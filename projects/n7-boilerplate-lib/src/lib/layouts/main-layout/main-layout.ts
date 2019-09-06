@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { LayoutBuilder } from '@n7-frontend/core';
 
-import * as DS from '@lib/common/data-sources';
-import * as EH from '@lib/common/event-handlers';
+import * as DS from '../../common/data-sources';
+import * as EH from '../../common/event-handlers';
 import { MainLayoutEH } from './main-layout.eh';
 import { MainLayoutDS } from './main-layout.ds';
 

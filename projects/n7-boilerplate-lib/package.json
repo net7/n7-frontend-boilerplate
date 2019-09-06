@@ -1,5 +1,5 @@
 {
-  "name": "n7-boilerplate-lib",
+  "name": "@n7-frontend/boilerplate",
   "version": "0.0.1",
   "peerDependencies": {
     "@angular/common": "^8.2.4",
