@@ -5,6 +5,7 @@ import * as DS from '../../common/data-sources';
 import * as EH from '../../common/event-handlers';
 import { MainLayoutEH } from './main-layout.eh';
 import { MainLayoutDS } from './main-layout.ds';
+import { ConfigurationService } from '@lib/services/configuration.service';
 
 @Component({
     selector: 'main-layout',
@@ -13,16 +14,18 @@ import { MainLayoutDS } from './main-layout.ds';
 export class MainLayoutComponent implements OnInit {
   public lb = new LayoutBuilder('main-layout');
   private widgets = [
-    { id: 'header', hasStaticData: true }
+    { id: 'header' }
   ];
 
-  constructor(){ }
+  constructor(
+    private configuration: ConfigurationService
+  ){ }
 
   ngOnInit(){
     // on ready
     this.lb.ready$.subscribe(() => {
       this.lb.eventHandler.emitInner('init', {
-        // TODO
+        configuration: this.configuration
       });
     });
 
