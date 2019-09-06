@@ -1,40 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ModuleWithProviders } from '@angular/compiler/src/core';
-import { DvComponentsLibModule } from '@n7-frontend/components';
-import { N7BoilerplateLibComponent } from './n7-boilerplate-lib.component';
-
-// services
-import { ConfigurationService } from './services/configuration.service';
-import { MainStateService } from './services/main-state.service';
-
-// layouts
-import { MainLayoutComponent } from './layouts/main-layout/main-layout';
-
-const COMPONENTS = [
-  N7BoilerplateLibComponent,
-  MainLayoutComponent
-];
-
+import { N7BoilerplateCommonModule } from './common/n7-boilerplate-common.module';
 
 @NgModule({
-  declarations: COMPONENTS,
   imports: [
-    CommonModule,
-    DvComponentsLibModule
+    CommonModule
   ],
   providers: [],
-  exports: COMPONENTS
+  exports: [
+    N7BoilerplateCommonModule
+  ]
 })
-export class N7BoilerplateLibModule {
-  static forRoot(config: any): ModuleWithProviders {
-    return {
-      ngModule: N7BoilerplateLibModule,
-      providers: [
-        MainStateService, 
-        ConfigurationService, 
-        { provide: 'config', useValue: config }
-      ]
-    }
-  }
-}
+export class N7BoilerplateLibModule { }

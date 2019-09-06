@@ -25,8 +25,7 @@
       ],
       "n7-boilerplate-lib/*": [
         "dist/n7-boilerplate-lib/*"
-      ],
-      "@lib/*": ["projects/n7-boilerplate-lib/src/lib/*"]
+      ]
     }
   }
 }

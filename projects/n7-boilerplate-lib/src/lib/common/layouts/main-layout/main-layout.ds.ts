@@ -28,6 +28,6 @@ export class MainLayoutDS extends LayoutDataSource {
         'customNav' : this.mainState.hasCustom('customNav'),
         'customNavs' : this.mainState.has('customNavs'),
       });
-    }, 5000)
+    }, 5000);
   }
 }

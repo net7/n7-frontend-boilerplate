@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { LayoutBuilder } from '@n7-frontend/core';
 
-import * as DS from '../../common/data-sources';
-import * as EH from '../../common/event-handlers';
+import * as DS from '../../data-sources';
+import * as EH from '../../event-handlers';
 import { MainLayoutEH } from './main-layout.eh';
 import { MainLayoutDS } from './main-layout.ds';
-import { ConfigurationService } from '@lib/services/configuration.service';
-import { MainStateService } from '@lib/services/main-state.service';
+import { ConfigurationService } from '../../services/configuration.service';
+import { MainStateService } from '../../services/main-state.service';
 
 @Component({
     selector: 'main-layout',
