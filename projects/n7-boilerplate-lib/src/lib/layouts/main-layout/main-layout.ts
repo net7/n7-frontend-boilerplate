@@ -6,6 +6,7 @@ import * as EH from '../../common/event-handlers';
 import { MainLayoutEH } from './main-layout.eh';
 import { MainLayoutDS } from './main-layout.ds';
 import { ConfigurationService } from '@lib/services/configuration.service';
+import { MainStateService } from '@lib/services/main-state.service';
 
 @Component({
     selector: 'main-layout',
@@ -18,14 +19,16 @@ export class MainLayoutComponent implements OnInit {
   ];
 
   constructor(
-    private configuration: ConfigurationService
+    private configuration: ConfigurationService,
+    private mainState: MainStateService
   ){ }
 
   ngOnInit(){
     // on ready
     this.lb.ready$.subscribe(() => {
       this.lb.eventHandler.emitInner('init', {
-        configuration: this.configuration
+        configuration: this.configuration,
+        mainState: this.mainState,
       });
     });
 

@@ -6,6 +6,7 @@ import { N7BoilerplateLibComponent } from './n7-boilerplate-lib.component';
 
 // services
 import { ConfigurationService } from './services/configuration.service';
+import { MainStateService } from './services/main-state.service';
 
 // layouts
 import { MainLayoutComponent } from './layouts/main-layout/main-layout';
@@ -30,6 +31,7 @@ export class N7BoilerplateLibModule {
     return {
       ngModule: N7BoilerplateLibModule,
       providers: [
+        MainStateService, 
         ConfigurationService, 
         { provide: 'config', useValue: config }
       ]

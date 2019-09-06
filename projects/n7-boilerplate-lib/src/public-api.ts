@@ -8,3 +8,4 @@ export * from './lib/n7-boilerplate-lib.module';
 
 // misc
 export * from './lib/services/configuration.service';
+export * from './lib/services/main-state.service';
