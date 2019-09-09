@@ -1,12 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import config from './home-layout.config';
+import config from './works-layout.config';
 import { AbstractLayout } from '../../../common/models/abstract-layout';
 
 @Component({
-  selector: 'aw-home-layout',
-  templateUrl: './home-layout.html'
+  selector: 'aw-works-layout',
+  templateUrl: './works-layout.html'
 })
-export class AwHomeLayoutComponent extends AbstractLayout implements OnInit, OnDestroy {
+export class AwWorksLayoutComponent extends AbstractLayout implements OnInit, OnDestroy {
   constructor(
   ){
     super(config);

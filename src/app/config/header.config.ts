@@ -3,7 +3,8 @@ export default {
     title: 'Example',
     subtitle: 'boilerplate app',
     payload: {
-      source: 'route',
+      source: 'navigate',
+      handler: 'router',
       path: ['/']
     }
   },
@@ -12,7 +13,8 @@ export default {
       text: page,
       icon: 'n7-icon-home',
       payload: {
-        source: 'route',
+        source: 'navigate',
+        handler: 'router',
         path: [`/${page.toLowerCase()}`]
       }
     }))

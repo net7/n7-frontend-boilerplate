@@ -11,7 +11,7 @@ export abstract class AbstractLayout {
     this.lb = new LayoutBuilder(this.config.layoutId);
   }
 
-  protected initPayload = () => {};
+  protected initPayload(): any {};
 
   protected onInit(){
     // on ready

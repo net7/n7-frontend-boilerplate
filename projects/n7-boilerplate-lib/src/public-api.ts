@@ -14,6 +14,15 @@ export * from './lib/common/models/abstract-layout';
 
 // arianna web
 export * from './lib/arianna-web/n7-boilerplate-arianna-web.module';
+export * from './lib/arianna-web/layouts/home-layout/home-layout';
 export * from './lib/arianna-web/layouts/home-layout/home-layout.config';
 export * from './lib/arianna-web/layouts/home-layout/home-layout.ds';
 export * from './lib/arianna-web/layouts/home-layout/home-layout.eh';
+export * from './lib/arianna-web/layouts/about-layout/about-layout';
+export * from './lib/arianna-web/layouts/about-layout/about-layout.config';
+export * from './lib/arianna-web/layouts/about-layout/about-layout.ds';
+export * from './lib/arianna-web/layouts/about-layout/about-layout.eh';
+export * from './lib/arianna-web/layouts/works-layout/works-layout';
+export * from './lib/arianna-web/layouts/works-layout/works-layout.config';
+export * from './lib/arianna-web/layouts/works-layout/works-layout.ds';
+export * from './lib/arianna-web/layouts/works-layout/works-layout.eh';

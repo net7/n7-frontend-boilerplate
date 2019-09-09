@@ -6,7 +6,13 @@ export class HeaderEH extends EventHandler {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch(type){
         case 'header.click':
-          console.log(type, payload);
+          // navigate control
+          if(payload.source === 'navigate'){
+            this.emitGlobal('navigate', payload);
+          }
+
+          // global signal
+          this.emitGlobal(type, payload);
           break;
 
         default:

@@ -1,47 +1,36 @@
-import { Component, OnInit } from '@angular/core';
-import { LayoutBuilder } from '@n7-frontend/core';
-
-import * as DS from '../../data-sources';
-import * as EH from '../../event-handlers';
-import { MainLayoutEH } from './main-layout.eh';
-import { MainLayoutDS } from './main-layout.ds';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
+import { AbstractLayout } from '../../models/abstract-layout'
 import { ConfigurationService } from '../../services/configuration.service';
 import { MainStateService } from '../../services/main-state.service';
+import config from './main-layout.config';
 
 @Component({
     selector: 'main-layout',
     templateUrl: './main-layout.html'
 })
-export class MainLayoutComponent implements OnInit {
-  public lb = new LayoutBuilder('main-layout');
-  private widgets = [
-    { id: 'header' }
-  ];
-
+export class MainLayoutComponent extends AbstractLayout implements OnInit, OnDestroy {
   constructor(
+    private router: Router,
     private configuration: ConfigurationService,
-    private mainState: MainStateService
-  ){ }
+    private mainState: MainStateService,
+  ){
+    super(config);
+  }
+
+  protected initPayload(){
+    return {
+      configuration: this.configuration,
+      mainState: this.mainState,
+      router: this.router,
+    }
+  }
 
   ngOnInit(){
-    // on ready
-    this.lb.ready$.subscribe(() => {
-      this.lb.eventHandler.emitInner('init', {
-        configuration: this.configuration,
-        mainState: this.mainState,
-      });
-    });
-
-    this.lb.init({
-      widgetsConfig: this.widgets,
-      widgetsDataSources: DS,
-      widgetsEventHandlers: EH,
-      dataSource: new MainLayoutDS(),
-      eventHandler: new MainLayoutEH(),
-    });
+    this.onInit();
   }
 
   ngOnDestroy(){
-    this.lb.eventHandler.emitInner('destroy');
+    this.onDestroy();
   }
 }
