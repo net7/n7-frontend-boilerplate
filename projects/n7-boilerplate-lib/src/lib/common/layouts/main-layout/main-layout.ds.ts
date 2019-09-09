@@ -1,10 +1,14 @@
 import { LayoutDataSource } from '@n7-frontend/core';
 import { Subject } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 export class MainLayoutDS extends LayoutDataSource {
   private configuration: any;
   private mainState: any;
   private router: any;
+  private mainStateMap = [
+    ['subnav', 'subnav']
+  ];
 
   onInit({ configuration, mainState, router }){
     this.configuration = configuration;
@@ -13,6 +17,13 @@ export class MainLayoutDS extends LayoutDataSource {
 
     // update header
     this.one('header').update(this.configuration.get('main').header);
+
+    // main state updates
+    this.mainStateMap.forEach(([widgetId, streamKey]) => {
+      this.mainState.get$(streamKey).pipe(
+        tap(val => console.log('stream', val))
+      ).subscribe(val => this.one(widgetId).update(val));
+    });
 
     // mainState test
     /* this.mainState.addCustom('customNav', new Subject());

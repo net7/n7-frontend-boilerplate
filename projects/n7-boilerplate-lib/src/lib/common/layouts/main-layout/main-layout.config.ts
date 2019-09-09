@@ -7,6 +7,8 @@ export default {
   layoutId: 'main-layout',
   widgets: [{
     id: 'header'
+  }, {
+    id: 'subnav'
   }],
   layoutDS: MainLayoutDS,
   layoutEH: MainLayoutEH,

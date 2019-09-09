@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ConfigurationService } from 'n7-boilerplate-lib';
+import { ConfigurationService, MainStateService } from 'n7-boilerplate-lib';
 import { EventHandler } from '@n7-frontend/core';
 
 @Component({
@@ -13,10 +13,25 @@ export class AppComponent {
   public useRouter: boolean;
 
   constructor(
-    private config: ConfigurationService
+    private config: ConfigurationService,
+    private mainState: MainStateService
   ) {
 
     this.useRouter = this.config.get('main').useRouter;
+
+    // mainState test
+    setTimeout(() => {
+      this.mainState.update('subnav', ['home', 'about', 'works'].map(page => ({
+        text: page.toUpperCase(), 
+        payload: {
+          source: 'navigate',
+          handler: 'router',
+          path: [`/${page}`],
+          id: page
+        },
+        _meta: { id: page }
+      })));
+    });
     
     EventHandler.globalEvents$.subscribe(({ type, payload }) => {
       if(type === 'global.navigate' && payload.handler === 'static'){
