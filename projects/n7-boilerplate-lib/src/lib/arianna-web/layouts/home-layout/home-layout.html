@@ -1,0 +1,6 @@
+<div class="" *ngIf="lb.dataSource">
+    <n7-table
+    [data]="lb.widgets['aw-table'].ds.out$ | async"
+    [emit]="lb.widgets['aw-table'].emit">
+    </n7-table>
+</div>

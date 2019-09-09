@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { N7BoilerplateCommonModule } from 'n7-boilerplate-lib';
+import { N7BoilerplateAriannaWebModule } from 'n7-boilerplate-lib';
 import mainConfig from './config/main.config';
 
 import { AppComponent } from './app.component';
@@ -12,6 +13,7 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserModule,
     N7BoilerplateCommonModule.forRoot(mainConfig),
+    N7BoilerplateAriannaWebModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
