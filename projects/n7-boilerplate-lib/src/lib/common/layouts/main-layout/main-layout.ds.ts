@@ -5,7 +5,6 @@ export class MainLayoutDS extends LayoutDataSource {
   private configuration: any;
   private mainState: any;
   private router: any;
-  private currentLayout: string;
 
   onInit({ configuration, mainState, router }){
     this.configuration = configuration;
@@ -40,12 +39,6 @@ export class MainLayoutDS extends LayoutDataSource {
       // path control
       if(!payload.path) throw Error('onNavigate: no path for router navigate');
       this.router.navigate(payload.path);
-    
-    // component static navigation
-    } else if(payload.handler === 'static'){
-      // layout control
-      if(!payload.layout) throw Error('onNavigate: no layout for static navigate');
-      this.currentLayout = payload.layout;
     }
   }
 }

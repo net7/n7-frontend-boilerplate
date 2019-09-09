@@ -1,3 +1,10 @@
 <main-layout>
-    <router-outlet></router-outlet>
+    <ng-container *ngIf="useRouter">
+        <router-outlet></router-outlet>
+    </ng-container>
+    <ng-container *ngIf="!useRouter">
+        <aw-home-layout *ngIf="currentLayout === 'home'"></aw-home-layout>
+        <aw-about-layout *ngIf="currentLayout === 'about'"></aw-about-layout>
+        <aw-works-layout *ngIf="currentLayout === 'works'"></aw-works-layout>
+    </ng-container>
 </main-layout>

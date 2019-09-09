@@ -5,7 +5,9 @@ export default {
     payload: {
       source: 'navigate',
       handler: 'router',
-      path: ['/']
+      path: ['/'],
+      // handler: 'static',
+      // layout: 'home'
     }
   },
   nav: {
@@ -16,6 +18,8 @@ export default {
         source: 'navigate',
         handler: 'router',
         path: [`/${page.toLowerCase()}`]
+        // handler: 'static',
+        // layout: page.toLowerCase()
       }
     }))
   },
