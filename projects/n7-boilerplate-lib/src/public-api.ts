@@ -7,22 +7,14 @@ export * from './lib/n7-boilerplate-lib.module';
 
 // common
 export * from './lib/common/n7-boilerplate-common.module';
-export * from './lib/common/layouts/main-layout/main-layout';
-export * from './lib/common/services/configuration.service';
-export * from './lib/common/services/main-state.service';
-export * from './lib/common/models/abstract-layout';
+export * from './lib/common/services/index';
+export * from './lib/common/models/index';
+export * from './lib/common/data-sources/index';
+export * from './lib/common/event-handlers/index';
+export * from './lib/common/layouts/index';
 
 // arianna web
 export * from './lib/arianna-web/n7-boilerplate-arianna-web.module';
-export * from './lib/arianna-web/layouts/home-layout/home-layout';
-export * from './lib/arianna-web/layouts/home-layout/home-layout.config';
-export * from './lib/arianna-web/layouts/home-layout/home-layout.ds';
-export * from './lib/arianna-web/layouts/home-layout/home-layout.eh';
-export * from './lib/arianna-web/layouts/about-layout/about-layout';
-export * from './lib/arianna-web/layouts/about-layout/about-layout.config';
-export * from './lib/arianna-web/layouts/about-layout/about-layout.ds';
-export * from './lib/arianna-web/layouts/about-layout/about-layout.eh';
-export * from './lib/arianna-web/layouts/works-layout/works-layout';
-export * from './lib/arianna-web/layouts/works-layout/works-layout.config';
-export * from './lib/arianna-web/layouts/works-layout/works-layout.ds';
-export * from './lib/arianna-web/layouts/works-layout/works-layout.eh';
+export * from './lib/arianna-web/data-sources/index';
+export * from './lib/arianna-web/event-handlers/index';
+export * from './lib/arianna-web/layouts/index';
