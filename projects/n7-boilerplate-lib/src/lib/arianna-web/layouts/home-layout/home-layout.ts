@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import config from './home-layout.config';
 import { AbstractLayout } from '../../../common/models/abstract-layout';
+import { AwHomeLayoutConfig as config } from './home-layout.config';
 
 @Component({
   selector: 'aw-home-layout',

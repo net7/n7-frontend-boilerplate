@@ -3,7 +3,7 @@ import { AwAboutLayoutEH } from './about-layout.eh';
 import * as DS from '../../data-sources';
 import * as EH from '../../event-handlers';
 
-export default {
+export const AwAboutLayoutConfig = {
   layoutId: 'aw-about-layout',
   widgets: [],
   layoutDS: AwAboutLayoutDS,

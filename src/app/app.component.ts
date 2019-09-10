@@ -17,7 +17,7 @@ export class AppComponent {
     private mainState: MainStateService
   ) {
 
-    this.useRouter = this.config.get('main').useRouter;
+    this.useRouter = this.config.get('useRouter');
 
     // mainState test
     setTimeout(() => {

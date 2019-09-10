@@ -3,7 +3,7 @@ import { AwHomeLayoutEH } from './home-layout.eh';
 import * as DS from '../../data-sources';
 import * as EH from '../../event-handlers';
 
-export default {
+export const AwHomeLayoutConfig = {
   layoutId: 'aw-home-layout',
   widgets: [{
     id: 'aw-table',
@@ -13,7 +13,7 @@ export default {
   layoutEH: AwHomeLayoutEH,
   widgetsDataSources: DS,
   widgetsEventHandlers: EH,
-  layoutOptions: {
+  options: {
     // TODO
   }
 };

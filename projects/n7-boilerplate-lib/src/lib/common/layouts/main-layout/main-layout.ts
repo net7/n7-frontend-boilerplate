@@ -2,8 +2,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { AbstractLayout } from '../../models/abstract-layout'
 import { ConfigurationService } from '../../services/configuration.service';
+import { LayoutsConfigurationService } from '../../services/layouts-configuration.service';
 import { MainStateService } from '../../services/main-state.service';
-import config from './main-layout.config';
+import { MainLayoutConfig as config } from './main-layout.config';
 
 @Component({
     selector: 'main-layout',
@@ -13,9 +14,10 @@ export class MainLayoutComponent extends AbstractLayout implements OnInit, OnDes
   constructor(
     private router: Router,
     private configuration: ConfigurationService,
+    private layoutsConfiguration: LayoutsConfigurationService,
     private mainState: MainStateService,
   ){
-    super(config);
+    super(layoutsConfiguration.get('MainLayoutConfig') || config);
   }
 
   protected initPayload(){
@@ -23,6 +25,7 @@ export class MainLayoutComponent extends AbstractLayout implements OnInit, OnDes
       configuration: this.configuration,
       mainState: this.mainState,
       router: this.router,
+      options: this.config.options || {},
     }
   }
 

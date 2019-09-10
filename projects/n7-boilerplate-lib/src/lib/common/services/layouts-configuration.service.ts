@@ -3,13 +3,13 @@ import { Injectable, Inject } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class ConfigurationService {
+export class LayoutsConfigurationService {
   private defaults: any = {};
 
   constructor(@Inject('config') private config: any){
-    if(this.config.global){
-      Object.keys(this.config.global).forEach(key => {
-        this.set(key, this.config.global[key]);
+    if(this.config.layouts){
+      Object.keys(this.config.layouts).forEach(key => {
+        this.set(key, this.config.layouts[key]);
       });
     }
   }

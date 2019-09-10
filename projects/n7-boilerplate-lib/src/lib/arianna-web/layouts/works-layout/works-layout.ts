@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import config from './works-layout.config';
 import { AbstractLayout } from '../../../common/models/abstract-layout';
+import { AwWorksLayoutConfig as config } from './works-layout.config';
 
 @Component({
   selector: 'aw-works-layout',

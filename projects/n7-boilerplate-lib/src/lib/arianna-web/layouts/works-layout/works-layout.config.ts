@@ -3,7 +3,7 @@ import { AwWorksLayoutEH } from './works-layout.eh';
 import * as DS from '../../data-sources';
 import * as EH from '../../event-handlers';
 
-export default {
+export const AwWorksLayoutConfig = {
   layoutId: 'aw-works-layout',
   widgets: [],
   layoutDS: AwWorksLayoutDS,

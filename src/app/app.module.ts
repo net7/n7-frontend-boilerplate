@@ -1,9 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { N7BoilerplateCommonModule } from 'n7-boilerplate-lib';
-import { N7BoilerplateAriannaWebModule } from 'n7-boilerplate-lib';
-import mainConfig from './config/main.config';
+import { 
+  N7BoilerplateCommonModule,
+  N7BoilerplateAriannaWebModule
+} from 'n7-boilerplate-lib';
+import globalConfig from './config/global';
+import layoutsConfig from './config/layouts';
 import { APP_ROUTES } from './app.routes';
 
 import { AppComponent } from './app.component';
@@ -17,7 +20,10 @@ import { AppComponent } from './app.component';
     RouterModule.forRoot(
       APP_ROUTES
     ),
-    N7BoilerplateCommonModule.forRoot(mainConfig),
+    N7BoilerplateCommonModule.forRoot({
+      global: globalConfig,
+      layouts: layoutsConfig
+    }),
     N7BoilerplateAriannaWebModule,
   ],
   providers: [],

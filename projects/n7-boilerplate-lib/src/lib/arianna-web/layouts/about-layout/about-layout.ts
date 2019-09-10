@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import config from './about-layout.config';
 import { AbstractLayout } from '../../../common/models/abstract-layout';
+import { AwAboutLayoutConfig as config } from './about-layout.config';
 
 @Component({
   selector: 'aw-about-layout',

@@ -5,6 +5,7 @@ import { DvComponentsLibModule } from '@n7-frontend/components';
 
 // services
 import { ConfigurationService } from './services/configuration.service';
+import { LayoutsConfigurationService } from './services/layouts-configuration.service';
 import { MainStateService } from './services/main-state.service';
 
 // layouts
@@ -13,7 +14,6 @@ import { MainLayoutComponent } from './layouts/main-layout/main-layout';
 const COMPONENTS = [
   MainLayoutComponent
 ];
-
 
 @NgModule({
   declarations: COMPONENTS,
@@ -31,6 +31,7 @@ export class N7BoilerplateCommonModule {
       providers: [
         MainStateService, 
         ConfigurationService, 
+        LayoutsConfigurationService, 
         { provide: 'config', useValue: config }
       ]
     }

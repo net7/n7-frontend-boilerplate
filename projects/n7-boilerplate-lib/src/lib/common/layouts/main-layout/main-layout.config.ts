@@ -3,7 +3,7 @@ import { MainLayoutEH } from './main-layout.eh';
 import * as DS from '../../data-sources';
 import * as EH from '../../event-handlers';
 
-export default {
+export const MainLayoutConfig = {
   layoutId: 'main-layout',
   widgets: [{
     id: 'header'
@@ -14,7 +14,7 @@ export default {
   layoutEH: MainLayoutEH,
   widgetsDataSources: DS,
   widgetsEventHandlers: EH,
-  layoutOptions: {
+  options: {
     // TODO
   }
 };
