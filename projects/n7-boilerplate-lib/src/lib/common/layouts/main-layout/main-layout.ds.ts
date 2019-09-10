@@ -2,10 +2,10 @@ import { LayoutDataSource } from '@n7-frontend/core';
 import { tap } from 'rxjs/operators';
 
 export class MainLayoutDS extends LayoutDataSource {
-  private configuration: any;
-  private mainState: any;
-  private router: any;
-  private mainStateMap = [{
+  protected configuration: any;
+  protected mainState: any;
+  protected router: any;
+  protected mainStateMap = [{
     widgetId: 'subnav',
     streamKey: 'subnav'
   }];
