@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ConfigurationService, MainStateService } from 'n7-boilerplate-lib';
+import { ConfigurationService, MainStateService, CommunicationService } from 'n7-boilerplate-lib';
 import { EventHandler } from '@n7-frontend/core';
 
 @Component({
@@ -14,10 +14,17 @@ export class AppComponent {
 
   constructor(
     private config: ConfigurationService,
-    private mainState: MainStateService
+    private mainState: MainStateService,
+    private communication: CommunicationService,
   ) {
 
     this.useRouter = this.config.get('useRouter');
+
+    this.communication.request$('getLastPosts', {
+      onError: (error) => console.log('app error', error)
+    }).subscribe(posts => {
+      console.log('provider', posts);
+    });
 
     // mainState test
     setTimeout(() => {
