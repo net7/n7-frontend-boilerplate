@@ -12,10 +12,10 @@ The Boilerplate is built with **Angular 8.2.5**: the projects that include the B
 
 ## Layout naming prefix guidelines
 
-Layouts in **common** must be prefixed with `n7-` (following the same logic adopted for components).
-Layouts in **arianna-web** must be prefixed with `aw-`.
-Layouts in **muruca** must be prefixed with `mr-`.
-Layouts in **data-viz** must be prefixed with `dv-`.
+- Layouts in **common** must be prefixed with `n7-` (following the same logic adopted for components).
+- Layouts in **arianna-web** must be prefixed with `aw-`.
+- Layouts in **muruca** must be prefixed with `mr-`.
+- Layouts in **data-viz** must be prefixed with `dv-`.
 
 ## Development server
 
