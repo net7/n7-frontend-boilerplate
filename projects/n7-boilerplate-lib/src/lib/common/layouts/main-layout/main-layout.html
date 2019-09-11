@@ -5,6 +5,7 @@
         [data]="lb.widgets['header'].ds.out$ | async"></n7-header>
 
         <n7-nav 
+        *ngIf="!lb.dataSource.options.sidebar"
         [emit]="lb.widgets['subnav'].emit"
         [data]="lb.widgets['subnav'].ds.out$ | async">
         </n7-nav>

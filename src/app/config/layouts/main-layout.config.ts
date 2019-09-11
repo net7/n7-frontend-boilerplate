@@ -5,6 +5,6 @@ export default {
   ...MainLayoutConfig,
   layoutDS: AppLayoutDS,
   options: {
-    hello: 'world'
-  }
+    sidebar: false
+  },
 }
