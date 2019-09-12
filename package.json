@@ -25,6 +25,7 @@
     "@n7-frontend/components": "git+ssh://git@github.com/net7/n7-frontend-components-dist.git#master",
     "@n7-frontend/core": "git+ssh://git@github.com/net7/n7-frontend-core.git#develop",
     "@n7-frontend/icon-font": "git+ssh://git@github.com/net7/n7-icon-font.git#master",
+    "apexcharts": "^3.8.6",
     "core-js": "^2.5.4",
     "rxjs": "6.0.0",
     "susy": "^3.0.5",
