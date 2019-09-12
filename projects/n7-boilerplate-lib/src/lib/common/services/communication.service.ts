@@ -37,12 +37,10 @@ export class CommunicationService {
   }
 
   handleError(error, onError): Observable<any> {
-    onError = onError || this.communicationConfig.onError;
-    
     if(onError){
       onError(error);
     } else {
-      console.warn('No default error handler for communication service', error);
+      console.warn('No error handler for communication request', error);
     }
 
     return empty();

@@ -1,4 +1,4 @@
-export default {
+export const ApolloProviderConfig = {
   'getLastPosts': `
     {
       getLastPosts(__PARAMS__) {

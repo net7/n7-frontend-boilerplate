@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
-import ApolloConfig from './apollo.config';
+import { ApolloProviderConfig } from './config';
 import { ConfigurationService } from '../../configuration.service';
 import { ICommunicationProvider } from '../communication-provider.interface';
 
@@ -24,7 +24,7 @@ export class ApolloProvider implements ICommunicationProvider {
 
   request$(requestId, options){
     const { params, method, httpOptions } = options;
-    let query = ApolloConfig[requestId];
+    let query = ApolloProviderConfig[requestId];
 
     if(this.providerConfig.config && this.providerConfig.config[requestId]){
       query = this.providerConfig.config[requestId];
@@ -46,8 +46,6 @@ export class ApolloProvider implements ICommunicationProvider {
       return this.http.post(this.providerConfig.baseUrl, { query }, httpOptions);
     }
   }
-
-  getConfig = () => this.providerConfig;
 
   private makeParamsStr(params){
     let paramsStr = [];
