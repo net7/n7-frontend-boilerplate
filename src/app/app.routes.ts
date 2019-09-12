@@ -1,6 +1,7 @@
 
 import { Routes } from '@angular/router';
 import { 
+  Page404LayoutComponent,
   AwHomeLayoutComponent,
   AwAboutLayoutComponent,
   AwWorksLayoutComponent,
@@ -14,5 +15,5 @@ export const APP_ROUTES: Routes = [
     redirectTo: '/home',
     pathMatch: 'full'
   },
-  { path: '**', component: AwHomeLayoutComponent }
+  { path: '**', component: Page404LayoutComponent }
 ];
