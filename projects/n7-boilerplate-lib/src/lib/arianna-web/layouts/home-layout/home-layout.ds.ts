@@ -13,8 +13,8 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       // method: 'GET',
       // httpOptions: {}
     }).subscribe((response) => {
-      this.one('aw-hero').update(response.data.getTestHero);
-      // this.some(['aw-hero']).update(response.data.getTestHero);
+      this.one('aw-hero').update(response);
+      // this.some(['aw-hero']).update(response);
     });
     // TODO
   }

@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http'
 import { ApolloProviderConfig } from './config';
 import { ConfigurationService } from '../../configuration.service';
 import { ICommunicationProvider } from '../communication-provider.interface';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 
 @Injectable({
@@ -30,21 +32,30 @@ export class ApolloProvider implements ICommunicationProvider {
       query = this.providerConfig.config[requestId];
     }
 
+    query = query || {};
+    let { queryName, queryBody } = query;
+
     // config query control
-    if(!query) throw Error(`No config found for requestId "${requestId}"`);
+    if(!queryName || !queryBody) throw Error(`No config found for requestId "${requestId}"`);
 
     if(params){
       let paramsStr = this.makeParamsStr(params);
-      query = query.replace('__PARAMS__', paramsStr);
+      queryBody = queryBody.replace('__PARAMS__', paramsStr);
     } else {
-      query = query.replace('(__PARAMS__)', '');
+      queryBody = queryBody.replace('(__PARAMS__)', '');
     }
 
+    let source$: Observable<any>;
+
     if(method && method === 'GET'){
-      return this.http.get(this.providerConfig.baseUrl);
+      source$ = this.http.get(this.providerConfig.baseUrl);
     } else {
-      return this.http.post(this.providerConfig.baseUrl, { query }, httpOptions);
+      source$ = this.http.post(this.providerConfig.baseUrl, { query: queryBody }, httpOptions);  
     }
+
+    return source$.pipe(
+      map((response: any) => response.data[queryName])
+    );
   }
 
   private makeParamsStr(params){

@@ -1,25 +1,23 @@
 export const ApolloProviderConfig = {
-  'getLastPosts': `
-    {
-      getLastPosts(__PARAMS__) {
-        id
-        title
+  'getLastPosts': {
+    queryName: 'getLastPosts',
+    queryBody: `
+      {
+        getLastPosts(__PARAMS__) {
+          id
+          title
+        }
       }
-    }
-  `, 
-  'getTestHero': `
-    {
-      getTestHero(__PARAMS__) {
-        title
+    ` 
+  }, 
+  'getTestHero': {
+    queryName: 'getTestHero',
+    queryBody: `
+      {
+        getTestHero(__PARAMS__) {
+          title
+        }
       }
-    }
-  `, 
-  'getPosts': `
-    {
-      getPosts(__PARAMS__) {
-        title
-        description
-      }
-    }
-  `, 
+    `
+  },
 };
