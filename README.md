@@ -2,6 +2,21 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.5.
 
+## Projects that use the Boilerplate
+
+The Boilerplate is built with **Angular 8.2.5**: the projects that include the Boilerplate must use the same Angular version to avoid conflicts.
+
+## Node version
+
+ We suggest to use Node **v10.xx.xx**.
+
+## Layout naming prefix guidelines
+
+- Layouts in **common** must be prefixed with `n7-` (following the same logic adopted for components).
+- Layouts in **arianna-web** must be prefixed with `aw-`.
+- Layouts in **muruca** must be prefixed with `mr-`.
+- Layouts in **data-viz** must be prefixed with `dv-`.
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
