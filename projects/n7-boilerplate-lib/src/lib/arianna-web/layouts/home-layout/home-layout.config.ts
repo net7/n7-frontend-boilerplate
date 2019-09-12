@@ -8,6 +8,9 @@ export const AwHomeLayoutConfig = {
   widgets: [{
     id: 'aw-table',
     hasStaticData: true
+  }, {
+    id: 'aw-hero',
+    hasStaticData: true
   }],
   layoutDS: AwHomeLayoutDS,
   layoutEH: AwHomeLayoutEH,

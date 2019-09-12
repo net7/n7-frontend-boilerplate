@@ -1,6 +1,11 @@
 <div class="" *ngIf="lb.dataSource">
-    <n7-table
+    <n7-hero
+    [data]="lb.widgets['aw-hero'].ds.out$ | async"
+    [emit]="lb.widgets['aw-hero'].emit">
+    </n7-hero>
+    <!--<n7-table
     [data]="lb.widgets['aw-table'].ds.out$ | async"
     [emit]="lb.widgets['aw-table'].emit">
-    </n7-table>
+    </n7-table>-->
+    <span>{{ lb.dataSource.test }}</span>
 </div>

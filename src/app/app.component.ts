@@ -20,11 +20,11 @@ export class AppComponent {
 
     this.useRouter = this.config.get('useRouter');
 
-    this.communication.request$('getLastPosts', {
+    /* this.communication.request$('getLastPosts', {
       onError: (error) => console.log('app error', error)
     }).subscribe(posts => {
       console.log('provider', posts);
-    });
+    }); */
 
     // mainState test
     setTimeout(() => {

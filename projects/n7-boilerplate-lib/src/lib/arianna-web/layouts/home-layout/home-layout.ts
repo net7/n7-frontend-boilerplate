@@ -1,15 +1,35 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AbstractLayout } from '../../../common/models/abstract-layout';
+import { Router } from '@angular/router';
+import { AbstractLayout } from '../../../common/models/abstract-layout'
+import { ConfigurationService } from '../../../common/services/configuration.service';
+import { LayoutsConfigurationService } from '../../../common/services/layouts-configuration.service';
+import { MainStateService } from '../../../common/services/main-state.service';
 import { AwHomeLayoutConfig as config } from './home-layout.config';
+import { CommunicationService } from '../../../common/services';
 
 @Component({
-  selector: 'aw-home-layout',
-  templateUrl: './home-layout.html'
+    selector: 'aw-home-layout',
+    templateUrl: './home-layout.html'
 })
 export class AwHomeLayoutComponent extends AbstractLayout implements OnInit, OnDestroy {
   constructor(
+    layoutsConfiguration: LayoutsConfigurationService,
+    private router: Router,
+    private configuration: ConfigurationService,
+    private communication: CommunicationService,
+    private mainState: MainStateService,
   ){
-    super(config);
+    super(layoutsConfiguration.get('AwHomeLayoutConfig') || config);
+  }
+
+  protected initPayload(){
+    return {
+      configuration: this.configuration,
+      mainState: this.mainState,
+      router: this.router,
+      communication: this.communication,
+      options: this.config.options || {},
+    }
   }
 
   ngOnInit(){
@@ -19,5 +39,4 @@ export class AwHomeLayoutComponent extends AbstractLayout implements OnInit, OnD
   ngOnDestroy(){
     this.onDestroy();
   }
-
 }

@@ -7,4 +7,19 @@ export const ApolloProviderConfig = {
       }
     }
   `, 
+  'getTestHero': `
+    {
+      getTestHero(__PARAMS__) {
+        title
+      }
+    }
+  `, 
+  'getPosts': `
+    {
+      getPosts(__PARAMS__) {
+        title
+        description
+      }
+    }
+  `, 
 };

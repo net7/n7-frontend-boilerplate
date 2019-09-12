@@ -1,6 +1,6 @@
-import { ApolloProviderConfig } from 'n7-boilerplate-lib';
+// import { ApolloProviderConfig } from 'n7-boilerplate-lib';
 
-const customApolloConfig = {
+/* const customApolloConfig = {
   ...ApolloProviderConfig,
   'getLastPosts': `
   {
@@ -10,15 +10,14 @@ const customApolloConfig = {
     }
   }
   `,
-};
+}; */
 
 export default {
   defaultProvider: 'apollo',
-  onError: (error) => console.log('config error', error),
   providers: {
     apollo: {
-      baseUrl: 'https://i-swat-apollo.piotrowicz.now.sh/',
-      config: customApolloConfig
+      baseUrl: 'https://n7-ariannaweb-graphql-git-develop.net7.now.sh/',
+      // config: customApolloConfig
     },
     rest: {
       baseUrl: "https://jsonplaceholder.typicode.com/",
