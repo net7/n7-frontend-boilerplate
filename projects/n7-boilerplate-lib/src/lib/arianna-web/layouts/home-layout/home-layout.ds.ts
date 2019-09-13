@@ -2,10 +2,12 @@ import { LayoutDataSource } from '@n7-frontend/core';
 
 export class AwHomeLayoutDS extends LayoutDataSource {
   private communication: any;
+  private mainState: any;
   public test: string;
   
-  onInit({ communication }){
+  onInit({ communication, mainState }){
     this.communication = communication;
+    this.mainState = mainState;
 
     this.communication.request$('getTestHero', {
       onError: (error) => console.log(error),
@@ -16,10 +18,49 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       this.one('aw-hero').update(response);
       // this.some(['aw-hero']).update(response);
     });
-    // TODO
+
+    // update streams
+    this.mainState.update('headTitle', 'Arianna Web > Home');
+    this.mainState.update('pageTitle', 'Arianna Web: Home Layout');
+    this.mainState.update('subnav', this._getSubnav());
+    this.mainState.update('breadcrumbs', this._getBreadcrumbs());
   }
 
   changeTestText(value){
     this.test = value;
+  }
+
+  private _getSubnav(){
+    return ['home', 'results', 'single'].map(page => ({
+      text: page.toUpperCase(), 
+      payload: {
+        source: 'navigate',
+        handler: 'router',
+        path: [`arianna-web/${page}-layout`],
+        id: page
+      },
+      _meta: { id: page }
+    }));
+  }
+
+  private _getBreadcrumbs(){
+    return {
+      items: [{
+        label: 'Arianna Web',
+        payload: {
+          source: 'navigate',
+          handler: 'router',
+          path: [`arianna-web/home-layout`]
+        }
+      },
+      {
+        label: 'Home Layout',
+        payload: {
+          source: 'navigate',
+          handler: 'router',
+          path: [`arianna-web/home-layout`]
+        }
+      }] 
+    };
   }
 }

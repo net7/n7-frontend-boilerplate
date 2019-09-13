@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 import { AbstractLayout } from '../../models/abstract-layout'
 import { ConfigurationService } from '../../services/configuration.service';
 import { LayoutsConfigurationService } from '../../services/layouts-configuration.service';
@@ -16,6 +17,7 @@ export class MainLayoutComponent extends AbstractLayout implements OnInit, OnDes
     private configuration: ConfigurationService,
     private layoutsConfiguration: LayoutsConfigurationService,
     private mainState: MainStateService,
+    private titleService: Title
   ){
     super(layoutsConfiguration.get('MainLayoutConfig') || config);
   }
@@ -25,6 +27,7 @@ export class MainLayoutComponent extends AbstractLayout implements OnInit, OnDes
       configuration: this.configuration,
       mainState: this.mainState,
       router: this.router,
+      titleService: this.titleService,
       options: this.config.options || {},
     }
   }

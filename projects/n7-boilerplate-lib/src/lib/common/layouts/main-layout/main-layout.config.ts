@@ -9,6 +9,8 @@ export const MainLayoutConfig = {
     id: 'header'
   }, {
     id: 'subnav'
+  }, {
+    id: 'breadcrumbs'
   }],
   layoutDS: MainLayoutDS,
   layoutEH: MainLayoutEH,
