@@ -6,11 +6,13 @@ import { N7BoilerplateCommonModule } from '../common/n7-boilerplate-common.modul
 import { AwHomeLayoutComponent } from './layouts/home-layout/home-layout';
 import { AwAboutLayoutComponent } from './layouts/about-layout/about-layout';
 import { AwWorksLayoutComponent } from './layouts/works-layout/works-layout';
+import { AwPatrimonioLayoutComponent } from './layouts/patrimonio-layout/patrimonio-layout';
 
 const COMPONENTS = [
   AwHomeLayoutComponent,
   AwAboutLayoutComponent,
   AwWorksLayoutComponent,
+  AwPatrimonioLayoutComponent,
 ];
 
 

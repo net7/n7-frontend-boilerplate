@@ -1,9 +1,10 @@
 
 import { Routes } from '@angular/router';
-import { 
+import {
   Page404LayoutComponent,
   AwHomeLayoutComponent,
   AwAboutLayoutComponent,
+  AwPatrimonioLayoutComponent,
   AwWorksLayoutComponent,
 } from 'n7-boilerplate-lib';
 
@@ -11,8 +12,10 @@ export const APP_ROUTES: Routes = [
   // arianna web routes
   { path: 'arianna-web/home-layout', component: AwHomeLayoutComponent },
   { path: 'about', component: AwAboutLayoutComponent },
+  { path: 'patrimonio', component: AwPatrimonioLayoutComponent },
   { path: 'works', component: AwWorksLayoutComponent },
-  { path: '',
+  {
+    path: '',
     redirectTo: '/home',
     pathMatch: 'full'
   },
