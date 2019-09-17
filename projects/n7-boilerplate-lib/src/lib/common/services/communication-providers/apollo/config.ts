@@ -9,7 +9,7 @@ export const ApolloProviderConfig = {
         }
       }
     ` 
-  }, 
+  },
   'getTestHero': {
     queryName: 'getTestHero',
     queryBody: `
@@ -20,4 +20,29 @@ export const ApolloProviderConfig = {
       }
     `
   },
+  'initialGlobalFilterCall':{
+    queryName: 'globalFilter',
+    queryBody:`{
+      globalFilter {
+        entitiesData {
+            countData {
+              type {
+                id
+                label
+                color
+                icon
+              }
+              count
+            }
+          entitiesCountData {
+            entity {
+              id
+              label
+            }
+            count
+          }
+          }
+        }
+      }`
+  }
 };

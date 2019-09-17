@@ -27,7 +27,12 @@ export class AwHomeLayoutEH extends EventHandler {
           const { inputPayload, value } = payload;
           this.dataSource.changeTestText(value);
           break;
-        
+
+        case 'aw-home-bubble-chart.click':
+          console.log('bubble click!', payload);
+          // TODO: implement here bubble clicks
+          break;
+
           default:
             break;
       }
@@ -41,8 +46,8 @@ export class AwHomeLayoutEH extends EventHandler {
         case 'global.navigate':
           this.dataSource.onNavigate(payload);
           break;
-          
-        default: 
+
+        default:
           break;
       }
     }); */

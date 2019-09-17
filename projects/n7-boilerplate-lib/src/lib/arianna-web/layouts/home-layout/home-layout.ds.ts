@@ -20,13 +20,36 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       // this.some(['aw-hero']).update(response);
     });
 
-    this.one('aw-home-bubble-chart').update({});
+
+    this.communication.request$('initialGlobalFilterCall', {
+      onError: (error) => console.log(error),
+    }).subscribe((response) => {
+      this.renderBubblesFromApolloQuery(response);
+    });
 
     // update streams
     this.mainState.update('headTitle', 'Arianna Web > Home');
     this.mainState.update('pageTitle', 'Arianna Web: Home Layout');
     this.mainState.update('subnav', this._getSubnav());
     this.mainState.update('breadcrumbs', this._getBreadcrumbs());
+  }
+
+  renderBubblesFromApolloQuery(response: any){
+    console.log( {response} );
+    if( !response || !response.entitiesData ) return;
+    let allBubbles = [];
+    for(var i=0;i<response.entitiesData.length;i++){
+      let currentToE = response.entitiesData[i];
+      console.log({currentToE});
+      for(var j=0;j<currentToE.entitiesCountData.length;j++){
+        allBubbles.push(
+          {
+            ...currentToE.entitiesCountData[j],
+            color:currentToE.countData.type.color
+          });
+      }
+    }
+    this.one('aw-home-bubble-chart').update(allBubbles);
   }
 
   changeTestText(value){
