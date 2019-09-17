@@ -6,9 +6,12 @@
     <hr>
     <span>Event test: {{ lb.dataSource.test }} !</span>
     <hr>
-    Bubble Chart goes here.
+    <n7-bubble-chart 
+        [data]="lb.widgets['aw-home-bubble-chart'].ds.out$ | async" 
+        [emit]="lb.widgets['aw-home-bubble-chart'].emit">
+    </n7-bubble-chart>
     <hr>
-    <n7-hero 
+    <n7-hero
         [data]="lb.widgets['aw-home-hero-patrimonio'].ds.out$ | async" 
         [emit]="lb.widgets['aw-home-hero-patrimonio'].emit">
     </n7-hero>

@@ -12,7 +12,7 @@ export class AwHeroDS extends DataSource {
         text: "CERCA",
         payload: "cerca"
       },
-      backgroundImage: "https://placeimg.com/1000/480/any",
+      backgroundImage: "https://i.imgur.com/FgsxSYR.png",
       input: {
         placeholder: "Cerca in MAXXI",
         payload: "cerca-in-maxxi"

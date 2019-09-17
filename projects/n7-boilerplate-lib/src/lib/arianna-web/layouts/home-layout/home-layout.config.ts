@@ -11,6 +11,8 @@ export const AwHomeLayoutConfig = {
   }, {
     id: 'aw-home-hero-patrimonio',
     hasStaticData: true
+  }, {
+    id: 'aw-home-bubble-chart',
   }],
   layoutDS: AwHomeLayoutDS,
   layoutEH: AwHomeLayoutEH,

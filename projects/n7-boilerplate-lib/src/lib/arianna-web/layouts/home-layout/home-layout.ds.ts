@@ -20,6 +20,8 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       // this.some(['aw-hero']).update(response);
     });
 
+    this.one('aw-home-bubble-chart').update({});
+
     // update streams
     this.mainState.update('headTitle', 'Arianna Web > Home');
     this.mainState.update('pageTitle', 'Arianna Web: Home Layout');
@@ -37,7 +39,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       payload: {
         source: 'navigate',
         handler: 'router',
-        path: [`arianna-web/${page}-layout`],
+        path: [`aw/${page}`],
         id: page
       },
       _meta: { id: page }
@@ -51,7 +53,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         payload: {
           source: 'navigate',
           handler: 'router',
-          path: [`arianna-web/home-layout`]
+          path: [`aw/home`]
         }
       },
       {
@@ -59,7 +61,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         payload: {
           source: 'navigate',
           handler: 'router',
-          path: [`arianna-web/home-layout`]
+          path: [`aw/home`]
         }
       }] 
     };
