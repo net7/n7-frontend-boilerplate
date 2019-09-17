@@ -5,7 +5,7 @@ export class AwHomeBubbleChartDS extends DataSource {
 
   protected transform(data){
     console.log({data});
-
-    return BUBBLECHART_MOCK;
+    return null;
+    //return BUBBLECHART_MOCK;
   }
 }
