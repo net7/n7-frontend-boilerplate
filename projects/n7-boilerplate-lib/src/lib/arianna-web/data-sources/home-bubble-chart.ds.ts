@@ -48,7 +48,7 @@ export class AwHomeBubbleChartDS extends DataSource {
         ],
         x: cWidth/2+50,
         y: cHeight/2+50,
-        "radius":bubble.count/950,
+        "radius":bubble.count/55,
         color:bubble.color,
         hasCloseIcon: false,
         payload:{
