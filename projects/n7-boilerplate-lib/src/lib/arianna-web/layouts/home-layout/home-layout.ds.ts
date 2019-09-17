@@ -16,6 +16,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       // httpOptions: {}
     }).subscribe((response) => {
       this.one('aw-hero').update(response);
+      //this.one('aw-home-hero-patrimonio').update(response);
       // this.some(['aw-hero']).update(response);
     });
 

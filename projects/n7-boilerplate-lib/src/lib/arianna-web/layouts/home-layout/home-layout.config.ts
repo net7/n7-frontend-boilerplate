@@ -6,10 +6,10 @@ import * as EH from '../../event-handlers';
 export const AwHomeLayoutConfig = {
   layoutId: 'aw-home-layout',
   widgets: [{
-    id: 'aw-table',
-    hasStaticData: true
-  }, {
     id: 'aw-hero',
+    //hasStaticData: true
+  }, {
+    id: 'aw-home-hero-patrimonio',
     hasStaticData: true
   }],
   layoutDS: AwHomeLayoutDS,

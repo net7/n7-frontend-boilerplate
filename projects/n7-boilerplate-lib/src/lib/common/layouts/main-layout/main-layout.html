@@ -1,24 +1,25 @@
 <div class="n7-main-layout" id="main-layout">
     <div class="n7-page-content">
-        <n7-header 
+        <n7-header
         [emit]="lb.widgets['header'].emit"
         [data]="lb.widgets['header'].ds.out$ | async"></n7-header>
 
-        <n7-nav 
+        <!-- <n7-nav 
         *ngIf="!lb.dataSource.options.sidebar"
         [emit]="lb.widgets['subnav'].emit"
         [data]="lb.widgets['subnav'].ds.out$ | async">
-        </n7-nav>
+        </n7-nav> -->
 
         <main class="n7-content">
             <div class="n7-top-page-bar">
                 <div class="n7-top-page-bar__main">
-                    <h1 
+                    <!-- <h1 
                     *ngIf="lb.dataSource.pageTitle"
                     class="n7-top-page-bar__title">{{ lb.dataSource.pageTitle }}</h1>
                     <n7-breadcrumbs 
                     [emit]="lb.widgets['breadcrumbs'].emit"
-                    [data]="lb.widgets['breadcrumbs'].ds.out$ | async"></n7-breadcrumbs>
+                    [data]="lb.widgets['breadcrumbs'].ds.out$ | async">
+                    </n7-breadcrumbs> -->
                 </div>
                 <!--<div *ngIf="lb.dataSource.pageTools" class="n7-top-page-bar__tools">
                     <a *ngFor="let tool of lb.dataSource.pageTools" 

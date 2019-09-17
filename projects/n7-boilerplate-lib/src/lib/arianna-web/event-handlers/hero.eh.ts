@@ -4,12 +4,9 @@ export class AwHeroEH extends EventHandler {
 
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
-      switch(type){
+      switch (type) {
         case 'aw-hero.click':
-          this.emitGlobal('navigate', {
-            handler: 'router',
-            path: ['/about']
-          });
+          // TODO
           break;
 
         case 'aw-hero.change':
@@ -20,7 +17,6 @@ export class AwHeroEH extends EventHandler {
           break;
       }
     });
-
     /* this.outerEvents$.subscribe(event => {
     
     }); */

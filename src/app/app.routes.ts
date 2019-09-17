@@ -10,10 +10,10 @@ import {
 
 export const APP_ROUTES: Routes = [
   // arianna web routes
-  { path: 'arianna-web/home-layout', component: AwHomeLayoutComponent },
-  { path: 'about', component: AwAboutLayoutComponent },
-  { path: 'patrimonio', component: AwPatrimonioLayoutComponent },
-  { path: 'works', component: AwWorksLayoutComponent },
+  { path: 'aw/home', component: AwHomeLayoutComponent },
+  { path: 'aw/about', component: AwAboutLayoutComponent },
+  { path: 'aw/patrimonio', component: AwPatrimonioLayoutComponent },
+  { path: 'aw/works', component: AwWorksLayoutComponent },
   {
     path: '',
     redirectTo: '/home',

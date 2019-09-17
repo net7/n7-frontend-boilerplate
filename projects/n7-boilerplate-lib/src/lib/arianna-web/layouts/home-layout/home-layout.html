@@ -1,11 +1,15 @@
 <div class="" *ngIf="lb.dataSource">
     <n7-hero
-    [data]="lb.widgets['aw-hero'].ds.out$ | async"
-    [emit]="lb.widgets['aw-hero'].emit">
+        [data]="lb.widgets['aw-hero'].ds.out$ | async"
+        [emit]="lb.widgets['aw-hero'].emit">
     </n7-hero>
-    <!--<n7-table
-    [data]="lb.widgets['aw-table'].ds.out$ | async"
-    [emit]="lb.widgets['aw-table'].emit">
-    </n7-table>-->
-    <span>{{ lb.dataSource.test }}</span>
+    <hr>
+    <span>Event test: {{ lb.dataSource.test }} !</span>
+    <hr>
+    Bubble Chart goes here.
+    <hr>
+    <n7-hero 
+        [data]="lb.widgets['aw-home-hero-patrimonio'].ds.out$ | async" 
+        [emit]="lb.widgets['aw-home-hero-patrimonio'].emit">
+    </n7-hero>
 </div>
