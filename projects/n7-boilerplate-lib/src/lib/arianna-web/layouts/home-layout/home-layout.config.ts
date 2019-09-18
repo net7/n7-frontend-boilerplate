@@ -13,6 +13,9 @@ export const AwHomeLayoutConfig = {
     hasStaticData: true
   }, {
     id: 'aw-home-bubble-chart',
+  }, {
+    id: 'aw-home-facets-wrapper',
+    hasStaticData: true
   }],
   layoutDS: AwHomeLayoutDS,
   layoutEH: AwHomeLayoutEH,

@@ -3,14 +3,17 @@
         [data]="lb.widgets['aw-hero'].ds.out$ | async"
         [emit]="lb.widgets['aw-hero'].emit">
     </n7-hero>
-    <hr>
-    <span>Event test: {{ lb.dataSource.test }} !</span>
-    <hr>
+    <!-- <span>Event test: {{ lb.dataSource.test }} !</span> -->
+    <div *ngFor="let f of lb.dataSource.facetsList">
+        <n7-facet-header
+            [data]="lb.widgets['aw-home-facets-wrapper'].ds.out$ | async"
+            [emit]="lb.widgets['aw-home-facets-wrapper'].emit">
+        </n7-facet-header>
+    </div>  
     <n7-bubble-chart 
         [data]="lb.widgets['aw-home-bubble-chart'].ds.out$ | async" 
         [emit]="lb.widgets['aw-home-bubble-chart'].emit">
     </n7-bubble-chart>
-    <hr>
     <n7-hero
         [data]="lb.widgets['aw-home-hero-patrimonio'].ds.out$ | async" 
         [emit]="lb.widgets['aw-home-hero-patrimonio'].emit">

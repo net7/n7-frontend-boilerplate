@@ -56,6 +56,54 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     this.test = value;
   }
 
+  facetsList =
+    [
+      {
+        "countData": {
+          "type": {
+            "id": "toe-people",
+            "label": "Persone",
+            "icon": "n7-icon-biography",
+            "color": "#3a81f2"
+          },
+          "count": 36686
+        }
+      },
+      {
+        "countData": {
+          "type": {
+            "id": "toe-places",
+            "label": "Luoghi",
+            "icon": "n7-icon-map1",
+            "color": "#f2cd3a"
+          },
+          "count": 21996
+        }
+      },
+      {
+        "countData": {
+          "type": {
+            "id": "toe-concepts",
+            "label": "Concetti",
+            "icon": "n7-icon-lightbulb",
+            "color": "#5eab7b"
+          },
+          "count": 28728
+        }
+      },
+      {
+        "countData": {
+          "type": {
+            "id": "toe-organizations",
+            "label": "Organizzazioni",
+            "icon": "n7-icon-building",
+            "color": "#c48731"
+          },
+          "count": 41168
+        }
+      }
+    ];
+
   private _getSubnav(){
     return ['home', 'results', 'single'].map(page => ({
       text: page.toUpperCase(), 
