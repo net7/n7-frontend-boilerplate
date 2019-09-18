@@ -6,8 +6,13 @@ import * as EH from '../../event-handlers';
 export const AwHomeLayoutConfig = {
   layoutId: 'aw-home-layout',
   widgets: [{
-    id: 'aw-table',
+    id: 'aw-hero',
+    //hasStaticData: true
+  }, {
+    id: 'aw-home-hero-patrimonio',
     hasStaticData: true
+  }, {
+    id: 'aw-home-bubble-chart',
   }],
   layoutDS: AwHomeLayoutDS,
   layoutEH: AwHomeLayoutEH,

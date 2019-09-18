@@ -1,7 +1,92 @@
 import { LayoutDataSource } from '@n7-frontend/core';
 
 export class AwHomeLayoutDS extends LayoutDataSource {
-  onInit(payload){
-    // TODO
+  private communication: any;
+  private mainState: any;
+  public test: string;
+  
+  onInit({ communication, mainState }){
+    this.communication = communication;
+    this.mainState = mainState;
+
+    this.communication.request$('getTestHero', {
+      onError: (error) => console.log(error),
+      params: { title: 'quello che vuoi tu!!!' },
+      // method: 'GET',
+      // httpOptions: {}
+    }).subscribe((response) => {
+      this.one('aw-hero').update(response);
+      //this.one('aw-home-hero-patrimonio').update(response);
+      // this.some(['aw-hero']).update(response);
+    });
+
+
+    this.communication.request$('initialGlobalFilterCall', {
+      onError: (error) => console.log(error),
+    }).subscribe((response) => {
+      this.renderBubblesFromApolloQuery(response);
+    });
+
+    // update streams
+    this.mainState.update('headTitle', 'Arianna Web > Home');
+    this.mainState.update('pageTitle', 'Arianna Web: Home Layout');
+    this.mainState.update('subnav', this._getSubnav());
+    this.mainState.update('breadcrumbs', this._getBreadcrumbs());
+  }
+
+  renderBubblesFromApolloQuery(response: any){
+    console.log( {response} );
+    if( !response || !response.entitiesData ) return;
+    let allBubbles = [];
+    for(var i=0;i<response.entitiesData.length;i++){
+      let currentToE = response.entitiesData[i];
+      console.log({currentToE});
+      for(var j=0;j<currentToE.entitiesCountData.length;j++){
+        allBubbles.push(
+          {
+            ...currentToE.entitiesCountData[j],
+            color:currentToE.countData.type.color
+          });
+      }
+    }
+    this.one('aw-home-bubble-chart').update(allBubbles);
+  }
+
+  changeTestText(value){
+    this.test = value;
+  }
+
+  private _getSubnav(){
+    return ['home', 'results', 'single'].map(page => ({
+      text: page.toUpperCase(), 
+      payload: {
+        source: 'navigate',
+        handler: 'router',
+        path: [`aw/${page}`],
+        id: page
+      },
+      _meta: { id: page }
+    }));
+  }
+
+  private _getBreadcrumbs(){
+    return {
+      items: [{
+        label: 'Arianna Web',
+        payload: {
+          source: 'navigate',
+          handler: 'router',
+          path: [`aw/home`]
+        }
+      },
+      {
+        label: 'Home Layout',
+        payload: {
+          source: 'navigate',
+          handler: 'router',
+          path: [`aw/home`]
+        }
+      }] 
+    };
   }
 }

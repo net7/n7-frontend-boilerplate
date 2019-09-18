@@ -1,32 +1,29 @@
 import { LayoutDataSource } from '@n7-frontend/core';
-import { tap } from 'rxjs/operators';
 
 export class MainLayoutDS extends LayoutDataSource {
   protected configuration: any;
   protected mainState: any;
   protected router: any;
-  protected mainStateMap = [{
-    widgetId: 'subnav',
-    streamKey: 'subnav'
-  }];
+  protected titleService: any;
 
   public options: any;
+  public pageTitle: string;
 
-  onInit({ configuration, mainState, router, options }){
+  onInit({ configuration, mainState, router, options, titleService }){
     this.configuration = configuration;
     this.mainState = mainState;
     this.router = router;
+    this.titleService = titleService;
     this.options = options;
 
     // update header
     this.one('header').update(this.configuration.get('header'));
 
     // main state updates
-    this.mainStateMap.forEach(({ widgetId, streamKey }) => {
-      this.mainState.get$(streamKey).pipe(
-        tap(val => console.log('stream', val))
-      ).subscribe(val => this.one(widgetId).update(val));
-    });
+    this.mainState.get$('headTitle').subscribe(val => this.titleService.setTitle(val));
+    this.mainState.get$('pageTitle').subscribe(val => this.pageTitle = val);
+    this.mainState.get$('subnav').subscribe(val => this.one('subnav').update(val));
+    this.mainState.get$('breadcrumbs').subscribe(val => this.one('breadcrumbs').update(val));
 
     // mainState test
     /* this.mainState.addCustom('customNav', new Subject());

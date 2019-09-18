@@ -1,18 +1,27 @@
 
 import { Routes } from '@angular/router';
-import { 
+import {
+  Page404LayoutComponent,
   AwHomeLayoutComponent,
   AwAboutLayoutComponent,
+  AwPatrimonioLayoutComponent,
   AwWorksLayoutComponent,
 } from 'n7-boilerplate-lib';
 
 export const APP_ROUTES: Routes = [
-  { path: 'home', component: AwHomeLayoutComponent },
-  { path: 'about', component: AwAboutLayoutComponent },
-  { path: 'works', component: AwWorksLayoutComponent },
-  { path: '',
+  // arianna web routes
+  { path: 'aw/home', component: AwHomeLayoutComponent },
+  { path: 'aw/about', component: AwAboutLayoutComponent },
+  { path: 'aw/patrimonio', component: AwPatrimonioLayoutComponent },
+  { path: 'aw/works', component: AwWorksLayoutComponent },
+  {
+    path: '',
     redirectTo: '/home',
     pathMatch: 'full'
   },
-  { path: '**', component: AwHomeLayoutComponent }
+
+  // altri moduli...
+
+  // page404
+  { path: '**', component: Page404LayoutComponent }
 ];

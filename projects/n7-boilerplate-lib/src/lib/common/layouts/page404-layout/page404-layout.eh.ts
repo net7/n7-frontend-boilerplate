@@ -1,39 +1,21 @@
 import { EventHandler } from '@n7-frontend/core';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 
-export class AwHomeLayoutEH extends EventHandler {
+export class Page404LayoutEH extends EventHandler {
   private destroyed$: Subject<any> = new Subject();
-  
+
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch(type) {
-        case 'aw-home-layout.init':
+        case 'n7-page404-layout.init':
           this.dataSource.onInit(payload);
           break;
 
-        case 'aw-home-layout.destroy':
+        case 'n7-page404-layout.destroy':
             this.destroyed$.next();
             break;
 
         default:
-            break;
-      }
-    });
-    
-    this.outerEvents$.subscribe(({ type, payload }) => {
-      switch(type){
-        case 'aw-hero.change':
-          const { inputPayload, value } = payload;
-          this.dataSource.changeTestText(value);
-          break;
-
-        case 'aw-home-bubble-chart.click':
-          console.log('bubble click!', payload);
-          // TODO: implement here bubble clicks
-          break;
-
-          default:
             break;
       }
     });
@@ -46,11 +28,11 @@ export class AwHomeLayoutEH extends EventHandler {
         case 'global.navigate':
           this.dataSource.onNavigate(payload);
           break;
-
-        default:
+          
+        default: 
           break;
       }
     }); */
   }
-
+  
 }

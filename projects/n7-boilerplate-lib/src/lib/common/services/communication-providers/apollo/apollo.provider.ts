@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
-import ApolloConfig from './apollo.config';
+import { ApolloProviderConfig } from './config';
 import { ConfigurationService } from '../../configuration.service';
 import { ICommunicationProvider } from '../communication-provider.interface';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 
 @Injectable({
@@ -24,30 +26,37 @@ export class ApolloProvider implements ICommunicationProvider {
 
   request$(requestId, options){
     const { params, method, httpOptions } = options;
-    let query = ApolloConfig[requestId];
+    let query = ApolloProviderConfig[requestId];
 
     if(this.providerConfig.config && this.providerConfig.config[requestId]){
       query = this.providerConfig.config[requestId];
     }
 
+    query = query || {};
+    let { queryName, queryBody } = query;
+
     // config query control
-    if(!query) throw Error(`No config found for requestId "${requestId}"`);
+    if(!queryName || !queryBody) throw Error(`No config found for requestId "${requestId}"`);
 
     if(params){
       let paramsStr = this.makeParamsStr(params);
-      query = query.replace('__PARAMS__', paramsStr);
+      queryBody = queryBody.replace('__PARAMS__', paramsStr);
     } else {
-      query = query.replace('(__PARAMS__)', '');
+      queryBody = queryBody.replace('(__PARAMS__)', '');
     }
+
+    let source$: Observable<any>;
 
     if(method && method === 'GET'){
-      return this.http.get(this.providerConfig.baseUrl);
+      source$ = this.http.get(this.providerConfig.baseUrl);
     } else {
-      return this.http.post(this.providerConfig.baseUrl, { query }, httpOptions);
+      source$ = this.http.post(this.providerConfig.baseUrl, { query: queryBody }, httpOptions);  
     }
-  }
 
-  getConfig = () => this.providerConfig;
+    return source$.pipe(
+      map((response: any) => response.data[queryName])
+    );
+  }
 
   private makeParamsStr(params){
     let paramsStr = [];

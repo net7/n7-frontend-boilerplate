@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
-import RestConfig from './rest.config';
+import { RestProviderConfig } from './config';
 import { ConfigurationService } from '../../configuration.service';
 import { ICommunicationProvider } from '../communication-provider.interface';
 
@@ -22,9 +22,12 @@ export class RestProvider implements ICommunicationProvider {
     }
   }
 
-  request$(requestId, options){
-    const { params, method, httpOptions } = options;
-    let point = RestConfig[requestId];
+  request$(requestId, options: any = {}){
+    let { params, method, httpOptions } = options;
+    let point = RestProviderConfig[requestId];
+
+    // default method
+    if(!method) method = this.providerConfig.defaultMethod || 'GET';
 
     if(this.providerConfig.config && this.providerConfig.config[requestId]){
       point = this.providerConfig.config[requestId];
@@ -33,13 +36,13 @@ export class RestProvider implements ICommunicationProvider {
     // config point control
     if(!point) throw Error(`No config found for requestId "${requestId}"`);
 
-    if(method && method === 'POST'){
-      return this.http.post(this.providerConfig.baseUrl + point, params, httpOptions);
+    if(method === 'POST' || method === 'PUT'){
+      return this.http[method.toLowerCase()](this.providerConfig.baseUrl + point, params, httpOptions);
+    } else if(method === 'GET' || method === 'DELETE'){
+      return this.http[method.toLowerCase()](this.providerConfig.baseUrl + point, httpOptions);
     } else {
-      return this.http.get(this.providerConfig.baseUrl + point);
+      throw Error(`Rest method ${method} not supported`);
     }
   }
-
-  getConfig = () => this.providerConfig;
 
 }

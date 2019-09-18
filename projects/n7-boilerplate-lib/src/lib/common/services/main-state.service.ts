@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,17 +10,17 @@ export class MainStateService {
   
   // default streams
   private default: {
-    headTitle: Subject<any>,
-    pageTitle: Subject<any>,
-    subnav: Subject<any>,
-    breadcrumbs: Subject<any>,
-    filters: Subject<any>,
+    headTitle: ReplaySubject<any>,
+    pageTitle: ReplaySubject<any>,
+    subnav: ReplaySubject<any>,
+    breadcrumbs: ReplaySubject<any>,
+    filters: ReplaySubject<any>,
   } = {
-    headTitle: new Subject(),
-    pageTitle: new Subject(),
-    subnav: new Subject(),
-    breadcrumbs: new Subject(),
-    filters: new Subject(),
+    headTitle: new ReplaySubject(),
+    pageTitle: new ReplaySubject(),
+    subnav: new ReplaySubject(),
+    breadcrumbs: new ReplaySubject(),
+    filters: new ReplaySubject(),
   };
 
   public get$ = (key: string) => this._get('default', key);
@@ -32,7 +32,7 @@ export class MainStateService {
   public has = (key: string) => !!this.default[key];
   public hasCustom = (key: string) => !!this.custom[key];
 
-  public addCustom(key: string, stream$: Subject<any>){
+  public addCustom(key: string, stream$: ReplaySubject<any>){
     if(this.custom[key]) throw Error(`custom stream ${key} exists!`);
 
     this.custom[key] = stream$;
