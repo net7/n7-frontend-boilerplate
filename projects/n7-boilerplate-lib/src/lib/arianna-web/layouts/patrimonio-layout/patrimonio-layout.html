@@ -1,3 +1,9 @@
 <div class="aw-patrimonio-layout" id="patrimonio-layout">
-    Layout patrimonio!
+    <n7-sidebar-header
+        [data]="lb.widgets['aw-patrimonio-sidebar-header'].ds.out$ | async" 
+        [emit]="lb.widgets['aw-patrimonio-sidebar-header'].emit"
+    ></n7-sidebar-header>
+    <n7-tree
+        [data]="lb.widgets['aw-patrimonio-sidebar-tree'].ds.out$ | async"
+    ></n7-tree>
 </div>
