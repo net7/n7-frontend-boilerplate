@@ -38,6 +38,9 @@ export const ApolloProviderConfig = {
             entity {
               id
               label
+              typeOfEntity {
+                id
+              }
             }
             count
           }

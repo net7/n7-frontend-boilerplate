@@ -4,106 +4,78 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   private communication: any;
   private mainState: any;
   public test: string;
-  
+  private facetData: any[] = null;
+  private allBubbles: any[] = null;
+  private updateBubblesFunc: any = null;
   onInit({ communication, mainState }){
     this.communication = communication;
     this.mainState = mainState;
 
-    this.communication.request$('getTestHero', {
-      onError: (error) => console.log(error),
-      params: { title: 'quello che vuoi tu!!!' },
-      // method: 'GET',
-      // httpOptions: {}
-    }).subscribe((response) => {
-      this.one('aw-hero').update(response);
-      //this.one('aw-home-hero-patrimonio').update(response);
-      // this.some(['aw-hero']).update(response);
-    });
-
+    this.one('aw-hero').update({});
 
     this.communication.request$('initialGlobalFilterCall', {
       onError: (error) => console.log(error),
     }).subscribe((response) => {
+      this.facetData = [];
+      response.entitiesData.forEach( (ent) => {
+        this.facetData.push({...(ent.countData), enabled:true});
+      } );
+      this.one('aw-home-facets-wrapper').update(this.facetData);
       this.renderBubblesFromApolloQuery(response);
     });
 
     // update streams
     this.mainState.update('headTitle', 'Arianna Web > Home');
     this.mainState.update('pageTitle', 'Arianna Web: Home Layout');
-    this.mainState.update('subnav', this._getSubnav());
-    this.mainState.update('breadcrumbs', this._getBreadcrumbs());
+    // this.mainState.update('subnav', this._getSubnav());
+    // this.mainState.update('breadcrumbs', this._getBreadcrumbs());
+  }
+
+  setUpdateBubbles(updateFunc){
+    this.updateBubblesFunc = updateFunc;
   }
 
   renderBubblesFromApolloQuery(response: any){
-    console.log( {response} );
     if( !response || !response.entitiesData ) return;
-    let allBubbles = [];
+    this.allBubbles = [];
     for(var i=0;i<response.entitiesData.length;i++){
       let currentToE = response.entitiesData[i];
-      console.log({currentToE});
       for(var j=0;j<currentToE.entitiesCountData.length;j++){
-        allBubbles.push(
+        this.allBubbles.push(
           {
             ...currentToE.entitiesCountData[j],
             color:currentToE.countData.type.color
           });
       }
     }
-    this.one('aw-home-bubble-chart').update(allBubbles);
+    this.one('aw-home-bubble-chart').update({bubbles:this.allBubbles,setUpdateReference:this.setUpdateBubbles});
+  }
+
+  toggleFacetEnabled(facetId){
+    this.facetData.forEach( (f) => {
+        if(f.type.id===facetId){
+          f.enabled = !f.enabled;
+        }
+    });
+    this.one('aw-home-facets-wrapper').update(this.facetData);
+    let currentBubbles = this.allBubbles.filter(
+      (bubble) => {
+        for(var i=0; i<this.facetData.length; i++){
+          if( bubble.entity.typeOfEntity.id === this.facetData[i].type.id )
+            if( !this.facetData[i].enabled ){ return false; }
+        }
+        return true;
+      }
+    );
+    console.log('number of bubbles ' , currentBubbles.length );
+    this.one('aw-home-bubble-chart').update({bubbles:currentBubbles});
+    if(this.updateBubblesFunc) this.updateBubblesFunc();
   }
 
   changeTestText(value){
     this.test = value;
   }
-
-  facetsList =
-    [
-      {
-        "countData": {
-          "type": {
-            "id": "toe-people",
-            "label": "Persone",
-            "icon": "n7-icon-biography",
-            "color": "#3a81f2"
-          },
-          "count": 36686
-        }
-      },
-      {
-        "countData": {
-          "type": {
-            "id": "toe-places",
-            "label": "Luoghi",
-            "icon": "n7-icon-map1",
-            "color": "#f2cd3a"
-          },
-          "count": 21996
-        }
-      },
-      {
-        "countData": {
-          "type": {
-            "id": "toe-concepts",
-            "label": "Concetti",
-            "icon": "n7-icon-lightbulb",
-            "color": "#5eab7b"
-          },
-          "count": 28728
-        }
-      },
-      {
-        "countData": {
-          "type": {
-            "id": "toe-organizations",
-            "label": "Organizzazioni",
-            "icon": "n7-icon-building",
-            "color": "#c48731"
-          },
-          "count": 41168
-        }
-      }
-    ];
-
+  
   private _getSubnav(){
     return ['home', 'results', 'single'].map(page => ({
       text: page.toUpperCase(), 

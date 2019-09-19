@@ -1,9 +1,17 @@
 import { DataSource } from '@n7-frontend/core';
-import { FACET_HEADER_MOCK } from '@n7-frontend/components';
 
 export class AwHomeFacetsWrapperDS extends DataSource {
 
   protected transform(data) {
-    return FACET_HEADER_MOCK;
+    console.log({data});
+    return data.map(facet => ({
+      iconLeft: facet.type.icon,
+      text: facet.type.label,
+      additionalText: facet.count,
+      iconRight: ( facet.enabled ? 'n7-icon-eye' : 'n7-icon-eye-slash' ),
+      classes: '',
+      payload: facet.type.id,
+    }))
   }
+
 }

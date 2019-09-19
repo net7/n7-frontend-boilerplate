@@ -4,10 +4,6 @@ import { BUBBLECHART_MOCK } from '@n7-frontend/components';
 export class AwHomeBubbleChartDS extends DataSource {
 
   protected transform(data){
-    console.log('realBubbleData',data);
-    console.log('mockBubbleData',BUBBLECHART_MOCK);
-
-
     const cWidth = 1500;
     const cHeight = 700;
 
@@ -20,7 +16,7 @@ export class AwHomeBubbleChartDS extends DataSource {
 
     bubblesData['bubblesData'] = [];
 
-    data.forEach( bubble => {
+    data.bubbles.forEach( bubble => {
       let bId = 'B_'+bubble.entity.id.replace(/-/g,'_');
       let bubbleData = {
         id:bId,
@@ -70,7 +66,9 @@ export class AwHomeBubbleChartDS extends DataSource {
       velocityDecay: 0.65
     }
 
-
+    if(data.setUpdateReference)
+      bubblesData['setUpdateReference'] = data.setUpdateReference;
+    console.log({bubblesData});
     return bubblesData;
   }
 }

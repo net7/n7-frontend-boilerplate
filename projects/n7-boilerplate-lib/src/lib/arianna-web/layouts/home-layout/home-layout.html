@@ -4,12 +4,16 @@
         [emit]="lb.widgets['aw-hero'].emit">
     </n7-hero>
     <!-- <span>Event test: {{ lb.dataSource.test }} !</span> -->
-    <div *ngFor="let f of lb.dataSource.facetsList">
+
+    <!-- BUBBLE FACETS -->
+    <!--*ngFor="let f of lb.dataSource.facetsList" -->
+    <div *ngFor="let widgetData of lb.widgets['aw-home-facets-wrapper'].ds.out$ | async;">
         <n7-facet-header
-            [data]="lb.widgets['aw-home-facets-wrapper'].ds.out$ | async"
+            [data]="widgetData"
             [emit]="lb.widgets['aw-home-facets-wrapper'].emit">
         </n7-facet-header>
     </div>  
+    
     <n7-bubble-chart 
         [data]="lb.widgets['aw-home-bubble-chart'].ds.out$ | async" 
         [emit]="lb.widgets['aw-home-bubble-chart'].emit">

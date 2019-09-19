@@ -22,10 +22,15 @@ export class AwHomeLayoutEH extends EventHandler {
     });
     
     this.outerEvents$.subscribe(({ type, payload }) => {
+      console.log('from layout ds',{ type, payload });
       switch(type){
         case 'aw-hero.change':
           const { inputPayload, value } = payload;
           this.dataSource.changeTestText(value);
+          break;
+
+        case 'aw-home-facets-wrapper.click':
+          this.dataSource.toggleFacetEnabled(payload);
           break;
 
         case 'aw-home-bubble-chart.click':
