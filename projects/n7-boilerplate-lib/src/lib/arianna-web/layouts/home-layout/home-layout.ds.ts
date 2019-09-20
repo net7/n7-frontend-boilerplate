@@ -22,6 +22,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       } );
       this.one('aw-home-facets-wrapper').update(this.facetData);
       this.renderBubblesFromApolloQuery(response);
+      this.renderPreviewsFromApolloQuery(response);
     });
 
     // update streams
@@ -30,6 +31,12 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     // this.mainState.update('subnav', this._getSubnav());
     // this.mainState.update('breadcrumbs', this._getBreadcrumbs());
   }
+
+
+  renderPreviewsFromApolloQuery(response: any){
+    this.one('aw-home-item-preview-wrapper').update(response.items);
+  }
+
 
   setUpdateBubbles(updateFunc){
     this.updateBubblesFunc = updateFunc;

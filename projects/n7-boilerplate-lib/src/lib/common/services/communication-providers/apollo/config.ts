@@ -25,15 +25,15 @@ export const ApolloProviderConfig = {
     queryBody:`{
       globalFilter {
         entitiesData {
-            countData {
-              type {
-                id
-                label
-                color
-                icon
-              }
-              count
+          countData {
+            type {
+              id
+              label
+              color
+              icon
             }
+            count
+          }
           entitiesCountData {
             entity {
               id
@@ -44,8 +44,28 @@ export const ApolloProviderConfig = {
             }
             count
           }
+        }
+        items {
+          item {
+            id
+            label
+            info {
+              key
+              value
+            }
+          }
+          thumbnail
+          relatedTOEData {
+            type {
+              id
+              label
+              icon
+              color
+            }
+            count
           }
         }
-      }`
+      }
+    }`
   }
 };

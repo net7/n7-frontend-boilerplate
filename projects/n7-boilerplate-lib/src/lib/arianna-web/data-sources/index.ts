@@ -4,5 +4,6 @@ export * from './table.ds';
 export * from './home-hero-patrimonio.ds';
 export * from './home-bubble-chart.ds';
 export * from './home-facets-wrapper.ds';
+export * from './home-item-preview-wrapper.ds';
 
 // Patrimonio Layout

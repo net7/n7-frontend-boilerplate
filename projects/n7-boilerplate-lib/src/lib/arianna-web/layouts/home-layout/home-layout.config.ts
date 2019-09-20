@@ -14,6 +14,8 @@ export const AwHomeLayoutConfig = {
     id: 'aw-home-bubble-chart',
   }, {
     id: 'aw-home-facets-wrapper',
+  }, {
+    id: 'aw-home-item-preview-wrapper'
   }],
   layoutDS: AwHomeLayoutDS,
   layoutEH: AwHomeLayoutEH,
