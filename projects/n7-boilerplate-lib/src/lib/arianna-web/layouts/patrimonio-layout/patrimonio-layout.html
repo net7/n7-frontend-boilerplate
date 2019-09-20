@@ -1,9 +1,12 @@
-<div class="aw-patrimonio-layout" id="patrimonio-layout">
-    <n7-sidebar-header
-        [data]="lb.widgets['aw-patrimonio-sidebar-header'].ds.out$ | async" 
-        [emit]="lb.widgets['aw-patrimonio-sidebar-header'].emit"
-    ></n7-sidebar-header>
-    <n7-tree
-        [data]="lb.widgets['aw-patrimonio-sidebar-tree'].ds.out$ | async"
-    ></n7-tree>
+<div class="aw-patrimonio-layout n7-grid-2" id="patrimonio-layout">
+    <div>
+        <n7-sidebar-header
+            [data]="lb.widgets['aw-patrimonio-sidebar-header'].ds.out$ | async" 
+            [emit]="lb.widgets['aw-patrimonio-sidebar-header'].emit"
+        ></n7-sidebar-header>
+        <n7-tree
+            [data]="lb.widgets['aw-tree'].ds.out$ | async"
+            [emit]="lb.widgets['aw-tree'].emit"
+        ></n7-tree>
+    </div>
 </div>

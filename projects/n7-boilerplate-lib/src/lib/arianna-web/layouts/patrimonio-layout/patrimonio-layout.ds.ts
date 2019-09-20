@@ -23,8 +23,8 @@ export class AwPatrimonioLayoutDS extends LayoutDataSource {
     this.router = router;
     this.titleService = titleService;
     this.options = options;
-      console.log('CHIARA, NON PASSA DA QUI :(');
-      this.one('aw-patrimonio-sidebar-header').update(null);
+    this.one('aw-patrimonio-sidebar-header').update(null);
+    this.one('aw-tree').update(null);
     /*
     * For an example of header update, or mainState update, check
     * main-layout.ds.ts

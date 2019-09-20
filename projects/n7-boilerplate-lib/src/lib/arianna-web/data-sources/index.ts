@@ -6,4 +6,4 @@ export * from './home-bubble-chart.ds';
 
 // Patrimonio Layout
 export * from './patrimonio-sidebar-header.ds';
-export * from './patrimonio-sidebar-tree.ds';
+export * from './tree.ds';

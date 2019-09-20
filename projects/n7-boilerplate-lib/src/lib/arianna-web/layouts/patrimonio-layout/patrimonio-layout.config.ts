@@ -4,7 +4,7 @@ import * as DS from '../../data-sources';
 import * as EH from '../../event-handlers';
 
 export const AwPatrimonioLayoutConfig = {
-  layoutId: 'n7-patrimonio-layout',
+  layoutId: 'aw-patrimonio-layout',
   /**
    * Array of components you want to use
    * in this leyout
@@ -13,7 +13,7 @@ export const AwPatrimonioLayoutConfig = {
      { id: 'aw-patrimonio-sidebar-header', 
    
     },
-     { id: 'aw-patrimonio-sidebar-tree' },
+     { id: 'aw-tree' },
   ],
   layoutDS: AwPatrimonioLayoutDS,
   layoutEH: AwPatrimonioLayoutEH,
