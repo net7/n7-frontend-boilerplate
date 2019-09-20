@@ -1,0 +1,46 @@
+//
+// I-SWAT
+//
+// All SASS and CSS Import for the I-SWAT DataViz
+//
+
+// ------------------------------------ //
+// #N7-ICON-FONT
+// ------------------------------------ //
+@import "../../../../../../node_modules/@n7-frontend/icon-font/Font/n7-icon/style.css";
+
+
+// ------------------------------------ //
+// #TIPPY
+// ------------------------------------ //
+// @import '../../node_modules/tippy.js/themes/light-border.css';
+
+
+// ------------------------------------ //
+// #ARIANNA WEB COLOR SCHEME
+// ------------------------------------ //
+@import "./generic/_color_scheme";
+
+
+// ------------------------------------ //
+// #N7 COMPONENTS VARIABLES
+// ------------------------------------ //
+@import "../../../../../../node_modules/@n7-frontend/components/styles/generic/variables";
+
+
+// ------------------------------------ //
+// #ARIANNA WEB VARIABLES OVERRIDE
+// ------------------------------------ //
+@import "./generic/_variables.scss";
+
+
+// ------------------------------------ //
+// #N7 COMPONENTS STYLES
+// ------------------------------------ //
+@import '../../../../../../node_modules/@n7-frontend/components/styles/imports';
+
+
+// ------------------------------------ //
+// #ARIANNA WEB LAYOUTS
+// ------------------------------------ //
+@import "layouts/main-layout";
