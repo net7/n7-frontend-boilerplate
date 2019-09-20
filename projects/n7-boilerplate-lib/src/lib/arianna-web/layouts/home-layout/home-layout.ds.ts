@@ -13,7 +13,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
 
     this.one('aw-hero').update({});
 
-    this.communication.request$('initialGlobalFilterCall', {
+    this.communication.request$('globalFilter', {
       onError: (error) => console.log(error),
     }).subscribe((response) => {
       this.facetData = [];

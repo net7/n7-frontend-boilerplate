@@ -20,10 +20,10 @@ export const ApolloProviderConfig = {
       }
     `
   },
-  'initialGlobalFilterCall':{
+  'globalFilter':{
     queryName: 'globalFilter',
     queryBody:`{
-      globalFilter {
+      globalFilter(__PARAMS__) {
         entitiesData {
           countData {
             type {
