@@ -6,6 +6,7 @@ import { ConfigurationService } from '../../../common/services/configuration.ser
 import { LayoutsConfigurationService } from '../../../common/services/layouts-configuration.service';
 import { MainStateService } from '../../../common/services';
 import { AwPatrimonioLayoutConfig as config } from './patrimonio-layout.config';
+import { CommunicationService } from '../../../common/services';
 
 @Component({
   selector: 'aw-patrimonio-layout',
@@ -18,7 +19,9 @@ export class AwPatrimonioLayoutComponent extends AbstractLayout implements OnIni
     private configuration: ConfigurationService,
     private layoutsConfiguration: LayoutsConfigurationService,
     private mainState: MainStateService,
-    private titleService: Title
+    private titleService: Title,
+    private communication: CommunicationService,
+
   ) {
     super(layoutsConfiguration.get('AwPatrimonioLayoutConfig') || config);
   }
@@ -34,6 +37,7 @@ export class AwPatrimonioLayoutComponent extends AbstractLayout implements OnIni
       mainState: this.mainState,
       router: this.router,
       titleService: this.titleService,
+      communication: this.communication,
       options: this.config.options || {},
     }
   }

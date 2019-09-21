@@ -20,6 +20,33 @@ export const ApolloProviderConfig = {
       }
     `
   },
+  'getTree': {
+    queryName: 'getTreeOfItems',
+    queryBody: `
+    {
+      getTreeOfItems(treeId: "patrimonioId" ) {
+        id
+        label
+        icon
+        branches {
+          label
+          id
+          icon   
+          branches {
+            label
+            id
+            icon  
+            branches {
+              label
+              id
+              icon          
+            }        
+          }       
+        }
+      }
+    }
+    `
+  },
   'initialGlobalFilterCall':{
     queryName: 'globalFilter',
     queryBody:`{

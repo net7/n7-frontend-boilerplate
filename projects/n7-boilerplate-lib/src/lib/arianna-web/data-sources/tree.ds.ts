@@ -7,7 +7,29 @@ export class AwTreeDS extends DataSource {
   }
 
   protected transform(data) {
-     console.log(data);
+    let tree = [];
+    let treeObj = {
+      items: []
+    };
+
+
+    data['branches'].forEach( item => {
+            treeObj['items'].push( this.parseTree(item, true) );
+          })
+
+    return treeObj;
+    //return treeObj;
+    /*data.forEach(function (item, key) {
+      if( key != "branches" ) {
+        treeObj[key] = item;
+      }
+      else {
+        
+      }
+      console.log(key); // the key (ex. sandwich)
+      console.log(item); // the item (ex. turkey)
+    });*/
+
     const SIDEBAR_HEADER_DATA = {
        
   items: [
@@ -236,5 +258,39 @@ export class AwTreeDS extends DataSource {
     return SIDEBAR_HEADER_DATA;
   }
 
+  private parseTree(data, toggle) {
+    let treeItem = {};
+    Object.keys(data).forEach( key => {
+      if( toggle ){
+        treeItem['toggle'] = {
+          icon: 'n7-icon-angle-right',
+          payload: 'toggle'
+        }
+      }  
+        if( key != "branches" ) {
+          switch (key) {
+            case "label": treeItem['text'] = data[key]; break;
+            case "icon" :  
+                if (toggle) 
+                {
+                  treeItem['toggle']['icon'] = data[key];
+                }             
+                break;
+            case "id" : treeItem['payload'] = data[key]; break;
+            default :  data[key]; break;
+          }
 
+          treeItem['classes'] = 'is-expanded';
+        }
+        else if( data['branches'] != null ) {
+          treeItem['items'] = [];
+          data[key].forEach( item => {
+            treeItem['items'].push( this.parseTree(item, true) );
+          })
+        }        
+        //this.set(key, this.config.global[key]);
+      }
+    )
+    return treeItem;
+  }
 }
