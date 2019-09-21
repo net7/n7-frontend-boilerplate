@@ -19,6 +19,7 @@
         [emit]="lb.widgets['aw-home-bubble-chart'].emit">
         </n7-bubble-chart>
         <div [ngStyle]="{ 'display': 'flex' , 'flex-direction': 'column' }">
+            <div *ngIf="lb.dataSource.numOfItemsStr"> <h1>{{ lb.dataSource.numOfItemsStr }} <span>Oggetti culturali</span></h1></div>
             <ng-container *ngFor="let widgetData of lb.widgets['aw-home-item-preview-wrapper'].ds.out$ | async;">
                 <n7-item-preview
                     [data]="widgetData"

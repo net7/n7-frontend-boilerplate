@@ -7,6 +7,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   private facetData: any[] = null;
   private allBubbles: any[] = null;
   private selectedBubbleIds: any[] = [];
+  public numOfItemsStr: string = null;
 
   onInit({ communication, mainState }){
     this.communication = communication;
@@ -35,6 +36,16 @@ export class AwHomeLayoutDS extends LayoutDataSource {
 
 
   renderPreviewsFromApolloQuery(response: any){
+    let numOfItems = response.items.length;
+    if(numOfItems>0){
+      let prefix:string = Math.floor(9/(this.selectedBubbleIds.length+2))+'';
+      let randomNum0 = (Math.floor((Math.random()*(9 - 1)) + 1));
+      let randomNum1 = Math.floor((Math.random()*(999 - 100)) + 100);
+      this.numOfItemsStr = prefix +''+randomNum0+'.'+randomNum1;
+      // numOfItemsStr should be something like: numOfItems+'';
+    } else {
+      this.numOfItemsStr = null;
+    }
     this.one('aw-home-item-preview-wrapper').update(response.items);
   }
 
