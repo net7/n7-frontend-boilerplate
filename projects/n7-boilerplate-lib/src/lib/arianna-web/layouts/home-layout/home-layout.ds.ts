@@ -82,7 +82,10 @@ export class AwHomeLayoutDS extends LayoutDataSource {
           });
       }
     }
-    this.one('aw-home-bubble-chart').update({bubbles:this.allBubbles});
+    this.one('aw-home-bubble-chart').update({
+      width: window.innerWidth/1.8,
+      bubbles:this.allBubbles
+    });
   }
 
   toggleFacetEnabled(facetId){
@@ -112,9 +115,14 @@ export class AwHomeLayoutDS extends LayoutDataSource {
           return true;
         }
       );
-      this.one('aw-home-bubble-chart').update({bubbles:currentBubbles,reset:true});
+      this.one('aw-home-bubble-chart').update({
+        width: window.innerWidth/1.8,
+        bubbles:currentBubbles,
+        reset:true
+      });
     }
   }
+
 
   changeTestText(value){
     this.test = value;

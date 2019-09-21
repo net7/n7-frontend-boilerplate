@@ -5,7 +5,7 @@ export class AwHomeBubbleChartDS extends DataSource {
 
   protected transform(data){
     if(!data) return null;
-    const cWidth = 1500;
+    const cWidth = (data.width ? data.width : 1000);
     const cHeight = 700;
 
     let bubblesData = {
