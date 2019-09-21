@@ -6,6 +6,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   public test: string;
   private facetData: any[] = null;
   private allBubbles: any[] = null;
+  private selectedBubbleIds: any[] = [];
 
   onInit({ communication, mainState }){
     this.communication = communication;
@@ -38,27 +39,35 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   }
 
   public onBubbleSelected(payload){
-    console.log('SELECTED',payload);
-
-
-    /*
-    let group = this.bubbleChart.select(`g[bubblesElId=${c.id}]`);
-    c.texts.forEach( tx => {
-      group.append("text")
-      .style("text-anchor", "middle")
-      .attr("dx", tx.x_function )
-      .attr("dy", tx.y_function )
-      .text(tx.label)
-      .attr("font-size", tx.fontSize_function)
-      .attr("fill", tx.color)
-      .attr("bubblesElId",tx.id)
-      .attr("class",tx.classes);
-    });
-    */
-
-    // TODO: apollo global filter
+    if(payload && payload.id){
+      if( !this.selectedBubbleIds.includes(payload.id))
+        this.selectedBubbleIds.push(payload.id);
+    }
+    this.updateItemPreviews();
   }
 
+
+  public onBubbleDeselected(payload){
+    if(payload && payload.id)
+      this.selectedBubbleIds = this.selectedBubbleIds.filter(
+        (b) => {
+          return (b!==payload.id); }
+      );
+      this.updateItemPreviews();
+  }
+
+  private updateItemPreviews(){
+    this.communication.request$('globalFilter', {
+      onError: (error) => console.log(error),
+      params: { selectedEntitiesIds: this.selectedBubbleIds },
+    }).subscribe((response) => {
+      this.facetData = [];
+      response.entitiesData.forEach( (ent) => {
+        this.facetData.push({...(ent.countData), enabled:true});
+      } );
+      this.renderPreviewsFromApolloQuery(response);
+    });
+  }
 
   renderBubblesFromApolloQuery(response: any){
     if( !response || !response.entitiesData ) return;
@@ -92,9 +101,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         return true;
       }
     );
-    console.log('number of bubbles ' , currentBubbles.length );
     this.one('aw-home-bubble-chart').update({bubbles:currentBubbles,reset:true});
-    //if(this.updateBubblesFunc) this.updateBubblesFunc();
   }
 
   changeTestText(value){

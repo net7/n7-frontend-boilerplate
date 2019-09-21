@@ -36,7 +36,7 @@ export class AwHomeLayoutEH extends EventHandler {
           if(payload.source==='bubble')
             this.dataSource.onBubbleSelected(payload.bubblePayload);
           else if(payload.source==='close')
-            console.log('deselect bubble'); // TODO: IMPLEMENT DESELECTION
+            this.dataSource.onBubbleDeselected(payload.bubblePayload);
           break;
 
           default:
