@@ -10,16 +10,6 @@ export const ApolloProviderConfig = {
       }
     ` 
   },
-  'getTestHero': {
-    queryName: 'getTestHero',
-    queryBody: `
-      {
-        getTestHero(__PARAMS__) {
-          title
-        }
-      }
-    `
-  },
   'globalFilter':{
     queryName: 'globalFilter',
     queryBody:`{
