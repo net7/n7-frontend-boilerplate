@@ -6,7 +6,6 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   public test: string;
   private facetData: any[] = null;
   private allBubbles: any[] = null;
-  private updateBubblesFunc: any = null;
 
   onInit({ communication, mainState }){
     this.communication = communication;
@@ -38,10 +37,28 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     this.one('aw-home-item-preview-wrapper').update(response.items);
   }
 
+  public onBubbleSelected(payload){
+    console.log('SELECTED',payload);
 
-  setUpdateBubbles(updateFunc){
-    this.updateBubblesFunc = updateFunc;
+
+    /*
+    let group = this.bubbleChart.select(`g[bubblesElId=${c.id}]`);
+    c.texts.forEach( tx => {
+      group.append("text")
+      .style("text-anchor", "middle")
+      .attr("dx", tx.x_function )
+      .attr("dy", tx.y_function )
+      .text(tx.label)
+      .attr("font-size", tx.fontSize_function)
+      .attr("fill", tx.color)
+      .attr("bubblesElId",tx.id)
+      .attr("class",tx.classes);
+    });
+    */
+
+    // TODO: apollo global filter
   }
+
 
   renderBubblesFromApolloQuery(response: any){
     if( !response || !response.entitiesData ) return;
@@ -56,7 +73,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
           });
       }
     }
-    this.one('aw-home-bubble-chart').update({bubbles:this.allBubbles,setUpdateReference:this.setUpdateBubbles});
+    this.one('aw-home-bubble-chart').update({bubbles:this.allBubbles});
   }
 
   toggleFacetEnabled(facetId){

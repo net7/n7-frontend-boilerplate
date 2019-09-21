@@ -13,6 +13,7 @@ export class AwHomeBubbleChartDS extends DataSource {
       containerWidth : cWidth,
       containerHeight : cHeight,
       isForceSimulationEnabled: true,
+      maxBubblesSelected:3
     };
 
     bubblesData['bubblesData'] = [];
@@ -50,7 +51,8 @@ export class AwHomeBubbleChartDS extends DataSource {
         hasCloseIcon: false,
         payload:{
           id: bId
-        }
+        },
+        selectable: true
       };
 
       bubblesData['bubblesData'].push(bubbleData);
@@ -66,9 +68,6 @@ export class AwHomeBubbleChartDS extends DataSource {
       collisionIterations: 1,
       velocityDecay: 0.65
     }
-
-    if(data.setUpdateReference)
-      bubblesData['setUpdateReference'] = data.setUpdateReference;
 
     if(data.reset) bubblesData['reset'] = data.reset;
 

@@ -22,7 +22,6 @@ export class AwHomeLayoutEH extends EventHandler {
     });
     
     this.outerEvents$.subscribe(({ type, payload }) => {
-      console.log('from layout ds',{ type, payload });
       switch(type){
         case 'aw-hero.change':
           const { inputPayload, value } = payload;
@@ -34,8 +33,10 @@ export class AwHomeLayoutEH extends EventHandler {
           break;
 
         case 'aw-home-bubble-chart.click':
-          console.log('bubble click!', payload);
-          // TODO: implement here bubble clicks
+          if(payload.source==='bubble')
+            this.dataSource.onBubbleSelected(payload.bubblePayload);
+          else if(payload.source==='close')
+            console.log('deselect bubble'); // TODO: IMPLEMENT DESELECTION
           break;
 
           default:
