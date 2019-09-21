@@ -86,22 +86,34 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   }
 
   toggleFacetEnabled(facetId){
+    let updateBubbles = false;
+    let enabledFacets = this.facetData.filter( (f) => f.enabled ).length;
     this.facetData.forEach( (f) => {
         if(f.type.id===facetId){
-          f.enabled = !f.enabled;
+          if(f.enabled){
+            if(enabledFacets>1){
+              f.enabled = false;
+              updateBubbles = true;
+            }
+          } else {
+            f.enabled = true;
+            updateBubbles = true;
+          }
         }
     });
     this.one('aw-home-facets-wrapper').update(this.facetData);
-    let currentBubbles = this.allBubbles.filter(
-      (bubble) => {
-        for(var i=0; i<this.facetData.length; i++){
-          if( bubble.entity.typeOfEntity.id === this.facetData[i].type.id )
-            if( !this.facetData[i].enabled ){ return false; }
+    if(updateBubbles){
+      let currentBubbles = this.allBubbles.filter(
+        (bubble) => {
+          for(var i=0; i<this.facetData.length; i++){
+            if( bubble.entity.typeOfEntity.id === this.facetData[i].type.id )
+              if( !this.facetData[i].enabled ){ return false; }
+          }
+          return true;
         }
-        return true;
-      }
-    );
-    this.one('aw-home-bubble-chart').update({bubbles:currentBubbles,reset:true});
+      );
+      this.one('aw-home-bubble-chart').update({bubbles:currentBubbles,reset:true});
+    }
   }
 
   changeTestText(value){

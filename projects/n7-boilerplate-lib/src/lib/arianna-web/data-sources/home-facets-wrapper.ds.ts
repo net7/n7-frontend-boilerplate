@@ -3,7 +3,6 @@ import { DataSource } from '@n7-frontend/core';
 export class AwHomeFacetsWrapperDS extends DataSource {
 
   protected transform(data) {
-    console.log({data});
     return data.map(facet => ({
       iconLeft: facet.type.icon,
       text: facet.type.label,
