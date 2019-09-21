@@ -4,6 +4,7 @@ import { BUBBLECHART_MOCK } from '@n7-frontend/components';
 export class AwHomeBubbleChartDS extends DataSource {
 
   protected transform(data){
+    if(!data) return null;
     const cWidth = 1500;
     const cHeight = 700;
 
@@ -68,7 +69,9 @@ export class AwHomeBubbleChartDS extends DataSource {
 
     if(data.setUpdateReference)
       bubblesData['setUpdateReference'] = data.setUpdateReference;
-    console.log({bubblesData});
+
+    if(data.reset) bubblesData['reset'] = data.reset;
+
     return bubblesData;
   }
 }

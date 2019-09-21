@@ -7,6 +7,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   private facetData: any[] = null;
   private allBubbles: any[] = null;
   private updateBubblesFunc: any = null;
+
   onInit({ communication, mainState }){
     this.communication = communication;
     this.mainState = mainState;
@@ -75,8 +76,8 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       }
     );
     console.log('number of bubbles ' , currentBubbles.length );
-    this.one('aw-home-bubble-chart').update({bubbles:currentBubbles});
-    if(this.updateBubblesFunc) this.updateBubblesFunc();
+    this.one('aw-home-bubble-chart').update({bubbles:currentBubbles,reset:true});
+    //if(this.updateBubblesFunc) this.updateBubblesFunc();
   }
 
   changeTestText(value){
