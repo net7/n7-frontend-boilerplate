@@ -1,8 +1,8 @@
 <div class="aw-patrimonio-layout n7-grid-2" id="patrimonio-layout">
     <div> <!--Left sidebar -->
         <n7-sidebar-header
-            [data]="lb.widgets['aw-patrimonio-sidebar-header'].ds.out$ | async" 
-            [emit]="lb.widgets['aw-patrimonio-sidebar-header'].emit"
+            [data]="lb.widgets['aw-sidebar-header'].ds.out$ | async" 
+            [emit]="lb.widgets['aw-sidebar-header'].emit"
         ></n7-sidebar-header>
         <n7-tree
             [data]="lb.widgets['aw-tree'].ds.out$ | async"

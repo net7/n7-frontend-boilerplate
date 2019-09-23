@@ -10,7 +10,7 @@ export const AwPatrimonioLayoutConfig = {
    * in this leyout
    */
   widgets: [
-     { id: 'aw-patrimonio-sidebar-header'},
+     { id: 'aw-sidebar-header'},
      { id: 'aw-tree' }
   ],
   layoutDS: AwPatrimonioLayoutDS,
