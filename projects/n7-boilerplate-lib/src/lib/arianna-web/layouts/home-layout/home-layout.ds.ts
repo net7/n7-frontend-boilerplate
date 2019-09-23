@@ -5,6 +5,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   private mainState: any;
   public test: string;
   private facetData: any[] = null;
+  private facetInputs: any = {};
   private allBubbles: any[] = null;
   private selectedBubbleIds: any[] = [];
   public numOfItemsStr: string = null;
@@ -18,6 +19,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     this.communication.request$('globalFilter', {
       onError: (error) => console.log(error),
     }).subscribe((response) => {
+      console.log('apollo-response', {response})
       this.facetData = [];
       response.entitiesData.forEach( (ent) => {
         this.facetData.push({...(ent.countData), enabled:true});
@@ -106,7 +108,22 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     });
   }
 
-  toggleFacetEnabled(facetId){
+  handleFacetSearchChange(change) {
+    var payload: string = change.inputPayload;
+    var value: string = change.value;
+    // store the entered text in facetInputs
+    this.facetInputs[payload] = value;
+    console.log('changed: '+ payload + ' with value: ' + value)
+  }
+
+  handleFacetSearchEnter(enter) {
+    var payload: string = enter.inputPayload;
+    var value: string = this.facetInputs[payload];
+    // get the text entered in this input
+    console.log('entered: ' + payload + ' with value: ' + value)
+  }
+
+  handleFacetHeaderClick(facetId){
     let updateBubbles = false;
     let enabledFacets = this.facetData.filter( (f) => f.enabled ).length;
     this.facetData.forEach( (f) => {
