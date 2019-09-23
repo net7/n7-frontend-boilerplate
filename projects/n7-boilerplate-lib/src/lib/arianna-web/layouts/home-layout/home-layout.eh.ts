@@ -25,11 +25,17 @@ export class AwHomeLayoutEH extends EventHandler {
       switch(type){
         case 'aw-hero.change':
           const { inputPayload, value } = payload;
-          this.dataSource.changeTestText(value);
+          // do something
           break;
 
         case 'aw-home-facets-wrapper.click':
-          this.dataSource.toggleFacetEnabled(payload);
+          this.dataSource.handleFacetHeaderClick(payload);
+          break;
+        case 'aw-home-facets-wrapper.change':
+          this.dataSource.handleFacetSearchChange(payload);
+          break;
+        case 'aw-home-facets-wrapper.enter':
+          this.dataSource.handleFacetSearchEnter(payload);
           break;
 
         case 'aw-home-bubble-chart.click':

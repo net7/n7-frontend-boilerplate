@@ -6,12 +6,17 @@
 
     <div [ngStyle]="{ 'display': 'flex' , 'align-items': 'center' }">
         <div [ngStyle]="{ 'display': 'flex' , 'flex-direction': 'column' }">
-            <ng-container *ngFor="let widgetData of lb.widgets['aw-home-facets-wrapper'].ds.out$ | async;">
+            <span class="n7-home__facets-wrapper"
+                  *ngFor="let widgetData of lb.widgets['aw-home-facets-wrapper'].ds.out$ | async;">
                 <n7-facet-header
-                    [data]="widgetData"
+                    [data]="widgetData.header"
                     [emit]="lb.widgets['aw-home-facets-wrapper'].emit">
                 </n7-facet-header>
-            </ng-container>
+                <n7-facet
+                    [data]="widgetData.input"
+                    [emit]="lb.widgets['aw-home-facets-wrapper'].emit">
+                </n7-facet>
+            </span>
         </div>
 
         <n7-bubble-chart
