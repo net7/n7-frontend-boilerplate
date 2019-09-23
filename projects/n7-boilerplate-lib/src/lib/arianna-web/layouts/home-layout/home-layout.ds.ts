@@ -72,10 +72,12 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       onError: (error) => console.log(error),
       params: { selectedEntitiesIds: this.selectedBubbleIds },
     }).subscribe((response) => {
-      this.facetData = [];
-      response.entitiesData.forEach( (ent) => {
-        this.facetData.push({...(ent.countData), enabled:true});
-      } );
+      // the facets should be handled by the layout
+      // (otherwise they would always return as enabled)
+      //this.facetData = [];
+      //response.entitiesData.forEach( (ent) => {
+      //  this.facetData.push({...(ent.countData), enabled:true});
+      //});
       this.renderPreviewsFromApolloQuery(response);
     });
   }
@@ -93,6 +95,11 @@ export class AwHomeLayoutDS extends LayoutDataSource {
           });
       }
     }
+    this.allBubbles.map( (bubble) => {
+      // d3/svg doesn't allow '-' or strings starting with a number as ids
+      bubble.entity.id = 'B_'+bubble.entity.id.replace(/-/g,'_');
+      return bubble;
+    });
     this.one('aw-home-bubble-chart').update({
       width: window.innerWidth/1.8,
       bubbles:this.allBubbles
@@ -117,6 +124,28 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     });
     this.one('aw-home-facets-wrapper').update(this.facetData);
     if(updateBubbles){
+      let disableFacetsIds = [];
+      this.facetData.forEach( (fD) => {
+        if(!fD.enabled) disableFacetsIds.push(fD.type.id);
+      });
+
+      if(disableFacetsIds){
+        let filteredSelectedBubbleIds = this.selectedBubbleIds.filter( (bId) => {
+          let typeOfEntity = "";
+          for(var i=0;i<this.allBubbles.length;i++){
+            if(this.allBubbles[i].entity.id===bId){
+              typeOfEntity=this.allBubbles[i].entity.typeOfEntity.id;
+              break;
+            }
+          }
+          if(disableFacetsIds.includes(typeOfEntity)) return false;
+          return true;
+        });
+        if(filteredSelectedBubbleIds.length!=this.selectedBubbleIds.length){
+          this.selectedBubbleIds = filteredSelectedBubbleIds;
+          this.updateItemPreviews();
+        };
+      }
       let currentBubbles = this.allBubbles.filter(
         (bubble) => {
           for(var i=0; i<this.facetData.length; i++){
@@ -126,6 +155,12 @@ export class AwHomeLayoutDS extends LayoutDataSource {
           return true;
         }
       );
+      currentBubbles.forEach( (bubble) => {
+        bubble.selected = false;
+        if(this.selectedBubbleIds.includes(bubble.entity.id)){
+          bubble.selected = true;
+        }
+      });
       this.one('aw-home-bubble-chart').update({
         width: window.innerWidth/1.8,
         bubbles:currentBubbles,
@@ -135,10 +170,6 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   }
 
 
-  changeTestText(value){
-    this.test = value;
-  }
-  
   private _getSubnav(){
     return ['home', 'results', 'single'].map(page => ({
       text: page.toUpperCase(), 

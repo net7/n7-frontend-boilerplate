@@ -19,9 +19,9 @@ export class AwHomeBubbleChartDS extends DataSource {
     bubblesData['bubblesData'] = [];
 
     data.bubbles.forEach( bubble => {
-      let bId = 'B_'+bubble.entity.id.replace(/-/g,'_');
+      let bId = bubble.entity.id;
       let bubbleData = {
-        id:bId,
+        id:bubble.entity.id,
         texts: [
           {
             id:bId+"_label0",
@@ -52,7 +52,8 @@ export class AwHomeBubbleChartDS extends DataSource {
         payload:{
           id: bId
         },
-        selectable: true
+        selectable: true,
+        selected: ( bubble.selected ? bubble.selected : false )
       };
 
       bubblesData['bubblesData'].push(bubbleData);
