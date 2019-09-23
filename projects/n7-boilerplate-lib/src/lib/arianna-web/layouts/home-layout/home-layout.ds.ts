@@ -38,17 +38,24 @@ export class AwHomeLayoutDS extends LayoutDataSource {
 
 
   renderPreviewsFromApolloQuery(response: any){
-    let numOfItems = response.items.length;
+    if(!response || !response.itemsPagination) return;
+
+    let numOfItems = response.itemsPagination.totalCount;
     if(numOfItems>0){
-      let prefix:string = Math.floor(9/(this.selectedBubbleIds.length+2))+'';
-      let randomNum0 = (Math.floor((Math.random()*(9 - 1)) + 1));
-      let randomNum1 = Math.floor((Math.random()*(999 - 100)) + 100);
-      this.numOfItemsStr = prefix +''+randomNum0+'.'+randomNum1;
-      // numOfItemsStr should be something like: numOfItems+'';
+      let numOfThousand = 0;
+      while(numOfItems>999){
+        numOfItems-=1000;
+        numOfThousand += 1;
+      }
+      if(numOfThousand>0)
+        this.numOfItemsStr = numOfThousand+'.'+numOfItems;
+      else
+       this.numOfItemsStr = numOfItems+'';
     } else {
       this.numOfItemsStr = null;
     }
-    this.one('aw-home-item-preview-wrapper').update(response.items);
+
+    this.one('aw-home-item-preview-wrapper').update(response.itemsPagination.items);
   }
 
   public onBubbleSelected(payload){
@@ -72,7 +79,8 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   private updateItemPreviews(){
     this.communication.request$('globalFilter', {
       onError: (error) => console.log(error),
-      params: { selectedEntitiesIds: this.selectedBubbleIds },
+      params: { selectedEntitiesIds: this.selectedBubbleIds,
+                itemsPagination:{ offset:0,limit:4 } },
     }).subscribe((response) => {
       // the facets should be handled by the layout
       // (otherwise they would always return as enabled)

@@ -27,6 +27,6 @@ export class AwHomeItemPreviewWrapperDS extends DataSource {
         payload: item.item.id
       });
     });
-    return result.slice(0,5);
+    return result;
   }
 }

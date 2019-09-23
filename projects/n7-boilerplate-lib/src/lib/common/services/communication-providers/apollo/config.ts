@@ -13,7 +13,7 @@ export const ApolloProviderConfig = {
   'globalFilter':{
     queryName: 'globalFilter',
     queryBody:`{
-      globalFilter(__PARAMS__) {
+      globalFilter(__PARAMS__){
         entitiesData {
           countData {
             type {
@@ -35,24 +35,27 @@ export const ApolloProviderConfig = {
             count
           }
         }
-        items {
-          item {
-            id
-            label
-            info {
-              key
-              value
-            }
-          }
-          thumbnail
-          relatedTOEData {
-            type {
+        itemsPagination {
+          totalCount
+          items {
+            item {
               id
               label
-              icon
-              color
+              info {
+                key
+                value
+              }
             }
-            count
+            thumbnail
+            relatedTOEData {
+              type {
+                id
+                label
+                icon
+                color
+              }
+              count
+            }
           }
         }
       }
