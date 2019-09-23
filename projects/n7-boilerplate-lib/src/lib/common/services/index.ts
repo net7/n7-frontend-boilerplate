@@ -2,6 +2,7 @@ export * from './configuration.service';
 export * from './layouts-configuration.service';
 export * from './main-state.service';
 export * from './communication.service';
+export * from './json-config.service';
 
 // communication providers
 export * from './communication-providers/apollo/apollo.provider';
