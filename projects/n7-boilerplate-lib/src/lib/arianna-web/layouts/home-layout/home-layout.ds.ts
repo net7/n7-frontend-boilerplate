@@ -7,7 +7,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   private facetData: any[] = null;
   private facetInputs: any = {};
   private allBubbles: any[] = null;
-  private selectedBubbleIds: any[] = [];
+  public selectedBubbleIds: any[] = [];
   public numOfItemsStr: string = null;
 
   onInit({ communication, mainState }){
@@ -81,6 +81,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       //  this.facetData.push({...(ent.countData), enabled:true});
       //});
       this.renderPreviewsFromApolloQuery(response);
+      this.renderItemTags();
     });
   }
 
@@ -186,6 +187,20 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     }
   }
 
+  renderItemTags(){
+    let tagsData = [];
+    this.selectedBubbleIds.forEach( (sBid) => {
+      let label = '';
+      for(var i=0;i<this.allBubbles.length;i++){
+        if(this.allBubbles[i].entity.id===sBid){
+          label = this.allBubbles[i].entity.label;
+          break;
+        }
+      }
+      tagsData.push({label});
+    });
+    this.one('aw-home-item-tags-wrapper').update(tagsData);
+  }
 
   private _getSubnav(){
     return ['home', 'results', 'single'].map(page => ({

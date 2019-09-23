@@ -15,6 +15,8 @@ export const AwHomeLayoutConfig = {
   }, {
     id: 'aw-home-facets-wrapper',
   }, {
+    id: 'aw-home-item-tags-wrapper',
+  }, {
     id: 'aw-home-item-preview-wrapper'
   }],
   layoutDS: AwHomeLayoutDS,
