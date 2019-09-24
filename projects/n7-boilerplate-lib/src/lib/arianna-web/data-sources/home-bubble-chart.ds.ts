@@ -48,12 +48,10 @@ export class AwHomeBubbleChartDS extends DataSource {
         y: cHeight/2+50,
         "radius":bubble.count/55,
         color:bubble.color,
-        hasCloseIcon: false,
+        hasCloseIcon: ( bubble.selected ? bubble.selected : false ),
         payload:{
           id: bId
         },
-        selectable: true,
-        selected: ( bubble.selected ? bubble.selected : false )
       };
 
       bubblesData['bubblesData'].push(bubbleData);
@@ -71,6 +69,8 @@ export class AwHomeBubbleChartDS extends DataSource {
     }
 
     if(data.reset) bubblesData['reset'] = data.reset;
+
+    if(data.setUpdateReference) bubblesData['setUpdateReference'] = data.setUpdateReference;
 
     return bubblesData;
   }

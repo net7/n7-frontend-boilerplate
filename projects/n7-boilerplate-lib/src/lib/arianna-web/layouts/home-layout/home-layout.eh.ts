@@ -40,10 +40,14 @@ export class AwHomeLayoutEH extends EventHandler {
 
         case 'aw-home-bubble-chart.click':
           if(payload.source==='bubble')
-            this.dataSource.onBubbleSelected(payload.bubblePayload);
+            this.dataSource.onBubbleSelected({bubblePayload:payload.bubblePayload,bubble:payload.bubble});
           else if(payload.source==='close')
-            this.dataSource.onBubbleDeselected(payload.bubblePayload);
+            this.dataSource.onBubbleDeselected({bubblePayload:payload.bubblePayload,bubble:payload.bubble});
           break;
+
+        case 'aw-home-item-tags-wrapper.click':
+            this.dataSource.onTagClicked(payload);
+            break;
 
           default:
             break;

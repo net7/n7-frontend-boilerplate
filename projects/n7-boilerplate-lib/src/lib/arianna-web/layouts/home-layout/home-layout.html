@@ -23,7 +23,7 @@
         [data]="lb.widgets['aw-home-bubble-chart'].ds.out$ | async"
         [emit]="lb.widgets['aw-home-bubble-chart'].emit">
         </n7-bubble-chart>
-        <ng-container *ngIf="lb.dataSource.selectedBubbleIds.length>0">
+        <ng-container *ngIf="lb.dataSource.selectedBubbles.length>0">
             <div [ngStyle]="{ 'display': 'flex' , 'flex-direction': 'column' }">
                 <div *ngIf="lb.dataSource.numOfItemsStr"> <h1>{{ lb.dataSource.numOfItemsStr }} <span>Oggetti culturali</span></h1></div>
                     <h3>Collegati a </h3>
