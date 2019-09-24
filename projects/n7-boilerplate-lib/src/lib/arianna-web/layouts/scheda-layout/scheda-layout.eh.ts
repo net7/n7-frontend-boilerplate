@@ -8,11 +8,11 @@ export class AwPatrimonioLayoutEH extends EventHandler {
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
-        case 'aw-patrimonio-layout.init':
+        case 'aw-scheda-layout.init':
           this.dataSource.onInit(payload);
           break;
 
-        case 'aw-patrimonio-layout.destroy':
+        case 'aw-scheda-layout.destroy':
           this.destroyed$.next();
           break;
 

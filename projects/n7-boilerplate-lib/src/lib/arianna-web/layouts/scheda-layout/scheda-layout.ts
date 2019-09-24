@@ -5,15 +5,15 @@ import { AbstractLayout } from '../../../common/models/abstract-layout'
 import { ConfigurationService } from '../../../common/services/configuration.service';
 import { LayoutsConfigurationService } from '../../../common/services/layouts-configuration.service';
 import { MainStateService } from '../../../common/services';
-import { AwPatrimonioLayoutConfig as config } from './patrimonio-layout.config';
+import { AwPatrimonioLayoutConfig as config } from './scheda-layout.config';
 import { CommunicationService } from '../../../common/services';
 
 @Component({
-  selector: 'aw-patrimonio-layout',
-  templateUrl: './patrimonio-layout.html'
+  selector: 'aw-scheda-layout',
+  templateUrl: './scheda-layout.html'
 })
 
-export class AwPatrimonioLayoutComponent extends AbstractLayout implements OnInit, OnDestroy {
+export class AwSchedaLayoutComponent extends AbstractLayout implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private configuration: ConfigurationService,
