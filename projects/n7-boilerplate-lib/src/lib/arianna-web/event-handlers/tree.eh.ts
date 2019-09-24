@@ -4,7 +4,7 @@ export class AwTreeEH extends EventHandler {
 
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {   
-      if(typeof payload.source != "undefined" && payload.source == "toggle"){
+      if(payload && typeof payload.source != "undefined" && payload.source == "toggle"){
         this.dataSource.updateTree( null, payload.parents );
       }
     });
