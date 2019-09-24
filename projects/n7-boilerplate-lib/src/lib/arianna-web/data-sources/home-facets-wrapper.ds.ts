@@ -13,7 +13,7 @@ export class AwHomeFacetsWrapperDS extends DataSource {
         text: facet.type.label,
         additionalText: facet.count,
         iconRight: (facet.enabled ? 'n7-icon-eye' : 'n7-icon-eye-slash'),
-        classes: '',
+        classes: (facet.enabled ? '' : 'is-disabled'),
         payload: facet.type.id,
       });
       // make array of inputs data
