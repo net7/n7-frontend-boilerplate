@@ -7,12 +7,17 @@ export const AwHomeLayoutConfig = {
   layoutId: 'aw-home-layout',
   widgets: [{
     id: 'aw-hero',
-    //hasStaticData: true
   }, {
     id: 'aw-home-hero-patrimonio',
     hasStaticData: true
   }, {
     id: 'aw-home-bubble-chart',
+  }, {
+    id: 'aw-home-facets-wrapper',
+  }, {
+    id: 'aw-home-item-tags-wrapper',
+  }, {
+    id: 'aw-home-item-preview-wrapper'
   }],
   layoutDS: AwHomeLayoutDS,
   layoutEH: AwHomeLayoutEH,

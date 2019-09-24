@@ -20,24 +20,5 @@ export class AwPatrimonioLayoutEH extends EventHandler {
           break;
       }
     });
-
-    /**
-     * Global Events Listener
-     * 
-     * Remove this function if this layout doesn't
-     * use routing events. 
-     */
-    EventHandler.globalEvents$.pipe(
-      takeUntil(this.destroyed$)
-    ).subscribe(({ type, payload }) => {
-      switch (type) {
-        case 'global.navigate':
-          this.dataSource.onNavigate(payload);
-          break;
-
-        default:
-          break;
-      }
-    });
   }
 }

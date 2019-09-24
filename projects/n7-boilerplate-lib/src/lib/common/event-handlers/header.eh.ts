@@ -7,12 +7,14 @@ export class HeaderEH extends EventHandler {
       switch(type){
         case 'header.click':
           // navigate control
-          if(payload.source === 'navigate'){
-            this.emitGlobal('navigate', payload);
-          }
-
+          // if(payload.source === 'navigate'){
+          this.emitGlobal('navigate', {
+            handler: 'router',
+            path: [payload]
+          });
+          // }
           // global signal
-          this.emitGlobal(type, payload);
+          // this.emitGlobal(type, payload);
           break;
 
         default:
