@@ -7,14 +7,14 @@
 // ------------------------------------ //
 // #LAYOUT
 // ------------------------------------ //
-$page-max-width: 1140px;
+// $page-max-width: 1140px;
 
 
 // ------------------------------------ //
 // #GRIDS
 // ------------------------------------ //
-$grid-gutter-h: $space*3;
-$grid-gutter-v: $space*2;
+// $grid-gutter-h: $space*3;
+// $grid-gutter-v: $space*2;
 
 
 // //////////////////////////////////// //
@@ -29,8 +29,8 @@ $grid-gutter-v: $space*2;
 // ------------------------------------ //
 // #Z-INDEX
 // ------------------------------------ //
-$z-index-base: 1000;
-$z-index-modal:         $z-index-base + 10;
+// $z-index-base: 1000;
+// $z-index-modal:         $z-index-base + 10;
 
 // ------------------------------------ //
 // #SPACING-UNIT
@@ -57,19 +57,19 @@ $susy: (
 // #FONTS
 // ------------------------------------ //
 // @import url('https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,700,700i,900');
-@import url('https://fonts.googleapis.com/css?family=Nunito+Sans:400,400i,700,700i&display=swap');
+// @import url('https://fonts.googleapis.com/css?family=Nunito+Sans:400,400i,700,700i&display=swap');
 
 
 // ------------------------------------ //
 // TYPOGRAPHY
 // ------------------------------------ //
-$font-family-main: 'Nunito Sans', sans-serif;
-$font-family-headings: 'Nunito Sans', sans-serif;
+// $font-family-main: 'Nunito Sans', sans-serif;
+// $font-family-headings: 'Nunito Sans', sans-serif;
 
 // $font-size-xxxl: 38px;
 // $font-size-xxl: 30px;
 // $font-size-xl: 26px;
-$font-size-l: 18px;
+// $font-size-l: 18px;
 // $font-size-m: 16px;
 // $font-size-s: 14px;
 // $font-size-xs: 12px;
@@ -97,8 +97,8 @@ $font-size-l: 18px;
 
 // Backgrounds
 // $color-background-base: $color-gray-00;
-$color-background-light: $color-gray-01;
-$color-background-light-blue: #F5F7FF;
+// $color-background-light: $color-gray-01;
+// $color-background-light-blue: #F5F7FF;
 // $color-background-medium: $color-gray-01;
 // $color-background-dark: $color-gray-03;
 
@@ -123,20 +123,20 @@ $color-background-light-blue: #F5F7FF;
 // ------------------------------------ //
 // #BUTTONS
 // ------------------------------------ //
-$button-border-width: 0px;
+// $button-border-width: 0px;
 // $button-border-radius: $border-radius;
 // $button-small-height: 24px;
-$button-normal-height: 32px;
+// $button-normal-height: 32px;
 // $button-large-height: 50px;
 
 // Normal button
-$color-button-text: $color-text-link;
-$color-button-text-hover: $color-text-link-hover;
-$color-button-text-disabled: rgba($color-text-link, .4);
+// $color-button-text: $color-text-link;
+// $color-button-text-hover: $color-text-link-hover;
+// $color-button-text-disabled: rgba($color-text-link, .4);
 
-$color-button-bg: #E0E7FF;
-$color-button-bg-hover: #E0E7FF;
-$color-button-bg-disabled: #E0E7FF;
+// $color-button-bg: #E0E7FF;
+// $color-button-bg-hover: #E0E7FF;
+// $color-button-bg-disabled: #E0E7FF;
 
 // $color-button-border: $color-border-normal;
 // $color-button-border-hover: $color-border-normal;
@@ -166,7 +166,7 @@ $color-button-bg-disabled: #E0E7FF;
 // $form-input-height: 38px;
 // $form-input-small-height: 26px;
 // $form-border-radius: $border-radius;
-$form-dropdown-height: 30px;
+// $form-dropdown-height: 30px;
 
 // ------------------------------------ //
 // #TRANSITIONS
@@ -182,7 +182,7 @@ $form-dropdown-height: 30px;
 // $header-bg-color: $color-background-base;
 // $header-logo-height: $header-height - ($space*2);
 // $header-logo-height-mobile: $header-height-mobile - ($space*2);
-$header-user-thumb-size: 40px;
+// $header-user-thumb-size: 40px;
 // $header-user-thumb-size-mobile: 38px;
 // $header-search-input-height: 36px;
 // $header-search-input-height-mobile: 28px;
@@ -203,11 +203,11 @@ $header-user-thumb-size: 40px;
 // #TABLE
 // ------------------------------------ //
 // $table-border-color: $color-border-normal;
-$table-border-size: 1px;
+// $table-border-size: 1px;
 /* Header */
-$table-header-font-size: $font-size-xs;
+// $table-header-font-size: $font-size-xs;
 // $table-header-text-color: $color-text;
-$table-header-bg: $color-background-light-blue;
+// $table-header-bg: $color-background-light-blue;
 /* Contents */
 // $table-font-size: $font-size-s;
 // $table-text-color: $color-text;

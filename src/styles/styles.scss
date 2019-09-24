@@ -9,32 +9,15 @@
 // ------------------------------------ //
 @import "../../node_modules/@n7-frontend/icon-font/Font/n7-icon/style.css";
 
-
-// ------------------------------------ //
-// #SUSY
-// ------------------------------------ //
-// @import "../../node_modules/susy/sass/susy";
-
-
 // ------------------------------------ //
 // #N7 COLOR SCHEME
 // ------------------------------------ //
 @import "../../node_modules/@n7-frontend/components/styles/generic/color_scheme";
 
 // ------------------------------------ //
-// #ARIANNA WEB COLOR SCHEME
-// ------------------------------------ //
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/generic/color_scheme";
-
-// ------------------------------------ //
 // #N7 COMPONENTS VARIABLES
 // ------------------------------------ //
 @import "../../node_modules/@n7-frontend/components/styles/generic/variables";
-
-// ------------------------------------ //
-// #ARIANNA WEB VARIABLES OVERRIDE
-// ------------------------------------ //
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/generic/variables";
 
 // ------------------------------------ //
 // #N7 COMPONENTS STYLES
@@ -44,4 +27,4 @@
 // ------------------------------------ //
 // #ARIANNA WEB LAYOUTS
 // ------------------------------------ //
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/layouts/main-layout";
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/layouts/home-layout";
