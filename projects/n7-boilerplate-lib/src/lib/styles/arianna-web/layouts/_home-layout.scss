@@ -1,0 +1,120 @@
+/**
+ * HOMEPAGE
+ *
+ * Layout for homepage
+ */
+ 
+ $page-max-width: 1140px; // TODO add in components variables!
+
+/* ------------------------------------ *\
+    BUBBLE-CHART
+\* ------------------------------------ */
+.aw-home {
+    /* Bubble facets and chart wrapper */
+    &__bubble-wrapper {
+        display: grid;
+        grid-template-columns: 220px 1fr;
+        grid-column-gap: $grid-gutter-h;
+        max-width: $page-max-width;
+        margin: 0 auto;
+
+        &.has-results {
+            grid-template-columns: 220px minmax(200px, 1fr) 400px;
+        }
+    }
+
+    .aw-home__facets-wrapper {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    &__bubble-chart {
+        padding: $space*2;
+    }
+    
+    /* Facets */
+    .aw-home__facet {
+        padding-top: $space*1.5;
+        border-bottom: 1px solid $color-border-normal;
+
+        &:last-child {
+            border-bottom: 0;
+        }
+    }
+
+    .n7-facet-header {
+        position: relative;
+        background-color: transparent;
+        color: $color-text;
+    }
+
+    .n7-facet-header__title {
+        position: absolute;
+        left: 46px;
+        margin-left: 0;
+        font-size: $font-size-l;
+        font-weight: $font-weight-bold;
+    }
+
+    .n7-facet-header__counter {
+        position: absolute;
+        top: 25px;
+        left: 46px;
+        margin-left: 0;
+        color: $color-text-light;
+        font-size: $font-size-s;
+    }
+
+    .n7-facet-header__icon-left {
+        padding: $space;
+        background-color: transparent;
+        color: $color-text;
+        font-size: $font-size-l;
+        border-right: 1px solid $color-border-normal;
+    }
+
+    .n7-facet-header__icon-right {
+        padding: $space;
+        background-color: transparent;
+        color: $color-text-light;
+        font-size: $font-size-l;
+        cursor: pointer;
+        transition: all $transition-durations;
+
+        &:hover {
+            color: $color-text-link-hover;
+        }
+    }
+
+    .n7-facet {
+        padding-top: 0;
+    }
+
+    .n7-facet__search-wrapper {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    /* Results */
+    .aw-home__results-wrapper {
+        padding: $space*2;
+        background-color: $color-background-base;
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: $breakpoint-laptop) {
+}
+
+@media all and (max-width: $breakpoint-ipad-portrait) {
+}
+
+@media all and (max-width: $breakpoint-smartphone-landscape) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}

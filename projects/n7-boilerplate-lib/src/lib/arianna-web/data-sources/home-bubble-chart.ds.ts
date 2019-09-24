@@ -4,11 +4,8 @@ import { BUBBLECHART_MOCK } from '@n7-frontend/components';
 export class AwHomeBubbleChartDS extends DataSource {
 
   protected transform(data){
-    console.log('realBubbleData',data);
-    console.log('mockBubbleData',BUBBLECHART_MOCK);
-
-
-    const cWidth = 1500;
+    if(!data) return null;
+    const cWidth = (data.width ? data.width : 1000);
     const cHeight = 700;
 
     let bubblesData = {
@@ -16,14 +13,15 @@ export class AwHomeBubbleChartDS extends DataSource {
       containerWidth : cWidth,
       containerHeight : cHeight,
       isForceSimulationEnabled: true,
+      maxBubblesSelected:3
     };
 
     bubblesData['bubblesData'] = [];
 
-    data.forEach( bubble => {
-      let bId = 'B_'+bubble.entity.id.replace(/-/g,'_');
+    data.bubbles.forEach( bubble => {
+      let bId = bubble.entity.id;
       let bubbleData = {
-        id:bId,
+        id:bubble.entity.id,
         texts: [
           {
             id:bId+"_label0",
@@ -53,7 +51,9 @@ export class AwHomeBubbleChartDS extends DataSource {
         hasCloseIcon: false,
         payload:{
           id: bId
-        }
+        },
+        selectable: true,
+        selected: ( bubble.selected ? bubble.selected : false )
       };
 
       bubblesData['bubblesData'].push(bubbleData);
@@ -70,6 +70,7 @@ export class AwHomeBubbleChartDS extends DataSource {
       velocityDecay: 0.65
     }
 
+    if(data.reset) bubblesData['reset'] = data.reset;
 
     return bubblesData;
   }
