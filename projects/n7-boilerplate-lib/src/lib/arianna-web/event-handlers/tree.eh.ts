@@ -6,7 +6,11 @@ export class AwTreeEH extends EventHandler {
     this.innerEvents$.subscribe(({ type, payload }) => {   
       if(payload && typeof payload.source != "undefined" && payload.source == "toggle"){
         this.dataSource.updateTree( null, payload.parents );
-      }
+      } else if( type == "aw-tree.click" ) {
+        this.dataSource.selectTreeItem( payload );
+        this.emitOuter('click', payload);
+      } 
+
     });
 
      this.outerEvents$.subscribe(({ type, payload }) => {   

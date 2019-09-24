@@ -71,5 +71,31 @@ export const ApolloProviderConfig = {
           }
         }
       }`
+  },
+  'getItemDetails':{
+    queryName: 'getItemDetails',
+    queryBody:`{
+        getItemDetails(__PARAMS__){
+            title
+            text
+            subTitle
+            fields {
+              id
+              label
+              fields {
+                id
+                key
+                value
+              }
+            }
+            item {
+              id
+            }
+            breadcrumbs {
+              label
+              link
+            }
+          }
+      }`
   }
 };

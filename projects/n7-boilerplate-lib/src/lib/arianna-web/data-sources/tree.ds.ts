@@ -26,13 +26,32 @@ export class AwTreeDS extends DataSource {
     this.update(data);
   }
 
+  selectTreeItem(id, data){
+    if ( !data ) {
+      data = this.output;    
+    }
+
+    data.items.forEach( (it) => {
+        if(  it['_meta'] == id ) {
+            it['classes'] = "is-active";
+        } else {
+          let classes = it['classes'];
+          it['classes'] = classes.replace("is-active", "");
+        }
+        if( typeof it['items'] != "undefined" && it['items'].length > 0 ) {            
+          this.selectTreeItem(id, it);            
+        }
+    });
+    this.update(data);
+  }
+
   toggleSidebar() {
     let sidebarData = this.output;    
     if ( sidebarData.classes == "is-expanded" ) {
       sidebarData.classes = "is-collapsed";
-  } else {
-      sidebarData.classes = "is-expanded";
+    } else {
+        sidebarData.classes = "is-expanded";
+    }    
+    this.update(sidebarData);
   }
-  this.update(sidebarData);
-}
 }

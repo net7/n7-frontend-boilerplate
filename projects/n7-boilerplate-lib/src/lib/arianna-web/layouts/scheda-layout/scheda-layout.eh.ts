@@ -21,6 +21,12 @@ export class AwPatrimonioLayoutEH extends EventHandler {
       }
     });
 
+    this.outerEvents$.subscribe(({ type, payload }) => {   
+      if( type == 'aw-tree.click'){
+          this.dataSource.loadItem(payload);
+        }
+    }); 
+
     /**
      * Global Events Listener
      * 

@@ -10,27 +10,24 @@
         ></n7-tree>
     </div> <!--end Left sidebar -->
     <div>  <!--Right sidebar --> 
-        <div>       
-            <h1>Collezione d'Arte</h1>
-            <div class="n7-grid-2">
-                <div>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi gravida sagittis pulvinar. Etiam iaculis maximus metus, id tincidunt libero auctor et. Proin tempus turpis vel erat ultrices, id vestibulum ante cursus. Vestibulum lobortis, ante at eleifend consequat, massa libero bibendum justo, id fermentum magna odio ac nulla. Cras aliquet scelerisque malesuada. Mauris congue fermentum tristique. Nulla imperdiet accumsan dui, tristique lobortis metus eleifend non. Donec quis odio massa. Cras sit amet sem eu turpis molestie blandit vitae sed nibh. Pellentesque ornare enim nisl, et efficitur ante elementum a. Ut nec ex finibus, congue libero feugiat, aliquam ante. Cras sem neque, pellentesque eget mi at, auctor vulputate tellus. Sed aliquam mi a tortor ultricies interdum. Etiam tincidunt nunc commodo nulla porttitor semper. Etiam porta lacinia libero a mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        <n7-breadcrumbs
+            *ngIf="lb.dataSource.hasBreadcrumb"
+            [data]="lb.widgets['aw-scheda-breadcrumbs'].ds.out$ | async" 
+            [emit]="lb.widgets['aw-scheda-breadcrumbs'].emit"
+        ></n7-breadcrumbs>
+        <div *ngFor="let part of lb.dataSource.contentParts">
+            <div>
+                <h1>{{ part.title }}</h1>
+                <div class="n7-grid-2">
+                    <div [innerHTML]="part.content" >
+                                      
+                    </div>                
                 </div>
-                <div>
-                    Suspendisse semper lorem neque, non pulvinar risus gravida a. Vivamus in diam at lacus efficitur pellentesque ac sed orci. Curabitur bibendum aliquet interdum. Nunc scelerisque diam erat, at scelerisque quam ullamcorper eget. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aenean efficitur tempus vulputate. Cras dapibus egestas augue, et auctor ligula ultrices sit amet. Praesent sed tortor commodo, viverra enim et, bibendum urna. Sed quis elit ac nibh porttitor sodales ut porttitor libero.
-                </div>
-            </div>
-        </div>
-        <div>       
-            <h1>Centro Archivi</h1>
-            <div class="n7-grid-2">
-                <div>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi gravida sagittis pulvinar. Etiam iaculis maximus metus, id tincidunt libero auctor et. Proin tempus turpis vel erat ultrices, id vestibulum ante cursus. Vestibulum lobortis, ante at eleifend consequat, massa libero bibendum justo, id fermentum magna odio ac nulla. Cras aliquet scelerisque malesuada. Mauris congue fermentum tristique. Nulla imperdiet accumsan dui, tristique lobortis metus eleifend non. Donec quis odio massa. Cras sit amet sem eu turpis molestie blandit vitae sed nibh. Pellentesque ornare enim nisl, et efficitur ante elementum a. Ut nec ex finibus, congue libero feugiat, aliquam ante. Cras sem neque, pellentesque eget mi at, auctor vulputate tellus. Sed aliquam mi a tortor ultricies interdum. Etiam tincidunt nunc commodo nulla porttitor semper. Etiam porta lacinia libero a mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                </div>
-                <div>
-                    Suspendisse semper lorem neque, non pulvinar risus gravida a. Vivamus in diam at lacus efficitur pellentesque ac sed orci. Curabitur bibendum aliquet interdum. Nunc scelerisque diam erat, at scelerisque quam ullamcorper eget. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aenean efficitur tempus vulputate. Cras dapibus egestas augue, et auctor ligula ultrices sit amet. Praesent sed tortor commodo, viverra enim et, bibendum urna. Sed quis elit ac nibh porttitor sodales ut porttitor libero.
-                </div>
-            </div>
+            </div> 
+            <div *ngIf="part.type == 'metaGroup'">
+                <div *ngFor="let meta of part.fields">
+                    <strong>{{meta.key}}: </strong><span>{{meta.value}}</span>
+                </div>  
         </div>
     </div>  <!--end Right sidebar -->
 </div>

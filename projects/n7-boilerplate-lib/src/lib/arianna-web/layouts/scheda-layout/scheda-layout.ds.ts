@@ -1,4 +1,5 @@
 import { LayoutDataSource } from '@n7-frontend/core';
+import { ItemPreviewComponent } from '@n7-frontend/components';
 
 export class AwPatrimonioLayoutDS extends LayoutDataSource {
   /**
@@ -13,6 +14,8 @@ export class AwPatrimonioLayoutDS extends LayoutDataSource {
 
   public options: any;
   public pageTitle: string;
+  public hasBreadcrumb: boolean;
+  public contentParts: any;
   public tree: any;
 
   /**
@@ -27,9 +30,20 @@ export class AwPatrimonioLayoutDS extends LayoutDataSource {
     this.communication = communication;
     this.options = options;
 
-    this.one('aw-patrimonio-sidebar-header').update(null);    
-    
-    //this.one('aw-tree').update(null);
+    this.pageTitle = 'Collezione d\'Arte';
+    this.hasBreadcrumb = false;
+    this.contentParts = [
+      {
+        type: "text",
+        title: 'Collezione d\'Arte',
+        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi gravida sagittis pulvinar. Etiam iaculis maximus metus, id tincidunt libero auctor et. Proin tempus turpis vel erat ultrices, id vestibulum ante cursus. Vestibulum lobortis, ante at eleifend consequat, massa libero bibendum justo, id fermentum magna odio ac nulla. Cras aliquet scelerisque malesuada. Mauris congue fermentum tristique. Nulla imperdiet accumsan dui, tristique lobortis metus eleifend non. Donec quis odio massa. Cras sit amet sem eu turpis molestie blandit vitae sed nibh. Pellentesque ornare enim nisl, et efficitur ante elementum a. Ut nec ex finibus, congue libero feugiat, aliquam ante. Cras sem neque, pellentesque eget mi at, auctor vulputate tellus. Sed aliquam mi a tortor ultricies interdum. Etiam tincidunt nunc commodo nulla porttitor semper. Etiam porta lacinia libero a mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+      },
+      {
+        type: "text",
+        title: 'Centro Archivi',
+        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi gravida sagittis pulvinar. Etiam iaculis maximus metus, id tincidunt libero auctor et. Proin tempus turpis vel erat ultrices, id vestibulum ante cursus. Vestibulum lobortis, ante at eleifend consequat, massa libero bibendum justo, id fermentum magna odio ac nulla. Cras aliquet scelerisque malesuada. Mauris congue fermentum tristique. Nulla imperdiet accumsan dui, tristique lobortis metus eleifend non. Donec quis odio massa. Cras sit amet sem eu turpis molestie blandit vitae sed nibh. Pellentesque ornare enim nisl, et efficitur ante elementum a. Ut nec ex finibus, congue libero feugiat, aliquam ante. Cras sem neque, pellentesque eget mi at, auctor vulputate tellus. Sed aliquam mi a tortor ultricies interdum. Etiam tincidunt nunc commodo nulla porttitor semper. Etiam porta lacinia libero a mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+      }
+    ]
 
     this.communication.request$('getTree', {
       onError: (error) => console.log(error),
@@ -54,7 +68,50 @@ export class AwPatrimonioLayoutDS extends LayoutDataSource {
 
       this.one('aw-tree').update(treeObj);
       this.one('aw-sidebar-header').update(header);
-    });
+      this.one('aw-scheda-breadcrumbs').update(null);
+    }); 
+  }
+
+  loadItem(id){
+    this.communication.request$('getItemDetails', {
+      onError: (error) => console.log(error),
+      params: { itemId: id },
+      // method: 'GET',
+      // httpOptions: {}
+    }).subscribe((response) => {
+      this.hasBreadcrumb = true;
+      this.contentParts = [{
+        title: response.title,
+        content: response.text,
+        type: 'text'
+      }];
+
+      let breadcrumbs = {
+        items: []
+      }
+console.log(response);
+      if(response.fields){
+        response.fields.forEach(field => {
+          this.contentParts.push({
+            title: field.label,
+            content: response.text,
+            type: 'metaGroup',
+            fields: field.fields
+          })
+        });
+      }
+console.log(this.contentParts);
+      response.breadcrumbs.forEach(element => {
+        breadcrumbs.items.push({
+          label: element.label,
+          payload: element.link
+        })
+      });
+      
+
+      this.one('aw-scheda-breadcrumbs').update(breadcrumbs);
+     
+    })
   }
 
   private parseTree(data, toggle, parents) {
@@ -81,7 +138,7 @@ export class AwPatrimonioLayoutDS extends LayoutDataSource {
                 }             
                 break;
             case "id" :                
-                treeItem['_meta'] = data[key];               
+                treeItem['_meta'] = treeItem['payload'] = data[key];               
                 break;
             default :  data[key]; break;
           }
