@@ -21,3 +21,9 @@ export * from './patrimonio-layout/patrimonio-layout';
 export * from './patrimonio-layout/patrimonio-layout.ds';
 export * from './patrimonio-layout/patrimonio-layout.eh';
 export * from './patrimonio-layout/patrimonio-layout.config';
+
+// entita layout
+export * from './entita-layout/entita-layout';
+export * from './entita-layout/entita-layout.ds';
+export * from './entita-layout/entita-layout.eh';
+export * from './entita-layout/entita-layout.config';

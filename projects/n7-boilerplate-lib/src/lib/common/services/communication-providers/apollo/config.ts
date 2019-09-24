@@ -60,5 +60,56 @@ export const ApolloProviderConfig = {
         }
       }
     }`
+  },
+  'getEntityDetails': {
+    queryName: 'getEntityDetails',
+    queryBody: `{
+      getEntityDetails(__PARAMS__){
+        entity {
+          label
+          id
+        }
+        fieldsTab {
+          id
+          fields {
+            id
+            key
+            value
+          }
+        }
+        entities {
+          entity {
+            id
+            label
+            typeOfEntity {
+              id
+              color
+            }
+          }
+          count
+        }
+        items {
+          breadcrumbs {
+            link
+            label
+          }
+          item {
+            id
+            label
+          }
+          thumbnail
+          relatedTOEData {
+            type {
+              id
+              label
+              color
+              icon
+            }
+            count
+          }
+        }
+      }
+    }
+    `
   }
 };

@@ -8,3 +8,6 @@ export * from './home-item-preview-wrapper.eh';
 export * from './home-item-tags-wrapper.eh';
 
 // Patrimonio Layout
+
+// Entita Layout
+export * from './entita-nav.eh'
