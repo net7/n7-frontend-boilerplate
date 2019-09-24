@@ -21,10 +21,10 @@
     ],
     "paths": {
       "n7-boilerplate-lib": [
-        "dist/n7-boilerplate-lib"
+        "projects/n7-boilerplate-lib/src/public-api"
       ],
       "n7-boilerplate-lib/*": [
-        "dist/n7-boilerplate-lib/*"
+        "projects/n7-boilerplate-lib/src/*"
       ]
     }
   }
