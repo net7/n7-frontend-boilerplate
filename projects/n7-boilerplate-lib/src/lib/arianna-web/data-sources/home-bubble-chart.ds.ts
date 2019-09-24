@@ -71,7 +71,7 @@ export class AwHomeBubbleChartDS extends DataSource {
     if(data.reset) bubblesData['reset'] = data.reset;
 
     if(data.setUpdateReference) bubblesData['setUpdateReference'] = data.setUpdateReference;
-
+    if(data.setBubbleChart) bubblesData['setBubbleChart'] = data.setBubbleChart;
     return bubblesData;
   }
 }

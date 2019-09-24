@@ -10,6 +10,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   public selectedBubbles: any[] = [];
   public numOfItemsStr: string = null;
   public _updateBubbles: any = null;
+  private _bubbleChart: any = null;
   private maxBubblesSelectable:number = 3;
 
   onInit({ communication, mainState }){
@@ -134,7 +135,8 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     this.one('aw-home-bubble-chart').update({
       width: window.innerWidth/1.8,
       bubbles:this.allBubbles,
-      setUpdateReference: (ref) => this._updateBubbles = ref
+      setUpdateReference: (ref) => this._updateBubbles = ref,
+      setBubbleChart: (bubbleCref) => this._bubbleChart = bubbleCref
     });
   }
 
@@ -211,6 +213,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       this.one('aw-home-bubble-chart').update({
         width: window.innerWidth/1.8,
         bubbles:currentBubbles,
+        setBubbleChart: (bubbleCref) => this._bubbleChart = bubbleCref,
         reset:true
       });
     }
@@ -233,16 +236,18 @@ export class AwHomeLayoutDS extends LayoutDataSource {
 
 
   onTagClicked(payload){
-    console.log('DS CLOSE TAG!!!!',payload);
     if(!payload) return;
     const bubbleId=payload;
     this.selectedBubbles.forEach( (sB) => {
       if(sB.id===bubbleId) sB.hasCloseIcon=false;
     });
-    console.log({'selectedBS':this.selectedBubbles});
+    if(this._bubbleChart){
+      this._bubbleChart.selectAll(`g`).each( b => {
+        if(b.id===bubbleId) b.hasCloseIcon = false;
+      });
+    }
     if(this._updateBubbles) this._updateBubbles();
     this.selectedBubbles = this.selectedBubbles.filter( (b) => b.id!==payload );
-    if(this._updateBubbles) this._updateBubbles();
     this.updateItemPreviews();
   }
 
