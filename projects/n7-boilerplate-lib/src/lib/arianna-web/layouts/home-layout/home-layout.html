@@ -3,14 +3,47 @@
         [data]="lb.widgets['aw-hero'].ds.out$ | async"
         [emit]="lb.widgets['aw-hero'].emit">
     </n7-hero>
-    <hr>
-    <span>Event test: {{ lb.dataSource.test }} !</span>
-    <hr>
-    <n7-bubble-chart 
-        [data]="lb.widgets['aw-home-bubble-chart'].ds.out$ | async" 
+
+    <div [ngStyle]="{ 'display': 'flex' , 'align-items': 'center' }">
+        <div [ngStyle]="{ 'display': 'flex' , 'flex-direction': 'column' }">
+            <span class="n7-home__facets-wrapper"
+                  *ngFor="let widgetData of lb.widgets['aw-home-facets-wrapper'].ds.out$ | async;">
+                <n7-facet-header
+                    [data]="widgetData.header"
+                    [emit]="lb.widgets['aw-home-facets-wrapper'].emit">
+                </n7-facet-header>
+                <n7-facet
+                    [data]="widgetData.input"
+                    [emit]="lb.widgets['aw-home-facets-wrapper'].emit">
+                </n7-facet>
+            </span>
+        </div>
+
+        <n7-bubble-chart
+        [data]="lb.widgets['aw-home-bubble-chart'].ds.out$ | async"
         [emit]="lb.widgets['aw-home-bubble-chart'].emit">
-    </n7-bubble-chart>
-    <hr>
+        </n7-bubble-chart>
+        <ng-container *ngIf="lb.dataSource.selectedBubbleIds.length>0">
+            <div [ngStyle]="{ 'display': 'flex' , 'flex-direction': 'column' }">
+                <div *ngIf="lb.dataSource.numOfItemsStr"> <h1>{{ lb.dataSource.numOfItemsStr }} <span>Oggetti culturali</span></h1></div>
+                    <h3>Collegati a </h3>
+                    <ng-container *ngFor="let widgetData of lb.widgets['aw-home-item-tags-wrapper'].ds.out$ | async;">
+                            <n7-tag
+                                [data]="widgetData"
+                                [emit]="lb.widgets['aw-home-item-tags-wrapper'].emit">
+                            </n7-tag>
+                            <br>
+                    </ng-container>
+                <ng-container *ngFor="let widgetData of lb.widgets['aw-home-item-preview-wrapper'].ds.out$ | async;">
+                    <n7-item-preview
+                        [data]="widgetData"
+                        [emit]="lb.widgets['aw-home-item-preview-wrapper'].emit">
+                    </n7-item-preview>
+                </ng-container>
+            </div>
+        </ng-container>
+    </div>
+
     <n7-hero
         [data]="lb.widgets['aw-home-hero-patrimonio'].ds.out$ | async" 
         [emit]="lb.widgets['aw-home-hero-patrimonio'].emit">
