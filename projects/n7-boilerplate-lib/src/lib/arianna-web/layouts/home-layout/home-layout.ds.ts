@@ -80,10 +80,8 @@ export class AwHomeLayoutDS extends LayoutDataSource {
 
   public onBubbleDeselected(payload){
     if(payload && payload.bubble){
-      console.log({bubbbllle:payload.bubble});
       this.selectedBubbles = this.selectedBubbles.filter(
         (b) => b.id!==payload.bubble.id );
-      console.log({selectedBubbles:this.selectedBubbles});
       if(payload.bubble.hasCloseIcon){
         payload.bubble.hasCloseIcon=false;
         if(this._updateBubbles) this._updateBubbles();
@@ -100,7 +98,6 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       if(entityId)
         selectedEntitiesIds.push(entityId);
     });
-    console.log({selectedEntitiesIds});
     this.communication.request$('globalFilter', {
       onError: (error) => console.log(error),
       params: { selectedEntitiesIds,
