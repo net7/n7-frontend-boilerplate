@@ -10,18 +10,25 @@ export class AwTreeDS extends DataSource {
     return data;
   }
 
-  updateTree(data, parents){
+  updateTree(data, parents, id){ 
     if ( !data ) {
       data = this.output;    
     }
-
-    data.items.forEach( (it) => {
-        if( parents.indexOf( it['_meta'] ) >= 0 ) {
-            it['classes'] = "is-expanded";
-        }
-        if( typeof it['items'] != "undefined" && it['items'].length > 0 ) {            
-          this.updateTree(it, parents);            
-        }
+    
+    data.items.forEach( (it) => {    
+      if( it['_meta'] == id ) {      
+        if ( it['classes'] == "is-expanded" ) {
+          it['classes'] = "is-collapsed";
+        } else {
+          it['classes'] = "is-expanded";
+        }  
+      }    
+      else if( parents.indexOf( it['_meta'] ) >= 0 ) {          
+          it['classes'] = "is-expanded";
+      }
+      if( typeof it['items'] != "undefined" && it['items'].length > 0 ) {            
+        this.updateTree(it, parents, id);            
+      }
     });
     this.update(data);
   }
@@ -33,7 +40,7 @@ export class AwTreeDS extends DataSource {
 
     data.items.forEach( (it) => {
         if(  it['_meta'] == id ) {
-            it['classes'] = "is-active";
+            it['classes'] = it['classes'] + " is-active";
         } else {
           let classes = it['classes'];
           it['classes'] = classes.replace("is-active", "");

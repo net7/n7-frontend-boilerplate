@@ -12,7 +12,8 @@ export const APP_ROUTES: Routes = [
   // arianna web routes
   { path: 'aw/home', component: AwHomeLayoutComponent },
   { path: 'aw/about', component: AwAboutLayoutComponent },
-  { path: 'aw/patrimonio', component: AwSchedaLayoutComponent },
+  { path: 'aw/patrimonio/:id', component: AwSchedaLayoutComponent },
+  { path: 'aw/patrimonio', redirectTo: 'aw/patrimonio/' },
   { path: 'aw/works', component: AwWorksLayoutComponent },
   {
     path: '',
