@@ -9,7 +9,7 @@
     
     <!-- Bubble chart -->
     <div class="aw-home__bubble-wrapper"
-         [ngClass]="{ 'has-results' : lb.dataSource.selectedBubbleIds.length>0 }">
+         [ngClass]="{ 'has-results' : lb.dataSource.selectedBubbles.length>0 }">
         <div class="aw-home__facets-wrapper">
             <span class="aw-home__facet"
                   *ngFor="let widgetData of lb.widgets['aw-home-facets-wrapper'].ds.out$ | async;">
