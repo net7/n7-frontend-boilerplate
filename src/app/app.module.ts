@@ -1,15 +1,18 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { 
   N7BoilerplateCommonModule,
-  N7BoilerplateAriannaWebModule
+  N7BoilerplateAriannaWebModule,
+  JsonConfigService
 } from 'n7-boilerplate-lib';
 import globalConfig from './config/global';
 import layoutsConfig from './config/layouts';
 import { APP_ROUTES } from './app.routes';
 
 import { AppComponent } from './app.component';
+
+const JSON_PATH = './assets/config.json';
 
 @NgModule({
   declarations: [
@@ -26,7 +29,12 @@ import { AppComponent } from './app.component';
     }),
     N7BoilerplateAriannaWebModule,
   ],
-  providers: [],
+  providers: [{
+    provide: APP_INITIALIZER,
+    useFactory: (jsonConfigService: JsonConfigService) => () => jsonConfigService.load(JSON_PATH),
+    deps: [JsonConfigService],
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

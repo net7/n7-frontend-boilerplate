@@ -1,0 +1,28 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { tap, catchError } from 'rxjs/operators';
+import { ConfigurationService } from './configuration.service';
+import { of } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class JsonConfigService {
+  constructor(
+    private http: HttpClient,
+    private config: ConfigurationService,
+  ){}
+
+  load(path): Promise<any> {
+    return this.http.get(path).pipe(
+      catchError((error) => of({})),
+      tap(response => this._handleResponse(response))
+    ).toPromise();
+  }
+
+  private _handleResponse(response){
+    if(response){
+      Object.keys(response).forEach(key => this.config.set(key, response[key]));
+    }
+  }
+}
