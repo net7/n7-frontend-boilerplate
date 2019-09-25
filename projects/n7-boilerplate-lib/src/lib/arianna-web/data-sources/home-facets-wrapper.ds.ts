@@ -18,7 +18,7 @@ export class AwHomeFacetsWrapperDS extends DataSource {
         text: facet.type.label,
         additionalText: facet.count,
         iconRight: (facet.enabled ? 'n7-icon-eye' : 'n7-icon-eye-slash'),
-        classes: (facet.enabled ? '' : 'is-disabled'),
+        classes: (facet.enabled ? 'prova' : 'is-disabled') + (facet.type.color ? ` ${facet.type.color}` : ''),
         payload: facet.type.id,
       });
       // make array of inputs data
