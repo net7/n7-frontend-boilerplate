@@ -19,9 +19,9 @@ export class AwHomeBubbleChartDS extends DataSource {
     bubblesData['bubblesData'] = [];
 
     data.bubbles.forEach( bubble => {
-      let bId = bubble.entity.id;
+      let bId = bubble.id;
       let bubbleData = {
-        id:bubble.entity.id,
+        id:bubble.id,
         texts: [
           {
             id:bId+"_label0",

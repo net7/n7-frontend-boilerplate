@@ -12,6 +12,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   public _updateBubbles: any = null;
   private _bubbleChart: any = null;
   private maxBubblesSelectable:number = 3;
+  private entityBubbleIdMap: any = {};
 
   onInit({ communication, mainState }){
     this.communication = communication;
@@ -93,8 +94,11 @@ export class AwHomeLayoutDS extends LayoutDataSource {
 
   private updateItemPreviews(){
     let selectedEntitiesIds = [];
+    if(this.entityBubbleIdMap)
     this.selectedBubbles.forEach( (sB) => {
-      selectedEntitiesIds.push(sB.id);
+      let entityId = this.entityBubbleIdMap[sB.id];
+      if(entityId)
+        selectedEntitiesIds.push(entityId);
     });
     console.log({selectedEntitiesIds});
     this.communication.request$('globalFilter', {
@@ -127,9 +131,12 @@ export class AwHomeLayoutDS extends LayoutDataSource {
           });
       }
     }
-    this.allBubbles.map( (bubble) => {
-      // d3/svg doesn't allow '-' or strings starting with a number as ids
-      bubble.entity.id = 'B_'+bubble.entity.id.replace(/-/g,'_');
+    this.entityBubbleIdMap = {};
+    this.allBubbles.forEach( (bubble) => {
+      // d3/svg doesn't allow '-' as part of the ids
+      // or strings starting with a number as ids
+      bubble.id = 'B_'+bubble.entity.id.replace(/-/g,'_');
+      this.entityBubbleIdMap[bubble.id]=bubble.entity.id;
       return bubble;
     });
     this.one('aw-home-bubble-chart').update({
@@ -182,7 +189,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         let filteredSelectedBubbles = this.selectedBubbles.filter( (bubble) => {
           let typeOfEntity = "";
           for(var i=0;i<this.allBubbles.length;i++){
-            if(this.allBubbles[i].entity.id===bubble.id){
+            if(this.allBubbles[i].id===bubble.id){
               typeOfEntity=this.allBubbles[i].entity.typeOfEntity.id;
               break;
             }
@@ -207,7 +214,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       currentBubbles.forEach( (bubble) => {
         bubble.selected = false;
         for(var i=0; i<this.selectedBubbles.length;i++){
-          if(this.selectedBubbles[i].id===bubble.entity.id) bubble.selected=true;
+          if(this.selectedBubbles[i].id===bubble.id) bubble.selected=true;
         }
       });
       this.one('aw-home-bubble-chart').update({
@@ -224,7 +231,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     this.selectedBubbles.forEach( (sBubble) => {
       let label = '';
       for(var i=0;i<this.allBubbles.length;i++){
-        if(this.allBubbles[i].entity.id===sBubble.id){
+        if(this.allBubbles[i].id===sBubble.id){
           label = this.allBubbles[i].entity.label;
           break;
         }
