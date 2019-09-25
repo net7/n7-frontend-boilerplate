@@ -238,16 +238,13 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   onTagClicked(payload){
     if(!payload) return;
     const bubbleId=payload;
-    this.selectedBubbles.forEach( (sB) => {
-      if(sB.id===bubbleId) sB.hasCloseIcon=false;
-    });
     if(this._bubbleChart){
       this._bubbleChart.selectAll(`g`).each( b => {
         if(b.id===bubbleId) b.hasCloseIcon = false;
       });
     }
-    if(this._updateBubbles) this._updateBubbles();
     this.selectedBubbles = this.selectedBubbles.filter( (b) => b.id!==payload );
+    if(this._updateBubbles) this._updateBubbles();
     this.updateItemPreviews();
   }
 
