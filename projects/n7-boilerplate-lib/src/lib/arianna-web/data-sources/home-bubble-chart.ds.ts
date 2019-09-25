@@ -19,9 +19,9 @@ export class AwHomeBubbleChartDS extends DataSource {
     bubblesData['bubblesData'] = [];
 
     data.bubbles.forEach( bubble => {
-      let bId = bubble.entity.id;
+      let bId = bubble.id;
       let bubbleData = {
-        id:bubble.entity.id,
+        id:bubble.id,
         texts: [
           {
             id:bId+"_label0",
@@ -48,12 +48,10 @@ export class AwHomeBubbleChartDS extends DataSource {
         y: cHeight/2+50,
         "radius":bubble.count/55,
         color:bubble.color,
-        hasCloseIcon: false,
+        hasCloseIcon: ( bubble.selected ? bubble.selected : false ),
         payload:{
           id: bId
         },
-        selectable: true,
-        selected: ( bubble.selected ? bubble.selected : false )
       };
 
       bubblesData['bubblesData'].push(bubbleData);
@@ -72,6 +70,8 @@ export class AwHomeBubbleChartDS extends DataSource {
 
     if(data.reset) bubblesData['reset'] = data.reset;
 
+    if(data.setUpdateReference) bubblesData['setUpdateReference'] = data.setUpdateReference;
+    if(data.setBubbleChart) bubblesData['setBubbleChart'] = data.setBubbleChart;
     return bubblesData;
   }
 }
