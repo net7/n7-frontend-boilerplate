@@ -12,7 +12,7 @@ import { APP_ROUTES } from './app.routes';
 
 import { AppComponent } from './app.component';
 
-const JSON_PATH = './assets/config.json';
+const JSON_PATH = './assets/app-config.json';
 
 @NgModule({
   declarations: [

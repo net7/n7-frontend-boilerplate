@@ -1,3 +1,79 @@
 {
-  "hello": "world!"
+  "communication": {
+    "defaultProvider": "apollo",
+    "providers": {
+      "apollo": {
+        "baseUrl": "https://n7-ariannaweb-graphql-git-develop.net7.now.sh/"
+      },
+      "rest": {
+        "baseUrl": "https://jsonplaceholder.typicode.com/",
+        "defaultMethod": "GET"
+      }
+    }
+  },
+  "header": {
+    "logo": {
+      "image": "https://i.imgur.com/kTND3Do.png",
+      "payload": "aw/home"
+    },
+    "nav": {
+      "items": [
+        {
+          "text": "Home",
+          "payload": "aw/home",
+          "icon": "n7-icon-home"
+        },
+        {
+          "text": "Patrimonio",
+          "payload": "aw/patrimonio",
+          "icon": "n7-icon-tree-icon"
+        },
+        {
+          "text": "Galleria",
+          "payload": "aw/galleria",
+          "icon": "n7-icon-th"
+        },
+        {
+          "text": "Ricerca",
+          "payload": "aw/ricerca",
+          "icon": "n7-icon-search"
+        },
+        {
+          "text": "Utenti",
+          "payload": "aw/utenti",
+          "icon": "n7-icon-facebook"
+        }
+      ]
+    },
+    "user": {
+      "img": "https://placeimg.com/150/150/any/people",
+      "name": "Giorgio Spinosa"
+    },
+    "menuToggle": {
+      "open": {
+        "payload": "mobile-open"
+      },
+      "close": {
+        "payload": "mobile-close"
+      }
+    }
+  },
+  "config-keys": {
+    "people": {
+      "color": {
+        "hex": "#3a81f2",
+        "rgb": [58, 129, 242]
+      },
+      "icon": "n7-icon-biography",
+      "label": "Persone"
+    },
+    "places": {
+      "color": {
+        "hex": "#f2cd3a",
+        "rgb": [242, 205, 58]
+      },
+      "icon": "n7-icon-map1",
+      "label": "Luoghi"
+    }
+  }
 }
