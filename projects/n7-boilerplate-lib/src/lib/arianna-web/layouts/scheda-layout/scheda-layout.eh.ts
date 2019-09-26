@@ -44,12 +44,16 @@ export class AwPatrimonioLayoutEH extends EventHandler {
 
   private listenRoute() {
     this.route.paramMap.subscribe(params => {
-      this.dataSource.loadItem(params.get('id')).subscribe((response) => {
-        if(response){
-          this.emitGlobal('navigate', {path: [this.configuration.get("paths").schedaBasePath + response.item.id], handler: 'router'});
-          this.dataSource.loadContent(response);
-        }
-      });
+     if(params.get('id')) {
+       this.dataSource.loadItem(params.get('id')).subscribe((response) => {
+         if(response){
+           this.emitGlobal('navigate', {path: [this.configuration.get("paths").schedaBasePath + response.item.id], handler: 'router'});
+           this.dataSource.loadContent(response);
+          }
+        });
+      } else {
+        this.dataSource.loadItem();
+      }
     });
   }
 }
