@@ -28,7 +28,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         this.facetData.push({...(ent.countData), enabled:true});
       } );
       this.one('aw-home-facets-wrapper').update(this.facetData);
-      this.renderBubblesFromApolloQuery(response);
+      this.setAllBubblesFromApolloQuery(response);
       this.renderPreviewsFromApolloQuery(response);
     });
 
@@ -70,8 +70,8 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         if(this.selectedBubbles.length<this.maxBubblesSelectable){
           this.selectedBubbles.push(payload.bubble);
           payload.bubble.hasCloseIcon=true;
-          if(this._updateBubbles) this._updateBubbles();
-          this.updateItemPreviews();
+          //if(this._updateBubbles) this._updateBubbles();
+          this.updateBubblesAndItemPreviews();
         }
       }
     }
@@ -85,12 +85,12 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       if(payload.bubble.hasCloseIcon){
         payload.bubble.hasCloseIcon=false;
         if(this._updateBubbles) this._updateBubbles();
-        this.updateItemPreviews();
+        this.updateBubblesAndItemPreviews();
       }
     }
   }
 
-  private updateItemPreviews(){
+  private updateBubblesAndItemPreviews(){
     let selectedEntitiesIds = [];
     if(this.entityBubbleIdMap)
     this.selectedBubbles.forEach( (sB) => {
@@ -111,11 +111,12 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       //});
       this.renderPreviewsFromApolloQuery(response);
       this.renderItemTags();
-      if(this._updateBubbles) this._updateBubbles();
+      this.setAllBubblesFromApolloQuery(response,true);
+      //if(this._updateBubbles) this._updateBubbles();
     });
   }
 
-  renderBubblesFromApolloQuery(response: any){
+  setAllBubblesFromApolloQuery(response: any,reset?:boolean){
     if( !response || !response.entitiesData ) return;
     this.allBubbles = [];
     for(var i=0;i<response.entitiesData.length;i++){
@@ -136,13 +137,33 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       this.entityBubbleIdMap[bubble.id]=bubble.entity.id;
       return bubble;
     });
+    this.allBubbles.forEach( (bubble) => {
+      bubble.selected = false;
+      for(var i=0; i<this.selectedBubbles.length;i++){
+        if(this.selectedBubbles[i].id===bubble.id) bubble.selected=true;
+      }
+    });
     this.one('aw-home-bubble-chart').update({
       width: window.innerWidth/1.8,
-      bubbles:this.allBubbles,
+      bubbles: this.filterBubblesBasedOnFacetsEnabled(),
+      reset: ( reset? reset : false ),
       setUpdateReference: (ref) => this._updateBubbles = ref,
       setBubbleChart: (bubbleCref) => this._bubbleChart = bubbleCref
     });
   }
+
+  filterBubblesBasedOnFacetsEnabled(){
+    return this.allBubbles.filter(
+      (bubble) => {
+        for(var i=0; i<this.facetData.length; i++){
+          if( bubble.entity.typeOfEntity.id === this.facetData[i].type.id )
+            if( !this.facetData[i].enabled ){ return false; }
+        }
+        return true;
+      }
+    );
+  }
+
 
   handleFacetSearchChange(change) {
     var payload: string = change.inputPayload;
@@ -196,19 +217,10 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         });
         if(filteredSelectedBubbles.length!=this.selectedBubbles.length){
           this.selectedBubbles = filteredSelectedBubbles;
-          this.updateItemPreviews();
+          this.updateBubblesAndItemPreviews();
         };
       }
-      let currentBubbles = this.allBubbles.filter(
-        (bubble) => {
-          for(var i=0; i<this.facetData.length; i++){
-            if( bubble.entity.typeOfEntity.id === this.facetData[i].type.id )
-              if( !this.facetData[i].enabled ){ return false; }
-          }
-          return true;
-        }
-      );
-      currentBubbles.forEach( (bubble) => {
+      this.allBubbles.forEach( (bubble) => {
         bubble.selected = false;
         for(var i=0; i<this.selectedBubbles.length;i++){
           if(this.selectedBubbles[i].id===bubble.id) bubble.selected=true;
@@ -216,7 +228,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       });
       this.one('aw-home-bubble-chart').update({
         width: window.innerWidth/1.8,
-        bubbles:currentBubbles,
+        bubbles:this.filterBubblesBasedOnFacetsEnabled(),
         setBubbleChart: (bubbleCref) => this._bubbleChart = bubbleCref,
         reset:true
       });
@@ -249,7 +261,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     }
     this.selectedBubbles = this.selectedBubbles.filter( (b) => b.id!==payload );
     if(this._updateBubbles) this._updateBubbles();
-    this.updateItemPreviews();
+    this.updateBubblesAndItemPreviews();
   }
 
 
