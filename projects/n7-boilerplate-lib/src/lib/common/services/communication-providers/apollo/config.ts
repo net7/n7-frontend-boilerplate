@@ -10,16 +10,7 @@ export const ApolloProviderConfig = {
       }
     ` 
   },
-  'getTestHero': {
-    queryName: 'getTestHero',
-    queryBody: `
-      {
-        getTestHero(__PARAMS__) {
-          title
-        }
-      }
-    `
-  },
+
   'getTree': {
     queryName: 'getTreeOfItems',
     queryBody: `
@@ -50,24 +41,49 @@ export const ApolloProviderConfig = {
   'initialGlobalFilterCall':{
     queryName: 'globalFilter',
     queryBody:`{
-      globalFilter {
+      globalFilter(__PARAMS__){
         entitiesData {
-            countData {
-              type {
-                id
-                label
-                color
-                icon
-              }
-              count
+          countData {
+            type {
+              id
+              label
+              color
+              icon
             }
+            count
+          }
           entitiesCountData {
             entity {
               id
               label
+              typeOfEntity {
+                id
+              }
             }
             count
           }
+        }
+        itemsPagination {
+          totalCount
+          items {
+            item {
+              id
+              label
+              info {
+                key
+                value
+              }
+            }
+            thumbnail
+            relatedTOEData {
+              type {
+                id
+                label
+                icon
+                color
+              }
+              count
+            }
           }
         }
       }`
@@ -98,5 +114,6 @@ export const ApolloProviderConfig = {
             }
           }
       }`
-  }
-};
+    }
+  };
+    

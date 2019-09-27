@@ -1,18 +1,62 @@
-<div class="" *ngIf="lb.dataSource">
-    <n7-hero
-        [data]="lb.widgets['aw-hero'].ds.out$ | async"
-        [emit]="lb.widgets['aw-hero'].emit">
-    </n7-hero>
-    <hr>
-    <span>Event test: {{ lb.dataSource.test }} !</span>
-    <hr>
-    <n7-bubble-chart 
-        [data]="lb.widgets['aw-home-bubble-chart'].ds.out$ | async" 
-        [emit]="lb.widgets['aw-home-bubble-chart'].emit">
-    </n7-bubble-chart>
-    <hr>
-    <n7-hero
-        [data]="lb.widgets['aw-home-hero-patrimonio'].ds.out$ | async" 
-        [emit]="lb.widgets['aw-home-hero-patrimonio'].emit">
-    </n7-hero>
+<div class="aw-home" *ngIf="lb.dataSource">
+    <!-- Hero section at the top of the page -->
+    <div class="aw-home__top-hero">
+        <n7-hero
+            [data]="lb.widgets['aw-hero'].ds.out$ | async"
+            [emit]="lb.widgets['aw-hero'].emit">
+        </n7-hero>
+    </div>
+    
+    <!-- Bubble chart -->
+    <div class="aw-home__bubble-wrapper"
+         [ngClass]="{ 'has-results' : lb.dataSource.selectedBubbles.length>0 }">
+        <div class="aw-home__facets-wrapper">
+            <span class="aw-home__facet"
+                  *ngFor="let widgetData of lb.widgets['aw-home-facets-wrapper'].ds.out$ | async;">
+                <n7-facet-header
+                    [data]="widgetData.header"
+                    [emit]="lb.widgets['aw-home-facets-wrapper'].emit">
+                </n7-facet-header>
+                <n7-facet
+                    [data]="widgetData.input"
+                    [emit]="lb.widgets['aw-home-facets-wrapper'].emit">
+                </n7-facet>
+            </span>
+        </div>
+
+        <div id="bubble-chart-container">
+            <n7-bubble-chart
+            [data]="lb.widgets['aw-home-bubble-chart'].ds.out$ | async"
+            [emit]="lb.widgets['aw-home-bubble-chart'].emit">
+            </n7-bubble-chart>
+        </div>
+        <ng-container *ngIf="lb.dataSource.selectedBubbles.length>0">
+            <div [ngStyle]="{ 'display': 'flex' , 'flex-direction': 'column' }">
+                <div *ngIf="lb.dataSource.numOfItemsStr"> <h1>{{ lb.dataSource.numOfItemsStr }} <span>Oggetti culturali</span></h1></div>
+                    <h3>Collegati a </h3>
+                    <ng-container *ngFor="let widgetData of lb.widgets['aw-home-item-tags-wrapper'].ds.out$ | async;">
+                            <n7-tag
+                                [data]="widgetData"
+                                [emit]="lb.widgets['aw-home-item-tags-wrapper'].emit">
+                            </n7-tag>
+                            <br>
+                    </ng-container>
+                <ng-container *ngFor="let widgetData of lb.widgets['aw-home-item-preview-wrapper'].ds.out$ | async;">
+                    <n7-item-preview
+                        [data]="widgetData"
+                        [emit]="lb.widgets['aw-home-item-preview-wrapper'].emit">
+                    </n7-item-preview>
+                </ng-container>
+            </div>
+        </ng-container>
+    </div>
+
+    <!-- Hero section at the bottom of the page -->
+    <div class="aw-home__bottom-hero">
+        <n7-hero
+            [data]="lb.widgets['aw-home-hero-patrimonio'].ds.out$ | async" 
+            [emit]="lb.widgets['aw-home-hero-patrimonio'].emit">
+        </n7-hero>
+    </div>
+
 </div>
