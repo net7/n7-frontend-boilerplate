@@ -18,7 +18,7 @@ export class AwPatrimonioLayoutDS extends LayoutDataSource {
   public hasBreadcrumb: boolean;
   public contentParts: any;
   public tree: any;
-
+  public sidebarCollapsed: boolean;
   /**
   * If you are not using these variables (from your-layout.ts), 
   * remove them from onInit() parameters and inside the function.
@@ -29,9 +29,8 @@ export class AwPatrimonioLayoutDS extends LayoutDataSource {
     this.router = router;
     this.titleService = titleService;
     this.communication = communication;
-    this.options = options;
-    
- 
+    this.options = options; 
+    this.sidebarCollapsed = false;
   }
 
   getNavigation( id ) {
@@ -184,8 +183,9 @@ export class AwPatrimonioLayoutDS extends LayoutDataSource {
     return treeItem;
   }
 
-  listenRouter() {
-
+  collapseSidebar() {
+    this.sidebarCollapsed = !this.sidebarCollapsed;
+    console.log( this.sidebarCollapsed);
   }
 
 }

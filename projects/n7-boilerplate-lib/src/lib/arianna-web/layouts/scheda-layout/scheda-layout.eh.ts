@@ -30,17 +30,16 @@ export class AwPatrimonioLayoutEH extends EventHandler {
     });
 
     this.outerEvents$.subscribe(({ type, payload }) => {   
-      if ( type == 'aw-tree.click'){
-        if ( payload ) {
-          this.emitGlobal('navigate', {path: [this.configuration.get("paths").schedaBasePath + payload], handler: 'router'});
-        }
-          /*this.dataSource.loadItem(payload).subscribe((response) => {
-            if(response){
-              this.emitGlobal('navigate', {path: [this.configuration.get("paths").schedaBasePath + response.item.id], handler: 'router'});
-              this.dataSource.loadContent(response);
-            }
-          })*/
-        }
+      switch (type) {
+        case 'aw-tree.click':
+          if ( payload ) {
+            this.emitGlobal('navigate', {path: [this.configuration.get("paths").schedaBasePath + payload], handler: 'router'});
+          }
+          break;
+        case "aw-sidebar-header.click": this.dataSource.collapseSidebar();
+        break;
+
+      }
     });     
   }
 

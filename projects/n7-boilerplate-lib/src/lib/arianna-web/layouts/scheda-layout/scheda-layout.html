@@ -6,7 +6,8 @@
         ></n7-sidebar-header>
         <n7-tree
             [data]="lb.widgets['aw-tree'].ds.out$ | async"
-            [emit]="lb.widgets['aw-tree'].emit"
+            [emit]="lb.widgets['aw-tree'].emit"            
+            [hidden]="lb.dataSource.sidebarCollapsed"
         ></n7-tree>
     </div> <!--end Left sidebar -->
     <div>  <!--Right sidebar --> 
