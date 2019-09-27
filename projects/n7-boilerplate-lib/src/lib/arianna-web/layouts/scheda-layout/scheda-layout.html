@@ -17,8 +17,14 @@
         ></n7-breadcrumbs>
         <div *ngFor="let part of lb.dataSource.contentParts">
             <div *ngIf="part.type == 'image'">
-                <div [ngStyle]="{'background-image': 'url(' + part.image + ')'}">
-                {{part.image}}
+                <div 
+                [ngStyle]="{
+                    'background-image': 'url(' + part.image + ')',
+                    'width': '100%',
+                    'height': '200px'
+                    }">            
+                
+                
                 </div>               
             </div>
 
