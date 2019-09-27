@@ -7,13 +7,18 @@ export class AwHomeFacetsWrapperDS extends DataSource {
     var inputs: any[] = []
 
     data.forEach(facet => {
+      /**
+       * For each facet on back-end, push a header-component
+       * and a facet-component (search input only) to each array.
+       */
+
       // make array of headers data
       headers.push({
         iconLeft: facet.type.icon,
         text: facet.type.label,
         additionalText: facet.count,
         iconRight: (facet.enabled ? 'n7-icon-eye' : 'n7-icon-eye-slash'),
-        classes: '',
+        classes: (facet.enabled ? 'prova' : 'is-disabled') + (facet.type.color ? ` ${facet.type.color}` : ''),
         payload: facet.type.id,
       });
       // make array of inputs data
@@ -21,6 +26,8 @@ export class AwHomeFacetsWrapperDS extends DataSource {
         input: {
           placeholder: 'Search',
           icon: 'n7-icon-search',
+          // disable input if faced header is not enabled
+          disabled: !facet.enabled,
           payload: String(facet.type.id) + '-search',
         }
       });
