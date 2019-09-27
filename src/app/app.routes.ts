@@ -16,7 +16,7 @@ export const APP_ROUTES: Routes = [
   { path: 'aw/works', component: AwWorksLayoutComponent },
   {
     path: '',
-    redirectTo: '/home',
+    redirectTo: '/aw/home',
     pathMatch: 'full'
   },
 
