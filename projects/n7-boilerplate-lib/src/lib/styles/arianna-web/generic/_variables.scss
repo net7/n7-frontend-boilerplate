@@ -177,7 +177,7 @@ $susy: (
 // ------------------------------------ //
 // #HEADER
 // ------------------------------------ //
-// $header-height: 80px;
+$header-height: 100px;
 // $header-height-mobile: 60px;
 // $header-bg-color: $color-background-base;
 // $header-logo-height: $header-height - ($space*2);
@@ -217,3 +217,11 @@ $susy: (
 // $table-footer-font-size: $font-size-s;
 // $table-footer-text-color: $color-text-light;
 // $table-footer-bg: $color-background-medium;
+
+// ------------------------------------ //
+// #HERO
+// ------------------------------------ //
+$hero-input-height: 60px;
+$hero-button-height: $hero-input-height;
+$hero-image-border: 10px solid #ffffff;
+$hero-image-border-radius: $space*2;
