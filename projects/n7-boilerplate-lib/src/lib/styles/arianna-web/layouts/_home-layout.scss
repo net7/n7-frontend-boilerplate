@@ -62,6 +62,16 @@
                 display: flex;
                 min-width: 100%;
             }
+
+        }
+    }
+
+    .n7-hero {
+        &.has-image {
+            .n7-hero__image {
+                border: $hero-image-border;
+                border-radius: $border-radius;
+            }
         }
     }
 
