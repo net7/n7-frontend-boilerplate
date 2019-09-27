@@ -19,8 +19,7 @@ export const ApolloProviderConfig = {
             type {
               id
               label
-              color
-              icon
+              configKey
             }
             count
           }
@@ -51,8 +50,7 @@ export const ApolloProviderConfig = {
               type {
                 id
                 label
-                icon
-                color
+                configKey
               }
               count
             }
