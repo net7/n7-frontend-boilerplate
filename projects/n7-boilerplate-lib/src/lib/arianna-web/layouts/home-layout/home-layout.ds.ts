@@ -1,5 +1,9 @@
 import { LayoutDataSource } from '@n7-frontend/core';
 
+
+// FIX ME : HO MESSO QUI IL CONFIG SENZA PRENDERLO DAL FILE EFFETTIVO PERCHE'
+//          MI DAVA PROBLEMI E VOLEVO RISOLVERE LA COSA SUBITO PER NON BLOCCARE
+//          NESSUNO, DA AGGANGIARE IL CONFIG VERO
 var config =  {"config-keys": {
       "people": {
         "color": {
@@ -154,10 +158,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     this.allBubbles = [];
     for(var i=0;i<response.entitiesData.length;i++){
       let currentToE = response.entitiesData[i];
-
-      console.log({config});
       for(var j=0;j<currentToE.entitiesCountData.length;j++){
-        console.log('ck',currentToE.countData.type.configKey);
         this.allBubbles.push(
           {
             ...currentToE.entitiesCountData[j],
