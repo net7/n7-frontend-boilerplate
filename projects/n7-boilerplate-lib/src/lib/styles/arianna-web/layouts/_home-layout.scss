@@ -101,6 +101,35 @@
         padding: $space*2;
         background-color: $color-background-base;
     }
+
+    .tag-toe-people {
+        border-radius: 20px;
+        background-color:rgb(58, 129, 242);
+    }
+
+    .tag-toe-organizations {
+        border-radius: 20px;
+        background-color:rgb(196, 135, 49);
+    }
+
+    .tag-toe-concepts {
+        border-radius: 20px;
+        background-color: rgb(94, 171, 123);
+    }
+
+    .tag-toe-places {
+        border-radius: 20px;
+        background-color: rgb(242, 205, 58);
+    }
+
+    .n7-icon-close {
+        border-radius: 50%;
+        color: black;
+        background-color: white;
+        padding: 2px;
+        margin: 1px;
+        font-size: 10px;
+    }
 }
 
 /* ------------------------------------ *\

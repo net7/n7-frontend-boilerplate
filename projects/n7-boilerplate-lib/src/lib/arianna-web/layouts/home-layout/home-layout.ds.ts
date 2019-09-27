@@ -240,7 +240,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
           break;
         }
       }
-      tagsData.push({label,icon:"n7-icon-close",payload:sBubble.id});
+      tagsData.push({label,icon:"n7-icon-close",payload:sBubble.id,classes:"tag-"+this.allBubbles[i].entity.typeOfEntity.id});
     });
     this.one('aw-home-item-tags-wrapper').update(tagsData);
   }
