@@ -61,7 +61,6 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     }).subscribe((response) => {
       this.facetData = [];
       response.entitiesData.forEach( (ent) => {
-        console.log({ent});
         this.facetData.push({...(ent.countData),
                              enabled:true,
                              icon: config["config-keys"][ent.countData.type.configKey]['icon'],
