@@ -46,12 +46,10 @@ export class AwHomeLayoutEH extends EventHandler {
           break;
 
         case 'aw-home-bubble-chart.mouse_enter':
-          console.log('bubble mouse enter',payload);
           // TODO: implemente behaviour
           break;
 
         case 'aw-home-bubble-chart.mouse_leave':
-          console.log('bubble mouse leave',payload);
           // TODO: implemente behaviour
           break;
 
