@@ -38,7 +38,7 @@ export const ApolloProviderConfig = {
     }
     `
   },
-  'initialGlobalFilterCall':{
+  'globalFilter':{
     queryName: 'globalFilter',
     queryBody:`{
       globalFilter(__PARAMS__){
@@ -86,7 +86,8 @@ export const ApolloProviderConfig = {
             }
           }
         }
-      }`
+      }
+    }`
   },
   'getItemDetails':{
     queryName: 'getItemDetails',
