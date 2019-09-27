@@ -17,9 +17,61 @@
         grid-column-gap: $grid-gutter-h;
         max-width: $page-max-width;
         margin: 0 auto;
+        padding-top: $space*3;
+        padding-bottom: $space*3;
 
         &.has-results {
             grid-template-columns: 220px minmax(200px, 1fr) 400px;
+        }
+    }
+
+    &__top-hero {
+        .n7-hero {
+            &__title {
+                font-size: $font-size-xxxl;
+            }
+
+            &__text {
+                &-wrapper {
+                    width: 60%;
+                }
+            }
+
+            &__input {
+                height: $hero-input-height;
+                padding-right: $space*2;
+                padding-left: $space*2;
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+                line-height: $hero-input-height;
+
+                @include placeholder {
+                    font-size: $font-size-l;
+                }
+            }
+
+            &__btn {
+                height: $hero-button-height;
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+                border: none;
+                font-size: $font-size-l;
+            }
+
+            &__input-wrapper {
+                display: flex;
+                min-width: 100%;
+            }
+
+        }
+    }
+
+    .n7-hero {
+        &.has-image {
+            .n7-hero__image {
+                border: $hero-image-border;
+                border-radius: $border-radius;
+            }
         }
     }
 
