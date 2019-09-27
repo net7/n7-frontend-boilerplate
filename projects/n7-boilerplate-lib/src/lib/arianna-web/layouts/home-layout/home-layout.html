@@ -9,7 +9,7 @@
     
     <!-- Bubble chart -->
     <div class="aw-home__bubble-wrapper"
-         [ngClass]="{ 'has-results' : lb.dataSource.selectedBubbleIds.length>0 }">
+         [ngClass]="{ 'has-results' : lb.dataSource.selectedBubbles.length>0 }">
         <div class="aw-home__facets-wrapper">
             <span class="aw-home__facet"
                   *ngFor="let widgetData of lb.widgets['aw-home-facets-wrapper'].ds.out$ | async;">
@@ -24,15 +24,14 @@
             </span>
         </div>
 
-        <div class="aw-home__bubble-chart">
+        <div id="bubble-chart-container">
             <n7-bubble-chart
-                [data]="lb.widgets['aw-home-bubble-chart'].ds.out$ | async"
-                [emit]="lb.widgets['aw-home-bubble-chart'].emit">
+            [data]="lb.widgets['aw-home-bubble-chart'].ds.out$ | async"
+            [emit]="lb.widgets['aw-home-bubble-chart'].emit">
             </n7-bubble-chart>
         </div>
-
-        <ng-container *ngIf="lb.dataSource.selectedBubbleIds.length>0">
-            <div class="aw-home__results-wrapper">
+        <ng-container *ngIf="lb.dataSource.selectedBubbles.length>0">
+            <div [ngStyle]="{ 'display': 'flex' , 'flex-direction': 'column' }">
                 <div *ngIf="lb.dataSource.numOfItemsStr"> <h1>{{ lb.dataSource.numOfItemsStr }} <span>Oggetti culturali</span></h1></div>
                     <h3>Collegati a </h3>
                     <ng-container *ngFor="let widgetData of lb.widgets['aw-home-item-tags-wrapper'].ds.out$ | async;">
