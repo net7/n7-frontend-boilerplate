@@ -31,30 +31,36 @@ export class AwPatrimonioLayoutDS extends LayoutDataSource {
     this.communication = communication;
     this.options = options;
     
-    this.communication.request$('getTree', {
-      onError: (error) => console.log(error),
-      params: { treeId: "patrimonioId" },
-      // method: 'GET',
-      // httpOptions: {}
-    }).subscribe((response) => {
-        let treeObj = {
-            items: []
-          };
-        response['branches'].forEach( item => {
-          treeObj['items'].push( this.parseTree(item, false, []) );
-        })
-      let header = {
-        iconLeft: 'n7-icon-tree-icon',
-         text:  response['label'],
-         iconRight: 'n7-icon-angle-left',
-         classes: 'is-expanded',
-         payload: 'header'
-     };
+ 
+  }
 
-      this.one('aw-tree').update(treeObj);
-      this.one('aw-sidebar-header').update(header);
-      this.one('aw-scheda-breadcrumbs').update(null);
-    }); 
+  getNavigation( id ) {
+    return this.communication.request$('getTree', {
+      onError: (error) => console.log(error),
+      params: { treeId: id }
+    })
+  }
+
+  updateNavigation( data ) {
+    let treeObj = {
+      items: []
+    };
+
+    data['branches'].forEach( item => {
+      treeObj['items'].push( this.parseTree(item, false, []) );
+    })
+
+    let header = {
+      iconLeft: 'n7-icon-tree-icon',
+      text:  data['label'],
+      iconRight: 'n7-icon-angle-left',
+      classes: 'is-expanded',
+      payload: 'header'
+    };
+
+    this.one('aw-tree').update(treeObj);
+    this.one('aw-sidebar-header').update(header);
+    this.one('aw-scheda-breadcrumbs').update(null);
   }
 
   loadItem(id){
@@ -85,11 +91,19 @@ export class AwPatrimonioLayoutDS extends LayoutDataSource {
   loadContent(response) {
     this.hasBreadcrumb = true;
       if(response){
-        this.contentParts = [{
+        this.contentParts = [];
+        if( response.image ) {
+          this.contentParts.push({    
+            image: response.image,       
+            type: 'image'
+          });    
+        }
+
+        this.contentParts.push({          
           title: response.title,
           content: response.text,
           type: 'text'
-        }];
+        });
         
         let breadcrumbs = {
           items: []
@@ -166,9 +180,7 @@ export class AwPatrimonioLayoutDS extends LayoutDataSource {
         treeItem['items'].push( this.parseTree(item, true, currParents) );
       })   
     }        
-        //this.set(key, this.config.global[key]);
-      }
-    )
+    })
     return treeItem;
   }
 

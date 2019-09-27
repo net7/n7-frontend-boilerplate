@@ -20,6 +20,10 @@ export class AwTreeEH extends EventHandler {
         if( type == 'aw-sidebar-header.click'){
             this.dataSource.toggleSidebar();
           }
+          else if( type == 'aw-scheda-layout.selectItem'){
+            this.dataSource.selectTreeItem( payload );
+            this.dataSource.updateTree( null, this.dataSource.currentItem.payload.parents, payload );
+          }
       }); 
   }
 

@@ -79,6 +79,7 @@ export const ApolloProviderConfig = {
             title
             text
             subTitle
+            image
             fields {
               id
               label

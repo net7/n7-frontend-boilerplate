@@ -15,7 +15,9 @@ export class AwPatrimonioLayoutEH extends EventHandler {
           this.dataSource.onInit(payload);
           this.configuration = payload.configuration;
           this.route = payload.route;
+          let paramId = this.route.snapshot.params.id || "";
           this.listenRoute();
+          this.loadNavigation(paramId);
           break;
 
         case 'aw-scheda-layout.destroy':
@@ -44,16 +46,27 @@ export class AwPatrimonioLayoutEH extends EventHandler {
 
   private listenRoute() {
     this.route.paramMap.subscribe(params => {
-     if(params.get('id')) {
+     if(params.get('id')) {       
        this.dataSource.loadItem(params.get('id')).subscribe((response) => {
          if(response){
            this.emitGlobal('navigate', {path: [this.configuration.get("paths").schedaBasePath + response.item.id], handler: 'router'});
            this.dataSource.loadContent(response);
           }
-        });
+        });             
       } else {
         this.dataSource.loadItem();
       }
-    });
+    });    
+  }
+  
+  private loadNavigation( selectedItem ) {
+    this.dataSource.getNavigation('patrimonio').subscribe((response) => {
+      if( response ){
+        this.dataSource.updateNavigation(response, selectedItem);
+      }
+      if ( selectedItem ) {
+        this.emitOuter('selectItem', selectedItem);        
+      }
+      });
   }
 }

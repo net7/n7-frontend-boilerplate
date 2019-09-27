@@ -16,6 +16,12 @@
             [emit]="lb.widgets['aw-scheda-breadcrumbs'].emit"
         ></n7-breadcrumbs>
         <div *ngFor="let part of lb.dataSource.contentParts">
+            <div *ngIf="part.type == 'image'">
+                <div [ngStyle]="{'background-image': 'url(' + part.image + ')'}">
+                {{part.image}}
+                </div>               
+            </div>
+
             <div>
                 <h1>{{ part.title }}</h1>
                 <div class="n7-grid-2">

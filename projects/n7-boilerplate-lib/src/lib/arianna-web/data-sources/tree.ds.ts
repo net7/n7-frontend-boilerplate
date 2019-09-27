@@ -2,6 +2,8 @@ import { DataSource } from '@n7-frontend/core';
 
 export class AwTreeDS extends DataSource {
 
+  public currentItem: string;
+
   toggleNav() {
     
   }
@@ -39,8 +41,9 @@ export class AwTreeDS extends DataSource {
     }
 
     data.items.forEach( (it) => {
-        if(  it['_meta'] == id ) {
+        if( it['_meta'] == id ) {
             it['classes'] = it['classes'] + " is-active";
+            this.currentItem = it;
         } else {
           let classes = it['classes'];
           it['classes'] = classes.replace("is-active", "");

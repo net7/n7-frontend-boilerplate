@@ -45,7 +45,6 @@ export class AwSchedaLayoutComponent extends AbstractLayout implements OnInit, O
   }
 
   ngOnInit() {
-    console.log("init");
     this.onInit();
   }
 
