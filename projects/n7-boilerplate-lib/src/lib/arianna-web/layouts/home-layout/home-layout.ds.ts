@@ -10,7 +10,6 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   private allBubbles: any[] = null;
   public selectedBubbles: any[] = [];
   public numOfItemsStr: string = null;
-  //public _updateBubbles: any = null;
   private _bubbleChart: any = null;
   private maxBubblesSelectable:number = 3;
   private entityBubbleIdMap: any = {};
