@@ -1,5 +1,6 @@
 import { LayoutDataSource } from '@n7-frontend/core';
-import config from "src/assets/app-config.json";
+const config:any = require('../../../../../../../src/assets/app-config.json');
+
 
 export class AwHomeLayoutDS extends LayoutDataSource {
   private communication: any;
