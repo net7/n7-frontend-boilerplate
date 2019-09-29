@@ -38,7 +38,6 @@ export class AwHomeBubbleChartDS extends DataSource {
       totalCount+=bubble.count;
       if(bubble.selected) numOfSelectedBubbles++;
     });
-    console.log({containerSize:Math.log(containerSize),numOfBubbles,minBubbleCount,maxBubbleCount,totalCount,numOfSelectedBubbles});
     data.bubbles.forEach( bubble => {
       let bId = bubble.id;
       //let bubblePercentage = ( bubble.count - (minBubbleCount/3) )/( (maxBubbleCount*3) - (minBubbleCount/3) );
