@@ -85,19 +85,19 @@
     },
     "concepts": {
       "color": {
-        "hex": '#5eab7b',
+        "hex": "#5eab7b",
         "rgb": [94, 171, 123]
       },
-      "icon": 'n7-icon-lightbulb',
-      "label": 'Concetti'
+      "icon": "n7-icon-lightbulb",
+      "label": "Concetti"
     },
     "organizations": {
       "color": {
-        "hex": '#c48731',
+        "hex": "#c48731",
         "rgb": [196, 135, 49]
       },
-      "icon": 'n7-icon-building',
-      "label": 'Organizzazioni'
+      "icon": "n7-icon-building",
+      "label": "Organizzazioni"
     }
   }
 }
