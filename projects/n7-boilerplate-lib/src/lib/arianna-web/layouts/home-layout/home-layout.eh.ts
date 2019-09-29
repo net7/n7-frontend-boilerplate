@@ -46,11 +46,11 @@ export class AwHomeLayoutEH extends EventHandler {
           break;
 
         case 'aw-home-bubble-chart.mouse_enter':
-          // TODO: implemente behaviour
+          // TODO: do something
           break;
 
         case 'aw-home-bubble-chart.mouse_leave':
-          // TODO: implemente behaviour
+          // TODO: do something
           break;
 
         case 'aw-home-item-tags-wrapper.click':
