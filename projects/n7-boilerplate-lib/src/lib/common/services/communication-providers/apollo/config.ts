@@ -8,7 +8,7 @@ export const ApolloProviderConfig = {
           title
         }
       }
-    ` 
+    `
   },
 
   'getTree': {
@@ -38,17 +38,16 @@ export const ApolloProviderConfig = {
     }
     `
   },
-  'initialGlobalFilterCall':{
+  'globalFilter': {
     queryName: 'globalFilter',
-    queryBody:`{
+    queryBody: `{
       globalFilter(__PARAMS__){
         entitiesData {
           countData {
             type {
               id
               label
-              color
-              icon
+              configKey
             }
             count
           }
@@ -79,18 +78,18 @@ export const ApolloProviderConfig = {
               type {
                 id
                 label
-                icon
-                color
+                configKey
               }
               count
             }
           }
         }
-      }`
+      }
+    }`
   },
-  'getItemDetails':{
+  'getItemDetails': {
     queryName: 'getItemDetails',
-    queryBody:`{
+    queryBody: `{
         getItemDetails(__PARAMS__){
             title
             text
@@ -114,6 +113,5 @@ export const ApolloProviderConfig = {
             }
           }
       }`
-    }
-  };
-    
+  }
+};
