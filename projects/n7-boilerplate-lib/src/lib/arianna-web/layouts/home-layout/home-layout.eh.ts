@@ -11,11 +11,9 @@ export class AwHomeLayoutEH extends EventHandler {
         case 'aw-home-layout.init':
           this.dataSource.onInit(payload);
           break;
-
         case 'aw-home-layout.destroy':
             this.destroyed$.next();
             break;
-
         default:
             break;
       }
@@ -54,13 +52,20 @@ export class AwHomeLayoutEH extends EventHandler {
           else if(payload.source==='close')
             this.dataSource.onBubbleDeselected({bubblePayload:payload.bubblePayload,bubble:payload.bubble});
           break;
+        case 'aw-home-bubble-chart.mouse_enter':
+          //console.log('bubble mouse enter',payload);
+          // TODO: implemente behaviour
+          break;
+        case 'aw-home-bubble-chart.mouse_leave':
+          //console.log('bubble mouse leave',payload);
+          // TODO: implemente behaviour
+          break;
         /**
          * Tags & Item Previews Event Handlers
          */
         case 'aw-home-item-tags-wrapper.click':
             this.dataSource.onTagClicked(payload);
             break;
-
         default:
             break;
       }

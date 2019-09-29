@@ -33,7 +33,6 @@ export class AwPatrimonioLayoutEH extends EventHandler {
       switch (type) {
         case 'aw-tree.click':
           if ( payload ) {
-            console.log('path: ' + this.configuration.get('paths'))
             this.emitGlobal('navigate', {path: [this.configuration.get("paths").schedaBasePath + payload], handler: 'router'});
           }
           break;
