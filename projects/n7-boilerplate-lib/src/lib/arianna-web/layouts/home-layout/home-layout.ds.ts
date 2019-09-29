@@ -1,6 +1,5 @@
 import { LayoutDataSource } from '@n7-frontend/core';
-const config:any = require('../../../../../../../src/assets/app-config.json');
-
+const config:any = require('src/assets/app-config.json');
 
 export class AwHomeLayoutDS extends LayoutDataSource {
   private communication: any;
@@ -43,7 +42,6 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     this.mainState.update('headTitle', 'Arianna Web > Home');
     this.mainState.update('pageTitle', 'Arianna Web: Home Layout');
   }
-
 
   renderPreviewsFromApolloQuery(response: any){
     if(!response || !response.itemsPagination) return;
@@ -159,7 +157,6 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     );
     return result;
   }
-
 
   handleFacetSearchChange(change) {
     var payload: string = change.inputPayload;
