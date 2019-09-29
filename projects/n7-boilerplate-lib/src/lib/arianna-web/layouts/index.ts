@@ -17,7 +17,7 @@ export * from './works-layout/works-layout.eh';
 export * from './works-layout/works-layout.config';
 
 // patrimonio layout
-export * from './patrimonio-layout/patrimonio-layout';
-export * from './patrimonio-layout/patrimonio-layout.ds';
-export * from './patrimonio-layout/patrimonio-layout.eh';
-export * from './patrimonio-layout/patrimonio-layout.config';
+export * from './scheda-layout/scheda-layout';
+export * from './scheda-layout/scheda-layout.ds';
+export * from './scheda-layout/scheda-layout.eh';
+export * from './scheda-layout/scheda-layout.config';

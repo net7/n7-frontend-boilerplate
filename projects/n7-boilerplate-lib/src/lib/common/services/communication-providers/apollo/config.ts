@@ -10,6 +10,34 @@ export const ApolloProviderConfig = {
       }
     ` 
   },
+
+  'getTree': {
+    queryName: 'getTreeOfItems',
+    queryBody: `
+    {
+      getTreeOfItems(treeId: "patrimonioId" ) {
+        id
+        label
+        icon
+        branches {
+          label
+          id
+          icon   
+          branches {
+            label
+            id
+            icon  
+            branches {
+              label
+              id
+              icon          
+            }        
+          }       
+        }
+      }
+    }
+    `
+  },
   'globalFilter':{
     queryName: 'globalFilter',
     queryBody:`{
@@ -58,5 +86,33 @@ export const ApolloProviderConfig = {
         }
       }
     }`
-  }
-};
+  },
+  'getItemDetails':{
+    queryName: 'getItemDetails',
+    queryBody:`{
+        getItemDetails(__PARAMS__){
+            title
+            text
+            subTitle
+            image
+            fields {
+              id
+              label
+              fields {
+                id
+                key
+                value
+              }
+            }
+            item {
+              id
+            }
+            breadcrumbs {
+              label
+              link
+            }
+          }
+      }`
+    }
+  };
+    
