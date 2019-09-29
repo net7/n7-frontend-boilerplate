@@ -1,40 +1,5 @@
 import { LayoutDataSource } from '@n7-frontend/core';
-
-var config =  {"config-keys": {
-      "people": {
-        "color": {
-          "hex": "#3a81f2",
-          "rgb": [58, 129, 242]
-        },
-        "icon": "n7-icon-biography",
-        "label": "Persone"
-      },
-      "places": {
-        "color": {
-          "hex": "#f2cd3a",
-          "rgb": [242, 205, 58]
-        },
-        "icon": "n7-icon-map1",
-        "label": "Luoghi"
-      },
-      "concepts": {
-        "color": {
-          "hex": '#5eab7b',
-          "rgb": [94, 171, 123]
-        },
-        "icon": 'n7-icon-lightbulb',
-        "label": 'Concetti'
-      },
-      "organizations": {
-        "color": {
-          "hex": '#c48731',
-          "rgb": [196, 135, 49]
-        },
-        "icon": 'n7-icon-building',
-        "label": 'Organizzazioni'
-      }
-    }
-  };
+import config from "src/assets/app-config.json";
 
 export class AwHomeLayoutDS extends LayoutDataSource {
   private communication: any;
@@ -57,16 +22,16 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     this.one('aw-hero').update({});
 
     this.communication.request$('globalFilter', {
-      onError: (error) => console.log(error),
+      onError: (error) => console.error(error),
     }).subscribe((response) => {
       this.facetData = [];
-      response.entitiesData.forEach( (ent) => {
-        console.log({ent});
-        this.facetData.push({...(ent.countData),
-                             enabled:true,
-                             icon: config["config-keys"][ent.countData.type.configKey]['icon'],
-                             label: config["config-keys"][ent.countData.type.configKey]['label']
-                             });
+      response.entitiesData.forEach( (ent) => {        
+        this.facetData.push({
+          ...(ent.countData),
+          enabled:true,
+          icon: config["config-keys"][ent.countData.type.configKey]['icon'],
+          label: config["config-keys"][ent.countData.type.configKey]['label']
+          });
       } );
       this.one('aw-home-facets-wrapper').update(this.facetData);
       this.setAllBubblesFromApolloQuery(response);
@@ -76,8 +41,6 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     // update streams
     this.mainState.update('headTitle', 'Arianna Web > Home');
     this.mainState.update('pageTitle', 'Arianna Web: Home Layout');
-    // this.mainState.update('subnav', this._getSubnav());
-    // this.mainState.update('breadcrumbs', this._getBreadcrumbs());
   }
 
 
@@ -110,14 +73,11 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       if(!this.selectedBubbles.includes(payload.bubble)){
         if(this.selectedBubbles.length<this.maxBubblesSelectable){
           this.selectedBubbles.push(payload.bubble);
-          //payload.bubble.hasCloseIcon=true;
-          //if(this._updateBubbles) this._updateBubbles();
           this.updateBubblesAndItemPreviews();
         }
       }
     }
   }
-
 
   public onBubbleDeselected(payload){
     if(payload && payload.bubble){
@@ -125,7 +85,6 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         (b) => b.id!==payload.bubble.id );
       if(payload.bubble.hasCloseIcon){
         payload.bubble.hasCloseIcon=false;
-        //if(this._updateBubbles) this._updateBubbles();
         this.updateBubblesAndItemPreviews();
       }
     }
@@ -140,9 +99,11 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         selectedEntitiesIds.push(entityId);
     });
     this.communication.request$('globalFilter', {
-      onError: (error) => console.log(error),
-      params: { selectedEntitiesIds,
-                itemsPagination:{ offset:0,limit:4 } },
+      onError: (error) => console.error(error),
+      params: { 
+        selectedEntitiesIds,
+        itemsPagination:{ offset:0,limit:4 }
+      },
     }).subscribe((response) => {
       this.renderPreviewsFromApolloQuery(response);
       this.renderItemTags();
@@ -155,10 +116,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     this.allBubbles = [];
     for(var i=0;i<response.entitiesData.length;i++){
       let currentToE = response.entitiesData[i];
-
-      console.log({config});
       for(var j=0;j<currentToE.entitiesCountData.length;j++){
-        console.log('ck',currentToE.countData.type.configKey);
         this.allBubbles.push(
           {
             ...currentToE.entitiesCountData[j],
@@ -168,8 +126,8 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     }
     this.entityBubbleIdMap = {};
     this.allBubbles.forEach( (bubble) => {
-      // d3/svg doesn't allow '-' as part of the ids
-      // or strings starting with a number as ids
+      // d3/svg does not allow Number as beginning of ID.
+      // d3/svg does not allow '-' as part of ID.
       bubble.id = 'B_'+bubble.entity.id.replace(/-/g,'_');
       this.entityBubbleIdMap[bubble.id]=bubble.entity.id;
       return bubble;
@@ -184,7 +142,6 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       width: window.innerWidth/1.8,
       bubbles: this.filterBubblesBasedOnFacetsEnabled(),
       reset: ( reset? reset : false ),
-      //setUpdateReference: (ref) => this._updateBubbles = ref,
       setBubbleChart: (bubbleCref) => this._bubbleChart = bubbleCref
     });
   }
@@ -199,7 +156,6 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         return true;
       }
     );
-    console.log({filterBubbles:result});
     return result;
   }
 
@@ -209,14 +165,12 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     var value: string = change.value;
     // store the entered text in facetInputs
     this.facetInputs[payload] = value;
-    console.log('changed: '+ payload + ' with value: ' + value)
   }
 
   handleFacetSearchEnter(enter) {
     var payload: string = enter.inputPayload;
-    var value: string = this.facetInputs[payload];
     // get the text entered in this input
-    console.log('entered: ' + payload + ' with value: ' + value)
+    var value: string = this.facetInputs[payload];
   }
 
   handleFacetHeaderClick(facetId){
@@ -289,7 +243,6 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     this.one('aw-home-item-tags-wrapper').update(tagsData);
   }
 
-
   onTagClicked(payload){
     if(!payload) return;
     const bubbleId=payload;
@@ -299,10 +252,8 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       });
     }
     this.selectedBubbles = this.selectedBubbles.filter( (b) => b.id!==payload );
-    //if(this._updateBubbles) this._updateBubbles();
     this.updateBubblesAndItemPreviews();
   }
-
 
   private _getSubnav(){
     return ['home', 'results', 'single'].map(page => ({
