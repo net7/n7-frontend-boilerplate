@@ -8,7 +8,7 @@ export const ApolloProviderConfig = {
           title
         }
       }
-    ` 
+    `
   },
 
   'getTree': {
@@ -38,9 +38,9 @@ export const ApolloProviderConfig = {
     }
     `
   },
-  'globalFilter':{
+  'globalFilter': {
     queryName: 'globalFilter',
-    queryBody:`{
+    queryBody: `{
       globalFilter(__PARAMS__){
         entitiesData {
           countData {
@@ -87,9 +87,9 @@ export const ApolloProviderConfig = {
       }
     }`
   },
-  'getItemDetails':{
+  'getItemDetails': {
     queryName: 'getItemDetails',
-    queryBody:`{
+    queryBody: `{
         getItemDetails(__PARAMS__){
             title
             text
@@ -113,6 +113,5 @@ export const ApolloProviderConfig = {
             }
           }
       }`
-    }
-  };
-    
+  }
+};

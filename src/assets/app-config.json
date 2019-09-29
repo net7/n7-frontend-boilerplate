@@ -62,7 +62,11 @@
     "people": {
       "color": {
         "hex": "#3a81f2",
-        "rgb": [58, 129, 242]
+        "rgb": [
+          58,
+          129,
+          242
+        ]
       },
       "icon": "n7-icon-biography",
       "label": "Persone"
@@ -70,7 +74,11 @@
     "places": {
       "color": {
         "hex": "#f2cd3a",
-        "rgb": [242, 205, 58]
+        "rgb": [
+          242,
+          205,
+          58
+        ]
       },
       "icon": "n7-icon-map1",
       "label": "Luoghi"

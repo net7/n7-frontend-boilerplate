@@ -35,7 +35,7 @@ export class AwPatrimonioLayoutDS extends LayoutDataSource {
 
   getNavigation( id ) {
     return this.communication.request$('getTree', {
-      onError: (error) => console.log(error),
+      onError: (error) => console.error(error),
       params: { treeId: id }
     })
   }
@@ -65,7 +65,7 @@ export class AwPatrimonioLayoutDS extends LayoutDataSource {
   loadItem(id){
     if(id) {
       return  this.communication.request$('getItemDetails', {
-        onError: (error) => console.log(error),
+        onError: (error) => console.error(error),
         params: { itemId: id }
       })
     } else {
@@ -185,7 +185,6 @@ export class AwPatrimonioLayoutDS extends LayoutDataSource {
 
   collapseSidebar() {
     this.sidebarCollapsed = !this.sidebarCollapsed;
-    console.log( this.sidebarCollapsed);
   }
 
 }
