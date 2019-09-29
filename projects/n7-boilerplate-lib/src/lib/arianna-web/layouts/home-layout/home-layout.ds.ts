@@ -1,44 +1,6 @@
 import { LayoutDataSource } from '@n7-frontend/core';
+const config = require('../../../../../../../src/assets/app-config.json');
 
-
-// FIX ME : HO MESSO QUI IL CONFIG SENZA PRENDERLO DAL FILE EFFETTIVO PERCHE'
-//          MI DAVA PROBLEMI E VOLEVO RISOLVERE LA COSA SUBITO PER NON BLOCCARE
-//          NESSUNO, DA AGGANGIARE IL CONFIG VERO
-var config =  {"config-keys": {
-      "people": {
-        "color": {
-          "hex": "#3a81f2",
-          "rgb": [58, 129, 242]
-        },
-        "icon": "n7-icon-biography",
-        "label": "Persone"
-      },
-      "places": {
-        "color": {
-          "hex": "#f2cd3a",
-          "rgb": [242, 205, 58]
-        },
-        "icon": "n7-icon-map1",
-        "label": "Luoghi"
-      },
-      "concepts": {
-        "color": {
-          "hex": '#5eab7b',
-          "rgb": [94, 171, 123]
-        },
-        "icon": 'n7-icon-lightbulb',
-        "label": 'Concetti'
-      },
-      "organizations": {
-        "color": {
-          "hex": '#c48731',
-          "rgb": [196, 135, 49]
-        },
-        "icon": 'n7-icon-building',
-        "label": 'Organizzazioni'
-      }
-    }
-  };
 
 export class AwHomeLayoutDS extends LayoutDataSource {
   private communication: any;
@@ -49,7 +11,6 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   private allBubbles: any[] = null;
   public selectedBubbles: any[] = [];
   public numOfItemsStr: string = null;
-  //public _updateBubbles: any = null;
   private _bubbleChart: any = null;
   private maxBubblesSelectable:number = 3;
   private entityBubbleIdMap: any = {};
@@ -65,11 +26,13 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     }).subscribe((response) => {
       this.facetData = [];
       response.entitiesData.forEach( (ent) => {
-        this.facetData.push({...(ent.countData),
-                             enabled:true,
-                             icon: config["config-keys"][ent.countData.type.configKey]['icon'],
-                             label: config["config-keys"][ent.countData.type.configKey]['label']
-                             });
+        const teoConfigData = config["config-keys"][ent.countData.type.configKey];
+        if(teoConfigData)
+          this.facetData.push({...(ent.countData),
+                              enabled:true,
+                              icon: teoConfigData.icon,
+                              label: teoConfigData.label
+                              });
       } );
       this.one('aw-home-facets-wrapper').update(this.facetData);
       this.setAllBubblesFromApolloQuery(response);
