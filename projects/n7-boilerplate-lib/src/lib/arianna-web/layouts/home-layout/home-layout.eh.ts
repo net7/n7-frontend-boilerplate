@@ -65,20 +65,5 @@ export class AwHomeLayoutEH extends EventHandler {
             break;
       }
     });
-
-    // listen to global events
-    /* EventHandler.globalEvents$.pipe(
-      takeUntil(this.destroyed$)
-    ).subscribe(({type, payload}) => {
-      switch(type){
-        case 'global.navigate':
-          this.dataSource.onNavigate(payload);
-          break;
-
-        default:
-          break;
-      }
-    }); */
   }
-
 }
