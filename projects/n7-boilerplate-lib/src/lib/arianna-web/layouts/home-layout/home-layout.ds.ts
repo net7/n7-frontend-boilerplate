@@ -1,5 +1,5 @@
 import { LayoutDataSource } from '@n7-frontend/core';
-import config from "src/assets/app-config.json";
+const config:any = require('src/assets/app-config.json');
 
 export class AwHomeLayoutDS extends LayoutDataSource {
   private communication: any;
@@ -24,13 +24,14 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       onError: (error) => console.error(error),
     }).subscribe((response) => {
       this.facetData = [];
-      response.entitiesData.forEach( (ent) => {        
-        this.facetData.push({
-          ...(ent.countData),
-          enabled:true,
-          icon: config["config-keys"][ent.countData.type.configKey]['icon'],
-          label: config["config-keys"][ent.countData.type.configKey]['label']
-          });
+      response.entitiesData.forEach( (ent) => {
+        const teoConfigData = config["config-keys"][ent.countData.type.configKey];
+        if(teoConfigData)
+          this.facetData.push({...(ent.countData),
+                              enabled:true,
+                              icon: teoConfigData.icon,
+                              label: teoConfigData.label
+                              });
       } );
       this.one('aw-home-facets-wrapper').update(this.facetData);
       this.setAllBubblesFromApolloQuery(response);
@@ -41,7 +42,6 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     this.mainState.update('headTitle', 'Arianna Web > Home');
     this.mainState.update('pageTitle', 'Arianna Web: Home Layout');
   }
-
 
   renderPreviewsFromApolloQuery(response: any){
     if(!response || !response.itemsPagination) return;
@@ -157,7 +157,6 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     );
     return result;
   }
-
 
   handleFacetSearchChange(change) {
     var payload: string = change.inputPayload;
