@@ -4,7 +4,6 @@ import { HERO_MOCK } from '@n7-frontend/components';
 export class AwHeroDS extends DataSource {
 
   protected transform(data){
-    console.log({data});
     const HERO_DATA = {
       title: "Arte, architettura e fotografia nel XXI secolo",
       text: "Consulta il patrimonio completo del polo nazionale per l\'arte e l\'architettura contemporanee.",
