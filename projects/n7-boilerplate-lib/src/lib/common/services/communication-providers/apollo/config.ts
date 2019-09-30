@@ -108,8 +108,7 @@ export const ApolloProviderConfig = {
             id
             label
             typeOfEntity {
-              id
-              color
+              configKey
             }
           }
           count
@@ -127,9 +126,7 @@ export const ApolloProviderConfig = {
           relatedTOEData {
             type {
               id
-              label
-              color
-              icon
+              configKey
             }
             count
           }

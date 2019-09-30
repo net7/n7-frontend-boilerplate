@@ -101,6 +101,7 @@
     }
   },
   "paths": {
-    "schedaBasePath": "/aw/patrimonio/"
+    "schedaBasePath": "/aw/patrimonio/",
+    "entitaBasePath": "/aw/entita/"
   }
 }
