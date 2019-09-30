@@ -9,15 +9,24 @@
 // ------------------------------------ //
 @import "../../node_modules/@n7-frontend/icon-font/Font/n7-icon/style.css";
 
+
 // ------------------------------------ //
 // #N7 COLOR SCHEME
 // ------------------------------------ //
 @import "../../node_modules/@n7-frontend/components/styles/generic/color_scheme";
 
+
 // ------------------------------------ //
 // #N7 COMPONENTS VARIABLES
 // ------------------------------------ //
 @import "../../node_modules/@n7-frontend/components/styles/generic/variables";
+
+
+// ------------------------------------ //
+// #AW LAYOUTS VARIABLES
+// ------------------------------------ //
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/generic/variables";
+
 
 // ------------------------------------ //
 // #ARIANNA WEB VARIABLES
@@ -29,13 +38,9 @@
 // ------------------------------------ //
 @import '../../node_modules/@n7-frontend/components/styles/imports';
 
-$color-people: red;
-
-.color-people {
-    color: $color-people;
-}
 
 // ------------------------------------ //
 // #ARIANNA WEB LAYOUTS
 // ------------------------------------ //
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/layouts/home-layout";
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/layouts/scheda-layout";
