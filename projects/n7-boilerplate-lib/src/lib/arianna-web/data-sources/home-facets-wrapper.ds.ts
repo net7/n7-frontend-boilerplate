@@ -14,8 +14,8 @@ export class AwHomeFacetsWrapperDS extends DataSource {
 
       // make array of headers data
       headers.push({
-        iconLeft: facet.type.icon,
-        text: facet.type.label,
+        iconLeft: facet.icon,
+        text: facet.label,
         additionalText: facet.count,
         iconRight: (facet.enabled ? 'n7-icon-eye' : 'n7-icon-eye-slash'),
         classes: (facet.enabled ? 'prova' : 'is-disabled') + (facet.type.color ? ` ${facet.type.color}` : ''),
