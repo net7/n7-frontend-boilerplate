@@ -1,9 +1,9 @@
 import { LayoutDataSource } from '@n7-frontend/core';
-const config:any = require('src/assets/app-config.json');
 
 export class AwHomeLayoutDS extends LayoutDataSource {
   private communication: any;
   private mainState: any;
+  private configuration: any;
   public test: string;
   private facetData: any[] = null;
   private facetInputs: any = {};
@@ -14,9 +14,10 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   private maxBubblesSelectable:number = 3;
   private entityBubbleIdMap: any = {};
 
-  onInit({ communication, mainState }){
+  onInit({ communication, mainState, configuration }){
     this.communication = communication;
     this.mainState = mainState;
+    this.configuration = configuration;
 
     this.one('aw-hero').update({});
 
@@ -25,7 +26,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     }).subscribe((response) => {
       this.facetData = [];
       response.entitiesData.forEach( (ent) => {
-        const teoConfigData = config["config-keys"][ent.countData.type.configKey];
+        const teoConfigData = this.configuration.get("config-keys")[ent.countData.type.configKey];
         if(teoConfigData)
           this.facetData.push({...(ent.countData),
                               enabled:true,
@@ -119,7 +120,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         this.allBubbles.push(
           {
             ...currentToE.entitiesCountData[j],
-            color: config["config-keys"][currentToE.countData.type.configKey]['color']['hex']
+            color: this.configuration.get("config-keys")[currentToE.countData.type.configKey]['color']['hex']
           });
       }
     }
