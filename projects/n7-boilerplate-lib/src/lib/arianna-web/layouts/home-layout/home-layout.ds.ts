@@ -15,6 +15,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   private _bubbleChart: any = null;
   private maxBubblesSelectable:number = 3;
   private entityBubbleIdMap: any = {};
+  private lastWindowWidth: number = -1;
 
   onInit({ communication, mainState }){
     this.communication = communication;
@@ -44,9 +45,14 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     this.mainState.update('headTitle', 'Arianna Web > Home');
     this.mainState.update('pageTitle', 'Arianna Web: Home Layout');
 
+    this.lastWindowWidth=window.outerWidth;
     fromEvent( window , "resize" ).pipe(debounce(() => interval(200))).
-    subscribe( (response) => {
-      this.updateBubblesAndItemPreviews(true);
+    subscribe( () => {
+      // only resets the bubbles if the window's width has changed
+      if(this.lastWindowWidth!=window.outerWidth){
+        this.lastWindowWidth=window.outerWidth;
+        this.updateBubblesAndItemPreviews(true);
+      }
     });
   }
 
