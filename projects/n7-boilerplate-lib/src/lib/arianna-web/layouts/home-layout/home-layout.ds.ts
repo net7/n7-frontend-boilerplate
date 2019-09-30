@@ -1,4 +1,6 @@
 import { LayoutDataSource } from '@n7-frontend/core';
+import { Observable, fromEvent, interval } from 'rxjs';
+import { debounce } from 'rxjs/operators';
 const config:any = require('src/assets/app-config.json');
 
 export class AwHomeLayoutDS extends LayoutDataSource {
@@ -41,6 +43,11 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     // update streams
     this.mainState.update('headTitle', 'Arianna Web > Home');
     this.mainState.update('pageTitle', 'Arianna Web: Home Layout');
+
+    fromEvent( window , "resize" ).pipe(debounce(() => interval(200))).
+    subscribe( (response) => {
+      this.updateBubblesAndItemPreviews(true);
+    });
   }
 
   renderPreviewsFromApolloQuery(response: any){
@@ -89,7 +96,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     }
   }
 
-  private updateBubblesAndItemPreviews(){
+  private updateBubblesAndItemPreviews(onlyBubbles?:boolean){
     let selectedEntitiesIds = [];
     if(this.entityBubbleIdMap)
     this.selectedBubbles.forEach( (sB) => {
@@ -104,8 +111,10 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         itemsPagination:{ offset:0,limit:4 }
       },
     }).subscribe((response) => {
-      this.renderPreviewsFromApolloQuery(response);
-      this.renderItemTags();
+      if(!onlyBubbles){
+        this.renderPreviewsFromApolloQuery(response);
+        this.renderItemTags();
+      }
       this.setAllBubblesFromApolloQuery(response,true);
     });
   }
