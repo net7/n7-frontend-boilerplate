@@ -34,6 +34,7 @@
         <ng-container *ngIf="lb.dataSource.selectedBubbles.length>0">
             <div class="aw-home__bubble-results" [ngStyle]="{ 'display': 'flex' , 'flex-direction': 'column' }">
                 <div *ngIf="lb.dataSource.numOfItemsStr"> <h1 class="aw-home__bubble-results-title"><strong class="aw-home__bubble-results-title-counter">{{ lb.dataSource.numOfItemsStr }}</strong> <span>Oggetti culturali</span></h1></div>
+
                 <div class="aw-home__bubble-tags-wrapper">
                     <h3 class="aw-home__bubble-tags-title">Collegati a </h3>
                     <ng-container *ngFor="let widgetData of lb.widgets['aw-home-item-tags-wrapper'].ds.out$ | async;">
