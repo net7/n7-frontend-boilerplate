@@ -3,7 +3,7 @@
  *
  * Layout for homepage
  */
- 
+
  $page-max-width: 1140px; // TODO add in components variables!
 
  /* ------------------------------------ *\
@@ -91,7 +91,7 @@
     &__bubble-chart {
         padding: $space*2;
     }
-    
+
     /* Facets */
     .aw-home__facet {
         padding-top: $space*2;
@@ -148,14 +148,14 @@
             color: $color-text-light;
             font-size: $font-size-s;
         }
-    
+
         &__icon-left {
             padding: 0 $space 0 0;
             background-color: transparent;
             color: $color-text;
             font-size: $font-size-xl;
         }
-    
+
         &__icon-right {
             padding: 0 0 0 $space;
             background-color: transparent;
@@ -163,7 +163,7 @@
             font-size: $font-size-l;
             cursor: pointer;
             transition: all $transition-durations;
-    
+
             &:hover {
                 color: $color-text-link-hover;
             }
@@ -194,34 +194,61 @@
         background-color: $color-background-base;
     }
 
+    .aw-home__bubble-tags-wrapper {
+        display: flex;
+        flex-flow: row wrap;
+        margin-bottom: $space;
+
+        .n7-tag {
+            margin-right: $space/2;
+            padding-right: $n7-tag-icon-size + $space;
+            position: relative;
+            border-radius: 20px;
+
+            &__label {
+                font-weight: $font-weight-normal;
+            }
+
+            &__icon {
+                width: $n7-tag-icon-size;
+                height: $n7-tag-icon-size;
+                position: absolute;
+                top: 50%;
+                right: $space/2;
+                border-radius: 50%;
+                transform: translateY(-50%);
+                background-color: $n7-tag-icon-background;
+                color: $color-text;
+                font-size: $n7-tag-icon-font-size;
+                text-align: center;
+                line-height: $n7-tag-icon-size;
+            }
+        }
+    }
+
+    .aw-home__bubble-tags-title {
+        margin-right: $space/2;
+        font-weight: $font-weight-normal;
+    }
+
+    /* TODO: remove bg colors from here */
     .tag-toe-people {
-        border-radius: 20px;
         background-color:rgb(58, 129, 242);
     }
 
     .tag-toe-organizations {
-        border-radius: 20px;
         background-color:rgb(196, 135, 49);
     }
 
     .tag-toe-concepts {
-        border-radius: 20px;
         background-color: rgb(94, 171, 123);
     }
 
     .tag-toe-places {
-        border-radius: 20px;
         background-color: rgb(242, 205, 58);
     }
 
-    .n7-icon-close {
-        border-radius: 50%;
-        color: black;
-        background-color: white;
-        padding: 2px;
-        margin: 1px;
-        font-size: 10px;
-    }
+
 }
 
 /* ------------------------------------ *\
@@ -237,7 +264,7 @@
                 &__title {
                     font-size: $font-size-xxl;
                 }
-    
+
                 &__text {
                     &-wrapper {
                         width: 70%;
@@ -255,7 +282,7 @@
                 &__title {
                     font-size: $font-size-xl;
                 }
-    
+
                 &__text {
                     &-wrapper {
                         width: 100%;
