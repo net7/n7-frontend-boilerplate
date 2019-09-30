@@ -7,7 +7,10 @@ export * from './home-facets-wrapper.ds';
 export * from './home-item-preview-wrapper.ds';
 export * from './home-item-tags-wrapper.ds';
 
-// Patrimonio Layout
-
 // Entita Layout
 export * from './entita-nav.ds'
+
+// Scheda Layout
+export * from './tree.ds';
+export * from './sidebar-header.ds';
+export * from './scheda-breadcrumbs.ds';

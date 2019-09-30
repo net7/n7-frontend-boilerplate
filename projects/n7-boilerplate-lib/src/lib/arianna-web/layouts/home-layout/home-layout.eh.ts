@@ -11,11 +11,9 @@ export class AwHomeLayoutEH extends EventHandler {
         case 'aw-home-layout.init':
           this.dataSource.onInit(payload);
           break;
-
         case 'aw-home-layout.destroy':
             this.destroyed$.next();
             break;
-
         default:
             break;
       }
@@ -25,9 +23,11 @@ export class AwHomeLayoutEH extends EventHandler {
       switch(type){
         case 'aw-hero.change':
           const { inputPayload, value } = payload;
-          // do something
+          // TODO: do something
           break;
-
+        /**
+         * Facets Event Handlers
+         */
         case 'aw-home-facets-wrapper.click':
           this.dataSource.handleFacetHeaderClick(payload);
           break;
@@ -37,46 +37,36 @@ export class AwHomeLayoutEH extends EventHandler {
         case 'aw-home-facets-wrapper.enter':
           this.dataSource.handleFacetSearchEnter(payload);
           break;
-
+        /**
+         * Bubble Chart Event Handlers
+         */
+        case 'aw-home-bubble-chart.mouse_enter':
+          // TODO: do something
+          break;
+        case 'aw-home-bubble-chart.mouse_leave':
+          // TODO: do something
+          break;
         case 'aw-home-bubble-chart.click':
           if(payload.source==='bubble')
             this.dataSource.onBubbleSelected({bubblePayload:payload.bubblePayload,bubble:payload.bubble});
           else if(payload.source==='close')
             this.dataSource.onBubbleDeselected({bubblePayload:payload.bubblePayload,bubble:payload.bubble});
           break;
-
         case 'aw-home-bubble-chart.mouse_enter':
-          console.log('bubble mouse enter',payload);
           // TODO: implemente behaviour
           break;
-
         case 'aw-home-bubble-chart.mouse_leave':
-          console.log('bubble mouse leave',payload);
           // TODO: implemente behaviour
           break;
-
+        /**
+         * Tags & Item Previews Event Handlers
+         */
         case 'aw-home-item-tags-wrapper.click':
             this.dataSource.onTagClicked(payload);
             break;
-
         default:
             break;
       }
     });
-
-    // listen to global events
-    /* EventHandler.globalEvents$.pipe(
-      takeUntil(this.destroyed$)
-    ).subscribe(({type, payload}) => {
-      switch(type){
-        case 'global.navigate':
-          this.dataSource.onNavigate(payload);
-          break;
-
-        default:
-          break;
-      }
-    }); */
   }
-
 }

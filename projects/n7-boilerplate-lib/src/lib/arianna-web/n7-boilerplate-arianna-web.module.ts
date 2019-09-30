@@ -7,14 +7,14 @@ import { N7BoilerplateCommonModule } from '../common/n7-boilerplate-common.modul
 import { AwAboutLayoutComponent } from './layouts/about-layout/about-layout';
 import { AwEntitaLayoutComponent } from "./layouts/entita-layout/entita-layout";
 import { AwHomeLayoutComponent } from './layouts/home-layout/home-layout';
-import { AwPatrimonioLayoutComponent } from './layouts/patrimonio-layout/patrimonio-layout';
+import { AwSchedaLayoutComponent } from './layouts/scheda-layout/scheda-layout';
 import { AwWorksLayoutComponent } from './layouts/works-layout/works-layout';
 
 const COMPONENTS = [
   AwAboutLayoutComponent,
   AwEntitaLayoutComponent,
   AwHomeLayoutComponent,
-  AwPatrimonioLayoutComponent,
+  AwSchedaLayoutComponent,
   AwWorksLayoutComponent,
 ];
 

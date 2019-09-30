@@ -1,24 +1,28 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { AbstractLayout } from '../../../common/models/abstract-layout'
 import { ConfigurationService } from '../../../common/services/configuration.service';
 import { LayoutsConfigurationService } from '../../../common/services/layouts-configuration.service';
 import { MainStateService } from '../../../common/services';
-import { AwPatrimonioLayoutConfig as config } from './patrimonio-layout.config';
+import { AwPatrimonioLayoutConfig as config } from './scheda-layout.config';
+import { CommunicationService } from '../../../common/services';
 
 @Component({
-  selector: 'aw-patrimonio-layout',
-  templateUrl: './patrimonio-layout.html'
+  selector: 'aw-scheda-layout',
+  templateUrl: './scheda-layout.html'
 })
 
-export class AwPatrimonioLayoutComponent extends AbstractLayout implements OnInit, OnDestroy {
+export class AwSchedaLayoutComponent extends AbstractLayout implements OnInit, OnDestroy {
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private configuration: ConfigurationService,
     private layoutsConfiguration: LayoutsConfigurationService,
     private mainState: MainStateService,
-    private titleService: Title
+    private titleService: Title,
+    private communication: CommunicationService,
+
   ) {
     super(layoutsConfiguration.get('AwPatrimonioLayoutConfig') || config);
   }
@@ -33,7 +37,9 @@ export class AwPatrimonioLayoutComponent extends AbstractLayout implements OnIni
       configuration: this.configuration,
       mainState: this.mainState,
       router: this.router,
+      route: this.route,
       titleService: this.titleService,
+      communication: this.communication,
       options: this.config.options || {},
     }
   }

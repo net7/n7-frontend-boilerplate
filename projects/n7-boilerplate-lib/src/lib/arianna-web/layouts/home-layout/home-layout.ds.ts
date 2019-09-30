@@ -3,29 +3,36 @@ import { LayoutDataSource } from '@n7-frontend/core';
 export class AwHomeLayoutDS extends LayoutDataSource {
   private communication: any;
   private mainState: any;
+  private configuration: any;
   public test: string;
   private facetData: any[] = null;
   private facetInputs: any = {};
   private allBubbles: any[] = null;
   public selectedBubbles: any[] = [];
   public numOfItemsStr: string = null;
-  //public _updateBubbles: any = null;
   private _bubbleChart: any = null;
   private maxBubblesSelectable:number = 3;
   private entityBubbleIdMap: any = {};
 
-  onInit({ communication, mainState }){
+  onInit({ communication, mainState, configuration }){
     this.communication = communication;
     this.mainState = mainState;
+    this.configuration = configuration;
 
     this.one('aw-hero').update({});
 
     this.communication.request$('globalFilter', {
-      onError: (error) => console.log(error),
+      onError: (error) => console.error(error),
     }).subscribe((response) => {
       this.facetData = [];
       response.entitiesData.forEach( (ent) => {
-        this.facetData.push({...(ent.countData), enabled:true});
+        const teoConfigData = this.configuration.get("config-keys")[ent.countData.type.configKey];
+        if(teoConfigData)
+          this.facetData.push({...(ent.countData),
+                              enabled:true,
+                              icon: teoConfigData.icon,
+                              label: teoConfigData.label
+                              });
       } );
       this.one('aw-home-facets-wrapper').update(this.facetData);
       this.setAllBubblesFromApolloQuery(response);
@@ -35,10 +42,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     // update streams
     this.mainState.update('headTitle', 'Arianna Web > Home');
     this.mainState.update('pageTitle', 'Arianna Web: Home Layout');
-    // this.mainState.update('subnav', this._getSubnav());
-    // this.mainState.update('breadcrumbs', this._getBreadcrumbs());
   }
-
 
   renderPreviewsFromApolloQuery(response: any){
     if(!response || !response.itemsPagination) return;
@@ -69,14 +73,11 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       if(!this.selectedBubbles.includes(payload.bubble)){
         if(this.selectedBubbles.length<this.maxBubblesSelectable){
           this.selectedBubbles.push(payload.bubble);
-          //payload.bubble.hasCloseIcon=true;
-          //if(this._updateBubbles) this._updateBubbles();
           this.updateBubblesAndItemPreviews();
         }
       }
     }
   }
-
 
   public onBubbleDeselected(payload){
     if(payload && payload.bubble){
@@ -84,7 +85,6 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         (b) => b.id!==payload.bubble.id );
       if(payload.bubble.hasCloseIcon){
         payload.bubble.hasCloseIcon=false;
-        //if(this._updateBubbles) this._updateBubbles();
         this.updateBubblesAndItemPreviews();
       }
     }
@@ -99,9 +99,11 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         selectedEntitiesIds.push(entityId);
     });
     this.communication.request$('globalFilter', {
-      onError: (error) => console.log(error),
-      params: { selectedEntitiesIds,
-                itemsPagination:{ offset:0,limit:4 } },
+      onError: (error) => console.error(error),
+      params: { 
+        selectedEntitiesIds,
+        itemsPagination:{ offset:0,limit:4 }
+      },
     }).subscribe((response) => {
       this.renderPreviewsFromApolloQuery(response);
       this.renderItemTags();
@@ -118,14 +120,14 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         this.allBubbles.push(
           {
             ...currentToE.entitiesCountData[j],
-            color:currentToE.countData.type.color
+            color: this.configuration.get("config-keys")[currentToE.countData.type.configKey]['color']['hex']
           });
       }
     }
     this.entityBubbleIdMap = {};
     this.allBubbles.forEach( (bubble) => {
-      // d3/svg doesn't allow '-' as part of the ids
-      // or strings starting with a number as ids
+      // d3/svg does not allow Number as beginning of ID.
+      // d3/svg does not allow '-' as part of ID.
       bubble.id = 'B_'+bubble.entity.id.replace(/-/g,'_');
       this.entityBubbleIdMap[bubble.id]=bubble.entity.id;
       return bubble;
@@ -140,7 +142,6 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       width: window.innerWidth/1.8,
       bubbles: this.filterBubblesBasedOnFacetsEnabled(),
       reset: ( reset? reset : false ),
-      //setUpdateReference: (ref) => this._updateBubbles = ref,
       setBubbleChart: (bubbleCref) => this._bubbleChart = bubbleCref
     });
   }
@@ -155,24 +156,20 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         return true;
       }
     );
-    console.log({filterBubbles:result});
     return result;
   }
-
 
   handleFacetSearchChange(change) {
     var payload: string = change.inputPayload;
     var value: string = change.value;
     // store the entered text in facetInputs
     this.facetInputs[payload] = value;
-    console.log('changed: '+ payload + ' with value: ' + value)
   }
 
   handleFacetSearchEnter(enter) {
     var payload: string = enter.inputPayload;
-    var value: string = this.facetInputs[payload];
     // get the text entered in this input
-    console.log('entered: ' + payload + ' with value: ' + value)
+    var value: string = this.facetInputs[payload];
   }
 
   handleFacetHeaderClick(facetId){
@@ -245,7 +242,6 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     this.one('aw-home-item-tags-wrapper').update(tagsData);
   }
 
-
   onTagClicked(payload){
     if(!payload) return;
     const bubbleId=payload;
@@ -255,10 +251,8 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       });
     }
     this.selectedBubbles = this.selectedBubbles.filter( (b) => b.id!==payload );
-    //if(this._updateBubbles) this._updateBubbles();
     this.updateBubblesAndItemPreviews();
   }
-
 
   private _getSubnav(){
     return ['home', 'results', 'single'].map(page => ({

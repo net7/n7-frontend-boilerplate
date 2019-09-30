@@ -4,7 +4,7 @@ import {
   Page404LayoutComponent,
   AwHomeLayoutComponent,
   AwAboutLayoutComponent,
-  AwPatrimonioLayoutComponent,
+  AwSchedaLayoutComponent,
   AwWorksLayoutComponent,
   AwEntitaLayoutComponent,
 } from 'n7-boilerplate-lib';
@@ -13,7 +13,8 @@ export const APP_ROUTES: Routes = [
   // arianna web routes
   { path: 'aw/home', component: AwHomeLayoutComponent },
   { path: 'aw/about', component: AwAboutLayoutComponent },
-  { path: 'aw/patrimonio', component: AwPatrimonioLayoutComponent },
+  { path: 'aw/patrimonio/:id', component: AwSchedaLayoutComponent },
+  { path: 'aw/patrimonio', redirectTo: 'aw/patrimonio/' },
   { path: 'aw/works', component: AwWorksLayoutComponent },
   { path: 'aw/entita', component: AwEntitaLayoutComponent },
   {

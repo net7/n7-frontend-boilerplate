@@ -8,19 +8,46 @@ export const ApolloProviderConfig = {
           title
         }
       }
-    ` 
+    `
   },
-  'globalFilter':{
+
+  'getTree': {
+    queryName: 'getTreeOfItems',
+    queryBody: `
+    {
+      getTreeOfItems(treeId: "patrimonioId" ) {
+        id
+        label
+        icon
+        branches {
+          label
+          id
+          icon   
+          branches {
+            label
+            id
+            icon  
+            branches {
+              label
+              id
+              icon          
+            }        
+          }       
+        }
+      }
+    }
+    `
+  },
+  'globalFilter': {
     queryName: 'globalFilter',
-    queryBody:`{
+    queryBody: `{
       globalFilter(__PARAMS__){
         entitiesData {
           countData {
             type {
               id
               label
-              color
-              icon
+              configKey
             }
             count
           }
@@ -51,8 +78,7 @@ export const ApolloProviderConfig = {
               type {
                 id
                 label
-                icon
-                color
+                configKey
               }
               count
             }
@@ -111,5 +137,32 @@ export const ApolloProviderConfig = {
       }
     }
     `
+  },
+  'getItemDetails': {
+    queryName: 'getItemDetails',
+    queryBody: `{
+        getItemDetails(__PARAMS__){
+            title
+            text
+            subTitle
+            image
+            fields {
+              id
+              label
+              fields {
+                id
+                key
+                value
+              }
+            }
+            item {
+              id
+            }
+            breadcrumbs {
+              label
+              link
+            }
+          }
+      }`
   }
 };
