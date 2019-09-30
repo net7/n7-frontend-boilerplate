@@ -99,5 +99,8 @@
       "icon": "n7-icon-building",
       "label": "Organizzazioni"
     }
+  },
+  "paths": {
+    "schedaBasePath": "/aw/patrimonio/"
   }
 }
