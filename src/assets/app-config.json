@@ -45,10 +45,6 @@
         }
       ]
     },
-    "user": {
-      "img": "https://placeimg.com/150/150/any/people",
-      "name": "Giorgio Spinosa"
-    },
     "menuToggle": {
       "open": {
         "payload": "mobile-open"
