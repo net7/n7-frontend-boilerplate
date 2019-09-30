@@ -3,7 +3,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { resolveSanitizationFn } from '@angular/compiler/src/render3/view/template';
 
-export class AwPatrimonioLayoutEH extends EventHandler {
+export class AwSchedaLayoutEH extends EventHandler {
   private destroyed$: Subject<any> = new Subject();
   private configuration: any;
   private route: any;
@@ -29,7 +29,7 @@ export class AwPatrimonioLayoutEH extends EventHandler {
       }
     });
 
-    this.outerEvents$.subscribe(({ type, payload }) => {   
+    this.outerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
         case 'aw-tree.click':
           if ( payload ) {
@@ -40,31 +40,31 @@ export class AwPatrimonioLayoutEH extends EventHandler {
         break;
 
       }
-    });     
+    });
   }
 
   private listenRoute() {
     this.route.paramMap.subscribe(params => {
-     if(params.get('id')) {       
+     if(params.get('id')) {
        this.dataSource.loadItem(params.get('id')).subscribe((response) => {
          if(response){
            this.emitGlobal('navigate', {path: [this.configuration.get("paths").schedaBasePath + response.item.id], handler: 'router'});
            this.dataSource.loadContent(response);
           }
-        });             
+        });
       } else {
         this.dataSource.loadItem();
       }
-    });    
+    });
   }
-  
+
   private loadNavigation( selectedItem ) {
     this.dataSource.getNavigation('patrimonio').subscribe((response) => {
       if( response ){
         this.dataSource.updateNavigation(response, selectedItem);
       }
       if ( selectedItem ) {
-        this.emitOuter('selectItem', selectedItem);        
+        this.emitOuter('selectItem', selectedItem);
       }
       });
   }

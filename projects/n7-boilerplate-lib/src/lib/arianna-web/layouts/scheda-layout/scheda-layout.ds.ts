@@ -2,9 +2,9 @@ import { LayoutDataSource } from '@n7-frontend/core';
 import { ItemPreviewComponent } from '@n7-frontend/components';
 import { Location } from '@angular/common';
 
-export class AwPatrimonioLayoutDS extends LayoutDataSource {
+export class AwSchedaLayoutDS extends LayoutDataSource {
   /**
-  * If you are not using these variables (from your-layout.ts), 
+  * If you are not using these variables (from your-layout.ts),
   * remove them from here too.
   */
   private communication: any;
@@ -20,7 +20,7 @@ export class AwPatrimonioLayoutDS extends LayoutDataSource {
   public tree: any;
   public sidebarCollapsed: boolean;
   /**
-  * If you are not using these variables (from your-layout.ts), 
+  * If you are not using these variables (from your-layout.ts),
   * remove them from onInit() parameters and inside the function.
   */
   onInit({configuration, mainState, router, options, titleService, communication }) {
@@ -29,7 +29,7 @@ export class AwPatrimonioLayoutDS extends LayoutDataSource {
     this.router = router;
     this.titleService = titleService;
     this.communication = communication;
-    this.options = options; 
+    this.options = options;
     this.sidebarCollapsed = false;
   }
 
@@ -92,22 +92,22 @@ export class AwPatrimonioLayoutDS extends LayoutDataSource {
       if(response){
         this.contentParts = [];
         if( response.image ) {
-          this.contentParts.push({    
-            image: response.image,       
+          this.contentParts.push({
+            image: response.image,
             type: 'image'
-          });    
+          });
         }
 
-        this.contentParts.push({          
+        this.contentParts.push({
           title: response.title,
           content: response.text,
           type: 'text'
         });
-        
+
         let breadcrumbs = {
           items: []
         }
-        
+
         if(response.fields){
           response.fields.forEach(field => {
             this.contentParts.push({
@@ -127,7 +127,7 @@ export class AwPatrimonioLayoutDS extends LayoutDataSource {
           })
         });
         this.one('aw-scheda-breadcrumbs').update(breadcrumbs);
-      }   
+      }
   }
 
   private parseTree(data, toggle, parents) {
@@ -141,21 +141,21 @@ export class AwPatrimonioLayoutDS extends LayoutDataSource {
               source: "toggle",
               id: data['id'],
               parents: currParents,
-            }           
+            }
         }
-    } 
-    
+    }
+
     if( key != "branches" ) {
       switch (key) {
         case "label": treeItem['text'] = data[key]; break;
-        case "icon" :  
-            if (toggle) 
+        case "icon" :
+            if (toggle)
             {
               treeItem['toggle']['icon'] = data[key];
-            }             
+            }
             break;
-        case "id" :                
-            treeItem['_meta'] =  data[key];       
+        case "id" :
+            treeItem['_meta'] =  data[key];
             treeItem['payload'] = {
               source: "menuItem",
               id: data['id']
@@ -174,11 +174,11 @@ export class AwPatrimonioLayoutDS extends LayoutDataSource {
         treeItem['payload']['parents'] = currParents;
       }
 
-      treeItem['items'] = [];          
+      treeItem['items'] = [];
       data[key].forEach( item => {
         treeItem['items'].push( this.parseTree(item, true, currParents) );
-      })   
-    }        
+      })
+    }
     })
     return treeItem;
   }
