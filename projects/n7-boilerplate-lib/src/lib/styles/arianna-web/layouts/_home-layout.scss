@@ -73,8 +73,8 @@
         grid-column-gap: $grid-gutter-h;
         max-width: $page-max-width;
         margin: 0 auto;
-        padding-top: $space*3;
-        padding-bottom: $space*3;
+        padding-top: $space*4;
+        padding-bottom: $space*4;
 
         &.has-results {
             grid-template-columns: 220px minmax(200px, 1fr) 400px;
@@ -181,18 +181,11 @@
         &__search-input {
             height: $n7-facet-search-input-height;
             border-radius: $n7-facet-search-input-border-radius;
-
-            &-wrapper {
-            }
         }
 
         &__search-icon {
             line-height: $n7-facet-search-input-height;
         }
-    }
-
-    .n7-facet-search {
-       
     }
 
     /* Results */
