@@ -30,10 +30,12 @@
             [emit]="lb.widgets['aw-home-bubble-chart'].emit">
             </n7-bubble-chart>
         </div>
+
         <ng-container *ngIf="lb.dataSource.selectedBubbles.length>0">
-            <div [ngStyle]="{ 'display': 'flex' , 'flex-direction': 'column' }">
-                <div *ngIf="lb.dataSource.numOfItemsStr"> <h1>{{ lb.dataSource.numOfItemsStr }} <span>Oggetti culturali</span></h1></div>
-                    <h3>Collegati a </h3>
+            <div class="aw-home__bubble-results" [ngStyle]="{ 'display': 'flex' , 'flex-direction': 'column' }">
+                <div class="aw-home__bubble-results-title" *ngIf="lb.dataSource.numOfItemsStr"> <h1><strong>{{ lb.dataSource.numOfItemsStr }}</strong> <span>Oggetti culturali</span></h1></div>
+                <div class="aw-home__bubble-tags-wrapper">
+                    <h3 class="aw-home__bubble-tags-title">Collegati a </h3>
                     <ng-container *ngFor="let widgetData of lb.widgets['aw-home-item-tags-wrapper'].ds.out$ | async;">
                             <n7-tag
                                 [data]="widgetData"
@@ -41,6 +43,8 @@
                             </n7-tag>
                             <br>
                     </ng-container>
+                </div>
+
                 <ng-container *ngFor="let widgetData of lb.widgets['aw-home-item-preview-wrapper'].ds.out$ | async;">
                     <n7-item-preview
                         [data]="widgetData"
