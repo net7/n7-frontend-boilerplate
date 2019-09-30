@@ -208,7 +208,6 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         });
         if(filteredSelectedBubbles.length!=this.selectedBubbles.length){
           this.selectedBubbles = filteredSelectedBubbles;
-          this.updateBubblesAndItemPreviews();
         };
       }
       this.allBubbles.forEach( (bubble) => {
