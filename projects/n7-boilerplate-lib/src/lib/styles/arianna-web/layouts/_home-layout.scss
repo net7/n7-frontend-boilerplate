@@ -189,6 +189,27 @@
     }
 
     /* Results */
+    .aw-home__bubble-results {
+        &-title {
+            font-weight: $font-weight-normal;
+    
+            &-counter {
+                margin-right: $space/2;
+            }
+        }
+
+        &-list {
+            padding: $space*2 0;
+            border-top: 1px solid $color-border-normal;
+        }
+
+        .n7-item-preview {
+            margin-bottom: $space*2;
+            padding-bottom: $space;
+            border-bottom: 1px solid $color-border-normal;
+        }
+    }
+
     .aw-home__results-wrapper {
         padding: $space*2;
         background-color: $color-background-base;
@@ -197,7 +218,7 @@
     .aw-home__bubble-tags-wrapper {
         display: flex;
         flex-flow: row wrap;
-        margin-bottom: $space;
+        margin-bottom: $space*2;
 
         .n7-tag {
             margin-right: $space/2;
