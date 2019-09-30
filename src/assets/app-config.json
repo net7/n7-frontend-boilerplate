@@ -75,5 +75,8 @@
       "icon": "n7-icon-map1",
       "label": "Luoghi"
     }
+  },
+  "paths": {
+    "schedaBasePath": "/aw/patrimonio/"
   }
 }
