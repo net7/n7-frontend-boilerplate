@@ -1,12 +1,14 @@
 import { LayoutDataSource } from '@n7-frontend/core';
-import { Observable, fromEvent, interval } from 'rxjs';
+import { fromEvent, interval } from 'rxjs';
 import { debounce } from 'rxjs/operators';
+import 'tippy.js/themes/light-border.css';
+
 const config:any = require('src/assets/app-config.json');
 
 export class AwHomeLayoutDS extends LayoutDataSource {
   private communication: any;
   private mainState: any;
-  public test: string;
+  private tippy: any;
   private facetData: any[] = null;
   private facetInputs: any = {};
   private allBubbles: any[] = null;
@@ -16,9 +18,12 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   private maxBubblesSelectable:number = 3;
   private entityBubbleIdMap: any = {};
   private lastWindowWidth: number = -1;
+  private bubblePopup: any = null;
+  public currentHoverEntity: any = null;
 
-  onInit({ communication, mainState }){
+  onInit({ communication, mainState , tippy }){
     this.communication = communication;
+    this.tippy = tippy;
     this.mainState = mainState;
 
     this.one('aw-hero').update({});
@@ -53,6 +58,42 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         this.lastWindowWidth=window.outerWidth;
         this.updateBubblesAndItemPreviews(true);
       }
+    });
+  }
+
+
+  onBubbleMouseEnter(payload){
+    if(!payload || !payload.bubble) return;
+    const bubbleId = payload.bubble.id;
+    let hoverEntityId = this.entityBubbleIdMap[payload.bubble.id];
+    for(var i=0;i<this.allBubbles.length;i++){
+      let bubble = this.allBubbles[i];
+      if(bubble.entity.id===hoverEntityId){
+        this.currentHoverEntity = bubble.entity;
+        this.currentHoverEntity.count = bubble.count;
+        break;
+      }
+    }
+    if(this.bubblePopup){
+      this.bubblePopup.hide();
+      this.bubblePopup.destroy();
+      this.bubblePopup = null;
+    }
+    setTimeout( () => {
+      let template = document.getElementById("bubble-popup-menu");
+      let templateClone = template.cloneNode(true);
+      templateClone['style'].display = "inline-block";
+      this.bubblePopup = this.tippy(`#${bubbleId}`, {
+        content: templateClone,
+        trigger: 'manual',
+        interactive: true,
+        arrow: true,
+        theme: 'light-border no-padding',
+        placement: 'top-middle',
+        maxWidth: 500,
+        //onHidden: () => console.log('hidden'),
+      })[0];
+      if(this,this.bubblePopup) this.bubblePopup.show();
     });
   }
 

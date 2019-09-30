@@ -41,6 +41,7 @@ export class AwHomeLayoutEH extends EventHandler {
          * Bubble Chart Event Handlers
          */
         case 'aw-home-bubble-chart.mouse_enter':
+          this.dataSource.onBubbleMouseEnter({bubblePayload:payload.bubblePayload,bubble:payload.bubble});
           // TODO: do something
           break;
         case 'aw-home-bubble-chart.mouse_leave':
@@ -51,12 +52,6 @@ export class AwHomeLayoutEH extends EventHandler {
             this.dataSource.onBubbleSelected({bubblePayload:payload.bubblePayload,bubble:payload.bubble});
           else if(payload.source==='close')
             this.dataSource.onBubbleDeselected({bubblePayload:payload.bubblePayload,bubble:payload.bubble});
-          break;
-        case 'aw-home-bubble-chart.mouse_enter':
-          // TODO: implemente behaviour
-          break;
-        case 'aw-home-bubble-chart.mouse_leave':
-          // TODO: implemente behaviour
           break;
         /**
          * Tags & Item Previews Event Handlers
