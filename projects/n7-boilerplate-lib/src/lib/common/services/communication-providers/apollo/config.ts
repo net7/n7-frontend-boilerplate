@@ -91,6 +91,7 @@ export const ApolloProviderConfig = {
     queryName: 'getEntityDetails',
     queryBody: `{
       getEntityDetails(__PARAMS__){
+        overviewTab
         entity {
           label
           id
