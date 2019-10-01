@@ -4,7 +4,9 @@ import { takeUntil } from 'rxjs/operators';
 
 export class AwHomeLayoutEH extends EventHandler {
   private destroyed$: Subject<any> = new Subject();
-  
+  private configuration: any;
+  private route: any;
+
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch(type) {
@@ -13,6 +15,19 @@ export class AwHomeLayoutEH extends EventHandler {
           break;
         case 'aw-home-layout.destroy':
             this.destroyed$.next();
+            break;
+        case "aw-home-layout.bubble-tooltip-close-click":
+            this.dataSource.onBubbleTooltipClick('close',payload);
+            break;
+        case "aw-home-layout.bubble-tooltip-goto-click":
+            if(!payload || !payload.entityId) return;
+            this.emitGlobal('navigate', {
+              handler: 'router',
+              path: [`aw/entita/${payload.entityId}/overview`]
+            });
+            break;
+        case "aw-home-layout.bubble-tooltip-select-click":
+            this.dataSource.onBubbleTooltipClick('select',payload);
             break;
         default:
             break;
@@ -41,22 +56,16 @@ export class AwHomeLayoutEH extends EventHandler {
          * Bubble Chart Event Handlers
          */
         case 'aw-home-bubble-chart.mouse_enter':
-          // TODO: do something
+          this.dataSource.onBubbleMouseEnter({bubblePayload:payload.bubblePayload,bubble:payload.bubble});
           break;
         case 'aw-home-bubble-chart.mouse_leave':
           // TODO: do something
           break;
         case 'aw-home-bubble-chart.click':
-          if(payload.source==='bubble')
-            this.dataSource.onBubbleSelected({bubblePayload:payload.bubblePayload,bubble:payload.bubble});
-          else if(payload.source==='close')
+          if(payload.source==='bubble'){
+            if(payload.bubble) this.dataSource.onBubbleSelected(payload.bubble);
+          } else if(payload.source==='close')
             this.dataSource.onBubbleDeselected({bubblePayload:payload.bubblePayload,bubble:payload.bubble});
-          break;
-        case 'aw-home-bubble-chart.mouse_enter':
-          // TODO: implemente behaviour
-          break;
-        case 'aw-home-bubble-chart.mouse_leave':
-          // TODO: implemente behaviour
           break;
         /**
          * Tags & Item Previews Event Handlers
