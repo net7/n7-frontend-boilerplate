@@ -47,7 +47,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
     data['branches'].forEach( item => {
       treeObj['items'].push( this.parseTree(item, false, []) );
-    })
+    });
 
     let header = {
       iconLeft: 'n7-icon-tree-icon',
@@ -62,8 +62,8 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     this.one('aw-scheda-breadcrumbs').update(null);
   }
 
-  loadItem(id){
-    if(id) {
+  loadItem( id ) {
+    if ( id ) {
       return  this.communication.request$('getItemDetails', {
         onError: (error) => console.error(error),
         params: { itemId: id }
@@ -74,14 +74,14 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       this.hasBreadcrumb = false;
       this.contentParts = [
         {
-          type: "text",
+          type: 'text',
           title: 'Collezione d\'Arte',
-          content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi gravida sagittis pulvinar. Etiam iaculis maximus metus, id tincidunt libero auctor et. Proin tempus turpis vel erat ultrices, id vestibulum ante cursus. Vestibulum lobortis, ante at eleifend consequat, massa libero bibendum justo, id fermentum magna odio ac nulla. Cras aliquet scelerisque malesuada. Mauris congue fermentum tristique. Nulla imperdiet accumsan dui, tristique lobortis metus eleifend non. Donec quis odio massa. Cras sit amet sem eu turpis molestie blandit vitae sed nibh. Pellentesque ornare enim nisl, et efficitur ante elementum a. Ut nec ex finibus, congue libero feugiat, aliquam ante. Cras sem neque, pellentesque eget mi at, auctor vulputate tellus. Sed aliquam mi a tortor ultricies interdum. Etiam tincidunt nunc commodo nulla porttitor semper. Etiam porta lacinia libero a mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+          content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi gravida sagittis pulvinar. Etiam iaculis maximus metus, id tincidunt libero auctor et. Proin tempus turpis vel erat ultrices, id vestibulum ante cursus. Vestibulum lobortis, ante at eleifend consequat, massa libero bibendum justo, id fermentum magna odio ac nulla. Cras aliquet scelerisque malesuada. Mauris congue fermentum tristique. Nulla imperdiet accumsan dui, tristique lobortis metus eleifend non. Donec quis odio massa. Cras sit amet sem eu turpis molestie blandit vitae sed nibh. Pellentesque ornare enim nisl, et efficitur ante elementum a. Ut nec ex finibus, congue libero feugiat, aliquam ante. Cras sem neque, pellentesque eget mi at, auctor vulputate tellus. Sed aliquam mi a tortor ultricies interdum. Etiam tincidunt nunc commodo nulla porttitor semper. Etiam porta lacinia libero a mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
         },
         {
-          type: "text",
+          type: 'text',
           title: 'Centro Archivi',
-          content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi gravida sagittis pulvinar. Etiam iaculis maximus metus, id tincidunt libero auctor et. Proin tempus turpis vel erat ultrices, id vestibulum ante cursus. Vestibulum lobortis, ante at eleifend consequat, massa libero bibendum justo, id fermentum magna odio ac nulla. Cras aliquet scelerisque malesuada. Mauris congue fermentum tristique. Nulla imperdiet accumsan dui, tristique lobortis metus eleifend non. Donec quis odio massa. Cras sit amet sem eu turpis molestie blandit vitae sed nibh. Pellentesque ornare enim nisl, et efficitur ante elementum a. Ut nec ex finibus, congue libero feugiat, aliquam ante. Cras sem neque, pellentesque eget mi at, auctor vulputate tellus. Sed aliquam mi a tortor ultricies interdum. Etiam tincidunt nunc commodo nulla porttitor semper. Etiam porta lacinia libero a mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+          content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi gravida sagittis pulvinar. Etiam iaculis maximus metus, id tincidunt libero auctor et. Proin tempus turpis vel erat ultrices, id vestibulum ante cursus. Vestibulum lobortis, ante at eleifend consequat, massa libero bibendum justo, id fermentum magna odio ac nulla. Cras aliquet scelerisque malesuada. Mauris congue fermentum tristique. Nulla imperdiet accumsan dui, tristique lobortis metus eleifend non. Donec quis odio massa. Cras sit amet sem eu turpis molestie blandit vitae sed nibh. Pellentesque ornare enim nisl, et efficitur ante elementum a. Ut nec ex finibus, congue libero feugiat, aliquam ante. Cras sem neque, pellentesque eget mi at, auctor vulputate tellus. Sed aliquam mi a tortor ultricies interdum. Etiam tincidunt nunc commodo nulla porttitor semper. Etiam porta lacinia libero a mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
         }
       ]
     }
@@ -108,17 +108,27 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
           items: []
         }
 
-        if(response.fields){
-          response.fields.forEach(field => {
-            this.contentParts.push({
-              title: field.label,
-              content: response.text,
-              type: 'metaGroup',
-              fields: field.fields
-            })
-          });
-        }
+        let group = { group: [] };
 
+        if ( response.fields ){
+          response.fields.forEach(field => {
+            let items = [];
+            field.fields.forEach(item => {
+              items.push( { label: item.key, value: item.value} )
+            });
+
+            group.group.push(
+              {
+                title: field.label,
+                items: items
+                //items: field.fields
+              }
+            );
+        });
+      }
+
+
+        this.one('aw-scheda-metadata').update(group);
 
         response.breadcrumbs.forEach(element => {
           breadcrumbs.items.push({

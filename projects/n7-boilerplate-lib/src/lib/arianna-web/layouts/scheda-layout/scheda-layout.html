@@ -3,46 +3,46 @@
         <!-- Left sidebar: tree -->
         <div class="aw-scheda__tree">
             <n7-sidebar-header
-                [data]="lb.widgets['aw-sidebar-header'].ds.out$ | async" 
+                [data]="lb.widgets['aw-sidebar-header'].ds.out$ | async"
                 [emit]="lb.widgets['aw-sidebar-header'].emit"
             ></n7-sidebar-header>
             <n7-tree
                 [data]="lb.widgets['aw-tree'].ds.out$ | async"
-                [emit]="lb.widgets['aw-tree'].emit"            
+                [emit]="lb.widgets['aw-tree'].emit"
                 [hidden]="lb.dataSource.sidebarCollapsed"
             ></n7-tree>
         </div>
-    
-        <!-- Scheda details --> 
+
+        <!-- Scheda details -->
         <div class="aw-scheda__scheda-wrapper">
             <n7-breadcrumbs
                 *ngIf="lb.dataSource.hasBreadcrumb"
-                [data]="lb.widgets['aw-scheda-breadcrumbs'].ds.out$ | async" 
+                [data]="lb.widgets['aw-scheda-breadcrumbs'].ds.out$ | async"
                 [emit]="lb.widgets['aw-scheda-breadcrumbs'].emit"
             ></n7-breadcrumbs>
             <div *ngFor="let part of lb.dataSource.contentParts">
                 <div *ngIf="part.type == 'image'">
-                    <div 
+                    <div
                     [ngStyle]="{
                         'background-image': 'url(' + part.image + ')',
                         'width': '100%',
                         'height': '200px'
                         }">
-                    </div>               
+                    </div>
                 </div>
-    
+
                 <div>
                     <h1>{{ part.title }}</h1>
                     <div>
                         <div [innerHTML]="part.content" >
-                        </div>                
+                        </div>
                     </div>
-                </div> 
-                <div *ngIf="part.type == 'metaGroup'">
-                    <div *ngFor="let meta of part.fields">
-                        <strong>{{meta.key}}: </strong><span>{{meta.value}}</span>
-                    </div>  
+                </div>
             </div>
-        </div>        
+            <n7-metadata-viewer
+                [data]="lb.widgets['aw-scheda-metadata'].ds.out$ | async"
+            >
+            </n7-metadata-viewer>
+        </div>
     </div>
 </div>

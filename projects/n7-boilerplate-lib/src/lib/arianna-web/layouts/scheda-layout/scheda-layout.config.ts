@@ -12,7 +12,8 @@ export const AwPatrimonioLayoutConfig = {
   widgets: [
      { id: 'aw-sidebar-header'},
      { id: 'aw-tree' },
-     { id: 'aw-scheda-breadcrumbs' }
+     { id: 'aw-scheda-breadcrumbs' },
+     { id: 'aw-scheda-metadata' }
   ],
   layoutDS: AwSchedaLayoutDS,
   layoutEH: AwSchedaLayoutEH,

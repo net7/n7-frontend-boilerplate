@@ -33,10 +33,10 @@ export class AwSchedaLayoutEH extends EventHandler {
       switch (type) {
         case 'aw-tree.click':
           if ( payload ) {
-            this.emitGlobal('navigate', {path: [this.configuration.get("paths").schedaBasePath + payload], handler: 'router'});
+            this.emitGlobal('navigate', {path: [this.configuration.get('paths').schedaBasePath + payload], handler: 'router'});
           }
           break;
-        case "aw-sidebar-header.click": this.dataSource.collapseSidebar();
+        case 'aw-sidebar-header.click': this.dataSource.collapseSidebar();
         break;
 
       }
@@ -45,10 +45,9 @@ export class AwSchedaLayoutEH extends EventHandler {
 
   private listenRoute() {
     this.route.paramMap.subscribe(params => {
-     if(params.get('id')) {
+     if ( params.get('id') ) {
        this.dataSource.loadItem(params.get('id')).subscribe((response) => {
-         if(response){
-           this.emitGlobal('navigate', {path: [this.configuration.get("paths").schedaBasePath + response.item.id], handler: 'router'});
+         if ( response ) {
            this.dataSource.loadContent(response);
           }
         });
