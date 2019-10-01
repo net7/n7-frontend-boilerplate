@@ -12,3 +12,4 @@ export * from './tree.ds';
 export * from './sidebar-header.ds';
 export * from './scheda-breadcrumbs.ds';
 export * from './scheda-metadata.ds';
+export * from './scheda-image.ds';

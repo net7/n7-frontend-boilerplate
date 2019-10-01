@@ -20,16 +20,11 @@
                 [data]="lb.widgets['aw-scheda-breadcrumbs'].ds.out$ | async"
                 [emit]="lb.widgets['aw-scheda-breadcrumbs'].emit"
             ></n7-breadcrumbs>
+            <n7-image-viewer
+                [data]="lb.widgets['aw-scheda-image'].ds.out$ | async"
+            >
+            </n7-image-viewer>
             <div *ngFor="let part of lb.dataSource.contentParts">
-                <div *ngIf="part.type == 'image'">
-                    <div
-                    [ngStyle]="{
-                        'background-image': 'url(' + part.image + ')',
-                        'width': '100%',
-                        'height': '200px'
-                        }">
-                    </div>
-                </div>
 
                 <div>
                     <h1>{{ part.title }}</h1>

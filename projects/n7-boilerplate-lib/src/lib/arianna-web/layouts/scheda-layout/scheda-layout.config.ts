@@ -13,7 +13,8 @@ export const AwPatrimonioLayoutConfig = {
      { id: 'aw-sidebar-header'},
      { id: 'aw-tree' },
      { id: 'aw-scheda-breadcrumbs' },
-     { id: 'aw-scheda-metadata' }
+     { id: 'aw-scheda-metadata' },
+     { id: 'aw-scheda-image' }
   ],
   layoutDS: AwSchedaLayoutDS,
   layoutEH: AwSchedaLayoutEH,

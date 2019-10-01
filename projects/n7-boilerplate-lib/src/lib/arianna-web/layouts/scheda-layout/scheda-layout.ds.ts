@@ -91,11 +91,14 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     this.hasBreadcrumb = true;
       if(response){
         this.contentParts = [];
-        if( response.image ) {
-          this.contentParts.push({
-            image: response.image,
-            type: 'image'
-          });
+        if ( response.image ) {
+
+          this.one('aw-scheda-image').update({
+              images: [
+                {type: 'image', url: response.image, buildPyramid: false}
+              ],
+              viewerId: "scheda-layout-viewer"
+            })
         }
 
         this.contentParts.push({
@@ -126,8 +129,6 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
             );
         });
       }
-
-
         this.one('aw-scheda-metadata').update(group);
 
         response.breadcrumbs.forEach(element => {
