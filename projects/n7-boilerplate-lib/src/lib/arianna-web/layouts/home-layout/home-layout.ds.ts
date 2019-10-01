@@ -1,7 +1,6 @@
 import { LayoutDataSource } from '@n7-frontend/core';
 import { fromEvent, interval } from 'rxjs';
 import { debounce } from 'rxjs/operators';
-import 'tippy.js/themes/light-border.css';
 
 const config:any = require('src/assets/app-config.json');
 
@@ -61,6 +60,25 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     });
   }
 
+  onBubbleTooltipClick(source:string,payload){
+    switch(source){
+      case 'select':
+        if(!payload) return;
+        const bubbleId = this.convertEntityIdToBubbleId(payload.entityId);
+        if(!bubbleId) return;
+        let bubble = null;
+        if(this._bubbleChart){
+          this._bubbleChart.selectAll(`g`).each( b => {
+            if(b.id===bubbleId) bubble=b;
+          });
+          if(bubble) this.onBubbleSelected(bubble);
+        }
+        break;
+      default:
+        break;
+    }
+  }
+
 
   onBubbleMouseEnter(payload){
     if(!payload || !payload.bubble) return;
@@ -93,7 +111,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         maxWidth: 500,
         //onHidden: () => console.log('hidden'),
       })[0];
-      if(this,this.bubblePopup) this.bubblePopup.show();
+      setTimeout( () => { if(this.bubblePopup) this.bubblePopup.show() } , 800 );
     });
   }
 
@@ -121,11 +139,11 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     this.one('aw-home-item-preview-wrapper').update(response.itemsPagination.items);
   }
 
-  public onBubbleSelected(payload){
-    if(payload && payload.bubble){
-      if(!this.selectedBubbles.includes(payload.bubble)){
+  public onBubbleSelected(bubble){
+    if(bubble){
+      if(!this.selectedBubbles.includes(bubble)){
         if(this.selectedBubbles.length<this.maxBubblesSelectable){
-          this.selectedBubbles.push(payload.bubble);
+          this.selectedBubbles.push(bubble);
           this.updateBubblesAndItemPreviews();
         }
       }
@@ -166,6 +184,12 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     });
   }
 
+  private convertEntityIdToBubbleId(entityId:string) :string {
+    if(!entityId) return null;
+    return ( 'B_'+entityId.replace(/-/g,'_') );
+  }
+
+
   setAllBubblesFromApolloQuery(response: any,reset?:boolean){
     if( !response || !response.entitiesData ) return;
     this.allBubbles = [];
@@ -183,7 +207,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     this.allBubbles.forEach( (bubble) => {
       // d3/svg does not allow Number as beginning of ID.
       // d3/svg does not allow '-' as part of ID.
-      bubble.id = 'B_'+bubble.entity.id.replace(/-/g,'_');
+      bubble.id = this.convertEntityIdToBubbleId(bubble.entity.id);
       this.entityBubbleIdMap[bubble.id]=bubble.entity.id;
       return bubble;
     });
