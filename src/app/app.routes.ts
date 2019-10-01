@@ -6,6 +6,7 @@ import {
   AwAboutLayoutComponent,
   AwSchedaLayoutComponent,
   AwWorksLayoutComponent,
+  AwEntitaLayoutComponent,
 } from 'n7-boilerplate-lib';
 
 export const APP_ROUTES: Routes = [
@@ -15,9 +16,11 @@ export const APP_ROUTES: Routes = [
   { path: 'aw/patrimonio/:id', component: AwSchedaLayoutComponent },
   { path: 'aw/patrimonio', redirectTo: 'aw/patrimonio/' },
   { path: 'aw/works', component: AwWorksLayoutComponent },
+  { path: 'aw/entita/:id/:tab', component: AwEntitaLayoutComponent},
+  { path: 'aw/entita/:id', redirectTo: 'aw/entita/:id/overview' },
   {
     path: '',
-    redirectTo: '/home',
+    redirectTo: '/aw/home',
     pathMatch: 'full'
   },
 

@@ -1,0 +1,63 @@
+<div class="aw-entita-layout" *ngIf="lb.dataSource">
+    <h2><span class="n7-icon-map-marker-alt"></span> {{lb.dataSource.entityTitle}}</h2>
+    <n7-nav 
+        [data]="lb.widgets['aw-entita-nav'].ds.out$ | async" 
+        [emit]="lb.widgets['aw-entita-nav'].emit">
+    </n7-nav>
+    <ng-container [ngSwitch]="lb.dataSource.selectedTab">
+        <ng-container *ngSwitchCase="'overview'">
+            <ng-container *ngTemplateOutlet="overview"></ng-container>
+        </ng-container>
+        <ng-container *ngSwitchCase="'campi'">
+            <ng-container *ngTemplateOutlet="campi"></ng-container>
+        </ng-container>
+        <ng-container *ngSwitchCase="'oggetti'">
+            <ng-container *ngTemplateOutlet="oggetti"></ng-container>
+        </ng-container>
+        <ng-container *ngSwitchCase="'entita'">
+            <ng-container *ngTemplateOutlet="entita"></ng-container>
+        </ng-container>
+        <ng-container *ngSwitchCase="'maxxi'">
+            <ng-container *ngTemplateOutlet="maxxi"></ng-container>
+        </ng-container>
+        <ng-container *ngSwitchCase="'wiki'">
+            <ng-container *ngTemplateOutlet="wiki"></ng-container>
+        </ng-container>
+    </ng-container>
+</div>
+
+<ng-template #overview>
+    <div>
+        {{lb.dataSource.myResponse.overviewTab}}
+    </div>
+</ng-template>
+
+<ng-template #campi>
+    <div>
+        Page campi
+    </div>
+</ng-template>
+
+<ng-template #oggetti>
+    <div>
+        Page oggetti
+    </div>
+</ng-template>
+
+<ng-template #entita>
+    <div>
+        Page entita
+    </div>
+</ng-template>
+
+<ng-template #maxxi>
+    <div>
+        Page maxxi
+    </div>
+</ng-template>
+
+<ng-template #wiki>
+    <div>
+        Page wiki
+    </div>
+</ng-template>

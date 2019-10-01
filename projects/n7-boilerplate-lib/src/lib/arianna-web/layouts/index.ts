@@ -16,7 +16,13 @@ export * from './works-layout/works-layout.ds';
 export * from './works-layout/works-layout.eh';
 export * from './works-layout/works-layout.config';
 
-// patrimonio layout
+// entita layout
+export * from './entita-layout/entita-layout';
+export * from './entita-layout/entita-layout.ds';
+export * from './entita-layout/entita-layout.eh';
+export * from './entita-layout/entita-layout.config';
+
+// scheda layout
 export * from './scheda-layout/scheda-layout';
 export * from './scheda-layout/scheda-layout.ds';
 export * from './scheda-layout/scheda-layout.eh';
