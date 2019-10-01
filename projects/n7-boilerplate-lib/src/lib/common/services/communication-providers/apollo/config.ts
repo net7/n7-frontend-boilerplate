@@ -95,6 +95,9 @@ export const ApolloProviderConfig = {
         entity {
           label
           id
+          typeOfEntity {
+            configKey
+          }
         }
         fieldsTab {
           id

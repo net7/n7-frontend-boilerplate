@@ -1,5 +1,9 @@
 <div class="aw-entita-layout" *ngIf="lb.dataSource">
-    <h2><span class="n7-icon-map-marker-alt"></span> {{lb.dataSource.entityTitle}}</h2>
+
+    <!-- <n7-inner-title
+        [data]="lb.dataSource.navHeader">
+    </n7-inner-title> -->
+
     <n7-nav 
         [data]="lb.widgets['aw-entita-nav'].ds.out$ | async" 
         [emit]="lb.widgets['aw-entita-nav'].emit">

@@ -12,7 +12,13 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
   public pageTitle: string;
 
   public myResponse: any = {}; // store response object
-  public entityTitle:string; // entity header
+  public navHeader: any = {
+    title: {
+      main: {
+        text: 'test'
+      }
+    }
+  }; // entity header
   public selectedTab:string; // selected nav item
 
   private communication: any;
@@ -24,13 +30,6 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     this.titleService = titleService;
     this.options = options;
     this.communication = communication;
-
-    // this.communication.request$('getEntityDetails', {
-    //   onError: (error) => console.log(error),
-    //   params: { entityId: "test" }
-    // }).subscribe((response) => {
-    //   console.log('apollo-response', { response })
-    // });
   }
 
   getNavigation(id) {
@@ -105,8 +104,15 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
   }
 
   loadContent(res) {
-    console.log('loadcontent-response: ', {res})
+    console.log('Apollo responded with: ', {res})
     this.myResponse = res
-    this.entityTitle = res.entity.label
+    this.navHeader = {
+      icon: this.configuration.get("config-key")[this.myResponse.entity.typeOfEntity.configKey],
+      title: {
+        main: {
+          text: res.entity.label
+        }
+      }
+    }
   }
 }
