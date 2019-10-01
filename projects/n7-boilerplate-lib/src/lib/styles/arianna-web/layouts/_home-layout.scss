@@ -3,27 +3,13 @@
  *
  * Layout for homepage
  */
- 
+
  $page-max-width: 1140px; // TODO add in components variables!
 
-/* ------------------------------------ *\
-    BUBBLE-CHART
+ /* ------------------------------------ *\
+    HERO
 \* ------------------------------------ */
 .aw-home {
-    /* Bubble facets and chart wrapper */
-    &__bubble-wrapper {
-        display: grid;
-        grid-template-columns: 220px 1fr;
-        grid-column-gap: $grid-gutter-h;
-        max-width: $page-max-width;
-        margin: 0 auto;
-        padding-top: $space*3;
-        padding-bottom: $space*3;
-
-        &.has-results {
-            grid-template-columns: 220px minmax(200px, 1fr) 400px;
-        }
-    }
 
     &__top-hero {
         .n7-hero {
@@ -74,6 +60,27 @@
             }
         }
     }
+}
+
+/* ------------------------------------ *\
+    BUBBLE-CHART
+\* ------------------------------------ */
+.aw-home {
+    /* Bubble facets and chart wrapper */
+    &__bubble-wrapper {
+        display: grid;
+        grid-template-columns: 220px 1fr;
+        grid-column-gap: $grid-gutter-h;
+        max-width: $page-max-width;
+        margin: 0 auto;
+        padding-top: $space*4;
+        padding-bottom: $space*4;
+
+        &.has-results {
+            grid-template-columns: 220px minmax(200px, 1fr) 400px;
+        }
+    }
+
 
     .aw-home__facets-wrapper {
         display: flex;
@@ -84,10 +91,10 @@
     &__bubble-chart {
         padding: $space*2;
     }
-    
+
     /* Facets */
     .aw-home__facet {
-        padding-top: $space*1.5;
+        padding-top: $space*2;
         border-bottom: 1px solid $color-border-normal;
 
         &:last-child {
@@ -96,92 +103,173 @@
     }
 
     .n7-facet-header {
+        height: auto;
         position: relative;
         background-color: transparent;
         color: $color-text;
-    }
 
-    .n7-facet-header__title {
-        position: absolute;
-        left: 46px;
-        margin-left: 0;
-        font-size: $font-size-l;
-        font-weight: $font-weight-bold;
-    }
+        &__text,
+        &__secondary-text {
+            line-height: 1.2;
+        }
 
-    .n7-facet-header__counter {
-        position: absolute;
-        top: 25px;
-        left: 46px;
-        margin-left: 0;
-        color: $color-text-light;
-        font-size: $font-size-s;
-    }
+        &__text {
+            margin-bottom: $space/2;
+            font-size: $font-size-l;
+            font-weight: $font-weight-bold;
+            &-wrapper {
+                display: flex;
+                flex-flow: column nowrap;
+                width: 100%;
+                border-left: 1px solid $color-border-normal;
+            }
+        }
 
-    .n7-facet-header__icon-left {
-        padding: $space;
-        background-color: transparent;
-        color: $color-text;
-        font-size: $font-size-l;
-        border-right: 1px solid $color-border-normal;
-    }
+        &__secondary-text {
+            margin-top: auto;
+            margin-right: $space;
+            margin-left: $space;
+            color: $color-text-light;
+        }
 
-    .n7-facet-header__icon-right {
-        padding: $space;
-        background-color: transparent;
-        color: $color-text-light;
-        font-size: $font-size-l;
-        cursor: pointer;
-        transition: all $transition-durations;
+        &__title {
+            position: absolute;
+            left: 46px;
+            margin-left: 0;
+            font-size: $font-size-l;
+            font-weight: $font-weight-bold;
+        }
 
-        &:hover {
-            color: $color-text-link-hover;
+        &__counter {
+            position: absolute;
+            top: 25px;
+            left: 46px;
+            margin-left: 0;
+            color: $color-text-light;
+            font-size: $font-size-s;
+        }
+
+        &__icon-left {
+            padding: 0 $space 0 0;
+            background-color: transparent;
+            color: $color-text;
+            font-size: $font-size-xl;
+        }
+
+        &__icon-right {
+            padding: 0 0 0 $space;
+            background-color: transparent;
+            color: $color-text-light;
+            font-size: $font-size-l;
+            cursor: pointer;
+            transition: all $transition-durations;
+
+            &:hover {
+                color: $color-text-link-hover;
+            }
         }
     }
 
     .n7-facet {
         padding-top: 0;
-    }
+        &__search-wrapper {
+            padding-right: 0;
+            padding-bottom: $space*2;
+            padding-left: 0;
+        }
 
-    .n7-facet__search-wrapper {
-        padding-left: 0;
-        padding-right: 0;
+        &__search-input {
+            height: $n7-facet-search-input-height;
+            border-radius: $n7-facet-search-input-border-radius;
+        }
+
+        &__search-icon {
+            line-height: $n7-facet-search-input-height;
+        }
     }
 
     /* Results */
+    .aw-home__bubble-results {
+        &-title {
+            font-weight: $font-weight-normal;
+    
+            &-counter {
+                margin-right: $space/2;
+            }
+        }
+
+        &-list {
+            padding: $space*2 0;
+            border-top: 1px solid $color-border-normal;
+        }
+
+        .n7-item-preview {
+            margin-bottom: $space*2;
+            padding-bottom: $space;
+            border-bottom: 1px solid $color-border-normal;
+        }
+    }
+
     .aw-home__results-wrapper {
         padding: $space*2;
         background-color: $color-background-base;
     }
 
+    .aw-home__bubble-tags-wrapper {
+        display: flex;
+        flex-flow: row wrap;
+        margin-bottom: $space*2;
+
+        .n7-tag {
+            margin-right: $space/2;
+            padding-right: $n7-tag-icon-size + $space;
+            position: relative;
+            border-radius: 20px;
+
+            &__label {
+                font-weight: $font-weight-normal;
+            }
+
+            &__icon {
+                width: $n7-tag-icon-size;
+                height: $n7-tag-icon-size;
+                position: absolute;
+                top: 50%;
+                right: $space/2;
+                border-radius: 50%;
+                transform: translateY(-50%);
+                background-color: $n7-tag-icon-background;
+                color: $color-text;
+                font-size: $n7-tag-icon-font-size;
+                text-align: center;
+                line-height: $n7-tag-icon-size;
+            }
+        }
+    }
+
+    .aw-home__bubble-tags-title {
+        margin-right: $space/2;
+        font-weight: $font-weight-normal;
+    }
+
+    /* TODO: remove bg colors from here */
     .tag-toe-people {
-        border-radius: 20px;
         background-color:rgb(58, 129, 242);
     }
 
     .tag-toe-organizations {
-        border-radius: 20px;
         background-color:rgb(196, 135, 49);
     }
 
     .tag-toe-concepts {
-        border-radius: 20px;
         background-color: rgb(94, 171, 123);
     }
 
     .tag-toe-places {
-        border-radius: 20px;
         background-color: rgb(242, 205, 58);
     }
 
-    .n7-icon-close {
-        border-radius: 50%;
-        color: black;
-        background-color: white;
-        padding: 2px;
-        margin: 1px;
-        font-size: 10px;
-    }
+
 }
 
 /* ------------------------------------ *\
@@ -191,9 +279,39 @@
 }
 
 @media all and (max-width: $breakpoint-ipad-portrait) {
+    .aw-home {
+        &__top-hero {
+            .n7-hero {
+                &__title {
+                    font-size: $font-size-xxl;
+                }
+
+                &__text {
+                    &-wrapper {
+                        width: 70%;
+                    }
+                }
+            }
+        }
+    }
 }
 
 @media all and (max-width: $breakpoint-smartphone-landscape) {
+    .aw-home {
+        &__top-hero {
+            .n7-hero {
+                &__title {
+                    font-size: $font-size-xl;
+                }
+
+                &__text {
+                    &-wrapper {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
 }
 
 /* Retina */

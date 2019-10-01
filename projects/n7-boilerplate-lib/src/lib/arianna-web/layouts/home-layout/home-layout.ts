@@ -6,6 +6,7 @@ import { LayoutsConfigurationService } from '../../../common/services/layouts-co
 import { MainStateService } from '../../../common/services/main-state.service';
 import { AwHomeLayoutConfig as config } from './home-layout.config';
 import { CommunicationService } from '../../../common/services';
+import tippy from 'tippy.js';
 
 @Component({
     selector: 'aw-home-layout',
@@ -29,6 +30,7 @@ export class AwHomeLayoutComponent extends AbstractLayout implements OnInit, OnD
       router: this.router,
       communication: this.communication,
       options: this.config.options || {},
+      tippy: tippy,
     }
   }
 

@@ -1,10 +1,14 @@
 import { LayoutDataSource } from '@n7-frontend/core';
+import { fromEvent, interval } from 'rxjs';
+import { debounce } from 'rxjs/operators';
+
+const config:any = require('src/assets/app-config.json');
 
 export class AwHomeLayoutDS extends LayoutDataSource {
   private communication: any;
   private mainState: any;
+  private tippy: any;
   private configuration: any;
-  public test: string;
   private facetData: any[] = null;
   private facetInputs: any = {};
   private allBubbles: any[] = null;
@@ -13,9 +17,13 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   private _bubbleChart: any = null;
   private maxBubblesSelectable:number = 3;
   private entityBubbleIdMap: any = {};
+  private lastWindowWidth: number = -1;
+  private bubblePopup: any = null;
+  public currentHoverEntity: any = null;
 
-  onInit({ communication, mainState, configuration }){
+  onInit({ communication, mainState, configuration, tippy }){
     this.communication = communication;
+    this.tippy = tippy;
     this.mainState = mainState;
     this.configuration = configuration;
 
@@ -42,6 +50,71 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     // update streams
     this.mainState.update('headTitle', 'Arianna Web > Home');
     this.mainState.update('pageTitle', 'Arianna Web: Home Layout');
+
+    this.lastWindowWidth=window.outerWidth;
+    fromEvent( window , "resize" ).pipe(debounce(() => interval(200))).
+    subscribe( () => {
+      // only resets the bubbles if the window's width has changed
+      if(this.lastWindowWidth!=window.outerWidth){
+        this.lastWindowWidth=window.outerWidth;
+        this.updateBubblesAndItemPreviews(true);
+      }
+    });
+  }
+
+  onBubbleTooltipClick(source:string,payload){
+    switch(source){
+      case 'select':
+        if(!payload) return;
+        const bubbleId = this.convertEntityIdToBubbleId(payload.entityId);
+        if(!bubbleId) return;
+        let bubble = null;
+        if(this._bubbleChart){
+          this._bubbleChart.selectAll(`g`).each( b => {
+            if(b.id===bubbleId) bubble=b;
+          });
+          if(bubble) this.onBubbleSelected(bubble);
+        }
+        break;
+      default:
+        break;
+    }
+  }
+
+
+  onBubbleMouseEnter(payload){
+    if(!payload || !payload.bubble) return;
+    const bubbleId = payload.bubble.id;
+    let hoverEntityId = this.entityBubbleIdMap[payload.bubble.id];
+    for(var i=0;i<this.allBubbles.length;i++){
+      let bubble = this.allBubbles[i];
+      if(bubble.entity.id===hoverEntityId){
+        this.currentHoverEntity = bubble.entity;
+        this.currentHoverEntity.count = bubble.count;
+        break;
+      }
+    }
+    if(this.bubblePopup){
+      this.bubblePopup.hide();
+      this.bubblePopup.destroy();
+      this.bubblePopup = null;
+    }
+    setTimeout( () => {
+      let template = document.getElementById("bubble-popup-menu");
+      let templateClone = template.cloneNode(true);
+      templateClone['style'].display = "inline-block";
+      this.bubblePopup = this.tippy(`#${bubbleId}`, {
+        content: templateClone,
+        trigger: 'manual',
+        interactive: true,
+        arrow: true,
+        theme: 'light-border no-padding',
+        placement: 'top-middle',
+        maxWidth: 500,
+        //onHidden: () => console.log('hidden'),
+      })[0];
+      setTimeout( () => { if(this.bubblePopup) this.bubblePopup.show() } , 800 );
+    });
   }
 
   renderPreviewsFromApolloQuery(response: any){
@@ -68,11 +141,11 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     this.one('aw-home-item-preview-wrapper').update(response.itemsPagination.items);
   }
 
-  public onBubbleSelected(payload){
-    if(payload && payload.bubble){
-      if(!this.selectedBubbles.includes(payload.bubble)){
+  public onBubbleSelected(bubble){
+    if(bubble){
+      if(!this.selectedBubbles.includes(bubble)){
         if(this.selectedBubbles.length<this.maxBubblesSelectable){
-          this.selectedBubbles.push(payload.bubble);
+          this.selectedBubbles.push(bubble);
           this.updateBubblesAndItemPreviews();
         }
       }
@@ -90,7 +163,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     }
   }
 
-  private updateBubblesAndItemPreviews(){
+  private updateBubblesAndItemPreviews(onlyBubbles?:boolean){
     let selectedEntitiesIds = [];
     if(this.entityBubbleIdMap)
     this.selectedBubbles.forEach( (sB) => {
@@ -105,11 +178,19 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         itemsPagination:{ offset:0,limit:4 }
       },
     }).subscribe((response) => {
-      this.renderPreviewsFromApolloQuery(response);
-      this.renderItemTags();
+      if(!onlyBubbles){
+        this.renderPreviewsFromApolloQuery(response);
+        this.renderItemTags();
+      }
       this.setAllBubblesFromApolloQuery(response,true);
     });
   }
+
+  private convertEntityIdToBubbleId(entityId:string) :string {
+    if(!entityId) return null;
+    return ( 'B_'+entityId.replace(/-/g,'_') );
+  }
+
 
   setAllBubblesFromApolloQuery(response: any,reset?:boolean){
     if( !response || !response.entitiesData ) return;
@@ -128,7 +209,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     this.allBubbles.forEach( (bubble) => {
       // d3/svg does not allow Number as beginning of ID.
       // d3/svg does not allow '-' as part of ID.
-      bubble.id = 'B_'+bubble.entity.id.replace(/-/g,'_');
+      bubble.id = this.convertEntityIdToBubbleId(bubble.entity.id);
       this.entityBubbleIdMap[bubble.id]=bubble.entity.id;
       return bubble;
     });
@@ -209,7 +290,6 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         });
         if(filteredSelectedBubbles.length!=this.selectedBubbles.length){
           this.selectedBubbles = filteredSelectedBubbles;
-          this.updateBubblesAndItemPreviews();
         };
       }
       this.allBubbles.forEach( (bubble) => {
