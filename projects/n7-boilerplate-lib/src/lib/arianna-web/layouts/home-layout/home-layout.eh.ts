@@ -4,7 +4,9 @@ import { takeUntil } from 'rxjs/operators';
 
 export class AwHomeLayoutEH extends EventHandler {
   private destroyed$: Subject<any> = new Subject();
-  
+  private configuration: any;
+  private route: any;
+
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch(type) {
@@ -53,10 +55,10 @@ export class AwHomeLayoutEH extends EventHandler {
             this.dataSource.onBubbleDeselected({bubblePayload:payload.bubblePayload,bubble:payload.bubble});
           break;
         case 'aw-home-bubble-chart.mouse_enter':
-          // TODO: implemente behaviour
+          // TODO: implement behaviour
           break;
         case 'aw-home-bubble-chart.mouse_leave':
-          // TODO: implemente behaviour
+          // TODO: implement behaviour
           break;
         /**
          * Tags & Item Previews Event Handlers
