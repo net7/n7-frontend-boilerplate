@@ -39,11 +39,9 @@ export class AwEntitaLayoutEH extends EventHandler {
       // look for id
       if (params.get('id')) {
         // get item from response with id === id and return as promise
-        this.dataSource.loadItem(params.get('id')).subscribe((response) => {
-          if (response) {
-            // navigate to: "basepath + :id"
-            this.emitGlobal('navigate', { path: [this.configuration.get("paths").entitaBasePath + response.entity.id], handler: 'router' });
-            // this.dataSource.loadContent(response); // FIX: LOOP
+        this.dataSource.loadItem(params.get('id'), params.get('tab')).subscribe((res) => {
+          if (res) {
+            this.dataSource.loadContent(res);
           }
         });
       } else {
@@ -60,11 +58,9 @@ export class AwEntitaLayoutEH extends EventHandler {
      */
     this.dataSource.getNavigation('entita').subscribe((response) => {
       if (response) {
-        console.log('got a reponse')
         this.dataSource.updateWidgets(response);
       }
       if (selectedItem) {
-        console.log('navigating to selected item: ' + selectedItem)
         this.emitOuter('selectItem', selectedItem);
       }
     });

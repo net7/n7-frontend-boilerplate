@@ -16,8 +16,8 @@ export const APP_ROUTES: Routes = [
   { path: 'aw/patrimonio/:id', component: AwSchedaLayoutComponent },
   { path: 'aw/patrimonio', redirectTo: 'aw/patrimonio/' },
   { path: 'aw/works', component: AwWorksLayoutComponent },
-  { path: 'aw/entita/:id', component: AwEntitaLayoutComponent },
-  { path: 'aw/entita', redirectTo: 'aw/entita/' },
+  { path: 'aw/entita/:id/:tab', component: AwEntitaLayoutComponent},
+  { path: 'aw/entita/:id', redirectTo: 'aw/entita/:id/overview' },
   {
     path: '',
     redirectTo: '/aw/home',

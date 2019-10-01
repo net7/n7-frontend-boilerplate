@@ -1,5 +1,6 @@
 import { LayoutDataSource } from '@n7-frontend/core';
 import { promise } from 'protractor';
+import { JsonConfigService } from 'n7-boilerplate-lib/lib/common/services';
 
 export class AwEntitaLayoutDS extends LayoutDataSource {
   protected configuration: any;
@@ -9,7 +10,10 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
 
   public options: any;
   public pageTitle: string;
-  public myResponse: any; // store response object
+
+  public myResponse: any = {}; // store response object
+  public entityTitle:string; // entity header
+  public selectedTab:string; // selected nav item
 
   private communication: any;
 
@@ -36,7 +40,6 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
      * @param id - the id of the item to get
      * @returns the response of getEntityDetails with entityId === id
      */
-    console.log('stai navigando a: ' + id)
     return this.communication.request$('getEntityDetails', {
       onError: (error) => console.error(error),
       params: { entityId: id }
@@ -50,8 +53,6 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
      * @param data - communication reponse object
      */
 
-    console.log('data obj: ', {data})
-
     const navigation: any = { items: [
       {
         text: 'OVERVIEW',
@@ -59,23 +60,23 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       },
       {
         text: 'CAMPI',
-        payload: 'overview',
+        payload: 'campi',
       },
       {
         text: 'OGGETTI COLLEGATI',
-        payload: 'overview',
+        payload: 'oggetti-collegati',
       },
       {
         text: 'ENTITA COLLEGATE',
-        payload: 'overview',
+        payload: 'entita-collegate',
       },
       {
         text: 'MAXXI',
-        payload: 'overview',
+        payload: 'maxxi',
       },
       {
         text: 'WIKIPEDIA',
-        payload: 'overview',
+        payload: 'wiki',
       },
     ],
       payload: 'entita-nav'
@@ -84,24 +85,28 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     this.one('aw-entita-nav').update(navigation)
   }
 
-  loadItem(id) {
+  loadItem(id, tab) {
     /**
      * Loads the data for the selected nav item, into the adjacent text block.
      * 
      * @param id - id of item to request
+     * @param tab - selected nav tab
      */
-    if (id) { return (
-      this.communication.request$('getEntityDetails', {
+    if (id && tab) { 
+      this.selectedTab = tab // store selected tab from url
+      return this.communication.request$('getEntityDetails', {
         onError: error => console.error(error),
         params: {entityId: id}
       })
-    )}
+    }
     else {
       this.pageTitle = 'Entità Test'
     }
   }
 
-  loadContent(response) {
-    console.log(response)
+  loadContent(res) {
+    console.log('loadcontent-response: ', {res})
+    this.myResponse = res
+    this.entityTitle = res.entity.label
   }
 }
