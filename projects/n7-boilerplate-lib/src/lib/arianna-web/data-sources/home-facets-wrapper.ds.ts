@@ -24,7 +24,7 @@ export class AwHomeFacetsWrapperDS extends DataSource {
       // make array of inputs data
       inputs.push({
         input: {
-          placeholder: 'Search',
+          placeholder: facet['input-placeholder'],
           icon: 'n7-icon-search',
           // disable input if faced header is not enabled
           disabled: !facet.enabled,

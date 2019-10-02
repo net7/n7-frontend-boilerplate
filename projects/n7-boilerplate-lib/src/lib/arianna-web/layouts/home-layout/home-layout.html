@@ -55,13 +55,16 @@
                         <br>
                     </ng-container>
                 </div>
-                <div class="aw-home__bubble-results-list">
-                    <ng-container *ngFor="let widgetData of lb.widgets['aw-home-item-preview-wrapper'].ds.out$ | async;">
-                        <n7-item-preview
-                            [data]="widgetData"
-                            [emit]="lb.widgets['aw-home-item-preview-wrapper'].emit">
-                        </n7-item-preview>
-                    </ng-container>
+                <div class="aw-home__bubble-results-list-wrapper">
+                    <div class="aw-home__bubble-results-list" [attr.id]="'bubble-results-list'">
+                        <ng-container *ngFor="let widgetData of lb.widgets['aw-home-item-preview-wrapper'].ds.out$ | async;">
+                            <n7-item-preview
+                                [data]="widgetData"
+                                [emit]="lb.widgets['aw-home-item-preview-wrapper'].emit">
+                            </n7-item-preview>
+                        </ng-container>
+                    </div>
+                    <div *ngIf="lb.dataSource.hasScrollBackground" class="aw-home__bubble-results-list-wrapper-with-scroll"></div>
                 </div>
                
             </div>
