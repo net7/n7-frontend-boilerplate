@@ -1,6 +1,6 @@
 import { LayoutDataSource } from '@n7-frontend/core';
 import { fromEvent, interval } from 'rxjs';
-import { debounce } from 'rxjs/operators';
+import { debounce, debounceTime } from 'rxjs/operators';
 
 const config:any = require('src/assets/app-config.json');
 
@@ -20,6 +20,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   private lastWindowWidth: number = -1;
   private bubblePopup: any = null;
   public currentHoverEntity: any = null;
+  public hasScrollBackground: boolean = false;
 
   onInit({ communication, mainState, configuration, tippy }){
     this.communication = communication;
@@ -27,7 +28,8 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     this.mainState = mainState;
     this.configuration = configuration;
 
-    this.one('aw-hero').update({});
+    this.one('aw-hero').update(this.configuration.get('home-layout')['top-hero']);
+    this.one('aw-home-hero-patrimonio').update(this.configuration.get('home-layout')['bottom-hero']);
 
     this.communication.request$('globalFilter', {
       onError: (error) => console.error(error),
@@ -36,11 +38,11 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       response.entitiesData.forEach( (ent) => {
         const teoConfigData = this.configuration.get("config-keys")[ent.countData.type.configKey];
         if(teoConfigData)
-          this.facetData.push({...(ent.countData),
-                              enabled:true,
-                              icon: teoConfigData.icon,
-                              label: teoConfigData.label
-                              });
+          this.facetData.push({
+            ...ent.countData,
+            ...teoConfigData,                  
+            enabled:true,
+          });
       } );
       this.one('aw-home-facets-wrapper').update(this.facetData);
       this.setAllBubblesFromApolloQuery(response);
@@ -62,7 +64,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     });
   }
 
-  onBubbleTooltipClick(source:string,payload){
+  onBubbleTooltipClick(source:string, payload){
     switch(source){
       case 'select':
         if(!payload) return;
@@ -139,6 +141,9 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     }
 
     this.one('aw-home-item-preview-wrapper').update(response.itemsPagination.items);
+
+    // scroll control
+    this._scrollBackgroundControl();
   }
 
   public onBubbleSelected(bubble){
@@ -175,7 +180,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       onError: (error) => console.error(error),
       params: { 
         selectedEntitiesIds,
-        itemsPagination:{ offset:0,limit:4 }
+        itemsPagination:{ offset:0, limit: this.configuration.get('home-layout')['results-limit'] }
       },
     }).subscribe((response) => {
       if(!onlyBubbles){
@@ -366,5 +371,26 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         }
       }] 
     };
+  }
+
+  private _scrollBackgroundControl(){
+    const el = document.getElementById('bubble-results-list'), 
+      source$ = fromEvent(document.getElementById('bubble-results-list'), 'scroll');
+
+    // height control
+    setTimeout(() => {
+      this._setHasScrollBackground(el);
+    }, 500);
+
+    // scroll listen
+    source$.pipe(
+      debounceTime(50)
+    ).subscribe(({ target }: { target: any }) => {
+      this._setHasScrollBackground(target);
+    });
+  }
+
+  private _setHasScrollBackground({ scrollTop, scrollHeight, clientHeight }){
+    this.hasScrollBackground = scrollHeight > (scrollTop + clientHeight);
   }
 }
