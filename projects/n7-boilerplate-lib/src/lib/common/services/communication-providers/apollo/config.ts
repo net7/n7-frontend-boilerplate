@@ -22,17 +22,17 @@ export const ApolloProviderConfig = {
         branches {
           label
           id
-          icon   
+          icon
           branches {
             label
             id
-            icon  
+            icon
             branches {
               label
               id
-              icon          
-            }        
-          }       
+              icon
+            }
+          }
         }
       }
     }
@@ -140,27 +140,43 @@ export const ApolloProviderConfig = {
     queryName: 'getItemDetails',
     queryBody: `{
         getItemDetails(__PARAMS__){
-            title
-            text
-            subTitle
-            image
-            fields {
-              id
-              label
-              fields {
+          title
+          text
+          subTitle
+          image
+           item {
+            id
+            icon
+          }
+           similarItems {
+          thumbnail
+        }
+          connectedEntities {
+            count
+            entity{
+             id
+            label
+              typeOfEntity {
                 id
-                key
-                value
+                label
+                configKey
               }
             }
-            item {
+          }
+          fields {
+            id
+            label
+            fields {
               id
-            }
-            breadcrumbs {
-              label
-              link
+              key
+              value
             }
           }
+          breadcrumbs {
+            label
+            link
+          }
+        }
       }`
   }
 };

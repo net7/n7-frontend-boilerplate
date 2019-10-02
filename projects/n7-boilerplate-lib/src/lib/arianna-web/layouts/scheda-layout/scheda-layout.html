@@ -20,6 +20,11 @@
                 [data]="lb.widgets['aw-scheda-breadcrumbs'].ds.out$ | async"
                 [emit]="lb.widgets['aw-scheda-breadcrumbs'].emit"
             ></n7-breadcrumbs>
+
+            <n7-inner-title
+            [data]="lb.widgets['aw-scheda-inner-title'].ds.out$ | async"
+            ></n7-inner-title>
+
             <n7-image-viewer
                 [data]="lb.widgets['aw-scheda-image'].ds.out$ | async"
             >
@@ -38,6 +43,11 @@
                 [data]="lb.widgets['aw-scheda-metadata'].ds.out$ | async"
             >
             </n7-metadata-viewer>
+            <div id="bubble-chart-container">
+                <n7-bubble-chart [data]="lb.widgets['aw-scheda-bubble-chart'].ds.out$ | async"
+                    [emit]="lb.widgets['aw-scheda-bubble-chart'].emit">
+                </n7-bubble-chart>
+            </div>
         </div>
     </div>
 </div>
