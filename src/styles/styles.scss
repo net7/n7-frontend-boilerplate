@@ -23,6 +23,11 @@
 
 
 // ------------------------------------ //
+// #PROJECT COLOR SCHEME
+// ------------------------------------ //
+@import "./generic/color_scheme";
+
+// ------------------------------------ //
 // #N7 COMPONENTS VARIABLES
 // ------------------------------------ //
 @import "../../node_modules/@n7-frontend/components/styles/generic/variables";
@@ -44,6 +49,9 @@
 // ------------------------------------ //
 @import '../../node_modules/@n7-frontend/components/styles/imports';
 
+.color-people {
+    color: $color-people;
+}
 
 // ------------------------------------ //
 // #ARIANNA WEB LAYOUTS
