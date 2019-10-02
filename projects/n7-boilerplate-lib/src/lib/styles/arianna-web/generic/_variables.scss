@@ -81,6 +81,7 @@ $susy: (
 // Font weight
 // $font-weight-normal: 400;
 // $font-weight-bold: 700;
+$font-weight-black: 900;
 
 
 // ------------------------------------ //
@@ -225,16 +226,22 @@ $header-height: 100px;
 // ------------------------------------ //
 // #HERO
 // ------------------------------------ //
-$hero-input-height: 60px;
+$hero-height: 380px;
+$hero-text-max-width: 715px;
+$hero-input-border-radius: 5px;
+$hero-input-height: 56px;
+$hero-input-box-shadow: 0 2px 4px rgba(0,0,0,0.3);
 $hero-button-height: $hero-input-height;
 $hero-image-border: 10px solid #ffffff;
 $hero-image-border-radius: $space*2;
+
 
 // ------------------------------------ //
 // #FACET
 // ------------------------------------ //
 $n7-facet-search-input-height: 32px;
 $n7-facet-search-input-border-radius: 3px;
+
 
 // ------------------------------------ //
 // #TAG
