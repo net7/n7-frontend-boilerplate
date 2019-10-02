@@ -8,8 +8,7 @@ export const AwHomeLayoutConfig = {
   widgets: [{
     id: 'aw-hero',
   }, {
-    id: 'aw-home-hero-patrimonio',
-    hasStaticData: true
+    id: 'aw-home-hero-patrimonio'
   }, {
     id: 'aw-home-bubble-chart',
   }, {
