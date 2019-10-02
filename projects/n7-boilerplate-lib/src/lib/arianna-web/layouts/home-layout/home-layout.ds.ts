@@ -1,8 +1,6 @@
 import { LayoutDataSource } from '@n7-frontend/core';
 import { fromEvent, interval } from 'rxjs';
-import { debounce } from 'rxjs/operators';
-
-const config:any = require('src/assets/app-config.json');
+import { debounce, debounceTime } from 'rxjs/operators';
 
 export class AwHomeLayoutDS extends LayoutDataSource {
   private communication: any;
@@ -11,15 +9,31 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   private configuration: any;
   private facetData: any[] = null;
   private facetInputs: any = {};
+  // all the bubbles as they have been given by apollo
+  // (the objects in the allBubbles are not the same bubble objects
+  // present in the bubble chart)
   private allBubbles: any[] = null;
+  // the bubbles currently selected (this are saved from the event handler's
+  // and correspond exactly to the bubblechart's bubble objects)
   public selectedBubbles: any[] = [];
   public numOfItemsStr: string = null;
+  // instance of the bubble chart (from which you can access all the various
+  // bubble objects)
   private _bubbleChart: any = null;
+  // the maximum number of bubbles which can be selected at the same time
   private maxBubblesSelectable:number = 3;
+  // entities have their own unique id, these ids are generic and are very flexible
+  // bubbles (as the bubble chart's objects) have unique ids but do not allow certain
+  // characters, so each bubble has its own id different from the id of the entity which
+  // the bubble represents (given an bubble's id called bubbleId you can obtain the
+  // respective entity's id with as: entityId = entityBubbleIdMap[bubbleId] )
   private entityBubbleIdMap: any = {};
+  // widh of the window which is updated at each resize and it is used by the bubble
+  // chart to check if the width of the window has changed during the last resize
   private lastWindowWidth: number = -1;
   private bubblePopup: any = null;
   public currentHoverEntity: any = null;
+  public hasScrollBackground: boolean = false;
 
   onInit({ communication, mainState, configuration, tippy }){
     this.communication = communication;
@@ -27,7 +41,8 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     this.mainState = mainState;
     this.configuration = configuration;
 
-    this.one('aw-hero').update({});
+    this.one('aw-hero').update(this.configuration.get('home-layout')['top-hero']);
+    this.one('aw-home-hero-patrimonio').update(this.configuration.get('home-layout')['bottom-hero']);
 
     this.communication.request$('globalFilter', {
       onError: (error) => console.error(error),
@@ -36,11 +51,11 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       response.entitiesData.forEach( (ent) => {
         const teoConfigData = this.configuration.get("config-keys")[ent.countData.type.configKey];
         if(teoConfigData)
-          this.facetData.push({...(ent.countData),
-                              enabled:true,
-                              icon: teoConfigData.icon,
-                              label: teoConfigData.label
-                              });
+          this.facetData.push({
+            ...ent.countData,
+            ...teoConfigData,
+            enabled:true,
+          });
       } );
       this.one('aw-home-facets-wrapper').update(this.facetData);
       this.setAllBubblesFromApolloQuery(response);
@@ -55,6 +70,8 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     fromEvent( window , "resize" ).pipe(debounce(() => interval(200))).
     subscribe( () => {
       // only resets the bubbles if the window's width has changed
+      // (if the resize only effects the window's hight then the bubble chart
+      // doesn't get reset)
       if(this.lastWindowWidth!=window.outerWidth){
         this.lastWindowWidth=window.outerWidth;
         this.updateBubblesAndItemPreviews(true);
@@ -62,7 +79,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     });
   }
 
-  onBubbleTooltipClick(source:string,payload){
+  onBubbleTooltipClick(source:string, payload){
     switch(source){
       case 'select':
         if(!payload) return;
@@ -139,6 +156,9 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     }
 
     this.one('aw-home-item-preview-wrapper').update(response.itemsPagination.items);
+
+    // scroll control
+    this._scrollBackgroundControl();
   }
 
   public onBubbleSelected(bubble){
@@ -163,6 +183,13 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     }
   }
 
+  /**
+   * updates the bubble chart and the item previews based on the currently
+   * selected bubbles
+   *
+   * @param onlyBubbles specifies if only the bubble chart should be updated,
+   *                    leaving the item previews as they are
+   */
   private updateBubblesAndItemPreviews(onlyBubbles?:boolean){
     let selectedEntitiesIds = [];
     if(this.entityBubbleIdMap)
@@ -175,7 +202,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       onError: (error) => console.error(error),
       params: { 
         selectedEntitiesIds,
-        itemsPagination:{ offset:0,limit:4 }
+        itemsPagination:{ offset:0, limit: this.configuration.get('home-layout')['results-limit'] }
       },
     }).subscribe((response) => {
       if(!onlyBubbles){
@@ -186,12 +213,24 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     });
   }
 
+  /**
+   * converts the id of an entity to the id of a bubble
+   * ( // d3/svg does not allow Number as beginning of ID.
+   *   // d3/svg does not allow '-' as part of ID. )
+   * @param entityId id of the entity
+   */
   private convertEntityIdToBubbleId(entityId:string) :string {
     if(!entityId) return null;
     return ( 'B_'+entityId.replace(/-/g,'_') );
   }
 
-
+  /**
+   * sets the this.allBubbles variable based on the response apollo has given
+   * for the globalFilterQuery
+   *
+   * @param response apollo's response
+   * @param reset true if the bubble chart has to be reset/redrawn
+   */
   setAllBubblesFromApolloQuery(response: any,reset?:boolean){
     if( !response || !response.entitiesData ) return;
     this.allBubbles = [];
@@ -207,8 +246,6 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     }
     this.entityBubbleIdMap = {};
     this.allBubbles.forEach( (bubble) => {
-      // d3/svg does not allow Number as beginning of ID.
-      // d3/svg does not allow '-' as part of ID.
       bubble.id = this.convertEntityIdToBubbleId(bubble.entity.id);
       this.entityBubbleIdMap[bubble.id]=bubble.entity.id;
       return bubble;
@@ -366,5 +403,26 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         }
       }] 
     };
+  }
+
+  private _scrollBackgroundControl(){
+    const el = document.getElementById('bubble-results-list'), 
+      source$ = fromEvent(document.getElementById('bubble-results-list'), 'scroll');
+
+    // height control
+    setTimeout(() => {
+      this._setHasScrollBackground(el);
+    }, 500);
+
+    // scroll listen
+    source$.pipe(
+      debounceTime(50)
+    ).subscribe(({ target }: { target: any }) => {
+      this._setHasScrollBackground(target);
+    });
+  }
+
+  private _setHasScrollBackground({ scrollTop, scrollHeight, clientHeight }){
+    this.hasScrollBackground = scrollHeight > (scrollTop + clientHeight);
   }
 }

@@ -2,9 +2,9 @@ import { LayoutDataSource } from '@n7-frontend/core';
 import { ItemPreviewComponent } from '@n7-frontend/components';
 import { Location } from '@angular/common';
 
-export class AwPatrimonioLayoutDS extends LayoutDataSource {
+export class AwSchedaLayoutDS extends LayoutDataSource {
   /**
-  * If you are not using these variables (from your-layout.ts), 
+  * If you are not using these variables (from your-layout.ts),
   * remove them from here too.
   */
   private communication: any;
@@ -20,7 +20,7 @@ export class AwPatrimonioLayoutDS extends LayoutDataSource {
   public tree: any;
   public sidebarCollapsed: boolean;
   /**
-  * If you are not using these variables (from your-layout.ts), 
+  * If you are not using these variables (from your-layout.ts),
   * remove them from onInit() parameters and inside the function.
   */
   onInit({configuration, mainState, router, options, titleService, communication }) {
@@ -29,7 +29,7 @@ export class AwPatrimonioLayoutDS extends LayoutDataSource {
     this.router = router;
     this.titleService = titleService;
     this.communication = communication;
-    this.options = options; 
+    this.options = options;
     this.sidebarCollapsed = false;
   }
 
@@ -47,7 +47,7 @@ export class AwPatrimonioLayoutDS extends LayoutDataSource {
 
     data['branches'].forEach( item => {
       treeObj['items'].push( this.parseTree(item, false, []) );
-    })
+    });
 
     let header = {
       iconLeft: 'n7-icon-tree-icon',
@@ -62,8 +62,8 @@ export class AwPatrimonioLayoutDS extends LayoutDataSource {
     this.one('aw-scheda-breadcrumbs').update(null);
   }
 
-  loadItem(id){
-    if(id) {
+  loadItem( id ) {
+    if ( id ) {
       return  this.communication.request$('getItemDetails', {
         onError: (error) => console.error(error),
         params: { itemId: id }
@@ -74,14 +74,14 @@ export class AwPatrimonioLayoutDS extends LayoutDataSource {
       this.hasBreadcrumb = false;
       this.contentParts = [
         {
-          type: "text",
+          type: 'text',
           title: 'Collezione d\'Arte',
-          content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi gravida sagittis pulvinar. Etiam iaculis maximus metus, id tincidunt libero auctor et. Proin tempus turpis vel erat ultrices, id vestibulum ante cursus. Vestibulum lobortis, ante at eleifend consequat, massa libero bibendum justo, id fermentum magna odio ac nulla. Cras aliquet scelerisque malesuada. Mauris congue fermentum tristique. Nulla imperdiet accumsan dui, tristique lobortis metus eleifend non. Donec quis odio massa. Cras sit amet sem eu turpis molestie blandit vitae sed nibh. Pellentesque ornare enim nisl, et efficitur ante elementum a. Ut nec ex finibus, congue libero feugiat, aliquam ante. Cras sem neque, pellentesque eget mi at, auctor vulputate tellus. Sed aliquam mi a tortor ultricies interdum. Etiam tincidunt nunc commodo nulla porttitor semper. Etiam porta lacinia libero a mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+          content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi gravida sagittis pulvinar. Etiam iaculis maximus metus, id tincidunt libero auctor et. Proin tempus turpis vel erat ultrices, id vestibulum ante cursus. Vestibulum lobortis, ante at eleifend consequat, massa libero bibendum justo, id fermentum magna odio ac nulla. Cras aliquet scelerisque malesuada. Mauris congue fermentum tristique. Nulla imperdiet accumsan dui, tristique lobortis metus eleifend non. Donec quis odio massa. Cras sit amet sem eu turpis molestie blandit vitae sed nibh. Pellentesque ornare enim nisl, et efficitur ante elementum a. Ut nec ex finibus, congue libero feugiat, aliquam ante. Cras sem neque, pellentesque eget mi at, auctor vulputate tellus. Sed aliquam mi a tortor ultricies interdum. Etiam tincidunt nunc commodo nulla porttitor semper. Etiam porta lacinia libero a mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
         },
         {
-          type: "text",
+          type: 'text',
           title: 'Centro Archivi',
-          content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi gravida sagittis pulvinar. Etiam iaculis maximus metus, id tincidunt libero auctor et. Proin tempus turpis vel erat ultrices, id vestibulum ante cursus. Vestibulum lobortis, ante at eleifend consequat, massa libero bibendum justo, id fermentum magna odio ac nulla. Cras aliquet scelerisque malesuada. Mauris congue fermentum tristique. Nulla imperdiet accumsan dui, tristique lobortis metus eleifend non. Donec quis odio massa. Cras sit amet sem eu turpis molestie blandit vitae sed nibh. Pellentesque ornare enim nisl, et efficitur ante elementum a. Ut nec ex finibus, congue libero feugiat, aliquam ante. Cras sem neque, pellentesque eget mi at, auctor vulputate tellus. Sed aliquam mi a tortor ultricies interdum. Etiam tincidunt nunc commodo nulla porttitor semper. Etiam porta lacinia libero a mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+          content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi gravida sagittis pulvinar. Etiam iaculis maximus metus, id tincidunt libero auctor et. Proin tempus turpis vel erat ultrices, id vestibulum ante cursus. Vestibulum lobortis, ante at eleifend consequat, massa libero bibendum justo, id fermentum magna odio ac nulla. Cras aliquet scelerisque malesuada. Mauris congue fermentum tristique. Nulla imperdiet accumsan dui, tristique lobortis metus eleifend non. Donec quis odio massa. Cras sit amet sem eu turpis molestie blandit vitae sed nibh. Pellentesque ornare enim nisl, et efficitur ante elementum a. Ut nec ex finibus, congue libero feugiat, aliquam ante. Cras sem neque, pellentesque eget mi at, auctor vulputate tellus. Sed aliquam mi a tortor ultricies interdum. Etiam tincidunt nunc commodo nulla porttitor semper. Etiam porta lacinia libero a mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
         }
       ]
     }
@@ -92,33 +92,43 @@ export class AwPatrimonioLayoutDS extends LayoutDataSource {
       if(response){
         this.contentParts = [];
         if( response.image ) {
-          this.contentParts.push({    
-            image: response.image,       
+          this.contentParts.push({
+            image: response.image,
             type: 'image'
-          });    
+          });
         }
 
-        this.contentParts.push({          
+        this.contentParts.push({
           title: response.title,
           content: response.text,
           type: 'text'
         });
-        
+
         let breadcrumbs = {
           items: []
         }
-        
-        if(response.fields){
-          response.fields.forEach(field => {
-            this.contentParts.push({
-              title: field.label,
-              content: response.text,
-              type: 'metaGroup',
-              fields: field.fields
-            })
-          });
-        }
 
+        let group = { group: [] };
+
+        if ( response.fields ){
+          response.fields.forEach(field => {
+            let items = [];
+            field.fields.forEach(item => {
+              items.push( { label: item.key, value: item.value} )
+            });
+
+            group.group.push(
+              {
+                title: field.label,
+                items: items
+                //items: field.fields
+              }
+            );
+        });
+      }
+
+
+        this.one('aw-scheda-metadata').update(group);
 
         response.breadcrumbs.forEach(element => {
           breadcrumbs.items.push({
@@ -127,7 +137,7 @@ export class AwPatrimonioLayoutDS extends LayoutDataSource {
           })
         });
         this.one('aw-scheda-breadcrumbs').update(breadcrumbs);
-      }   
+      }
   }
 
   private parseTree(data, toggle, parents) {
@@ -141,21 +151,21 @@ export class AwPatrimonioLayoutDS extends LayoutDataSource {
               source: "toggle",
               id: data['id'],
               parents: currParents,
-            }           
+            }
         }
-    } 
-    
+    }
+
     if( key != "branches" ) {
       switch (key) {
         case "label": treeItem['text'] = data[key]; break;
-        case "icon" :  
-            if (toggle) 
+        case "icon" :
+            if (toggle)
             {
               treeItem['toggle']['icon'] = data[key];
-            }             
+            }
             break;
-        case "id" :                
-            treeItem['_meta'] =  data[key];       
+        case "id" :
+            treeItem['_meta'] =  data[key];
             treeItem['payload'] = {
               source: "menuItem",
               id: data['id']
@@ -174,11 +184,11 @@ export class AwPatrimonioLayoutDS extends LayoutDataSource {
         treeItem['payload']['parents'] = currParents;
       }
 
-      treeItem['items'] = [];          
+      treeItem['items'] = [];
       data[key].forEach( item => {
         treeItem['items'].push( this.parseTree(item, true, currParents) );
-      })   
-    }        
+      })
+    }
     })
     return treeItem;
   }

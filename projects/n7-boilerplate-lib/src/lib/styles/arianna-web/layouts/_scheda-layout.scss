@@ -1,0 +1,57 @@
+/**
+ * SCHEDA
+ *
+ * Layout for page detail of Cultural Objects and Aggregations.
+ * Includes traa navigation on the right.
+ */
+ 
+/* ------------------------------------ *\
+    LAYOUT
+\* ------------------------------------ */
+.aw-scheda {
+    padding-top: $space*3;
+    background-color: $color-background-medium;
+}
+
+.aw-scheda__content {
+    margin: 0 auto;
+    max-width: $page-max-width;
+    display: grid;
+    grid-template-columns: $aw-scheda-tree-width 1fr;
+    grid-column-gap: 0;
+}
+
+
+/* ------------------------------------ *\
+    TREE
+\* ------------------------------------ */
+.aw-scheda__tree {
+    .n7-tree {
+        background-color: $color-background-base;
+    }
+}
+
+
+/* ------------------------------------ *\
+    SCHEDA-DETAILS
+\* ------------------------------------ */
+.aw-scheda__scheda-wrapper {
+    background-color: $color-background-base;
+}
+
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: $breakpoint-laptop) {
+}
+
+@media all and (max-width: $breakpoint-ipad-portrait) {
+}
+
+@media all and (max-width: $breakpoint-smartphone-landscape) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}

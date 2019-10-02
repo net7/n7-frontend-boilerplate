@@ -11,10 +11,10 @@
 $color-gray-00: #ffffff;
 $color-gray-01: #fafbfc;
 $color-gray-02: #f5f5f5;
-$color-gray-03: #E0E7FF; // #dddddd;
-$color-gray-04: #8798AD; // #ababab;
+$color-gray-03: #dddddd;
+$color-gray-04: #ababab;
 $color-gray-05: #262216;
-$color-gray-06: #2E384D;
+$color-gray-06: #000000;
 
 // Brand colors
 $color-main: #2E5BFF;
@@ -26,3 +26,9 @@ $color-text-hover: rgb(26, 64, 204); /* Used for text link in hover state */
 $color-error: #D12C47;
 $color-warning: #F5A623;
 $color-success: #3F7600;
+
+// project custom colors
+$color-people: #3a81f2;
+$color-places: #f2cd3a;
+$color-concepts: #5eab7b;
+$color-organizations: #c48731;
