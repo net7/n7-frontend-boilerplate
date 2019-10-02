@@ -100,9 +100,8 @@ export const ApolloProviderConfig = {
           }
         }
         fieldsTab {
-          id
+          label
           fields {
-            id
             key
             value
           }

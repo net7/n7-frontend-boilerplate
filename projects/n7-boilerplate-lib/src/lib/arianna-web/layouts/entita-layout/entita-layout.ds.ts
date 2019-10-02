@@ -1,6 +1,6 @@
 import { LayoutDataSource } from '@n7-frontend/core';
-import { promise } from 'protractor';
 import { JsonConfigService } from 'n7-boilerplate-lib/lib/common/services';
+import { promise } from 'protractor';
 
 export class AwEntitaLayoutDS extends LayoutDataSource {
   protected configuration: any;
@@ -11,33 +11,25 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
   public options: any;
   public pageTitle: string;
 
-  public myResponse: any = {}; // store response object
-  public navHeader: any = {
-    title: {
-      main: {
-        text: 'test'
-      }
-    }
-  }; // entity header
+  public myResponse: any = {}; // backend response object
   public selectedTab:string; // selected nav item
+  public navHeader: any = {}; // nav-header (custom) data
+  public metadataViewer: any = {}; // metadata-viewer data
 
   private communication: any;
 
   onInit({ configuration, mainState, router, options, titleService, communication }) {
-    this.configuration = configuration;
-    this.mainState = mainState;
-    this.router = router;
-    this.titleService = titleService;
-    this.options = options;
     this.communication = communication;
+    this.configuration = configuration;
+    this.mainState     = mainState;
+    this.options       = options;
+    this.router        = router;
+    this.titleService  = titleService;
   }
 
   getNavigation(id) {
-    /**
-     * Requests data from communication provider
-     * 
-     * @param id - the id of the item to get
-     * @returns the response of getEntityDetails with entityId === id
+    /*
+      Requests data from communication provider
      */
     return this.communication.request$('getEntityDetails', {
       onError: (error) => console.error(error),
@@ -46,51 +38,16 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
   }
 
   updateWidgets(data) {
-    /**
-     * Updates the widgets on this layout, based on route
-     * 
-     * @param data - communication reponse object
-     */
-
-    const navigation: any = { items: [
-      {
-        text: 'OVERVIEW',
-        payload: 'overview',
-      },
-      {
-        text: 'CAMPI',
-        payload: 'campi',
-      },
-      {
-        text: 'OGGETTI COLLEGATI',
-        payload: 'oggetti-collegati',
-      },
-      {
-        text: 'ENTITA COLLEGATE',
-        payload: 'entita-collegate',
-      },
-      {
-        text: 'MAXXI',
-        payload: 'maxxi',
-      },
-      {
-        text: 'WIKIPEDIA',
-        payload: 'wiki',
-      },
-    ],
-      payload: 'entita-nav'
-  }
-
-    this.one('aw-entita-nav').update(navigation)
+    /*
+      Updates the widgets on this layout, based on route
+    */
+    this.one('aw-entita-nav').update( 'some data' )
   }
 
   loadItem(id, tab) {
-    /**
-     * Loads the data for the selected nav item, into the adjacent text block.
-     * 
-     * @param id - id of item to request
-     * @param tab - selected nav tab
-     */
+    /*
+      Loads the data for the selected nav item, into the adjacent text block.
+    */
     if (id && tab) { 
       this.selectedTab = tab // store selected tab from url
       return this.communication.request$('getEntityDetails', {
@@ -103,16 +60,78 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     }
   }
 
+  unpackFields( fields ) {
+    /*
+      Recursive unpacking for rendering res.fields
+      ***
+      this function transforms the response object tree
+      into an array, usable by metadata-viewer-component
+    */
+    var extracted = []     // holds transformed object
+    if (!fields) return [] // if is empty → quit
+    for ( let i = 0; i < fields.length; i++ ) {
+      var thisField = fields[i]     // rename current field
+      var title = thisField.label   // field title
+      var label = thisField.key     // item label
+      var value = thisField.value   // item value
+      var group = thisField.fields  // child group
+      var temp:any = {}             // temporary object
+
+      if (title) { // if there is a title, use it
+        temp.title = title
+      } if (label && value) { // if there are a lable and value, use them
+        temp.label = label
+        temp.value = value
+      } if (group) { // if there is a child group
+        if (group[0].key) { // if this group has a tuple of (label, value)
+          temp.items = this.unpackFields(group) // make items array
+        } else {
+          temp.group = this.unpackFields(group) // make child group array
+        }
+      }
+      extracted.push(temp) // add this object to the new array
+    }
+    return extracted
+  }
+
   loadContent(res) {
     console.log('Apollo responded with: ', {res})
     this.myResponse = res
-    this.navHeader = {
-      icon: this.configuration.get("config-key")[this.myResponse.entity.typeOfEntity.configKey],
-      title: {
-        main: {
-          text: res.entity.label
-        }
-      }
+    this.navHeader = { // always render nav header
+      icon: this.configuration.get("config-keys")[this.myResponse.entity.typeOfEntity.configKey].icon,
+      text: this.myResponse.entity.label
+    }
+    switch (this.selectedTab) { // make dynamic content depending on request
+      case 'overview': {
+        console.log('starting to unpack: ', res.fieldsTab)
+        this.metadataViewer.group = this.unpackFields(res.fieldsTab)
+        console.log('metadataViewer: ', this.metadataViewer)
+      } break;
+      
+      case 'campi': {
+        // campi
+      } break;
+
+      case 'oggetti': {
+        // oggetti
+      } break;
+
+      case 'entita': {
+        // entita
+      } break;
+
+      case 'maxxi': {
+        // maxxi
+      } break;
+
+      case 'wiki': {
+        // wiki
+      } break;
+
+      default:
+        // the url is aw/entita/something/ ??? → unknown
+        console.warn('Unhandled navigation page');
+        break;
     }
   }
 }
