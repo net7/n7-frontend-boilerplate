@@ -3,7 +3,9 @@ import { BUBBLECHART_MOCK } from '@n7-frontend/components';
 
 export class AwHomeBubbleChartDS extends DataSource {
 
+  // threshold below which a bubble should not show its title
   private thresholdShowTitle:number = 50;
+  // threshold below which a bubble should not show its number
   private thresholdShowValue:number = 60;
 
   protected transform(data){
@@ -11,11 +13,14 @@ export class AwHomeBubbleChartDS extends DataSource {
 
     let bubbleCointainer = document.getElementById("bubble-chart-container");
     const cWidth = bubbleCointainer.offsetWidth;
+    // now the bubblechart's height is hardcoded to 700, not sure
+    // how it sould be actually set
     // TODO: think of a good way to pass/compute cHeight
     const cHeight = 700; // bubbleCointainer.offsetHeight
 
     const containerSize = cWidth*cHeight;
 
+    // generic data of the bubble chart
     let bubblesData = {
       containerId: "bubbleChartContainer",
       containerWidth : cWidth,
@@ -24,26 +29,43 @@ export class AwHomeBubbleChartDS extends DataSource {
       maxBubblesSelected:3
     };
 
+    // data about each single bubble (starts as [] and gets filled)
     bubblesData['bubblesData'] = [];
 
-    let maxBubbleCount=-1;
-    let minBubbleCount=-1;
+    // first loop over all the data's bubbles to gather various numbers, such
+    // as the maximum/minimum bubble value and number of selected bubbles
+    let maxBubbleValue=-1;
+    let minBubbleValue=-1;
     let numOfBubbles=0;
-    let totalCount=0;
+    let totalValues=0;
     let numOfSelectedBubbles=0;
     data.bubbles.forEach( bubble => {
-      if(maxBubbleCount<bubble.count) maxBubbleCount=bubble.count;
-      if(minBubbleCount<0 || minBubbleCount>bubble.count) minBubbleCount=bubble.count;
+      if(maxBubbleValue<bubble.count) maxBubbleValue=bubble.count;
+      if(minBubbleValue<0 || minBubbleValue>bubble.count) minBubbleValue=bubble.count;
       numOfBubbles++;
-      totalCount+=bubble.count;
+      totalValues+=bubble.count;
       if(bubble.selected) numOfSelectedBubbles++;
     });
+
+    // second loop  over all the data's bubbles, for each bubble a corresponding object
+    // is created and addded to the bubblesData array
     data.bubbles.forEach( bubble => {
       let bId = bubble.id;
-      //let bubblePercentage = ( bubble.count - (minBubbleCount/3) )/( (maxBubbleCount*3) - (minBubbleCount/3) );
+      // here I compute the bubble's radius (could/should be improved), for it I compute a percentage of the bubble's value
+      // compared to all the bubbles and use that percentage to compute the bubble's radius
+      // Note : I also use the containerSize and the number of bubbles, ideally also the totValues and
+      //        numOfSelectedBubbles should be considered when computing the radius
+      //        (selected bubbles are in theory larger bubbles so taking that into account
+      //         could help for the radius computation)
+      // Note : the radius computation is very important, if the bubbles' radiuses are too big then
+      //        the bubbles will go one over the other and will not be able to move as they should, if
+      //        the rediuses are instead too small then the bubbles will be to small and conver only a
+      //        portion of the container
+      let bubblePercentage = ( bubble.count - (minBubbleValue/3) )/( (maxBubbleValue*3) - (minBubbleValue/3) );
       //let bubbleRadius = 2*( ((containerSize/(numOfBubbles*(totalCount/600)))*bubblePercentage)/( Math.pow(numOfSelectedBubbles+1,1.8)) );
-      let bubblePercentage = ( bubble.count - (minBubbleCount/3) )/( (maxBubbleCount*3) - (minBubbleCount/3) );
       let bubbleRadius = (Math.log(containerSize)/10)*(bubblePercentage*3)*(70-Math.sqrt(numOfBubbles));
+
+      // creation of the bubbleData object
       let bubbleData = {
         id: bId,
         texts: [
@@ -85,7 +107,7 @@ export class AwHomeBubbleChartDS extends DataSource {
       bubblesData['bubblesData'].push(bubbleData);
     });
 
-
+    // force simulation's parameters for the bubble chart
     bubblesData['forceSimulationData'] = {
       xPull: cWidth/2,
       xPullStrength: -0.01,
@@ -97,9 +119,9 @@ export class AwHomeBubbleChartDS extends DataSource {
     }
 
     if(data.reset) bubblesData['reset'] = data.reset;
-
     if(data.setUpdateReference) bubblesData['setUpdateReference'] = data.setUpdateReference;
     if(data.setBubbleChart) bubblesData['setBubbleChart'] = data.setBubbleChart;
+
     return bubblesData;
   }
 }
