@@ -375,6 +375,10 @@
         color: $color-text-light;
     }
 
+    &__title {
+        margin-bottom: 0;
+    }
+
     &__text {
         font-size: $font-size-s;
     }
