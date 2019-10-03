@@ -246,6 +246,15 @@
         &-list {
             overflow: auto;
             max-height: 450px;
+
+            &-actions {
+                display: flex;
+                justify-content: center;
+
+                .n7-btn {
+                    font-weight: $font-weight-black;
+                }
+            }
         }
         
         &-list-wrapper {
