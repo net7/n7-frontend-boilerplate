@@ -3,7 +3,12 @@ import { DataSource } from '@n7-frontend/core';
 export class AwEntitaMetadataViewerDS extends DataSource {
 
   protected transform(data){
-    console.log('metadata-viewer options', this.options);
+    /*
+      // console.log('metadata options: ', this.options);
+      - - -
+      Access and use this.options if the rendering 
+      changes based on context.
+    */
 
     return {
       group: AwEntitaMetadataViewerDS.unpackFields(data)
@@ -13,8 +18,8 @@ export class AwEntitaMetadataViewerDS extends DataSource {
   static unpackFields( fields ) {
     /*
       Recursive unpacking for rendering res.fields
-      ***
-      this function transforms the response object tree
+      - - -
+      This function transforms the response object tree
       into an array, usable by metadata-viewer-component
     */
     var extracted = []     // holds transformed object

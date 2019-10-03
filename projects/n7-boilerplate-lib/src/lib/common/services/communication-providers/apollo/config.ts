@@ -124,6 +124,10 @@ export const ApolloProviderConfig = {
           item {
             id
             label
+            info {
+              key
+              value
+            }
           }
           thumbnail
           relatedTOEData {

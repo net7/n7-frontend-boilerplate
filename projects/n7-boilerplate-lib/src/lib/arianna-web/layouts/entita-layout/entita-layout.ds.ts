@@ -67,12 +67,10 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     }
     switch (this.selectedTab) { // make dynamic content depending on request
       case 'overview': {
-        // console.log('starting to unpack: ', res.fieldsTab)
-        // this.metadataViewer.group = this.unpackFields(res.fieldsTab)
-        // console.log('metadataViewer: ', this.metadataViewer)
-        console.log('updating metadata-viewer', res.fieldsTab);
         this.one('aw-entita-metadata-viewer').updateOptions({ context: 'overview' });
         this.one('aw-entita-metadata-viewer').update(res.fieldsTab);
+        this.one('aw-entita-linked-objects').updateOptions({ context: 'overview', configKeys: this.configuration.get("config-keys") })
+        this.one('aw-entita-linked-objects').update(res.items);
       } break;
       
       case 'campi': {

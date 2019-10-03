@@ -43,10 +43,25 @@
             <button class="n7-btn n7-btn-light">DESCRIZIONE WIKIPEDIA</button>
             <button class="n7-btn n7-btn-light">DESCRIZIONE MAXXI</button>
         </div>
-        <h1>Campi</h1>
-        <n7-metadata-viewer class="aw-entita-layout__metadata-viewer"
-            [data]="lb.widgets['aw-entita-metadata-viewer'].ds.out$ | async">
-        </n7-metadata-viewer>
+        
+        <ng-container *ngIf="lb.widgets['aw-entita-metadata-viewer'].ds.out$ | async">
+            <h1>Campi</h1>
+            <button class="n7-btn n7-btn-light">TUTTI I CAMPI</button>
+            <n7-metadata-viewer class="aw-entita-layout__metadata-viewer"
+                [data]="lb.widgets['aw-entita-metadata-viewer'].ds.out$ | async">
+            </n7-metadata-viewer>
+        </ng-container>
+        
+        <h1>Oggetti collegati</h1><button class="n7-btn n7-btn-light">TUTTI GLI OGGETTI COLLEGATI</button>
+        <ng-container *ngFor="let preview of lb.widgets['aw-entita-linked-objects'].ds.out$ | async">
+            <n7-breadcrumbs
+                [data]="preview.breadcrumbs">
+            </n7-breadcrumbs>
+            <n7-item-preview
+                [data]="preview">
+            </n7-item-preview>
+        </ng-container>
+        
     </div>
 </ng-template>
 
