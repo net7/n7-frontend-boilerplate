@@ -37,8 +37,7 @@ export class AwHomeLayoutEH extends EventHandler {
     this.outerEvents$.subscribe(({ type, payload }) => {
       switch(type){
         case 'aw-hero.change':
-          const { inputPayload, value } = payload;
-          // TODO: do something
+          this.dataSource.onHeroChange(payload.value);
           break;
         /**
          * Facets Event Handlers

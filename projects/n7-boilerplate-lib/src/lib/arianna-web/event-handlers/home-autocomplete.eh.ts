@@ -1,18 +1,14 @@
 import { EventHandler } from '@n7-frontend/core';
 
-export class AwHeroEH extends EventHandler {
+export class AwHomeAutocompleteEH extends EventHandler {
 
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
-      switch (type) {
-        case 'aw-hero.click':
+      switch(event.type){
+        case "aw-home-autocomplete.click":
           // TODO
+          console.log('home-autocomplete', type, payload);
           break;
-
-        case 'aw-hero.change':
-          this.emitOuter('change', payload);
-          break;
-
         default:
           break;
       }
