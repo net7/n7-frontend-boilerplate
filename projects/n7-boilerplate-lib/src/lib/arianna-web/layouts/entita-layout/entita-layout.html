@@ -45,7 +45,7 @@
         </div>
         <h1>Campi</h1>
         <n7-metadata-viewer class="aw-entita-layout__metadata-viewer"
-                            [data]="lb.dataSource.metadataViewer">
+            [data]="lb.widgets['aw-entita-metadata-viewer'].ds.out$ | async">
         </n7-metadata-viewer>
     </div>
 </ng-template>

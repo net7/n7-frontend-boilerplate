@@ -11,7 +11,8 @@ export const AwEntitaLayoutConfig = {
    */
   widgets: [
     // { id: 'header' },
-    { id: 'aw-entita-nav', hasStaticData: true}
+    { id: 'aw-entita-nav', hasStaticData: true},
+    { id: 'aw-entita-metadata-viewer' }
   ],
   layoutDS: AwEntitaLayoutDS,
   layoutEH: AwEntitaLayoutEH,

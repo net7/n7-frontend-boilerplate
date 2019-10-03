@@ -8,7 +8,8 @@ export * from './home-item-preview-wrapper.ds';
 export * from './home-item-tags-wrapper.ds';
 
 // Entita Layout
-export * from './entita-nav.ds'
+export * from './entita-nav.ds';
+export * from './entita-metadata-viewer.ds';
 
 // Scheda Layout
 export * from './tree.ds';

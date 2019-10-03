@@ -1,6 +1,4 @@
 import { LayoutDataSource } from '@n7-frontend/core';
-import { JsonConfigService } from 'n7-boilerplate-lib/lib/common/services';
-import { promise } from 'protractor';
 
 export class AwEntitaLayoutDS extends LayoutDataSource {
   protected configuration: any;
@@ -14,7 +12,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
   public myResponse: any = {}; // backend response object
   public selectedTab:string; // selected nav item
   public navHeader: any = {}; // nav-header (custom) data
-  public metadataViewer: any = {}; // metadata-viewer data
+  // public metadataViewer: any = {}; // metadata-viewer data
 
   private communication: any;
 
@@ -60,40 +58,6 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     }
   }
 
-  unpackFields( fields ) {
-    /*
-      Recursive unpacking for rendering res.fields
-      ***
-      this function transforms the response object tree
-      into an array, usable by metadata-viewer-component
-    */
-    var extracted = []     // holds transformed object
-    if (!fields) return [] // if is empty → quit
-    for ( let i = 0; i < fields.length; i++ ) {
-      var thisField = fields[i]     // rename current field
-      var title = thisField.label   // field title
-      var label = thisField.key     // item label
-      var value = thisField.value   // item value
-      var group = thisField.fields  // child group
-      var temp:any = {}             // temporary object
-
-      if (title) { // if there is a title, use it
-        temp.title = title
-      } if (label && value) { // if there are a lable and value, use them
-        temp.label = label
-        temp.value = value
-      } if (group) { // if there is a child group
-        if (group[0].key) { // if this group has a tuple of (label, value)
-          temp.items = this.unpackFields(group) // make items array
-        } else {
-          temp.group = this.unpackFields(group) // make child group array
-        }
-      }
-      extracted.push(temp) // add this object to the new array
-    }
-    return extracted
-  }
-
   loadContent(res) {
     console.log('Apollo responded with: ', {res})
     this.myResponse = res
@@ -103,9 +67,12 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     }
     switch (this.selectedTab) { // make dynamic content depending on request
       case 'overview': {
-        console.log('starting to unpack: ', res.fieldsTab)
-        this.metadataViewer.group = this.unpackFields(res.fieldsTab)
-        console.log('metadataViewer: ', this.metadataViewer)
+        // console.log('starting to unpack: ', res.fieldsTab)
+        // this.metadataViewer.group = this.unpackFields(res.fieldsTab)
+        // console.log('metadataViewer: ', this.metadataViewer)
+        console.log('updating metadata-viewer', res.fieldsTab);
+        this.one('aw-entita-metadata-viewer').updateOptions({ context: 'overview' });
+        this.one('aw-entita-metadata-viewer').update(res.fieldsTab);
       } break;
       
       case 'campi': {
