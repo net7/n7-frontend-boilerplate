@@ -75,6 +75,26 @@
                 border: $hero-image-border;
                 border-radius: $border-radius;
             }
+
+            .n7-hero__btn {
+                background: $hero-button-bg;
+                border-color: $hero-button-border;
+                font-size: $font-size-l;
+
+                &:hover,
+                &:focus {
+                    background: $hero-button-bg-hover;
+                    border-color: $hero-button-border-hover;
+                }
+
+                &:active, &.active {
+                    background: $hero-button-bg-active;
+                }
+
+                &:disabled, &.disabled {
+                    background: $hero-button-bg-disabled;
+                }
+            }
         }
     }
 }
