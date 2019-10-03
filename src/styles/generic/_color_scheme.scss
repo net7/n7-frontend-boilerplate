@@ -28,10 +28,11 @@
 // $color-success: #3F7600;
 
 // project custom colors
-$color-people: #3a81f2;
-$color-places: #f2cd3a;
-$color-concepts: #5eab7b;
-$color-organizations: #c48731;
+// $color-people: #3a81f2;
+// $color-places: #f2cd3a;
+// $color-concepts: #5eab7b;
+// $color-organizations: #c48731;
 
-// $color-people: #FF0000;
-// $color-people: var(--color-person);
+// Categories color variables
+$color-people: #0000FF; // Fallback
+$color-people: var(--color-person);

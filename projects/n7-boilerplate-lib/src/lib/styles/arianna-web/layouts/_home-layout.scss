@@ -118,7 +118,6 @@
         }
     }
 
-
     .aw-home__facets-wrapper {
         display: flex;
         justify-content: center;
@@ -205,6 +204,13 @@
                 color: $color-text-link-hover;
             }
         }
+
+        // &.color-people {
+        //     .n7-facet-header__icon-left,
+        //     .n7-facet-header__text {
+        //         color: $color-people;
+        //     }
+        // }
     }
 
     .n7-facet {
@@ -222,7 +228,6 @@
 
         &__search-icon {
             line-height: $n7-facet-search-input-height;
-            // color: $color-people;
         }
     }
 
@@ -261,6 +266,17 @@
             margin: $space*2 0;
             padding-bottom: $space;
             border-bottom: 1px solid $color-border-normal;
+
+            &__title {
+                margin-bottom: $space/2;
+                font-weight: $font-weight-black;
+            }
+
+            // &__metadata-group {
+            //     .n7-item-preview__metadata-item {
+            //         border-right: 1px solid $color-border-normal;
+            //     }
+            // }
 
             &.has-image {
                 grid-template-columns: $item-preview-image-size 1fr;
@@ -317,7 +333,8 @@
 
     /* TODO: remove bg colors from here */
     .tag-toe-people {
-        background-color:rgb(58, 129, 242);
+        // background-color: $color-people;
+        background-color: #3a81f2;
     }
 
     .tag-toe-organizations {
@@ -331,8 +348,6 @@
     .tag-toe-places {
         background-color: rgb(242, 205, 58);
     }
-
-
 }
 
 /* ------------------------------------ *\
