@@ -437,6 +437,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         interactive: true,
         arrow: true,
         theme: 'light-border',
+        placement: 'bottom-start',
         onHidden: () => this.autocompletePopoverOpen = false,
       })[0];
     }
