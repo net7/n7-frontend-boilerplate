@@ -139,7 +139,7 @@ $border-radius: 5px;
 // $color-button-text-hover: $color-text-link-hover;
 // $color-button-text-disabled: rgba($color-text-link, .4);
 
-// $color-button-bg: #E0E7FF;
+// $color-button-bg: #2EBBC7;
 // $color-button-bg-hover: #E0E7FF;
 // $color-button-bg-disabled: #E0E7FF;
 
@@ -151,10 +151,10 @@ $border-radius: 5px;
 // $color-button-cta-text-hover: $color-text-inverse;
 // $color-button-cta-text-disabled: rgba($color-text-inverse, .4);
 
-// $color-button-cta-bg: $color-main;
-// $color-button-cta-bg-hover: $color-text-hover;
-// $color-button-cta-bg-active: $color-text-hover;
-// $color-button-cta-bg-disabled: rgba($color-main, .4);
+$color-button-cta-bg: #2EBBC7;
+$color-button-cta-bg-hover: darken($color-button-cta-bg, 5%);
+$color-button-cta-bg-active: #3FE3F1;
+$color-button-cta-bg-disabled: rgba($color-button-cta-bg, .4);
 
 // $color-button-cta-border: darken($color-main, 5); // $color-text-hover;
 
