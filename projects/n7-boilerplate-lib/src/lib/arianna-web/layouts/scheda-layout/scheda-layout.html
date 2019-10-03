@@ -1,5 +1,6 @@
 <div class="aw-scheda" id="scheda-layout">
-    <div class="aw-scheda__content">
+    <div class="aw-scheda__content"
+         [ngClass]="{ 'is-collapsed' : lb.dataSource.sidebarCollapsed }">
         <!-- Left sidebar: tree -->
         <div class="aw-scheda__tree">
             <n7-sidebar-header

@@ -14,11 +14,30 @@
 }
 
 .aw-scheda__content {
+    position: relative;
     margin: 0 auto;
     max-width: $page-max-width;
     display: grid;
     grid-template-columns: $aw-scheda-tree-width 1fr;
     grid-column-gap: 0;
+
+    .n7-sidebar-header__icon-right {
+        cursor: pointer;
+    }
+}
+
+
+/* ------------------------------------ *\
+    COLLAPSED
+\* ------------------------------------ */
+.aw-scheda__content.is-collapsed {
+    display: block;
+
+    .aw-scheda__tree {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
 }
 
 
