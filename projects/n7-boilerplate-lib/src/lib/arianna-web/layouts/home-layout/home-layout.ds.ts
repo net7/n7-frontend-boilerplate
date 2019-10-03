@@ -403,16 +403,24 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   }
 
   private _listenAutoCompleteChanges(){
+    this.one('aw-home-autocomplete').updateOptions({ config: this.configuration.get('config-keys') });
+
     this.autocompleteChanged$.pipe(
       debounceTime(500)
     ).subscribe(value => {
-      // TODO: autocomplete request
 
-      console.log('autocomplete', value);
-
-      if(value && !this.autocompletePopoverOpen){
-        this._toggleAutocompletePopover();
-      } else if(!value) {
+      if(value){
+        this.communication.request$('autoComplete', {
+          onError: (error) => console.error(error),
+          params: {
+            input: value,
+            itemsPagination:{ offset:0, limit: this.configuration.get('home-layout')['results-limit'] }
+          }
+        }).subscribe((response) => {
+          this.one('aw-home-autocomplete').update(response);
+          if(!this.autocompletePopoverOpen) this._toggleAutocompletePopover();
+        });
+      } else {
         this._toggleAutocompletePopover();
       }
     });

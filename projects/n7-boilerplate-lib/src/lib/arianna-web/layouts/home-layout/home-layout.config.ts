@@ -18,8 +18,7 @@ export const AwHomeLayoutConfig = {
   }, {
     id: 'aw-home-item-preview-wrapper'
   }, {
-    id: 'aw-home-autocomplete',
-    hasStaticData: true
+    id: 'aw-home-autocomplete'
   }],
   layoutDS: AwHomeLayoutDS,
   layoutEH: AwHomeLayoutEH,
