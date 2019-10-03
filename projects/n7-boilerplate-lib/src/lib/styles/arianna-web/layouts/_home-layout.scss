@@ -351,6 +351,50 @@
 }
 
 /* ------------------------------------ *\
+    BUBBLE-CHART
+\* ------------------------------------ */
+.tippy-tooltip {
+    &.light-border-theme {
+        border-radius: $border-radius;
+        border: none;
+        box-shadow: $tippy-box-shadow;
+    }
+
+    .tippy-content {
+        padding: $space*1.5 $space*2;
+        text-align: left;
+    }
+}
+
+/* Inner popup menu component */
+.aw-bubble-popup-menu {
+    .n7-icon-close {
+        position: absolute;
+        top: $space*1.5;
+        right: $space*1.5;
+        color: $color-text-light;
+    }
+
+    &__text {
+        font-size: $font-size-s;
+    }
+
+    &__actions {
+        margin-top: $space;
+    }
+
+    &__link {
+        font-weight: $font-weight-black;
+
+        &:first-of-type {
+            margin-right: $space;
+            padding-right: $space;
+            border-right: 1px solid $color-border-normal;
+        }
+    }
+}
+
+/* ------------------------------------ *\
    #MEDIA-QUERIES
 \* ------------------------------------ */
 @media all and (max-width: $breakpoint-laptop) {
