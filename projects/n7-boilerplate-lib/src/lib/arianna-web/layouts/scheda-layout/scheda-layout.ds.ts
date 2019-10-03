@@ -21,6 +21,11 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   public contentParts: any;
   public tree: any;
   public sidebarCollapsed: boolean;
+  public bubbleChartSectionTitle: string;
+  public similarItemsSectionTitle: string;
+  public images: any;
+  public imageIndex: number;
+  public imageViewerIstance: any;
   /**
   * If you are not using these variables (from your-layout.ts),
   * remove them from onInit() parameters and inside the function.
@@ -33,6 +38,10 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     this.communication = communication;
     this.options = options;
     this.sidebarCollapsed = false;
+    this.imageIndex = 0;
+    this.images = ['https://cdn.pixabay.com/photo/2019/09/30/18/41/taxi-4516525_960_720.jpg', 'https://cdn.pixabay.com/photo/2019/09/14/12/40/iceland-4475920_960_720.jpg', 'https://cdn.pixabay.com/photo/2019/09/26/06/26/face-4505196_960_720.jpg']
+    this.bubbleChartSectionTitle = this.configuration.get('scheda-layout')['bubble-chart']['title'];
+    this.similarItemsSectionTitle = this.configuration.get('scheda-layout')['related-items']['title'];
   }
 
   getNavigation( id ) {
@@ -61,19 +70,18 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
     this.one('aw-tree').update(treeObj);
     this.one('aw-sidebar-header').update(header);
-    this.one('aw-scheda-breadcrumbs').update(null);
   }
 
   loadItem( id ) {
     if ( id ) {
+      const maxSimilarItems = this.configuration.get('scheda-layout')['related-items']['max-related-items'];
       return  this.communication.request$('getItemDetails', {
         onError: (error) => console.error(error),
-        params: { itemId: id }
+        params: { itemId: id, maxSimilarItems }
       })
     } else {
       /* TODO: valori statici, da prendere da config */
       this.pageTitle = 'Collezione d\'Arte';
-      this.hasBreadcrumb = false;
       this.contentParts = [
         {
           type: 'text',
@@ -90,18 +98,29 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   }
 
   loadContent(response) {
-    this.hasBreadcrumb = true;
       if(response){
         this.contentParts = [];
-        if ( response.image ) {
+        let content = {};
 
-          this.one('aw-scheda-image').update({
-              images: [
-                {type: 'image', url: response.image, buildPyramid: false}
-              ],
+        if ( response.text ){
+          content['content'] = response.text;
+        }
+        this.contentParts.push(content);
+        if ( response.image ) {
+          console.log( "responseimage " + response.image);
+          const images =  [{type: 'image', url: this.images[this.imageIndex], buildPyramid: false}];
+          this.imageIndex++;
+          if( !this.imageViewerIstance ) {
+            this.one('aw-scheda-image').update({
               viewerId: 'scheda-layout-viewer',
-              _setViewer : (viewer) => {},
+              _setViewer : (viewer) => {
+                this.imageViewerIstance = viewer;
+                viewer.open(images);
+              },
             });
+          } else {
+            this.imageViewerIstance.open(images);
+          }
         }
 
         let titleObj = {
@@ -155,6 +174,11 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       /* Related Entities */
       if( response.connectedEntities ) {
         this.setAllBubblesFromApolloQuery(response);
+      }
+
+      /* Similar item */
+      if( response.similarItems ) {
+        this.one('aw-scheda-item-preview-wrapper').update(response.similarItems);
       }
   }
 

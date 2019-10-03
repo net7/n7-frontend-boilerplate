@@ -16,7 +16,6 @@
         <!-- Scheda details -->
         <div class="aw-scheda__scheda-wrapper">
             <n7-breadcrumbs
-                *ngIf="lb.dataSource.hasBreadcrumb"
                 [data]="lb.widgets['aw-scheda-breadcrumbs'].ds.out$ | async"
                 [emit]="lb.widgets['aw-scheda-breadcrumbs'].emit"
             ></n7-breadcrumbs>
@@ -30,13 +29,7 @@
             >
             </n7-image-viewer>
             <div *ngFor="let part of lb.dataSource.contentParts">
-
-                <div>
-                    <h1>{{ part.title }}</h1>
-                    <div>
-                        <div [innerHTML]="part.content" >
-                        </div>
-                    </div>
+                <div [innerHTML]="part.content" >
                 </div>
             </div>
             <n7-metadata-viewer
@@ -44,10 +37,22 @@
             >
             </n7-metadata-viewer>
             <div id="bubble-chart-container">
+                <div class="n7-metadata-viewer__group-title">{{lb.dataSource.bubbleChartSectionTitle}}</div>
                 <n7-bubble-chart [data]="lb.widgets['aw-scheda-bubble-chart'].ds.out$ | async"
                     [emit]="lb.widgets['aw-scheda-bubble-chart'].emit">
                 </n7-bubble-chart>
             </div>
+            <div id="related-item-container">
+                    <div class="n7-metadata-viewer__group-title">{{lb.dataSource.similarItemsSectionTitle}}</div>
+                    <div class="n7-related-item__wrapper">
+                        <ng-container *ngFor="let widgetData of lb.widgets['aw-scheda-item-preview-wrapper'].ds.out$ | async;">
+                            <n7-item-preview
+                                [data]="widgetData"
+                                [emit]="lb.widgets['aw-scheda-item-preview-wrapper'].emit">
+                            </n7-item-preview>
+                        </ng-container>
+                    </div>
+             </div>
         </div>
     </div>
 </div>

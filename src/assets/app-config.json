@@ -77,6 +77,15 @@
     },
     "results-limit": 10
   },
+  "scheda-layout": {
+    "bubble-chart": {
+      "title": "Entità collegate"
+    },
+    "related-items": {
+      "title": "Oggetti culturali simili",
+      "max-related-items": 6
+    }
+  },
   "config-keys": {
     "people": {
       "color": {

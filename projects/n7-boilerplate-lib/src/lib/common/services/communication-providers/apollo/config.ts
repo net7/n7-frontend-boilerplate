@@ -148,9 +148,24 @@ export const ApolloProviderConfig = {
             id
             icon
           }
-           similarItems {
-          thumbnail
-        }
+          similarItems {
+            thumbnail
+              item {
+                label
+                icon
+                info {
+                  key
+                  value
+                }
+              }
+            relatedTOEData {
+              count
+              type {
+                label
+                configKey
+              }
+            }
+          }
           connectedEntities {
             count
             entity{
