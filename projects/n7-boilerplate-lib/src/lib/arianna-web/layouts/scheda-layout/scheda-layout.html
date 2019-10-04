@@ -1,7 +1,8 @@
 <div class="aw-scheda" id="scheda-layout">
     <div class="aw-scheda__content"
          [ngClass]="{ 'is-collapsed' : lb.dataSource.sidebarCollapsed }">
-        <!-- Left sidebar: tree -->
+        
+         <!-- Left sidebar: tree -->
         <div class="aw-scheda__tree">
             <n7-sidebar-header
                 [data]="lb.widgets['aw-sidebar-header'].ds.out$ | async"
@@ -29,23 +30,28 @@
                 [data]="lb.widgets['aw-scheda-image'].ds.out$ | async"
             >
             </n7-image-viewer>
-            <div *ngFor="let part of lb.dataSource.contentParts">
-                <div [innerHTML]="part.content" >
+            
+            <section class="aw-scheda__description">
+                <div *ngFor="let part of lb.dataSource.contentParts">
+                    <div [innerHTML]="part.content"></div>
                 </div>
-            </div>
-            <n7-metadata-viewer
-                [data]="lb.widgets['aw-scheda-metadata'].ds.out$ | async"
-            >
-            </n7-metadata-viewer>
+            </section>
 
-            <div id="bubble-chart-container">
+            <section class="aw-scheda__metadata">
+                <div class="aw-scheda__inner-title">Metadati</div>
+                <n7-metadata-viewer
+                    [data]="lb.widgets['aw-scheda-metadata'].ds.out$ | async">
+                </n7-metadata-viewer>
+            </section>
+
+            <section id="bubble-chart-container" class="aw-scheda__bubble-chart">
                 <div class="aw-scheda__inner-title">{{lb.dataSource.bubbleChartSectionTitle}}</div>
                 <n7-bubble-chart [data]="lb.widgets['aw-scheda-bubble-chart'].ds.out$ | async"
                     [emit]="lb.widgets['aw-scheda-bubble-chart'].emit">
                 </n7-bubble-chart>
-            </div>
+            </section>
             
-            <div id="related-item-container">
+            <section id="related-item-container" class="aw-scheda__related">
                 <div class="aw-scheda__inner-title">{{lb.dataSource.similarItemsSectionTitle}}</div>
                 <div class="aw-scheda__related-items n7-grid-2">
                     <ng-container *ngFor="let widgetData of lb.widgets['aw-scheda-item-preview-wrapper'].ds.out$ | async;">
@@ -55,7 +61,7 @@
                         </n7-item-preview>
                     </ng-container>
                 </div>
-             </div>
+             </section>
         </div>
     </div>
 </div>
