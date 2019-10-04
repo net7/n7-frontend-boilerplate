@@ -7,7 +7,7 @@
 // ------------------------------------ //
 // #LAYOUT
 // ------------------------------------ //
-$page-max-width: 1140px;
+$page-max-width: 1300px;
 
 
 // ------------------------------------ //
@@ -229,6 +229,7 @@ $header-height: 100px;
 // #HERO
 // ------------------------------------ //
 $hero-height: 600px;
+$hero-content-width: $page-max-width;
 $top-hero-height: 380px;
 $hero-text-max-width: 715px;
 $hero-input-border-radius: $border-radius;
@@ -270,4 +271,4 @@ $tippy-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
 // ------------------------------------ //
 // #BUBBLE-RESULTS
 // ------------------------------------ //
-$bubble-results-height: 650px;
+$bubble-results-height: 555px;

@@ -4,8 +4,6 @@
  * Layout for homepage
  */
 
- $page-max-width: 1140px; // TODO add in components variables!
-
  /* ------------------------------------ *\
     HERO
 \* ------------------------------------ */
@@ -254,6 +252,8 @@
 
     /* Results */
     .aw-home__bubble-results {
+        background: #ffffff;
+        
         &-title {
             margin-bottom: $space*2;
             font-weight: $font-weight-normal;
