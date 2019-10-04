@@ -39,7 +39,6 @@ function unpackData (data, amount, config) {
         {
           classes: 'n7-objects__metadata-linked',
           items: el.relatedTOEData.map( toe => {
-            console.log(config);
             const icon = typeof config[toe.type.configKey] != 'undefined' ? config[toe.type.configKey].icon : toe.type.configKey;
             return { // Persone: 6, Organizz: 12, Luoghi: 2, Concetti: 32
               value: toe.count,
