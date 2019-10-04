@@ -5,6 +5,8 @@
  * Includes traa navigation on the right.
  */
  
+$aw-scheda-content-padding: $space*3;
+
 /* ------------------------------------ *\
     LAYOUT
 \* ------------------------------------ */
@@ -41,6 +43,9 @@
     TREE
 \* ------------------------------------ */
 .aw-scheda__tree {
+    position: sticky;
+    top: 0;
+    
     .n7-tree {
         background-color: $color-background-base;
     }
@@ -74,13 +79,44 @@
     }
 
     /* Inner title */
+    /* Main title that describes the scheda content */
     .n7-inner-title {
 
     }
 
+    /* Minor inner titles that descibe the various sections */
+    .aw-scheda__inner-title {
+        padding: $aw-scheda-content-padding;
+        border-top: 2px solid $color-border-normal;
+        font-size: $font-size-xxl;
+        font-weight: $font-weight-normal;
+    }
+
+    /* Description text */
+    .aw-scheda__description {
+        padding: $aw-scheda-content-padding;
+        columns: 2;
+        font-size: $font-size-l;
+    }
+
+    /* Metadata */
+    .aw-scheda__metadata {
+        .n7-metadata-viewer {
+            padding: 0 $aw-scheda-content-padding $aw-scheda-content-padding $aw-scheda-content-padding;
+            columns: 2;
+        }
+    }
+
+    /* Bubble chart */
+    .aw-scheda__bubble-chart {
+        .n7-bubble-chart {
+            padding: 0 $aw-scheda-content-padding $aw-scheda-content-padding $aw-scheda-content-padding;
+        }
+    }
+    
     /* Related items */
     .aw-scheda__related-items {
-        padding: $space*2;
+        padding: $aw-scheda-content-padding;
     }
 }
 

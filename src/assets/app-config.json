@@ -84,6 +84,9 @@
     "related-items": {
       "title": "Oggetti culturali simili",
       "max-related-items": 6
+    },
+    "metadata": {
+      "title": "Metadati"
     }
   },
   "config-keys": {

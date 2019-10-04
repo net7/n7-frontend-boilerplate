@@ -23,6 +23,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   public sidebarCollapsed: boolean;
   public bubbleChartSectionTitle: string;
   public similarItemsSectionTitle: string;
+  public metadataSectionTitle: string;
   public hasBubbles: boolean;
   public hasSimilarItems: boolean;
   public imageViewerIstance: any;
@@ -40,6 +41,9 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     this.sidebarCollapsed = false;
     this.bubbleChartSectionTitle = this.configuration.get('scheda-layout')['bubble-chart']['title'];
     this.similarItemsSectionTitle = this.configuration.get('scheda-layout')['related-items']['title'];
+    this.metadataSectionTitle = this.configuration.get('scheda-layout')['metadata']['title'];
+    this.hasSimilarItems = false;
+    this.hasBubbles = false;
   }
 
   getNavigation( id ) {
@@ -168,15 +172,21 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       }
 
       /* Related Entities */
-      if( response.connectedEntities ) {
+      if ( response.connectedEntities ) {
         this.hasBubbles = true;
         this.setAllBubblesFromApolloQuery(response);
+      } else {
+        this.hasBubbles = false;
+        this.one('aw-scheda-bubble-chart').update(null);
       }
 
       /* Similar item */
-      if( response.similarItems ) {
+      if ( response.similarItems ) {
         this.hasSimilarItems = true;
         this.one('aw-scheda-item-preview-wrapper').update(response.similarItems);
+      } else {
+        this.hasSimilarItems = false;
+        this.one('aw-scheda-item-preview-wrapper').update(null);
       }
   }
 
@@ -243,7 +253,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
     for ( let i = 0; i < response.connectedEntities.length; i++ ){
 
-      const color = this.configuration.get('config-keys') ? this.configuration.get('config-keys')[response.connectedEntities[i].entity.typeOfEntity.configKey]['color']['hex'] : "";
+      const color = this.configuration.get('config-keys')[response.connectedEntities[i].entity.typeOfEntity.configKey] ? this.configuration.get('config-keys')[response.connectedEntities[i].entity.typeOfEntity.configKey]['color']['hex'] : "";
 
       this.allBubbles.push(
         {
