@@ -1,3 +1,6 @@
+// Any
+export * from './linked-objects.ds';
+
 // Home Layout
 export * from './hero.ds';
 export * from './table.ds';
@@ -10,7 +13,6 @@ export * from './home-item-tags-wrapper.ds';
 // Entita Layout
 export * from './entita-nav.ds';
 export * from './entita-metadata-viewer.ds';
-export * from './entita-linked-objects.ds';
 
 // Scheda Layout
 export * from './tree.ds';

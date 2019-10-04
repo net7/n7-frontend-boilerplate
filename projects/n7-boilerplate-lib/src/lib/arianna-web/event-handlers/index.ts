@@ -1,3 +1,6 @@
+// Any
+export * from './linked-objects.eh';
+
 // Home Layout
 export * from './hero.eh';
 export * from './home-bubble-chart.eh';
@@ -8,7 +11,6 @@ export * from './home-item-tags-wrapper.eh';
 
 // Entita Layout
 export * from './entita-nav.eh';
-export * from './entita-linked-objects.eh';
 
 //Scheda Layout
 export * from './scheda-breadcrumbs.eh';

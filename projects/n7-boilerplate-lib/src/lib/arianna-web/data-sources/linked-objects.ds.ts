@@ -1,6 +1,6 @@
 import { DataSource } from '@n7-frontend/core';
 
-export class AwEntitaLinkedObjectsDS extends DataSource {
+export class AwLinkedObjectsDS extends DataSource {
 
   protected transform(data, amount:number) {
     switch (this.options.context) {
