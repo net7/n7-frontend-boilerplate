@@ -292,31 +292,7 @@
             }
         }
 
-        .n7-item-preview {
-            margin: $space*2 0;
-            padding-bottom: $space;
-            border-bottom: 1px solid $color-border-normal;
 
-            &__title {
-                margin-bottom: $space/2;
-                font-weight: $font-weight-black;
-            }
-
-            // &__metadata-group {
-            //     .n7-item-preview__metadata-item {
-            //         border-right: 1px solid $color-border-normal;
-            //     }
-            // }
-
-            &.has-image {
-                grid-template-columns: $item-preview-image-size 1fr;
-
-                .n7-item-preview__image {
-                    width: $item-preview-image-size;
-                    height: $item-preview-image-size;
-                }
-            }
-        }
     }
 
     .aw-home__results-wrapper {
@@ -376,6 +352,65 @@
 
     .tag-toe-places {
         background-color: $color-places;
+    }
+}
+
+/* ------------------------------------ *\
+    ITEM-PREVIEW
+\* ------------------------------------ */
+/* Todo: to move from here */
+.n7-item-preview {
+    margin: $space*2 0;
+    padding-bottom: $space;
+    border-bottom: 1px solid $color-border-normal;
+
+    &__title {
+        margin-bottom: $space/2;
+        font-weight: $font-weight-black;
+    }
+
+    &__metadata-item {
+        display: inline-flex;
+        align-items: baseline;
+        padding-right: $space;
+        border-right: 1px solid $color-border-normal;
+
+        &:last-of-type {
+            border-right: none;
+        }
+
+        &.color-people {
+            color: $color-people;
+        }
+
+        &.color-places {
+            color: $color-places;
+        }
+
+        &.color-organizations {
+            color: $color-organizations;
+        }
+
+        &.color-concepts {
+            color: $color-concepts;
+        }
+
+        &-icon {
+            font-size: $font-size-m;
+        }
+
+        &-value {
+            font-size: $font-size-s;
+        }
+    }
+    
+    &.has-image {
+        grid-template-columns: $item-preview-image-size 1fr;
+
+        .n7-item-preview__image {
+            width: $item-preview-image-size;
+            height: $item-preview-image-size;
+        }
     }
 }
 
