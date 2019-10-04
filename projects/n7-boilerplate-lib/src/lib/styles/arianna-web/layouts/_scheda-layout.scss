@@ -21,19 +21,33 @@ $aw-scheda-content-padding: $space*3;
         display: grid;
         grid-template-columns: $aw-scheda-tree-width 1fr;
         grid-column-gap: 0;
+    }
 
-        .n7-sidebar-header__icon-right {
-            cursor: pointer;
+    &__tree {
+        width: $aw-scheda-tree-width;
+
+        .n7-sidebar-header {
+            position: sticky !important;
+            top: 0px !important;    
+        }
+
+        .n7-tree {
+            position: sticky !important;
+            top: 44px !important; // 44px is the sidebarheader height
+            max-height: calc(100vh - 190px); // 44px is the sidebarheader height
+            overflow-y: auto;
         }
     }
 
     &__scheda-wrapper {
+        position: relative;
+        z-index: 4;
         box-shadow: 0 2px 20px 0 rgba(0,0,0,0.08);
     }
 
     .n7-sidebar-header {
         position: relative;
-        z-index: 2;
+        z-index: 6;
         box-shadow: 0 2px 20px 0 rgba(0,0,0,0.10);
     }
 }
@@ -45,9 +59,13 @@ $aw-scheda-content-padding: $space*3;
 .aw-scheda__tree {
     position: sticky;
     top: 0;
-    
+
     .n7-tree {
         background-color: $color-background-base;
+    }
+
+    .n7-sidebar-header__icon-right {
+        cursor: pointer;
     }
 }
 
@@ -62,6 +80,16 @@ $aw-scheda-content-padding: $space*3;
         position: absolute;
         top: 0;
         left: 0;
+        width: auto;
+    }
+
+    .n7-sidebar-header__icon-left,
+    .n7-sidebar-header__text-wrapper {
+        display: none;
+    }
+
+    .n7-breadcrumbs {
+        margin-left: 44px; // 44px is the sidebarheader height
     }
 }
 
@@ -75,6 +103,7 @@ $aw-scheda-content-padding: $space*3;
     /* Breadcrumbs */
     .n7-breadcrumbs  {
         height: 44px;
+        box-sizing: border-box;
         background-color: $color-background-medium;
     }
 
@@ -104,6 +133,10 @@ $aw-scheda-content-padding: $space*3;
         .n7-metadata-viewer {
             padding: 0 $aw-scheda-content-padding $aw-scheda-content-padding $aw-scheda-content-padding;
             columns: 2;
+        }
+
+        .n7-metadata-viewer__group-wrapper {
+            break-inside: avoid;
         }
     }
 
