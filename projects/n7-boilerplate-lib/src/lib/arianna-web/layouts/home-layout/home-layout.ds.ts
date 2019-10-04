@@ -77,6 +77,9 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         this.updateBubblesAndItemPreviews(true);
       }
     });
+
+    // adding options to widgets
+    this.one('aw-home-item-preview-wrapper').updateOptions({ config: this.configuration.get('config-keys') });
   }
 
   onBubbleTooltipClick(source:string, payload){
