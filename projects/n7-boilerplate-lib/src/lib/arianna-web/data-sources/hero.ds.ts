@@ -1,22 +1,21 @@
 import { DataSource } from '@n7-frontend/core';
-import { HERO_MOCK } from '@n7-frontend/components';
 
 export class AwHeroDS extends DataSource {
-
   protected transform(data){
-    const HERO_DATA = {
-      title: "Arte, architettura e fotografia nel XXI secolo",
-      text: "Consulta il patrimonio completo del polo nazionale per l\'arte e l\'architettura contemporanee.",
+    const { title, text, button, backgroundImage, input } = data;
+
+    return {
+      title,
+      text,
+      backgroundImage,
       button: {
-        text: "CERCA",
+        text: button.text,
         payload: "cerca"
       },
-      backgroundImage: "https://i.imgur.com/FgsxSYR.png",
       input: {
-        placeholder: "Cerca in MAXXI",
+        placeholder: input.placeholder,
         payload: "cerca-in-maxxi"
       }
-    };  
-    return HERO_DATA;
+    };
   }
 }
