@@ -59,10 +59,10 @@
                 id="related-item-container" class="aw-scheda__related">
                 <div class="aw-scheda__inner-title">{{lb.dataSource.similarItemsSectionTitle}}</div>
                 <div class="aw-scheda__related-items n7-grid-2">
-                    <ng-container *ngFor="let widgetData of lb.widgets['aw-scheda-item-preview-wrapper'].ds.out$ | async;">
+                    <ng-container *ngFor="let widgetData of lb.widgets['aw-linked-objects'].ds.out$ | async;">
                         <n7-item-preview
                             [data]="widgetData"
-                            [emit]="lb.widgets['aw-scheda-item-preview-wrapper'].emit">
+                            >
                         </n7-item-preview>
                     </ng-container>
                 </div>
