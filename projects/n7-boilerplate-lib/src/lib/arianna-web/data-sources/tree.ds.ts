@@ -22,8 +22,14 @@ export class AwTreeDS extends DataSource {
       if( it['_meta'] == id ) {
         if ( classes.indexOf("is-expanded") > -1 ) {
           it['classes'] = classes.replace(/is-expanded/g, "is-collapsed");
+          if ( it['toggle'] ){
+            it['toggle']['icon'] = 'n7-icon-angle-right';
+          }
         } else {
           it['classes'] = classes.replace(/is-collapsed/g, "is-expanded");
+          if ( it['toggle'] ){
+            it['toggle']['icon'] = 'n7-icon-angle-down';
+          }
         }
       } else if ( parents.indexOf( it['_meta'] ) >= 0 ) {
           it['classes'] = classes + ' is-expanded';

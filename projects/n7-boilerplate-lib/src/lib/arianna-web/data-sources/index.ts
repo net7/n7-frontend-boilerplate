@@ -21,3 +21,6 @@ export * from './scheda-image.ds';
 export * from './scheda-inner-title.ds';
 export * from './scheda-bubble-chart.ds';
 export * from './scheda-item-preview-wrapper.ds';
+
+// Common
+export * from './linked-objects.ds';

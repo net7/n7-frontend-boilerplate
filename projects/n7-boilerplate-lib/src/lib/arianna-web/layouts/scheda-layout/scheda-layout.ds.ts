@@ -24,6 +24,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   public bubbleChartSectionTitle: string;
   public similarItemsSectionTitle: string;
   public metadataSectionTitle: string;
+  public hasMetadata: boolean;
   public hasBubbles: boolean;
   public hasSimilarItems: boolean;
   public imageViewerIstance: any;
@@ -141,6 +142,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
         let group = { group: [] };
 
         if ( response.fields ){
+          this.hasMetadata = true;
           response.fields.forEach(field => {
             let items = [];
             field.fields.forEach(item => {
@@ -183,10 +185,11 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       /* Similar item */
       if ( response.similarItems ) {
         this.hasSimilarItems = true;
-        this.one('aw-scheda-item-preview-wrapper').update(response.similarItems);
+        this.one('aw-linked-objects').updateOptions({ context: 'scheda', configKeys: this.configuration.get("config-keys") })
+         this.one('aw-linked-objects').update(response.similarItems);
       } else {
         this.hasSimilarItems = false;
-        this.one('aw-scheda-item-preview-wrapper').update(null);
+        this.one('aw-linked-objects').update(null);
       }
   }
 
