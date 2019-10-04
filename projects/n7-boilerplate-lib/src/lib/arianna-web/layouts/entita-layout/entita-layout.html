@@ -53,7 +53,7 @@
         </ng-container>
         
         <h1>Oggetti collegati</h1><button class="n7-btn n7-btn-light">TUTTI GLI OGGETTI COLLEGATI</button>
-        <ng-container *ngFor="let preview of lb.widgets['aw-entita-linked-objects'].ds.out$ | async">
+        <ng-container *ngFor="let preview of lb.widgets['aw-linked-objects'].ds.out$ | async">
             <n7-breadcrumbs
                 [data]="preview.breadcrumbs">
             </n7-breadcrumbs>
