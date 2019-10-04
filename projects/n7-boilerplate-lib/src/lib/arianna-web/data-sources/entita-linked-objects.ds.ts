@@ -2,7 +2,7 @@ import { DataSource } from '@n7-frontend/core';
 
 export class AwEntitaLinkedObjectsDS extends DataSource {
 
-  protected transform(data) {
+  protected transform(data, amount:number) {
     switch (this.options.context) {
       case 'overview':
         var amount = 3
@@ -47,7 +47,7 @@ function unpackData (data, amount, config) {
         {
           classes: 'n7-objects__metadata-linked',
           items: el.relatedTOEData.map( toe => {
-            return { // Persone: 6, Organizz: 12, Luoghi: 2, Concetti: 32 
+            return { // Persone: 6, Organizz: 12, Luoghi: 2, Concetti: 32
               value: toe.count,
               // icon: 'n7-icon-bell' // TODO: link icon to config key
               icon: config[toe.type.configKey].icon

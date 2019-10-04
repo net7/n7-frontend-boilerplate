@@ -5,31 +5,31 @@ export class AwTreeDS extends DataSource {
   public currentItem: string;
 
   toggleNav() {
-    
+
   }
 
-  protected transform(data) {     
+  protected transform(data) {
     return data;
   }
 
-  updateTree(data, parents, id){ 
+  updateTree(data, parents, id){
     if ( !data ) {
-      data = this.output;    
+      data = this.output;
     }
-    
-    data.items.forEach( (it) => {    
-      if( it['_meta'] == id ) {      
-        if ( it['classes'] == "is-expanded" ) {
-          it['classes'] = "is-collapsed";
+
+    data.items.forEach( (it) => {
+      const classes = it['classes'];
+      if( it['_meta'] == id ) {
+        if ( classes.indexOf("is-expanded") > -1 ) {
+          it['classes'] = classes.replace(/is-expanded/g, "is-collapsed");
         } else {
-          it['classes'] = "is-expanded";
-        }  
-      }    
-      else if( parents.indexOf( it['_meta'] ) >= 0 ) {          
-          it['classes'] = "is-expanded";
+          it['classes'] = classes.replace(/is-collapsed/g, "is-expanded");
+        }
+      } else if ( parents.indexOf( it['_meta'] ) >= 0 ) {
+          it['classes'] = classes + ' is-expanded';
       }
-      if( typeof it['items'] != "undefined" && it['items'].length > 0 ) {            
-        this.updateTree(it, parents, id);            
+      if( typeof it['items'] != "undefined" && it['items'].length > 0 ) {
+        this.updateTree(it, parents, id);
       }
     });
     this.update(data);
@@ -37,31 +37,31 @@ export class AwTreeDS extends DataSource {
 
   selectTreeItem(id, data){
     if ( !data ) {
-      data = this.output;    
+      data = this.output;
     }
 
     data.items.forEach( (it) => {
-        if( it['_meta'] == id ) {
-            it['classes'] = it['classes'] + " is-active";
+        if ( it['_meta'] == id && it['classes'].indexOf('is-active') < 0 ) {
+            it['classes'] = it['classes'] + ' is-active';
             this.currentItem = it;
         } else {
-          let classes = it['classes'];
+          const classes = it['classes'];
           it['classes'] = classes.replace("is-active", "");
         }
-        if( typeof it['items'] != "undefined" && it['items'].length > 0 ) {            
-          this.selectTreeItem(id, it);            
+        if( typeof it['items'] != "undefined" && it['items'].length > 0 ) {
+          this.selectTreeItem(id, it);
         }
     });
     this.update(data);
   }
 
   toggleSidebar() {
-    let sidebarData = this.output;    
+    let sidebarData = this.output;
     if ( sidebarData.classes == "is-expanded" ) {
       sidebarData.classes = "is-collapsed";
     } else {
         sidebarData.classes = "is-expanded";
-    }    
+    }
     this.update(sidebarData);
   }
 }

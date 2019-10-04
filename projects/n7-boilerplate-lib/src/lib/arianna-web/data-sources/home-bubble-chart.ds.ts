@@ -8,7 +8,6 @@ export class AwHomeBubbleChartDS extends DataSource {
 
   protected transform(data){
     if(!data) return null;
-
     let bubbleCointainer = document.getElementById("bubble-chart-container");
     const cWidth = bubbleCointainer.offsetWidth;
     // TODO: think of a good way to pass/compute cHeight

@@ -12,6 +12,8 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   protected mainState: any;
   protected router: any;
   protected titleService: any;
+  private allBubbles: any[] = null;
+  public selectedBubbles: any[] = [];
 
   public options: any;
   public pageTitle: string;
@@ -19,6 +21,12 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   public contentParts: any;
   public tree: any;
   public sidebarCollapsed: boolean;
+  public bubbleChartSectionTitle: string;
+  public similarItemsSectionTitle: string;
+  public metadataSectionTitle: string;
+  public hasBubbles: boolean;
+  public hasSimilarItems: boolean;
+  public imageViewerIstance: any;
   /**
   * If you are not using these variables (from your-layout.ts),
   * remove them from onInit() parameters and inside the function.
@@ -31,6 +39,11 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     this.communication = communication;
     this.options = options;
     this.sidebarCollapsed = false;
+    this.bubbleChartSectionTitle = this.configuration.get('scheda-layout')['bubble-chart']['title'];
+    this.similarItemsSectionTitle = this.configuration.get('scheda-layout')['related-items']['title'];
+    this.metadataSectionTitle = this.configuration.get('scheda-layout')['metadata']['title'];
+    this.hasSimilarItems = false;
+    this.hasBubbles = false;
   }
 
   getNavigation( id ) {
@@ -59,19 +72,18 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
     this.one('aw-tree').update(treeObj);
     this.one('aw-sidebar-header').update(header);
-    this.one('aw-scheda-breadcrumbs').update(null);
   }
 
   loadItem( id ) {
     if ( id ) {
+      const maxSimilarItems = this.configuration.get('scheda-layout')['related-items']['max-related-items'];
       return  this.communication.request$('getItemDetails', {
         onError: (error) => console.error(error),
-        params: { itemId: id }
+        params: { itemId: id, maxSimilarItems }
       })
     } else {
       /* TODO: valori statici, da prendere da config */
       this.pageTitle = 'Collezione d\'Arte';
-      this.hasBreadcrumb = false;
       this.contentParts = [
         {
           type: 'text',
@@ -88,26 +100,44 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   }
 
   loadContent(response) {
-    this.hasBreadcrumb = true;
       if(response){
         this.contentParts = [];
-        if( response.image ) {
-          this.contentParts.push({
-            image: response.image,
-            type: 'image'
-          });
+        let content = {};
+
+        if ( response.text ){
+          content['content'] = response.text;
+        }
+        this.contentParts.push(content);
+        if ( response.image ) {
+          const images =  [{type: 'image', url: response.image, buildPyramid: false}];
+          if( !this.imageViewerIstance ) {
+            this.one('aw-scheda-image').update({
+              viewerId: 'scheda-layout-viewer',
+              _setViewer : (viewer) => {
+                this.imageViewerIstance = viewer;
+                viewer.open(images);
+              },
+            });
+          } else {
+            this.imageViewerIstance.open(images);
+          }
         }
 
-        this.contentParts.push({
-          title: response.title,
-          content: response.text,
-          type: 'text'
-        });
+        let titleObj = {
+          icon: response.item.icon,
+          title: {
+            main: {
+              text: response.title,
+              classes: 'bold',
+            }
+          },
+          tools: response.subTitle,
+          actions: {}
+        };
 
-        let breadcrumbs = {
-          items: []
-        }
+        this.one('aw-scheda-inner-title').update(titleObj);
 
+        /*Metadata section*/
         let group = { group: [] };
 
         if ( response.fields ){
@@ -121,14 +151,16 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
               {
                 title: field.label,
                 items: items
-                //items: field.fields
               }
             );
         });
       }
+      this.one('aw-scheda-metadata').update(group);
 
-
-        this.one('aw-scheda-metadata').update(group);
+      /*Breadcrumb section*/
+        let breadcrumbs = {
+          items: []
+        };
 
         response.breadcrumbs.forEach(element => {
           breadcrumbs.items.push({
@@ -137,6 +169,24 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
           })
         });
         this.one('aw-scheda-breadcrumbs').update(breadcrumbs);
+      }
+
+      /* Related Entities */
+      if ( response.connectedEntities ) {
+        this.hasBubbles = true;
+        this.setAllBubblesFromApolloQuery(response);
+      } else {
+        this.hasBubbles = false;
+        this.one('aw-scheda-bubble-chart').update(null);
+      }
+
+      /* Similar item */
+      if ( response.similarItems ) {
+        this.hasSimilarItems = true;
+        this.one('aw-scheda-item-preview-wrapper').update(response.similarItems);
+      } else {
+        this.hasSimilarItems = false;
+        this.one('aw-scheda-item-preview-wrapper').update(null);
       }
   }
 
@@ -196,5 +246,34 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   collapseSidebar() {
     this.sidebarCollapsed = !this.sidebarCollapsed;
   }
+
+  setAllBubblesFromApolloQuery( response: any, reset?: boolean ){
+    if ( !response || !response.connectedEntities ) { return; }
+    this.allBubbles = [];
+
+    for ( let i = 0; i < response.connectedEntities.length; i++ ){
+
+      const color = this.configuration.get('config-keys')[response.connectedEntities[i].entity.typeOfEntity.configKey] ? this.configuration.get('config-keys')[response.connectedEntities[i].entity.typeOfEntity.configKey]['color']['hex'] : "";
+
+      this.allBubbles.push(
+        {
+          id: this.convertEntityIdToBubbleId( response.connectedEntities[i].entity.id ),
+          ...response.connectedEntities[i],
+          color: color
+        });
+    }
+    this.one('aw-scheda-bubble-chart').update({
+      containerId: 'bubble-chart-container',
+      width: window.innerWidth / 1.8,
+      bubbles: this.allBubbles,
+      reset: ( reset ? reset : false )
+    });
+  }
+
+  private convertEntityIdToBubbleId( entityId: string ): string {
+    if( !entityId ) return null;
+    return ( 'B_' + entityId.replace(/-/g, '_') );
+  }
+
 
 }
