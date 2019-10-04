@@ -1,10 +1,19 @@
 <div class="aw-entita-layout" *ngIf="lb.dataSource">
-    <h2><span class="n7-icon-map-marker-alt"></span> {{lb.dataSource.entityTitle}}</h2>
+
+    <!-- custom header -->
+    <div class="n7-nav-header">
+        <h1>
+            <span class="{{lb.dataSource.navHeader.icon}}"></span>
+            {{lb.dataSource.navHeader.text}}
+        </h1>
+    </div>
+    <!-- navigation -->
     <n7-nav 
         [data]="lb.widgets['aw-entita-nav'].ds.out$ | async" 
         [emit]="lb.widgets['aw-entita-nav'].emit">
     </n7-nav>
-    <ng-container [ngSwitch]="lb.dataSource.selectedTab">
+    <div class="aw-entita-layout__content-wrapper" 
+         [ngSwitch]="lb.dataSource.selectedTab">
         <ng-container *ngSwitchCase="'overview'">
             <ng-container *ngTemplateOutlet="overview"></ng-container>
         </ng-container>
@@ -23,12 +32,36 @@
         <ng-container *ngSwitchCase="'wiki'">
             <ng-container *ngTemplateOutlet="wiki"></ng-container>
         </ng-container>
-    </ng-container>
+    </div>
 </div>
 
+<!-- navigation page content templates -->
 <ng-template #overview>
     <div>
         {{lb.dataSource.myResponse.overviewTab}}
+        <div class="aw-entita-layout__button-wrapper">
+            <button class="n7-btn n7-btn-light">DESCRIZIONE WIKIPEDIA</button>
+            <button class="n7-btn n7-btn-light">DESCRIZIONE MAXXI</button>
+        </div>
+        
+        <ng-container *ngIf="lb.widgets['aw-entita-metadata-viewer'].ds.out$ | async">
+            <h1>Campi</h1>
+            <button class="n7-btn n7-btn-light">TUTTI I CAMPI</button>
+            <n7-metadata-viewer class="aw-entita-layout__metadata-viewer"
+                [data]="lb.widgets['aw-entita-metadata-viewer'].ds.out$ | async">
+            </n7-metadata-viewer>
+        </ng-container>
+        
+        <h1>Oggetti collegati</h1><button class="n7-btn n7-btn-light">TUTTI GLI OGGETTI COLLEGATI</button>
+        <ng-container *ngFor="let preview of lb.widgets['aw-entita-linked-objects'].ds.out$ | async">
+            <n7-breadcrumbs
+                [data]="preview.breadcrumbs">
+            </n7-breadcrumbs>
+            <n7-item-preview
+                [data]="preview">
+            </n7-item-preview>
+        </ng-container>
+        
     </div>
 </ng-template>
 

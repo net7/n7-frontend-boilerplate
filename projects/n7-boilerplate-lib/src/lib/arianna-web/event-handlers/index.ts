@@ -7,7 +7,8 @@ export * from './home-item-preview-wrapper.eh';
 export * from './home-item-tags-wrapper.eh';
 
 // Entita Layout
-export * from './entita-nav.eh'
+export * from './entita-nav.eh';
+export * from './entita-linked-objects.eh';
 
 //Scheda Layout
 export * from './scheda-breadcrumbs.eh';
