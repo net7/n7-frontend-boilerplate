@@ -81,7 +81,6 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     }
   }
 
-
   onBubbleMouseEnter(payload){
     if(!payload || !payload.bubble) return;
     const bubbleId = payload.bubble.id;
