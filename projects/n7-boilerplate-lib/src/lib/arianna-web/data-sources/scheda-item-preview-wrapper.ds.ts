@@ -1,7 +1,6 @@
 import { DataSource } from '@n7-frontend/core';
 
 export class AwSchedaItemPreviewWrapperDS extends DataSource {
-
   protected transform(data) {
     let result = [];
     data.forEach(item => {

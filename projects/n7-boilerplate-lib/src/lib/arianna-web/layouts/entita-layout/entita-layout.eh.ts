@@ -1,7 +1,5 @@
 import { EventHandler } from '@n7-frontend/core';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 
 export class AwEntitaLayoutEH extends EventHandler {
   private destroyed$: Subject<any> = new Subject();
@@ -28,6 +26,28 @@ export class AwEntitaLayoutEH extends EventHandler {
           break;
       }
     });
+
+    this.outerEvents$.subscribe(({ type, payload }) => {
+      switch (type) {
+        case 'aw-entita-nav.click':
+          if (payload) {
+            this.emitGlobal('navigate', { 
+              path: [
+                this.configuration.get("paths").entitaBasePath
+                + '/' +
+                this.route.snapshot.params.id
+                + '/' +
+                payload
+              ], 
+              handler: 'router' 
+            });
+          }
+          break;
+        default:
+          break;
+      }
+    })
+
   }
 
   private listenRoute() {

@@ -1,11 +1,12 @@
 import { EventHandler } from '@n7-frontend/core';
 
-export class AwEntitaNavEH extends EventHandler {
+export class AwEntitaLinkedObjectsEH extends EventHandler {
 
   public listen() {
-    this.innerEvents$.subscribe(({type, payload}) => {
-      switch(type) {
-        case 'aw-entita-nav.click':
+    /*
+    this.innerEvents$.subscribe(({ type, payload }) => {
+      switch (type) {
+        case 'my-event.click':
           this.emitOuter('click', payload)
           break;
         default:
@@ -13,7 +14,6 @@ export class AwEntitaNavEH extends EventHandler {
           break;
       }
     });
-    /*
 
     this.outerEvents$.subscribe(event => {
       
