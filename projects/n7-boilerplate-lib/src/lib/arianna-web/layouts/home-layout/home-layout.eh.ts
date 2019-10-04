@@ -33,7 +33,7 @@ export class AwHomeLayoutEH extends EventHandler {
             break;
       }
     });
-    
+
     this.outerEvents$.subscribe(({ type, payload }) => {
       switch(type){
         case 'aw-hero.change':
@@ -55,13 +55,13 @@ export class AwHomeLayoutEH extends EventHandler {
         /**
          * Bubble Chart Event Handlers
          */
-        case 'aw-home-bubble-chart.mouse_enter':
+        case 'aw-bubble-chart.mouse_enter':
           this.dataSource.onBubbleMouseEnter({bubblePayload:payload.bubblePayload,bubble:payload.bubble});
           break;
-        case 'aw-home-bubble-chart.mouse_leave':
+        case 'aw-bubble-chart.mouse_leave':
           // TODO: do something
           break;
-        case 'aw-home-bubble-chart.click':
+        case 'aw-bubble-chart.click':
           if(payload.source==='bubble'){
             if(payload.bubble) this.dataSource.onBubbleSelected(payload.bubble);
           } else if(payload.source==='close')

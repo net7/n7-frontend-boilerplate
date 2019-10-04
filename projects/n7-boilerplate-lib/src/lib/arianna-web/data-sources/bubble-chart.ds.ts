@@ -1,0 +1,167 @@
+import { DataSource } from '@n7-frontend/core';
+import { BUBBLECHART_MOCK } from '@n7-frontend/components';
+
+export class AwBubbleChartDS extends DataSource {
+
+  private thresholdShowTitle:number = 50;
+  private thresholdShowValue:number = 60;
+  public configuration: any;
+  private allBubbles: any[] = null;
+  private entityBubbleIdMap: any = {};
+  public selectedBubbles: any[] = [];
+  private facetData: any[] = null;
+
+  protected transform(data){
+    if ( !data ){ return null; }
+    if ( data.facetData ) {
+      this.facetData = data.facetData;
+    }
+    if ( data.source ) {
+      this.setAllBubblesFromApolloQuery(data.source, data.reset);
+    }
+      data.bubbles = this.filterBubblesBasedOnFacetsEnabled();
+    let bubbleCointainer = document.getElementById("bubble-chart-container");
+    const cWidth = bubbleCointainer.offsetWidth;
+
+    // TODO: think of a good way to pass/compute cHeight
+    const cHeight = 700; // bubbleCointainer.offsetHeight
+    const containerSize = cWidth * cHeight;
+
+    let bubblesData = {
+      containerId: "bubbleChartContainer",
+      containerWidth : cWidth,
+      containerHeight : cHeight,
+      isForceSimulationEnabled: true,
+      maxBubblesSelected:3
+    };
+
+    bubblesData['bubblesData'] = [];
+
+    let maxBubbleCount = -1;
+    let minBubbleCount = -1;
+    let numOfBubbles = 0;
+    let totalCount = 0;
+    let numOfSelectedBubbles = 0;
+
+    data.bubbles.forEach( bubble => {
+      if ( maxBubbleCount < bubble.count ) maxBubbleCount = bubble.count;
+      if ( minBubbleCount < 0 || minBubbleCount>bubble.count ) minBubbleCount = bubble.count;
+      numOfBubbles++;
+      totalCount += bubble.count;
+      if(bubble.selected) numOfSelectedBubbles++;
+    });
+
+    data.bubbles.forEach( bubble => {
+      let bId = bubble.id;
+      let bubblePercentage = ( bubble.count - (minBubbleCount/3) )/( (maxBubbleCount*3) - (minBubbleCount/3) );
+      let bubbleRadius = (Math.log(containerSize)/10)*(bubblePercentage*3)*(70-Math.sqrt(numOfBubbles));
+      let bubbleData = {
+        id: bId,
+        texts: [
+          {
+            id:bId+"_label0",
+            label: (d) => { if(d.radius<this.thresholdShowTitle) return null; return bubble.entity.label },
+            x_function: (d) => d.x,
+            y_function: (d) => {
+              let mNum = (d.radius/9);
+              if(d.radius<this.thresholdShowValue) mNum=0;
+              return d.y-mNum;
+            },
+            "user_select":"none",
+            fontSize_function: (d) => d.radius/5,
+            color: "white",
+            "classes":""
+          },
+          {
+            id:bId+"_label1",
+            label: (d) => { if(d.radius<this.thresholdShowValue) return null; return bubble.count },
+            x_function: (d) => d.x,
+            y_function: (d) => d.y+(d.radius/9),
+            "user_select":"none",
+            fontSize_function: (d) => d.radius/6,
+            color: "white",
+            "classes":""
+        }
+        ],
+        x: cWidth/2+50,
+        y: cHeight/2+50,
+        "radius": bubbleRadius,
+        color:bubble.color,
+        hasCloseIcon: ( bubble.selected ? bubble.selected : false ),
+        payload:{
+          id: bId
+        },
+      };
+
+      bubblesData['bubblesData'].push(bubbleData);
+    });
+
+
+    bubblesData['forceSimulationData'] = {
+      xPull: cWidth/2,
+      xPullStrength: -0.01,
+      yPull: cHeight/2,
+      yPullStrength: -0.01,
+      collisionStrengh: 0.99,
+      collisionIterations: 1,
+      velocityDecay: 0.65
+    }
+
+    if(data.reset) bubblesData['reset'] = data.reset;
+
+    if(data.setUpdateReference) bubblesData['setUpdateReference'] = data.setUpdateReference;
+    if(data.setBubbleChart) bubblesData['setBubbleChart'] = data.setBubbleChart;
+    return bubblesData;
+  }
+
+  setAllBubblesFromApolloQuery(response: any, reset?: boolean ) {
+    if ( !response || !response.entitiesData ) {return; }
+    this.allBubbles = [];
+    for (let i = 0 ; i < response.entitiesData.length; i++) {
+      let currentToE = response.entitiesData[i];
+
+      for ( var j = 0; j < currentToE.entitiesCountData.length; j++) {
+        this.allBubbles.push(
+          {
+            ...currentToE.entitiesCountData[j],
+            color: this.options.configKeys[currentToE.countData.type.configKey]['color']['hex']
+          });
+      }
+    }
+    this.entityBubbleIdMap = {};
+    this.allBubbles.forEach( (bubble) => {
+      // d3/svg does not allow Number as beginning of ID.
+      // d3/svg does not allow '-' as part of ID.
+      bubble.id = this.convertEntityIdToBubbleId(bubble.entity.id);
+      this.entityBubbleIdMap[bubble.id] = bubble.entity.id;
+      return bubble;
+    });
+    this.allBubbles.forEach( (bubble) => {
+      bubble.selected = false;
+      for( var i = 0; i < this.selectedBubbles.length; i++ ){
+        if ( this.selectedBubbles[i].id === bubble.id ) {
+          bubble.selected = true;
+        }
+      }
+    });
+  }
+
+  private convertEntityIdToBubbleId(entityId: string): string {
+    if ( !entityId ) { return null; }
+    return ( 'B_' + entityId.replace(/-/g, '_') );
+  }
+
+  filterBubblesBasedOnFacetsEnabled() {
+    let result = this.allBubbles.filter(
+      (bubble) => {
+        for ( var i = 0; i < this.facetData.length; i++ ){
+          if ( bubble.entity.typeOfEntity.id === this.facetData[i].type.id ) {
+            if ( !this.facetData[i].enabled ) { return false; }
+          }
+        }
+        return true;
+      }
+    );
+    return result;
+  }
+}

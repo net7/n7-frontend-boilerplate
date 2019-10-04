@@ -38,13 +38,23 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         if(teoConfigData)
           this.facetData.push({
             ...ent.countData,
-            ...teoConfigData,                  
+            ...teoConfigData,
             enabled:true,
           });
       } );
       this.one('aw-home-facets-wrapper').update(this.facetData);
-      this.setAllBubblesFromApolloQuery(response);
-      this.renderPreviewsFromApolloQuery(response);
+      this.one('aw-bubble-chart').updateOptions({ context: 'home', configKeys: this.configuration.get("config-keys") });
+      this.one('aw-bubble-chart').update({
+        width: window.innerWidth / 1.8,
+        //bubbles: this.filterBubblesBasedOnFacetsEnabled(),
+        setBubbleChart: (bubbleCref) => this._bubbleChart = bubbleCref,
+        source: response,
+        reset: false,
+        facetData: this.facetData
+      });
+
+      //this.setAllBubblesFromApolloQuery(response);
+      //this.renderPreviewsFromApolloQuery(response);
     });
 
     // update streams
@@ -181,11 +191,27 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         itemsPagination:{ offset:0, limit: this.configuration.get('home-layout')['results-limit'] }
       },
     }).subscribe((response) => {
-      if(!onlyBubbles){
+      /*if(!onlyBubbles){
         this.renderPreviewsFromApolloQuery(response);
         this.renderItemTags();
       }
       this.setAllBubblesFromApolloQuery(response,true);
+      */
+
+      if( !onlyBubbles ){
+        this.renderItemTags();
+      }
+      this.one('aw-bubble-chart').updateOptions({ configuration: this.configuration });
+
+      this.one('aw-bubble-chart').update({
+        width: window.innerWidth / 1.8,
+        bubbles: this.filterBubblesBasedOnFacetsEnabled(),
+        setBubbleChart: (bubbleCref) => this._bubbleChart = bubbleCref,
+        source: response,
+        reset: true
+      });
+
+      //this.setAllBubblesFromApolloQuery(response,true);
     });
   }
 
@@ -195,40 +221,6 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   }
 
 
-  setAllBubblesFromApolloQuery(response: any,reset?:boolean){
-    if( !response || !response.entitiesData ) return;
-    this.allBubbles = [];
-    for(var i=0;i<response.entitiesData.length;i++){
-      let currentToE = response.entitiesData[i];
-      for(var j=0;j<currentToE.entitiesCountData.length;j++){
-        this.allBubbles.push(
-          {
-            ...currentToE.entitiesCountData[j],
-            color: this.configuration.get("config-keys")[currentToE.countData.type.configKey]['color']['hex']
-          });
-      }
-    }
-    this.entityBubbleIdMap = {};
-    this.allBubbles.forEach( (bubble) => {
-      // d3/svg does not allow Number as beginning of ID.
-      // d3/svg does not allow '-' as part of ID.
-      bubble.id = this.convertEntityIdToBubbleId(bubble.entity.id);
-      this.entityBubbleIdMap[bubble.id]=bubble.entity.id;
-      return bubble;
-    });
-    this.allBubbles.forEach( (bubble) => {
-      bubble.selected = false;
-      for(var i=0; i<this.selectedBubbles.length;i++){
-        if(this.selectedBubbles[i].id===bubble.id) bubble.selected=true;
-      }
-    });
-    this.one('aw-home-bubble-chart').update({
-      width: window.innerWidth/1.8,
-      bubbles: this.filterBubblesBasedOnFacetsEnabled(),
-      reset: ( reset? reset : false ),
-      setBubbleChart: (bubbleCref) => this._bubbleChart = bubbleCref
-    });
-  }
 
   filterBubblesBasedOnFacetsEnabled(){
     let result = this.allBubbles.filter(
@@ -372,7 +364,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   }
 
   private _scrollBackgroundControl(){
-    const el = document.getElementById('bubble-results-list'), 
+    const el = document.getElementById('bubble-results-list'),
       source$ = fromEvent(document.getElementById('bubble-results-list'), 'scroll');
 
     // height control

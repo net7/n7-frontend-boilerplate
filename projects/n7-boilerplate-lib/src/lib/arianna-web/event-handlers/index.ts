@@ -1,5 +1,6 @@
 // Any
 export * from './linked-objects.eh';
+export * from './bubble-chart.eh';
 
 // Home Layout
 export * from './hero.eh';
