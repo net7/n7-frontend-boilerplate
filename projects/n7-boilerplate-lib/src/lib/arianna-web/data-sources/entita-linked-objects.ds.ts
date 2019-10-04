@@ -2,7 +2,7 @@ import { DataSource } from '@n7-frontend/core';
 
 export class AwEntitaLinkedObjectsDS extends DataSource {
 
-  protected transform(data, amount) {
+  protected transform(data, amount:number) {
     switch (this.options.context) {
       case 'overview':
         var amount = 3
