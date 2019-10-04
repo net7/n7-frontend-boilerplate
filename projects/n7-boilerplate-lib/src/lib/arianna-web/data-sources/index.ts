@@ -7,7 +7,6 @@ export * from './table.ds';
 export * from './home-hero-patrimonio.ds';
 export * from './home-bubble-chart.ds';
 export * from './home-facets-wrapper.ds';
-export * from './home-item-preview-wrapper.ds';
 export * from './home-item-tags-wrapper.ds';
 
 // Entita Layout
@@ -22,4 +21,3 @@ export * from './scheda-metadata.ds';
 export * from './scheda-image.ds';
 export * from './scheda-inner-title.ds';
 export * from './scheda-bubble-chart.ds';
-export * from './scheda-item-preview-wrapper.ds';

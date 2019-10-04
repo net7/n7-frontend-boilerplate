@@ -138,7 +138,8 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       this.numOfItemsStr = null;
     }
 
-    this.one('aw-home-item-preview-wrapper').update(response.itemsPagination.items);
+    this.one('aw-linked-objects').updateOptions({ context: 'home', configKeys: this.configuration.get('config-keys')})
+    this.one('aw-linked-objects').update(response.itemsPagination.items);
 
     // scroll control
     this._scrollBackgroundControl();
