@@ -2,8 +2,6 @@ import { LayoutDataSource } from '@n7-frontend/core';
 import { fromEvent, interval } from 'rxjs';
 import { debounce, debounceTime } from 'rxjs/operators';
 
-const config:any = require('src/assets/app-config.json');
-
 export class AwHomeLayoutDS extends LayoutDataSource {
   private communication: any;
   private mainState: any;

@@ -95,11 +95,13 @@ export const ApolloProviderConfig = {
         entity {
           label
           id
+          typeOfEntity {
+            configKey
+          }
         }
         fieldsTab {
-          id
+          label
           fields {
-            id
             key
             value
           }
@@ -122,6 +124,10 @@ export const ApolloProviderConfig = {
           item {
             id
             label
+            info {
+              key
+              value
+            }
           }
           thumbnail
           relatedTOEData {
