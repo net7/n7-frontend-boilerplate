@@ -134,6 +134,7 @@ $aw-scheda-content-padding: $space*3;
     .aw-scheda__description {
         padding: $aw-scheda-content-padding;
         columns: 2;
+        line-height: 1.65;
     }
 
     /* Metadata */
