@@ -186,7 +186,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       if ( response.similarItems ) {
         this.hasSimilarItems = true;
         this.one('aw-linked-objects').updateOptions({ context: 'scheda', configKeys: this.configuration.get("config-keys") })
-         this.one('aw-linked-objects').update(response.similarItems);
+        this.one('aw-linked-objects').update(response.similarItems);
       } else {
         this.hasSimilarItems = false;
         this.one('aw-linked-objects').update(null);

@@ -8,7 +8,7 @@ export const AwEntitaLayoutConfig = {
   widgets: [ // array of components of this layout
     { id: 'aw-entita-nav', hasStaticData: true},
     { id: 'aw-entita-metadata-viewer' },
-    { id: 'aw-entita-linked-objects'},
+    { id: 'aw-linked-objects'},
   ],
   layoutDS: AwEntitaLayoutDS,
   layoutEH: AwEntitaLayoutEH,

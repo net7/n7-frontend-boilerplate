@@ -63,7 +63,8 @@
                 <div class="aw-scheda__related-items n7-grid-2">
                     <ng-container *ngFor="let widgetData of lb.widgets['aw-linked-objects'].ds.out$ | async;">
                         <n7-item-preview
-                            [data]="widgetData">
+                            [data]="widgetData"
+                            >
                         </n7-item-preview>
                     </ng-container>
                 </div>
