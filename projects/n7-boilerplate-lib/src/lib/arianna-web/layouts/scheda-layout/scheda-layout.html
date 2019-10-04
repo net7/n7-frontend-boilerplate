@@ -38,14 +38,18 @@
             >
             </n7-metadata-viewer>
 
-            <div id="bubble-chart-container">
+            <div
+                id="bubble-chart-container"
+            >
                 <div class="aw-scheda__inner-title">{{lb.dataSource.bubbleChartSectionTitle}}</div>
                 <n7-bubble-chart [data]="lb.widgets['aw-scheda-bubble-chart'].ds.out$ | async"
                     [emit]="lb.widgets['aw-scheda-bubble-chart'].emit">
                 </n7-bubble-chart>
             </div>
-            
-            <div id="related-item-container">
+
+            <div
+                id="related-item-container"
+            >
                 <div class="aw-scheda__inner-title">{{lb.dataSource.similarItemsSectionTitle}}</div>
                 <div class="aw-scheda__related-items n7-grid-2">
                     <ng-container *ngFor="let widgetData of lb.widgets['aw-scheda-item-preview-wrapper'].ds.out$ | async;">

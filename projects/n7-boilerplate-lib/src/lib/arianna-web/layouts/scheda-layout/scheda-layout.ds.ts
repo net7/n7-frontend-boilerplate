@@ -23,8 +23,8 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   public sidebarCollapsed: boolean;
   public bubbleChartSectionTitle: string;
   public similarItemsSectionTitle: string;
-  public images: any;
-  public imageIndex: number;
+  public hasBubbles: boolean;
+  public hasSimilarItems: boolean;
   public imageViewerIstance: any;
   /**
   * If you are not using these variables (from your-layout.ts),
@@ -38,8 +38,6 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     this.communication = communication;
     this.options = options;
     this.sidebarCollapsed = false;
-    this.imageIndex = 0;
-    this.images = ['https://cdn.pixabay.com/photo/2019/09/30/18/41/taxi-4516525_960_720.jpg', 'https://cdn.pixabay.com/photo/2019/09/14/12/40/iceland-4475920_960_720.jpg', 'https://cdn.pixabay.com/photo/2019/09/26/06/26/face-4505196_960_720.jpg']
     this.bubbleChartSectionTitle = this.configuration.get('scheda-layout')['bubble-chart']['title'];
     this.similarItemsSectionTitle = this.configuration.get('scheda-layout')['related-items']['title'];
   }
@@ -107,9 +105,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
         }
         this.contentParts.push(content);
         if ( response.image ) {
-          console.log( "responseimage " + response.image);
-          const images =  [{type: 'image', url: this.images[this.imageIndex], buildPyramid: false}];
-          this.imageIndex++;
+          const images =  [{type: 'image', url: response.image, buildPyramid: false}];
           if( !this.imageViewerIstance ) {
             this.one('aw-scheda-image').update({
               viewerId: 'scheda-layout-viewer',
@@ -173,11 +169,13 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
       /* Related Entities */
       if( response.connectedEntities ) {
+        this.hasBubbles = true;
         this.setAllBubblesFromApolloQuery(response);
       }
 
       /* Similar item */
       if( response.similarItems ) {
+        this.hasSimilarItems = true;
         this.one('aw-scheda-item-preview-wrapper').update(response.similarItems);
       }
   }
@@ -244,11 +242,14 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     this.allBubbles = [];
 
     for ( let i = 0; i < response.connectedEntities.length; i++ ){
+
+      const color = this.configuration.get('config-keys') ? this.configuration.get('config-keys')[response.connectedEntities[i].entity.typeOfEntity.configKey]['color']['hex'] : "";
+
       this.allBubbles.push(
         {
           id: this.convertEntityIdToBubbleId( response.connectedEntities[i].entity.id ),
           ...response.connectedEntities[i],
-          color: this.configuration.get('config-keys')[response.connectedEntities[i].entity.typeOfEntity.configKey]['color']['hex']
+          color: color
         });
     }
     this.one('aw-scheda-bubble-chart').update({
