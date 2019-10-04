@@ -66,8 +66,19 @@
    #IS-FULLWIDTH
 \* ------------------------------------ */
 .n7-item-preview.is-fullwidth {
+    .n7-item-preview__content {
+        display: grid;
+    }
+
     .n7-item-preview__metadata {
         display: flex;
+        margin-top: auto;
+
+        &-group {
+            &:last-of-type {
+                margin-left: auto;
+            }
+        }
     }
 }
 
