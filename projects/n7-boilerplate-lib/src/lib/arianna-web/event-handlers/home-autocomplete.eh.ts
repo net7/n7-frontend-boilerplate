@@ -4,10 +4,9 @@ export class AwHomeAutocompleteEH extends EventHandler {
 
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
-      switch(event.type){
+      switch(type){
         case "aw-home-autocomplete.click":
-          // TODO
-          console.log('home-autocomplete', type, payload);
+          this.emitOuter('click', payload);
           break;
         default:
           break;
