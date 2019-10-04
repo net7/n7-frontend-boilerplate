@@ -13,7 +13,7 @@ $page-max-width: 1400px;
 // ------------------------------------ //
 // #SCHEDA-LAYOUT
 // ------------------------------------ //
-$aw-scheda-tree-width: 300px;
+$aw-scheda-tree-width: 400px;
 
 // ------------------------------------ //
 // #GRIDS
@@ -230,11 +230,13 @@ $hero-button-height: $hero-input-height;
 $hero-image-border: 10px solid #ffffff;
 $hero-image-border-radius: $space*2;
 
+
 // ------------------------------------ //
 // #FACET
 // ------------------------------------ //
 $n7-facet-search-input-height: 32px;
 $n7-facet-search-input-border-radius: 3px;
+
 
 // ------------------------------------ //
 // #TAG
@@ -242,3 +244,15 @@ $n7-facet-search-input-border-radius: 3px;
 $n7-tag-icon-size: 16px;
 $n7-tag-icon-font-size: 8px;
 $n7-tag-icon-background: #ffffff;
+
+
+// ------------------------------------ //
+// #SIDEBAR-HEADER
+// ------------------------------------ //
+$sidebar-header-height: 50px;
+// $sidebar-header-background-color: $color-text;
+// $sidebar-header-text-color: $color-text-inverse;
+// $sidebar-left-background-color: $sidebar-header-background-color;
+// $sidebar-left-text-color: $sidebar-header-text-color;
+// $sidebar-right-background-color: $color-text-link;
+// $sidebar-right-text-color: $color-text-inverse;
