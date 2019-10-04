@@ -52,7 +52,7 @@
 
     .n7-hero {
         &__title {
-            font-weight: $font-weight-black;
+            font-weight: $font-weight-bold;
             font-size: $font-size-xxxl;
         }
 
@@ -96,6 +96,7 @@
         }
     }
 }
+
 
 /* ------------------------------------ *\
     BUBBLE-CHART
@@ -253,14 +254,14 @@
     /* Results */
     .aw-home__bubble-results {
         background: #ffffff;
-        
+
         &-title {
             margin-bottom: $space*2;
             font-weight: $font-weight-normal;
 
             &-counter {
                 margin-right: $space/2;
-                font-weight: $font-weight-black;
+                font-weight: $font-weight-bold;
             }
         }
 
@@ -273,7 +274,7 @@
                 justify-content: center;
 
                 .n7-btn {
-                    font-weight: $font-weight-black;
+                    font-weight: $font-weight-bold;
                 }
             }
         }
