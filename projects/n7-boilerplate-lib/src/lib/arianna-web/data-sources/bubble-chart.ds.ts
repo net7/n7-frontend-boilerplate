@@ -10,6 +10,9 @@ export class AwBubbleChartDS extends DataSource {
   private entityBubbleIdMap: any = {};
   public selectedBubbles: any[] = [];
   private facetData: any[] = null;
+  private bubblePopup: any = null;
+  public currentHoverEntity: any = null;
+  private tippy: any;
 
   protected transform(data){
     if ( !data ){ return null; }
@@ -19,7 +22,12 @@ export class AwBubbleChartDS extends DataSource {
     if ( data.source ) {
       this.setAllBubblesFromApolloQuery(data.source, data.reset);
     }
-      data.bubbles = this.filterBubblesBasedOnFacetsEnabled();
+
+    if ( data.tippy ) {
+      this.tippy = data.tippy;
+    }
+
+    data.bubbles = this.filterBubblesBasedOnFacetsEnabled();
     let bubbleCointainer = document.getElementById("bubble-chart-container");
     const cWidth = bubbleCointainer.offsetWidth;
 
@@ -163,5 +171,40 @@ export class AwBubbleChartDS extends DataSource {
       }
     );
     return result;
+  }
+
+  onBubbleMouseEnter(payload){
+    if ( !payload || !payload.bubble ) return;
+    const bubbleId = payload.bubble.id;
+    let hoverEntityId = this.entityBubbleIdMap[payload.bubble.id];
+    for (var i = 0; i < this.allBubbles.length; i++ ){
+      let bubble = this.allBubbles[i];
+      if ( bubble.entity.id===hoverEntityId ){
+        this.currentHoverEntity = bubble.entity;
+        this.currentHoverEntity.count = bubble.count;
+        break;
+      }
+    }
+    if(this.bubblePopup){
+      this.bubblePopup.hide();
+      this.bubblePopup.destroy();
+      this.bubblePopup = null;
+    }
+    setTimeout( () => {
+      let template = document.getElementById("bubble-popup-menu");
+      let templateClone = template.cloneNode(true);
+      templateClone['style'].display = "inline-block";
+      this.bubblePopup = this.tippy(`#${bubbleId}`, {
+        content: templateClone,
+        trigger: 'manual',
+        interactive: true,
+        arrow: true,
+        theme: 'light-border no-padding',
+        placement: 'top-middle',
+        maxWidth: 500,
+        //onHidden: () => console.log('hidden'),
+      })[0];
+      setTimeout( () => { if(this.bubblePopup) this.bubblePopup.show() } , 800 );
+    });
   }
 }

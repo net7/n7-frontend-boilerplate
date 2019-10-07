@@ -56,7 +56,7 @@ export class AwHomeLayoutEH extends EventHandler {
          * Bubble Chart Event Handlers
          */
         case 'aw-bubble-chart.mouse_enter':
-          this.dataSource.onBubbleMouseEnter({bubblePayload:payload.bubblePayload,bubble:payload.bubble});
+        //  this.dataSource.onBubbleMouseEnter(payload.currBubble);
           break;
         case 'aw-bubble-chart.mouse_leave':
           // TODO: do something

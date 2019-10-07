@@ -9,6 +9,8 @@ export class AwBubbleChartEH extends EventHandler {
           this.emitOuter('click', event.payload);
           break;
         case 'aw-bubble-chart.mouse_enter':
+          const currBubble = this.dataSource.onBubbleMouseEnter({bubblePayload:event.payload.bubblePayload, bubble:event.payload.bubble});
+          event.payload.currBubble = currBubble;
           this.emitOuter('mouse_enter', event.payload);
           break;
         case 'aw-bubble-chart.mouse_leave':
@@ -18,11 +20,10 @@ export class AwBubbleChartEH extends EventHandler {
           break;
       }
     });
-    /*
-    this.outerEvents$.subscribe(event => {
+
+    this.outerEvents$.subscribe(({ type, payload }) => {
+
 
     });
-    */
   }
-
 }

@@ -42,19 +42,19 @@ export class AwHomeLayoutDS extends LayoutDataSource {
             enabled:true,
           });
       } );
+
       this.one('aw-home-facets-wrapper').update(this.facetData);
       this.one('aw-bubble-chart').updateOptions({ context: 'home', configKeys: this.configuration.get("config-keys") });
       this.one('aw-bubble-chart').update({
         width: window.innerWidth / 1.8,
-        //bubbles: this.filterBubblesBasedOnFacetsEnabled(),
         setBubbleChart: (bubbleCref) => this._bubbleChart = bubbleCref,
         source: response,
         reset: false,
-        facetData: this.facetData
+        facetData: this.facetData,
+        tippy: this.tippy
       });
 
-      //this.setAllBubblesFromApolloQuery(response);
-      //this.renderPreviewsFromApolloQuery(response);
+      this.renderPreviewsFromApolloQuery(response);
     });
 
     // update streams
@@ -72,37 +72,11 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     });
   }
 
-  onBubbleTooltipClick(source:string, payload){
-    switch(source){
-      case 'select':
-        if(!payload) return;
-        const bubbleId = this.convertEntityIdToBubbleId(payload.entityId);
-        if(!bubbleId) return;
-        let bubble = null;
-        if(this._bubbleChart){
-          this._bubbleChart.selectAll(`g`).each( b => {
-            if(b.id===bubbleId) bubble=b;
-          });
-          if(bubble) this.onBubbleSelected(bubble);
-        }
-        break;
-      default:
-        break;
-    }
-  }
+  onBubbleMouseEnter(bubblePayload){
+    this.currentHoverEntity = bubblePayload.bubble;
+    this.currentHoverEntity.count = bubblePayload.count;
+    const bubbleId = bubblePayload.bubble.id;
 
-  onBubbleMouseEnter(payload){
-    if(!payload || !payload.bubble) return;
-    const bubbleId = payload.bubble.id;
-    let hoverEntityId = this.entityBubbleIdMap[payload.bubble.id];
-    for(var i=0;i<this.allBubbles.length;i++){
-      let bubble = this.allBubbles[i];
-      if(bubble.entity.id===hoverEntityId){
-        this.currentHoverEntity = bubble.entity;
-        this.currentHoverEntity.count = bubble.count;
-        break;
-      }
-    }
     if(this.bubblePopup){
       this.bubblePopup.hide();
       this.bubblePopup.destroy();
@@ -122,8 +96,30 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         maxWidth: 500,
         //onHidden: () => console.log('hidden'),
       })[0];
-      setTimeout( () => { if(this.bubblePopup) this.bubblePopup.show() } , 800 );
+      setTimeout( () => {
+        console.log( this.bubblePopup);
+        if(this.bubblePopup) this.bubblePopup.show() } , 800 );
     });
+  }
+
+
+  onBubbleTooltipClick(source:string, payload){
+    switch(source){
+      case 'select':
+        if(!payload) return;
+        const bubbleId = this.convertEntityIdToBubbleId(payload.entityId);
+        if(!bubbleId) return;
+        let bubble = null;
+        if(this._bubbleChart){
+          this._bubbleChart.selectAll(`g`).each( b => {
+            if(b.id===bubbleId) bubble=b;
+          });
+          if(bubble) this.onBubbleSelected(bubble);
+        }
+        break;
+      default:
+        break;
+    }
   }
 
   renderPreviewsFromApolloQuery(response: any){
