@@ -6,10 +6,16 @@ export class AwBubbleChartEH extends EventHandler {
     this.innerEvents$.subscribe(event => {
       switch (event.type) {
         case 'aw-bubble-chart.click':
+          event.payload.entityIdmap = this.dataSource.getEntityIdMap();
+          event.payload.allBubbles = this.dataSource.getAllBubbles();
           this.emitOuter('click', event.payload);
           break;
         case 'aw-bubble-chart.mouse_enter':
-          const currBubble = this.dataSource.onBubbleMouseEnter({bubblePayload:event.payload.bubblePayload, bubble:event.payload.bubble});
+          const currBubble = this.dataSource.onBubbleMouseEnter(
+            {
+              bubblePayload:event.payload.bubblePayload,
+              bubble:event.payload.bubble
+            });
           event.payload.currBubble = currBubble;
           this.emitOuter('mouse_enter', event.payload);
           break;
@@ -22,8 +28,18 @@ export class AwBubbleChartEH extends EventHandler {
     });
 
     this.outerEvents$.subscribe(({ type, payload }) => {
-
-
+      switch(type){
+        case "aw-home-layout.bubble-tooltip-select-click":
+              this.dataSource.onBubbleTooltipClick('select',payload);
+              break;
+        case 'aw-home-layout.bubble-filter':
+              this.emitOuter('bubble-filtered',
+              {
+               'allBubbles': this.dataSource.getAllBubbles(),
+               'selected': this.dataSource.getSelectedBubbles()
+              });
+              break;
+      }
     });
   }
 }

@@ -27,7 +27,7 @@ export class AwHomeLayoutEH extends EventHandler {
             });
             break;
         case "aw-home-layout.bubble-tooltip-select-click":
-            this.dataSource.onBubbleTooltipClick('select',payload);
+            //this.dataSource.onBubbleTooltipClick('select',payload);
             break;
         default:
             break;
@@ -62,11 +62,23 @@ export class AwHomeLayoutEH extends EventHandler {
           // TODO: do something
           break;
         case 'aw-bubble-chart.click':
-          if(payload.source==='bubble'){
-            if(payload.bubble) this.dataSource.onBubbleSelected(payload.bubble);
-          } else if(payload.source==='close')
+          if ( payload.source === 'bubble' ){
+            if (payload.bubble) {
+              this.dataSource.updateBubbleFilter(payload);
+              this.dataSource.onBubbleSelected(payload.bubble).subscribe((response) => {
+                if ( response ) {
+                  this.dataSource.updateBubbles(response);
+                  this.emitOuter('bubble-filter', response);
+                 }
+               });
+              }
+            } else if(payload.source==='close')
             this.dataSource.onBubbleDeselected({bubblePayload:payload.bubblePayload,bubble:payload.bubble});
-          break;
+            break;
+        case 'aw-bubble-chart.bubble-filtered':
+            this.dataSource.updateBubbleFilter(payload);
+            this.dataSource.updateTags();
+            break;
         /**
          * Tags & Item Previews Event Handlers
          */

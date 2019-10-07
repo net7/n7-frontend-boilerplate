@@ -13,6 +13,8 @@ export class AwBubbleChartDS extends DataSource {
   private bubblePopup: any = null;
   public currentHoverEntity: any = null;
   private tippy: any;
+  private _bubbleChart: any = null;
+  private maxBubblesSelectable:number = 3;
 
   protected transform(data){
     if ( !data ){ return null; }
@@ -207,4 +209,48 @@ export class AwBubbleChartDS extends DataSource {
       setTimeout( () => { if(this.bubblePopup) this.bubblePopup.show() } , 800 );
     });
   }
+
+
+  onBubbleTooltipClick(source:string, payload){
+    switch(source){
+      case 'select':
+        if(!payload) return;
+        const bubbleId = this.convertEntityIdToBubbleId(payload.entityId);
+        if(!bubbleId) return;
+        let bubble = null;
+        if(this._bubbleChart){
+          this._bubbleChart.selectAll(`g`).each( b => {
+            if(b.id===bubbleId) bubble=b;
+          });
+          if(bubble) this.onBubbleSelected(bubble);
+        }
+        break;
+      default:
+        break;
+    }
+  }
+
+  public onBubbleSelected(bubble){
+    if(bubble){
+      if(!this.selectedBubbles.includes(bubble)){
+        if(this.selectedBubbles.length<this.maxBubblesSelectable){
+          this.selectedBubbles.push(bubble);
+          //return this.filterRequest();
+        }
+      }
+    }
+  }
+
+  getSelectedBubbles() {
+    return this.selectedBubbles;
+  }
+
+  getAllBubbles() {
+    return this.allBubbles;
+  }
+
+  getEntityIdMap() {
+    return this.entityBubbleIdMap;
+  }
+
 }

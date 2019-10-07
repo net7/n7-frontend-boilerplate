@@ -102,26 +102,6 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     });
   }
 
-
-  onBubbleTooltipClick(source:string, payload){
-    switch(source){
-      case 'select':
-        if(!payload) return;
-        const bubbleId = this.convertEntityIdToBubbleId(payload.entityId);
-        if(!bubbleId) return;
-        let bubble = null;
-        if(this._bubbleChart){
-          this._bubbleChart.selectAll(`g`).each( b => {
-            if(b.id===bubbleId) bubble=b;
-          });
-          if(bubble) this.onBubbleSelected(bubble);
-        }
-        break;
-      default:
-        break;
-    }
-  }
-
   renderPreviewsFromApolloQuery(response: any){
     if(!response || !response.itemsPagination) return;
 
@@ -155,7 +135,8 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       if(!this.selectedBubbles.includes(bubble)){
         if(this.selectedBubbles.length<this.maxBubblesSelectable){
           this.selectedBubbles.push(bubble);
-          this.updateBubblesAndItemPreviews();
+          return this.filterRequest();
+          //this.updateBubblesAndItemPreviews();
         }
       }
     }
@@ -168,7 +149,54 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       if(payload.bubble.hasCloseIcon){
         payload.bubble.hasCloseIcon=false;
         this.updateBubblesAndItemPreviews();
+        return this.filterRequest();
       }
+    }
+  }
+
+  private filterRequest(){
+
+    let selectedEntitiesIds = [];
+    if(this.entityBubbleIdMap)
+    this.selectedBubbles.forEach( (sB) => {
+      let entityId = this.entityBubbleIdMap[sB.id];
+      if(entityId)
+        selectedEntitiesIds.push(entityId);
+    });
+
+    return this.communication.request$('globalFilter', {
+      onError: (error) => console.error(error),
+      params: {
+        selectedEntitiesIds,
+        itemsPagination:{ offset:0, limit: this.configuration.get('home-layout')['results-limit'] }
+      },
+    })
+  }
+
+  public updateBubbles(response, onlyBubbles?:boolean ) {
+
+    if ( !onlyBubbles ) {
+      this.renderPreviewsFromApolloQuery(response);
+    }
+
+    this.one('aw-bubble-chart').update({
+      width: window.innerWidth / 1.8,
+      setBubbleChart: (bubbleCref) => this._bubbleChart = bubbleCref,
+      source: response,
+      reset: true,
+      facetData: this.facetData
+    });
+  }
+
+  public updateBubbleFilter(data) {
+    this.allBubbles = data.allBubbles;
+    this.entityBubbleIdMap = data.entityIdmap;
+   // this.updateTags();
+  }
+
+  public updateTags(onlyBubbles?:boolean) {
+    if(!onlyBubbles){
+      this.renderItemTags();
     }
   }
 
@@ -187,27 +215,11 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         itemsPagination:{ offset:0, limit: this.configuration.get('home-layout')['results-limit'] }
       },
     }).subscribe((response) => {
-      /*if(!onlyBubbles){
+      if(!onlyBubbles){
         this.renderPreviewsFromApolloQuery(response);
         this.renderItemTags();
       }
-      this.setAllBubblesFromApolloQuery(response,true);
-      */
-
-      if( !onlyBubbles ){
-        this.renderItemTags();
-      }
-      this.one('aw-bubble-chart').updateOptions({ configuration: this.configuration });
-
-      this.one('aw-bubble-chart').update({
-        width: window.innerWidth / 1.8,
-        bubbles: this.filterBubblesBasedOnFacetsEnabled(),
-        setBubbleChart: (bubbleCref) => this._bubbleChart = bubbleCref,
-        source: response,
-        reset: true
-      });
-
-      //this.setAllBubblesFromApolloQuery(response,true);
+     // this.setAllBubblesFromApolloQuery(response,true);
     });
   }
 
@@ -302,14 +314,19 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     let tagsData = [];
     this.selectedBubbles.forEach( (sBubble) => {
       let label = '';
-      for(var i=0;i<this.allBubbles.length;i++){
-        if(this.allBubbles[i].id===sBubble.id){
+      for ( var i = 0; i < this.allBubbles.length; i++ ){
+        if ( this.allBubbles[i].id === sBubble.id ){
           label = this.allBubbles[i].entity.label;
           break;
         }
       }
-      tagsData.push({label,icon:"n7-icon-close",payload:sBubble.id,classes:"tag-"+this.allBubbles[i].entity.typeOfEntity.id});
+      tagsData.push({
+        label,icon:"n7-icon-close",
+        payload:sBubble.id,
+        classes:"tag-"+ this.allBubbles[i].entity.typeOfEntity.id
+      });
     });
+
     this.one('aw-home-item-tags-wrapper').update(tagsData);
   }
 

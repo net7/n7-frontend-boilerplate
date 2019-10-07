@@ -9,13 +9,13 @@
 
     <button style="display: none;"
             id="bubble-popup-menu_closebutton"
-            (click)="lb.eventHandler.emitInner('bubble-tooltip-close-click',{entityId:(lb.dataSource.currentHoverEntity ? lb.dataSource.currentHoverEntity.id : null)} )"></button>
+            (click)="lb.eventHandler.emitInner('bubble-tooltip-close-click',{entityId:(lb.widgets['aw-bubble-chart'].ds.currentHoverEntity ? lb.widgets['aw-bubble-chart'].ds.currentHoverEntity.id : null)} )"></button>
     <button style="display: none;"
             id="bubble-popup-menu_gotobutton"
-            (click)="lb.eventHandler.emitInner('bubble-tooltip-goto-click',{entityId:(lb.dataSource.currentHoverEntity ? lb.dataSource.currentHoverEntity.id : null)} )"></button>
+            (click)="lb.eventHandler.emitInner('bubble-tooltip-goto-click',{entityId:(lb.widgets['aw-bubble-chart'].ds.currentHoverEntity  ? lb.widgets['aw-bubble-chart'].ds.currentHoverEntity.id : null)} )"></button>
     <button style="display: none;"
             id="bubble-popup-menu_selectbutton"
-            (click)="lb.eventHandler.emitInner('bubble-tooltip-select-click',{entityId:(lb.dataSource.currentHoverEntity ? lb.dataSource.currentHoverEntity.id : null)} )"></button>
+            (click)="lb.eventHandler.emitOuter('bubble-tooltip-select-click',{entityId:(lb.widgets['aw-bubble-chart'].ds.currentHoverEntity ? lb.widgets['aw-bubble-chart'].ds.currentHoverEntity.id : null)} )"></button>
         <div id="bubble-popup-menu" style="display: none;">
             <h2>{{ ( lb.widgets['aw-bubble-chart'].ds.currentHoverEntity ? lb.widgets['aw-bubble-chart'].ds.currentHoverEntity.label : '' ) }}</h2>
             <span class="n7-icon-close" onclick="document.getElementById('bubble-popup-menu_closebutton').click();"></span>
