@@ -1,23 +1,19 @@
 import { DataSource } from '@n7-frontend/core';
+import { PAGINATION_MOCK } from '@n7-frontend/components';
 
 export class AwLinkedObjectsDS extends DataSource {
 
   protected transform(data) {
-    switch (this.options.context) {
-      case 'overview':
-        var amount = 3
-        break;
-      default:
-        var amount = 10
-        break;
-    }
-    return unpackData(data, amount, this.options.configKeys)
+    const KEYS = this.options.configKeys
+    const PAGE = this.options.page
+    const SIZE = this.options.size
+    return unpackData(data, PAGE, SIZE, KEYS)
   }
 }
 
-function unpackData (data, amount, config) {
-  if (data.length > amount) {
-    data = data.slice(0, amount)
+function unpackData (data, page, size, keys) {
+  if (size) {
+    data = data.slice(page * size - size, page * size)
   }
   var result = []
   data.forEach(el => {
@@ -42,7 +38,7 @@ function unpackData (data, amount, config) {
             return { // Persone: 6, Organizz: 12, Luoghi: 2, Concetti: 32
               value: toe.count,
               // icon: 'n7-icon-bell' // TODO: link icon to config key
-              icon: config[toe.type.configKey].icon 
+              icon: keys[toe.type.configKey].icon 
             }
           })
         }
@@ -60,5 +56,23 @@ function unpackData (data, amount, config) {
     }
     result.push(item);
   });
+  if ( page ) { // if I'm on a page, render pagination data.
+    return {
+      pagination: {
+        first: { payload: "first", classes: "is-disabled" },
+        prev: { payload: "prev", classes: "is-disabled" },
+        next: { payload: "next" },
+        last: { payload: "last" },
+        links: [
+          { text: "1", payload: 1, classes: "is-active" },
+          { text: "2", payload: 2 },
+          { text: "3", payload: 3 },
+          { text: "4", payload: 4 },
+          { text: "5", payload: 5 },
+        ]
+      },
+      previews: result 
+    }
+  }
   return result;
 }

@@ -20,10 +20,10 @@
         <ng-container *ngSwitchCase="'campi'">
             <ng-container *ngTemplateOutlet="campi"></ng-container>
         </ng-container>
-        <ng-container *ngSwitchCase="'oggetti'">
+        <ng-container *ngSwitchCase="'oggetti-collegati'">
             <ng-container *ngTemplateOutlet="oggetti"></ng-container>
         </ng-container>
-        <ng-container *ngSwitchCase="'entita'">
+        <ng-container *ngSwitchCase="'entita-collegate'">
             <ng-container *ngTemplateOutlet="entita"></ng-container>
         </ng-container>
         <ng-container *ngSwitchCase="'maxxi'">
@@ -44,11 +44,12 @@
             <button class="n7-btn n7-btn-light">DESCRIZIONE MAXXI</button>
         </div>
         
-        <ng-container *ngIf="lb.widgets['aw-entita-metadata-viewer'].ds.out$ | async">
+        <ng-container *ngIf="lb.widgets['aw-entita-metadata-viewer'].ds.out$ | async as data">
             <h1>Campi</h1>
             <button class="n7-btn n7-btn-light">TUTTI I CAMPI</button>
-            <n7-metadata-viewer class="aw-entita-layout__metadata-viewer"
-                [data]="lb.widgets['aw-entita-metadata-viewer'].ds.out$ | async">
+            <n7-metadata-viewer 
+                class="aw-entita-layout__metadata-viewer"
+                [data]="data">
             </n7-metadata-viewer>
         </ng-container>
         
@@ -61,19 +62,34 @@
                 [data]="preview">
             </n7-item-preview>
         </ng-container>
-        
     </div>
 </ng-template>
 
 <ng-template #campi>
     <div>
-        Page campi
+        <ng-container *ngIf="lb.widgets['aw-entita-metadata-viewer'].ds.out$ | async as data">
+            <h1>Campi</h1>
+            <n7-metadata-viewer class="aw-entita-layout__metadata-viewer"
+                [data]="data">
+            </n7-metadata-viewer>
+        </ng-container>
     </div>
 </ng-template>
 
 <ng-template #oggetti>
     <div>
-        Page oggetti
+        <h1>Oggetti collegati</h1>
+        <ng-container 
+            *ngFor="let preview of (lb.widgets['aw-linked-objects'].ds.out$ | async)?.previews">
+            <n7-breadcrumbs [data]="preview.breadcrumbs">
+            </n7-breadcrumbs>
+            <n7-item-preview [data]="preview">
+            </n7-item-preview>
+        </ng-container>
+        <n7-pagination 
+            [data]="(lb.widgets['aw-linked-objects'].ds.out$ | async)?.pagination"
+            [emit]="lb.widgets['aw-linked-objects'].emit">
+        </n7-pagination>
     </div>
 </ng-template>
 

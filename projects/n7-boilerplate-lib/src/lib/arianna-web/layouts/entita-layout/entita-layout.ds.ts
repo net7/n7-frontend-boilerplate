@@ -67,21 +67,27 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     }
     switch (this.selectedTab) { // make dynamic content depending on request
       case 'overview': {
-        this.one('aw-entita-metadata-viewer').updateOptions({ context: 'overview' });
+        this.one('aw-entita-metadata-viewer').updateOptions({ context: this.selectedTab });
         this.one('aw-entita-metadata-viewer').update(res.fieldsTab);
-        this.one('aw-linked-objects').updateOptions({ context: 'overview', configKeys: this.configuration.get("config-keys") })
+        this.one('aw-linked-objects').updateOptions({ context: this.selectedTab, configKeys: this.configuration.get("config-keys") })
         this.one('aw-linked-objects').update(res.items);
       } break;
       
       case 'campi': {
-        // campi
+        this.one('aw-entita-metadata-viewer').updateOptions({ context: 'campi' });
+        this.one('aw-entita-metadata-viewer').update(res.fieldsTab);
       } break;
 
-      case 'oggetti': {
-        // oggetti
+      case 'oggetti-collegati': {
+        this.one('aw-linked-objects').updateOptions({ 
+            context: this.selectedTab,
+            configKeys: this.configuration.get("config-keys"),
+            page: 1
+          })
+        this.one('aw-linked-objects').update(res.items);
       } break;
 
-      case 'entita': {
+      case 'entita-collegate': {
         // entita
       } break;
 

@@ -1,6 +1,4 @@
 import { LayoutDataSource } from '@n7-frontend/core';
-import { ItemPreviewComponent } from '@n7-frontend/components';
-import { Location } from '@angular/common';
 
 export class AwSchedaLayoutDS extends LayoutDataSource {
   /**
