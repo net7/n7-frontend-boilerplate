@@ -10,9 +10,10 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
   public pageTitle: string;
 
   public myResponse: any = {}; // backend response object
-  public selectedTab:string; // selected nav item
+  public selectedTab: string; // selected nav item
   public navHeader: any = {}; // nav-header (custom) data
-  // public metadataViewer: any = {}; // metadata-viewer data
+  public currentId: string; // selected entity (url param)
+  public currentPage: any; // pagination value (url param)
 
   private communication: any;
 
@@ -47,6 +48,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       Loads the data for the selected nav item, into the adjacent text block.
     */
     if (id && tab) { 
+      this.currentId = id // store selected item from url
       this.selectedTab = tab // store selected tab from url
       return this.communication.request$('getEntityDetails', {
         onError: error => console.error(error),
@@ -82,7 +84,8 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
         this.one('aw-linked-objects').updateOptions({ 
             context: this.selectedTab,
             configKeys: this.configuration.get("config-keys"),
-            page: 1
+            page: this.currentPage,
+            size: 5,
           })
         this.one('aw-linked-objects').update(res.items);
       } break;

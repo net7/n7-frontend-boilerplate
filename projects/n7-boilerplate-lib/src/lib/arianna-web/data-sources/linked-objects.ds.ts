@@ -1,18 +1,22 @@
 import { DataSource } from '@n7-frontend/core';
-import { PAGINATION_MOCK } from '@n7-frontend/components';
 
 export class AwLinkedObjectsDS extends DataSource {
 
+  public totalPages:Number
+  public currentPage:Number
+  public pageSize:Number
+
   protected transform(data) {
     const KEYS = this.options.configKeys
-    const PAGE = this.options.page
-    const SIZE = this.options.size
-    return unpackData(data, PAGE, SIZE, KEYS)
+    this.pageSize = this.options.size
+    this.currentPage = Number(this.options.page)
+    this.totalPages = Math.floor(data.length / Number(this.pageSize))
+    return unpackData(data, this.currentPage, this.pageSize, KEYS, this.totalPages)
   }
 }
 
-function unpackData (data, page, size, keys) {
-  if (size) {
+function unpackData (data, page, size, keys, totalPages) {
+  if (size && page) {
     data = data.slice(page * size - size, page * size)
   }
   var result = []
@@ -60,20 +64,26 @@ function unpackData (data, page, size, keys) {
   if ( page ) { // if I'm on a page, render pagination data.
     return {
       pagination: {
-        first: { payload: "first", classes: "is-disabled" },
-        prev: { payload: "prev", classes: "is-disabled" },
-        next: { payload: "next" },
-        last: { payload: "last" },
-        links: [
-          { text: "1", payload: 1, classes: "is-active" },
-          { text: "2", payload: 2 },
-          { text: "3", payload: 3 },
-          { text: "4", payload: 4 },
-          { text: "5", payload: 5 },
-        ]
+        first: { payload: `goto-${1}`, classes: page == 1 ? "is-disabled" : '' },
+        prev: { payload: `goto-${page-1}`, classes: page == 1 ? "is-disabled" : '' },
+        next:  { payload: `goto-${page+1}`, classes: page == totalPages ? "is-disabled" : ''},
+        last:  { payload: `goto-${totalPages}`, classes: page == totalPages ? "is-disabled" : ''},
+        links: makePagination(totalPages, page),
       },
       previews: result 
     }
   }
   return result;
+}
+
+function makePagination (totalPages, currentPage) {
+  let result = []
+  for (let i = 0; i < totalPages; i++) {
+    if (i + 1 === currentPage) {
+      result.push({ text: String(i+1), payload: 'page-' + String(i+1), classes: 'is-active' })
+    } else {
+      result.push({ text: String(i+1), payload: 'page-' + String(i+1) })
+    }
+  }
+  return result
 }

@@ -13,7 +13,8 @@ export class AwEntitaLayoutEH extends EventHandler {
           this.dataSource.onInit(payload);
           this.configuration = payload.configuration;
           this.route = payload.route;
-          let paramId = this.route.snapshot.params.id || ""
+          let paramId = this.route.snapshot.params.id || "";
+          this.dataSource.currentPage = this.route.snapshot.params.page || '';
           this.listenRoute();
           this.loadNavigation(paramId);
           break;
@@ -42,7 +43,18 @@ export class AwEntitaLayoutEH extends EventHandler {
               handler: 'router' 
             });
           }
-          break;
+          break
+        case 'aw-linked-objects.pagination':
+          this.dataSource.currentPage = payload.split('-')[1]
+          this.emitGlobal('navigate', {
+            handler: 'router',
+            path: [`aw/entita/${this.route.snapshot.params.id}/oggetti-collegati/${payload.split('-')[1]}`]
+          });
+          break
+        case 'aw-linked-objects.goto':
+          let targetPage = Number(payload.replace('goto-', ''))
+          console.log({targetPage})
+          break
         default:
           break;
       }
