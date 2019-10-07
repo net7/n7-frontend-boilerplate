@@ -21,6 +21,7 @@ function unpackData (data, page, size, keys) {
       image: el.thumbnail,
       title: el.item.label,
       text: el.item.info[1].value,
+      payload: el.item.id,
       metadata: [
         {
           classes: 'n7-objects__metadata-artist',
