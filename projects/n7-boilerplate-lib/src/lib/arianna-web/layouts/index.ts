@@ -27,3 +27,9 @@ export * from './scheda-layout/scheda-layout';
 export * from './scheda-layout/scheda-layout.ds';
 export * from './scheda-layout/scheda-layout.eh';
 export * from './scheda-layout/scheda-layout.config';
+
+// search layout
+export * from './search-layout/search-layout';
+export * from './search-layout/search-layout.ds';
+export * from './search-layout/search-layout.eh';
+export * from './search-layout/search-layout.config';

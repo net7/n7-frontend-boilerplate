@@ -7,6 +7,7 @@ import {
   AwSchedaLayoutComponent,
   AwWorksLayoutComponent,
   AwEntitaLayoutComponent,
+  AwSearchLayoutComponent,
 } from 'n7-boilerplate-lib';
 
 export const APP_ROUTES: Routes = [
@@ -18,6 +19,7 @@ export const APP_ROUTES: Routes = [
   { path: 'aw/works', component: AwWorksLayoutComponent },
   { path: 'aw/entita/:id/:tab', component: AwEntitaLayoutComponent},
   { path: 'aw/entita/:id', redirectTo: 'aw/entita/:id/overview' },
+  { path: 'aw/search', component: AwSearchLayoutComponent },
   {
     path: '',
     redirectTo: '/aw/home',

@@ -6,7 +6,7 @@ export interface ISearchConfig {
   page: any;
   resultFields: any;
   searchFields: any;
-  inputs: any;
+  fields: any;
   baseUrl: string;
 }
 
@@ -32,8 +32,13 @@ class SearchModel {
     if(!facetConfig) throw Error(`Facet "${facetId}" does not exists!`);
 
     // update input
-    const input = this._state.inputs.find(({ id }) => id === facetId);
-    if(input) input.value = value;
+    this._state.fields.forEach(field => {
+      field.inputs.forEach(input => {
+        if(input.id === facetId){
+          input.value = value;
+        }
+      })
+    });
 
     // update filters
     this._filters[facetId] = {
@@ -46,6 +51,7 @@ class SearchModel {
   
   // GETTERS
   public getId = () => this._id;
+  public getFields = () => this._state.fields;
   public getParams() {
     const { facets, resultFields, searchFields } = this._state;
     return { 
