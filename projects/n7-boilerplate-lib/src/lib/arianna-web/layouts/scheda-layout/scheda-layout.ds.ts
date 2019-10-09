@@ -24,6 +24,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   public bubbleChartSectionTitle: string;
   public similarItemsSectionTitle: string;
   public metadataSectionTitle: string;
+  public hasMetadata: boolean;
   public hasBubbles: boolean;
   public hasSimilarItems: boolean;
   public imageViewerIstance: any;
@@ -131,6 +132,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
         let group = { group: [] };
 
         if ( response.fields ){
+          this.hasMetadata = true;
           response.fields.forEach(field => {
             let items = [];
             field.fields.forEach(item => {

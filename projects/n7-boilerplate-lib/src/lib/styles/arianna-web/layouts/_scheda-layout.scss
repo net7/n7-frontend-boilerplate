@@ -33,8 +33,8 @@ $aw-scheda-content-padding: $space*3;
 
         .n7-tree {
             position: sticky !important;
-            top: 44px !important; // 44px is the sidebarheader height
-            max-height: calc(100vh - 190px); // 44px is the sidebarheader height
+            top: $sidebar-header-height !important; // 44px is the sidebarheader height
+            max-height: calc(100vh - 190px);
             overflow-y: auto;
         }
     }
@@ -67,6 +67,14 @@ $aw-scheda-content-padding: $space*3;
     .n7-sidebar-header__icon-right {
         cursor: pointer;
     }
+
+    /* First level */
+    .n7-tree {
+        > .n7-tree__item > .n7-tree__item-contents .n7-tree__item-text{
+             font-size: $font-size-l;
+             font-weight: $font-weight-bold;
+        }
+    }
 }
 
 
@@ -89,7 +97,7 @@ $aw-scheda-content-padding: $space*3;
     }
 
     .n7-breadcrumbs {
-        margin-left: 44px; // 44px is the sidebarheader height
+        margin-left: $sidebar-header-height;
     }
 }
 
@@ -102,7 +110,8 @@ $aw-scheda-content-padding: $space*3;
 
     /* Breadcrumbs */
     .n7-breadcrumbs  {
-        height: 44px;
+        height: $sidebar-header-height;
+        padding-left: $space*2;
         box-sizing: border-box;
         background-color: $color-background-medium;
     }
@@ -125,7 +134,7 @@ $aw-scheda-content-padding: $space*3;
     .aw-scheda__description {
         padding: $aw-scheda-content-padding;
         columns: 2;
-        font-size: $font-size-l;
+        line-height: 1.65;
     }
 
     /* Metadata */
@@ -138,6 +147,10 @@ $aw-scheda-content-padding: $space*3;
         .n7-metadata-viewer__group-wrapper {
             break-inside: avoid;
         }
+
+        .n7-metadata-viewer__group-title {
+            font-size: $font-size-l;
+        }
     }
 
     /* Bubble chart */
@@ -149,7 +162,7 @@ $aw-scheda-content-padding: $space*3;
     
     /* Related items */
     .aw-scheda__related-items {
-        padding: $aw-scheda-content-padding;
+        padding: 0 $aw-scheda-content-padding $aw-scheda-content-padding $aw-scheda-content-padding;
     }
 }
 
