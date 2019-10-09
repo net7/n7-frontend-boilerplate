@@ -189,7 +189,6 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         (b) => b.id!==payload.bubble.id );
       if(payload.bubble.hasCloseIcon){
         payload.bubble.hasCloseIcon=false;
-        //this.updateBubblesAndItemPreviews();
         return this.filterRequest();
       }
     }
@@ -371,7 +370,8 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       });
     }
     this.selectedBubbles = this.selectedBubbles.filter( (b) => b.id!==payload );
-    this.updateBubblesAndItemPreviews();
+    return this.filterRequest();
+    //this.updateBubblesAndItemPreviews();
   }
 
   onHeroChange(value){

@@ -68,19 +68,20 @@ export class AwHomeLayoutEH extends EventHandler {
           this.dataSource.onBubbleTooltipClick(payload.source, payload);
           break;*/
         case 'aw-bubble-chart.click':
+            let bubblePayload = {
+              width: window.innerWidth / 1.8,
+              setBubbleChart: (bubbleCref) => this.dataSource._bubbleChart = bubbleCref,
+              reset: true,
+              facetData: this.dataSource.facetData,
+              selectedBubbles: this.dataSource.selectedBubbles
+            }
+
           if ( payload.source === 'bubble' ){
             if (payload.bubble) {
               this.dataSource.updateBubbleFilter(payload);
               this.dataSource.onBubbleSelected(payload.bubble).subscribe((response) => {
                 if ( response ) {
-                  let bubblePayload = {
-                    width: window.innerWidth / 1.8,
-                    setBubbleChart: (bubbleCref) => this.dataSource._bubbleChart = bubbleCref,
-                    source: response,
-                    reset: true,
-                    facetData: this.dataSource.facetData,
-                    selectedBubbles: this.dataSource.selectedBubbles
-                  }
+                  bubblePayload['source'] = response;
                   this.emitOuter('filterbubbleresponse', bubblePayload);
                   this.dataSource.updateBubbles(response);
                  }
@@ -93,8 +94,9 @@ export class AwHomeLayoutEH extends EventHandler {
                 bubble:payload.bubble
               }).subscribe((response) => {
                 if ( response ) {
-                  this.dataSource.updateBubbles(response);
+                  bubblePayload['source'] = response;
                   this.emitOuter('bubble-filter', response);
+                  this.dataSource.updateBubbles(response);
                  }
                });
               }
@@ -107,7 +109,19 @@ export class AwHomeLayoutEH extends EventHandler {
          * Tags & Item Previews Event Handlers
          */
         case 'aw-home-item-tags-wrapper.click':
-            this.dataSource.onTagClicked(payload);
+            this.dataSource.onTagClicked(payload).subscribe((response) => {
+              let bubblePayload = {
+                width: window.innerWidth / 1.8,
+                setBubbleChart: (bubbleCref) => this.dataSource._bubbleChart = bubbleCref,
+                source: response,
+                reset: true,
+                facetData: this.dataSource.facetData,
+                selectedBubbles: this.dataSource.selectedBubbles
+              }
+              this.emitOuter('filterbubbleresponse', bubblePayload);
+              this.dataSource.renderPreviewsFromApolloQuery();
+              this.dataSource.renderItemTags();
+            });
             break;
         default:
             break;

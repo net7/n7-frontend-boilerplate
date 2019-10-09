@@ -66,6 +66,6 @@ export class AwSchedaLayoutEH extends EventHandler {
       if ( selectedItem ) {
         this.emitOuter('selectItem', selectedItem);
       }
-      });
+    });
   }
 }
