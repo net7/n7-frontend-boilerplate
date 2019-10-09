@@ -1,0 +1,97 @@
+/**
+ * ENTITÀ
+ *
+ * Layout for entity page
+ */
+
+ /* ------------------------------------ *\
+    HERO
+\* ------------------------------------ */
+.aw-entity {
+    margin: $space*3 auto 0 auto;
+    max-width: $page-max-width;
+
+    display: grid;
+    grid-template-columns: $aw-scheda-tree-width 1fr;
+
+    &__content {
+        margin-top: $space*3;
+        background-color: $color-background-base;
+        box-shadow: 0 2px 20px 0 rgba(0,0,0,0.08);
+    }
+}
+
+
+/* ------------------------------------ *\
+   #SIDEBAR
+\* ------------------------------------ */
+.aw-entity {
+    &__sidebar-title-wrapper {
+        padding: $space*2;
+        background-color: $color-background-light;
+        border: 1px solid $color-border-light;
+    }
+
+    &__sidebar-title {
+        display: flex;
+        align-items: center;
+        margin: 0;
+        font-size: $font-size-xxl;
+
+        .aw-entity__sidebar-title-icon {
+            margin-right: $space;
+            // vertical-align: middle;
+        }
+    }
+
+    &__sidebar {
+         .n7-nav {
+            background-color: $color-background-base; 
+            box-shadow: 0 2px 20px 0 rgba(0,0,0,0.08);
+        }
+
+        .n7-nav__item {
+        }
+        
+        .n7-nav__link {
+            display: block;
+            padding: $space*2;
+            border-bottom: 1px solid $color-border-light;
+            color: $color-text-light;
+            text-transform: uppercase;
+            font-size: $font-size-l;
+
+            &:hover {
+                color: $color-text-link;
+            }
+        }
+    }
+}
+
+
+/* ------------------------------------ *\
+   #CONTENT
+\* ------------------------------------ */
+.aw-entity {
+    &__content-section {
+        padding: $space*3;
+        border-bottom: 2px solid $color-border-light;
+    }
+}
+
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: $breakpoint-laptop) {
+}
+
+@media all and (max-width: $breakpoint-ipad-portrait) {
+}
+
+@media all and (max-width: $breakpoint-smartphone-landscape) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}

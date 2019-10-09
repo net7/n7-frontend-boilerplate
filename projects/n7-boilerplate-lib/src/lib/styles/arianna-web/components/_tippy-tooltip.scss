@@ -1,0 +1,37 @@
+/**
+ * TIPPY-TOOLTIP
+ *
+ * Tippy tooltip component customizations.
+ */
+ 
+/* ------------------------------------ *\
+   #TIPPY-TOOLTIP
+\* ------------------------------------ */
+.tippy-tooltip {
+    &.light-border-theme {
+        border-radius: $border-radius;
+        border: none;
+        box-shadow: $tippy-box-shadow;
+    }
+
+    .tippy-content {
+        padding: $space*1.5 $space*2;
+        text-align: left;
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: $breakpoint-laptop) {
+}
+
+@media all and (max-width: $breakpoint-ipad-portrait) {
+}
+
+@media all and (max-width: $breakpoint-smartphone-landscape) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}

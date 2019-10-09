@@ -65,6 +65,12 @@
                         </ng-container>
                     </div>
                     <div *ngIf="lb.dataSource.hasScrollBackground" class="aw-home__bubble-results-list-wrapper-with-scroll"></div>
+
+                    <div class="aw-home__bubble-results-list-actions">
+                        <a class="n7-btn n7-btn-light n7-btn-l aw-home__bubble-results-list-view-all" href="">Vedi tutti</a>
+                        <a class="n7-btn n7-btn-light n7-btn-l aw-home__bubble-results-list-view-others" href="">Vedi altri</a>
+                    </div>
+
                 </div>
 
             </div>
@@ -76,5 +82,12 @@
         <n7-hero [data]="lb.widgets['aw-home-hero-patrimonio'].ds.out$ | async"
             [emit]="lb.widgets['aw-home-hero-patrimonio'].emit">
         </n7-hero>
+    </div>
+
+    <!-- adavanced autocomplete popover  -->
+    <div id="aw-home-advanced-autocomplete-popover" style="display: none;">
+        <n7-advanced-autocomplete [data]="lb.widgets['aw-home-autocomplete'].ds.out$ | async"
+            [emit]="lb.widgets['aw-home-autocomplete'].emit">
+        </n7-advanced-autocomplete>
     </div>
 </div>

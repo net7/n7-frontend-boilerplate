@@ -9,6 +9,7 @@ export * from './home-hero-patrimonio.ds';
 export * from './home-bubble-chart.ds';
 export * from './home-facets-wrapper.ds';
 export * from './home-item-tags-wrapper.ds';
+export * from './home-autocomplete.ds';
 
 // Entita Layout
 export * from './entita-nav.ds';

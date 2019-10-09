@@ -1,5 +1,5 @@
 import { LayoutDataSource } from '@n7-frontend/core';
-import { fromEvent, interval } from 'rxjs';
+import { fromEvent, interval, Subject } from 'rxjs';
 import { debounce, debounceTime } from 'rxjs/operators';
 
 export class AwHomeLayoutDS extends LayoutDataSource {
@@ -9,12 +9,30 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   private configuration: any;
   private facetData: any[] = null;
   private facetInputs: any = {};
+  // all the bubbles as they have been given by apollo
+  // (the objects in the allBubbles are not the same bubble objects
+  // present in the bubble chart)
   private allBubbles: any[] = null;
+  private autocompletePopover: any;
+  private autocompletePopoverOpen: boolean = false;
+  private autocompleteChanged$: Subject<string> = new Subject();
+  // the bubbles currently selected (this are saved from the event handler's
+  // and correspond exactly to the bubblechart's bubble objects)
   public selectedBubbles: any[] = [];
   public numOfItemsStr: string = null;
+  // instance of the bubble chart (from which you can access all the various
+  // bubble objects)
   private _bubbleChart: any = null;
+  // the maximum number of bubbles which can be selected at the same time
   private maxBubblesSelectable:number = 3;
+  // entities have their own unique id, these ids are generic and are very flexible
+  // bubbles (as the bubble chart's objects) have unique ids but do not allow certain
+  // characters, so each bubble has its own id different from the id of the entity which
+  // the bubble represents (given an bubble's id called bubbleId you can obtain the
+  // respective entity's id with as: entityId = entityBubbleIdMap[bubbleId] )
   private entityBubbleIdMap: any = {};
+  // widh of the window which is updated at each resize and it is used by the bubble
+  // chart to check if the width of the window has changed during the last resize
   private lastWindowWidth: number = -1;
   private bubblePopup: any = null;
   public currentHoverEntity: any = null;
@@ -68,11 +86,16 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     fromEvent( window , "resize" ).pipe(debounce(() => interval(200))).
     subscribe( () => {
       // only resets the bubbles if the window's width has changed
+      // (if the resize only effects the window's hight then the bubble chart
+      // doesn't get reset)
       if(this.lastWindowWidth!=window.outerWidth){
         this.lastWindowWidth=window.outerWidth;
         this.updateBubblesAndItemPreviews(true);
       }
     });
+
+    // listen autocomplete changes
+    this._listenAutoCompleteChanges();
   }
 
   onBubbleMouseEnter(bubblePayload){
@@ -176,7 +199,6 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   }
 
   private filterRequest(){
-
     let selectedEntitiesIds = [];
     if(this.entityBubbleIdMap)
     this.selectedBubbles.forEach( (sB) => {
@@ -357,6 +379,10 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     this.updateBubblesAndItemPreviews();
   }
 
+  onHeroChange(value){
+    this.autocompleteChanged$.next(value);
+  }
+
   private _getSubnav(){
     return ['home', 'results', 'single'].map(page => ({
       text: page.toUpperCase(),
@@ -410,5 +436,54 @@ export class AwHomeLayoutDS extends LayoutDataSource {
 
   private _setHasScrollBackground({ scrollTop, scrollHeight, clientHeight }){
     this.hasScrollBackground = scrollHeight > (scrollTop + clientHeight);
+  }
+
+  private _listenAutoCompleteChanges(){
+    this.one('aw-home-autocomplete').updateOptions({ config: this.configuration.get('config-keys') });
+
+    this.autocompleteChanged$.pipe(
+      debounceTime(500)
+    ).subscribe(value => {
+
+      if(value){
+        this.communication.request$('autoComplete', {
+          onError: (error) => console.error(error),
+          params: {
+            input: value,
+            itemsPagination:{ offset:0, limit: this.configuration.get('home-layout')['results-limit'] }
+          }
+        }).subscribe((response) => {
+          this.one('aw-home-autocomplete').update(response);
+          if(!this.autocompletePopoverOpen) this._toggleAutocompletePopover();
+        });
+      } else {
+        this._toggleAutocompletePopover();
+      }
+    });
+  }
+
+  private _toggleAutocompletePopover(){
+    if(!this.autocompletePopover){
+      const template = document.getElementById('aw-home-advanced-autocomplete-popover');
+      template.style.display = 'block';
+
+      this.autocompletePopover = this.tippy('.aw-home__top-hero .n7-hero__input', {
+        content: template,
+        trigger: 'manual',
+        interactive: true,
+        arrow: false,
+        theme: 'light-border',
+        placement: 'bottom-start',
+        onHidden: () => this.autocompletePopoverOpen = false,
+      })[0];
+    }
+
+    if(this.autocompletePopoverOpen){
+      this.autocompletePopover.hide();
+    } else {
+      this.autocompletePopover.show();
+    }
+
+    this.autocompletePopoverOpen = !this.autocompletePopoverOpen;
   }
 }
