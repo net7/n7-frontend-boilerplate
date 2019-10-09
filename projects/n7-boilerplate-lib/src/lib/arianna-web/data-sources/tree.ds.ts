@@ -9,11 +9,7 @@ export class AwTreeDS extends DataSource {
   }
 
   protected transform(data) {
-    if( data.parseData ){
-      return this.parseData(data);
-    }
-    else return data;
-
+    return data;
   }
 
   updateTree(data, parents, id){
@@ -78,8 +74,7 @@ export class AwTreeDS extends DataSource {
         treeObj['items'].push( this.parseTree(item, false, []) );
       });
     }
-
-    return treeObj;
+    this.update(treeObj);
   }
 
   private parseTree(data, toggle, parents) {

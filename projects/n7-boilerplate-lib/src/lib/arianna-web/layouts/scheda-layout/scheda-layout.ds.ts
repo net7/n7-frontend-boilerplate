@@ -61,8 +61,6 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       classes: 'is-expanded',
       payload: 'header'
     };
-    data.parseData = true;
-    this.one('aw-tree').update(data);
     this.one('aw-sidebar-header').update(header);
   }
 
