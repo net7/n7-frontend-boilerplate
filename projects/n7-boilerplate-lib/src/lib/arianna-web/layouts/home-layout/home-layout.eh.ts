@@ -12,6 +12,7 @@ export class AwHomeLayoutEH extends EventHandler {
       switch(type) {
         case 'aw-home-layout.init':
           this.dataSource.onInit(payload);
+          this.configuration = payload.configuration;
           break;
         case 'aw-home-layout.destroy':
             this.destroyed$.next();
@@ -37,8 +38,7 @@ export class AwHomeLayoutEH extends EventHandler {
     this.outerEvents$.subscribe(({ type, payload }) => {
       switch(type){
         case 'aw-hero.change':
-          const { inputPayload, value } = payload;
-          // TODO: do something
+          this.dataSource.onHeroChange(payload.value);
           break;
         /**
          * Facets Event Handlers
@@ -73,6 +73,15 @@ export class AwHomeLayoutEH extends EventHandler {
         case 'aw-home-item-tags-wrapper.click':
             this.dataSource.onTagClicked(payload);
             break;
+        /**
+         * Tags & Item Previews Event Handlers
+         */
+        case 'aw-home-autocomplete.click':
+          this.emitGlobal('navigate', {
+            handler: 'router',
+            path: [this.configuration.get('paths').entitaBasePath, payload.id] 
+          });
+          break;
         default:
             break;
       }

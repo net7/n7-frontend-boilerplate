@@ -86,4 +86,11 @@
             [emit]="lb.widgets['aw-home-hero-patrimonio'].emit">
         </n7-hero>
     </div>
+
+    <!-- adavanced autocomplete popover  -->
+    <div id="aw-home-advanced-autocomplete-popover" style="display: none;">
+        <n7-advanced-autocomplete [data]="lb.widgets['aw-home-autocomplete'].ds.out$ | async"
+            [emit]="lb.widgets['aw-home-autocomplete'].emit">
+        </n7-advanced-autocomplete>
+    </div>
 </div>

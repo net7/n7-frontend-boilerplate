@@ -1,4 +1,5 @@
 import { LayoutDataSource } from '@n7-frontend/core';
+import tippy from 'tippy.js';
 
 export class MainLayoutDS extends LayoutDataSource {
   protected configuration: any;
@@ -50,6 +51,14 @@ export class MainLayoutDS extends LayoutDataSource {
       // path control
       if(!payload.path) throw Error('onNavigate: no path for router navigate');
       this.router.navigate(payload.path);
+
+      // on change
+      this._onRouterNavigate();
     }
+  }
+  
+  private _onRouterNavigate(){
+    // hide tippy
+    tippy.hideAll();
   }
 }

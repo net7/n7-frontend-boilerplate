@@ -16,6 +16,8 @@ export const AwHomeLayoutConfig = {
   }, {
     id: 'aw-home-item-tags-wrapper',
   }, {
+    id: 'aw-home-autocomplete'
+  }, {
     id: 'aw-linked-objects'
   }],
   layoutDS: AwHomeLayoutDS,

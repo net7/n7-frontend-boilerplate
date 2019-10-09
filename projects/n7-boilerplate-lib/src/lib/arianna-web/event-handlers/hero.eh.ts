@@ -17,9 +17,6 @@ export class AwHeroEH extends EventHandler {
           break;
       }
     });
-    /* this.outerEvents$.subscribe(event => {
-    
-    }); */
   }
 
 }

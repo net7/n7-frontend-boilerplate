@@ -1,5 +1,5 @@
 import { LayoutDataSource } from '@n7-frontend/core';
-import { fromEvent, interval } from 'rxjs';
+import { fromEvent, interval, Subject } from 'rxjs';
 import { debounce, debounceTime } from 'rxjs/operators';
 
 export class AwHomeLayoutDS extends LayoutDataSource {
@@ -13,6 +13,9 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   // (the objects in the allBubbles are not the same bubble objects
   // present in the bubble chart)
   private allBubbles: any[] = null;
+  private autocompletePopover: any;
+  private autocompletePopoverOpen: boolean = false;
+  private autocompleteChanged$: Subject<string> = new Subject();
   // the bubbles currently selected (this are saved from the event handler's
   // and correspond exactly to the bubblechart's bubble objects)
   public selectedBubbles: any[] = [];
@@ -78,8 +81,8 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       }
     });
 
-    // adding options to widgets
-    this.one('aw-home-item-preview-wrapper').updateOptions({ config: this.configuration.get('config-keys') });
+    // listen autocomplete changes
+    this._listenAutoCompleteChanges();
   }
 
   onBubbleTooltipClick(source:string, payload){
@@ -374,6 +377,10 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     this.updateBubblesAndItemPreviews();
   }
 
+  onHeroChange(value){
+    this.autocompleteChanged$.next(value);
+  }
+
   private _getSubnav(){
     return ['home', 'results', 'single'].map(page => ({
       text: page.toUpperCase(),
@@ -427,5 +434,54 @@ export class AwHomeLayoutDS extends LayoutDataSource {
 
   private _setHasScrollBackground({ scrollTop, scrollHeight, clientHeight }){
     this.hasScrollBackground = scrollHeight > (scrollTop + clientHeight);
+  }
+
+  private _listenAutoCompleteChanges(){
+    this.one('aw-home-autocomplete').updateOptions({ config: this.configuration.get('config-keys') });
+
+    this.autocompleteChanged$.pipe(
+      debounceTime(500)
+    ).subscribe(value => {
+
+      if(value){
+        this.communication.request$('autoComplete', {
+          onError: (error) => console.error(error),
+          params: {
+            input: value,
+            itemsPagination:{ offset:0, limit: this.configuration.get('home-layout')['results-limit'] }
+          }
+        }).subscribe((response) => {
+          this.one('aw-home-autocomplete').update(response);
+          if(!this.autocompletePopoverOpen) this._toggleAutocompletePopover();
+        });
+      } else {
+        this._toggleAutocompletePopover();
+      }
+    });
+  }
+
+  private _toggleAutocompletePopover(){
+    if(!this.autocompletePopover){
+      const template = document.getElementById('aw-home-advanced-autocomplete-popover');
+      template.style.display = 'block';
+  
+      this.autocompletePopover = this.tippy('.aw-home__top-hero .n7-hero__input', {
+        content: template,
+        trigger: 'manual',
+        interactive: true,
+        arrow: false,
+        theme: 'light-border',
+        placement: 'bottom-start',
+        onHidden: () => this.autocompletePopoverOpen = false,
+      })[0];
+    }
+    
+    if(this.autocompletePopoverOpen){
+      this.autocompletePopover.hide();
+    } else {
+      this.autocompletePopover.show();
+    }
+
+    this.autocompletePopoverOpen = !this.autocompletePopoverOpen;
   }
 }
