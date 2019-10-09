@@ -45,15 +45,14 @@ export class AwBubbleChartEH extends EventHandler {
             'selected': this.dataSource.getSelectedBubbles()
           });
           break;
-        /*case "aw-home-layout.bubble-tooltip-select-click":
-            let data = {
-              'bubbleId': this.dataSource.getBubbleFromId(payload.entityId),
-              'entityIdmap': this.dataSource.getEntityIdMap(),
-              'allBubbles': this.dataSource.getAllBubbles(),
-              'source': "select"
-            }
-            this.emitOuter('bubble-selected', data);
-          break;*/
+        case 'aw-home-layout.filterbubbleresponse':
+          this.dataSource.setAllBubblesFromApolloQuery(payload);
+          this.emitOuter('bubble-filtered',
+          {
+            'allBubbles': this.dataSource.getAllBubbles(),
+            'selected': this.dataSource.getSelectedBubbles()
+          });
+          break;
       }
     });
   }

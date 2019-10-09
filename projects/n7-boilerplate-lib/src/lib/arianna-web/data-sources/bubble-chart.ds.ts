@@ -22,17 +22,10 @@ export class AwBubbleChartDS extends DataSource {
       this.facetData = data.facetData;
     }
 
-    if ( data.selectedBubbles ) {
-      this.selectedBubbles = data.selectedBubbles;
-    }
-
+    /*
     if ( data.source ) {
       this.setAllBubblesFromApolloQuery(data.source, data.reset);
-    }
-
-    if ( data.tippy ) {
-      this.tippy = data.tippy;
-    }
+    }*/
 
     data.bubbles = this.filterBubblesBasedOnFacetsEnabled();
     let bubbleCointainer = document.getElementById("bubble-chart-container");
@@ -130,9 +123,15 @@ export class AwBubbleChartDS extends DataSource {
     return bubblesData;
   }
 
-  setAllBubblesFromApolloQuery(response: any, reset?: boolean ) {
+  setAllBubblesFromApolloQuery(data: any, reset?: boolean ) {
+    const response = data.source;
     if ( !response || !response.entitiesData ) {return; }
     this.allBubbles = [];
+
+    if ( data.selectedBubbles ) {
+      this.selectedBubbles = data.selectedBubbles;
+    }
+
     for (let i = 0 ; i < response.entitiesData.length; i++) {
       let currentToE = response.entitiesData[i];
 
@@ -160,6 +159,8 @@ export class AwBubbleChartDS extends DataSource {
         }
       }
     });
+
+    this.update(data);
   }
 
   private convertEntityIdToBubbleId(entityId: string): string {
@@ -202,7 +203,7 @@ export class AwBubbleChartDS extends DataSource {
       let template = document.getElementById("bubble-popup-menu");
       let templateClone = template.cloneNode(true);
       templateClone['style'].display = "inline-block";
-      this.bubblePopup = this.tippy(`#${bubbleId}`, {
+      this.bubblePopup = this.options.tippy(`#${bubbleId}`, {
         content: templateClone,
         trigger: 'manual',
         interactive: true,

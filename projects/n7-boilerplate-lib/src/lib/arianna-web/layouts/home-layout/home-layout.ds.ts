@@ -47,36 +47,6 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     this.one('aw-hero').update(this.configuration.get('home-layout')['top-hero']);
     this.one('aw-home-hero-patrimonio').update(this.configuration.get('home-layout')['bottom-hero']);
 
-    this.communication.request$('globalFilter', {
-      onError: (error) => console.error(error),
-    }).subscribe((response) => {
-      this.facetData = [];
-      response.entitiesData.forEach( (ent) => {
-        const teoConfigData = this.configuration.get("config-keys")[ent.countData.type.configKey];
-        if(teoConfigData)
-          this.facetData.push({
-            ...ent.countData,
-            ...teoConfigData,
-            enabled:true,
-          });
-      } );
-
-      this.one('aw-home-facets-wrapper').update(this.facetData);
-      this.one('aw-bubble-chart').updateOptions({
-        context: 'home',
-        configKeys: this.configuration.get("config-keys")
-      });
-      this.one('aw-bubble-chart').update({
-        width: window.innerWidth / 1.8,
-        setBubbleChart: (bubbleCref) => this._bubbleChart = bubbleCref,
-        source: response,
-        reset: false,
-        facetData: this.facetData,
-        tippy: this.tippy
-      });
-      this.renderPreviewsFromApolloQuery(response);
-
-    });
 
     // update streams
     this.mainState.update('headTitle', 'Arianna Web > Home');
@@ -96,6 +66,33 @@ export class AwHomeLayoutDS extends LayoutDataSource {
 
     // listen autocomplete changes
     this._listenAutoCompleteChanges();
+  }
+
+  initialFilterRequest(){
+    return this.communication.request$('globalFilter', {
+      onError: (error) => console.error(error),
+    })
+  }
+
+  parseInitialRequest(response) {
+    this.facetData = [];
+    response.entitiesData.forEach( (ent) => {
+      const teoConfigData = this.configuration.get("config-keys")[ent.countData.type.configKey];
+      if(teoConfigData)
+        this.facetData.push({
+          ...ent.countData,
+          ...teoConfigData,
+          enabled:true,
+        });
+    } );
+
+    this.one('aw-home-facets-wrapper').update(this.facetData);
+    this.one('aw-bubble-chart').updateOptions({
+      context: 'home',
+      configKeys: this.configuration.get("config-keys"),
+      tippy: this.tippy
+    });
+    this.renderPreviewsFromApolloQuery(response);
   }
 
   onBubbleMouseEnter(bubblePayload){
@@ -217,19 +214,18 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   }
 
   public updateBubbles(response, onlyBubbles?:boolean ) {
-
     if ( !onlyBubbles ) {
       this.renderPreviewsFromApolloQuery(response);
     }
 
-    this.one('aw-bubble-chart').update({
+   /* this.one('aw-bubble-chart').update({
       width: window.innerWidth / 1.8,
       setBubbleChart: (bubbleCref) => this._bubbleChart = bubbleCref,
       source: response,
       reset: true,
       facetData: this.facetData,
       selectedBubbles: this.selectedBubbles
-    });
+    });*/
   }
 
   public updateBubbleFilter(data) {
@@ -262,7 +258,6 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         this.renderPreviewsFromApolloQuery(response);
         this.renderItemTags();
       }
-     // this.setAllBubblesFromApolloQuery(response,true);
     });
   }
 
@@ -337,7 +332,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
           if(this.selectedBubbles[i].id===bubble.id) bubble.selected=true;
         }
       });
-      this.one('aw-home-bubble-chart').update({
+      this.one('aw-bubble-chart').update({
         width: window.innerWidth/1.8,
         bubbles:this.filterBubblesBasedOnFacetsEnabled(),
         selectedBubbles: this.selectedBubbles,

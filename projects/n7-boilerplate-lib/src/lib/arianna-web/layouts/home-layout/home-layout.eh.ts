@@ -12,7 +12,7 @@ export class AwHomeLayoutEH extends EventHandler {
       switch(type) {
         case 'aw-home-layout.init':
           this.dataSource.onInit(payload);
-          this.configuration = payload.configuration;
+          this.loadFilters();
           break;
         case 'aw-home-layout.destroy':
             this.destroyed$.next();
@@ -40,7 +40,8 @@ export class AwHomeLayoutEH extends EventHandler {
     this.outerEvents$.subscribe(({ type, payload }) => {
       switch(type){
         case 'aw-hero.change':
-          this.dataSource.onHeroChange(payload.value);
+          const { inputPayload, value } = payload;
+          // TODO: do something
           break;
         /**
          * Facets Event Handlers
@@ -72,8 +73,16 @@ export class AwHomeLayoutEH extends EventHandler {
               this.dataSource.updateBubbleFilter(payload);
               this.dataSource.onBubbleSelected(payload.bubble).subscribe((response) => {
                 if ( response ) {
+                  let bubblePayload = {
+                    width: window.innerWidth / 1.8,
+                    setBubbleChart: (bubbleCref) => this.dataSource._bubbleChart = bubbleCref,
+                    source: response,
+                    reset: true,
+                    facetData: this.dataSource.facetData,
+                    selectedBubbles: this.dataSource.selectedBubbles
+                  }
+                  this.emitOuter('filterbubbleresponse', bubblePayload);
                   this.dataSource.updateBubbles(response);
-                  this.emitOuter('bubble-filter', response);
                  }
                });
               }
@@ -100,17 +109,24 @@ export class AwHomeLayoutEH extends EventHandler {
         case 'aw-home-item-tags-wrapper.click':
             this.dataSource.onTagClicked(payload);
             break;
-        /**
-         * Tags & Item Previews Event Handlers
-         */
-        case 'aw-home-autocomplete.click':
-          this.emitGlobal('navigate', {
-            handler: 'router',
-            path: [this.configuration.get('paths').entitaBasePath, payload.id] 
-          });
-          break;
         default:
             break;
+      }
+    });
+  }
+
+  private loadFilters(){
+    this.dataSource.initialFilterRequest().subscribe((response) => {
+      if( response ){
+        this.dataSource.parseInitialRequest(response);
+        let bubblePayload = {
+          width: window.innerWidth / 1.8,
+          setBubbleChart: (bubbleCref) => this.dataSource._bubbleChart = bubbleCref,
+          source: response,
+          reset: false,
+          facetData: this.dataSource.facetData
+        };
+        this.emitOuter('filterbubbleresponse', bubblePayload);
       }
     });
   }
