@@ -21,20 +21,18 @@
 // ------------------------------------ //
 @import "../../node_modules/@n7-frontend/components/styles/generic/color_scheme";
 
-// ------------------------------------ //
-// #PROJECT COLOR SCHEME
-// ------------------------------------ //
-@import "./generic/color_scheme";
 
 // ------------------------------------ //
-// #ARIANNA WEB COLOR SCHEMES
+// #AW COLOR SCHEME
 // ------------------------------------ //
-// @import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/generic/color_scheme";
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/generic/color_scheme";
+
 
 // ------------------------------------ //
 // #N7 COMPONENTS VARIABLES
 // ------------------------------------ //
 @import "../../node_modules/@n7-frontend/components/styles/generic/variables";
+
 
 // ------------------------------------ //
 // #AW LAYOUTS VARIABLES
@@ -43,14 +41,10 @@
 
 
 // ------------------------------------ //
-// #ARIANNA WEB VARIABLES
-// ------------------------------------ //
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/generic/variables";
-
-// ------------------------------------ //
 // #N7 COMPONENTS STYLES
 // ------------------------------------ //
 @import '../../node_modules/@n7-frontend/components/styles/imports';
+
 
 // ------------------------------------ //
 // #TEMP AW COMPONENT

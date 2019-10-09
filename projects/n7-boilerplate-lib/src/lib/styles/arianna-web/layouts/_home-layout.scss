@@ -14,7 +14,6 @@
 
             &__text {
                 font-size: $font-size-xl;
-                line-height: 1.3;
 
                 &-wrapper {
                     height: $top-hero-height;
@@ -29,6 +28,7 @@
                 border-radius: $hero-input-border-radius 0 0 $hero-input-border-radius;
                 box-shadow: $hero-input-box-shadow;
                 line-height: $hero-input-height;
+                font-size: $font-size-l;
 
                 @include placeholder {
                     font-size: $font-size-l;
@@ -231,6 +231,16 @@
                 color: $color-organizations;
             }
         }
+
+        /* Disabled */
+        /*
+        &.is-disabled {
+            .n7-facet-header__icon-right {
+                cursor: not-allowed;
+                opacity: .5;
+            }
+        }
+        */
     }
 
     .n7-facet {

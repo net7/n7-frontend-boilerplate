@@ -17,7 +17,7 @@
             (click)="lb.eventHandler.emitInner('bubble-tooltip-select-click',{entityId:(lb.dataSource.currentHoverEntity ? lb.dataSource.currentHoverEntity.id : null)} )"></button>
     <div class="aw-bubble-popup-menu" id="bubble-popup-menu" style="display: none;">
         <h2 class="aw-bubble-popup-menu__title">{{ ( lb.dataSource.currentHoverEntity ? lb.dataSource.currentHoverEntity.label : '' ) }}</h2>
-        <span class="n7-icon-close" onclick="document.getElementById('bubble-popup-menu_closebutton').click();"></span>
+        <span class="aw-bubble-popup-menu__close n7-icon-close" onclick="document.getElementById('bubble-popup-menu_closebutton').click();"></span>
         <p class="aw-bubble-popup-menu__text">
             {{ ( lb.dataSource.currentHoverEntity ? 'È collegato a '+lb.dataSource.currentHoverEntity.count+' entità' : '' ) }}
         </p>
