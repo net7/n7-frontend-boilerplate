@@ -121,6 +121,7 @@ export class AwBubbleChartDS extends DataSource {
 
     if(data.setUpdateReference) bubblesData['setUpdateReference'] = data.setUpdateReference;
     if(data.setBubbleChart) bubblesData['setBubbleChart'] = data.setBubbleChart;
+
     return bubblesData;
   }
 
@@ -212,17 +213,19 @@ export class AwBubbleChartDS extends DataSource {
 
 
   onBubbleTooltipClick(source:string, payload){
+    console.log('onBubbleTooltipClick');
+    console.log(payload);
     switch(source){
       case 'select':
         if(!payload) return;
         const bubbleId = this.convertEntityIdToBubbleId(payload.entityId);
         if(!bubbleId) return;
         let bubble = null;
-        if(this._bubbleChart){
-          this._bubbleChart.selectAll(`g`).each( b => {
+        if(payload._bubbleChart){
+          payload._bubbleChart.selectAll(`g`).each( b => {
             if(b.id===bubbleId) bubble=b;
           });
-          if(bubble) this.onBubbleSelected(bubble);
+          if(bubble) return bubble;
         }
         break;
       default:

@@ -27,6 +27,8 @@ export class AwHomeLayoutEH extends EventHandler {
             });
             break;
         case "aw-home-layout.bubble-tooltip-select-click":
+            payload._bubbleChart = this.dataSource._bubbleChart;
+            this.emitOuter('bubble-tooltip-select-click', payload);
             //this.dataSource.onBubbleTooltipClick('select',payload);
             break;
         default:

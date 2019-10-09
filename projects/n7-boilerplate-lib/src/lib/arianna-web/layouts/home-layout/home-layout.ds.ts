@@ -44,7 +44,10 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       } );
 
       this.one('aw-home-facets-wrapper').update(this.facetData);
-      this.one('aw-bubble-chart').updateOptions({ context: 'home', configKeys: this.configuration.get("config-keys") });
+      this.one('aw-bubble-chart').updateOptions({
+        context: 'home',
+        configKeys: this.configuration.get("config-keys")
+      });
       this.one('aw-bubble-chart').update({
         width: window.innerWidth / 1.8,
         setBubbleChart: (bubbleCref) => this._bubbleChart = bubbleCref,

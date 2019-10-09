@@ -30,7 +30,13 @@ export class AwBubbleChartEH extends EventHandler {
     this.outerEvents$.subscribe(({ type, payload }) => {
       switch(type){
         case "aw-home-layout.bubble-tooltip-select-click":
-              this.dataSource.onBubbleTooltipClick('select',payload);
+              const data = {
+                'bubble': this.dataSource.onBubbleTooltipClick('select',payload),
+                'entityIdmap': this.dataSource.getEntityIdMap(),
+                'allBubbles': this.dataSource.getAllBubbles(),
+                'source': 'bubble'
+              };
+              this.emitOuter('click', data);
               break;
         case 'aw-home-layout.bubble-filter':
               this.emitOuter('bubble-filtered',
