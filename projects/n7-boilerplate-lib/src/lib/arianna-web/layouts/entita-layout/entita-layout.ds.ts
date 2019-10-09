@@ -14,6 +14,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
   public navHeader: any = {}; // nav-header (custom) data
   public currentId: string; // selected entity (url param)
   public currentPage: any; // pagination value (url param)
+  public pageSize: number = 10; // linked objects page size
 
   private communication: any;
 
@@ -71,12 +72,12 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       case 'overview': {
         this.one('aw-entita-metadata-viewer').updateOptions({ context: this.selectedTab });
         this.one('aw-entita-metadata-viewer').update(res.fieldsTab);
-        this.one('aw-linked-objects').updateOptions({ context: this.selectedTab, configKeys: this.configuration.get("config-keys") })
+        this.one('aw-linked-objects').updateOptions({ size: 3, configKeys: this.configuration.get("config-keys") })
         this.one('aw-linked-objects').update(res.items);
       } break;
       
       case 'campi': {
-        this.one('aw-entita-metadata-viewer').updateOptions({ context: 'campi' });
+        this.one('aw-entita-metadata-viewer').updateOptions({ context: this.selectedTab });
         this.one('aw-entita-metadata-viewer').update(res.fieldsTab);
       } break;
 
@@ -85,7 +86,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
             context: this.selectedTab,
             configKeys: this.configuration.get("config-keys"),
             page: this.currentPage,
-            size: 5,
+            size: this.pageSize,
           })
         this.one('aw-linked-objects').update(res.items);
       } break;
