@@ -16,9 +16,13 @@ export class AwLinkedObjectsDS extends DataSource {
 }
 
 function unpackData (data, page, size, keys, totalPages) {
+  // resize data
   if (size && page) {
     data = data.slice(page * size - size, page * size)
+  } else if ( size ) {
+    data = data.slice(0, size)
   }
+
   var result = []
   data.forEach(el => {
     let item = {
@@ -62,6 +66,7 @@ function unpackData (data, page, size, keys, totalPages) {
     result.push(item);
   });
   if ( page ) { // if I'm on a page, render pagination data.
+    let sizeOptions = [10, 25, 50]
     return {
       pagination: {
         first: { payload: `goto-${1}`, classes: page == 1 ? "is-disabled" : '' },
@@ -69,6 +74,13 @@ function unpackData (data, page, size, keys, totalPages) {
         next:  { payload: `goto-${page+1}`, classes: page == totalPages ? "is-disabled" : ''},
         last:  { payload: `goto-${totalPages}`, classes: page == totalPages ? "is-disabled" : ''},
         links: makePagination(totalPages, page),
+        select: {
+          label: 'Numero di risultati',
+          options: sizeOptions.map(o => {
+            return { text: o , selected: o == size, disabled: o > totalPages }
+          }),
+          payload: 'select-size'
+        }
       },
       previews: result 
     }
@@ -78,12 +90,11 @@ function unpackData (data, page, size, keys, totalPages) {
 
 function makePagination (totalPages, currentPage) {
   let result = []
-  for (let i = 0; i < totalPages; i++) {
-    if (i + 1 === currentPage) {
-      result.push({ text: String(i+1), payload: 'page-' + String(i+1), classes: 'is-active' })
-    } else {
-      result.push({ text: String(i+1), payload: 'page-' + String(i+1) })
-    }
+  // always push the first page
+  result.push({ text: '1', payload: 'page-1', classes: currentPage==1? 'is-active' : '' })
+
+  for (let i = 1; i < totalPages; i++) {
+    result.push({ text: String(i + 1), payload: 'page-' + String(i + 1), classes: currentPage== i + 1 ? 'is-active' : '' })
   }
   return result
 }

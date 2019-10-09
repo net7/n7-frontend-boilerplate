@@ -24,9 +24,12 @@ export class AwLinkedObjectsEH extends EventHandler {
             });
           }
           break;
-        default:
-          console.warn('unhandled event type: ', type, ' with payload: ', payload)
+        case 'aw-linked-objects.change':
+          this.emitOuter('change', Number(payload.value))
           break;
+          default:
+            console.warn('unhandled event type: ', type, ' with payload: ', payload)
+            break;
       }
     });
   }

@@ -53,8 +53,14 @@ export class AwEntitaLayoutEH extends EventHandler {
           break
         case 'aw-linked-objects.goto':
           let targetPage = Number(payload.replace('goto-', ''))
-          console.log({targetPage})
+          // this.emitGlobal('navigate', {
+          //   handler: 'router',
+          //   path: [`aw/entita/${this.route.snapshot.params.id}/oggetti-collegati/${targetPage}`]
+          // });
           break
+        case 'aw-linked-objects.change':
+          this.dataSource.pageSize = payload;
+          this.listenRoute() // reloads the page content with the new page size
         default:
           break;
       }
