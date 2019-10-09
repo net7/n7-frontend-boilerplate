@@ -55,7 +55,6 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   }
 
   updateNavigation( data ) {
-    this.one('aw-tree').update(data);
     let header = {
       iconLeft: 'n7-icon-tree-icon',
       text:  data['label'],
@@ -183,7 +182,6 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
         this.one('aw-linked-objects').update(null);
       }
   }
-
 
   collapseSidebar() {
     this.sidebarCollapsed = !this.sidebarCollapsed;

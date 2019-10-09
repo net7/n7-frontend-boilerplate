@@ -60,7 +60,8 @@ export class AwSchedaLayoutEH extends EventHandler {
   private loadNavigation( selectedItem ) {
     this.dataSource.getNavigation('patrimonio').subscribe((response) => {
       if( response ){
-        this.dataSource.updateNavigation(response, selectedItem);
+        this.dataSource.updateNavigation(response);
+        this.emitOuter('navigationresponse', response);
       }
       if ( selectedItem ) {
         this.emitOuter('selectItem', selectedItem);

@@ -9,46 +9,26 @@ export class AwTreeDS extends DataSource {
   }
 
   protected transform(data) {
-    if ( !this.output ) {
-      return this.parseData(data);
-    } else {
-      return data;
-    }
-  }
-
-  parseData(data) {
-    let treeObj = {
-      items: []
-    };
-
-    data['branches'].forEach( item => {
-      treeObj['items'].push( this.parseTree(item, false, []) );
-    });
-    return treeObj;
+    return data;
   }
 
   updateTree(data, parents, id){
     if ( !data ) {
       data = this.output;
     }
+
     data.items.forEach( (it) => {
       const classes = it['classes'];
       if( it['_meta'] == id ) {
-        if ( classes.indexOf('is-expanded') > -1 ) {
-          it['classes'] = classes.replace(/is-expanded/g, 'is-collapsed');
-          if ( it['toggle'] ){
-            it['toggle']['icon'] = 'n7-icon-angle-right';
-          }
+        if ( classes.indexOf("is-expanded") > -1 ) {
+          it['classes'] = classes.replace(/is-expanded/g, "is-collapsed");
         } else {
-          it['classes'] = classes.replace(/is-collapsed/g, 'is-expanded');
-          if ( it['toggle'] ){
-            it['toggle']['icon'] = 'n7-icon-angle-down';
-          }
+          it['classes'] = classes.replace(/is-collapsed/g, "is-expanded");
         }
       } else if ( parents.indexOf( it['_meta'] ) >= 0 ) {
           it['classes'] = classes + ' is-expanded';
       }
-      if( typeof it['items'] != 'undefined' && it['items'].length > 0 ) {
+      if( typeof it['items'] != "undefined" && it['items'].length > 0 ) {
         this.updateTree(it, parents, id);
       }
     });
@@ -66,9 +46,9 @@ export class AwTreeDS extends DataSource {
             this.currentItem = it;
         } else {
           const classes = it['classes'];
-          it['classes'] = classes.replace('is-active', '');
+          it['classes'] = classes.replace("is-active", "");
         }
-        if( typeof it['items'] != 'undefined' && it['items'].length > 0 ) {
+        if( typeof it['items'] != "undefined" && it['items'].length > 0 ) {
           this.selectTreeItem(id, it);
         }
     });
@@ -77,67 +57,78 @@ export class AwTreeDS extends DataSource {
 
   toggleSidebar() {
     let sidebarData = this.output;
-    if ( sidebarData.classes == 'is-expanded' ) {
-      sidebarData.classes = 'is-collapsed';
+    if ( sidebarData.classes == "is-expanded" ) {
+      sidebarData.classes = "is-collapsed";
     } else {
-        sidebarData.classes = 'is-expanded';
+        sidebarData.classes = "is-expanded";
     }
     this.update(sidebarData);
   }
 
-  parseTree(data, toggle, parents) {
+  private parseData(data) {
+    let treeObj = {
+      items: []
+    };
+    if( data['branches']) {
+      data['branches'].forEach( item => {
+        treeObj['items'].push( this.parseTree(item, false, []) );
+      });
+    }
+    this.update(treeObj);
+  }
+
+  private parseTree(data, toggle, parents) {
     var currParents = [...parents];
     let treeItem = {};
-    Object.keys(data).forEach( key => {
-      if( toggle ){
-        treeItem['toggle'] = {
-          icon: 'n7-icon-angle-right',
-          payload: {
-              id: data['id'],
-              parents: currParents,
-              source: ''
-            }
-        };
+    const showToggle =  toggle && data['branches'] != null;
+    if( showToggle ){
+      treeItem['toggle'] = {
+        icon: 'n7-icon-angle-right',
+        payload: {
+            source: "toggle",
+            id: data['id'],
+            parents: currParents,
+          }
       }
-
+    }
+    Object.keys(data).forEach( key => {
+    if( key != "branches" ) {
       switch (key) {
-        case 'label': treeItem['text'] = data[key]; break;
-        case 'icon' :
-            if (toggle) {
+        case "label": treeItem['text'] = data[key]; break;
+        case "icon" :
+            if (showToggle && data[key] != null){
               treeItem['toggle']['icon'] = data[key];
+            } else {
+              treeItem['icon'] = data[key];
             }
             break;
-        case 'id' :
+        case "id" :
             treeItem['_meta'] =  data[key];
             treeItem['payload'] = {
-              source: 'menuItem',
+              source: "menuItem",
               id: data['id']
             };
             break;
-        case 'branches' :
-            if ( toggle ){
-              treeItem['toggle']['payload']['source'] = 'toggle'; break;
-            }
         default :  data[key]; break;
       }
       treeItem['classes'] = 'is-collapsed';
-   //}
-    }); // end object.keys
-
-    if( data['branches'] != null ) {
+    }
+    else if( data['branches'] != null ) {
       currParents.push(data['id']);
 
       /*Handle cases with menu item with children but without toggle*/
-      if ( !toggle ) {
-        treeItem['payload']['source'] = 'ToggleMenuItem';
+      if( !toggle ) {
+        treeItem['payload']['source'] = "ToggleMenuItem";
         treeItem['payload']['parents'] = currParents;
       }
 
       treeItem['items'] = [];
-      data['branches'].forEach( item => {
+      data[key].forEach( item => {
         treeItem['items'].push( this.parseTree(item, true, currParents) );
-      });
+      })
     }
+    })
     return treeItem;
   }
+
 }

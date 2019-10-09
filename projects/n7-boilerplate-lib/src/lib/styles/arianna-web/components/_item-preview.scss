@@ -1,0 +1,99 @@
+/**
+ * ITEM-PREVIEW
+ *
+ * Component used to preview any kind of element with image, title, text, metadata and icons.
+ */
+ 
+/* ------------------------------------ *\
+   #ITEM-PREVIEW
+\* ------------------------------------ */
+.n7-item-preview {
+    margin: $space*2 0;
+    padding-bottom: $space;
+    border-bottom: 1px solid $color-border-normal;
+
+    &__title {
+        margin-bottom: $space/2;
+        font-weight: $font-weight-bold;
+    }
+
+    &__metadata-item {
+        display: inline-flex;
+        align-items: baseline;
+        padding-right: $space;
+        border-right: 1px solid $color-border-normal;
+
+        &:last-of-type {
+            border-right: none;
+        }
+
+        &.color-people {
+            color: $color-people;
+        }
+
+        &.color-places {
+            color: $color-places;
+        }
+
+        &.color-organizations {
+            color: $color-organizations;
+        }
+
+        &.color-concepts {
+            color: $color-concepts;
+        }
+
+        &-icon {
+            font-size: $font-size-m;
+        }
+
+        &-value {
+            font-size: $font-size-s;
+        }
+    }
+    
+    &.has-image {
+        grid-template-columns: $item-preview-image-size 1fr;
+
+        .n7-item-preview__image {
+            width: $item-preview-image-size;
+            height: $item-preview-image-size;
+        }
+    }
+}
+
+/* ------------------------------------ *\
+   #IS-FULLWIDTH
+\* ------------------------------------ */
+.n7-item-preview.is-fullwidth {
+    .n7-item-preview__content {
+        display: grid;
+    }
+
+    .n7-item-preview__metadata {
+        display: flex;
+        margin-top: auto;
+
+        &-group {
+            &:last-of-type {
+                margin-left: auto;
+            }
+        }
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: $breakpoint-laptop) {
+}
+
+@media all and (max-width: $breakpoint-ipad-portrait) {
+}
+
+@media all and (max-width: $breakpoint-smartphone-landscape) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}
