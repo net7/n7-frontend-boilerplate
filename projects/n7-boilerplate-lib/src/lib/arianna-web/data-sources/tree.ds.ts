@@ -64,4 +64,71 @@ export class AwTreeDS extends DataSource {
     }
     this.update(sidebarData);
   }
+
+  private parseData(data) {
+    let treeObj = {
+      items: []
+    };
+    if( data['branches']) {
+      data['branches'].forEach( item => {
+        treeObj['items'].push( this.parseTree(item, false, []) );
+      });
+    }
+    this.update(treeObj);
+  }
+
+  private parseTree(data, toggle, parents) {
+    var currParents = [...parents];
+    let treeItem = {};
+    const showToggle =  toggle && data['branches'] != null;
+    if( showToggle ){
+      treeItem['toggle'] = {
+        icon: 'n7-icon-angle-right',
+        payload: {
+            source: "toggle",
+            id: data['id'],
+            parents: currParents,
+          }
+      }
+    }
+    Object.keys(data).forEach( key => {
+    if( key != "branches" ) {
+      switch (key) {
+        case "label": treeItem['text'] = data[key]; break;
+        case "icon" :
+            if (showToggle && data[key] != null){
+              treeItem['toggle']['icon'] = data[key];
+            } else {
+              treeItem['icon'] = data[key];
+            }
+            break;
+        case "id" :
+            treeItem['_meta'] =  data[key];
+            treeItem['payload'] = {
+              source: "menuItem",
+              id: data['id']
+            };
+            break;
+        default :  data[key]; break;
+      }
+      treeItem['classes'] = 'is-collapsed';
+    }
+    else if( data['branches'] != null ) {
+      currParents.push(data['id']);
+
+      /*Handle cases with menu item with children but without toggle*/
+      if( !toggle ) {
+        treeItem['payload']['source'] = "ToggleMenuItem";
+        treeItem['payload']['parents'] = currParents;
+      }
+
+      treeItem['items'] = [];
+      data[key].forEach( item => {
+        treeItem['items'].push( this.parseTree(item, true, currParents) );
+      })
+    }
+    })
+    return treeItem;
+  }
+
 }

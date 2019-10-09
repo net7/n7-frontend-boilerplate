@@ -54,14 +54,6 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   }
 
   updateNavigation( data ) {
-    let treeObj = {
-      items: []
-    };
-
-    data['branches'].forEach( item => {
-      treeObj['items'].push( this.parseTree(item, false, []) );
-    });
-
     let header = {
       iconLeft: 'n7-icon-tree-icon',
       text:  data['label'],
@@ -69,8 +61,6 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       classes: 'is-expanded',
       payload: 'header'
     };
-
-    this.one('aw-tree').update(treeObj);
     this.one('aw-sidebar-header').update(header);
   }
 
@@ -189,59 +179,6 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
         this.hasSimilarItems = false;
         this.one('aw-linked-objects').update(null);
       }
-  }
-
-  private parseTree(data, toggle, parents) {
-    var currParents = [...parents];
-    let treeItem = {};
-    Object.keys(data).forEach( key => {
-      if( toggle ){
-        treeItem['toggle'] = {
-          icon: 'n7-icon-angle-right',
-          payload: {
-              source: "toggle",
-              id: data['id'],
-              parents: currParents,
-            }
-        }
-    }
-
-    if( key != "branches" ) {
-      switch (key) {
-        case "label": treeItem['text'] = data[key]; break;
-        case "icon" :
-            if (toggle)
-            {
-              treeItem['toggle']['icon'] = data[key];
-            }
-            break;
-        case "id" :
-            treeItem['_meta'] =  data[key];
-            treeItem['payload'] = {
-              source: "menuItem",
-              id: data['id']
-            };
-            break;
-        default :  data[key]; break;
-      }
-      treeItem['classes'] = 'is-collapsed';
-    }
-    else if( data['branches'] != null ) {
-      currParents.push(data['id']);
-
-      /*Handle cases with menu item with children but without toggle*/
-      if( !toggle ) {
-        treeItem['payload']['source'] = "ToggleMenuItem";
-        treeItem['payload']['parents'] = currParents;
-      }
-
-      treeItem['items'] = [];
-      data[key].forEach( item => {
-        treeItem['items'].push( this.parseTree(item, true, currParents) );
-      })
-    }
-    })
-    return treeItem;
   }
 
   collapseSidebar() {
