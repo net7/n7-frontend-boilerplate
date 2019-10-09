@@ -1,0 +1,55 @@
+/**
+ * BUBBLE-POPUP-MENU
+ *
+ * Bubble popup component.
+ */
+ 
+/* ------------------------------------ *\
+   #BUBBLE-POPUP-MENU
+\* ------------------------------------ */
+.aw-bubble-popup-menu {
+    .n7-icon-close {
+        position: absolute;
+        top: $space*1.5;
+        right: $space*1.5;
+        color: $color-text-light;
+    }
+
+    &__title {
+        margin-bottom: 0;
+    }
+
+    &__text {
+        font-size: $font-size-s;
+    }
+
+    &__actions {
+        margin-top: $space;
+    }
+
+    &__link {
+        font-weight: $font-weight-bold;
+
+        &:first-of-type {
+            margin-right: $space;
+            padding-right: $space;
+            border-right: 1px solid $color-border-normal;
+        }
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: $breakpoint-laptop) {
+}
+
+@media all and (max-width: $breakpoint-ipad-portrait) {
+}
+
+@media all and (max-width: $breakpoint-smartphone-landscape) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}
