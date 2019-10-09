@@ -1,18 +1,21 @@
-<div class="aw-entita-layout" *ngIf="lb.dataSource">
+<div class="aw-entity" *ngIf="lb.dataSource">
 
-    <!-- custom header -->
-    <div class="n7-nav-header">
-        <h1>
-            <span class="{{lb.dataSource.navHeader.icon}}"></span>
-            {{lb.dataSource.navHeader.text}}
-        </h1>
+    <div class="aw-entity__sidebar">
+        <!-- Custom header -->
+        <div class="aw-entity__sidebar-title-wrapper">
+            <h1 class="aw-entity__sidebar-title">
+                <span class="aw-entity__sidebar-title-icon {{lb.dataSource.navHeader.icon}}"></span>
+                <span class="aw-entity__sidebar-title-text">{{lb.dataSource.navHeader.text}}</span>
+            </h1>
+        </div>
+        <!-- Navigation -->
+        <n7-nav 
+            [data]="lb.widgets['aw-entita-nav'].ds.out$ | async" 
+            [emit]="lb.widgets['aw-entita-nav'].emit">
+        </n7-nav>
     </div>
-    <!-- navigation -->
-    <n7-nav 
-        [data]="lb.widgets['aw-entita-nav'].ds.out$ | async" 
-        [emit]="lb.widgets['aw-entita-nav'].emit">
-    </n7-nav>
-    <div class="aw-entita-layout__content-wrapper" 
+    
+    <div class="aw-entity__content" 
          [ngSwitch]="lb.dataSource.selectedTab">
         <ng-container *ngSwitchCase="'overview'">
             <ng-container *ngTemplateOutlet="overview"></ng-container>
@@ -37,33 +40,42 @@
 
 <!-- navigation page content templates -->
 <ng-template #overview>
-    <div>
-        {{lb.dataSource.myResponse.overviewTab}}
-        <div class="aw-entita-layout__button-wrapper">
-            <button class="n7-btn n7-btn-light">DESCRIZIONE WIKIPEDIA</button>
-            <button class="n7-btn n7-btn-light">DESCRIZIONE MAXXI</button>
+    <section>
+        <div class="aw-entity__content-section">
+            <div class="aw-entity__overview-description">
+                {{lb.dataSource.myResponse.overviewTab}}
+            </div>
+            <div class="aw-entita-layout__button-wrapper">
+                <button class="n7-btn n7-btn-light">DESCRIZIONE WIKIPEDIA</button>
+                <button class="n7-btn n7-btn-light">DESCRIZIONE MAXXI</button>
+            </div>
         </div>
         
         <ng-container *ngIf="lb.widgets['aw-entita-metadata-viewer'].ds.out$ | async as data">
-            <h1>Campi</h1>
-            <button class="n7-btn n7-btn-light">TUTTI I CAMPI</button>
-            <n7-metadata-viewer 
-                class="aw-entita-layout__metadata-viewer"
-                [data]="data">
-            </n7-metadata-viewer>
+            <div class="aw-entity__content-section">
+                <h1>Campi</h1>
+                <button class="n7-btn n7-btn-light">TUTTI I CAMPI</button>
+                <n7-metadata-viewer 
+                    class="aw-entita-layout__metadata-viewer"
+                    [data]="data">
+                </n7-metadata-viewer>
+            </div>
         </ng-container>
         
-        <h1>Oggetti collegati</h1><button class="n7-btn n7-btn-light">TUTTI GLI OGGETTI COLLEGATI</button>
-        <ng-container *ngFor="let preview of lb.widgets['aw-linked-objects'].ds.out$ | async">
-            <n7-breadcrumbs
-                [data]="preview.breadcrumbs">
-            </n7-breadcrumbs>
-            <n7-item-preview
-                [data]="preview"
-                [emit]="lb.widgets['aw-linked-objects'].emit">
-            </n7-item-preview>
-        </ng-container>
-    </div>
+        <div class="aw-entity__content-section">
+            <h1>Oggetti collegati</h1><button class="n7-btn n7-btn-light">TUTTI GLI OGGETTI COLLEGATI</button>
+            <ng-container *ngFor="let preview of lb.widgets['aw-linked-objects'].ds.out$ | async">
+                <n7-breadcrumbs
+                    [data]="preview.breadcrumbs">
+                </n7-breadcrumbs>
+                <n7-item-preview
+                    [data]="preview"
+                    [emit]="lb.widgets['aw-linked-objects'].emit">
+                </n7-item-preview>
+            </ng-container>
+        </div>
+        
+    </section>
 </ng-template>
 
 <ng-template #campi>
