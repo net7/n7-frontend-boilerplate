@@ -37,7 +37,9 @@
                 </div>
             </section>
 
-            <section class="aw-scheda__metadata">
+            <section class="aw-scheda__metadata"
+                [hidden] = "!lb.hasMetadata"
+            >
                 <div class="aw-scheda__inner-title">{{lb.dataSource.metadataSectionTitle}}</div>
                 <n7-metadata-viewer
                     [data]="lb.widgets['aw-scheda-metadata'].ds.out$ | async">
