@@ -30,21 +30,30 @@ export class AwBubbleChartEH extends EventHandler {
     this.outerEvents$.subscribe(({ type, payload }) => {
       switch(type){
         case "aw-home-layout.bubble-tooltip-select-click":
-              const data = {
+              let selectData = {
                 'bubble': this.dataSource.onBubbleTooltipClick('select',payload),
                 'entityIdmap': this.dataSource.getEntityIdMap(),
                 'allBubbles': this.dataSource.getAllBubbles(),
                 'source': 'bubble'
               };
-              this.emitOuter('click', data);
+              this.emitOuter('click', selectData);
               break;
         case 'aw-home-layout.bubble-filter':
-              this.emitOuter('bubble-filtered',
-              {
-               'allBubbles': this.dataSource.getAllBubbles(),
-               'selected': this.dataSource.getSelectedBubbles()
-              });
-              break;
+          this.emitOuter('bubble-filtered',
+          {
+            'allBubbles': this.dataSource.getAllBubbles(),
+            'selected': this.dataSource.getSelectedBubbles()
+          });
+          break;
+        /*case "aw-home-layout.bubble-tooltip-select-click":
+            let data = {
+              'bubbleId': this.dataSource.getBubbleFromId(payload.entityId),
+              'entityIdmap': this.dataSource.getEntityIdMap(),
+              'allBubbles': this.dataSource.getAllBubbles(),
+              'source': "select"
+            }
+            this.emitOuter('bubble-selected', data);
+          break;*/
       }
     });
   }

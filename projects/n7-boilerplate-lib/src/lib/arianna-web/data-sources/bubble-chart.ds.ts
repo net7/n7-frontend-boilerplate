@@ -21,6 +21,11 @@ export class AwBubbleChartDS extends DataSource {
     if ( data.facetData ) {
       this.facetData = data.facetData;
     }
+
+    if ( data.selectedBubbles ) {
+      this.selectedBubbles = data.selectedBubbles;
+    }
+
     if ( data.source ) {
       this.setAllBubblesFromApolloQuery(data.source, data.reset);
     }
@@ -213,8 +218,6 @@ export class AwBubbleChartDS extends DataSource {
 
 
   onBubbleTooltipClick(source:string, payload){
-    console.log('onBubbleTooltipClick');
-    console.log(payload);
     switch(source){
       case 'select':
         if(!payload) return;
@@ -241,6 +244,18 @@ export class AwBubbleChartDS extends DataSource {
           //return this.filterRequest();
         }
       }
+    }
+  }
+
+  public getBubbleFromId(id){
+    const bubbleId = this.convertEntityIdToBubbleId(id);
+    if(!bubbleId) return;
+    let bubble = null;
+    if(this._bubbleChart){
+      this._bubbleChart.selectAll(`g`).each( b => {
+        if(b.id===bubbleId) bubble=b;
+      });
+      if(bubble) return bubble;
     }
   }
 

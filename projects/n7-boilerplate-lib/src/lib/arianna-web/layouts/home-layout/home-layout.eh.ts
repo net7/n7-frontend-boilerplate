@@ -63,6 +63,9 @@ export class AwHomeLayoutEH extends EventHandler {
         case 'aw-bubble-chart.mouse_leave':
           // TODO: do something
           break;
+        /*case 'aw-bubble-chart.bubble-selected':
+          this.dataSource.onBubbleTooltipClick(payload.source, payload);
+          break;*/
         case 'aw-bubble-chart.click':
           if ( payload.source === 'bubble' ){
             if (payload.bubble) {
@@ -74,8 +77,13 @@ export class AwHomeLayoutEH extends EventHandler {
                  }
                });
               }
-            } else if(payload.source==='close')
-            this.dataSource.onBubbleDeselected({bubblePayload:payload.bubblePayload,bubble:payload.bubble});
+            } else if (payload.source==='close')
+            this.dataSource.onBubbleDeselected({bubblePayload:payload.bubblePayload,bubble:payload.bubble}).subscribe((response) => {
+              if ( response ) {
+                this.dataSource.updateBubbles(response);
+                this.emitOuter('bubble-filter', response);
+               }
+             });
             break;
         case 'aw-bubble-chart.bubble-filtered':
             this.dataSource.updateBubbleFilter(payload);

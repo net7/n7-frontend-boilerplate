@@ -56,8 +56,8 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         facetData: this.facetData,
         tippy: this.tippy
       });
-
       this.renderPreviewsFromApolloQuery(response);
+
     });
 
     // update streams
@@ -133,13 +133,31 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     this._scrollBackgroundControl();
   }
 
+  onBubbleTooltipClick(source:string, payload) {
+    switch(source){
+      case 'select':
+        if(!payload) return;
+        const bubbleId =payload.bubbleId;
+        if(!bubbleId) return;
+        let bubble = null;
+        if(this._bubbleChart){
+          this._bubbleChart.selectAll(`g`).each( b => {
+            if(b.id===bubbleId) bubble=b;
+          });
+          if(bubble) this.onBubbleSelected(bubble);
+        }
+        break;
+      default:
+        break;
+    }
+  }
+
   public onBubbleSelected(bubble){
     if(bubble){
       if(!this.selectedBubbles.includes(bubble)){
         if(this.selectedBubbles.length<this.maxBubblesSelectable){
           this.selectedBubbles.push(bubble);
           return this.filterRequest();
-          //this.updateBubblesAndItemPreviews();
         }
       }
     }
@@ -151,7 +169,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         (b) => b.id!==payload.bubble.id );
       if(payload.bubble.hasCloseIcon){
         payload.bubble.hasCloseIcon=false;
-        this.updateBubblesAndItemPreviews();
+        //this.updateBubblesAndItemPreviews();
         return this.filterRequest();
       }
     }
@@ -187,14 +205,14 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       setBubbleChart: (bubbleCref) => this._bubbleChart = bubbleCref,
       source: response,
       reset: true,
-      facetData: this.facetData
+      facetData: this.facetData,
+      selectedBubbles: this.selectedBubbles
     });
   }
 
   public updateBubbleFilter(data) {
     this.allBubbles = data.allBubbles;
     this.entityBubbleIdMap = data.entityIdmap;
-   // this.updateTags();
   }
 
   public updateTags(onlyBubbles?:boolean) {
@@ -225,13 +243,6 @@ export class AwHomeLayoutDS extends LayoutDataSource {
      // this.setAllBubblesFromApolloQuery(response,true);
     });
   }
-
-  private convertEntityIdToBubbleId(entityId:string) :string {
-    if(!entityId) return null;
-    return ( 'B_'+entityId.replace(/-/g,'_') );
-  }
-
-
 
   filterBubblesBasedOnFacetsEnabled(){
     let result = this.allBubbles.filter(
@@ -307,6 +318,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       this.one('aw-home-bubble-chart').update({
         width: window.innerWidth/1.8,
         bubbles:this.filterBubblesBasedOnFacetsEnabled(),
+        selectedBubbles: this.selectedBubbles,
         setBubbleChart: (bubbleCref) => this._bubbleChart = bubbleCref,
         reset:true
       });
