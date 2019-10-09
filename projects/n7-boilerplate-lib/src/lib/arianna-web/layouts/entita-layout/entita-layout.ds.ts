@@ -1,6 +1,4 @@
 import { LayoutDataSource } from '@n7-frontend/core';
-import { promise } from 'protractor';
-import { JsonConfigService } from 'n7-boilerplate-lib/lib/common/services';
 
 export class AwEntitaLayoutDS extends LayoutDataSource {
   protected configuration: any;
@@ -11,34 +9,25 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
   public options: any;
   public pageTitle: string;
 
-  public myResponse: any = {}; // store response object
-  public entityTitle:string; // entity header
+  public myResponse: any = {}; // backend response object
   public selectedTab:string; // selected nav item
+  public navHeader: any = {}; // nav-header (custom) data
+  // public metadataViewer: any = {}; // metadata-viewer data
 
   private communication: any;
 
   onInit({ configuration, mainState, router, options, titleService, communication }) {
-    this.configuration = configuration;
-    this.mainState = mainState;
-    this.router = router;
-    this.titleService = titleService;
-    this.options = options;
     this.communication = communication;
-
-    // this.communication.request$('getEntityDetails', {
-    //   onError: (error) => console.log(error),
-    //   params: { entityId: "test" }
-    // }).subscribe((response) => {
-    //   console.log('apollo-response', { response })
-    // });
+    this.configuration = configuration;
+    this.mainState     = mainState;
+    this.options       = options;
+    this.router        = router;
+    this.titleService  = titleService;
   }
 
   getNavigation(id) {
-    /**
-     * Requests data from communication provider
-     * 
-     * @param id - the id of the item to get
-     * @returns the response of getEntityDetails with entityId === id
+    /*
+      Requests data from communication provider
      */
     return this.communication.request$('getEntityDetails', {
       onError: (error) => console.error(error),
@@ -47,51 +36,16 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
   }
 
   updateWidgets(data) {
-    /**
-     * Updates the widgets on this layout, based on route
-     * 
-     * @param data - communication reponse object
-     */
-
-    const navigation: any = { items: [
-      {
-        text: 'OVERVIEW',
-        payload: 'overview',
-      },
-      {
-        text: 'CAMPI',
-        payload: 'campi',
-      },
-      {
-        text: 'OGGETTI COLLEGATI',
-        payload: 'oggetti-collegati',
-      },
-      {
-        text: 'ENTITA COLLEGATE',
-        payload: 'entita-collegate',
-      },
-      {
-        text: 'MAXXI',
-        payload: 'maxxi',
-      },
-      {
-        text: 'WIKIPEDIA',
-        payload: 'wiki',
-      },
-    ],
-      payload: 'entita-nav'
-  }
-
-    this.one('aw-entita-nav').update(navigation)
+    /*
+      Updates the widgets on this layout, based on route
+    */
+    this.one('aw-entita-nav').update( 'some data' )
   }
 
   loadItem(id, tab) {
-    /**
-     * Loads the data for the selected nav item, into the adjacent text block.
-     * 
-     * @param id - id of item to request
-     * @param tab - selected nav tab
-     */
+    /*
+      Loads the data for the selected nav item, into the adjacent text block.
+    */
     if (id && tab) { 
       this.selectedTab = tab // store selected tab from url
       return this.communication.request$('getEntityDetails', {
@@ -105,8 +59,44 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
   }
 
   loadContent(res) {
-    console.log('loadcontent-response: ', {res})
+    console.log('Apollo responded with: ', {res})
     this.myResponse = res
-    this.entityTitle = res.entity.label
+    this.navHeader = { // always render nav header
+      icon: this.configuration.get("config-keys")[this.myResponse.entity.typeOfEntity.configKey].icon,
+      text: this.myResponse.entity.label
+    }
+    switch (this.selectedTab) { // make dynamic content depending on request
+      case 'overview': {
+        this.one('aw-entita-metadata-viewer').updateOptions({ context: 'overview' });
+        this.one('aw-entita-metadata-viewer').update(res.fieldsTab);
+        this.one('aw-linked-objects').updateOptions({ context: 'overview', configKeys: this.configuration.get("config-keys") })
+        this.one('aw-linked-objects').update(res.items);
+      } break;
+      
+      case 'campi': {
+        // campi
+      } break;
+
+      case 'oggetti': {
+        // oggetti
+      } break;
+
+      case 'entita': {
+        // entita
+      } break;
+
+      case 'maxxi': {
+        // maxxi
+      } break;
+
+      case 'wiki': {
+        // wiki
+      } break;
+
+      default:
+        // the url is aw/entita/something/ ??? → unknown
+        console.warn('Unhandled navigation page');
+        break;
+    }
   }
 }

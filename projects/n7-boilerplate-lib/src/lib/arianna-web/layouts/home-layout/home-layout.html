@@ -60,10 +60,10 @@
                 </div>
                 <div class="aw-home__bubble-results-list-wrapper">
                     <div class="aw-home__bubble-results-list" [attr.id]="'bubble-results-list'">
-                        <ng-container *ngFor="let widgetData of lb.widgets['aw-home-item-preview-wrapper'].ds.out$ | async;">
+                        <ng-container *ngFor="let widgetData of lb.widgets['aw-linked-objects'].ds.out$ | async;">
                             <n7-item-preview
                                 [data]="widgetData"
-                                [emit]="lb.widgets['aw-home-item-preview-wrapper'].emit">
+                                [emit]="lb.widgets['aw-linked-objects'].emit">
                             </n7-item-preview>
                         </ng-container>
                     </div>

@@ -5,13 +5,10 @@ import * as EH from '../../event-handlers';
 
 export const AwEntitaLayoutConfig = {
   layoutId: 'aw-entita-layout',
-  /**
-   * Array of components to use
-   * in this layout
-   */
-  widgets: [
-    // { id: 'header' },
-    { id: 'aw-entita-nav'}
+  widgets: [ // array of components of this layout
+    { id: 'aw-entita-nav', hasStaticData: true},
+    { id: 'aw-entita-metadata-viewer' },
+    { id: 'aw-linked-objects'},
   ],
   layoutDS: AwEntitaLayoutDS,
   layoutEH: AwEntitaLayoutEH,

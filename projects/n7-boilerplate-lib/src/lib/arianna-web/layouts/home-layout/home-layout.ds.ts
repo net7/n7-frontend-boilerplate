@@ -101,7 +101,6 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     }
   }
 
-
   onBubbleMouseEnter(payload){
     if(!payload || !payload.bubble) return;
     const bubbleId = payload.bubble.id;
@@ -158,7 +157,8 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       this.numOfItemsStr = null;
     }
 
-    this.one('aw-home-item-preview-wrapper').update(response.itemsPagination.items);
+    this.one('aw-linked-objects').updateOptions({ context: 'home', configKeys: this.configuration.get('config-keys')})
+    this.one('aw-linked-objects').update(response.itemsPagination.items);
 
     // scroll control
     this._scrollBackgroundControl();
@@ -203,7 +203,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     });
     this.communication.request$('globalFilter', {
       onError: (error) => console.error(error),
-      params: { 
+      params: {
         selectedEntitiesIds,
         itemsPagination:{ offset:0, limit: this.configuration.get('home-layout')['results-limit'] }
       },
@@ -376,7 +376,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
 
   private _getSubnav(){
     return ['home', 'results', 'single'].map(page => ({
-      text: page.toUpperCase(), 
+      text: page.toUpperCase(),
       payload: {
         source: 'navigate',
         handler: 'router',
@@ -404,7 +404,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
           handler: 'router',
           path: [`aw/home`]
         }
-      }] 
+      }]
     };
   }
 

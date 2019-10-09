@@ -10,7 +10,6 @@ export class AwHomeBubbleChartDS extends DataSource {
 
   protected transform(data){
     if(!data) return null;
-
     let bubbleCointainer = document.getElementById("bubble-chart-container");
     const cWidth = bubbleCointainer.offsetWidth;
     // now the bubblechart's height is hardcoded to 700, not sure

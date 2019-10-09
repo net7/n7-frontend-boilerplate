@@ -1,6 +1,8 @@
 <div class="aw-scheda" id="scheda-layout">
-    <div class="aw-scheda__content">
-        <!-- Left sidebar: tree -->
+    <div class="aw-scheda__content"
+         [ngClass]="{ 'is-collapsed' : lb.dataSource.sidebarCollapsed }">
+
+         <!-- Left sidebar: tree -->
         <div class="aw-scheda__tree">
             <n7-sidebar-header
                 [data]="lb.widgets['aw-sidebar-header'].ds.out$ | async"
@@ -16,33 +18,55 @@
         <!-- Scheda details -->
         <div class="aw-scheda__scheda-wrapper">
             <n7-breadcrumbs
-                *ngIf="lb.dataSource.hasBreadcrumb"
                 [data]="lb.widgets['aw-scheda-breadcrumbs'].ds.out$ | async"
                 [emit]="lb.widgets['aw-scheda-breadcrumbs'].emit"
             ></n7-breadcrumbs>
-            <div *ngFor="let part of lb.dataSource.contentParts">
-                <div *ngIf="part.type == 'image'">
-                    <div
-                    [ngStyle]="{
-                        'background-image': 'url(' + part.image + ')',
-                        'width': '100%',
-                        'height': '200px'
-                        }">
-                    </div>
-                </div>
 
-                <div>
-                    <h1>{{ part.title }}</h1>
-                    <div>
-                        <div [innerHTML]="part.content" >
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <n7-metadata-viewer
-                [data]="lb.widgets['aw-scheda-metadata'].ds.out$ | async"
+            <n7-inner-title
+            [data]="lb.widgets['aw-scheda-inner-title'].ds.out$ | async"
+            ></n7-inner-title>
+
+            <n7-image-viewer
+                [data]="lb.widgets['aw-scheda-image'].ds.out$ | async"
             >
-            </n7-metadata-viewer>
+            </n7-image-viewer>
+
+            <section class="aw-scheda__description">
+                <div *ngFor="let part of lb.dataSource.contentParts">
+                    <div [innerHTML]="part.content"></div>
+                </div>
+            </section>
+
+            <section class="aw-scheda__metadata">
+                <div class="aw-scheda__inner-title">{{lb.dataSource.metadataSectionTitle}}</div>
+                <n7-metadata-viewer
+                    [data]="lb.widgets['aw-scheda-metadata'].ds.out$ | async">
+                </n7-metadata-viewer>
+            </section>
+
+            <section id="bubble-chart-container" class="aw-scheda__bubble-chart">
+                <div
+                    [hidden] = "!lb.dataSource.hasBubbles"
+                    class="aw-scheda__inner-title">{{lb.dataSource.bubbleChartSectionTitle}}
+                </div>
+                <n7-bubble-chart [data]="lb.widgets['aw-scheda-bubble-chart'].ds.out$ | async"
+                    [emit]="lb.widgets['aw-scheda-bubble-chart'].emit">
+                </n7-bubble-chart>
+            </section>
+
+            <section
+                [hidden] = "!lb.dataSource.hasSimilarItems"
+                id="related-item-container" class="aw-scheda__related">
+                <div class="aw-scheda__inner-title">{{lb.dataSource.similarItemsSectionTitle}}</div>
+                <div class="aw-scheda__related-items n7-grid-2">
+                    <ng-container *ngFor="let widgetData of lb.widgets['aw-linked-objects'].ds.out$ | async;">
+                        <n7-item-preview
+                            [data]="widgetData"
+                            >
+                        </n7-item-preview>
+                    </ng-container>
+                </div>
+             </section>
         </div>
     </div>
 </div>
