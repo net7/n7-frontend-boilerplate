@@ -1,0 +1,21 @@
+/**
+ * MAIN LAYOUT
+ *
+ * Css definining the style for the outer layout wrapper:
+ * (projects/n7-boilerplate-lib/src/lib/common/layouts/main-layout/main-layout.html)
+ */
+
+/* ------------------------------------ *\
+    MAIN LAYOUT
+\* ------------------------------------ */
+
+/* ------------------------------------ *\
+    STICKY FOOTER
+\* ------------------------------------ */
+/* Implemented with CSS grid */
+.n7-main-layout {
+    min-height: 100%;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    background-color: $color-gray-01;
+}

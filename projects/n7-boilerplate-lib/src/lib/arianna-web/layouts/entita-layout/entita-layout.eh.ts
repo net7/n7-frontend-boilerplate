@@ -1,7 +1,5 @@
 import { EventHandler } from '@n7-frontend/core';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 
 export class AwEntitaLayoutEH extends EventHandler {
   private destroyed$: Subject<any> = new Subject();
@@ -15,7 +13,8 @@ export class AwEntitaLayoutEH extends EventHandler {
           this.dataSource.onInit(payload);
           this.configuration = payload.configuration;
           this.route = payload.route;
-          let paramId = this.route.snapshot.params.id || ""
+          let paramId = this.route.snapshot.params.id || "";
+          this.dataSource.currentPage = this.route.snapshot.params.page || '';
           this.listenRoute();
           this.loadNavigation(paramId);
           break;
@@ -28,6 +27,45 @@ export class AwEntitaLayoutEH extends EventHandler {
           break;
       }
     });
+
+    this.outerEvents$.subscribe(({ type, payload }) => {
+      switch (type) {
+        case 'aw-entita-nav.click':
+          if (payload) {
+            this.emitGlobal('navigate', { 
+              path: [
+                this.configuration.get("paths").entitaBasePath
+                + '/' +
+                this.route.snapshot.params.id
+                + '/' +
+                payload
+              ], 
+              handler: 'router' 
+            });
+          }
+          break
+        case 'aw-linked-objects.pagination':
+          this.dataSource.currentPage = payload.split('-')[1]
+          this.emitGlobal('navigate', {
+            handler: 'router',
+            path: [`aw/entita/${this.route.snapshot.params.id}/oggetti-collegati/${payload.split('-')[1]}`]
+          });
+          break
+        case 'aw-linked-objects.goto':
+          let targetPage = Number(payload.replace('goto-', ''))
+          // this.emitGlobal('navigate', {
+          //   handler: 'router',
+          //   path: [`aw/entita/${this.route.snapshot.params.id}/oggetti-collegati/${targetPage}`]
+          // });
+          break
+        case 'aw-linked-objects.change':
+          this.dataSource.pageSize = payload;
+          this.listenRoute() // reloads the page content with the new page size
+        default:
+          break;
+      }
+    })
+
   }
 
   private listenRoute() {

@@ -15,14 +15,17 @@
     <button style="display: none;"
             id="bubble-popup-menu_selectbutton"
             (click)="lb.eventHandler.emitInner('bubble-tooltip-select-click',{entityId:(lb.dataSource.currentHoverEntity ? lb.dataSource.currentHoverEntity.id : null)} )"></button>
-    <div id="bubble-popup-menu" style="display: none;">
-        <h2>{{ ( lb.dataSource.currentHoverEntity ? lb.dataSource.currentHoverEntity.label : '' ) }}</h2>
+    <div class="aw-bubble-popup-menu" id="bubble-popup-menu" style="display: none;">
+        <h2 class="aw-bubble-popup-menu__title">{{ ( lb.dataSource.currentHoverEntity ? lb.dataSource.currentHoverEntity.label : '' ) }}</h2>
         <span class="n7-icon-close" onclick="document.getElementById('bubble-popup-menu_closebutton').click();"></span>
-        <p>
-                {{ ( lb.dataSource.currentHoverEntity ? 'È collegato a '+lb.dataSource.currentHoverEntity.count+' entità' : '' ) }}
+        <p class="aw-bubble-popup-menu__text">
+            {{ ( lb.dataSource.currentHoverEntity ? 'È collegato a '+lb.dataSource.currentHoverEntity.count+' entità' : '' ) }}
         </p>
-        <span onclick="document.getElementById('bubble-popup-menu_gotobutton').click();">Vai alla scheda</span> |
-        <span onclick="document.getElementById('bubble-popup-menu_selectbutton').click();">Seleziona</span>
+
+        <div class="aw-bubble-popup-menu__actions">
+            <span class="aw-bubble-popup-menu__link" onclick="document.getElementById('bubble-popup-menu_gotobutton').click();">Vai alla scheda</span>
+            <span class="aw-bubble-popup-menu__link" onclick="document.getElementById('bubble-popup-menu_selectbutton').click();">Seleziona</span>
+        </div>
     </div>
 
     <!-- Bubble chart -->
@@ -57,14 +60,20 @@
                 </div>
                 <div class="aw-home__bubble-results-list-wrapper">
                     <div class="aw-home__bubble-results-list" [attr.id]="'bubble-results-list'">
-                        <ng-container *ngFor="let widgetData of lb.widgets['aw-home-item-preview-wrapper'].ds.out$ | async;">
+                        <ng-container *ngFor="let widgetData of lb.widgets['aw-linked-objects'].ds.out$ | async;">
                             <n7-item-preview
                                 [data]="widgetData"
-                                [emit]="lb.widgets['aw-home-item-preview-wrapper'].emit">
+                                [emit]="lb.widgets['aw-linked-objects'].emit">
                             </n7-item-preview>
                         </ng-container>
                     </div>
                     <div *ngIf="lb.dataSource.hasScrollBackground" class="aw-home__bubble-results-list-wrapper-with-scroll"></div>
+                    
+                    <div class="aw-home__bubble-results-list-actions">
+                        <a class="n7-btn n7-btn-light n7-btn-l aw-home__bubble-results-list-view-all" href="">Vedi tutti</a>
+                        <a class="n7-btn n7-btn-light n7-btn-l aw-home__bubble-results-list-view-others" href="">Vedi altri</a>
+                    </div>
+                    
                 </div>
                
             </div>

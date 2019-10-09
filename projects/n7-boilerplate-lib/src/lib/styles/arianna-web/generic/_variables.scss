@@ -7,13 +7,13 @@
 // ------------------------------------ //
 // #LAYOUT
 // ------------------------------------ //
-$page-max-width: 1140px;
+$page-max-width: 1300px;
 
 
 // ------------------------------------ //
 // #SCHEDA-LAYOUT
 // ------------------------------------ //
-$aw-scheda-tree-width: 300px;
+$aw-scheda-tree-width: 400px;
 
 // ------------------------------------ //
 // #GRIDS
@@ -60,15 +60,14 @@ $susy: (
 // ------------------------------------ //
 // #FONTS
 // ------------------------------------ //
-// @import url('https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,700,700i,900');
-// @import url('https://fonts.googleapis.com/css?family=Nunito+Sans:400,400i,700,700i&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,900&display=swap');
 
 
 // ------------------------------------ //
 // TYPOGRAPHY
 // ------------------------------------ //
-// $font-family-main: 'Nunito Sans', sans-serif;
-// $font-family-headings: 'Nunito Sans', sans-serif;
+$font-family-main: 'Source Sans Pro', sans-serif;
+$font-family-headings: $font-family-main;
 
 // $font-size-xxxl: 38px;
 // $font-size-xxl: 30px;
@@ -81,7 +80,7 @@ $susy: (
 // Font weight
 // $font-weight-normal: 400;
 // $font-weight-bold: 700;
-
+$font-weight-black: 900;
 
 // ------------------------------------ //
 // COLORS
@@ -120,7 +119,7 @@ $susy: (
 // ------------------------------------ //
 // #BORDER-RADIUS
 // ------------------------------------ //
-// $border-radius: 3px;
+$border-radius: 5px;
 // $border-radius-hard: 8px;
 
 
@@ -131,14 +130,14 @@ $susy: (
 // $button-border-radius: $border-radius;
 // $button-small-height: 24px;
 // $button-normal-height: 32px;
-// $button-large-height: 50px;
+$button-large-height: 56px;
 
 // Normal button
 // $color-button-text: $color-text-link;
 // $color-button-text-hover: $color-text-link-hover;
 // $color-button-text-disabled: rgba($color-text-link, .4);
 
-// $color-button-bg: #E0E7FF;
+// $color-button-bg: #2EBBC7;
 // $color-button-bg-hover: #E0E7FF;
 // $color-button-bg-disabled: #E0E7FF;
 
@@ -150,15 +149,17 @@ $susy: (
 // $color-button-cta-text-hover: $color-text-inverse;
 // $color-button-cta-text-disabled: rgba($color-text-inverse, .4);
 
-// $color-button-cta-bg: $color-main;
-// $color-button-cta-bg-hover: $color-text-hover;
-// $color-button-cta-bg-active: $color-text-hover;
-// $color-button-cta-bg-disabled: rgba($color-main, .4);
+$color-button-cta-bg: $color-main;
+$color-button-cta-border: $color-main;
+$color-button-cta-bg-hover: darken($color-button-cta-bg, 5%);
+$color-button-cta-border-hover: darken($color-button-cta-bg, 5%);
+$color-button-cta-bg-active: #3FE3F1;
+$color-button-cta-bg-disabled: rgba($color-button-cta-bg, .4);
 
 // $color-button-cta-border: darken($color-main, 5); // $color-text-hover;
 
 // Light button (no background or border, only text)
-// $color-button-light-text: $color-text-link;
+$color-button-light-text: $color-text;
 // $color-button-light-text-hover: $color-text-link-hover;
 // $color-button-light-text-disabled: $color-text-light;
 // $color-button-light-text-active: $color-text-link-hover;
@@ -184,6 +185,7 @@ $susy: (
 $header-height: 100px;
 // $header-height-mobile: 60px;
 // $header-bg-color: $color-background-base;
+$header-active-item-color: #F7FAFA;
 // $header-logo-height: $header-height - ($space*2);
 // $header-logo-height-mobile: $header-height-mobile - ($space*2);
 // $header-user-thumb-size: 40px;
@@ -225,10 +227,23 @@ $header-height: 100px;
 // ------------------------------------ //
 // #HERO
 // ------------------------------------ //
-$hero-input-height: 60px;
+$hero-height: 600px;
+$hero-content-width: $page-max-width;
+$top-hero-height: 380px;
+$hero-text-max-width: 715px;
+$hero-input-border-radius: $border-radius;
+$hero-input-height: 56px;
+$hero-input-box-shadow: 0 2px 4px rgba(0,0,0,0.3);
 $hero-button-height: $hero-input-height;
 $hero-image-border: 10px solid #ffffff;
 $hero-image-border-radius: $space*2;
+$hero-button-bg: #FFCD00;
+$hero-button-border: #FFCD00;
+$hero-button-bg-hover: darken($hero-button-bg, 5%);
+$hero-button-border-hover: darken($hero-button-bg, 5%);
+$hero-button-bg-active: #FFB600;
+$hero-button-bg-disabled: rgba($hero-button-bg, .4);
+
 
 // ------------------------------------ //
 // #FACET
@@ -236,9 +251,40 @@ $hero-image-border-radius: $space*2;
 $n7-facet-search-input-height: 32px;
 $n7-facet-search-input-border-radius: 3px;
 
+
 // ------------------------------------ //
 // #TAG
 // ------------------------------------ //
 $n7-tag-icon-size: 16px;
 $n7-tag-icon-font-size: 8px;
 $n7-tag-icon-background: #ffffff;
+
+
+// ------------------------------------ //
+// #SIDEBAR-HEADER
+// ------------------------------------ //
+$sidebar-header-height: 50px;
+// $sidebar-header-background-color: $color-text;
+// $sidebar-header-text-color: $color-text-inverse;
+// $sidebar-left-background-color: $sidebar-header-background-color;
+// $sidebar-left-text-color: $sidebar-header-text-color;
+// $sidebar-right-background-color: $color-text-link;
+// $sidebar-right-text-color: $color-text-inverse;
+
+
+// ------------------------------------ //
+// #ITEM-PREVIEW
+// ------------------------------------ //
+$item-preview-image-size: 85px;
+
+
+// ------------------------------------ //
+// #TIPPY-COMPONENT
+// ------------------------------------ //
+$tippy-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
+
+
+// ------------------------------------ //
+// #BUBBLE-RESULTS
+// ------------------------------------ //
+$bubble-results-height: 555px;

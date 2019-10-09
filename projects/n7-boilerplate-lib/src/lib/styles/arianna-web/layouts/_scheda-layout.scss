@@ -5,20 +5,51 @@
  * Includes traa navigation on the right.
  */
  
+$aw-scheda-content-padding: $space*3;
+
 /* ------------------------------------ *\
     LAYOUT
 \* ------------------------------------ */
 .aw-scheda {
     padding-top: $space*3;
-    background-color: $color-background-medium;
-}
+    margin-bottom: $space*7;
 
-.aw-scheda__content {
-    margin: 0 auto;
-    max-width: $page-max-width;
-    display: grid;
-    grid-template-columns: $aw-scheda-tree-width 1fr;
-    grid-column-gap: 0;
+    &__content {
+        position: relative;
+        margin: 0 auto;
+        max-width: $page-max-width;
+        display: grid;
+        grid-template-columns: $aw-scheda-tree-width 1fr;
+        grid-column-gap: 0;
+    }
+
+    &__tree {
+        width: $aw-scheda-tree-width;
+
+        .n7-sidebar-header {
+            position: sticky !important;
+            top: 0px !important;    
+        }
+
+        .n7-tree {
+            position: sticky !important;
+            top: $sidebar-header-height !important; // 44px is the sidebarheader height
+            max-height: calc(100vh - 190px);
+            overflow-y: auto;
+        }
+    }
+
+    &__scheda-wrapper {
+        position: relative;
+        z-index: 4;
+        box-shadow: 0 2px 20px 0 rgba(0,0,0,0.08);
+    }
+
+    .n7-sidebar-header {
+        position: relative;
+        z-index: 6;
+        box-shadow: 0 2px 20px 0 rgba(0,0,0,0.10);
+    }
 }
 
 
@@ -26,8 +57,47 @@
     TREE
 \* ------------------------------------ */
 .aw-scheda__tree {
+    position: sticky;
+    top: 0;
+
     .n7-tree {
         background-color: $color-background-base;
+    }
+
+    .n7-sidebar-header__icon-right {
+        cursor: pointer;
+    }
+
+    /* First level */
+    .n7-tree {
+        > .n7-tree__item > .n7-tree__item-contents .n7-tree__item-text{
+             font-size: $font-size-l;
+             font-weight: $font-weight-bold;
+        }
+    }
+}
+
+
+/* ------------------------------------ *\
+    COLLAPSED
+\* ------------------------------------ */
+.aw-scheda__content.is-collapsed {
+    display: block;
+
+    .aw-scheda__tree {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: auto;
+    }
+
+    .n7-sidebar-header__icon-left,
+    .n7-sidebar-header__text-wrapper {
+        display: none;
+    }
+
+    .n7-breadcrumbs {
+        margin-left: $sidebar-header-height;
     }
 }
 
@@ -37,6 +107,63 @@
 \* ------------------------------------ */
 .aw-scheda__scheda-wrapper {
     background-color: $color-background-base;
+
+    /* Breadcrumbs */
+    .n7-breadcrumbs  {
+        height: $sidebar-header-height;
+        padding-left: $space*2;
+        box-sizing: border-box;
+        background-color: $color-background-medium;
+    }
+
+    /* Inner title */
+    /* Main title that describes the scheda content */
+    .n7-inner-title {
+
+    }
+
+    /* Minor inner titles that descibe the various sections */
+    .aw-scheda__inner-title {
+        padding: $aw-scheda-content-padding;
+        border-top: 2px solid $color-border-normal;
+        font-size: $font-size-xxl;
+        font-weight: $font-weight-normal;
+    }
+
+    /* Description text */
+    .aw-scheda__description {
+        padding: $aw-scheda-content-padding;
+        columns: 2;
+        line-height: 1.65;
+    }
+
+    /* Metadata */
+    .aw-scheda__metadata {
+        .n7-metadata-viewer {
+            padding: 0 $aw-scheda-content-padding $aw-scheda-content-padding $aw-scheda-content-padding;
+            columns: 2;
+        }
+
+        .n7-metadata-viewer__group-wrapper {
+            break-inside: avoid;
+        }
+
+        .n7-metadata-viewer__group-title {
+            font-size: $font-size-l;
+        }
+    }
+
+    /* Bubble chart */
+    .aw-scheda__bubble-chart {
+        .n7-bubble-chart {
+            padding: 0 $aw-scheda-content-padding $aw-scheda-content-padding $aw-scheda-content-padding;
+        }
+    }
+    
+    /* Related items */
+    .aw-scheda__related-items {
+        padding: 0 $aw-scheda-content-padding $aw-scheda-content-padding $aw-scheda-content-padding;
+    }
 }
 
 

@@ -18,6 +18,11 @@ export class AwHomeBubbleChartEH extends EventHandler {
           break;
       }
     });
+    /*
+    this.outerEvents$.subscribe(event => {
+      
+    });
+    */
   }
 
 }
