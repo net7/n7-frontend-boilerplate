@@ -77,13 +77,18 @@ export class AwHomeLayoutEH extends EventHandler {
                  }
                });
               }
-            } else if (payload.source==='close')
-            this.dataSource.onBubbleDeselected({bubblePayload:payload.bubblePayload,bubble:payload.bubble}).subscribe((response) => {
-              if ( response ) {
-                this.dataSource.updateBubbles(response);
-                this.emitOuter('bubble-filter', response);
-               }
-             });
+            } else if (payload.source==='close') {
+              this.dataSource.updateBubbleFilter(payload);
+              this.dataSource.onBubbleDeselected({
+                bubblePayload:payload.bubblePayload,
+                bubble:payload.bubble
+              }).subscribe((response) => {
+                if ( response ) {
+                  this.dataSource.updateBubbles(response);
+                  this.emitOuter('bubble-filter', response);
+                 }
+               });
+              }
             break;
         case 'aw-bubble-chart.bubble-filtered':
             this.dataSource.updateBubbleFilter(payload);
