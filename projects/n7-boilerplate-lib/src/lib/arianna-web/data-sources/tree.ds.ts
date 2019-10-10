@@ -95,6 +95,7 @@ export class AwTreeDS extends DataSource {
     if( key != "branches" ) {
       switch (key) {
         case "label": treeItem['text'] = data[key]; break;
+        case "img" : treeItem['img'] = data[key]; break;
         case "icon" :
             if (showToggle && data[key] != null){
               treeItem['toggle']['icon'] = data[key];
