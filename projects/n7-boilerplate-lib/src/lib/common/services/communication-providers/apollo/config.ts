@@ -23,14 +23,17 @@ export const ApolloProviderConfig = {
           label
           id
           icon
+          img
           branches {
             label
             id
             icon
+            img
             branches {
               label
               id
               icon
+              img
             }
           }
         }
