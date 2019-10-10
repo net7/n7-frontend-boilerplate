@@ -379,12 +379,6 @@
                 &__title {
                     font-size: $font-size-xxl;
                 }
-
-                &__text {
-                    &-wrapper {
-                        max-width: 70%;
-                    }
-                }
             }
         }
     }
@@ -396,12 +390,6 @@
             .n7-hero {
                 &__title {
                     font-size: $font-size-xl;
-                }
-
-                &__text {
-                    &-wrapper {
-                        max-width: 100%;
-                    }
                 }
             }
         }
