@@ -49,6 +49,8 @@ export class AwEntitaLayoutEH extends EventHandler {
       switch (type) {
         case 'aw-entita-nav.click':
           if (payload) {
+            this.dataSource.selectedTab = payload;
+            this.dataSource.handleNavUpdate( payload )
             this.emitGlobal('navigate', { 
               path: [
                 this.configuration.get("paths").entitaBasePath
@@ -106,6 +108,7 @@ export class AwEntitaLayoutEH extends EventHandler {
   }
 
   private loadNavigation(selectedItem) {
+    console.log('LOAD NAVIGATION')
     this.dataSource.getNavigation(selectedItem).subscribe((response) => {
       if (response) {
         this.dataSource.updateWidgets(response);

@@ -37,6 +37,14 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     })
   }
 
+  handleNavUpdate = tab => {
+    /*
+      Updates selected tab on tab change
+    */
+    this.selectedTab = tab
+    this.updateWidgets( this.myResponse )
+  }
+
   updateWidgets(data) {
     /*
       Updates the widgets on this layout, based on route
