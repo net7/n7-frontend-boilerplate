@@ -76,6 +76,11 @@
     &__content-section {
         padding: $space*3;
         border-bottom: 2px solid $color-border-light;
+
+        &-title {
+            font-weight: $font-weight-normal;
+            font-size: $font-size-xxl;
+        }
     }
 }
 
