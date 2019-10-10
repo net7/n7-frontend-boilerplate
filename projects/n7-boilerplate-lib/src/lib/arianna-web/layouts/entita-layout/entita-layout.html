@@ -2,7 +2,7 @@
 
     <div class="aw-entity__sidebar">
         <!-- Custom header -->
-        <div class="aw-entity__sidebar-title-wrapper">
+        <div class="aw-entity__sidebar-title-wrapper color-{{lb.dataSource.navHeader.color}}">
             <h1 class="aw-entity__sidebar-title">
                 <span class="aw-entity__sidebar-title-icon {{lb.dataSource.navHeader.icon}}"></span>
                 <span class="aw-entity__sidebar-title-text">{{lb.dataSource.navHeader.text}}</span>
@@ -46,15 +46,26 @@
                 {{lb.dataSource.myResponse.overviewTab}}
             </div>
             <div class="aw-entita-layout__button-wrapper">
-                <button class="n7-btn n7-btn-light">DESCRIZIONE WIKIPEDIA</button>
-                <button class="n7-btn n7-btn-light">DESCRIZIONE MAXXI</button>
+                <button *ngIf="lb.dataSource.myResponse.wikiTabUrl"
+                        class="n7-btn n7-btn-light"
+                        (click)="lb.eventHandler.emitInner('showmore', 'wiki')">
+                    DESCRIZIONE WIKIPEDIA
+                </button>
+                <button *ngIf="lb.dataSource.myResponse.extraTabUrl"
+                        class="n7-btn n7-btn-light"
+                        (click)="lb.eventHandler.emitInner('showmore', 'maxxi')">
+                    DESCRIZIONE MAXXI
+                </button>
             </div>
         </div>
         
         <ng-container *ngIf="lb.widgets['aw-entita-metadata-viewer'].ds.out$ | async as data">
             <div class="aw-entity__content-section">
                 <h1>Campi</h1>
-                <button class="n7-btn n7-btn-light">TUTTI I CAMPI</button>
+                <button class="n7-btn n7-btn-light"
+                        (click)="lb.eventHandler.emitInner('showmore', 'campi')">
+                    TUTTI I CAMPI
+                </button>
                 <n7-metadata-viewer 
                     class="aw-entita-layout__metadata-viewer"
                     [data]="data">
@@ -63,7 +74,11 @@
         </ng-container>
         
         <div class="aw-entity__content-section">
-            <h1>Oggetti collegati</h1><button class="n7-btn n7-btn-light">TUTTI GLI OGGETTI COLLEGATI</button>
+            <h1>Oggetti collegati</h1>
+            <button class="n7-btn n7-btn-light"
+                    (click)="lb.eventHandler.emitInner('showmore', 'oggetti-collegati')">
+                TUTTI GLI OGGETTI COLLEGATI
+            </button>
             <ng-container *ngFor="let preview of lb.widgets['aw-linked-objects'].ds.out$ | async">
                 <n7-breadcrumbs
                     [data]="preview.breadcrumbs">
@@ -73,6 +88,16 @@
                     [emit]="lb.widgets['aw-linked-objects'].emit">
                 </n7-item-preview>
             </ng-container>
+        </div>
+
+        <div class="aw-entity__content-section">
+            <h1>Entità collegate</h1>
+            <button class="n7-btn n7-btn-light"
+                    (click)="lb.eventHandler.emitInner('showmore', 'entita-collegate')">
+                TUTTE LE ENTITÀ COLLEGATE
+            </button>
+            <!-- BUBBLE CHART GOES HERE -->
+            <img src="https://i.imgur.com/P21HGo5.png" alt="bubble chart" (dragstart)="false">
         </div>
         
     </section>
@@ -110,18 +135,32 @@
 
 <ng-template #entita>
     <div>
-        Page entita
+        <h1>Entità collegate</h1>
+        <!-- BUBBLE CHART GOES HERE -->
+        <img src="https://i.imgur.com/P21HGo5.png" alt="bubble chart" (dragstart)="false">
     </div>
 </ng-template>
 
 <ng-template #maxxi>
     <div>
-        Page maxxi
+        <h1>Descrizione Maxxi</h1>
+        <div>
+            {{lb.dataSource.myResponse.overviewTab}}
+        </div>
+        <a href="{{lb.dataSource.myResponse.extraTabUrl}}">
+            {{lb.dataSource.myResponse.extraTabUrl}}
+        </a>
     </div>
 </ng-template>
 
 <ng-template #wiki>
     <div>
-        Page wiki
+        <h1>Descrizione Wikipedia</h1>
+        <div>
+            {{lb.dataSource.myResponse.overviewTab}}
+        </div>
+        <a href="{{lb.dataSource.myResponse.wikiTabUrl}}">
+            {{lb.dataSource.myResponse.wikiTabUrl}}
+        </a>
     </div>
 </ng-template>

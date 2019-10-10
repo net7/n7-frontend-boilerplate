@@ -41,7 +41,8 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     /*
       Updates the widgets on this layout, based on route
     */
-    this.one('aw-entita-nav').update( 'some data' )
+    const selected = this.selectedTab
+    this.one('aw-entita-nav').update( { data, selected } )
   }
 
   loadItem(id, tab) {
@@ -66,7 +67,8 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     this.myResponse = res
     this.navHeader = { // always render nav header
       icon: this.configuration.get("config-keys")[this.myResponse.entity.typeOfEntity.configKey].icon,
-      text: this.myResponse.entity.label
+      text: this.myResponse.entity.label,
+      color: this.myResponse.entity.typeOfEntity.configKey
     }
     switch (this.selectedTab) { // make dynamic content depending on request
       case 'overview': {
