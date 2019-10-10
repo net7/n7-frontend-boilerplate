@@ -5,6 +5,7 @@ export class AwEntitaLayoutEH extends EventHandler {
   private destroyed$: Subject<any> = new Subject();
   private configuration: any;
   private route: any;
+  private currentPage
 
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
@@ -21,6 +22,21 @@ export class AwEntitaLayoutEH extends EventHandler {
 
         case 'aw-entita-layout.destroy':
           this.destroyed$.next();
+          break;
+
+        case 'aw-entita-layout.showmore':
+          if (payload) {
+            this.emitGlobal('navigate', {
+              path: [
+                this.configuration.get("paths").entitaBasePath
+                + '/' +
+                this.route.snapshot.params.id
+                + '/' +
+                payload
+              ],
+              handler: 'router'
+            });
+          }
           break;
 
         default:
