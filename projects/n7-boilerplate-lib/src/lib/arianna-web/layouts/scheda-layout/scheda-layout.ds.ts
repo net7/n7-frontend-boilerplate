@@ -102,7 +102,6 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
           if( !this.imageViewerIstance ) {
             this.one('aw-scheda-image').update({
               viewerId: 'scheda-layout-viewer',
-              prefixUrl: this.configuration.get('assets')['imageViewerIcons'],
               _setViewer : (viewer) => {
                 this.imageViewerIstance = viewer;
                 viewer.open(images);

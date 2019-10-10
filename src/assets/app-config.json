@@ -138,8 +138,5 @@
   "paths": {
     "schedaBasePath": "/aw/patrimonio/",
     "entitaBasePath": "/aw/entita/"
-  },
-  "assets": {
-    "imageViewerIcons": "/assets/images/openseadragon/"
   }
 }
