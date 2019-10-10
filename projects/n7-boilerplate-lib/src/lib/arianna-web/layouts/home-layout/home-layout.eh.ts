@@ -17,21 +17,6 @@ export class AwHomeLayoutEH extends EventHandler {
         case 'aw-home-layout.destroy':
             this.destroyed$.next();
             break;
-        case "aw-home-layout.bubble-tooltip-close-click":
-            this.dataSource.onBubbleTooltipClick('close',payload);
-            break;
-        case "aw-home-layout.bubble-tooltip-goto-click":
-            if(!payload || !payload.entityId) return;
-            this.emitGlobal('navigate', {
-              handler: 'router',
-              path: [`aw/entita/${payload.entityId}/overview`]
-            });
-            break;
-        case "aw-home-layout.bubble-tooltip-select-click":
-            payload._bubbleChart = this.dataSource._bubbleChart;
-            this.emitOuter('bubble-tooltip-select-click', payload);
-            //this.dataSource.onBubbleTooltipClick('select',payload);
-            break;
         default:
             break;
       }
@@ -55,18 +40,20 @@ export class AwHomeLayoutEH extends EventHandler {
         case 'aw-home-facets-wrapper.enter':
           this.dataSource.handleFacetSearchEnter(payload);
           break;
-        /**
-         * Bubble Chart Event Handlers
-         */
-        case 'aw-bubble-chart.mouse_enter':
-        //  this.dataSource.onBubbleMouseEnter(payload.currBubble);
-          break;
-        case 'aw-bubble-chart.mouse_leave':
-          // TODO: do something
-          break;
-        /*case 'aw-bubble-chart.bubble-selected':
-          this.dataSource.onBubbleTooltipClick(payload.source, payload);
-          break;*/
+        case "aw-bubble-chart.bubble-tooltip-close-click":
+            this.dataSource.onBubbleTooltipClick('close',payload);
+            break;
+        case "aw-bubble-chart.bubble-tooltip-goto-click":
+            if(!payload || !payload.entityId) return;
+            this.emitGlobal('navigate', {
+              handler: 'router',
+              path: [`aw/entita/${payload.entityId}/overview`]
+            });
+            break;
+        case "aw-bubble-chart.bubble-tooltip-select-click":
+            payload._bubbleChart = this.dataSource._bubbleChart;
+            this.emitOuter('bubble-tooltip-select-click', payload);
+            break;
         case 'aw-bubble-chart.click':
             let bubblePayload = {
               width: window.innerWidth / 1.8,
@@ -95,7 +82,7 @@ export class AwHomeLayoutEH extends EventHandler {
               }).subscribe((response) => {
                 if ( response ) {
                   bubblePayload['source'] = response;
-                  this.emitOuter('bubble-filter', response);
+                  this.emitOuter('filterbubbleresponse', bubblePayload);
                   this.dataSource.updateBubbles(response);
                  }
                });
@@ -119,8 +106,8 @@ export class AwHomeLayoutEH extends EventHandler {
                 selectedBubbles: this.dataSource.selectedBubbles
               }
               this.emitOuter('filterbubbleresponse', bubblePayload);
-              this.dataSource.renderPreviewsFromApolloQuery();
-              this.dataSource.renderItemTags();
+              this.dataSource.updateBubbles(response);
+             // this.dataSource.renderItemTags();
             });
             break;
         default:

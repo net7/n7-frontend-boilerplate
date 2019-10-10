@@ -1,0 +1,23 @@
+<div class="aw-bubble-chart-wrapper">
+    <button style="display: none;"
+            id="bubble-popup-menu_closebutton"
+            (click)="onClick('bubble-tooltip-close-click',{entityId: (hover ? hover.id : null)} )"></button>
+    <button style="display: none;"
+            id="bubble-popup-menu_gotobutton"
+            (click)="onClick('bubble-tooltip-goto-click',{entityId:(hover  ? hover.id : null)} )"></button>
+    <button style="display: none;"
+            id="bubble-popup-menu_selectbutton"
+            (click)="onClick('bubble-tooltip-select-click',{entityId:(hover ? hover.id : null)} )"></button>
+    <div id="bubble-popup-menu" style="display: none;">
+        <h2>{{ ( hover ? hover.label : '' ) }}</h2>
+        <span class="n7-icon-close" onclick="document.getElementById('bubble-popup-menu_closebutton').click();"></span>
+        <p>
+                {{ ( hover ? 'È collegato a '+ hover.count + ' entità' : '' ) }}
+        </p>
+        <span onclick="document.getElementById('bubble-popup-menu_gotobutton').click();">Vai alla scheda</span> |
+        <span onclick="document.getElementById('bubble-popup-menu_selectbutton').click();">Seleziona</span>
+    </div>
+    <div id="bubble-chart-container">
+        <ng-content></ng-content>
+    </div>
+</div>

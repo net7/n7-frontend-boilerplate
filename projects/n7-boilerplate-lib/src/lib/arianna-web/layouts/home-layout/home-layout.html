@@ -7,24 +7,7 @@
 
     <!-- hidden buttons and div used to implement the bubbles' popups -->
 
-    <button style="display: none;"
-            id="bubble-popup-menu_closebutton"
-            (click)="lb.eventHandler.emitInner('bubble-tooltip-close-click',{entityId:(lb.widgets['aw-bubble-chart'].ds.currentHoverEntity ? lb.widgets['aw-bubble-chart'].ds.currentHoverEntity.id : null)} )"></button>
-    <button style="display: none;"
-            id="bubble-popup-menu_gotobutton"
-            (click)="lb.eventHandler.emitInner('bubble-tooltip-goto-click',{entityId:(lb.widgets['aw-bubble-chart'].ds.currentHoverEntity  ? lb.widgets['aw-bubble-chart'].ds.currentHoverEntity.id : null)} )"></button>
-    <button style="display: none;"
-            id="bubble-popup-menu_selectbutton"
-            (click)="lb.eventHandler.emitInner('bubble-tooltip-select-click',{entityId:(lb.widgets['aw-bubble-chart'].ds.currentHoverEntity ? lb.widgets['aw-bubble-chart'].ds.currentHoverEntity.id : null)} )"></button>
-        <div id="bubble-popup-menu" style="display: none;">
-            <h2>{{ ( lb.widgets['aw-bubble-chart'].ds.currentHoverEntity ? lb.widgets['aw-bubble-chart'].ds.currentHoverEntity.label : '' ) }}</h2>
-            <span class="n7-icon-close" onclick="document.getElementById('bubble-popup-menu_closebutton').click();"></span>
-            <p>
-                    {{ ( lb.widgets['aw-bubble-chart'].ds.currentHoverEntity ? 'È collegato a '+lb.widgets['aw-bubble-chart'].ds.currentHoverEntity.count + ' entità' : '' ) }}
-            </p>
-            <span onclick="document.getElementById('bubble-popup-menu_gotobutton').click();">Vai alla scheda</span> |
-            <span onclick="document.getElementById('bubble-popup-menu_selectbutton').click();">Seleziona</span>
-        </div>
+
     <!-- Bubble chart -->
     <div class="aw-home__bubble-wrapper" [ngClass]="{ 'has-results' : lb.dataSource.selectedBubbles.length>0 }">
         <div class="aw-home__facets-wrapper">
@@ -36,13 +19,16 @@
                 </n7-facet>
             </span>
         </div>
-
-        <div id="bubble-chart-container">
-            <n7-bubble-chart [data]="lb.widgets['aw-bubble-chart'].ds.out$ | async"
-                [emit]="lb.widgets['aw-bubble-chart'].emit">
+        <aw-bubble-chart-wrapper
+            [hover]="lb.widgets['aw-bubble-chart'].ds.currentHoverEntity"
+            [emit]="lb.widgets['aw-bubble-chart'].emit" >
+                <n7-bubble-chart
+                    [data]="lb.widgets['aw-bubble-chart'].ds.out$ | async"
+                    [emit]="lb.widgets['aw-bubble-chart'].emit">
             </n7-bubble-chart>
-        </div>
+        </aw-bubble-chart-wrapper>
 
+        <!-- Linked objects -->
         <ng-container *ngIf="lb.dataSource.selectedBubbles.length>0">
             <div class="aw-home__bubble-results" [ngStyle]="{ 'display': 'flex' , 'flex-direction': 'column' }">
                 <div *ngIf="lb.dataSource.numOfItemsStr"> <h1 class="aw-home__bubble-results-title"><strong class="aw-home__bubble-results-title-counter">{{ lb.dataSource.numOfItemsStr }}</strong> <span> Oggetti culturali</span></h1></div>

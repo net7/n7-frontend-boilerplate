@@ -1,5 +1,6 @@
 import { DataSource } from '@n7-frontend/core';
 import { BUBBLECHART_MOCK } from '@n7-frontend/components';
+//import tippy from 'tippy.js';
 
 export class AwBubbleChartDS extends DataSource {
 

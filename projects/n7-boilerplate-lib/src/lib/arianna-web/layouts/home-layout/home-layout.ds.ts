@@ -60,7 +60,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       // doesn't get reset)
       if(this.lastWindowWidth!=window.outerWidth){
         this.lastWindowWidth=window.outerWidth;
-        this.updateBubblesAndItemPreviews(true);
+        //this.updateBubblesAndItemPreviews(true);
       }
     });
 
@@ -216,15 +216,6 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     if ( !onlyBubbles ) {
       this.renderPreviewsFromApolloQuery(response);
     }
-
-   /* this.one('aw-bubble-chart').update({
-      width: window.innerWidth / 1.8,
-      setBubbleChart: (bubbleCref) => this._bubbleChart = bubbleCref,
-      source: response,
-      reset: true,
-      facetData: this.facetData,
-      selectedBubbles: this.selectedBubbles
-    });*/
   }
 
   public updateBubbleFilter(data) {
@@ -238,7 +229,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     }
   }
 
-  private updateBubblesAndItemPreviews(onlyBubbles?:boolean){
+  /*private updateBubblesAndItemPreviews(onlyBubbles?:boolean){
     let selectedEntitiesIds = [];
     if(this.entityBubbleIdMap)
     this.selectedBubbles.forEach( (sB) => {
@@ -258,7 +249,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         this.renderItemTags();
       }
     });
-  }
+  }*/
 
   filterBubblesBasedOnFacetsEnabled(){
     let result = this.allBubbles.filter(
@@ -348,14 +339,14 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       for ( var i = 0; i < this.allBubbles.length; i++ ){
         if ( this.allBubbles[i].id === sBubble.id ){
           label = this.allBubbles[i].entity.label;
+          tagsData.push({
+            label,icon:"n7-icon-close",
+            payload:sBubble.id,
+            classes:"tag-"+ this.allBubbles[i].entity.typeOfEntity.id
+          });
           break;
         }
       }
-      tagsData.push({
-        label,icon:"n7-icon-close",
-        payload:sBubble.id,
-        classes:"tag-"+ this.allBubbles[i].entity.typeOfEntity.id
-      });
     });
 
     this.one('aw-home-item-tags-wrapper').update(tagsData);
@@ -371,7 +362,6 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     }
     this.selectedBubbles = this.selectedBubbles.filter( (b) => b.id!==payload );
     return this.filterRequest();
-    //this.updateBubblesAndItemPreviews();
   }
 
   onHeroChange(value){

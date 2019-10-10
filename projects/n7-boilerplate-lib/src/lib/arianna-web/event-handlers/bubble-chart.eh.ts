@@ -22,6 +22,15 @@ export class AwBubbleChartEH extends EventHandler {
         case 'aw-bubble-chart.mouse_leave':
           this.emitOuter('mouse_leave', event.payload);
           break;
+          case "aw-bubble-chart.bubble-tooltip-close-click":
+            this.emitOuter('bubble-tooltip-close-click', event.payload);
+            break;
+        case "aw-bubble-chart.bubble-tooltip-goto-click":
+          this.emitOuter('bubble-tooltip-goto-click', event.payload);
+            break;
+        case "aw-bubble-chart.bubble-tooltip-select-click":
+          this.emitOuter('bubble-tooltip-select-click', event.payload);
+            break;
         default:
           break;
       }
