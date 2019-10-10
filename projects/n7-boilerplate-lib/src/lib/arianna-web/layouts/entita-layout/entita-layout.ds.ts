@@ -41,7 +41,8 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     /*
       Updates the widgets on this layout, based on route
     */
-    this.one('aw-entita-nav').update( data )
+    const selected = this.selectedTab
+    this.one('aw-entita-nav').update( { data, selected } )
   }
 
   loadItem(id, tab) {
