@@ -2,7 +2,7 @@
 
     <div class="aw-entity__sidebar">
         <!-- Custom header -->
-        <div class="aw-entity__sidebar-title-wrapper">
+        <div class="aw-entity__sidebar-title-wrapper color-{{lb.dataSource.navHeader.color}}">
             <h1 class="aw-entity__sidebar-title">
                 <span class="aw-entity__sidebar-title-icon {{lb.dataSource.navHeader.icon}}"></span>
                 <span class="aw-entity__sidebar-title-text">{{lb.dataSource.navHeader.text}}</span>
@@ -46,11 +46,13 @@
                 {{lb.dataSource.myResponse.overviewTab}}
             </div>
             <div class="aw-entita-layout__button-wrapper">
-                <button class="n7-btn n7-btn-light"
+                <button *ngIf="lb.dataSource.myResponse.wikiTabUrl"
+                        class="n7-btn n7-btn-light"
                         (click)="lb.eventHandler.emitInner('showmore', 'wiki')">
                     DESCRIZIONE WIKIPEDIA
                 </button>
-                <button class="n7-btn n7-btn-light"
+                <button *ngIf="lb.dataSource.myResponse.extraTabUrl"
+                        class="n7-btn n7-btn-light"
                         (click)="lb.eventHandler.emitInner('showmore', 'maxxi')">
                     DESCRIZIONE MAXXI
                 </button>
@@ -95,6 +97,7 @@
                 TUTTE LE ENTITÀ COLLEGATE
             </button>
             <!-- BUBBLE CHART GOES HERE -->
+            <img src="https://i.imgur.com/P21HGo5.png" alt="bubble chart" (dragstart)="false">
         </div>
         
     </section>
@@ -133,17 +136,31 @@
 <ng-template #entita>
     <div>
         <h1>Entità collegate</h1>
+        <!-- BUBBLE CHART GOES HERE -->
+        <img src="https://i.imgur.com/P21HGo5.png" alt="bubble chart" (dragstart)="false">
     </div>
 </ng-template>
 
 <ng-template #maxxi>
     <div>
         <h1>Descrizione Maxxi</h1>
+        <div>
+            {{lb.dataSource.myResponse.overviewTab}}
+        </div>
+        <a href="{{lb.dataSource.myResponse.extraTabUrl}}">
+            {{lb.dataSource.myResponse.extraTabUrl}}
+        </a>
     </div>
 </ng-template>
 
 <ng-template #wiki>
     <div>
         <h1>Descrizione Wikipedia</h1>
+        <div>
+            {{lb.dataSource.myResponse.overviewTab}}
+        </div>
+        <a href="{{lb.dataSource.myResponse.wikiTabUrl}}">
+            {{lb.dataSource.myResponse.wikiTabUrl}}
+        </a>
     </div>
 </ng-template>
