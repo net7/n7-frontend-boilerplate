@@ -9,7 +9,6 @@ export class AwEntitaNavDS extends DataSource {
     const selected = param.selected
     const navigation = { items: [], payload: 'entita-nav' }
 
-    console.log('selected', selected)
     navigation.items.push({ 
       text: 'OVERVIEW', 
       payload: 'overview', 
