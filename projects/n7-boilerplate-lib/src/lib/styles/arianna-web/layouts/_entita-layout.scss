@@ -51,6 +51,17 @@
         }
 
         .n7-nav__item {
+            /* Current item */
+            &.is-selected {
+                .n7-nav__link {
+                    color: $color-text;
+                    font-weight: $font-weight-bold;
+
+                    &:hover {
+                        color: $color-text;
+                    }
+                }
+            }
         }
         
         .n7-nav__link {
@@ -76,6 +87,11 @@
     &__content-section {
         padding: $space*3;
         border-bottom: 2px solid $color-border-light;
+
+        &-title {
+            font-weight: $font-weight-normal;
+            font-size: $font-size-xxl;
+        }
     }
 }
 

@@ -77,7 +77,12 @@ function unpackData (data, page, size, keys, totalPages) {
         select: {
           label: 'Numero di risultati',
           options: sizeOptions.map(o => {
-            return { text: o , selected: o == size, disabled: o > totalPages }
+            return {
+              text: o,
+              selected: o == size,
+              // disables options greater than total items
+              // disabled: o > totalPages*size
+            }
           }),
           payload: 'select-size'
         }

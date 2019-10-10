@@ -119,7 +119,9 @@ $aw-scheda-content-padding: $space*3;
     /* Inner title */
     /* Main title that describes the scheda content */
     .n7-inner-title {
-
+        &__title {
+            font-weight: $font-weight-black;
+        }
     }
 
     /* Minor inner titles that descibe the various sections */

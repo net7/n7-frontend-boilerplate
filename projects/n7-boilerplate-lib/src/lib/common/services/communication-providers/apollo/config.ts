@@ -23,14 +23,17 @@ export const ApolloProviderConfig = {
           label
           id
           icon
+          img
           branches {
             label
             id
             icon
+            img
             branches {
               label
               id
               icon
+              img
             }
           }
         }
@@ -116,6 +119,8 @@ export const ApolloProviderConfig = {
           }
           count
         }
+        extraTabUrl
+        wikiTabUrl
         items {
           breadcrumbs {
             link
