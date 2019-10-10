@@ -5,12 +5,17 @@
  */
 
  /* ------------------------------------ *\
-    HERO
+    TOP-HERO
 \* ------------------------------------ */
 .aw-home {
     &__top-hero {
         .n7-hero {
             height: $top-hero-height;
+
+            &__title {
+                font-weight: $font-weight-bold;
+                font-size: $font-size-xxxl;
+            }
 
             &__text {
                 font-size: $font-size-xl;
@@ -47,53 +52,16 @@
                 min-width: 100%;
             }
 
-        }
-    }
-
-    .n7-hero {
-        &__title {
-            font-weight: $font-weight-bold;
-            font-size: $font-size-xxxl;
-        }
-
-        &.has-image {
-            .n7-hero__content {
-                grid-column-gap: 44px;
+            /* Autocomplete */
+            .tippy-popper {
+                width: 100%;
+                max-width: 100%;
             }
 
-            .n7-hero__title {
-                margin-bottom: $space*3;
-                font-weight: $font-weight-black;
+            .tippy-tooltip, .tippy-content {
+                padding: 0;
             }
 
-            .n7-hero__input-wrapper {
-                margin-top: $space*3;
-            }
-
-            .n7-hero__image {
-                border: $hero-image-border;
-                border-radius: $border-radius;
-            }
-
-            .n7-hero__btn {
-                background: $hero-button-bg;
-                border-color: $hero-button-border;
-                font-size: $font-size-l;
-
-                &:hover,
-                &:focus {
-                    background: $hero-button-bg-hover;
-                    border-color: $hero-button-border-hover;
-                }
-
-                &:active, &.active {
-                    background: $hero-button-bg-active;
-                }
-
-                &:disabled, &.disabled {
-                    background: $hero-button-bg-disabled;
-                }
-            }
         }
     }
 }
@@ -366,6 +334,58 @@
         background-color: $color-places;
     }
 }
+
+
+ /* ------------------------------------ *\
+    BOTTOM-HERO
+\* ------------------------------------ */
+.aw-home {
+    &__bottom-hero {
+        .n7-hero {
+            &.has-image {
+                .n7-hero__content {
+                    grid-column-gap: 44px;
+                }
+    
+                .n7-hero__title {
+                    margin-bottom: $space*3;
+                    font-size: $font-size-xxxl;
+                    font-weight: $font-weight-black;
+                }
+    
+                .n7-hero__input-wrapper {
+                    margin-top: $space*3;
+                }
+    
+                .n7-hero__image {
+                    border: $hero-image-border;
+                    border-radius: $border-radius;
+                }
+    
+                .n7-hero__btn {
+                    background: $hero-button-bg;
+                    border-color: $hero-button-border;
+                    font-size: $font-size-l;
+    
+                    &:hover,
+                    &:focus {
+                        background: $hero-button-bg-hover;
+                        border-color: $hero-button-border-hover;
+                    }
+    
+                    &:active, &.active {
+                        background: $hero-button-bg-active;
+                    }
+    
+                    &:disabled, &.disabled {
+                        background: $hero-button-bg-disabled;
+                    }
+                }
+            }
+        }
+    }
+}
+
 
 /* ------------------------------------ *\
    #MEDIA-QUERIES
