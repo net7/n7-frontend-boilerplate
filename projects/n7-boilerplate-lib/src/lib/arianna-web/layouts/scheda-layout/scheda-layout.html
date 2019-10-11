@@ -60,7 +60,7 @@
                 [hidden] = "!lb.dataSource.hasSimilarItems"
                 id="related-item-container" class="aw-scheda__related">
                 <div class="aw-scheda__inner-title">{{lb.dataSource.similarItemsSectionTitle}}</div>
-                <div class="aw-scheda__related-items n7-grid-2">
+                <div class="aw-scheda__related-items">
                     <ng-container *ngFor="let widgetData of lb.widgets['aw-linked-objects'].ds.out$ | async;">
                         <n7-item-preview
                             [data]="widgetData"
