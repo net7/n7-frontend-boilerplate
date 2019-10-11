@@ -14,7 +14,7 @@ export class AwHomeFacetsWrapperDS extends DataSource {
 
       let headerClasses = [];
       let iconClasses = [facet.icon];
-      if(facet.enabled) headerClasses.push('is-disabled');
+      if(!facet.enabled) headerClasses.push('is-disabled');
       if(facet.type.configKey) {
         headerClasses.push(`color-${facet.type.configKey}`);
         iconClasses.push(`color-${facet.type.configKey}`);
