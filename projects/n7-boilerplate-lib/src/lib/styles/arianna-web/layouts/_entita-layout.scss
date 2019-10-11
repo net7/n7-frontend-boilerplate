@@ -42,6 +42,10 @@
             margin-right: $space;
             // vertical-align: middle;
         }
+
+        &-text {
+            font-weight: $font-weight-black;
+        }
     }
 
     &__sidebar {
@@ -52,6 +56,7 @@
 
         .n7-nav__item {
             /* Current item */
+            position: relative;
             &.is-selected {
                 .n7-nav__link {
                     color: $color-text;
@@ -60,6 +65,17 @@
                     &:hover {
                         color: $color-text;
                     }
+                }
+
+                &::before {
+                    content: '';
+                    display: block;
+                    width: $space;
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: $entity-nav-item-active-decoration-bg;
                 }
             }
         }

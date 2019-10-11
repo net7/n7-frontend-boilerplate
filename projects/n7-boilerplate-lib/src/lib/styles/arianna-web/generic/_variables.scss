@@ -67,7 +67,7 @@ $aw-scheda-tree-width: 400px;
 // Font weight
 // $font-weight-normal: 400;
 // $font-weight-bold: 700;
-// $font-weight-black: 900;
+$font-weight-black: 900;
 
 // ------------------------------------ //
 // COLORS
@@ -291,3 +291,8 @@ $bubble-results-count-font-weight: $font-weight-bold;
 // ------------------------------------ //
 $aw-scheda-content-padding: $space*3;
 $scheda-title-font-weight: $font-weight-bold;
+
+// ------------------------------------ //
+// #ENTITA
+// ------------------------------------ //
+$entity-nav-item-active-decoration-bg: $color-gray-06;
