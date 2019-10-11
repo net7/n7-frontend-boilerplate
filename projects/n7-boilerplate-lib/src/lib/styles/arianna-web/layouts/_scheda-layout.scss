@@ -120,7 +120,7 @@ $aw-scheda-content-padding: $space*3;
     /* Main title that describes the scheda content */
     .n7-inner-title {
         &__title {
-            font-weight: $font-weight-black;
+            font-weight: $scheda-title-font-weight;
         }
     }
 
