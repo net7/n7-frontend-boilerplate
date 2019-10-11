@@ -230,7 +230,7 @@ $top-hero-title-font-weight: $font-weight-bold;
 // #BOTTTOM-HERO-HOMEPAGE
 // ------------------------------------ //
 $bottom-hero-image-border: 10px solid #ffffff;
-$bottom-hero-image-border-radius: $space*2;
+$bottom-hero-image-border-radius: $border-radius;
 $bottom-hero-button-bg: #FFCD00;
 $bottom-hero-button-bg-hover: darken($bottom-hero-button-bg, 5%);
 $bottom-hero-button-bg-active: #FFB600;
