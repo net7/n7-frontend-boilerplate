@@ -82,7 +82,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       case 'overview': {
         this.one('aw-entita-metadata-viewer').updateOptions({ context: this.selectedTab });
         this.one('aw-entita-metadata-viewer').update(res.fieldsTab);
-        this.one('aw-linked-objects').updateOptions({ size: 3, configKeys: this.configuration.get("config-keys") })
+        this.one('aw-linked-objects').updateOptions({ size: 3, configKeys: this.configuration.get("config-keys"), context: 'entita' })
         this.one('aw-linked-objects').update(res.items);
       } break;
       
