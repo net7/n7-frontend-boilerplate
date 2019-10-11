@@ -43,15 +43,15 @@
     <section>
         <div class="aw-entity__content-section">
             <div class="aw-entity__overview-description">
-                {{lb.dataSource.myResponse.overviewTab}}
+                {{lb.dataSource.myResponse.extraTab}}
             </div>
             <div class="aw-entita-layout__button-wrapper">
-                <button *ngIf="lb.dataSource.myResponse.wikiTabUrl"
+                <button *ngIf="lb.dataSource.myResponse.wikiTab"
                         class="n7-btn n7-btn-light"
                         (click)="lb.eventHandler.emitInner('showmore', 'wiki')">
                     DESCRIZIONE WIKIPEDIA
                 </button>
-                <button *ngIf="lb.dataSource.myResponse.extraTabUrl"
+                <button *ngIf="lb.dataSource.myResponse.extraTab"
                         class="n7-btn n7-btn-light"
                         (click)="lb.eventHandler.emitInner('showmore', 'maxxi')">
                     DESCRIZIONE MAXXI
@@ -145,11 +145,8 @@
     <div>
         <h2 class="aw-entity__content-section-title">Descrizione Maxxi</h2>
         <div>
-            {{lb.dataSource.myResponse.overviewTab}}
+            {{lb.dataSource.myResponse.extraTab}}
         </div>
-        <a href="{{lb.dataSource.myResponse.extraTabUrl}}">
-            {{lb.dataSource.myResponse.extraTabUrl}}
-        </a>
     </div>
 </ng-template>
 
@@ -157,10 +154,10 @@
     <div>
         <h2 class="aw-entity__content-section-title">Descrizione Wikipedia</h2>
         <div>
-            {{lb.dataSource.myResponse.overviewTab}}
+            {{lb.dataSource.myResponse.wikiTab.text}}
         </div>
         <a href="{{lb.dataSource.myResponse.wikiTabUrl}}">
-            {{lb.dataSource.myResponse.wikiTabUrl}}
+            {{lb.dataSource.myResponse.wikiTab.url}}
         </a>
     </div>
 </ng-template>

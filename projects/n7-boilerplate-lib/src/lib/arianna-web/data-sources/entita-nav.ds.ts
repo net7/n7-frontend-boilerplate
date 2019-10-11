@@ -33,13 +33,13 @@ export class AwEntitaNavDS extends DataSource {
         payload: 'entita-collegate',
         classes: selected == 'entita-collegate' ? 'is-selected' : ''
       })    }
-    if (data.extraTabUrl) {
+    if (data.extraTab) {
       navigation.items.push({
         text: 'MAXXI',
         payload: 'maxxi',
         classes: selected == 'maxxi' ? 'is-selected' : ''
       })    }
-    if (data.wikiTabUrl) {
+    if (data.wikiTab) {
       navigation.items.push({
         text: 'WIKIPEDIA',
         payload: 'wiki',
