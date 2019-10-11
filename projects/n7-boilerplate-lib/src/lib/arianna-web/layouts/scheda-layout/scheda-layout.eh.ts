@@ -49,6 +49,10 @@ export class AwSchedaLayoutEH extends EventHandler {
        this.dataSource.loadItem(params.get('id')).subscribe((response) => {
          if ( response ) {
            this.dataSource.loadContent(response);
+           if ( response.connectedEntities ){
+             let connectedEntities = {source: response, connectedEntities: response.connectedEntities};
+             this.emitOuter('filterbubbleresponse', connectedEntities);
+           }
           }
         });
       } else {

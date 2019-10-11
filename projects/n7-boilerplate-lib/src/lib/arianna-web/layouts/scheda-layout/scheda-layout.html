@@ -51,9 +51,19 @@
                     [hidden] = "!lb.dataSource.hasBubbles"
                     class="aw-scheda__inner-title">{{lb.dataSource.bubbleChartSectionTitle}}
                 </div>
+                <!--
                 <n7-bubble-chart [data]="lb.widgets['aw-scheda-bubble-chart'].ds.out$ | async"
                     [emit]="lb.widgets['aw-scheda-bubble-chart'].emit">
                 </n7-bubble-chart>
+            -->
+                <aw-bubble-chart-wrapper
+                    [hover]="lb.widgets['aw-bubble-chart'].ds.currentHoverEntity"
+                    [emit]="lb.widgets['aw-bubble-chart'].emit" >
+                        <n7-bubble-chart
+                            [data]="lb.widgets['aw-bubble-chart'].ds.out$ | async"
+                            [emit]="lb.widgets['aw-bubble-chart'].emit">
+                    </n7-bubble-chart>
+                </aw-bubble-chart-wrapper>
             </section>
 
             <section

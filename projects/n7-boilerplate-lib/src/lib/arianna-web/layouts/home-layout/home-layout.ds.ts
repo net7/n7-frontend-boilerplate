@@ -90,7 +90,6 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     this.one('aw-bubble-chart').updateOptions({
       context: 'home',
       configKeys: this.configuration.get("config-keys"),
-      tippy: this.tippy
     });
     this.renderPreviewsFromApolloQuery(response);
   }
@@ -177,10 +176,11 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       if(!this.selectedBubbles.includes(bubble)){
         if(this.selectedBubbles.length<this.maxBubblesSelectable){
           this.selectedBubbles.push(bubble);
-          return this.filterRequest();
+          return true;
         }
       }
     }
+    return null;
   }
 
   public onBubbleDeselected(payload){
@@ -228,28 +228,6 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       this.renderItemTags();
     }
   }
-
-  /*private updateBubblesAndItemPreviews(onlyBubbles?:boolean){
-    let selectedEntitiesIds = [];
-    if(this.entityBubbleIdMap)
-    this.selectedBubbles.forEach( (sB) => {
-      let entityId = this.entityBubbleIdMap[sB.id];
-      if(entityId)
-        selectedEntitiesIds.push(entityId);
-    });
-    this.communication.request$('globalFilter', {
-      onError: (error) => console.error(error),
-      params: {
-        selectedEntitiesIds,
-        itemsPagination:{ offset:0, limit: this.configuration.get('home-layout')['results-limit'] }
-      },
-    }).subscribe((response) => {
-      if(!onlyBubbles){
-        this.renderPreviewsFromApolloQuery(response);
-        this.renderItemTags();
-      }
-    });
-  }*/
 
   filterBubblesBasedOnFacetsEnabled(){
     let result = this.allBubbles.filter(
@@ -324,9 +302,10 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       });
       this.one('aw-bubble-chart').update({
         width: window.innerWidth/1.8,
-        bubbles:this.filterBubblesBasedOnFacetsEnabled(),
+       // bubbles:this.filterBubblesBasedOnFacetsEnabled(),
         selectedBubbles: this.selectedBubbles,
         setBubbleChart: (bubbleCref) => this._bubbleChart = bubbleCref,
+        facetData: this.facetData,
         reset:true
       });
     }

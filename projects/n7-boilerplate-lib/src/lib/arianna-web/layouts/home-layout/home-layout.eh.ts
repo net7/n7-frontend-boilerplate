@@ -57,24 +57,26 @@ export class AwHomeLayoutEH extends EventHandler {
         case 'aw-bubble-chart.click':
             let bubblePayload = {
               width: window.innerWidth / 1.8,
-              setBubbleChart: (bubbleCref) => this.dataSource._bubbleChart = bubbleCref,
               reset: true,
-              facetData: this.dataSource.facetData,
-              selectedBubbles: this.dataSource.selectedBubbles
+              setBubbleChart: (bubbleCref) => this.dataSource._bubbleChart = bubbleCref,
+              facetData: this.dataSource.facetData
             }
 
           if ( payload.source === 'bubble' ){
             if (payload.bubble) {
               this.dataSource.updateBubbleFilter(payload);
-              this.dataSource.onBubbleSelected(payload.bubble).subscribe((response) => {
-                if ( response ) {
-                  bubblePayload['source'] = response;
-                  this.emitOuter('filterbubbleresponse', bubblePayload);
-                  this.dataSource.updateBubbles(response);
-                 }
-               });
+              if(this.dataSource.onBubbleSelected(payload.bubble)){
+                this.dataSource.filterRequest().subscribe((response) => {
+                  if ( response ) {
+                    bubblePayload['source'] = response;
+                    bubblePayload['selectedBubbles'] =  this.dataSource.selectedBubbles;
+                    this.emitOuter('filterbubbleresponse', bubblePayload);
+                    this.dataSource.updateBubbles(response);
+                  }
+                });
               }
-            } else if (payload.source==='close') {
+            }
+          } else if (payload.source==='close') {
               this.dataSource.updateBubbleFilter(payload);
               this.dataSource.onBubbleDeselected({
                 bubblePayload:payload.bubblePayload,
@@ -82,6 +84,7 @@ export class AwHomeLayoutEH extends EventHandler {
               }).subscribe((response) => {
                 if ( response ) {
                   bubblePayload['source'] = response;
+                  bubblePayload['selectedBubbles'] =  this.dataSource.selectedBubbles;
                   this.emitOuter('filterbubbleresponse', bubblePayload);
                   this.dataSource.updateBubbles(response);
                  }
@@ -107,7 +110,7 @@ export class AwHomeLayoutEH extends EventHandler {
               }
               this.emitOuter('filterbubbleresponse', bubblePayload);
               this.dataSource.updateBubbles(response);
-             // this.dataSource.renderItemTags();
+              this.dataSource.renderItemTags();
             });
             break;
         default:

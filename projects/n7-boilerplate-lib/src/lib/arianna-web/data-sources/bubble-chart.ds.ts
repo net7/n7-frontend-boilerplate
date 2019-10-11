@@ -1,6 +1,6 @@
 import { DataSource } from '@n7-frontend/core';
 import { BUBBLECHART_MOCK } from '@n7-frontend/components';
-//import tippy from 'tippy.js';
+import tippy from 'tippy.js';
 
 export class AwBubbleChartDS extends DataSource {
 
@@ -13,20 +13,15 @@ export class AwBubbleChartDS extends DataSource {
   private facetData: any[] = null;
   private bubblePopup: any = null;
   public currentHoverEntity: any = null;
-  private tippy: any;
   private _bubbleChart: any = null;
   private maxBubblesSelectable:number = 3;
+  private tippy;
 
   protected transform(data){
     if ( !data ){ return null; }
-    if ( data.facetData ) {
-      this.facetData = data.facetData;
-    }
 
-    /*
-    if ( data.source ) {
-      this.setAllBubblesFromApolloQuery(data.source, data.reset);
-    }*/
+    this.facetData = data.facetData ? data.facetData : [];
+    this.tippy = tippy;
 
     data.bubbles = this.filterBubblesBasedOnFacetsEnabled();
     let bubbleCointainer = document.getElementById("bubble-chart-container");
@@ -126,24 +121,39 @@ export class AwBubbleChartDS extends DataSource {
 
   setAllBubblesFromApolloQuery(data: any, reset?: boolean ) {
     const response = data.source;
-    if ( !response || !response.entitiesData ) {return; }
+   // if ( !response || !response.entitiesData ) {return; }
     this.allBubbles = [];
 
     if ( data.selectedBubbles ) {
       this.selectedBubbles = data.selectedBubbles;
     }
 
-    for (let i = 0 ; i < response.entitiesData.length; i++) {
-      let currentToE = response.entitiesData[i];
+    if( response.entitiesData ) {
+      for (let i = 0 ; i < response.entitiesData.length; i++) {
 
-      for ( var j = 0; j < currentToE.entitiesCountData.length; j++) {
+        let currentToE = response.entitiesData[i];
+
+        for ( var j = 0; j < currentToE.entitiesCountData.length; j++) {
+          this.allBubbles.push(
+            {
+              ...currentToE.entitiesCountData[j],
+              color: this.options.configKeys[currentToE.countData.type.configKey]['color']['hex']
+            });
+        }
+      }
+    }
+    else {
+      for ( let i = 0; i < response.connectedEntities.length; i++ ){
+        const color = this.options.configKeys[response.connectedEntities[i].entity.typeOfEntity.configKey] ? this.options.configKeys[response.connectedEntities[i].entity.typeOfEntity.configKey]['color']['hex'] : "";
         this.allBubbles.push(
           {
-            ...currentToE.entitiesCountData[j],
-            color: this.options.configKeys[currentToE.countData.type.configKey]['color']['hex']
+            id: this.convertEntityIdToBubbleId( response.connectedEntities[i].entity.id ),
+            ...response.connectedEntities[i],
+            color: color
           });
       }
     }
+
     this.entityBubbleIdMap = {};
     this.allBubbles.forEach( (bubble) => {
       // d3/svg does not allow Number as beginning of ID.
@@ -204,13 +214,14 @@ export class AwBubbleChartDS extends DataSource {
       let template = document.getElementById("bubble-popup-menu");
       let templateClone = template.cloneNode(true);
       templateClone['style'].display = "inline-block";
-      this.bubblePopup = this.options.tippy(`#${bubbleId}`, {
+      this.bubblePopup = this.tippy(`#${bubbleId}`, {
         content: templateClone,
+        allowHTML: true,
         trigger: 'manual',
         interactive: true,
         arrow: true,
         theme: 'light-border no-padding',
-        placement: 'top-middle',
+        placement: 'top',
         maxWidth: 500,
         //onHidden: () => console.log('hidden'),
       })[0];

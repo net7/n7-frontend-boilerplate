@@ -54,12 +54,14 @@ export class AwBubbleChartEH extends EventHandler {
             'selected': this.dataSource.getSelectedBubbles()
           });
           break;
+        case 'aw-scheda-layout.filterbubbleresponse':
         case 'aw-home-layout.filterbubbleresponse':
           this.dataSource.setAllBubblesFromApolloQuery(payload);
           this.emitOuter('bubble-filtered',
           {
             'allBubbles': this.dataSource.getAllBubbles(),
-            'selected': this.dataSource.getSelectedBubbles()
+            'selected': this.dataSource.getSelectedBubbles(),
+            'entityIdmap': this.dataSource.getEntityIdMap()
           });
           break;
       }
