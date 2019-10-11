@@ -142,8 +142,18 @@
             &-title {
                 font-size: $font-size-l;
             }
+
+            &-content {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                grid-column-gap: $space*3;
+            }
         }
 
+        &__item {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+        }
     }
 }
 
