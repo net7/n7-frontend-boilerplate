@@ -117,6 +117,25 @@
             font-weight: $font-weight-normal;
             font-size: $font-size-xxl;
         }
+
+        &-overview {
+            .n7-metadata-viewer {
+                &__group {
+        
+                    &-content {
+                        display: grid;
+                        grid-template-columns: repeat(2, 1fr);
+                        grid-column-gap: $space*3;
+                    }
+                }
+        
+                &__item {
+                    display: grid;
+                    grid-template-columns: 1fr 2fr;
+                }
+                
+            }
+        }
     }
 
     &__overview-description {
@@ -159,18 +178,11 @@
                 font-size: $font-size-l;
             }
 
-            &-content {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                grid-column-gap: $space*3;
-            }
+          
         }
-
-        &__item {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-        }
+        
     }
+    
 }
 
 
