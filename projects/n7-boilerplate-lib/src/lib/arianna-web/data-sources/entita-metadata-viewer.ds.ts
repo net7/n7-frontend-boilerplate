@@ -9,9 +9,10 @@ export class AwEntitaMetadataViewerDS extends DataSource {
       Access and use this.options if the rendering 
       changes based on context.
     */
-
+   
     return {
-      group: AwEntitaMetadataViewerDS.unpackFields(data)
+      group: AwEntitaMetadataViewerDS.unpackFields(data),
+      classes: this.options.context ? `context-${this.options.context}` : ''
     }
   }
 

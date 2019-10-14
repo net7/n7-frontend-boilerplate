@@ -26,7 +26,6 @@ function unpackData (data, page, size, keys, totalPages, context) {
   }
 
   var result = []
-  console.log('the context is', context)
   data.forEach(el => {
     let item = {
       image: el.thumbnail,
