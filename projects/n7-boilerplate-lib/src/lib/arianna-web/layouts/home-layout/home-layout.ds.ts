@@ -94,36 +94,6 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     this.renderPreviewsFromApolloQuery(response);
   }
 
-  onBubbleMouseEnter(bubblePayload){
-    this.currentHoverEntity = bubblePayload.bubble;
-    this.currentHoverEntity.count = bubblePayload.count;
-    const bubbleId = bubblePayload.bubble.id;
-
-    if(this.bubblePopup){
-      this.bubblePopup.hide();
-      this.bubblePopup.destroy();
-      this.bubblePopup = null;
-    }
-    setTimeout( () => {
-      let template = document.getElementById("bubble-popup-menu");
-      let templateClone = template.cloneNode(true);
-      templateClone['style'].display = "inline-block";
-      this.bubblePopup = this.tippy(`#${bubbleId}`, {
-        content: templateClone,
-        trigger: 'manual',
-        interactive: true,
-        arrow: true,
-        theme: 'light-border no-padding',
-        placement: 'top-middle',
-        maxWidth: 500,
-        //onHidden: () => console.log('hidden'),
-      })[0];
-      setTimeout( () => {
-        console.log( this.bubblePopup);
-        if(this.bubblePopup) this.bubblePopup.show() } , 800 );
-    });
-  }
-
   renderPreviewsFromApolloQuery(response: any){
     if(!response || !response.itemsPagination) return;
 
