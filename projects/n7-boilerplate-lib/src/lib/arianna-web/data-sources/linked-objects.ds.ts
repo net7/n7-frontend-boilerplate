@@ -53,7 +53,8 @@ function unpackData (data, page, size, keys, totalPages, context) {
             return { // Persone: 6, Organizz: 12, Luoghi: 2, Concetti: 32
               value: toe.count,
               // icon: 'n7-icon-bell' // TODO: link icon to config key
-              icon: keys[toe.type.configKey].icon 
+              icon: keys[toe.type.configKey].icon,
+              classes: 'color-' + toe.type.configKey
             }
           })
         }
