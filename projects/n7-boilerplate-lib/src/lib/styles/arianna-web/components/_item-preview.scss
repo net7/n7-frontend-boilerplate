@@ -47,26 +47,32 @@
     
             &-icon {
                 font-size: $font-size-m;
+                font-weight: $font-weight-bold;
             }
     
             &-value {
                 font-size: $font-size-s;
-                font-weight: $font-weight-normal;
-            }
-    
-            &-label {
-                & + .n7-item-preview__metadata-item-value {
-                    font-weight: $font-weight-bold;
-                }
             }
         }
 
         &-group {
             &.n7-objects__metadata-artist {
+                .n7-item-preview__metadata-item-value {
+                    font-weight: $font-weight-normal;
+                }
+
+                .n7-item-preview__metadata-item-label {
+                    & + .n7-item-preview__metadata-item-value {
+                        margin-left: $space/4;
+                        font-weight: $font-weight-bold;
+                    }
+                }
+
                 .n7-item-preview__metadata-item-icon {
                     margin-right: 0;
                 }
             }
+
         }
     }
 
