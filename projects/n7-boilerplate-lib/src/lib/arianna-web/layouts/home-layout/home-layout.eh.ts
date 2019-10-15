@@ -9,45 +9,54 @@ export class AwHomeLayoutEH extends EventHandler {
 
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
-      switch(type) {
+      switch (type) {
         case 'aw-home-layout.init':
           this.dataSource.onInit(payload);
           this.configuration = payload.configuration;
           break;
         case 'aw-home-layout.destroy':
-            this.destroyed$.next();
-            break;
+          this.destroyed$.next();
+          break;
         case "aw-home-layout.bubble-tooltip-close-click":
-            this.dataSource.onBubbleTooltipClick('close',payload);
-            break;
+          this.dataSource.onBubbleTooltipClick('close', payload);
+          break;
         case "aw-home-layout.bubble-tooltip-goto-click":
-            if(!payload || !payload.entityId) return;
-            this.emitGlobal('navigate', {
-              handler: 'router',
-              path: [`aw/entita/${payload.entityId}/overview`]
-            });
-            break;
+          if (!payload || !payload.entityId) return;
+          this.emitGlobal('navigate', {
+            handler: 'router',
+            path: [`aw/entita/${payload.entityId}/overview`]
+          });
+          break;
         case "aw-home-layout.bubble-tooltip-select-click":
-            this.dataSource.onBubbleTooltipClick('select',payload);
-            break;
+          this.dataSource.onBubbleTooltipClick('select', payload);
+          break;
         default:
-            break;
+          break;
       }
     });
-    
+
     this.outerEvents$.subscribe(({ type, payload }) => {
-      switch(type){
+      switch (type) {
         case 'aw-hero.change':
           this.dataSource.onHeroChange(payload.value);
           break;
-        /**
-         * Facets Event Handlers
-         */
         case 'aw-home-facets-wrapper.click':
           this.dataSource.handleFacetHeaderClick(payload);
           break;
         case 'aw-home-facets-wrapper.change':
-          this.dataSource.handleFacetSearchChange(payload);
+          if (payload.value) {
+            let params = {
+              input: payload.value,
+              typeOfConfigKey: payload.inputPayload.replace('-search', ''),
+              itemsPagination: {
+                offset: 0, limit: this.configuration.get('home-layout')['results-limit']
+              }
+            }
+            this.dataSource.makeRequest$('autoComplete', params).subscribe(response => {
+              this.emitOuter('facetswrapperresponse', { facetId: payload, response })
+              this.dataSource.updateComponent('aw-autocomplete-wrapper', {key: payload.value, response})
+            })
+          }
           break;
         case 'aw-home-facets-wrapper.enter':
           this.dataSource.handleFacetSearchEnter(payload);
@@ -56,34 +65,34 @@ export class AwHomeLayoutEH extends EventHandler {
          * Bubble Chart Event Handlers
          */
         case 'aw-home-bubble-chart.mouse_enter':
-          this.dataSource.onBubbleMouseEnter({bubblePayload:payload.bubblePayload,bubble:payload.bubble});
+          this.dataSource.onBubbleMouseEnter({ bubblePayload: payload.bubblePayload, bubble: payload.bubble });
           break;
         case 'aw-home-bubble-chart.mouse_leave':
           // TODO: do something
           break;
         case 'aw-home-bubble-chart.click':
-          if(payload.source==='bubble'){
-            if(payload.bubble) this.dataSource.onBubbleSelected(payload.bubble);
-          } else if(payload.source==='close')
-            this.dataSource.onBubbleDeselected({bubblePayload:payload.bubblePayload,bubble:payload.bubble});
+          if (payload.source === 'bubble') {
+            if (payload.bubble) this.dataSource.onBubbleSelected(payload.bubble);
+          } else if (payload.source === 'close')
+            this.dataSource.onBubbleDeselected({ bubblePayload: payload.bubblePayload, bubble: payload.bubble });
           break;
         /**
          * Tags & Item Previews Event Handlers
          */
         case 'aw-home-item-tags-wrapper.click':
-            this.dataSource.onTagClicked(payload);
-            break;
+          this.dataSource.onTagClicked(payload);
+          break;
         /**
          * Tags & Item Previews Event Handlers
          */
         case 'aw-home-autocomplete.click':
           this.emitGlobal('navigate', {
             handler: 'router',
-            path: [this.configuration.get('paths').entitaBasePath, payload.id] 
+            path: [this.configuration.get('paths').entitaBasePath, payload.id]
           });
           break;
         default:
-            break;
+          break;
       }
     });
   }

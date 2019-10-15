@@ -1,5 +1,6 @@
 // Any
 export * from './linked-objects.ds';
+export * from './autocomplete-wrapper.ds';
 
 // Home Layout
 export * from './hero.ds';

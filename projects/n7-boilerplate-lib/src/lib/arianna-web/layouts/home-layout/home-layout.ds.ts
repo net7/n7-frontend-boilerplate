@@ -395,6 +395,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   }
 
   private _getSubnav(){
+    // not in use
     return ['home', 'results', 'single'].map(page => ({
       text: page.toUpperCase(),
       payload: {
@@ -408,6 +409,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   }
 
   private _getBreadcrumbs(){
+    // not in use
     return {
       items: [{
         label: 'Arianna Web',
@@ -498,5 +500,16 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     }
 
     this.autocompletePopoverOpen = !this.autocompletePopoverOpen;
+  }
+
+  public makeRequest$ ( query, params ) {
+    return this.communication.request$( query, {
+      onError: (error) => console.error(error),
+      params: params
+    });
+  }
+
+  public updateComponent = (comp, data) => {
+    this.one(comp).update(data)
   }
 }

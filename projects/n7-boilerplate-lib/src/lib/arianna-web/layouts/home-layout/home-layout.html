@@ -89,8 +89,20 @@
 
     <!-- adavanced autocomplete popover  -->
     <div id="aw-home-advanced-autocomplete-popover" style="display: none;">
-        <n7-advanced-autocomplete [data]="lb.widgets['aw-home-autocomplete'].ds.out$ | async"
+        <n7-advanced-autocomplete 
+            [data]="lb.widgets['aw-home-autocomplete'].ds.out$ | async"
             [emit]="lb.widgets['aw-home-autocomplete'].emit">
         </n7-advanced-autocomplete>
+    </div>
+
+    <!-- simple autocomplete popover. DO NOT CHANGE parent div class! -->
+    <!-- creating one template for each facet -->
+    <div *ngFor="let widgetData of lb.widgets['aw-home-facets-wrapper'].ds.out$ | async;" 
+         style="display: none;"
+         class="aw-simple-autocomplete__{{widgetData.header.payload}}">
+        <n7-simple-autocomplete
+            [data]="lb.widgets['aw-autocomplete-wrapper'].ds.out$ | async"
+            [emit]="lb.widgets['aw-autocomplete-wrapper'].emit">
+        </n7-simple-autocomplete>
     </div>
 </div>
