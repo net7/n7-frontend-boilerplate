@@ -67,7 +67,7 @@
             </div>
         </ng-container>
 
-        <div class="aw-entity__content-section">
+        <div class="aw-entity__content-section aw-entity__content-section-overview">
             <div class="aw-entity__content-section-header">
                 <h2 class="aw-entity__content-section-title">Oggetti collegati</h2>
                 <button class="n7-btn n7-btn-light"
@@ -83,7 +83,7 @@
             </ng-container>
         </div>
 
-        <div class="aw-entity__content-section">
+        <div class="aw-entity__content-section aw-entity__content-section-overview">
             <div class="aw-entity__content-section-header">
                 <h2 class="aw-entity__content-section-title">Entità collegate</h2>
                 <button class="n7-btn n7-btn-light" (click)="lb.eventHandler.emitInner('showmore', 'entita-collegate')">
@@ -98,7 +98,7 @@
 </ng-template>
 
 <ng-template #campi>
-    <div class="aw-entity__content-section">
+    <div class="aw-entity__content-section aw-entity__content-section-fields">
         <ng-container *ngIf="lb.widgets['aw-entita-metadata-viewer'].ds.out$ | async as data">
             <div class="aw-entity__content-section-header">
                 <h2 class="aw-entity__content-section-title">Campi</h2>
@@ -110,7 +110,7 @@
 </ng-template>
 
 <ng-template #oggetti>
-    <div class="aw-entity__content-section">
+    <div class="aw-entity__content-section aw-entity__content-section-objects">
         <div class="aw-entity__content-section-header">
             <h2 class="aw-entity__content-section-title">Oggetti collegati</h2>
         </div>
@@ -127,7 +127,7 @@
 </ng-template>
 
 <ng-template #entita>
-    <div class="aw-entity__content-section">
+    <div class="aw-entity__content-section aw-entity__content-section-entities">
         <div class="aw-entity__content-section-header">
             <h2 class="aw-entity__content-section-title">Entità collegate</h2>
         </div>
@@ -137,7 +137,7 @@
 </ng-template>
 
 <ng-template #maxxi>
-    <div class="aw-entity__content-section">
+    <div class="aw-entity__content-section aw-entity__content-section-maxxi">
         <div class="aw-entity__content-section-header">
             <h2 class="aw-entity__content-section-title">Descrizione Maxxi</h2>
         </div>
@@ -148,7 +148,7 @@
 </ng-template>
 
 <ng-template #wiki>
-    <div class="aw-entity__content-section">
+    <div class="aw-entity__content-section aw-entity__content-section-wiki">
         <div class="aw-entity__content-section-header">
             <h2 class="aw-entity__content-section-title">Descrizione Wikipedia</h2>
         </div>

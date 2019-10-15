@@ -38,6 +38,10 @@
         margin: 0;
         font-size: $font-size-xxl;
 
+        &-wrapper {
+            background: $entity-sidebar-title-background;
+        }
+
         .aw-entity__sidebar-title-icon {
             margin-right: $space;
             // vertical-align: middle;
