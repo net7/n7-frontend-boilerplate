@@ -30,7 +30,6 @@ function unpackData (data, page, size, keys, totalPages, context) {
     let item = {
       image: el.thumbnail,
       title: el.item.label,
-      text: el.item.info[1].value,
       payload: el.item.id,
       classes: context == 'entita' ? 'is-fullwidth' : '',
       metadata: [
@@ -41,6 +40,10 @@ function unpackData (data, page, size, keys, totalPages, context) {
               // label: el.item.info[0].key,
               label: 'Autore',
               value: el.item.info[0].value
+            },
+            {
+              // olio su tela
+              value: el.item.info[1].value
             }
           ]
         },
