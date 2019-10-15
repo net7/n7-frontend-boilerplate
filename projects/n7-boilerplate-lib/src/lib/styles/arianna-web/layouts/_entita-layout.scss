@@ -46,9 +46,21 @@
         &-text {
             font-weight: $font-weight-black;
         }
-        
+
         .color-people & {
-            
+            color: $color-people;
+        }
+
+        .color-places & {
+            color: $color-places;
+        }
+
+        .color-organizations & {
+            color: $color-organizations;
+        }
+
+        .color-concepts & {
+            color: $color-concepts;
         }
 
     }

@@ -17,41 +17,59 @@
         font-weight: $font-weight-bold;
     }
 
-    &__metadata-item {
-        display: inline-flex;
-        align-items: baseline;
-        padding-right: $space;
-        border-right: 1px solid $color-border-normal;
+    &__metadata {
 
-        &:last-of-type {
-            border-right: none;
+        &-item {
+            display: inline-flex;
+            align-items: baseline;
+            padding-right: $space;
+            border-right: 1px solid $color-border-normal;
+    
+            &:last-of-type {
+                border-right: none;
+            }
+    
+            &.color-people {
+                color: $color-people;
+            }
+    
+            &.color-places {
+                color: $color-places;
+            }
+    
+            &.color-organizations {
+                color: $color-organizations;
+            }
+    
+            &.color-concepts {
+                color: $color-concepts;
+            }
+    
+            &-icon {
+                font-size: $font-size-m;
+            }
+    
+            &-value {
+                font-size: $font-size-s;
+                font-weight: $font-weight-normal;
+            }
+    
+            &-label {
+                & + .n7-item-preview__metadata-item-value {
+                    font-weight: $font-weight-bold;
+                }
+            }
         }
 
-        &.color-people {
-            color: $color-people;
-        }
-
-        &.color-places {
-            color: $color-places;
-        }
-
-        &.color-organizations {
-            color: $color-organizations;
-        }
-
-        &.color-concepts {
-            color: $color-concepts;
-        }
-
-        &-icon {
-            font-size: $font-size-m;
-        }
-
-        &-value {
-            font-size: $font-size-s;
+        &-group {
+            &.n7-objects__metadata-artist {
+                .n7-item-preview__metadata-item-icon {
+                    margin-right: 0;
+                }
+            }
         }
     }
-    
+
     &.has-image {
         grid-template-columns: $item-preview-image-size 1fr;
 
