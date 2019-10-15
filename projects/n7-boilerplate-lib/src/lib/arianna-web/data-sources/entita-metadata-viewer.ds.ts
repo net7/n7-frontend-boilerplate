@@ -12,7 +12,6 @@ export class AwEntitaMetadataViewerDS extends DataSource {
    
     return {
       group: AwEntitaMetadataViewerDS.unpackFields(data),
-      classes: this.options.context ? `context-${this.options.context}` : ''
     }
   }
 
