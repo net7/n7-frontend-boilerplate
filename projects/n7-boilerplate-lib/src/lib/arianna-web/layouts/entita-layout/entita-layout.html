@@ -100,7 +100,7 @@
 <ng-template #campi>
     <div class="aw-entity__content-section aw-entity__content-section-fields">
         <ng-container *ngIf="lb.widgets['aw-entita-metadata-viewer'].ds.out$ | async as data">
-            <div class="aw-entity__content-section-header">
+            <div class="aw-entity__content-section-header aw-entity__content-section-header-decorated">
                 <h2 class="aw-entity__content-section-title">Campi</h2>
             </div>
             <n7-metadata-viewer class="aw-entita-layout__metadata-viewer" [data]="data">
@@ -111,7 +111,7 @@
 
 <ng-template #oggetti>
     <div class="aw-entity__content-section aw-entity__content-section-objects">
-        <div class="aw-entity__content-section-header">
+        <div class="aw-entity__content-section-header aw-entity__content-section-header-decorated">
             <h2 class="aw-entity__content-section-title">Oggetti collegati</h2>
         </div>
         <ng-container *ngFor="let preview of (lb.widgets['aw-linked-objects'].ds.out$ | async)?.previews">
@@ -128,7 +128,7 @@
 
 <ng-template #entita>
     <div class="aw-entity__content-section aw-entity__content-section-entities">
-        <div class="aw-entity__content-section-header">
+        <div class="aw-entity__content-section-header aw-entity__content-section-header-decorated">
             <h2 class="aw-entity__content-section-title">Entità collegate</h2>
         </div>
         <!-- BUBBLE CHART GOES HERE -->
@@ -138,7 +138,7 @@
 
 <ng-template #maxxi>
     <div class="aw-entity__content-section aw-entity__content-section-maxxi">
-        <div class="aw-entity__content-section-header">
+        <div class="aw-entity__content-section-header aw-entity__content-section-header-decorated">
             <h2 class="aw-entity__content-section-title">Descrizione Maxxi</h2>
         </div>
         <div>
@@ -149,7 +149,7 @@
 
 <ng-template #wiki>
     <div class="aw-entity__content-section aw-entity__content-section-wiki">
-        <div class="aw-entity__content-section-header">
+        <div class="aw-entity__content-section-header aw-entity__content-section-header-decorated">
             <h2 class="aw-entity__content-section-title">Descrizione Wikipedia</h2>
         </div>
         <div>

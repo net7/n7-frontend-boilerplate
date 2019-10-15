@@ -132,6 +132,12 @@
             .n7-btn {
                 margin-left: auto;
             }
+
+            &-decorated {
+                margin-bottom: $space*3;
+                padding-bottom: calc(#{$space}*3 - 0.3em);
+                border-bottom: 2px solid $color-border-light;
+            }
         }
 
         &-title {
@@ -142,7 +148,6 @@
         &-overview {
             .n7-metadata-viewer {
                 &__group {
-        
                     &-content {
                         display: grid;
                         grid-template-columns: repeat(2, 1fr);
@@ -198,12 +203,23 @@
             &-title {
                 font-size: $font-size-l;
             }
-
-          
         }
-        
     }
+
+    &__content-section-fields {
+        .n7-metadata-viewer {
+            &__group {
+                margin-bottom: $space*3;
+                margin-left: $space*3;
+                padding-bottom: $space*2;
+                border-bottom: 2px solid $color-border-light;
     
+                &-content {
+                    margin-left: $space*3;
+                }
+            }
+        }     
+    }
 }
 
 
