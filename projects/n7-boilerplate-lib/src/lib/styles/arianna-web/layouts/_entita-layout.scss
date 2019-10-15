@@ -40,6 +40,9 @@
 
         &-wrapper {
             background: $entity-sidebar-title-background;
+            border-top: 1px solid $color-border-light;
+            border-right: 1px solid $color-border-light;
+            border-left: 1px solid $color-border-light;
         }
 
         .aw-entity__sidebar-title-icon {
@@ -72,7 +75,8 @@
     &__sidebar {
          .n7-nav {
             background-color: $color-background-base; 
-            box-shadow: 0 2px 20px 0 rgba(0,0,0,0.08);
+            border: 1px solid $color-border-light;
+            // box-shadow: 0 2px 20px 0 rgba(0,0,0,0.08);
         }
 
         .n7-nav__item {
@@ -113,6 +117,13 @@
                 color: $color-text-link;
             }
         }
+
+        &:last-of-type {
+            .n7-nav__link {
+                border-bottom: none;
+            }
+        }
+
     }
 }
 
