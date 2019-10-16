@@ -91,8 +91,8 @@ $font-weight-black: 900;
 // $color-background-light-blue: #F5F7FF;
 // $color-background-medium: $color-gray-01;
 // $color-background-dark: $color-gray-03;
-$color-background-layout: $color-background-light;
-$gradient-item-preview-list: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #ffffff 100%);
+$color-background-layout: $color-gray-02;
+$gradient-item-preview-list: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, $color-background-layout 100%);
 
 // ------------------------------------ //
 // #MEDIA-QUERIES-BREAKPOINT
@@ -295,5 +295,5 @@ $scheda-title-font-weight: $font-weight-bold;
 // ------------------------------------ //
 // #ENTITA
 // ------------------------------------ //
-$entity-sidebar-title-background: $color-gray-02;
+$entity-sidebar-title-background: $color-gray-01;
 $entity-nav-item-active-decoration-bg: $color-gray-06;
