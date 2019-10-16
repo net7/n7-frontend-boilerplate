@@ -3,7 +3,10 @@
 
         <!-- Left sidebar: tree -->
         <div class="aw-search__facets">
-            {{ lb.widgets['facets'].ds.out$ | async | json }}
+            <n7-facets-wrapper
+                [data]="lb.widgets['facets-wrapper'].ds.out$ | async"
+                [emit]="lb.widgets['facets-wrapper'].emit">
+            </n7-facets-wrapper>
         </div>
 
         <!-- Search details -->

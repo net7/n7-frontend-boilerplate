@@ -5,15 +5,17 @@ export class MainLayoutDS extends LayoutDataSource {
   protected configuration: any;
   protected mainState: any;
   protected router: any;
+  protected route: any;
   protected titleService: any;
 
   public options: any;
   public pageTitle: string;
 
-  onInit({ configuration, mainState, router, options, titleService }){
+  onInit({ configuration, mainState, router, options, titleService, route }){
     this.configuration = configuration;
     this.mainState = mainState;
     this.router = router;
+    this.route = route;
     this.titleService = titleService;
     this.options = options;
 
@@ -48,9 +50,20 @@ export class MainLayoutDS extends LayoutDataSource {
   onNavigate(payload){
     // router navigation
     if(payload.handler === 'router'){
+      const { path, queryParams } = payload;
+
       // path control
-      if(!payload.path) throw Error('onNavigate: no path for router navigate');
-      this.router.navigate(payload.path);
+      if(!path) throw Error('onNavigate: no path for router navigate');
+
+      if(queryParams){
+        this.router.navigate(path, {
+          relativeTo: this.route,
+          queryParams: queryParams,
+          queryParamsHandling: 'merge'
+        });
+      } else {
+        this.router.navigate(path);
+      }
 
       // on change
       this._onRouterNavigate();

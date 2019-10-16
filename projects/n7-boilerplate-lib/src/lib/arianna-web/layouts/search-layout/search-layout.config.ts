@@ -2,7 +2,8 @@ import { AwSearchLayoutDS } from './search-layout.ds';
 import { AwSearchLayoutEH } from './search-layout.eh';
 import * as DS from '../../data-sources';
 import * as EH from '../../event-handlers';
-import { FacetsDS } from '../../../common/data-sources';
+import { FacetsWrapperDS } from '../../../common/data-sources';
+import { FacetsWrapperEH } from '../../../common/event-handlers';
 
 export const AwSearchLayoutConfig = {
   layoutId: 'aw-search-layout',
@@ -11,7 +12,7 @@ export const AwSearchLayoutConfig = {
    * in this layout
    */
   widgets: [
-    { id: 'facets', dataSource: FacetsDS }
+    { id: 'facets-wrapper', dataSource: FacetsWrapperDS, eventHandler: FacetsWrapperEH },
   ],
   layoutDS: AwSearchLayoutDS,
   layoutEH: AwSearchLayoutEH,

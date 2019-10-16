@@ -1,72 +1,153 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
+export type FilterOperators = '=' | '>' | '<' | '>=' | '<=' | '<>' | 'LIKE';
+export type FacetTypes = 'value' | 'range';
+export type FacetOperators = 'OR' | 'AND';
+
 export interface ISearchConfig {
   facets: any;
   page: any;
   resultFields: any;
-  searchFields: any;
   fields: any;
   baseUrl: string;
 }
 
-const DEFAULT_OPERATOR = 'AND';
+export interface IFacet {
+  id: string,
+  type: FacetTypes;
+  operator: FacetOperators;
+  data?: any;
+}
 
-class SearchModel {
+export interface IFilter {
+  facetId: string;
+  value: number | string | (number | string)[] | null;
+  searchIn: Array<{
+    key: string;  
+    operator?: FilterOperators;
+  }>;  
+  isArray?: boolean;
+  context?: 'internal' | 'external';
+  target?: string;
+}
+
+export class SearchModel {
   private _id: string;
-  private _query: string;
-  private _filters: any = {};
-  private _state: ISearchConfig;
-  private _initialState: ISearchConfig;
-  public results$: Subject<any[]> = new Subject();
+  private _filters: IFilter[] = [];
+  private _facets: IFacet[] = [];
+  private _page: any;
+  private _config: ISearchConfig;
+  private _results$: Subject<any[]> = new Subject();
 
   constructor(id: string, config: ISearchConfig){
     this._id = id;
-    this._state = config;
-    this._initialState = config;
+    this._config = config;
+
+    this._setFilters();
+    this._setFacets();
+    this._setPage();
   }
 
-  // SETTERS
-  public setValue(facetId: string, value: any){
-    const facetConfig = this._state.facets[facetId];
-    if(!facetConfig) throw Error(`Facet "${facetId}" does not exists!`);
-
-    // update input
-    this._state.fields.forEach(field => {
-      field.inputs.forEach(input => {
-        if(input.id === facetId){
-          input.value = value;
-        }
-      })
-    });
-
-    // update filters
-    this._filters[facetId] = {
-      value,
-      operator: facetConfig.operator || DEFAULT_OPERATOR
-    };
-  }
-  public setQuery = (value: string) => this._query = value;
-  public setResults = (results) => this.results$.next(results);
-  
-  // GETTERS
   public getId = () => this._id;
-  public getFields = () => this._state.fields;
-  public getParams() {
-    const { facets, resultFields, searchFields } = this._state;
-    return { 
-      query: this._query, 
-      filters: this._filters, 
-      facets, 
-      resultFields, 
-      searchFields, 
-    };
+  public getFilters = () => this._filters;
+  public getFacets = () => this._facets;
+  public getConfig = () => this._config;
+  public getFields = () => this._config.fields;
+  public getResults$ = () => this._results$;
+
+  public setResults = (results) => this._results$.next(results);
+  
+  public updateFilter(facetId, value, remove?: boolean) {
+    const selectedFilters = this.getFiltersByFacetId(facetId);
+    selectedFilters.forEach(filter => {
+      if(Array.isArray(filter.value) && remove){
+        filter.value = filter.value.filter(item => item !== value);
+      } else if(Array.isArray(filter.value) && filter.value.indexOf(value) === -1){
+        filter.value.push(value);
+      } else {
+        filter.value = !remove ? value : null;
+      }
+    });
+  }
+
+  public updateFiltersFromQueryParams(queryParams) {
+    Object.keys(queryParams).forEach(facetId => {
+      const selectedFilters = this.getFiltersByFacetId(facetId),
+        value = queryParams[facetId];
+
+      selectedFilters.forEach(filter => {
+        filter.value = filter.isArray ? value.split(',') : value;
+      });
+    });
+  }
+
+  public updateFacet(facetId, data) {
+    let selectedFacets = this._facets.filter(facet => facet.id === facetId);
+    if(!selectedFacets.length){
+      throw Error(`Facet with id "${facetId}" does not exists`);
+    }
+
+    selectedFacets.forEach(facet => facet.data = data);
   }
 
   public reset(){
-    this._state = this._initialState;
-    this._filters = {};
-    this._query = '';
+    this._filters.forEach(filter => filter.value = null);
+  }
+
+  public getRequestParams(){
+    return {
+      facets: this._facets,
+      page: this._page,
+      resultFields: this._config.resultFields,
+      filters: this._filters
+        .filter(filter => { 
+          return (filter.context !== 'internal') && (
+            (Array.isArray(filter.value) && filter.value.length) || 
+            (!Array.isArray(filter.value) && filter.value)
+          );
+        })
+        .map(({ facetId, value, searchIn }) => ({ facetId, value, searchIn }))
+    }
+  }
+
+  public getInternalFilters(){
+    return this._filters
+        .filter(filter => { 
+          return (filter.context === 'internal') && (
+            (Array.isArray(filter.value) && filter.value.length) || 
+            (!Array.isArray(filter.value) && filter.value)
+          );
+        })
+        .map(({ facetId, value, searchIn }) => ({ facetId, value, searchIn }));
+  }
+
+  public filtersAsQueryParams(filters){
+    let queryParams: any = {};
+    filters.forEach(filter => queryParams[filter.facetId] = Array.isArray(filter.value) ? filter.value.join(',') : filter.value);
+
+    return queryParams;
+  }
+
+  public getFiltersByFacetId(facetId: string){
+    return this._filters.filter(filter => filter.facetId === facetId);
+  }
+
+  private _setFilters(){
+    this._config.fields.forEach(field => {
+      field.inputs.forEach(input => this._filters.push({ 
+        ...input.filterConfig,
+        value: input.filterConfig.isArray ? [] : null
+      }));
+    });
+  }
+
+  private _setFacets(){
+    this._facets = this._config.facets;
+  }
+
+  private _setPage(){
+    this._page = this._config.page;
   }
 }
 

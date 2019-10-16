@@ -1,77 +1,188 @@
 import { LayoutDataSource } from '@n7-frontend/core';
 import { SearchService } from 'n7-boilerplate-lib/lib/common/services';
 
-let SEARCH_CONFIG = {
-  facets: {
-    query: {
-      type: 'value'
-    },
-    'entity-types': {
-      type: 'value',
-      operator: 'OR',
-      data: null
-    },
-    'entity-filter': {
-      type: 'value'
-    },
-    modes: {
-      type: 'range',
-      ranges: [
-        { from: 1, name: 'Mode 1' },
-        { from: 1, to: 2, name: 'Mode 2' },
-        { from: 2, to: 3, name: 'Mode 3' },
-        { to: 4, name: 'Mode 4' },
-      ]
-    }
-  },
-  page: {
-    limit: 20
-  },
-  resultFields: {
-    title: {
-      highlight: true
-    },
-    description: {
-      highlight: true,
-      limit: 100
-    },
-    date: {}
-  },
-  searchFields: {
-    title: {
-      weight: 10,
-    },
-    description: {
-      weight: 5,
-    },
-    metadata: {}
-  },
+const SEARCH_CONFIG = {
+  facets: [{
+    id: 'entity-types', 
+    type: 'value',
+    operator: 'OR',
+    data: [{
+      value: 'people',
+      label: 'Persone',
+      count: 1,
+    }, {
+      value: 'places',
+      label: 'Luoghi',
+      count: 2,
+    }, {
+      value: 'concepts',
+      label: 'Concetti',
+      count: 3,
+    }, {
+      value: 'organizations',
+      label: 'Organizzazioni',
+      count: 4,
+    }]
+  }, {
+    id: 'entity-links', 
+    type: 'value',
+    data: [{
+      value: 'milano',
+      label: 'Milano',
+      count: 1,
+      filterData: {
+        text: 'Milano',
+        entity: 'places'
+      }
+    }, {
+      value: 'roma',
+      label: 'Comune di Roma',
+      count: 2,
+      filterData: {
+        text: 'Comune di Roma',
+        entity: 'places'
+      }
+    }, {
+      value: 'spazio',
+      label: 'Spazio',
+      count: 3,
+      filterData: {
+        text: 'Spazio',
+        entity: 'concept'
+      }
+    }, {
+      value: 'rodolfo-marna',
+      label: 'Rodolfo Marna',
+      count: 4,
+      filterData: {
+        text: 'Rodolfo Marna',
+        entity: 'people'
+      }
+    }, {
+      value: 'alighiero-boetti',
+      label: 'Alighiero Boetti',
+      count: 5,
+      filterData: {
+        text: 'Alighiero Boetti',
+        entity: 'people'
+      }
+    }]
+  }, {
+    id: 'date-from',
+    type: 'value',
+    operator: 'OR',
+    data: [{
+      value: '1990',
+      label: '1990',
+      count: 1,
+    }, {
+      value: '1995',
+      label: '1995',
+      count: 2,
+    }, {
+      value: '1996',
+      label: '1996',
+      count: 3,
+    }, {
+      value: '2018',
+      label: '2018',
+      count: 4,
+    }]
+  }, {
+    id: 'other-checks', 
+    type: 'value',
+    operator: 'OR',
+    data: [1, 2, 3, 4].map(number => ({
+      value: number,
+      label: `Check #${number}`,
+      count: number * 10,
+    }))
+  }],
   fields: [{
     header: {
-      label: 'Relazione con'
+      label: 'Relazione con',
+      classes: 'related-class'
     },
     inputs: [{
       id: 'entity-types',
       type: 'checkbox',
-      items: []
+      filterConfig: {
+        isArray: true,
+        facetId: 'entity-types',
+        context: 'internal',
+        target: 'entity-links',
+        searchIn: [{
+          key: 'entity',
+          operator: '='
+        }]
+      } 
     }, {
       id: 'entity-search',
-      type: 'internal-search',
+      type: 'search',
       placeholder: 'Cerca entità',
       icon: 'n7-icon-search',
-      payload: {
-        id: 'entity-search',
-        target: 'entity-filter'
+      options: {
+        delay: 500,
+        minChars: 3, 
       },
+      filterConfig: {
+        facetId: 'entity-search',
+        context: 'internal',
+        target: 'entity-links',
+        searchIn: [{
+          key: 'text',
+          operator: 'LIKE'
+        }]
+      } 
     }, {
-      id: 'entity-filter',
-      type: 'filter',
-      limit: 100,
-      items: []
+      id: 'entity-links',
+      type: 'link',
+      options: {
+        limit: 20,
+      },
+      filterConfig: {
+        facetId: 'entity-links',
+        searchIn: [{
+          key: 'source.id',
+          operator: '='
+        }]
+      } 
+    }]
+  }, {
+    header: {
+      label: 'Data',
+      classes: 'date-class'
+    },
+    inputs: [{
+      id: 'date-from',
+      label: 'Dal',
+      type: 'select',
+      filterConfig: {
+        facetId: 'date-from',
+        searchIn: [{
+          key: 'source.dateStart',
+          operator: '<='
+        }]
+      } 
+    }, {
+      id: 'other-checks',
+      type: 'checkbox',
+      filterConfig: {
+        isArray: true,
+        facetId: 'other-checks',
+        searchIn: [{
+          key: 'other',
+          operator: '='
+        }]
+      } 
     }]
   }],
+  resultFields: null,
+  page: null,
   baseUrl: ''
 }
+
+const SEARCH_ID = 'search-facets';
 
 export class AwSearchLayoutDS extends LayoutDataSource {
   private communication: any;
@@ -88,20 +199,8 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     this.search = search;
     this.options = options;
 
-    const configKeys = this.configuration.get('config-keys');
-    SEARCH_CONFIG.facets['entity-types'].data = Object.keys(configKeys).map(key => ({
-      value: key,
-      label: configKeys[key].label
-    }));
-
-    try {
-      this.search.add('search-layout', SEARCH_CONFIG);
-    } catch(err){
-      // do nothing
-    }
-
-    const searchModel = this.search.model('search-layout');
-    this.one('facets').updateOptions({ searchModel });
-    this.one('facets').update({ fields: searchModel.getFields() });
+    this.search.add(SEARCH_ID, SEARCH_CONFIG);
+    const searchModel = this.search.model(SEARCH_ID);
+    this.one('facets-wrapper').update({ searchModel });
   }
 }

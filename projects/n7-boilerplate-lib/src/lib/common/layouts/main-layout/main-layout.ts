@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { AbstractLayout } from '../../models/abstract-layout'
 import { ConfigurationService } from '../../services/configuration.service';
@@ -14,6 +14,7 @@ import { MainLayoutConfig as config } from './main-layout.config';
 export class MainLayoutComponent extends AbstractLayout implements OnInit, OnDestroy {
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private configuration: ConfigurationService,
     private layoutsConfiguration: LayoutsConfigurationService,
     private mainState: MainStateService,
@@ -27,6 +28,7 @@ export class MainLayoutComponent extends AbstractLayout implements OnInit, OnDes
       configuration: this.configuration,
       mainState: this.mainState,
       router: this.router,
+      route: this.route,
       titleService: this.titleService,
       options: this.config.options || {},
     }

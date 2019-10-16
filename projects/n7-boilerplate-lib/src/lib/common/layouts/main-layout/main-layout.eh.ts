@@ -1,15 +1,22 @@
 import { EventHandler } from '@n7-frontend/core';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, first, filter } from 'rxjs/operators';
 
 export class MainLayoutEH extends EventHandler {
   private destroyed$: Subject<any> = new Subject();
+  private route: any;
+  private router: any;
 
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch(type) {
         case 'main-layout.init':
           this.dataSource.onInit(payload);
+
+          this.route = payload.route;
+          this.router = payload.router;
+
+          this._listenRouterChanges();
           break;
 
         case 'main-layout.destroy':
@@ -35,5 +42,20 @@ export class MainLayoutEH extends EventHandler {
       }
     });
   }
+
+  private _listenRouterChanges(){
+    this.route.queryParams.pipe(
+      filter(params => {
+        if(Object.keys(params).length) return true;
+        return false;
+      }),
+      first()
+    ).subscribe(params => {
+      // setTimeout for fixing route event timings
+      setTimeout(() => {
+        this.emitGlobal('queryparams', params);
+      });
+    });
+  } 
   
 }

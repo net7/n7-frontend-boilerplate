@@ -12,6 +12,7 @@ export * from './lib/common/models';
 export * from './lib/common/data-sources';
 export * from './lib/common/event-handlers';
 export * from './lib/common/layouts';
+export * from './lib/common/components';
 
 // arianna web
 export * from './lib/arianna-web/n7-boilerplate-arianna-web.module';
