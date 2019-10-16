@@ -159,6 +159,7 @@
         &-overview {
             .n7-metadata-viewer {
                 &__group {
+                    margin-bottom: $space*2.5;
                     &-content {
                         display: grid;
                         grid-template-columns: repeat(2, 1fr);
@@ -169,6 +170,7 @@
                 &__item {
                     display: grid;
                     grid-template-columns: 1fr 2fr;
+                    margin-bottom: $space*2.5;
                 }
                 
             }
@@ -185,8 +187,7 @@
     }
 
     .n7-breadcrumbs {
-        padding-bottom: 0;
-        padding-left: 0;
+        padding: 0;
 
         &__item {
             font-size: $font-size-s;
