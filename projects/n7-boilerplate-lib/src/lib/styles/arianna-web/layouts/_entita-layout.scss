@@ -147,7 +147,7 @@
 
             &-decorated {
                 padding-bottom: calc(#{$space}*3 - 0.3em);
-                border-bottom: 2px solid $color-border-light;
+                border-bottom: 1px solid $color-border-light;
             }
         }
 
@@ -179,6 +179,7 @@
 
     &__overview-description {
         column-count: 2;
+        line-height: 1.4;
     }
 
     &-layout__button-wrapper {
@@ -224,7 +225,7 @@
                 margin-bottom: $space*3;
                 margin-left: $space*3;
                 padding-bottom: $space*2;
-                border-bottom: 2px solid $color-border-light;
+                border-bottom: 1px solid $color-border-light;
     
                 &-content {
                     margin-left: $space*3;
