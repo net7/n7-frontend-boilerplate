@@ -5,6 +5,8 @@ export class AwEntitaLayoutEH extends EventHandler {
   private destroyed$: Subject<any> = new Subject();
   private configuration: any;
   private route: any;
+  private entityId: string;
+  // private selectedTab: string;
 
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
@@ -13,13 +15,29 @@ export class AwEntitaLayoutEH extends EventHandler {
           this.dataSource.onInit(payload);
           this.configuration = payload.configuration;
           this.route = payload.route;
-          let paramId = this.route.snapshot.params.id || ""
+          this.entityId = this.route.snapshot.params.id || "";
+          this.dataSource.currentPage = this.route.snapshot.params.page || '';
           this.listenRoute();
-          this.loadNavigation(paramId);
+          this.loadNavigation(this.entityId);
           break;
 
         case 'aw-entita-layout.destroy':
           this.destroyed$.next();
+          break;
+
+        case 'aw-entita-layout.showmore':
+          if (payload) {
+            this.emitGlobal('navigate', {
+              path: [
+                this.configuration.get("paths").entitaBasePath
+                + '/' +
+                this.entityId
+                + '/' +
+                payload
+              ],
+              handler: 'router'
+            });
+          }
           break;
 
         default:
@@ -35,14 +53,31 @@ export class AwEntitaLayoutEH extends EventHandler {
               path: [
                 this.configuration.get("paths").entitaBasePath
                 + '/' +
-                this.route.snapshot.params.id
+                this.entityId
                 + '/' +
                 payload
               ], 
               handler: 'router' 
             });
           }
-          break;
+          break
+        case 'aw-linked-objects.pagination':
+          this.dataSource.currentPage = payload.split('-')[1]
+          this.emitGlobal('navigate', {
+            handler: 'router',
+            path: [`aw/entita/${this.route.snapshot.params.id}/oggetti-collegati/${payload.split('-')[1]}`]
+          });
+          break
+        case 'aw-linked-objects.goto':
+          let targetPage = Number(payload.replace('goto-', ''))
+          // this.emitGlobal('navigate', {
+          //   handler: 'router',
+          //   path: [`aw/entita/${this.route.snapshot.params.id}/oggetti-collegati/${targetPage}`]
+          // });
+          break
+        case 'aw-linked-objects.change':
+          this.dataSource.pageSize = payload;
+          this.listenRoute() // reloads the page content with the new page size
         default:
           break;
       }
@@ -71,12 +106,7 @@ export class AwEntitaLayoutEH extends EventHandler {
   }
 
   private loadNavigation(selectedItem) {
-    /**
-     * Fetches the content for this page, based on the URL.
-     * 
-     * @param selectItem - item to get from the communication provider
-     */
-    this.dataSource.getNavigation('entita').subscribe((response) => {
+    this.dataSource.getNavigation(selectedItem).subscribe((response) => {
       if (response) {
         this.dataSource.updateWidgets(response);
       }

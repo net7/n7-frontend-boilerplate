@@ -23,6 +23,12 @@
 
 
 // ------------------------------------ //
+// #AW COLOR SCHEME
+// ------------------------------------ //
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/generic/color_scheme";
+
+
+// ------------------------------------ //
 // #N7 COMPONENTS VARIABLES
 // ------------------------------------ //
 @import "../../node_modules/@n7-frontend/components/styles/generic/variables";
@@ -33,11 +39,6 @@
 // ------------------------------------ //
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/generic/variables";
 
-
-// ------------------------------------ //
-// #ARIANNA WEB VARIABLES
-// ------------------------------------ //
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/generic/variables";
 
 // ------------------------------------ //
 // #N7 COMPONENTS STYLES
@@ -52,8 +53,18 @@
 
 
 // ------------------------------------ //
+// #ARIANNA COMPONENTS
+// ------------------------------------ //
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/header";
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/item-preview";
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/tippy-tooltip";
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/bubble-popup-menu";
+
+
+// ------------------------------------ //
 // #ARIANNA WEB LAYOUTS
 // ------------------------------------ //
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/layouts/main-layout";
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/layouts/home-layout";
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/layouts/scheda-layout";
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/layouts/entita-layout";

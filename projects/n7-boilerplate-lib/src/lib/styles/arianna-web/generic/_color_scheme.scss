@@ -1,0 +1,20 @@
+//
+// COLOR SCHEME
+//
+// Here we define all colors used in components and project
+//
+
+// ------------------------------------ //
+// #ENTITIES-COLORS
+// ------------------------------------ //
+$color-people: #3a81f2; // Fallback
+$color-people: var(--color-people);
+
+$color-places: #f2cd3a; // Fallback
+$color-places: var(--color-places);
+
+$color-concepts: #5eab7b; // Fallback
+$color-concepts: var(--color-concepts);
+
+$color-organizations: #c48731; // Fallback
+$color-organizations: var(--color-organizations);
