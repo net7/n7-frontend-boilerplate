@@ -160,11 +160,6 @@
             .n7-metadata-viewer {
                 &__group {
                     margin-bottom: $space*2.5;
-                    &-content {
-                        display: grid;
-                        grid-template-columns: repeat(2, 1fr);
-                        grid-column-gap: $space*3;
-                    }
                 }
         
                 &__item {
@@ -212,6 +207,7 @@
     }
 
     .n7-metadata-viewer {
+        column-count: 2;
         &__group {
             &-title {
                 font-size: $font-size-l;
@@ -224,8 +220,6 @@
             &__group {
                 margin-bottom: $space*3;
                 margin-left: $space*3;
-                padding-bottom: $space*2;
-                border-bottom: 1px solid $color-border-light;
     
                 &-content {
                     margin-left: $space*3;
