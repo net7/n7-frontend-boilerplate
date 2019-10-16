@@ -231,7 +231,7 @@ export class FacetsWrapperDS extends DataSource {
       label: inputConfig.label,
       disabled: inputConfig.disabled,
       placeholder: inputConfig.placeholder,
-      icon: 'n7-icon-search',
+      icon: inputConfig.icon,
       inputPayload: {
         ...payload,
         trigger: 'input'

@@ -1,104 +1,82 @@
-import { LayoutDataSource } from '@n7-frontend/core';
+import { LayoutDataSource, LayoutBuilder } from '@n7-frontend/core';
 import { SearchService } from 'n7-boilerplate-lib/lib/common/services';
 
 const SEARCH_CONFIG = {
   facets: [{
-    id: 'entity-types', 
+    id: 'query', 
     type: 'value',
-    operator: 'OR',
+    data: []
+  }, {
+    id: 'query-all', 
+    type: 'value',
     data: [{
-      value: 'people',
-      label: 'Persone',
-      count: 1,
-    }, {
-      value: 'places',
-      label: 'Luoghi',
-      count: 2,
-    }, {
-      value: 'concepts',
-      label: 'Concetti',
-      count: 3,
-    }, {
-      value: 'organizations',
-      label: 'Organizzazioni',
-      count: 4,
+      value: '1',
+      label: 'Cerca in tutti campi delle schede'
     }]
+  }, {
+    id: 'query-links', 
+    type: 'value',
+    data: []
+  }, {
+    id: 'entity-types',
+    type: 'value',
+    data: []
+  }, {
+    id: 'entity-search', 
+    type: 'value',
+    data: []
   }, {
     id: 'entity-links', 
     type: 'value',
-    data: [{
-      value: 'milano',
-      label: 'Milano',
-      count: 1,
-      filterData: {
-        text: 'Milano',
-        entity: 'places'
-      }
-    }, {
-      value: 'roma',
-      label: 'Comune di Roma',
-      count: 2,
-      filterData: {
-        text: 'Comune di Roma',
-        entity: 'places'
-      }
-    }, {
-      value: 'spazio',
-      label: 'Spazio',
-      count: 3,
-      filterData: {
-        text: 'Spazio',
-        entity: 'concept'
-      }
-    }, {
-      value: 'rodolfo-marna',
-      label: 'Rodolfo Marna',
-      count: 4,
-      filterData: {
-        text: 'Rodolfo Marna',
-        entity: 'people'
-      }
-    }, {
-      value: 'alighiero-boetti',
-      label: 'Alighiero Boetti',
-      count: 5,
-      filterData: {
-        text: 'Alighiero Boetti',
-        entity: 'people'
-      }
-    }]
+    data: []
   }, {
-    id: 'date-from',
+    id: 'date-from', 
     type: 'value',
-    operator: 'OR',
-    data: [{
-      value: '1990',
-      label: '1990',
-      count: 1,
-    }, {
-      value: '1995',
-      label: '1995',
-      count: 2,
-    }, {
-      value: '1996',
-      label: '1996',
-      count: 3,
-    }, {
-      value: '2018',
-      label: '2018',
-      count: 4,
-    }]
+    data: []
   }, {
-    id: 'other-checks', 
+    id: 'date-to', 
     type: 'value',
-    operator: 'OR',
-    data: [1, 2, 3, 4].map(number => ({
-      value: number,
-      label: `Check #${number}`,
-      count: number * 10,
-    }))
+    data: []
   }],
   fields: [{
+    inputs: [{
+      id: 'query',
+      type: 'search',
+      placeholder: 'Cerca...',
+      // icon: 'n7-icon-search',
+      options: {
+        delay: 500,
+        minChars: 3, 
+      },
+      filterConfig: {
+        facetId: 'query',
+        searchIn: [{
+          key: 'source.title',
+          operator: 'LIKE'
+        }]
+      } 
+    }, {
+      id: 'query-all',
+      type: 'checkbox',
+      filterConfig: {
+        facetId: 'query-all',
+        searchIn: [{
+          key: 'query-all',
+          operator: '='
+        }]
+      }
+    }, {
+      id: 'query-links',
+      type: 'link',
+      filterConfig: {
+        facetId: 'query-links',
+        searchIn: [{
+          key: 'source.entityType',
+          operator: '='
+        }]
+      } 
+    }]
+  }, {
     header: {
       label: 'Relazione con',
       classes: 'related-class'
@@ -120,7 +98,7 @@ const SEARCH_CONFIG = {
       id: 'entity-search',
       type: 'search',
       placeholder: 'Cerca entità',
-      icon: 'n7-icon-search',
+      // icon: 'n7-icon-search',
       options: {
         delay: 500,
         minChars: 3, 
@@ -161,18 +139,18 @@ const SEARCH_CONFIG = {
         facetId: 'date-from',
         searchIn: [{
           key: 'source.dateStart',
-          operator: '<='
+          operator: '>='
         }]
       } 
     }, {
-      id: 'other-checks',
-      type: 'checkbox',
+      id: 'date-to',
+      label: 'Al',
+      type: 'select',
       filterConfig: {
-        isArray: true,
-        facetId: 'other-checks',
+        facetId: 'date-to',
         searchIn: [{
-          key: 'other',
-          operator: '='
+          key: 'source.dateEnd',
+          operator: '<='
         }]
       } 
     }]
@@ -199,7 +177,37 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     this.search = search;
     this.options = options;
 
-    this.search.add(SEARCH_ID, SEARCH_CONFIG);
+    // FIXME: togliere
+    const configKeys = this.configuration.get('config-keys'),
+      queryLinksData = Object.keys(configKeys).map(key => {
+        const config = configKeys[key];
+        return {
+          value: key,
+          label: config.label,
+          count: 1,
+
+          // questi vanno aggiunti a mano lato front-end
+          icon: config.icon,
+          classes: `color-${key}`
+        };
+      }),
+      entityTypesData = Object.keys(configKeys).map(key => {
+        const config = configKeys[key];
+        return {
+          value: key,
+          label: config.label,
+        };
+      });
+
+    SEARCH_CONFIG.facets.filter(facet => facet.id === 'query-links').forEach(facet => {
+      facet.data = queryLinksData;
+    });
+
+    SEARCH_CONFIG.facets.filter(facet => facet.id === 'entity-types').forEach(facet => {
+      facet.data = entityTypesData;
+    });
+
+    if(!this.search.model(SEARCH_ID)) this.search.add(SEARCH_ID, SEARCH_CONFIG);
     const searchModel = this.search.model(SEARCH_ID);
     this.one('facets-wrapper').update({ searchModel });
   }

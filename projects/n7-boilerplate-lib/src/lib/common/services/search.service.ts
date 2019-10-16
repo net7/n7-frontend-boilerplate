@@ -164,8 +164,6 @@ export class SearchService {
   }
 
   public model(id: string): SearchModel {
-    if(!this._models[id]) throw Error(`Search model "${id}" does not exists!`);
-    
-    return this._models[id];
+    return this._models[id] || null;
   }
 }
