@@ -87,35 +87,15 @@
             height: $item-preview-image-size;
         }
     }
-
-    &:not(.is-fullwidth) {
-        .n7-item-preview__content,
-        .n7-item-preview__metadata {
-            display: flex;
-            flex-flow: column nowrap;
-        }
-
-        .n7-item-preview__metadata {
-            flex: 1;
-        }
-
-        .n7-objects__metadata-linked {
-            margin-top: auto;
-        }
-    }
 }
 
 /* ------------------------------------ *\
    #IS-FULLWIDTH
 \* ------------------------------------ */
 .n7-item-preview.is-fullwidth {
-    .n7-item-preview__content {
-        display: grid;
-    }
 
     .n7-item-preview__metadata {
         display: flex;
-        margin-top: auto;
 
         &-group {
             margin-bottom: 0;
