@@ -1,5 +1,6 @@
 import { DataSource } from '@n7-frontend/core';
 import { SearchModel } from '../services/search.service';
+import { FacetInputCheckbox, FacetInput } from '../models';
 
 const HEADER_ICON_OPEN = 'n7-icon-angle-down';
 const HEADER_ICON_CLOSE = 'n7-icon-angle-right';
@@ -12,7 +13,7 @@ export class FacetsWrapperDS extends DataSource {
 
     this.searchModel = data.searchModel;
 
-    console.log(this.searchModel.getId(), 'loaded');
+    /* console.log(this.searchModel.getId(), 'loaded');
 
     const id = this.searchModel.getId(),
       facets = this.searchModel.getFacets(),
@@ -35,7 +36,12 @@ export class FacetsWrapperDS extends DataSource {
 
         // checkboxes
         if(inputConfig.type === 'checkbox'){
-          inputs = this._checkboxConfig(facetConfig.data, inputConfig, fieldId);
+          facetConfig.data.forEach(checkboxData => {
+            inputs.push(new FacetInputCheckbox({
+              ...inputConfig,
+
+            }));
+          })
         }
 
         // search
@@ -67,11 +73,13 @@ export class FacetsWrapperDS extends DataSource {
         }
       })
 
-    });
+    }); */
+
+    console.log('groups', this.searchModel.getGroups());
 
     return { 
-      groups, 
-      classes: `n7-facets-wrapper__${id}` 
+      groups: [], 
+      classes: `n7-facets-wrapper__${this.searchModel.getId()}` 
     };
   }
 

@@ -40,36 +40,31 @@ const SEARCH_CONFIG = {
   }],
   fields: [{
     inputs: [{
-      id: 'query',
       type: 'search',
+      facetId: 'query',
       placeholder: 'Cerca...',
       // icon: 'n7-icon-search',
-      options: {
+      filterConfig: {
         delay: 500,
         minChars: 3, 
-      },
-      filterConfig: {
-        facetId: 'query',
         searchIn: [{
           key: 'source.title',
           operator: 'LIKE'
         }]
       } 
     }, {
-      id: 'query-all',
       type: 'checkbox',
+      facetId: 'query-all',
       filterConfig: {
-        facetId: 'query-all',
         searchIn: [{
           key: 'query-all',
           operator: '='
         }]
       }
     }, {
-      id: 'query-links',
       type: 'link',
+      facetId: 'query-links',
       filterConfig: {
-        facetId: 'query-links',
         searchIn: [{
           key: 'source.entityType',
           operator: '='
@@ -82,11 +77,10 @@ const SEARCH_CONFIG = {
       classes: 'related-class'
     },
     inputs: [{
-      id: 'entity-types',
       type: 'checkbox',
+      facetId: 'entity-types',
       filterConfig: {
         isArray: true,
-        facetId: 'entity-types',
         context: 'internal',
         target: 'entity-links',
         searchIn: [{
@@ -95,16 +89,13 @@ const SEARCH_CONFIG = {
         }]
       } 
     }, {
-      id: 'entity-search',
       type: 'search',
+      facetId: 'entity-search',
       placeholder: 'Cerca entità',
       // icon: 'n7-icon-search',
-      options: {
+      filterConfig: {
         delay: 500,
         minChars: 3, 
-      },
-      filterConfig: {
-        facetId: 'entity-search',
         context: 'internal',
         target: 'entity-links',
         searchIn: [{
@@ -113,13 +104,10 @@ const SEARCH_CONFIG = {
         }]
       } 
     }, {
-      id: 'entity-links',
       type: 'link',
-      options: {
-        limit: 20,
-      },
+      facetId: 'entity-links',
       filterConfig: {
-        facetId: 'entity-links',
+        limit: 20,
         searchIn: [{
           key: 'source.id',
           operator: '='
@@ -132,22 +120,20 @@ const SEARCH_CONFIG = {
       classes: 'date-class'
     },
     inputs: [{
-      id: 'date-from',
-      label: 'Dal',
       type: 'select',
+      facetId: 'date-from',
+      label: 'Dal',
       filterConfig: {
-        facetId: 'date-from',
         searchIn: [{
           key: 'source.dateStart',
           operator: '>='
         }]
       } 
     }, {
-      id: 'date-to',
-      label: 'Al',
       type: 'select',
+      facetId: 'date-to',
+      label: 'Al',
       filterConfig: {
-        facetId: 'date-to',
         searchIn: [{
           key: 'source.dateEnd',
           operator: '<='
