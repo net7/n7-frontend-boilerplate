@@ -1,6 +1,7 @@
 import { EventHandler } from '@n7-frontend/core';
-import { Subject } from 'rxjs';
+import { fromEvent, Subject, interval } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { debounce, debounceTime } from 'rxjs/operators';
 
 export class AwHomeLayoutEH extends EventHandler {
   private destroyed$: Subject<any> = new Subject();
@@ -13,6 +14,7 @@ export class AwHomeLayoutEH extends EventHandler {
         case 'aw-home-layout.init':
           this.dataSource.onInit(payload);
           this.loadFilters();
+          //this.windowEvents();
           break;
         case 'aw-home-layout.destroy':
             this.destroyed$.next();
@@ -55,22 +57,13 @@ export class AwHomeLayoutEH extends EventHandler {
             this.emitOuter('bubble-tooltip-select-click', payload);
             break;
         case 'aw-bubble-chart.click':
-            let bubblePayload = {
-              width: window.innerWidth / 1.8,
-              reset: true,
-              setBubbleChart: (bubbleCref) => this.dataSource._bubbleChart = bubbleCref,
-              facetData: this.dataSource.facetData
-            }
-
           if ( payload.source === 'bubble' ){
             if (payload.bubble) {
               this.dataSource.updateBubbleFilter(payload);
               if(this.dataSource.onBubbleSelected(payload.bubble)){
                 this.dataSource.filterRequest().subscribe((response) => {
                   if ( response ) {
-                    bubblePayload['source'] = response;
-                    bubblePayload['selectedBubbles'] =  this.dataSource.selectedBubbles;
-                    this.emitOuter('filterbubbleresponse', bubblePayload);
+                    this.emitOuter('filterbubbleresponse', this.dataSource.getBubblePayload(response));
                     this.dataSource.updateBubbles(response);
                   }
                 });
@@ -83,9 +76,7 @@ export class AwHomeLayoutEH extends EventHandler {
                 bubble:payload.bubble
               }).subscribe((response) => {
                 if ( response ) {
-                  bubblePayload['source'] = response;
-                  bubblePayload['selectedBubbles'] =  this.dataSource.selectedBubbles;
-                  this.emitOuter('filterbubbleresponse', bubblePayload);
+                  this.emitOuter('filterbubbleresponse',  this.dataSource.getBubblePayload(response));
                   this.dataSource.updateBubbles(response);
                  }
                });
@@ -94,21 +85,18 @@ export class AwHomeLayoutEH extends EventHandler {
         case 'aw-bubble-chart.bubble-filtered':
             this.dataSource.updateBubbleFilter(payload);
             this.dataSource.updateTags();
+            const dataSource = this.dataSource;
+            setTimeout(function(){
+              dataSource.loadingBubbles = false;
+            }, 500);
             break;
+
         /**
          * Tags & Item Previews Event Handlers
          */
         case 'aw-home-item-tags-wrapper.click':
             this.dataSource.onTagClicked(payload).subscribe((response) => {
-              let bubblePayload = {
-                width: window.innerWidth / 1.8,
-                setBubbleChart: (bubbleCref) => this.dataSource._bubbleChart = bubbleCref,
-                source: response,
-                reset: true,
-                facetData: this.dataSource.facetData,
-                selectedBubbles: this.dataSource.selectedBubbles
-              }
-              this.emitOuter('filterbubbleresponse', bubblePayload);
+              this.emitOuter('filterbubbleresponse', this.dataSource.getBubblePayload(response));
               this.dataSource.updateBubbles(response);
               this.dataSource.renderItemTags();
             });
@@ -124,7 +112,6 @@ export class AwHomeLayoutEH extends EventHandler {
       if( response ){
         this.dataSource.parseInitialRequest(response);
         let bubblePayload = {
-          width: window.innerWidth / 1.8,
           setBubbleChart: (bubbleCref) => this.dataSource._bubbleChart = bubbleCref,
           source: response,
           reset: false,

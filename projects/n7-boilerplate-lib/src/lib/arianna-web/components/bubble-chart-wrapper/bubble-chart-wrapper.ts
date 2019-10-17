@@ -11,6 +11,7 @@ import { Component, Input } from '@angular/core';
 export class BubbleChartWrapperComponent {
   @Input() hover: any;
   @Input() emit: any;
+  @Input() container: string;
 
   onClick(type, payload) {
     this.emit(type, payload);

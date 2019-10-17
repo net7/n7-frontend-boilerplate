@@ -5,6 +5,8 @@ export class AwBubbleChartEH extends EventHandler {
   public listen() {
     this.innerEvents$.subscribe(event => {
       switch (event.type) {
+        case 'aw-bubble-chart.init':
+          break;
         case 'aw-bubble-chart.click':
           event.payload.entityIdmap = this.dataSource.getEntityIdMap();
           event.payload.allBubbles = this.dataSource.getAllBubbles();
@@ -20,6 +22,11 @@ export class AwBubbleChartEH extends EventHandler {
           this.emitOuter('mouse_enter', event.payload);
           break;
         case 'aw-bubble-chart.mouse_leave':
+         /*   this.dataSource.onBubbleMouseLeave(
+              {
+                bubblePayload:event.payload.bubblePayload,
+                bubble:event.payload.bubble
+              });*/
           this.emitOuter('mouse_leave', event.payload);
           break;
           case "aw-bubble-chart.bubble-tooltip-close-click":
@@ -56,13 +63,17 @@ export class AwBubbleChartEH extends EventHandler {
           break;
         case 'aw-scheda-layout.filterbubbleresponse':
         case 'aw-home-layout.filterbubbleresponse':
-          this.dataSource.setAllBubblesFromApolloQuery(payload);
-          this.emitOuter('bubble-filtered',
-          {
-            'allBubbles': this.dataSource.getAllBubbles(),
-            'selected': this.dataSource.getSelectedBubbles(),
-            'entityIdmap': this.dataSource.getEntityIdMap()
-          });
+          if( payload.source ){
+            this.dataSource.setAllBubblesFromApolloQuery(payload);
+            this.emitOuter('bubble-filtered',
+            {
+              'allBubbles': this.dataSource.getAllBubbles(),
+              'selected': this.dataSource.getSelectedBubbles(),
+              'entityIdmap': this.dataSource.getEntityIdMap()
+            });
+          } else {
+            this.dataSource.update(payload);
+          }
           break;
       }
     });

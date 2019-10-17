@@ -1,5 +1,5 @@
 import { LayoutDataSource } from '@n7-frontend/core';
-import { fromEvent, interval, Subject } from 'rxjs';
+import { fromEvent, Subject } from 'rxjs';
 import { debounce, debounceTime } from 'rxjs/operators';
 
 export class AwHomeLayoutDS extends LayoutDataSource {
@@ -37,6 +37,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   private bubblePopup: any = null;
   public currentHoverEntity: any = null;
   public hasScrollBackground: boolean = false;
+  public loadingBubbles = false;
 
   onInit({ communication, mainState, configuration, tippy }){
     this.communication = communication;
@@ -53,19 +54,10 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     this.mainState.update('pageTitle', 'Arianna Web: Home Layout');
 
     this.lastWindowWidth=window.outerWidth;
-    fromEvent( window , "resize" ).pipe(debounce(() => interval(200))).
-    subscribe( () => {
-      // only resets the bubbles if the window's width has changed
-      // (if the resize only effects the window's hight then the bubble chart
-      // doesn't get reset)
-      if(this.lastWindowWidth!=window.outerWidth){
-        this.lastWindowWidth=window.outerWidth;
-        //this.updateBubblesAndItemPreviews(true);
-      }
-    });
 
     // listen autocomplete changes
     this._listenAutoCompleteChanges();
+
   }
 
   initialFilterRequest(){
@@ -119,7 +111,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     this.one('aw-linked-objects').update(response.itemsPagination.items);
 
     // scroll control
-    this._scrollBackgroundControl();
+    //this._scrollBackgroundControl();
   }
 
   onBubbleTooltipClick(source:string, payload) {
@@ -145,6 +137,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     if(bubble){
       if(!this.selectedBubbles.includes(bubble)){
         if(this.selectedBubbles.length<this.maxBubblesSelectable){
+          this.loadingBubbles = this.selectedBubbles.length == 0;
           this.selectedBubbles.push(bubble);
           return true;
         }
@@ -162,6 +155,17 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         return this.filterRequest();
       }
     }
+  }
+
+  public getBubblePayload(response){
+    let bubblePayolad =  {
+      reset: true,
+      setBubbleChart: (bubbleCref) => this._bubbleChart = bubbleCref,
+      facetData: this.facetData,
+      source: response,
+      selectedBubbles: this.selectedBubbles
+    };
+    return bubblePayolad;
   }
 
   private filterRequest(){
@@ -270,14 +274,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
           if(this.selectedBubbles[i].id===bubble.id) bubble.selected=true;
         }
       });
-      this.one('aw-bubble-chart').update({
-        width: window.innerWidth/1.8,
-       // bubbles:this.filterBubblesBasedOnFacetsEnabled(),
-        selectedBubbles: this.selectedBubbles,
-        setBubbleChart: (bubbleCref) => this._bubbleChart = bubbleCref,
-        facetData: this.facetData,
-        reset:true
-      });
+      this.one('aw-bubble-chart').update( this.getBubblePayload(null) );
     }
   }
 

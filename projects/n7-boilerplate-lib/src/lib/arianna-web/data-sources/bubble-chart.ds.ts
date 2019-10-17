@@ -1,6 +1,8 @@
 import { DataSource } from '@n7-frontend/core';
 import { BUBBLECHART_MOCK } from '@n7-frontend/components';
 import tippy from 'tippy.js';
+import { fromEvent, interval } from 'rxjs';
+import { debounce, debounceTime } from 'rxjs/operators';
 
 export class AwBubbleChartDS extends DataSource {
 
@@ -16,16 +18,19 @@ export class AwBubbleChartDS extends DataSource {
   private _bubbleChart: any = null;
   private maxBubblesSelectable:number = 3;
   private tippy;
+  private windowResizeSet = false;
 
   protected transform(data){
     if ( !data ){ return null; }
+
+    this.destroyTooltip();
 
     this.facetData = data.facetData ? data.facetData : [];
     this.tippy = tippy;
 
     data.bubbles = this.filterBubblesBasedOnFacetsEnabled();
     let bubbleCointainer = document.getElementById("bubble-chart-container");
-    const cWidth = bubbleCointainer.offsetWidth;
+    const cWidth = data.width ? data.width : bubbleCointainer.offsetWidth;
 
     // TODO: think of a good way to pass/compute cHeight
     const cHeight = 700; // bubbleCointainer.offsetHeight
@@ -115,6 +120,8 @@ export class AwBubbleChartDS extends DataSource {
 
     if(data.setUpdateReference) bubblesData['setUpdateReference'] = data.setUpdateReference;
     if(data.setBubbleChart) bubblesData['setBubbleChart'] = data.setBubbleChart;
+
+    this.setWindowResize();
 
     return bubblesData;
   }
@@ -229,6 +236,13 @@ export class AwBubbleChartDS extends DataSource {
     });
   }
 
+  destroyTooltip(){
+    if(this.bubblePopup){
+      this.bubblePopup.hide();
+      this.bubblePopup.destroy();
+      this.bubblePopup = null;
+    }
+  }
 
   onBubbleTooltipClick(source:string, payload){
     switch(source){
@@ -282,6 +296,25 @@ export class AwBubbleChartDS extends DataSource {
 
   getEntityIdMap() {
     return this.entityBubbleIdMap;
+  }
+
+  setWindowResize() {
+    if( !this.windowResizeSet){
+      fromEvent( window , "resize" ).pipe(debounce(() => interval(200))).
+      subscribe( () => {
+        // only resets the bubbles if the window's width has changed
+        // (if the resize only effects the window's hight then the bubble chart
+        // doesn't get reset)
+          const container = document.getElementById("bubble-chart-container");
+          let bubblePayload = {
+            width: container.offsetWidth,
+            reset: true
+          };
+          this.update(bubblePayload);
+        })
+        this.windowResizeSet = true;
+    }
+
   }
 
 }
