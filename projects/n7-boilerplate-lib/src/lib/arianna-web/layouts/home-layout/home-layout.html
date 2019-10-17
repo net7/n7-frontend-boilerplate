@@ -97,10 +97,17 @@
 
     <!-- simple autocomplete popover. DO NOT CHANGE parent div class! -->
     <!-- creating one template for each facet -->
+    <!-- <div id="aw-simple-autocomplete__template">
+        <span>tippyJS</span>
+        <n7-simple-autocomplete 
+            [data]="lb.widgets['aw-autocomplete-wrapper'].ds.out$ | async"
+            [emit]="lb.widgets['aw-autocomplete-wrapper'].emit">
+        </n7-simple-autocomplete>
+    </div> -->
     <div *ngFor="let widgetData of lb.widgets['aw-home-facets-wrapper'].ds.out$ | async;" 
-         style="display: none;"
-         class="aw-simple-autocomplete__{{widgetData.header.payload}}">
-        <n7-simple-autocomplete
+         class="aw-simple-autocomplete__{{widgetData.header.payload}}"
+         style="display: none;">
+         <n7-simple-autocomplete
             [data]="lb.widgets['aw-autocomplete-wrapper'].ds.out$ | async"
             [emit]="lb.widgets['aw-autocomplete-wrapper'].emit">
         </n7-simple-autocomplete>

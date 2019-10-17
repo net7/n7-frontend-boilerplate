@@ -61,37 +61,43 @@ export class AwHomeFacetsWrapperDS extends DataSource {
     // create data for this facet
     if (!this.autoComplete[id]) {
       this.autoComplete[id] = {
-        data: [],         // array of suggestions
+        // data: [],         // array of suggestions
+        template: undefined,
         tippy: undefined, // tippy data / config
         open: true,       // show or hide tippy
       }
-    }
-    // bind this autocomplete data to ac
-    const ac = this.autoComplete[id]
-    // get the template for this facet, and cast from 'Element' to 'HTMLElement'
-    // necessary to change style prop
-    const template = <HTMLElement>document.getElementsByClassName('aw-simple-autocomplete__' + id.replace('-search', ''))[0]
-    template.style.display = 'block'
-    if (!ac.tippy) {
-      const target = '.' + id; // target the correct facet input class
-      ac.tippy = tippy(target, {
-        content: template,
-        trigger: 'manual',
-        interactive: true,
-        arrow: false,
-        appendTo: 'parent',
-        theme: 'light-border',
-        placement: 'bottom-start',
-        maxWidth: '100%',
-        onHidden: () => ac.open = false,
-      })[0];
+      const ac = this.autoComplete[id]
+      if (!ac.tippy) {
+        const target = '.' + id; // target the correct this.autoComplete[id] input class
+        ac.tippy = tippy(target, {
+          content: '<span>Loading tippy</span>',
+          trigger: 'manual',
+          interactive: true,
+          arrow: false,
+          appendTo: 'parent',
+          theme: 'light-border',
+          placement: 'bottom-start',
+          maxWidth: '100%',
+          onHidden: () => {
+            ac.open = false;
+          },
+          onShow: () => {
+            let node = document.getElementsByClassName('aw-simple-autocomplete__' + id.replace('-search', ''))[0]
+            // after I use this node, it becomes undefined
+            if (node) { // if I have the node, don't try to get it again
+              node.setAttribute('style', 'display: block');
+              ac.tippy.setContent(node);
+            }
+          },
+        })[0];
+      }
     }
 
+    let ac = this.autoComplete[id]
     if (res.totalCount > 0) {
       ac.tippy.show()
     } else {
       ac.tippy.hide()
     }
   }
-
 }
