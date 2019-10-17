@@ -34,14 +34,18 @@ export class AwHomeFacetsWrapperDS extends DataSource {
       });
       // make array of inputs data
       inputs.push({
-        input: {
-          placeholder: facet['input-placeholder'],
-          icon: 'n7-icon-search',
-          // disable input if faced header is not enabled
-          disabled: !facet.enabled,
-          payload: String(facet.type.id) + '-search',
-          classes: String(facet.type.id) + '-search', // make a class for tippy
-        }
+        sections: [{
+          inputs: [{
+            type: 'text',
+            placeholder: facet['input-placeholder'],
+            icon: 'n7-icon-search',
+            disabled: !facet.enabled,
+            inputPayload: String(facet.type.id) + '-search',
+            iconPayload: String(facet.type.id) + '-search',
+            enterPayload: String(facet.type.id) + '-search',
+            classes: String(facet.type.id) + '-search',
+          }]
+        }]
       });
     });
 
