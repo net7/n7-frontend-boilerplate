@@ -28,7 +28,7 @@ $aw-scheda-content-padding: $space*3;
 
         .n7-sidebar-header {
             position: sticky !important;
-            top: 0px !important;    
+            top: 0px !important;
         }
 
         .n7-tree {
@@ -70,9 +70,9 @@ $aw-scheda-content-padding: $space*3;
 
     /* First level */
     .n7-tree {
-        > .n7-tree__item > .n7-tree__item-contents .n7-tree__item-text{
-             font-size: $font-size-l;
-             font-weight: $font-weight-bold;
+        > .n7-tree__item > .n7-tree__item-contents .n7-tree__item-text {
+            font-size: $font-size-l;
+            font-weight: $font-weight-bold;
         }
     }
 }
@@ -109,7 +109,7 @@ $aw-scheda-content-padding: $space*3;
     background-color: $color-background-base;
 
     /* Breadcrumbs */
-    .n7-breadcrumbs  {
+    .n7-breadcrumbs {
         height: $sidebar-header-height;
         padding-left: $space*2;
         box-sizing: border-box;
