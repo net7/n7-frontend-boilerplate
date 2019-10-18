@@ -24,13 +24,29 @@
         // border-bottom: 1px solid $color-border-normal;
     }
 
-    &__group-title-wrapper {
+    .n7-advanced-autocomplete__group-title-wrapper {
         // color: $color-text-light;
+        &.color-people {
+            color: $color-people;
+        }
+
+        &.color-places {
+            color: $color-places;
+        }
+
+        &.color-organizations {
+            color: $color-organizations;
+        }
+
+        &.color-concepts {
+            color: $color-concepts;
+        }
     }
 
     &__group-title {
         // font-size: $font-size-l;
         // font-family: $font-family-headings;
+        font-weight: $font-weight-bold;
         // line-height: 1.4;
         // vertical-align: middle;
     }
