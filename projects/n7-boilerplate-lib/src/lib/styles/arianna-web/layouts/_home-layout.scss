@@ -4,13 +4,8 @@
  * Layout for homepage
  */
 
-<<<<<<< HEAD
- /* ------------------------------------ *\
-    TOP-HERO
-=======
 /* ------------------------------------ *\
     HERO
->>>>>>> develop
 \* ------------------------------------ */
 .aw-home {
     &__top-hero {
@@ -356,36 +351,36 @@
                 .n7-hero__content {
                     grid-column-gap: 44px;
                 }
-    
+
                 .n7-hero__title {
                     margin-bottom: $space*3;
                     font-size: $font-size-xxxl;
                     font-weight: $bottom-hero-title-font-weight;
                 }
-    
+
                 .n7-hero__input-wrapper {
                     margin-top: $space*3;
                 }
-    
+
                 .n7-hero__image {
                     border: $bottom-hero-image-border;
                     border-radius: $bottom-hero-image-border-radius;
                 }
-    
+
                 .n7-hero__btn {
                     background: $bottom-hero-button-bg;
                     border: 0;
                     font-size: $font-size-l;
-    
+
                     &:hover,
                     &:focus {
                         background: $bottom-hero-button-bg-hover;
                     }
-    
+
                     &:active, &.active {
                         background: $bottom-hero-button-bg-active;
                     }
-    
+
                     &:disabled, &.disabled {
                         background: $bottom-hero-button-bg-disabled;
                     }
