@@ -6,7 +6,7 @@ export class AwHomeAutocompleteDS extends DataSource {
   protected transform(data){
 
     const { items, totalCount } = data,
-      { config } = this.options;
+          { config } = this.options;
 
     let itemIds = [],
       groups = {};

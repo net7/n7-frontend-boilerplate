@@ -9,6 +9,7 @@ export const AwEntitaLayoutConfig = {
     { id: 'aw-entita-nav', hasStaticData: true},
     { id: 'aw-entita-metadata-viewer' },
     { id: 'aw-linked-objects'},
+    { id: 'aw-bubble-chart'},
   ],
   layoutDS: AwEntitaLayoutDS,
   layoutEH: AwEntitaLayoutEH,

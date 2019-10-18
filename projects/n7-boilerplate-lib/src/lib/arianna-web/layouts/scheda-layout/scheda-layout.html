@@ -47,7 +47,6 @@
             </section>
 
             <section
-                id="bubble-chart-container"
                 class="aw-scheda__bubble-chart"
             >
                 <div
@@ -57,7 +56,10 @@
                 <div  [style.overflow]="'hidden'">
                     <aw-bubble-chart-wrapper
                     [hover]="lb.widgets['aw-bubble-chart'].ds.currentHoverEntity"
-                    [emit]="lb.widgets['aw-bubble-chart'].emit" >
+                    [emit]="lb.widgets['aw-bubble-chart'].emit"
+                    [container]="'bubble-chart-container'"
+                    [buttons]="['goto']"
+                    >
                         <n7-bubble-chart
                         [data]="lb.widgets['aw-bubble-chart'].ds.out$ | async"
                         [emit]="lb.widgets['aw-bubble-chart'].emit">
@@ -70,7 +72,7 @@
                 [hidden] = "!lb.dataSource.hasSimilarItems"
                 id="related-item-container" class="aw-scheda__related">
                 <div class="aw-scheda__inner-title">{{lb.dataSource.similarItemsSectionTitle}}</div>
-                <div class="aw-scheda__related-items n7-grid-2">
+                <div class="aw-scheda__related-items">
                     <ng-container *ngFor="let widgetData of lb.widgets['aw-linked-objects'].ds.out$ | async;">
                         <n7-item-preview
                             [data]="widgetData"

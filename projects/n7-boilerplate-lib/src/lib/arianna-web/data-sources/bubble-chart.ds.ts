@@ -29,7 +29,7 @@ export class AwBubbleChartDS extends DataSource {
     this.tippy = tippy;
 
     data.bubbles = this.filterBubblesBasedOnFacetsEnabled();
-    let bubbleCointainer = document.getElementById("bubble-chart-container");
+    let bubbleCointainer = document.getElementById(this.options.containerId);
     const cWidth = data.width ? data.width : bubbleCointainer.offsetWidth;
 
     // TODO: think of a good way to pass/compute cHeight
@@ -37,7 +37,7 @@ export class AwBubbleChartDS extends DataSource {
     const containerSize = cWidth * cHeight;
 
     let bubblesData = {
-      containerId: "bubbleChartContainer",
+      containerId: this.options.bubbleContainerId,
       containerWidth : cWidth,
       containerHeight : cHeight,
       isForceSimulationEnabled: true,
@@ -305,7 +305,7 @@ export class AwBubbleChartDS extends DataSource {
         // only resets the bubbles if the window's width has changed
         // (if the resize only effects the window's hight then the bubble chart
         // doesn't get reset)
-          const container = document.getElementById("bubble-chart-container");
+          const container = document.getElementById(this.options.containerId);
           let bubblePayload = {
             width: container.offsetWidth,
             reset: true

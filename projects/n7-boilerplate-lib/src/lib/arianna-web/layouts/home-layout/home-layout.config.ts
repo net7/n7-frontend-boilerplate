@@ -8,7 +8,7 @@ export const AwHomeLayoutConfig = {
   widgets: [{
     id: 'aw-hero',
   }, {
-    id: 'aw-home-hero-patrimonio'
+    id: 'aw-home-hero-patrimonio',
   }, {
     id: 'aw-bubble-chart',
   }, {
@@ -16,9 +16,11 @@ export const AwHomeLayoutConfig = {
   }, {
     id: 'aw-home-item-tags-wrapper',
   }, {
-    id: 'aw-home-autocomplete'
+    id: 'aw-home-autocomplete',
   }, {
-    id: 'aw-linked-objects'
+    id: 'aw-linked-objects',
+  }, {
+    id: 'aw-autocomplete-wrapper',
   }],
   layoutDS: AwHomeLayoutDS,
   layoutEH: AwHomeLayoutEH,

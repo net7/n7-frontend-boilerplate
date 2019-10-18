@@ -5,8 +5,6 @@
  * Includes traa navigation on the right.
  */
  
-$aw-scheda-content-padding: $space*3;
-
 /* ------------------------------------ *\
     LAYOUT
 \* ------------------------------------ */
@@ -120,7 +118,7 @@ $aw-scheda-content-padding: $space*3;
     /* Main title that describes the scheda content */
     .n7-inner-title {
         &__title {
-            font-weight: $font-weight-black;
+            font-weight: $scheda-title-font-weight;
         }
     }
 
@@ -164,7 +162,20 @@ $aw-scheda-content-padding: $space*3;
     
     /* Related items */
     .aw-scheda__related-items {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-column-gap: $grid-gutter-h;
         padding: 0 $aw-scheda-content-padding $aw-scheda-content-padding $aw-scheda-content-padding;
+
+        /* Targeting elements in the last row */
+        >*:nth-child(2n + 1):nth-last-child(-n + 2),
+        >*:nth-child(2n + 1):nth-last-child(-n + 2) ~ * {
+            .n7-item-preview {
+                margin-bottom: 0;
+                padding-bottom: 0;
+                border-bottom: 0;
+            }
+        }
     }
 }
 

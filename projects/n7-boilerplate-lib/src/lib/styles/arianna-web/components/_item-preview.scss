@@ -8,8 +8,8 @@
    #ITEM-PREVIEW
 \* ------------------------------------ */
 .n7-item-preview {
-    margin: $space*2 0;
-    padding-bottom: $space;
+    margin: $space*1.5 0;
+    padding-bottom: $space*1.5;
     border-bottom: 1px solid $color-border-normal;
 
     &__title {
@@ -17,41 +17,68 @@
         font-weight: $font-weight-bold;
     }
 
-    &__metadata-item {
-        display: inline-flex;
-        align-items: baseline;
-        padding-right: $space;
-        border-right: 1px solid $color-border-normal;
-
-        &:last-of-type {
-            border-right: none;
+    &__metadata {
+        &-item {
+            display: inline-flex;
+            align-items: baseline;
+            padding-right: $space;
+            border-right: 1px solid $color-border-normal;
+    
+            &:last-of-type {
+                border-right: none;
+            }
+    
+            &.color-people {
+                color: $color-people;
+            }
+    
+            &.color-places {
+                color: $color-places;
+            }
+    
+            &.color-organizations {
+                color: $color-organizations;
+            }
+    
+            &.color-concepts {
+                color: $color-concepts;
+            }
+    
+            &-icon {
+                font-size: $font-size-m;
+                font-weight: $font-weight-bold;
+            }
+    
+            &-value {
+                font-size: $font-size-s;
+            }
         }
 
-        &.color-people {
-            color: $color-people;
-        }
+        &-group {
+            &:last-of-type {
+                margin-bottom: 0;
+            }
 
-        &.color-places {
-            color: $color-places;
-        }
+            &.n7-objects__metadata-artist {
+                .n7-item-preview__metadata-item-value {
+                    font-weight: $font-weight-normal;
+                }
 
-        &.color-organizations {
-            color: $color-organizations;
-        }
+                .n7-item-preview__metadata-item-label {
+                    & + .n7-item-preview__metadata-item-value {
+                        margin-left: $space/4;
+                        font-weight: $font-weight-bold;
+                    }
+                }
 
-        &.color-concepts {
-            color: $color-concepts;
-        }
+                .n7-item-preview__metadata-item-icon {
+                    margin-right: 0;
+                }
+            }
 
-        &-icon {
-            font-size: $font-size-m;
-        }
-
-        &-value {
-            font-size: $font-size-s;
         }
     }
-    
+
     &.has-image {
         grid-template-columns: $item-preview-image-size 1fr;
 
@@ -66,15 +93,13 @@
    #IS-FULLWIDTH
 \* ------------------------------------ */
 .n7-item-preview.is-fullwidth {
-    .n7-item-preview__content {
-        display: grid;
-    }
 
     .n7-item-preview__metadata {
         display: flex;
-        margin-top: auto;
 
         &-group {
+            margin-bottom: 0;
+
             &:last-of-type {
                 margin-left: auto;
             }
