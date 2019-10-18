@@ -86,6 +86,11 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
         }
       ]
     }
+     /*Breadcrumb section*/
+     let breadcrumbs = {
+      items: []
+    };
+    this.one('aw-scheda-breadcrumbs').update(breadcrumbs);
   }
 
   loadContent(response) {

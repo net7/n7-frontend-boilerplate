@@ -30,7 +30,6 @@ $aw-scheda-tree-width: 400px;
 // overwritten and must be removed if not used
 
 
-
 // ------------------------------------ //
 // #Z-INDEX
 // ------------------------------------ //
@@ -153,7 +152,7 @@ $color-button-cta-bg: $color-main;
 $color-button-cta-border: $color-main;
 $color-button-cta-bg-hover: darken($color-button-cta-bg, 5%);
 $color-button-cta-border-hover: darken($color-button-cta-bg, 5%);
-$color-button-cta-bg-active: #3FE3F1;
+$color-button-cta-bg-active: #3fe3f1;
 $color-button-cta-bg-disabled: rgba($color-button-cta-bg, .4);
 
 // $color-button-cta-border: darken($color-main, 5); // $color-text-hover;
@@ -185,7 +184,7 @@ $color-button-light-text: $color-text;
 $header-height: 100px;
 // $header-height-mobile: 60px;
 // $header-bg-color: $color-background-base;
-$header-active-item-color: #F7FAFA;
+$header-active-item-color: #f7fafa;
 // $header-logo-height: $header-height - ($space*2);
 // $header-logo-height-mobile: $header-height-mobile - ($space*2);
 // $header-user-thumb-size: 40px;
@@ -237,11 +236,11 @@ $hero-input-box-shadow: 0 2px 4px rgba(0,0,0,0.3);
 $hero-button-height: $hero-input-height;
 $hero-image-border: 10px solid #ffffff;
 $hero-image-border-radius: $space*2;
-$hero-button-bg: #FFCD00;
-$hero-button-border: #FFCD00;
+$hero-button-bg: #ffcd00;
+$hero-button-border: #ffcd00;
 $hero-button-bg-hover: darken($hero-button-bg, 5%);
 $hero-button-border-hover: darken($hero-button-bg, 5%);
-$hero-button-bg-active: #FFB600;
+$hero-button-bg-active: #ffb600;
 $hero-button-bg-disabled: rgba($hero-button-bg, .4);
 
 
