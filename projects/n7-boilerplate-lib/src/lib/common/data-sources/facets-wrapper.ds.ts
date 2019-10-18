@@ -13,10 +13,7 @@ export class FacetsWrapperDS extends DataSource {
 
     this.searchModel = data.searchModel;
 
-    /* console.log(this.searchModel.getId(), 'loaded');
-
     const id = this.searchModel.getId(),
-      facets = this.searchModel.getFacets(),
       fields = this.searchModel.getFields();
 
     fields.forEach((fieldConfig, fieldIndex) => {
@@ -27,41 +24,17 @@ export class FacetsWrapperDS extends DataSource {
 
       // inputs config
       let sections = [];
-      fieldConfig.inputs.forEach((inputConfig, inputIndex) => {
-        const fieldId = `group-${id}-${fieldIndex}-${inputIndex}`,
-          { facetId } = inputConfig.filterConfig,
-          facetConfig: any = facets.filter(facet => facet.id === facetId)[0] || {};
-
-        let inputs = [];
-
-        // checkboxes
-        if(inputConfig.type === 'checkbox'){
-          facetConfig.data.forEach(checkboxData => {
-            inputs.push(new FacetInputCheckbox({
-              ...inputConfig,
-
-            }));
-          })
-        }
-
-        // search
-        if(inputConfig.type === 'search'){
-          inputs = this._searchConfig(facetConfig.data, inputConfig, fieldId);
-        }
-
-        // links
-        if(inputConfig.type === 'link'){
-          inputs = this._linkConfig(facetConfig.data, inputConfig, fieldId);
-        }
-
-        // select
-        if(inputConfig.type === 'select'){
-          inputs = this._selectConfig(facetConfig.data, inputConfig, fieldId);
-        }
-
-        // add to sections
-        sections.push({ inputs });
-      });
+      this.searchModel.getInputs()
+        .filter(input => input.getSectionIndex() === fieldIndex)
+        .map(input => {
+          input.update();
+          return input.getOutput();
+        })
+        .forEach(output => {
+          sections.push({ 
+            inputs: Array.isArray(output) ? output : [output]
+          });
+        });
 
       groups.push({ 
         header,
@@ -73,20 +46,10 @@ export class FacetsWrapperDS extends DataSource {
         }
       })
 
-    }); */
-
-    console.log('inputs', this.searchModel.getInputs().map(input => ({
-      facetId: input.getFacetId(),
-      sectionIndex: input.getSectionIndex(),
-      inputIndex: input.getInputIndex(),
-      output: (() => {
-        input.update();
-        return input.getOutput();
-      })(),
-    })));
+    });
 
     return { 
-      groups: [], 
+      groups, 
       classes: `n7-facets-wrapper__${this.searchModel.getId()}` 
     };
   }
@@ -101,26 +64,29 @@ export class FacetsWrapperDS extends DataSource {
   }
   
   public onFacetChange({ eventPayload }){
-    const { filterConfig, source } = eventPayload.inputPayload;
+    const { facetId, source, trigger } = eventPayload.inputPayload,
+      filter = this.searchModel.getFiltersByFacetId(facetId)[0] || {},
+      filterValue = filter['value'];
+
     let remove: boolean = false,
-      value: any = '' + eventPayload.inputPayload.value;
-    
+      value: any = eventPayload.inputPayload.value || eventPayload.value;
+
+    // normalize
+    value = '' + value;
+      
     // remove control
-    if(source === 'input-checkbox'){
-      remove = !eventPayload.value;
+    if(Array.isArray(filterValue)){
+      remove = filterValue.indexOf(value) !== -1;
+    } else {
+      remove = filterValue === value;
     }
 
-    // input value control
-    if(['input-search', 'input-select'].indexOf(source) !== -1){
-      value = eventPayload.value;
-    }
+    // input text control
+    // TODO: gestire i casi enter / icon click nel input text
+    if(source === 'input-text' && ['enter', 'icon'].indexOf(trigger) !== -1) return;
 
-    // is-active control
-    if(source === 'input-link'){
-      // TODO
-    }
-
-    this.searchModel.updateFilter(filterConfig.facetId, value, remove);
+    this.searchModel.updateFilter(facetId, value, remove);
+    this.searchModel.updateInputsFromFilters();
   }
 
   public getRequestParams = () => this.searchModel.getRequestParams();
@@ -128,37 +94,10 @@ export class FacetsWrapperDS extends DataSource {
   public updateFiltersFromQueryParams = (queryParams) => this.searchModel.updateFiltersFromQueryParams(queryParams);
 
   public updateInputsFromFilters(){
-    this.output.groups.forEach(group => {
-      group.facet.sections.forEach(section => {
-        section.inputs.forEach(input => {
-          const { facetId } = input._meta,
-            filters = this.searchModel.getFiltersByFacetId(facetId);
-
-          // checkbox
-          if(input.type === 'checkbox'){
-            this._updateInputCheckboxFromFilters(input, filters);
-          }
-
-          // search
-          if(input.type === 'search'){
-            this._updateInputSearchFromFilters(input, filters);
-          }
-
-          // link
-          if(input.type === 'link'){
-            this._updateInputLinkFromFilters(input, filters);
-          }
-
-          // select
-          if(input.type === 'select'){
-            this._updateInputSelectFromFilters(input, filters);
-          }
-        });
-      })
-    });
+    this.searchModel.updateInputsFromFilters();
   }
 
-  private _updateInputCheckboxFromFilters(input, filters){
+  /* private _updateInputCheckboxFromFilters(input, filters){
     filters.forEach(filter => {
       if(Array.isArray(filter.value) && filter.value.indexOf('' + input._meta.value) !== -1){
         input.checked = true;
@@ -192,7 +131,7 @@ export class FacetsWrapperDS extends DataSource {
         }
       })
     });
-  }
+  } */
 
   private _headerConfig(header, groupId){
     return header ? {
@@ -210,6 +149,7 @@ export class FacetsWrapperDS extends DataSource {
     }: null;
   }
 
+  /* 
   private _checkboxConfig(facetData, inputConfig, fieldId){
     return facetData.map((checkboxData, itemIndex) => {
       const elementId = `${fieldId}-checkbox-${itemIndex}`,
@@ -312,5 +252,5 @@ export class FacetsWrapperDS extends DataSource {
         facetId: filterConfig.facetId,
       }
     }];
-  }
+  } */
 }

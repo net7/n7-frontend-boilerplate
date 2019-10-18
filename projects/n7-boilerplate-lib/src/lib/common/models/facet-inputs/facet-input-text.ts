@@ -7,7 +7,7 @@ export class FacetInputText extends FacetInput {
   
     const payload = {
       facetId,
-      source: 'input-checkbox'
+      source: 'input-text'
     };
 
     return { 
@@ -34,7 +34,7 @@ export class FacetInputText extends FacetInput {
   }
 
   public setActive(facetValue){
-    this.output.value = facetValue;
+    this.output.value = facetValue || null;
   }
   
 }

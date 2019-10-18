@@ -24,8 +24,8 @@ export class FacetInputCheckbox extends FacetInput {
   }
 
   public setActive(facetValue){
-    const { isArray } = this.config;
-
+    const { isArray } = this.config.filterConfig;
+    
     this.output.forEach(config => {
       if(isArray && Array.isArray(facetValue) && facetValue.indexOf(config._meta.value) !== -1){
         config.checked = true;

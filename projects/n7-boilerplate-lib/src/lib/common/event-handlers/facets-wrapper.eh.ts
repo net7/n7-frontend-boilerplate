@@ -8,14 +8,14 @@ export class FacetsWrapperEH extends EventHandler {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch(type){
         case 'facets-wrapper.facet':
-          const { filterConfig } = payload.eventPayload.inputPayload;
+          const { context } = payload.eventPayload.inputPayload;
           this._facetsChanged = true;
 
           // update
           this.dataSource.onFacetChange(payload);
 
           // internal
-          if(filterConfig.context === 'internal'){
+          if(context === 'internal'){
             // TODO: do internal filter
           // external
           } else {
@@ -40,7 +40,6 @@ export class FacetsWrapperEH extends EventHandler {
 
     // listen to outer events
     EventHandler.globalEvents$.subscribe(({ type, payload }) => {
-      console.log(type, payload);
       switch(type){
         case 'global.queryparams':
           if(!this._facetsChanged){

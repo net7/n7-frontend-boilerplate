@@ -3,18 +3,20 @@ import { Subject } from 'rxjs';
 import { 
   FacetInput, 
   FacetInputCheckbox,
-  FacetInputText
+  FacetInputText,
+  FacetInputLink,
+  FacetInputSelect,
 } from '../models';
 
 export type FilterOperators = '=' | '>' | '<' | '>=' | '<=' | '<>' | 'LIKE';
 export type FacetTypes = 'value' | 'range';
 export type FacetOperators = 'OR' | 'AND';
 
-const HEADER_ICON_OPEN = 'n7-icon-angle-down';
-const HEADER_ICON_CLOSE = 'n7-icon-angle-right';
 const INPUTS_MAP = {
   'checkbox': FacetInputCheckbox,
   'text': FacetInputText,
+  'link': FacetInputLink,
+  'select': FacetInputSelect,
 };
 
 export interface ISearchConfig {
@@ -98,6 +100,16 @@ export class SearchModel {
     });
   }
 
+  public updateInputsFromFilters(){
+    this._filters.forEach(({ facetId, value }) => {
+      this._inputs
+        .filter(input => input.getFacetId() === facetId)
+        .forEach(input => {
+          input.setActive(value); 
+        })
+    });
+  }
+
   public updateFacet(facetId, data) {
     let selectedFacets = this._facets.filter(facet => facet.id === facetId);
     if(!selectedFacets.length){
@@ -159,6 +171,7 @@ export class SearchModel {
     this._config.fields.forEach(field => {
       field.inputs.forEach(input => this._filters.push({ 
         ...input.filterConfig,
+        facetId: input.facetId,
         value: input.filterConfig.isArray ? [] : null
       }));
     });
@@ -176,8 +189,7 @@ export class SearchModel {
     this._config.fields.forEach((sectionConfig, sectionIndex) => {
       sectionConfig.inputs.forEach((inputConfig, inputIndex) => {
         const inputModel = INPUTS_MAP[inputConfig.type];
-        // if(!inputModel) throw Error(`Input type ${inputConfig.type} not supported`);
-        if(!inputModel) return;
+        if(!inputModel) throw Error(`Input type ${inputConfig.type} not supported`);
 
         this._inputs.push(new inputModel({ ...inputConfig, inputIndex, sectionIndex }));
       })
@@ -186,22 +198,6 @@ export class SearchModel {
 
   private _setInputsData(){
     this._facets.forEach(facet => this.setInputData(facet.id, facet.data));
-  }
-
-  private _headerConfig(header, groupId){
-    return header ? {
-      text: header.label,
-      iconRight: HEADER_ICON_OPEN,
-      classes: header.classes,
-      payload: {
-        source: 'group-header',
-        id: `${groupId}-header`,
-        groupId: groupId
-      },
-      _meta: {
-        id: `${groupId}-header`
-      }
-    }: null;
   }
 }
 

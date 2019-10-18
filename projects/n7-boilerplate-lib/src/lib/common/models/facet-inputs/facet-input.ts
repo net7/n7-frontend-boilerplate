@@ -1,12 +1,12 @@
 interface IFacetInputData {
   value: string | number,
   label: string,
-  count: number,
+  counter: number,
   options?: any
 }
 
 export abstract class FacetInput {
-  static counter: number = 0;
+  static index: number = 0;
 
   private id: string;
   protected config: any;
@@ -17,7 +17,7 @@ export abstract class FacetInput {
     this.config = config;
     this._setId();
     
-    FacetInput.counter++;
+    FacetInput.index++;
   }
 
   public abstract setActive(facetValue: any): void;
@@ -35,6 +35,6 @@ export abstract class FacetInput {
   
   public setData = (newData: IFacetInputData[]) => this.data = newData;
   private _setId() {
-    this.id = `facet-input-${this.getType()}-${FacetInput.counter}`;
+    this.id = `facet-input-${this.getType()}-${FacetInput.index}`;
   };
 }

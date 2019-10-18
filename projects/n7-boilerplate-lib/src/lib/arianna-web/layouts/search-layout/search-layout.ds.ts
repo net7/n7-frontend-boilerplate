@@ -65,6 +65,7 @@ const SEARCH_CONFIG = {
       type: 'link',
       facetId: 'query-links',
       filterConfig: {
+        isArray: true,
         searchIn: [{
           key: 'source.entityType',
           operator: '='
