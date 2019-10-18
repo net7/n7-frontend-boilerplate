@@ -17,7 +17,7 @@ export class AwHomeFacetsWrapperEH extends EventHandler {
         case 'aw-home-facets-wrapper.enter':
           this.emitOuter('enter', payload);
         default:
-          console.warn('unhandled event of type:', type)
+          console.warn('unhandled inner event of type:', type)
           break;
       }
     });
@@ -27,9 +27,8 @@ export class AwHomeFacetsWrapperEH extends EventHandler {
         case 'aw-home-layout.facetswrapperresponse':
           this.dataSource.tippyMaker(payload.response, payload.facetId.inputPayload)
           break;
-      
         default:
-          console.warn('unhandled event of type', type)
+          // silent ignore
           break;
       }
     });

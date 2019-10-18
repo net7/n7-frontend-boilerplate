@@ -1,35 +1,13 @@
 <div class="n7-main-layout" id="main-layout">
     <div class="n7-page-content">
         <n7-header
-        [emit]="lb.widgets['header'].emit"
-        [data]="lb.widgets['header'].ds.out$ | async"></n7-header>
-
-        <!-- <n7-nav 
-        *ngIf="!lb.dataSource.options.sidebar"
-        [emit]="lb.widgets['subnav'].emit"
-        [data]="lb.widgets['subnav'].ds.out$ | async">
-        </n7-nav> -->
-
+            [data]="lb.widgets['header'].ds.out$ | async"
+            [emit]="lb.widgets['header'].emit">
+        </n7-header>
         <main class="n7-content">
             <div class="n7-top-page-bar">
-                <div class="n7-top-page-bar__main">
-                    <!-- <h1 
-                    *ngIf="lb.dataSource.pageTitle"
-                    class="n7-top-page-bar__title">{{ lb.dataSource.pageTitle }}</h1>
-                    <n7-breadcrumbs 
-                    [emit]="lb.widgets['breadcrumbs'].emit"
-                    [data]="lb.widgets['breadcrumbs'].ds.out$ | async">
-                    </n7-breadcrumbs> -->
-                </div>
-                <!--<div *ngIf="lb.dataSource.pageTools" class="n7-top-page-bar__tools">
-                    <a *ngFor="let tool of lb.dataSource.pageTools" 
-                    (click)="lb.eventHandler.emitInner('tools-click', tool.payload)" 
-                    class="n7-btn {{ tool.classes || '' }}">
-                        {{ tool.label | translate }}
-                    </a>
-                </div>-->
+                <div class="n7-top-page-bar__main"></div>
             </div>
-            
             <div class="n7-alert-bar">
                 <!--<n7-alert
                 [attr.id]="'main-layout-alert'"
@@ -39,6 +17,8 @@
             <ng-content></ng-content>
         </main>
     </div>
-
-    <n7-footer></n7-footer>
+    <n7-footer 
+        [data]="lb.widgets['footer'].ds.out$ | async" 
+        [emit]="lb.widgets['footer'].emit">
+    </n7-footer>
 </div>
