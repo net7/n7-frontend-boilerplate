@@ -170,7 +170,7 @@
         /* Targeting elements in the last row */
         >*:nth-child(2n + 1):nth-last-child(-n + 2),
         >*:nth-child(2n + 1):nth-last-child(-n + 2) ~ * {
-            .n7-item-preview  {
+            .n7-item-preview {
                 margin-bottom: 0;
                 padding-bottom: 0;
                 border-bottom: 0;

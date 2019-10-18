@@ -60,19 +60,19 @@
     }
 
     &__action-bar {
-       // display: flex;
-       // justify-content: center;
-       padding: $space*2;
-       border-top: 1px solid $color-border-normal;
-       background-color: $color-background-medium;
+        // display: flex;
+        // justify-content: center;
+        padding: $space*2;
+        border-top: 1px solid $color-border-normal;
+        background-color: $color-background-medium;
 
-       .n7-btn {
-           // margin-right: $space;
+        .n7-btn {
+            // margin-right: $space;
 
-           &:last-child {
-               // margin-right: 0;
-           }
-       }
+            &:last-child {
+                // margin-right: 0;
+            }
+        }
     }
 }
 

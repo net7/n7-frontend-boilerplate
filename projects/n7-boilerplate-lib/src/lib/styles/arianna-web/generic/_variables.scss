@@ -31,7 +31,6 @@ $aw-scheda-tree-width: 400px;
 // overwritten and must be removed if not used
 
 
-
 // ------------------------------------ //
 // #Z-INDEX
 // ------------------------------------ //
@@ -47,7 +46,7 @@ $aw-scheda-tree-width: 400px;
 // ------------------------------------ //
 // #FONTS
 // ------------------------------------ //
-// @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,900&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,700,700i,900&display=swap');
 
 
 // ------------------------------------ //
@@ -68,6 +67,7 @@ $aw-scheda-tree-width: 400px;
 // $font-weight-normal: 400;
 // $font-weight-bold: 700;
 $font-weight-black: 900;
+
 
 // ------------------------------------ //
 // COLORS
@@ -93,6 +93,7 @@ $font-weight-black: 900;
 // $color-background-dark: $color-gray-03;
 $color-background-layout: $color-gray-02;
 $gradient-item-preview-list: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, $color-background-layout 100%);
+
 
 // ------------------------------------ //
 // #MEDIA-QUERIES-BREAKPOINT
@@ -160,6 +161,7 @@ $button-large-height: 56px;
 // $form-input-small-height: 26px;
 // $form-border-radius: $border-radius;
 // $form-dropdown-height: 30px;
+
 
 // ------------------------------------ //
 // #TRANSITIONS
@@ -232,9 +234,9 @@ $top-hero-title-font-weight: $font-weight-bold;
 // ------------------------------------ //
 $bottom-hero-image-border: 10px solid #ffffff;
 $bottom-hero-image-border-radius: $border-radius;
-$bottom-hero-button-bg: #FFCD00;
+$bottom-hero-button-bg: #ffcd00;
 $bottom-hero-button-bg-hover: darken($bottom-hero-button-bg, 5%);
-$bottom-hero-button-bg-active: #FFB600;
+$bottom-hero-button-bg-active: #ffb600;
 $bottom-hero-button-bg-disabled: rgba($bottom-hero-button-bg, .4);
 $bottom-hero-title-font-weight: $font-weight-bold;
 
@@ -291,6 +293,7 @@ $bubble-results-count-font-weight: $font-weight-bold;
 // ------------------------------------ //
 $aw-scheda-content-padding: $space*3;
 $scheda-title-font-weight: $font-weight-bold;
+
 
 // ------------------------------------ //
 // #ENTITA
