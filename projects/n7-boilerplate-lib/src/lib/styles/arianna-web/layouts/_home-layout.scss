@@ -96,6 +96,21 @@
         padding: $space*2;
     }
 
+    /* Bubblre chart */
+    .n7-bubble-chart {
+        g {
+            opacity: .9;
+            transition: $transition-durations;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+        g > circle, g > text {
+            cursor: pointer;
+        }
+    }
+
     /* Facets */
     .aw-home__facet {
         padding-top: $space*2;
