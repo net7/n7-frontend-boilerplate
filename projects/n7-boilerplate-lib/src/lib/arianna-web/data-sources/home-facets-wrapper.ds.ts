@@ -75,7 +75,7 @@ export class AwHomeFacetsWrapperDS extends DataSource {
           interactive: true,
           arrow: false,
           appendTo: 'parent',
-          theme: 'light-border',
+          theme: 'light-border aw-home__facet-tippy',
           placement: 'bottom-start',
           maxWidth: '100%',
           onHidden: () => {

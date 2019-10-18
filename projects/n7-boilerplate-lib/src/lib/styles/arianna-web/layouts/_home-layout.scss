@@ -96,7 +96,7 @@
         padding: $space*2;
     }
 
-    /* Bubblre chart */
+    /* Bubble chart */
     .n7-bubble-chart {
         g {
             opacity: .9;
@@ -216,32 +216,47 @@
             }
         }
 
-        /* Disabled */
-        /*
-        &.is-disabled {
+        /* Blocked */
+        &.is-blocked {
             .n7-facet-header__icon-right {
                 cursor: not-allowed;
-                opacity: .5;
+                opacity: .25;
+
+                &:hover {
+                    color: $color-text-light;
+                }
             }
         }
-        */
     }
 
     .n7-facet {
+        margin-top: $space*1;
         padding-top: 0;
-        &__search-wrapper {
-            padding-right: 0;
-            padding-bottom: $space*2;
-            padding-left: 0;
+
+        &__section {
+            position: relative;
         }
 
-        &__search-input {
-            height: $n7-facet-search-input-height;
-            border-radius: $n7-facet-search-input-border-radius;
+        &__input-text:disabled {
+            border: 1px solid rgba($color-border-normal, .5);
         }
 
-        &__search-icon {
-            line-height: $n7-facet-search-input-height;
+        /* Autocomplete/Tippy */
+        .tippy-popper {
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .aw-home__facet-tippy-theme {
+            padding: 0;
+            
+            .tippy-content {
+                padding: 0;
+            }
+
+            .n7-simple-autocomplete {
+                border: 0;
+            }
         }
     }
 
