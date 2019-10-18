@@ -82,6 +82,8 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     this.one('aw-bubble-chart').updateOptions({
       context: 'home',
       configKeys: this.configuration.get("config-keys"),
+      bubbleContainerId: 'bubbleChartContainer',
+      containerId: 'bubble-chart-container',
     });
     this.renderPreviewsFromApolloQuery(response);
   }

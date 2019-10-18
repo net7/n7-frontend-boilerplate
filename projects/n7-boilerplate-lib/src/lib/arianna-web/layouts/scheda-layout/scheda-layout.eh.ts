@@ -38,6 +38,13 @@ export class AwSchedaLayoutEH extends EventHandler {
           break;
         case 'aw-sidebar-header.click': this.dataSource.collapseSidebar();
         break;
+        case "aw-bubble-chart.bubble-tooltip-goto-click":
+          if(!payload || !payload.entityId) return;
+          this.emitGlobal('navigate', {
+            handler: 'router',
+            path: [`aw/entita/${payload.entityId}/overview`]
+          });
+        break;
 
       }
     });

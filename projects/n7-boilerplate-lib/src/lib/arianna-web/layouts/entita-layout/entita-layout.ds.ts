@@ -57,7 +57,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     /*
       Loads the data for the selected nav item, into the adjacent text block.
     */
-    if (id && tab) { 
+    if (id && tab) {
       this.currentId = id // store selected item from url
       this.selectedTab = tab // store selected tab from url
       return this.communication.request$('getEntityDetails', {
@@ -80,19 +80,25 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     }
     switch (this.selectedTab) { // make dynamic content depending on request
       case 'overview': {
+        this.one('aw-bubble-chart').updateOptions({
+          context: 'scheda',
+          configKeys: this.configuration.get("config-keys"),
+          bubbleContainerId: 'overviewBubbleChartContainer',
+          containerId: 'bubble-chart-container-overview',
+        });
         this.one('aw-entita-metadata-viewer').updateOptions({ context: this.selectedTab });
         this.one('aw-entita-metadata-viewer').update(res.fieldsTab);
         this.one('aw-linked-objects').updateOptions({ size: 3, configKeys: this.configuration.get("config-keys"), context: 'entita' })
         this.one('aw-linked-objects').update(res.items);
       } break;
-      
+
       case 'campi': {
         this.one('aw-entita-metadata-viewer').updateOptions({ context: this.selectedTab });
         this.one('aw-entita-metadata-viewer').update(res.fieldsTab);
       } break;
 
       case 'oggetti-collegati': {
-        this.one('aw-linked-objects').updateOptions({ 
+        this.one('aw-linked-objects').updateOptions({
             context: this.selectedTab,
             configKeys: this.configuration.get("config-keys"),
             page: this.currentPage,
@@ -102,7 +108,12 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       } break;
 
       case 'entita-collegate': {
-        // entita
+        this.one('aw-bubble-chart').updateOptions({
+          context: 'scheda',
+          configKeys: this.configuration.get("config-keys"),
+          bubbleContainerId: 'bubbleChartContainer',
+          containerId: 'bubble-chart-container',
+        });
       } break;
 
       case 'maxxi': {

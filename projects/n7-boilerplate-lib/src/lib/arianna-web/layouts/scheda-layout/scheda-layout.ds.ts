@@ -102,6 +102,8 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       this.one('aw-bubble-chart').updateOptions({
         context: 'scheda',
         configKeys: this.configuration.get("config-keys"),
+        bubbleContainerId: 'bubbleChartContainer',
+        containerId: 'bubble-chart-container',
       });
 
         if ( response.text ){

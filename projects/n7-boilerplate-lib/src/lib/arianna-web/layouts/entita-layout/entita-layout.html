@@ -90,10 +90,20 @@
                     TUTTE LE ENTITÀ COLLEGATE <i class="n7-icon-angle-right"></i>
                 </button>
             </div>
-            <!-- BUBBLE CHART GOES HERE -->
-            <img src="https://i.imgur.com/P21HGo5.png" alt="bubble chart" (dragstart)="false">
+            <div  [style.overflow]="'hidden'">
+                <aw-bubble-chart-wrapper
+                [hover]="lb.widgets['aw-bubble-chart'].ds.currentHoverEntity"
+                [emit]="lb.widgets['aw-bubble-chart'].emit"
+                [container]="'bubble-chart-container-overview'"
+                [buttons]="['goto']"
+                >
+                    <n7-bubble-chart
+                    [data]="lb.widgets['aw-bubble-chart'].ds.out$ | async"
+                    [emit]="lb.widgets['aw-bubble-chart'].emit">
+                    </n7-bubble-chart>
+                </aw-bubble-chart-wrapper>
+            </div>
         </div>
-
     </section>
 </ng-template>
 
@@ -131,8 +141,19 @@
         <div class="aw-entity__content-section-header aw-entity__content-section-header-decorated">
             <h2 class="aw-entity__content-section-title">Entità collegate</h2>
         </div>
-        <!-- BUBBLE CHART GOES HERE -->
-        <img src="https://i.imgur.com/P21HGo5.png" alt="bubble chart" (dragstart)="false">
+        <div  [style.overflow]="'hidden'">
+            <aw-bubble-chart-wrapper
+            [hover]="lb.widgets['aw-bubble-chart'].ds.currentHoverEntity"
+            [emit]="lb.widgets['aw-bubble-chart'].emit"
+            [container]="'bubble-chart-container'"
+            [buttons]="['goto']"
+            >
+                <n7-bubble-chart
+                [data]="lb.widgets['aw-bubble-chart'].ds.out$ | async"
+                [emit]="lb.widgets['aw-bubble-chart'].emit">
+                </n7-bubble-chart>
+            </aw-bubble-chart-wrapper>
+        </div>
     </div>
 </ng-template>
 

@@ -51,15 +51,15 @@ export class AwEntitaLayoutEH extends EventHandler {
           if (payload) {
             this.dataSource.selectedTab = payload;
             this.dataSource.handleNavUpdate( payload )
-            this.emitGlobal('navigate', { 
+            this.emitGlobal('navigate', {
               path: [
                 this.configuration.get("paths").entitaBasePath
                 + '/' +
                 this.entityId
                 + '/' +
                 payload
-              ], 
-              handler: 'router' 
+              ],
+              handler: 'router'
             });
           }
           break
@@ -80,6 +80,13 @@ export class AwEntitaLayoutEH extends EventHandler {
         case 'aw-linked-objects.change':
           this.dataSource.pageSize = payload;
           this.listenRoute() // reloads the page content with the new page size
+        case "aw-bubble-chart.bubble-tooltip-goto-click":
+            if(!payload || !payload.entityId) return;
+            this.emitGlobal('navigate', {
+              handler: 'router',
+              path: [`aw/entita/${payload.entityId}/overview`]
+            });
+          break;
         default:
           break;
       }
@@ -99,6 +106,9 @@ export class AwEntitaLayoutEH extends EventHandler {
         this.dataSource.loadItem(params.get('id'), params.get('tab')).subscribe((res) => {
           if (res) {
             this.dataSource.loadContent(res);
+            res['connectedEntities'] =res.entities
+            let connectedEntities = {source: res};
+            this.emitOuter('filterbubbleresponse', connectedEntities);
           }
         });
       } else {
