@@ -98,6 +98,12 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
         this.contentParts = [];
         let content = {};
 
+        /* Related Entities */
+      this.one('aw-bubble-chart').updateOptions({
+        context: 'scheda',
+        configKeys: this.configuration.get("config-keys"),
+      });
+
         if ( response.text ){
           content['content'] = response.text;
         }
@@ -166,14 +172,13 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
         this.one('aw-scheda-breadcrumbs').update(breadcrumbs);
       }
 
-      /* Related Entities */
-      if ( response.connectedEntities ) {
+      /*if ( response.connectedEntities ) {
         this.hasBubbles = true;
         this.setAllBubblesFromApolloQuery(response);
       } else {
         this.hasBubbles = false;
         this.one('aw-scheda-bubble-chart').update(null);
-      }
+      }*/
 
       /* Similar item */
       if ( response.similarItems ) {

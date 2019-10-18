@@ -9,6 +9,8 @@ import { AwEntitaLayoutComponent } from "./layouts/entita-layout/entita-layout";
 import { AwHomeLayoutComponent } from './layouts/home-layout/home-layout';
 import { AwSchedaLayoutComponent } from './layouts/scheda-layout/scheda-layout';
 import { AwWorksLayoutComponent } from './layouts/works-layout/works-layout';
+// COMPONENTS
+import { BubbleChartWrapperComponent } from './components/bubble-chart-wrapper/bubble-chart-wrapper';
 
 const COMPONENTS = [
   AwAboutLayoutComponent,
@@ -16,6 +18,7 @@ const COMPONENTS = [
   AwHomeLayoutComponent,
   AwSchedaLayoutComponent,
   AwWorksLayoutComponent,
+  BubbleChartWrapperComponent
 ];
 
 

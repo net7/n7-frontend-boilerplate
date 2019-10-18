@@ -1,5 +1,5 @@
 import { LayoutDataSource } from '@n7-frontend/core';
-import { fromEvent, interval, Subject } from 'rxjs';
+import { fromEvent, Subject } from 'rxjs';
 import { debounce, debounceTime } from 'rxjs/operators';
 
 export class AwHomeLayoutDS extends LayoutDataSource {
@@ -37,6 +37,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   private bubblePopup: any = null;
   public currentHoverEntity: any = null;
   public hasScrollBackground: boolean = false;
+  public loadingBubbles = false;
 
   onInit({ communication, mainState, configuration, tippy }){
     this.communication = communication;
@@ -47,96 +48,42 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     this.one('aw-hero').update(this.configuration.get('home-layout')['top-hero']);
     this.one('aw-home-hero-patrimonio').update(this.configuration.get('home-layout')['bottom-hero']);
 
-    this.communication.request$('globalFilter', {
-      onError: (error) => console.error(error),
-    }).subscribe((response) => {
-      this.facetData = [];
-      response.entitiesData.forEach( (ent) => {
-        const teoConfigData = this.configuration.get("config-keys")[ent.countData.type.configKey];
-        if(teoConfigData)
-          this.facetData.push({
-            ...ent.countData,
-            ...teoConfigData,
-            enabled:true,
-          });
-      } );
-      this.one('aw-home-facets-wrapper').update(this.facetData);
-      this.setAllBubblesFromApolloQuery(response);
-      this.renderPreviewsFromApolloQuery(response);
-    });
 
     // update streams
     this.mainState.update('headTitle', 'Arianna Web > Home');
     this.mainState.update('pageTitle', 'Arianna Web: Home Layout');
 
     this.lastWindowWidth=window.outerWidth;
-    fromEvent( window , "resize" ).pipe(debounce(() => interval(200))).
-    subscribe( () => {
-      // only resets the bubbles if the window's width has changed
-      // (if the resize only effects the window's hight then the bubble chart
-      // doesn't get reset)
-      if(this.lastWindowWidth!=window.outerWidth){
-        this.lastWindowWidth=window.outerWidth;
-        this.updateBubblesAndItemPreviews(true);
-      }
-    });
 
     // listen autocomplete changes
     this._listenAutoCompleteChanges();
+
   }
 
-  onBubbleTooltipClick(source:string, payload){
-    switch(source){
-      case 'select':
-        if(!payload) return;
-        const bubbleId = this.convertEntityIdToBubbleId(payload.entityId);
-        if(!bubbleId) return;
-        let bubble = null;
-        if(this._bubbleChart){
-          this._bubbleChart.selectAll(`g`).each( b => {
-            if(b.id===bubbleId) bubble=b;
-          });
-          if(bubble) this.onBubbleSelected(bubble);
-        }
-        break;
-      default:
-        break;
-    }
+  initialFilterRequest(){
+    return this.communication.request$('globalFilter', {
+      onError: (error) => console.error(error),
+    })
   }
 
-  onBubbleMouseEnter(payload){
-    if(!payload || !payload.bubble) return;
-    const bubbleId = payload.bubble.id;
-    let hoverEntityId = this.entityBubbleIdMap[payload.bubble.id];
-    for(var i=0;i<this.allBubbles.length;i++){
-      let bubble = this.allBubbles[i];
-      if(bubble.entity.id===hoverEntityId){
-        this.currentHoverEntity = bubble.entity;
-        this.currentHoverEntity.count = bubble.count;
-        break;
-      }
-    }
-    if(this.bubblePopup){
-      this.bubblePopup.hide();
-      this.bubblePopup.destroy();
-      this.bubblePopup = null;
-    }
-    setTimeout( () => {
-      let template = document.getElementById("bubble-popup-menu");
-      let templateClone = template.cloneNode(true);
-      templateClone['style'].display = "inline-block";
-      this.bubblePopup = this.tippy(`#${bubbleId}`, {
-        content: templateClone,
-        trigger: 'manual',
-        interactive: true,
-        arrow: true,
-        theme: 'light-border no-padding',
-        placement: 'top-middle',
-        maxWidth: 500,
-        //onHidden: () => console.log('hidden'),
-      })[0];
-      setTimeout( () => { if(this.bubblePopup) this.bubblePopup.show() } , 800 );
+  parseInitialRequest(response) {
+    this.facetData = [];
+    response.entitiesData.forEach( (ent) => {
+      const teoConfigData = this.configuration.get("config-keys")[ent.countData.type.configKey];
+      if(teoConfigData)
+        this.facetData.push({
+          ...ent.countData,
+          ...teoConfigData,
+          enabled:true,
+        });
+    } );
+
+    this.one('aw-home-facets-wrapper').update(this.facetData);
+    this.one('aw-bubble-chart').updateOptions({
+      context: 'home',
+      configKeys: this.configuration.get("config-keys"),
     });
+    this.renderPreviewsFromApolloQuery(response);
   }
 
   renderPreviewsFromApolloQuery(response: any){
@@ -164,18 +111,39 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     this.one('aw-linked-objects').update(response.itemsPagination.items);
 
     // scroll control
-    this._scrollBackgroundControl();
+    //this._scrollBackgroundControl();
+  }
+
+  onBubbleTooltipClick(source:string, payload) {
+    switch(source){
+      case 'select':
+        if(!payload) return;
+        const bubbleId =payload.bubbleId;
+        if(!bubbleId) return;
+        let bubble = null;
+        if(this._bubbleChart){
+          this._bubbleChart.selectAll(`g`).each( b => {
+            if(b.id===bubbleId) bubble=b;
+          });
+          if(bubble) this.onBubbleSelected(bubble);
+        }
+        break;
+      default:
+        break;
+    }
   }
 
   public onBubbleSelected(bubble){
     if(bubble){
       if(!this.selectedBubbles.includes(bubble)){
         if(this.selectedBubbles.length<this.maxBubblesSelectable){
+          this.loadingBubbles = this.selectedBubbles.length == 0;
           this.selectedBubbles.push(bubble);
-          this.updateBubblesAndItemPreviews();
+          return true;
         }
       }
     }
+    return null;
   }
 
   public onBubbleDeselected(payload){
@@ -184,19 +152,23 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         (b) => b.id!==payload.bubble.id );
       if(payload.bubble.hasCloseIcon){
         payload.bubble.hasCloseIcon=false;
-        this.updateBubblesAndItemPreviews();
+        return this.filterRequest();
       }
     }
   }
 
-  /**
-   * updates the bubble chart and the item previews based on the currently
-   * selected bubbles
-   *
-   * @param onlyBubbles specifies if only the bubble chart should be updated,
-   *                    leaving the item previews as they are
-   */
-  private updateBubblesAndItemPreviews(onlyBubbles?:boolean){
+  public getBubblePayload(response){
+    let bubblePayolad =  {
+      reset: true,
+      setBubbleChart: (bubbleCref) => this._bubbleChart = bubbleCref,
+      facetData: this.facetData,
+      source: response,
+      selectedBubbles: this.selectedBubbles
+    };
+    return bubblePayolad;
+  }
+
+  private filterRequest(){
     let selectedEntitiesIds = [];
     if(this.entityBubbleIdMap)
     this.selectedBubbles.forEach( (sB) => {
@@ -204,70 +176,31 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       if(entityId)
         selectedEntitiesIds.push(entityId);
     });
-    this.communication.request$('globalFilter', {
+
+    return this.communication.request$('globalFilter', {
       onError: (error) => console.error(error),
       params: {
         selectedEntitiesIds,
         itemsPagination:{ offset:0, limit: this.configuration.get('home-layout')['results-limit'] }
       },
-    }).subscribe((response) => {
-      if(!onlyBubbles){
-        this.renderPreviewsFromApolloQuery(response);
-        this.renderItemTags();
-      }
-      this.setAllBubblesFromApolloQuery(response,true);
-    });
+    })
   }
 
-  /**
-   * converts the id of an entity to the id of a bubble
-   * ( // d3/svg does not allow Number as beginning of ID.
-   *   // d3/svg does not allow '-' as part of ID. )
-   * @param entityId id of the entity
-   */
-  private convertEntityIdToBubbleId(entityId:string) :string {
-    if(!entityId) return null;
-    return ( 'B_'+entityId.replace(/-/g,'_') );
-  }
-
-  /**
-   * sets the this.allBubbles variable based on the response apollo has given
-   * for the globalFilterQuery
-   *
-   * @param response apollo's response
-   * @param reset true if the bubble chart has to be reset/redrawn
-   */
-  setAllBubblesFromApolloQuery(response: any,reset?:boolean){
-    if( !response || !response.entitiesData ) return;
-    this.allBubbles = [];
-    for(var i=0;i<response.entitiesData.length;i++){
-      let currentToE = response.entitiesData[i];
-      for(var j=0;j<currentToE.entitiesCountData.length;j++){
-        this.allBubbles.push(
-          {
-            ...currentToE.entitiesCountData[j],
-            color: this.configuration.get("config-keys")[currentToE.countData.type.configKey]['color']['hex']
-          });
-      }
+  public updateBubbles(response, onlyBubbles?:boolean ) {
+    if ( !onlyBubbles ) {
+      this.renderPreviewsFromApolloQuery(response);
     }
-    this.entityBubbleIdMap = {};
-    this.allBubbles.forEach( (bubble) => {
-      bubble.id = this.convertEntityIdToBubbleId(bubble.entity.id);
-      this.entityBubbleIdMap[bubble.id]=bubble.entity.id;
-      return bubble;
-    });
-    this.allBubbles.forEach( (bubble) => {
-      bubble.selected = false;
-      for(var i=0; i<this.selectedBubbles.length;i++){
-        if(this.selectedBubbles[i].id===bubble.id) bubble.selected=true;
-      }
-    });
-    this.one('aw-home-bubble-chart').update({
-      width: window.innerWidth/1.8,
-      bubbles: this.filterBubblesBasedOnFacetsEnabled(),
-      reset: ( reset? reset : false ),
-      setBubbleChart: (bubbleCref) => this._bubbleChart = bubbleCref
-    });
+  }
+
+  public updateBubbleFilter(data) {
+    this.allBubbles = data.allBubbles;
+    this.entityBubbleIdMap = data.entityIdmap;
+  }
+
+  public updateTags(onlyBubbles?:boolean) {
+    if(!onlyBubbles){
+      this.renderItemTags();
+    }
   }
 
   filterBubblesBasedOnFacetsEnabled(){
@@ -341,12 +274,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
           if(this.selectedBubbles[i].id===bubble.id) bubble.selected=true;
         }
       });
-      this.one('aw-home-bubble-chart').update({
-        width: window.innerWidth/1.8,
-        bubbles:this.filterBubblesBasedOnFacetsEnabled(),
-        setBubbleChart: (bubbleCref) => this._bubbleChart = bubbleCref,
-        reset:true
-      });
+      this.one('aw-bubble-chart').update( this.getBubblePayload(null) );
     }
   }
 
@@ -354,14 +282,19 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     let tagsData = [];
     this.selectedBubbles.forEach( (sBubble) => {
       let label = '';
-      for(var i=0;i<this.allBubbles.length;i++){
-        if(this.allBubbles[i].id===sBubble.id){
+      for ( var i = 0; i < this.allBubbles.length; i++ ){
+        if ( this.allBubbles[i].id === sBubble.id ){
           label = this.allBubbles[i].entity.label;
+          tagsData.push({
+            label,icon:"n7-icon-close",
+            payload:sBubble.id,
+            classes:"tag-"+ this.allBubbles[i].entity.typeOfEntity.id
+          });
           break;
         }
       }
-      tagsData.push({label,icon:"n7-icon-close",payload:sBubble.id,classes:"tag-"+this.allBubbles[i].entity.typeOfEntity.id});
     });
+
     this.one('aw-home-item-tags-wrapper').update(tagsData);
   }
 
@@ -374,7 +307,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       });
     }
     this.selectedBubbles = this.selectedBubbles.filter( (b) => b.id!==payload );
-    this.updateBubblesAndItemPreviews();
+    return this.filterRequest();
   }
 
   onHeroChange(value){
@@ -416,7 +349,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   }
 
   private _scrollBackgroundControl(){
-    const el = document.getElementById('bubble-results-list'), 
+    const el = document.getElementById('bubble-results-list'),
       source$ = fromEvent(document.getElementById('bubble-results-list'), 'scroll');
 
     // height control
@@ -464,7 +397,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     if(!this.autocompletePopover){
       const template = document.getElementById('aw-home-advanced-autocomplete-popover');
       template.style.display = 'block';
-  
+
       this.autocompletePopover = this.tippy('.aw-home__top-hero .n7-hero__input', {
         content: template,
         trigger: 'manual',
@@ -477,7 +410,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         onHidden: () => this.autocompletePopoverOpen = false,
       })[0];
     }
-    
+
     if(this.autocompletePopoverOpen){
       this.autocompletePopover.hide();
     } else {
