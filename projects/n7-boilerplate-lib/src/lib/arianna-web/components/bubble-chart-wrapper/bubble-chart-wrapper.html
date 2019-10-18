@@ -14,8 +14,14 @@
         <p>
                 {{ ( hover ? 'È collegato a '+ hover.count + ' entità' : '' ) }}
         </p>
-        <span onclick="document.getElementById('bubble-popup-menu_gotobutton').click();">Vai alla scheda</span> |
-        <span onclick="document.getElementById('bubble-popup-menu_selectbutton').click();">Seleziona</span>
+        <span
+            *ngIf="buttons.indexOf('goto') >= 0"
+            onclick="document.getElementById('bubble-popup-menu_gotobutton').click();"
+        >Vai alla scheda</span> <ng-container *ngIf="buttons.length > 1"> | </ng-container>
+        <span
+            *ngIf="buttons.indexOf('select') >= 0"
+            onclick="document.getElementById('bubble-popup-menu_selectbutton').click();">
+        Seleziona</span>
     </div>
     <div [id]="container">
         <ng-content></ng-content>

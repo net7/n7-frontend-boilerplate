@@ -47,7 +47,6 @@
             </section>
 
             <section
-                id="bubble-chart-container"
                 class="aw-scheda__bubble-chart"
             >
                 <div
@@ -57,7 +56,10 @@
                 <div  [style.overflow]="'hidden'">
                     <aw-bubble-chart-wrapper
                     [hover]="lb.widgets['aw-bubble-chart'].ds.currentHoverEntity"
-                    [emit]="lb.widgets['aw-bubble-chart'].emit" >
+                    [emit]="lb.widgets['aw-bubble-chart'].emit"
+                    [container]="'bubble-chart-container'"
+                    [buttons]="['goto']"
+                    >
                         <n7-bubble-chart
                         [data]="lb.widgets['aw-bubble-chart'].ds.out$ | async"
                         [emit]="lb.widgets['aw-bubble-chart'].emit">

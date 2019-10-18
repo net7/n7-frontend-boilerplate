@@ -24,6 +24,7 @@
                 [hover]="lb.widgets['aw-bubble-chart'].ds.currentHoverEntity"
                 [emit]="lb.widgets['aw-bubble-chart'].emit"
                 [container]="'bubble-chart-container'"
+                [buttons]="['select', 'goto']"
             >
                     <n7-bubble-chart
                         [data]="lb.widgets['aw-bubble-chart'].ds.out$ | async"
@@ -84,7 +85,7 @@
 
     <!-- adavanced autocomplete popover  -->
     <div id="aw-home-advanced-autocomplete-popover" style="display: none;">
-        <n7-advanced-autocomplete 
+        <n7-advanced-autocomplete
             [data]="lb.widgets['aw-home-autocomplete'].ds.out$ | async"
             [emit]="lb.widgets['aw-home-autocomplete'].emit">
         </n7-advanced-autocomplete>
@@ -94,12 +95,12 @@
     <!-- creating one template for each facet -->
     <!-- <div id="aw-simple-autocomplete__template">
         <span>tippyJS</span>
-        <n7-simple-autocomplete 
+        <n7-simple-autocomplete
             [data]="lb.widgets['aw-autocomplete-wrapper'].ds.out$ | async"
             [emit]="lb.widgets['aw-autocomplete-wrapper'].emit">
         </n7-simple-autocomplete>
     </div> -->
-    <div *ngFor="let widgetData of lb.widgets['aw-home-facets-wrapper'].ds.out$ | async;" 
+    <div *ngFor="let widgetData of lb.widgets['aw-home-facets-wrapper'].ds.out$ | async;"
          class="aw-simple-autocomplete__{{widgetData.header.payload}}"
          style="display: none;">
          <n7-simple-autocomplete

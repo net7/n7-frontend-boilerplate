@@ -12,6 +12,7 @@ export class BubbleChartWrapperComponent {
   @Input() hover: any;
   @Input() emit: any;
   @Input() container: string;
+  @Input() buttons: any;
 
   onClick(type, payload) {
     this.emit(type, payload);

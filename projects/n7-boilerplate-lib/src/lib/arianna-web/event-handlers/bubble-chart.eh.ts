@@ -62,6 +62,7 @@ export class AwBubbleChartEH extends EventHandler {
           });
           break;
         case 'aw-scheda-layout.filterbubbleresponse':
+        case 'aw-entita-layout.filterbubbleresponse':
         case 'aw-home-layout.filterbubbleresponse':
           if( payload.source ){
             this.dataSource.setAllBubblesFromApolloQuery(payload);
