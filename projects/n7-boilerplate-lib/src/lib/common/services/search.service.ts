@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { FacetInput, FacetInputCheckbox } from '../models';
+import { 
+  FacetInput, 
+  FacetInputCheckbox,
+  FacetInputText
+} from '../models';
 
 export type FilterOperators = '=' | '>' | '<' | '>=' | '<=' | '<>' | 'LIKE';
 export type FacetTypes = 'value' | 'range';
@@ -8,6 +12,10 @@ export type FacetOperators = 'OR' | 'AND';
 
 const HEADER_ICON_OPEN = 'n7-icon-angle-down';
 const HEADER_ICON_CLOSE = 'n7-icon-angle-right';
+const INPUTS_MAP = {
+  'checkbox': FacetInputCheckbox,
+  'text': FacetInputText,
+};
 
 export interface ISearchConfig {
   facets: any;
@@ -41,7 +49,6 @@ export class SearchModel {
   private _filters: IFilter[] = [];
   private _facets: IFacet[] = [];
   private _inputs: FacetInput[] = [];
-  private _groups: any[] = [];
   private _page: any;
   private _config: ISearchConfig;
   private _results$: Subject<any[]> = new Subject();
@@ -53,16 +60,17 @@ export class SearchModel {
     this._setFilters();
     this._setFacets();
     this._setPage();
-    this._setGroups();
+    this._setInputs();
+    this._setInputsData();
   }
 
   public getId = () => this._id;
   public getFilters = () => this._filters;
   public getFacets = () => this._facets;
+  public getInputs = () => this._inputs;
   public getConfig = () => this._config;
   public getFields = () => this._config.fields;
   public getResults$ = () => this._results$;
-  public getGroups = () => this._groups;
 
   public setResults = (results) => this._results$.next(results);
   
@@ -141,6 +149,12 @@ export class SearchModel {
     return this._filters.filter(filter => filter.facetId === facetId);
   }
 
+  public setInputData(facetId, data){
+    this._inputs
+      .filter(input => input.getFacetId() === facetId)
+      .forEach(input => input.setData(data));
+  }
+
   private _setFilters(){
     this._config.fields.forEach(field => {
       field.inputs.forEach(input => this._filters.push({ 
@@ -158,60 +172,20 @@ export class SearchModel {
     this._page = this._config.page;
   }
 
-  private _setGroups(){
-    this._config.fields.forEach((fieldConfig, fieldIndex) => {
-      const groupId = `group-${this._id}-${fieldIndex}`;
-      
-      // header config
-      const header = this._headerConfig(fieldConfig.header, groupId);
+  private _setInputs(){
+    this._config.fields.forEach((sectionConfig, sectionIndex) => {
+      sectionConfig.inputs.forEach((inputConfig, inputIndex) => {
+        const inputModel = INPUTS_MAP[inputConfig.type];
+        // if(!inputModel) throw Error(`Input type ${inputConfig.type} not supported`);
+        if(!inputModel) return;
 
-      // inputs config
-      let sections = [];
-      fieldConfig.inputs.forEach(inputConfig => {
-        const { facetId } = inputConfig,
-          facetConfig: any = this._facets.filter(facet => facet.id === facetId)[0] || {};
-
-        let inputs = [];
-
-        // checkboxes
-        if(inputConfig.type === 'checkbox'){
-          const input = new FacetInputCheckbox(inputConfig);
-          input.setData(facetConfig.data);
-          input.setInputConfig();
-
-          this._inputs.push(input);
-          (input.getInputConfig() || []).forEach(config => inputs.push(config));
-        }
-
-        // search
-        if(inputConfig.type === 'search'){
-          // inputs = this._searchConfig(facetConfig.data, inputConfig, fieldId);
-        }
-
-        // links
-        if(inputConfig.type === 'link'){
-          // inputs = this._linkConfig(facetConfig.data, inputConfig, fieldId);
-        }
-
-        // select
-        if(inputConfig.type === 'select'){
-          // inputs = this._selectConfig(facetConfig.data, inputConfig, fieldId);
-        }
-
-        // add to sections
-        sections.push({ inputs });
-      });
-
-      this._groups.push({ 
-        header,
-        facet: { sections },
-        classes: `n7-facets-wrapper__${groupId}`,
-        isOpen: true, 
-        _meta: {
-          groupId
-        }
+        this._inputs.push(new inputModel({ ...inputConfig, inputIndex, sectionIndex }));
       })
-    })
+    });
+  }
+
+  private _setInputsData(){
+    this._facets.forEach(facet => this.setInputData(facet.id, facet.data));
   }
 
   private _headerConfig(header, groupId){

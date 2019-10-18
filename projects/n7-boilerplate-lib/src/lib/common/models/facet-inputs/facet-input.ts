@@ -10,7 +10,7 @@ export abstract class FacetInput {
 
   private id: string;
   protected config: any;
-  protected inputConfig: any;
+  protected output: any;
   protected data: IFacetInputData[];
 
   constructor(config){
@@ -20,15 +20,18 @@ export abstract class FacetInput {
     FacetInput.counter++;
   }
 
-  public abstract setInputConfig(): void;
   public abstract setActive(facetValue: any): void;
+  protected abstract transform(): any;
   
+  public update = () => this.output = this.transform();
   public getId = () => this.id;
   public getData = () => this.data;
   public getConfig = () => this.config;
   public getFacetId = () => this.config.facetId;
+  public getInputIndex = () => this.config.inputIndex;
+  public getSectionIndex = () => this.config.sectionIndex;
   public getType = () => this.config.type;
-  public getInputConfig = () => this.inputConfig;
+  public getOutput = () => this.output;
   
   public setData = (newData: IFacetInputData[]) => this.data = newData;
   private _setId() {

@@ -75,7 +75,15 @@ export class FacetsWrapperDS extends DataSource {
 
     }); */
 
-    console.log('groups', this.searchModel.getGroups());
+    console.log('inputs', this.searchModel.getInputs().map(input => ({
+      facetId: input.getFacetId(),
+      sectionIndex: input.getSectionIndex(),
+      inputIndex: input.getInputIndex(),
+      output: (() => {
+        input.update();
+        return input.getOutput();
+      })(),
+    })));
 
     return { 
       groups: [], 

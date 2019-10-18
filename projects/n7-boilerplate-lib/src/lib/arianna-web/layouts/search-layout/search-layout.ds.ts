@@ -40,7 +40,7 @@ const SEARCH_CONFIG = {
   }],
   fields: [{
     inputs: [{
-      type: 'search',
+      type: 'text',
       facetId: 'query',
       placeholder: 'Cerca...',
       // icon: 'n7-icon-search',
@@ -89,7 +89,7 @@ const SEARCH_CONFIG = {
         }]
       } 
     }, {
-      type: 'search',
+      type: 'text',
       facetId: 'entity-search',
       placeholder: 'Cerca entità',
       // icon: 'n7-icon-search',
