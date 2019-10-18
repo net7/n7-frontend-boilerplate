@@ -5,31 +5,8 @@
         </n7-hero>
     </div>
 
-    <!-- hidden buttons and div used to implement the bubbles' popups -->
-    <button style="display: none;"
-            id="bubble-popup-menu_closebutton"
-            (click)="lb.eventHandler.emitInner('bubble-tooltip-close-click',{entityId:(lb.dataSource.currentHoverEntity ? lb.dataSource.currentHoverEntity.id : null)} )"></button>
-    <button style="display: none;"
-            id="bubble-popup-menu_gotobutton"
-            (click)="lb.eventHandler.emitInner('bubble-tooltip-goto-click',{entityId:(lb.dataSource.currentHoverEntity ? lb.dataSource.currentHoverEntity.id : null)} )"></button>
-    <button style="display: none;"
-            id="bubble-popup-menu_selectbutton"
-            (click)="lb.eventHandler.emitInner('bubble-tooltip-select-click',{entityId:(lb.dataSource.currentHoverEntity ? lb.dataSource.currentHoverEntity.id : null)} )"></button>
-    <div class="aw-bubble-popup-menu" id="bubble-popup-menu" style="display: none;">
-        <h2 class="aw-bubble-popup-menu__title">{{ ( lb.dataSource.currentHoverEntity ? lb.dataSource.currentHoverEntity.label : '' ) }}</h2>
-        <span class="aw-bubble-popup-menu__close n7-icon-close" onclick="document.getElementById('bubble-popup-menu_closebutton').click();"></span>
-        <p class="aw-bubble-popup-menu__text">
-            {{ ( lb.dataSource.currentHoverEntity ? 'È collegato a '+lb.dataSource.currentHoverEntity.count+' entità' : '' ) }}
-        </p>
-
-        <div class="aw-bubble-popup-menu__actions">
-            <span class="aw-bubble-popup-menu__link" onclick="document.getElementById('bubble-popup-menu_gotobutton').click();">Vai alla scheda</span>
-            <span class="aw-bubble-popup-menu__link" onclick="document.getElementById('bubble-popup-menu_selectbutton').click();">Seleziona</span>
-        </div>
-    </div>
-
     <!-- Bubble chart -->
-    <div class="aw-home__bubble-wrapper" [ngClass]="{ 'has-results' : lb.dataSource.selectedBubbles.length>0 }">
+    <div class="aw-home__bubble-wrapper" [ngClass]="{ 'has-results' : lb.dataSource.selectedBubbles.length > 0 }">
         <div class="aw-home__facets-wrapper">
             <span class="aw-home__facet"
                 *ngFor="let widgetData of lb.widgets['aw-home-facets-wrapper'].ds.out$ | async;">
@@ -39,17 +16,35 @@
                 </n7-facet>
             </span>
         </div>
-
-        <div id="bubble-chart-container">
-            <n7-bubble-chart [data]="lb.widgets['aw-home-bubble-chart'].ds.out$ | async"
-                [emit]="lb.widgets['aw-home-bubble-chart'].emit">
-            </n7-bubble-chart>
+        <div
+            class="aw-home__bubble-chart-wrapper"
+            [style.overflow]="lb.dataSource.loadingBubbles ? 'visible' : 'hidden'"
+        >
+            <aw-bubble-chart-wrapper
+                [hover]="lb.widgets['aw-bubble-chart'].ds.currentHoverEntity"
+                [emit]="lb.widgets['aw-bubble-chart'].emit"
+                [container]="'bubble-chart-container'"
+            >
+                    <n7-bubble-chart
+                        [data]="lb.widgets['aw-bubble-chart'].ds.out$ | async"
+                        [emit]="lb.widgets['aw-bubble-chart'].emit">
+                </n7-bubble-chart>
+            </aw-bubble-chart-wrapper>
         </div>
 
-        <ng-container *ngIf="lb.dataSource.selectedBubbles.length>0">
-            <div class="aw-home__bubble-results" [ngStyle]="{ 'display': 'flex' , 'flex-direction': 'column' }">
-                <div *ngIf="lb.dataSource.numOfItemsStr"> <h1 class="aw-home__bubble-results-title"><strong class="aw-home__bubble-results-title-counter">{{ lb.dataSource.numOfItemsStr }}</strong> <span> Oggetti culturali</span></h1></div>
-
+        <!-- Linked objects -->
+        <!--<ng-container *ngIf="lb.dataSource.selectedBubbles.length>0"> -->
+        <ng-container *ngIf="lb.dataSource.selectedBubbles.length > 0" >
+            <div class="aw-home__bubble-results"
+                id="home-bubble-results"
+                [ngStyle]="{ 'display': 'flex' , 'flex-direction': 'column', 'transition': 'opacity 1s ease-in-out;' }"
+                [style.opacity]="lb.dataSource.loadingBubbles ? '0' : '1'"
+            >
+                <div *ngIf="lb.dataSource.numOfItemsStr">
+                    <h1 class="aw-home__bubble-results-title"><strong class="aw-home__bubble-results-title-counter">
+                        {{ lb.dataSource.numOfItemsStr }}</strong> <span> Oggetti culturali</span>
+                    </h1>
+                </div>
                 <div class="aw-home__bubble-tags-wrapper">
                     <h3 class="aw-home__bubble-tags-title">Collegati a </h3>
                     <ng-container *ngFor="let widgetData of lb.widgets['aw-home-item-tags-wrapper'].ds.out$ | async;">
@@ -58,7 +53,7 @@
                         <br>
                     </ng-container>
                 </div>
-                <div class="aw-home__bubble-results-list-wrapper">
+                <div class="aw-home__bubble-results-list-wrapper" >
                     <div class="aw-home__bubble-results-list" [attr.id]="'bubble-results-list'">
                         <ng-container *ngFor="let widgetData of lb.widgets['aw-linked-objects'].ds.out$ | async;">
                             <n7-item-preview
@@ -68,14 +63,14 @@
                         </ng-container>
                     </div>
                     <div *ngIf="lb.dataSource.hasScrollBackground" class="aw-home__bubble-results-list-wrapper-with-scroll"></div>
-                    
+
                     <div class="aw-home__bubble-results-list-actions">
                         <a class="n7-btn n7-btn-light n7-btn-l aw-home__bubble-results-list-view-all" href="">Vedi tutti</a>
                         <a class="n7-btn n7-btn-light n7-btn-l aw-home__bubble-results-list-view-others" href="">Vedi altri</a>
                     </div>
-                    
+
                 </div>
-               
+
             </div>
         </ng-container>
     </div>

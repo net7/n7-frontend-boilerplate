@@ -1,6 +1,7 @@
 // Any
 export * from './linked-objects.ds';
 export * from './autocomplete-wrapper.ds';
+export * from './bubble-chart.ds';
 
 // Home Layout
 export * from './hero.ds';
@@ -22,4 +23,3 @@ export * from './scheda-breadcrumbs.ds';
 export * from './scheda-metadata.ds';
 export * from './scheda-image.ds';
 export * from './scheda-inner-title.ds';
-export * from './scheda-bubble-chart.ds';

@@ -10,7 +10,7 @@ export const AwHomeLayoutConfig = {
   }, {
     id: 'aw-home-hero-patrimonio',
   }, {
-    id: 'aw-home-bubble-chart',
+    id: 'aw-bubble-chart',
   }, {
     id: 'aw-home-facets-wrapper',
   }, {
