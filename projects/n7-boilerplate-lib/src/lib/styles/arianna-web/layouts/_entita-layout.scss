@@ -5,15 +5,15 @@
  */
 
 /* ------------------------------------ *\
-    HERO
+    ENTITY
 \* ------------------------------------ */
 .aw-entity {
-    margin: $space*3 auto 0 auto;
-    max-width: $page-max-width;
-
     display: grid;
     grid-template-columns: $aw-scheda-tree-width 1fr;
-
+    
+    margin: $space*3 auto $space*6 auto;
+    max-width: $page-max-width;
+    
     &__content {
         margin-top: $space*3;
         background-color: $color-background-base;
