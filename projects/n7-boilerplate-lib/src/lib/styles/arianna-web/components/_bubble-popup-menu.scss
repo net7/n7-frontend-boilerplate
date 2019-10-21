@@ -45,10 +45,15 @@
             color: $color-text-link;
         }
 
-        &:first-of-type {
-            margin-right: $space;
-            padding-right: $space;
-            border-right: 1px solid $color-border-normal;
+        // &:first-of-type {
+            
+            
+        // }
+
+        & + .aw-bubble-popup-menu__link {
+            margin-left: $space;
+            padding-left: $space;
+            border-left: 1px solid $color-border-normal;
         }
     }
 }
