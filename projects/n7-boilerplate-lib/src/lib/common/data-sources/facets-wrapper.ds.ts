@@ -1,6 +1,5 @@
 import { DataSource } from '@n7-frontend/core';
 import { SearchModel } from '../services/search.service';
-import { FacetInputCheckbox, FacetInput } from '../models';
 
 const HEADER_ICON_OPEN = 'n7-icon-angle-down';
 const HEADER_ICON_CLOSE = 'n7-icon-angle-right';
@@ -28,10 +27,14 @@ export class FacetsWrapperDS extends DataSource {
         .filter(input => input.getSectionIndex() === fieldIndex)
         .map(input => {
           input.update();
-          return input.getOutput();
+          return {
+            type: input.getType(),
+            output: input.getOutput()
+          }
         })
-        .forEach(output => {
+        .forEach(({ type, output }) => {
           sections.push({ 
+            classes: this._getSectionClasses(type),
             inputs: Array.isArray(output) ? output : [output]
           });
         });
@@ -92,46 +95,23 @@ export class FacetsWrapperDS extends DataSource {
   public getRequestParams = () => this.searchModel.getRequestParams();
   public filtersAsQueryParams = (filters) => this.searchModel.filtersAsQueryParams(filters);
   public updateFiltersFromQueryParams = (queryParams) => this.searchModel.updateFiltersFromQueryParams(queryParams);
+  public getInputByFacetId = (facetId) => this.searchModel.getInputByFacetId(facetId);
+  public filterTarget = (target) => this.searchModel.filterTarget(target);
 
   public updateInputsFromFilters(){
     this.searchModel.updateInputsFromFilters();
   }
 
-  /* private _updateInputCheckboxFromFilters(input, filters){
-    filters.forEach(filter => {
-      if(Array.isArray(filter.value) && filter.value.indexOf('' + input._meta.value) !== -1){
-        input.checked = true;
-      } else if(filter.value === input._meta.value) {
-        input.checked = true;
-      }
-    });
-  }
+  private _getSectionClasses(type){
+    const classesMap = {
+      'text': 'text',
+      'checkbox': 'checkboxes',
+      'link': 'links',
+      'select': 'select'
+    };
 
-  private _updateInputSearchFromFilters(input, filters){
-    filters.forEach(filter => {
-      if(filter.value){
-        input.value = filter.value;
-      }
-    });
+    return `n7-facet__section-input-${classesMap[type]}`;
   }
-
-  private _updateInputLinkFromFilters(input, filters){
-    filters.forEach(filter => {
-      if(filter.value === input._meta.value){
-        input.classes = 'is-active';
-      }
-    });
-  }
-
-  private _updateInputSelectFromFilters(input, filters){
-    filters.forEach(filter => {
-      input.options.forEach(option => {
-        if(filter.value === option.value){
-          option.selected = true;
-        }
-      })
-    });
-  } */
 
   private _headerConfig(header, groupId){
     return header ? {
@@ -149,108 +129,4 @@ export class FacetsWrapperDS extends DataSource {
     }: null;
   }
 
-  /* 
-  private _checkboxConfig(facetData, inputConfig, fieldId){
-    return facetData.map((checkboxData, itemIndex) => {
-      const elementId = `${fieldId}-checkbox-${itemIndex}`,
-        { filterConfig } = inputConfig;
-
-      return { 
-        type: 'checkbox', 
-        id: elementId, 
-        label: checkboxData.label, 
-        payload: {
-          filterConfig,
-          source: 'input-checkbox',
-          value: checkboxData.value
-        }, 
-        _meta: {
-          elementId,
-          facetId: filterConfig.facetId,
-          value: checkboxData.value
-        } 
-      };
-    });
-  }
-
-  private _searchConfig(facetData, inputConfig, fieldId){
-    const elementId = `${fieldId}-search`,
-    { filterConfig } = inputConfig,
-      payload = {
-        filterConfig,
-        source: 'input-search',
-      };
-
-    return [{ 
-      type: 'text',
-      id: elementId,
-      label: inputConfig.label,
-      disabled: inputConfig.disabled,
-      placeholder: inputConfig.placeholder,
-      icon: inputConfig.icon,
-      inputPayload: {
-        ...payload,
-        trigger: 'input'
-      },
-      enterPayload: {
-        ...payload,
-        trigger: 'enter'
-      },
-      iconPayload: {
-        ...payload,
-        trigger: 'icon'
-      },
-      _meta: {
-        facetId: filterConfig.facetId,
-      }
-    }];
-  };
-
-  private _linkConfig(facetData, inputConfig, fieldId){
-    return facetData.map((linkData, itemIndex) => {
-      const elementId = `${fieldId}-link-${itemIndex}`,
-        { filterConfig } = inputConfig;
-
-      return { 
-        type: 'link', 
-        id: elementId, 
-        text: linkData.label, 
-        counter: linkData.counter, 
-        payload: {
-          filterConfig,
-          source: 'input-link',
-          value: linkData.value
-        },
-        _meta: {
-          elementId,
-          facetId: filterConfig.facetId,
-          value: linkData.value
-        } 
-      };
-    });
-  }
-
-  private _selectConfig(facetData, inputConfig, fieldId){
-    const elementId = `${fieldId}-select`,
-    { filterConfig } = inputConfig;
-
-    return [{ 
-      type: 'select',
-      id: elementId,
-      label: inputConfig.label,
-      disabled: inputConfig.disabled,
-      options: facetData.map(({ value, label, selected }) => ({
-        value, 
-        label,
-        selected
-      })),
-      payload: {
-        filterConfig,
-        source: 'input-select',
-      },
-      _meta: {
-        facetId: filterConfig.facetId,
-      }
-    }];
-  } */
 }

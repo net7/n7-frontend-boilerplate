@@ -22,7 +22,7 @@ const INPUTS_MAP = {
 export interface ISearchConfig {
   facets: any;
   page: any;
-  resultFields: any;
+  results: any;
   fields: any;
   baseUrl: string;
 }
@@ -127,7 +127,7 @@ export class SearchModel {
     return {
       facets: this._facets,
       page: this._page,
-      resultFields: this._config.resultFields,
+      results: this._config.results,
       filters: this._filters
         .filter(filter => filter.context !== 'internal')
         .map(({ facetId, value, searchIn }) => ({ facetId, value, searchIn }))
@@ -156,10 +156,41 @@ export class SearchModel {
     return this._filters.filter(filter => filter.facetId === facetId);
   }
 
+  public getInputByFacetId(facetId: string){
+    return this._inputs.filter(input => input.getFacetId() === facetId)[0];
+  }
+
   public setInputData(facetId, data){
     this._inputs
       .filter(input => input.getFacetId() === facetId)
       .forEach(input => input.setData(data));
+  }
+
+  public filterTarget(target){
+    const inputs = this._inputs.filter(input => input.getTarget() === target),
+      facet = this._facets.filter(facet => facet.id === target)[0],
+      facetData = facet.data;
+
+    let searchMap = {};
+    inputs.forEach(input => {
+      const filter = this.getFiltersByFacetId(input.getFacetId())[0],
+        searchIn = input.getSearchIn(),
+        value = filter.value;
+
+      facetData.forEach(item => {});
+    });
+
+    console.log('facetData', facetData);
+  }
+
+  private _filterMetadata(value, searchIn, metadata){
+    // '=' EQUALS
+    // '>' GREATER THAN
+    // '<' LESS THAN
+    // '>=' GREATER OR EQUALS
+    // '<=' LESS OR EQUALS
+    // '<>' NOT EQUAL
+    //  'LIKE'
   }
 
   private _setFilters(){

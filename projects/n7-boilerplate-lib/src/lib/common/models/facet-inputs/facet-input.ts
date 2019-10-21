@@ -30,6 +30,9 @@ export abstract class FacetInput {
   public getFacetId = () => this.config.facetId;
   public getInputIndex = () => this.config.inputIndex;
   public getSectionIndex = () => this.config.sectionIndex;
+  public getContext = () => this.config.filterConfig.context || 'external';
+  public getTarget = () => this.config.filterConfig.target || null;
+  public getSearchIn = () => this.config.filterConfig.searchIn || null;
   public getType = () => this.config.type;
   public getOutput = () => this.output;
   

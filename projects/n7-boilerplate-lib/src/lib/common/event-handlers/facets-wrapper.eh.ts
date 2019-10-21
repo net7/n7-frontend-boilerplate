@@ -8,7 +8,9 @@ export class FacetsWrapperEH extends EventHandler {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch(type){
         case 'facets-wrapper.facet':
-          const { context } = payload.eventPayload.inputPayload;
+          const { facetId } = payload.eventPayload.inputPayload,
+            input = this.dataSource.getInputByFacetId(facetId),
+            context = input.getContext();
           this._facetsChanged = true;
 
           // update
@@ -16,8 +18,9 @@ export class FacetsWrapperEH extends EventHandler {
 
           // internal
           if(context === 'internal'){
-            // TODO: do internal filter
-          // external
+            this.dataSource.filterTarget(input.getTarget());
+
+            // external
           } else {
             const requestParams = this.dataSource.getRequestParams(),
               queryParams = this.dataSource.filtersAsQueryParams(requestParams.filters);

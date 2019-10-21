@@ -20,7 +20,9 @@ const SEARCH_CONFIG = {
   }, {
     id: 'entity-types',
     type: 'value',
-    data: []
+    operator: 'OR',
+    limit: 10,
+    order: 'count', // count | text
   }, {
     id: 'entity-search', 
     type: 'value',
@@ -28,7 +30,48 @@ const SEARCH_CONFIG = {
   }, {
     id: 'entity-links', 
     type: 'value',
-    data: []
+    metaData: ['title', 'entity-type'],
+    data: [{
+      value: 'milano',
+      label: 'Milano',
+      count: 1,
+      metaData: {
+        title: 'Milano',
+        'entity-type': 'places'
+      }
+    }, {
+      value: 'roma',
+      label: 'Comune di Roma',
+      count: 2,
+      metaData: {
+        title: 'Comune di Roma',
+        'entity-type': 'places'
+      }
+    }, {
+      value: 'spazio',
+      label: 'Spazio',
+      count: 3,
+      metaData: {
+        title: 'Spazio',
+        'entity-type': 'concept'
+      }
+    }, {
+      value: 'rodolfo-marna',
+      label: 'Rodolfo Marna',
+      count: 4,
+      metaData: {
+        title: 'Rodolfo Marna',
+        'entity-type': 'people'
+      }
+    }, {
+      value: 'alighiero-boetti',
+      label: 'Alighiero Boetti',
+      count: 5,
+      metaData: {
+        title: 'Alighiero Boetti',
+        'entity-type': 'people'
+      }
+    }]
   }, {
     id: 'date-from', 
     type: 'value',
@@ -85,7 +128,7 @@ const SEARCH_CONFIG = {
         context: 'internal',
         target: 'entity-links',
         searchIn: [{
-          key: 'entity',
+          key: 'entity-type',
           operator: '='
         }]
       } 
@@ -100,7 +143,7 @@ const SEARCH_CONFIG = {
         context: 'internal',
         target: 'entity-links',
         searchIn: [{
-          key: 'text',
+          key: 'title',
           operator: 'LIKE'
         }]
       } 
@@ -142,7 +185,19 @@ const SEARCH_CONFIG = {
       } 
     }]
   }],
-  resultFields: null,
+  results: {
+    order: {
+      type: 'score', // score | text | date
+      key: 'author', // docPath, elastic key, ecc
+      direction: 'ASC', // ASC | DESC
+    }, 
+    fields: {
+      title: {
+        highlight: true,
+        limit: 50,
+      }
+    },
+  },
   page: null,
   baseUrl: ''
 }
