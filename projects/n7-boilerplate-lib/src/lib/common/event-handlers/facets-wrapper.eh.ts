@@ -19,12 +19,16 @@ export class FacetsWrapperEH extends EventHandler {
             // TODO: do internal filter
           // external
           } else {
-            const requestParams = this.dataSource.getRequestParams();
+            const requestParams = this.dataSource.getRequestParams(),
+              queryParams = this.dataSource.filtersAsQueryParams(requestParams.filters);
+
+            Object.keys(queryParams).forEach(key => queryParams[key] = queryParams[key] || null);
+            
             this.emitGlobal('navigate', {
               handler: 'router',
               path: [],
-              queryParams: this.dataSource.filtersAsQueryParams(requestParams.filters)
-            })
+              queryParams
+            });
           }
 
           break;

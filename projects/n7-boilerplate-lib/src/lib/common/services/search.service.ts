@@ -129,12 +129,7 @@ export class SearchModel {
       page: this._page,
       resultFields: this._config.resultFields,
       filters: this._filters
-        .filter(filter => { 
-          return (filter.context !== 'internal') && (
-            (Array.isArray(filter.value) && filter.value.length) || 
-            (!Array.isArray(filter.value) && filter.value)
-          );
-        })
+        .filter(filter => filter.context !== 'internal')
         .map(({ facetId, value, searchIn }) => ({ facetId, value, searchIn }))
     }
   }
