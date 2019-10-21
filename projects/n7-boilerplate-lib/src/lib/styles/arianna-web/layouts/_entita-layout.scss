@@ -9,7 +9,7 @@
 \* ------------------------------------ */
 .aw-entity {
     display: grid;
-    grid-template-columns: $aw-scheda-tree-width 1fr;
+    grid-template-columns: $aw-scheda-tree-width minmax($bubble-chart-column-container-min-width,1fr);
     
     margin: $space*3 auto $space*6 auto;
     max-width: $page-max-width;
