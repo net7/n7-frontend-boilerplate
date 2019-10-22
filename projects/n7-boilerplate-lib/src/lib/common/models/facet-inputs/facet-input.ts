@@ -1,8 +1,9 @@
 interface IFacetInputData {
-  value: string | number,
-  label: string,
-  counter: number,
-  options?: any
+  value: string | number;
+  label: string;
+  counter: number;
+  hidden?: boolean;
+  options?: any;
 }
 
 export abstract class FacetInput {

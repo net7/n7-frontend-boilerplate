@@ -30,12 +30,12 @@ const SEARCH_CONFIG = {
   }, {
     id: 'entity-links', 
     type: 'value',
-    metaData: ['title', 'entity-type'],
+    metadata: ['title', 'entity-type'],
     data: [{
       value: 'milano',
       label: 'Milano',
       count: 1,
-      metaData: {
+      metadata: {
         title: 'Milano',
         'entity-type': 'places'
       }
@@ -43,7 +43,7 @@ const SEARCH_CONFIG = {
       value: 'roma',
       label: 'Comune di Roma',
       count: 2,
-      metaData: {
+      metadata: {
         title: 'Comune di Roma',
         'entity-type': 'places'
       }
@@ -51,15 +51,15 @@ const SEARCH_CONFIG = {
       value: 'spazio',
       label: 'Spazio',
       count: 3,
-      metaData: {
+      metadata: {
         title: 'Spazio',
-        'entity-type': 'concept'
+        'entity-type': 'concepts'
       }
     }, {
       value: 'rodolfo-marna',
       label: 'Rodolfo Marna',
       count: 4,
-      metaData: {
+      metadata: {
         title: 'Rodolfo Marna',
         'entity-type': 'people'
       }
@@ -67,7 +67,7 @@ const SEARCH_CONFIG = {
       value: 'alighiero-boetti',
       label: 'Alighiero Boetti',
       count: 5,
-      metaData: {
+      metadata: {
         title: 'Alighiero Boetti',
         'entity-type': 'people'
       }

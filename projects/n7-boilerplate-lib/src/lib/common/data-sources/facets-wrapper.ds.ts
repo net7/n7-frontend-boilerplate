@@ -10,7 +10,7 @@ export class FacetsWrapperDS extends DataSource {
   protected transform(data) {
     let groups = [];
 
-    this.searchModel = data.searchModel;
+    if(!this.searchModel) this.searchModel = data.searchModel;
 
     const id = this.searchModel.getId(),
       fields = this.searchModel.getFields();
@@ -28,14 +28,18 @@ export class FacetsWrapperDS extends DataSource {
         .map(input => {
           input.update();
           return {
+            facetId: input.getFacetId(),
             type: input.getType(),
             output: input.getOutput()
           }
         })
-        .forEach(({ type, output }) => {
+        .forEach(({ type, output, facetId }) => {
           sections.push({ 
             classes: this._getSectionClasses(type),
-            inputs: Array.isArray(output) ? output : [output]
+            inputs: Array.isArray(output) ? output : [output],
+            _meta: {
+              facetId
+            }
           });
         });
 
@@ -90,6 +94,21 @@ export class FacetsWrapperDS extends DataSource {
 
     this.searchModel.updateFilter(facetId, value, remove);
     this.searchModel.updateInputsFromFilters();
+  }
+
+  public updateFilteredTarget(target){
+    const input = this.searchModel.getInputByFacetId(target);
+    this.output.groups
+      .map(group => group.facet)
+      .map(facet => facet.sections)
+      .map(sections => {
+        sections.forEach(section => {
+          if(section._meta.facetId === target){
+            const inputOutput = input.getOutput();
+            section.inputs = Array.isArray(inputOutput) ? inputOutput : [inputOutput];
+          }
+        });
+      });
   }
 
   public getRequestParams = () => this.searchModel.getRequestParams();

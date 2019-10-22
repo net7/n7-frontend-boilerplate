@@ -168,29 +168,89 @@ export class SearchModel {
 
   public filterTarget(target){
     const inputs = this._inputs.filter(input => input.getTarget() === target),
+      targetInput = this.getInputByFacetId(target),
       facet = this._facets.filter(facet => facet.id === target)[0],
       facetData = facet.data;
 
-    let searchMap = {};
+    let searchIns = [];
     inputs.forEach(input => {
       const filter = this.getFiltersByFacetId(input.getFacetId())[0],
         searchIn = input.getSearchIn(),
         value = filter.value;
 
-      facetData.forEach(item => {});
+      searchIns.push([searchIn, value]);
     });
 
-    console.log('facetData', facetData);
+    // filter
+    facetData.forEach(item => this._filterData(searchIns, item))
+
+    // update
+    targetInput.setData(facetData);
+    targetInput.update();
   }
 
-  private _filterMetadata(value, searchIn, metadata){
-    // '=' EQUALS
-    // '>' GREATER THAN
-    // '<' LESS THAN
-    // '>=' GREATER OR EQUALS
-    // '<=' LESS OR EQUALS
-    // '<>' NOT EQUAL
-    //  'LIKE'
+  private _filterData(searchIns, item){
+    searchIns.forEach(([searchIn, value]) => {
+      searchIn.forEach(({ key, operator }) => {
+        switch(operator){
+          // '=' EQUALS
+          case '=':
+            if(Array.isArray(value)){
+              item.hidden = !(!value.length || value.indexOf(item.metadata[key]) !== -1);
+            } else {
+              item.hidden = !(value && value === item.metadata[key]);
+            }
+            break;
+          // '>' GREATER THAN
+          case '>':
+            if(!Array.isArray(value)){
+              item.hidden = !(value && value > item.metadata[key]);
+            } 
+            break;
+          // '<' LESS THAN
+          case '<': 
+            if(!Array.isArray(value)){
+              item.hidden = !(value && value < item.metadata[key]);
+            } 
+            break;
+          // '>=' GREATER OR EQUALS
+          case '>=': 
+            if(!Array.isArray(value)){
+              item.hidden = !(value && value >= item.metadata[key]);
+            } 
+            break;
+          // '<=' LESS OR EQUALS
+          case '<=': 
+            if(!Array.isArray(value)){
+              item.hidden = !(value && value <= item.metadata[key]);
+            } 
+            break;
+          // '<>' NOT EQUAL
+          case '<>': 
+            if(!Array.isArray(value)){
+              item.hidden = !(value && value !== item.metadata[key]);
+            } 
+            break;
+          //  'LIKE'
+          case 'LIKE':
+            if(
+              value && 
+              item.metadata[key] && 
+              typeof value === 'string' && 
+              typeof item.metadata[key] === 'string'
+            ){
+              const haystack = item.metadata[key].toLowerCase(),
+                needle = value.toLocaleLowerCase(); 
+                
+              item.hidden = !(haystack.indexOf(needle) !== -1);
+            }  
+            break;
+          default:
+            console.warn(`SearchIn: operator ${operator} not supported`);
+            break;
+        }
+      })
+    });
   }
 
   private _setFilters(){

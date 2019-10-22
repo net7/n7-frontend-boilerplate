@@ -19,6 +19,7 @@ export class FacetsWrapperEH extends EventHandler {
           // internal
           if(context === 'internal'){
             this.dataSource.filterTarget(input.getTarget());
+            this.dataSource.updateFilteredTarget(input.getTarget());
 
             // external
           } else {

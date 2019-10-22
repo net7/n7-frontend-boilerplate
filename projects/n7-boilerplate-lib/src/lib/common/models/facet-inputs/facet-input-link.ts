@@ -5,7 +5,7 @@ export class FacetInputLink extends FacetInput {
   protected transform(){
     const facetId = this.getFacetId();
   
-    return this.data.map(({ label, value, counter }) => {
+    return this.data.map(({ label, value, counter, hidden }) => {
       // normalize value
       value = '' + value;
 
@@ -19,6 +19,7 @@ export class FacetInputLink extends FacetInput {
           source: 'input-link',
           value
         },
+        classes: hidden ? 'is-hidden' : '',
         _meta: { facetId, value } 
       };
     });
