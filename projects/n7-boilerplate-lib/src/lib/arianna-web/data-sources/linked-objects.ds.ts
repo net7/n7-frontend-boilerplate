@@ -35,17 +35,10 @@ function unpackData (data, page, size, keys, totalPages, context) {
       metadata: [
         {
           classes: 'n7-objects__metadata-artist',
-          items: [
-            { // Artista: Mimmo Jodice
-              // label: el.item.info[0].key,
-              label: 'Autore',
-              value: el.item.info[0].value
-            },
-            {
-              // olio su tela
-              value: el.item.info[1].value
-            }
-          ]
+          items: el.item.info.map(({ value, key }) => ({
+            label: key === 'author' ? 'Artista' : null,
+            value 
+          }))
         },
         {
           classes: 'n7-objects__metadata-linked',
