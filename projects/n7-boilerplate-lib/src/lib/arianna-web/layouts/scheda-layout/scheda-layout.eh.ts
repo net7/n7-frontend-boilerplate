@@ -38,6 +38,13 @@ export class AwSchedaLayoutEH extends EventHandler {
           break;
         case 'aw-sidebar-header.click': this.dataSource.collapseSidebar();
         break;
+        case "aw-bubble-chart.bubble-tooltip-goto-click":
+          if(!payload || !payload.entityId) return;
+          this.emitGlobal('navigate', {
+            handler: 'router',
+            path: [`aw/entita/${payload.entityId}/overview`]
+          });
+        break;
 
       }
     });
@@ -49,6 +56,11 @@ export class AwSchedaLayoutEH extends EventHandler {
        this.dataSource.loadItem(params.get('id')).subscribe((response) => {
          if ( response ) {
            this.dataSource.loadContent(response);
+           if ( response.connectedEntities ){
+             this.dataSource.hasBubbles = true;
+             let connectedEntities = {source: response, connectedEntities: response.connectedEntities};
+             this.emitOuter('filterbubbleresponse', connectedEntities);
+           }
           }
         });
       } else {
@@ -66,6 +78,6 @@ export class AwSchedaLayoutEH extends EventHandler {
       if ( selectedItem ) {
         this.emitOuter('selectItem', selectedItem);
       }
-      });
+    });
   }
 }

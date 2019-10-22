@@ -25,10 +25,10 @@ export class AwEntitaLayoutComponent extends AbstractLayout implements OnInit, O
     super(layoutsConfiguration.get('AwEntitaLayoutConfig') || config);
   }
 
-  /**
-   * Optional variables that can be accessed from the layout's logic.
-   * If removed, they must also be removed from the layout's DataSource file,
-   * and from this file imports.
+  /*
+    Optional variables that can be accessed from the layout's logic.
+    If removed, they must also be removed from the layout's DataSource file,
+    and from this file imports.
    */
   protected initPayload() {
     return {

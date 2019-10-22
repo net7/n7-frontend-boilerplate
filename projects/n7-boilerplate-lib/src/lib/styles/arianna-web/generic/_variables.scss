@@ -7,13 +7,14 @@
 // ------------------------------------ //
 // #LAYOUT
 // ------------------------------------ //
-$page-max-width: 1300px;
+$page-max-width: 1350px;
 
 
 // ------------------------------------ //
 // #SCHEDA-LAYOUT
 // ------------------------------------ //
 $aw-scheda-tree-width: 400px;
+
 
 // ------------------------------------ //
 // #GRIDS
@@ -30,7 +31,6 @@ $aw-scheda-tree-width: 400px;
 // overwritten and must be removed if not used
 
 
-
 // ------------------------------------ //
 // #Z-INDEX
 // ------------------------------------ //
@@ -42,32 +42,18 @@ $aw-scheda-tree-width: 400px;
 // ------------------------------------ //
 // $space: 8px;
 
-// ------------------------------------ //
-// #SUSY
-// ------------------------------------ //
-/* stylelint-disable */
-/*
-$susy: (
-    'columns': susy-repeat(4),
-    'gutters': 0.25,
-    'spread': 'narrow',
-    'container-spread': 'narrow',
-);
-*/
-/* stylelint-enable */
-
 
 // ------------------------------------ //
 // #FONTS
 // ------------------------------------ //
-@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,900&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,700,700i,900&display=swap');
 
 
 // ------------------------------------ //
 // TYPOGRAPHY
 // ------------------------------------ //
-$font-family-main: 'Source Sans Pro', sans-serif;
-$font-family-headings: $font-family-main;
+// $font-family-main: 'Source Sans Pro', sans-serif;
+// $font-family-headings: $font-family-main;
 
 // $font-size-xxxl: 38px;
 // $font-size-xxl: 30px;
@@ -81,6 +67,7 @@ $font-family-headings: $font-family-main;
 // $font-weight-normal: 400;
 // $font-weight-bold: 700;
 $font-weight-black: 900;
+
 
 // ------------------------------------ //
 // COLORS
@@ -104,6 +91,8 @@ $font-weight-black: 900;
 // $color-background-light-blue: #F5F7FF;
 // $color-background-medium: $color-gray-01;
 // $color-background-dark: $color-gray-03;
+$color-background-layout: $color-gray-02;
+$gradient-item-preview-list: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, $color-background-layout 100%);
 
 
 // ------------------------------------ //
@@ -119,7 +108,7 @@ $font-weight-black: 900;
 // ------------------------------------ //
 // #BORDER-RADIUS
 // ------------------------------------ //
-$border-radius: 5px;
+// $border-radius: 5px;
 // $border-radius-hard: 8px;
 
 
@@ -149,17 +138,17 @@ $button-large-height: 56px;
 // $color-button-cta-text-hover: $color-text-inverse;
 // $color-button-cta-text-disabled: rgba($color-text-inverse, .4);
 
-$color-button-cta-bg: $color-main;
-$color-button-cta-border: $color-main;
-$color-button-cta-bg-hover: darken($color-button-cta-bg, 5%);
-$color-button-cta-border-hover: darken($color-button-cta-bg, 5%);
-$color-button-cta-bg-active: #3FE3F1;
-$color-button-cta-bg-disabled: rgba($color-button-cta-bg, .4);
+// $color-button-cta-bg: $color-main;
+// $color-button-cta-border: $color-main;
+// $color-button-cta-bg-hover: darken($color-button-cta-bg, 5%);
+// $color-button-cta-border-hover: darken($color-button-cta-bg, 5%);
+// $color-button-cta-bg-active: #3FE3F1;
+// $color-button-cta-bg-disabled: rgba($color-button-cta-bg, .4);
 
 // $color-button-cta-border: darken($color-main, 5); // $color-text-hover;
 
 // Light button (no background or border, only text)
-$color-button-light-text: $color-text;
+// $color-button-light-text: $color-text;
 // $color-button-light-text-hover: $color-text-link-hover;
 // $color-button-light-text-disabled: $color-text-light;
 // $color-button-light-text-active: $color-text-link-hover;
@@ -173,6 +162,7 @@ $color-button-light-text: $color-text;
 // $form-border-radius: $border-radius;
 // $form-dropdown-height: 30px;
 
+
 // ------------------------------------ //
 // #TRANSITIONS
 // ------------------------------------ //
@@ -185,7 +175,7 @@ $color-button-light-text: $color-text;
 $header-height: 100px;
 // $header-height-mobile: 60px;
 // $header-bg-color: $color-background-base;
-$header-active-item-color: #F7FAFA;
+$header-active-item-color: $color-gray-02;
 // $header-logo-height: $header-height - ($space*2);
 // $header-logo-height-mobile: $header-height-mobile - ($space*2);
 // $header-user-thumb-size: 40px;
@@ -224,32 +214,38 @@ $header-active-item-color: #F7FAFA;
 // $table-footer-text-color: $color-text-light;
 // $table-footer-bg: $color-background-medium;
 
+
 // ------------------------------------ //
-// #HERO
+// #TOP-HERO-HOMEPAGE
 // ------------------------------------ //
-$hero-height: 600px;
-$hero-content-width: $page-max-width;
 $top-hero-height: 380px;
-$hero-text-max-width: 715px;
-$hero-input-border-radius: $border-radius;
-$hero-input-height: 56px;
-$hero-input-box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-$hero-button-height: $hero-input-height;
-$hero-image-border: 10px solid #ffffff;
-$hero-image-border-radius: $space*2;
-$hero-button-bg: #FFCD00;
-$hero-button-border: #FFCD00;
-$hero-button-bg-hover: darken($hero-button-bg, 5%);
-$hero-button-border-hover: darken($hero-button-bg, 5%);
-$hero-button-bg-active: #FFB600;
-$hero-button-bg-disabled: rgba($hero-button-bg, .4);
+$top-hero-text-max-width: 715px;
+$top-hero-input-height: 56px;
+$top-hero-input-border-radius: $border-radius;
+$top-hero-input-box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+$top-hero-button-height: $top-hero-input-height;
+$top-hero-title-font-weight: $font-weight-bold;
+// $hero-height: 600px;
+// $hero-content-width: $page-max-width;
+
+
+// ------------------------------------ //
+// #BOTTTOM-HERO-HOMEPAGE
+// ------------------------------------ //
+$bottom-hero-image-border: 10px solid #ffffff;
+$bottom-hero-image-border-radius: $border-radius;
+$bottom-hero-button-bg: #ffcd00;
+$bottom-hero-button-bg-hover: darken($bottom-hero-button-bg, 5%);
+$bottom-hero-button-bg-active: #ffb600;
+$bottom-hero-button-bg-disabled: rgba($bottom-hero-button-bg, .4);
+$bottom-hero-title-font-weight: $font-weight-bold;
 
 
 // ------------------------------------ //
 // #FACET
 // ------------------------------------ //
 $n7-facet-search-input-height: 32px;
-$n7-facet-search-input-border-radius: 3px;
+$n7-facet-search-input-border-radius: $border-radius;
 
 
 // ------------------------------------ //
@@ -281,10 +277,26 @@ $item-preview-image-size: 85px;
 // ------------------------------------ //
 // #TIPPY-COMPONENT
 // ------------------------------------ //
-$tippy-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
+$tippy-box-shadow: 0 2px 10px 0 rgba(0,0,0,0.1);
 
 
 // ------------------------------------ //
-// #BUBBLE-RESULTS
+// #BUBBLE-CHART
 // ------------------------------------ //
+$bubble-popover-title-font-weight: $font-weight-bold;
 $bubble-results-height: 555px;
+$bubble-results-count-font-weight: $font-weight-bold;
+
+
+// ------------------------------------ //
+// #SCHEDA-LAYOUT
+// ------------------------------------ //
+$aw-scheda-content-padding: $space*3;
+$scheda-title-font-weight: $font-weight-bold;
+
+
+// ------------------------------------ //
+// #ENTITA
+// ------------------------------------ //
+$entity-sidebar-title-background: $color-gray-01;
+$entity-nav-item-active-decoration-bg: $color-gray-06;

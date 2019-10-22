@@ -3,7 +3,7 @@
  *
  * Bubble popup component.
  */
- 
+
 /* ------------------------------------ *\
    #BUBBLE-POPUP-MENU
 \* ------------------------------------ */
@@ -19,11 +19,11 @@
         &:hover {
             color: $color-text-link;
         }
-
     }
 
     &__title {
-        margin-bottom: 0;
+        margin-bottom: $space/2;
+        padding-right: $space*3;
         font-weight: $font-weight-black;
     }
 
@@ -51,6 +51,11 @@
             border-right: 1px solid $color-border-normal;
         }
     }
+}
+
+//TODO DEVE ESSERE VALIDO IN OGNI LAYOUT
+.aw-bubble-chart-wrapper {
+    width: 100%;
 }
 
 /* ------------------------------------ *\

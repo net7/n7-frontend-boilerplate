@@ -16,7 +16,7 @@ export const AwPatrimonioLayoutConfig = {
      { id: 'aw-scheda-metadata' },
      { id: 'aw-scheda-image' },
      { id: 'aw-scheda-inner-title' },
-     { id: 'aw-scheda-bubble-chart' },
+     { id: 'aw-bubble-chart' },
      { id: 'aw-linked-objects' }
   ],
   layoutDS: AwSchedaLayoutDS,

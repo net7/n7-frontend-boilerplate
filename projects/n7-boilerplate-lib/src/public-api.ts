@@ -19,3 +19,4 @@ export * from './lib/arianna-web/n7-boilerplate-arianna-web.module';
 export * from './lib/arianna-web/data-sources';
 export * from './lib/arianna-web/event-handlers';
 export * from './lib/arianna-web/layouts';
+export * from './lib/arianna-web/components';

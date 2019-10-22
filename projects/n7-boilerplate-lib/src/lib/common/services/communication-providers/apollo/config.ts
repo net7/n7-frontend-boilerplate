@@ -119,8 +119,11 @@ export const ApolloProviderConfig = {
           }
           count
         }
-        extraTabUrl
-        wikiTabUrl
+        extraTab
+        wikiTab {
+          text
+          url
+        }
         items {
           breadcrumbs {
             link

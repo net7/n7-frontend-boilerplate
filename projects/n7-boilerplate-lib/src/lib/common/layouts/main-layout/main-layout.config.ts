@@ -11,6 +11,9 @@ export const MainLayoutConfig = {
     id: 'subnav'
   }, {
     id: 'breadcrumbs'
+  }, {
+    id: 'footer',
+    hasStaticData: true
   }],
   layoutDS: MainLayoutDS,
   layoutEH: MainLayoutEH,

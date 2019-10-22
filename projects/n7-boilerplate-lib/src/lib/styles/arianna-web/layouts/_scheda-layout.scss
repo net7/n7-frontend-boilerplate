@@ -5,14 +5,12 @@
  * Includes traa navigation on the right.
  */
  
-$aw-scheda-content-padding: $space*3;
-
 /* ------------------------------------ *\
     LAYOUT
 \* ------------------------------------ */
 .aw-scheda {
     padding-top: $space*3;
-    margin-bottom: $space*7;
+    margin-bottom: $space*6;
 
     &__content {
         position: relative;
@@ -28,7 +26,7 @@ $aw-scheda-content-padding: $space*3;
 
         .n7-sidebar-header {
             position: sticky !important;
-            top: 0px !important;    
+            top: 0px !important;
         }
 
         .n7-tree {
@@ -70,9 +68,9 @@ $aw-scheda-content-padding: $space*3;
 
     /* First level */
     .n7-tree {
-        > .n7-tree__item > .n7-tree__item-contents .n7-tree__item-text{
-             font-size: $font-size-l;
-             font-weight: $font-weight-bold;
+        > .n7-tree__item > .n7-tree__item-contents .n7-tree__item-text {
+            font-size: $font-size-l;
+            font-weight: $font-weight-bold;
         }
     }
 }
@@ -109,7 +107,7 @@ $aw-scheda-content-padding: $space*3;
     background-color: $color-background-base;
 
     /* Breadcrumbs */
-    .n7-breadcrumbs  {
+    .n7-breadcrumbs {
         height: $sidebar-header-height;
         padding-left: $space*2;
         box-sizing: border-box;
@@ -120,7 +118,7 @@ $aw-scheda-content-padding: $space*3;
     /* Main title that describes the scheda content */
     .n7-inner-title {
         &__title {
-            font-weight: $font-weight-black;
+            font-weight: $scheda-title-font-weight;
         }
     }
 
@@ -164,7 +162,20 @@ $aw-scheda-content-padding: $space*3;
     
     /* Related items */
     .aw-scheda__related-items {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-column-gap: $grid-gutter-h;
         padding: 0 $aw-scheda-content-padding $aw-scheda-content-padding $aw-scheda-content-padding;
+
+        /* Targeting elements in the last row */
+        >*:nth-child(2n + 1):nth-last-child(-n + 2),
+        >*:nth-child(2n + 1):nth-last-child(-n + 2) ~ * {
+            .n7-item-preview {
+                margin-bottom: 0;
+                padding-bottom: 0;
+                border-bottom: 0;
+            }
+        }
     }
 }
 

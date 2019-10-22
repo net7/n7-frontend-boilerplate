@@ -47,24 +47,26 @@
 
 
 // ------------------------------------ //
-// #TEMP AW COMPONENT
-// ------------------------------------ //
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/temp/footer";
-
-
-// ------------------------------------ //
 // #COMMON COMPONENTS
 // ------------------------------------ //
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/common/components/facets-wrapper";
 
 
 // ------------------------------------ //
+// #TEMP AW COMPONENT
+// ------------------------------------ //
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/temp/footer";
+
+
+// ------------------------------------ //
 // #ARIANNA COMPONENTS
 // ------------------------------------ //
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/advanced-autocomplete";
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/bubble-popup-menu";
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/footer";
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/header";
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/item-preview";
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/tippy-tooltip";
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/bubble-popup-menu";
 
 
 // ------------------------------------ //

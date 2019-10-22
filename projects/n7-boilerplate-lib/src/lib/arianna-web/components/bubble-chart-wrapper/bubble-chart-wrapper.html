@@ -1,0 +1,35 @@
+<div class="aw-bubble-chart-wrapper">
+    <button style="display: none;"
+            id="bubble-popup-menu_closebutton"
+            (click)="onClick('bubble-tooltip-close-click',{entityId: (hover ? hover.id : null)} )"></button>
+    <button style="display: none;"
+            id="bubble-popup-menu_gotobutton"
+            (click)="onClick('bubble-tooltip-goto-click',{entityId:(hover  ? hover.id : null)} )"></button>
+    <button style="display: none;"
+            id="bubble-popup-menu_selectbutton"
+            (click)="onClick('bubble-tooltip-select-click',{entityId:(hover ? hover.id : null)} )"></button>
+    <div id="bubble-popup-menu" class="aw-bubble-popup-menu" style="display: none;">
+        <h2 class="aw-bubble-popup-menu__title">{{ ( hover ? hover.label : '' ) }}</h2>
+        <span class="n7-icon-close aw-bubble-popup-menu__close" onclick="document.getElementById('bubble-popup-menu_closebutton').click();"></span>
+        <p class="aw-bubble-popup-menu__text">
+                {{ ( hover ? 'È collegato a '+ hover.count + ' entità' : '' ) }}
+        </p>
+        <div class="aw-bubble-popup-menu__actions">
+            <span
+            class="aw-bubble-popup-menu__link"
+            *ngIf="buttons.indexOf('goto') >= 0"
+            onclick="document.getElementById('bubble-popup-menu_gotobutton').click();">
+                Vai alla scheda
+            </span> <ng-container *ngIf="buttons.length > 1"> | </ng-container>
+            <span
+                class="aw-bubble-popup-menu__link"
+                *ngIf="buttons.indexOf('select') >= 0"
+                onclick="document.getElementById('bubble-popup-menu_selectbutton').click();">
+                    Seleziona
+            </span>
+        </div>
+    </div>
+    <div [id]="container">
+        <ng-content></ng-content>
+    </div>
+</div>

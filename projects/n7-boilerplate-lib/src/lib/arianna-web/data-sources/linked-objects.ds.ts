@@ -2,20 +2,22 @@ import { DataSource } from '@n7-frontend/core';
 
 export class AwLinkedObjectsDS extends DataSource {
 
-  public totalPages:Number
-  public currentPage:Number
-  public pageSize:Number
+  public totalPages: number
+  public currentPage: number
+  public pageSize: number
+  public context: string
 
   protected transform(data) {
     const KEYS = this.options.configKeys
     this.pageSize = this.options.size
     this.currentPage = Number(this.options.page)
     this.totalPages = Math.floor(data.length / Number(this.pageSize))
-    return unpackData(data, this.currentPage, this.pageSize, KEYS, this.totalPages)
+    this.context = this.options.context
+    return unpackData(data, this.currentPage, this.pageSize, KEYS, this.totalPages, this.context)
   }
 }
 
-function unpackData (data, page, size, keys, totalPages) {
+function unpackData (data, page, size, keys, totalPages, context) {
   // resize data
   if (size && page) {
     data = data.slice(page * size - size, page * size)
@@ -28,8 +30,8 @@ function unpackData (data, page, size, keys, totalPages) {
     let item = {
       image: el.thumbnail,
       title: el.item.label,
-      text: el.item.info[1].value,
       payload: el.item.id,
+      classes: context == 'entita' ? 'is-fullwidth' : '',
       metadata: [
         {
           classes: 'n7-objects__metadata-artist',
@@ -38,6 +40,10 @@ function unpackData (data, page, size, keys, totalPages) {
               // label: el.item.info[0].key,
               label: 'Autore',
               value: el.item.info[0].value
+            },
+            {
+              // olio su tela
+              value: el.item.info[1].value
             }
           ]
         },
@@ -47,7 +53,8 @@ function unpackData (data, page, size, keys, totalPages) {
             return { // Persone: 6, Organizz: 12, Luoghi: 2, Concetti: 32
               value: toe.count,
               // icon: 'n7-icon-bell' // TODO: link icon to config key
-              icon: keys[toe.type.configKey].icon 
+              icon: keys[toe.type.configKey].icon,
+              classes: 'color-' + toe.type.configKey
             }
           })
         }
