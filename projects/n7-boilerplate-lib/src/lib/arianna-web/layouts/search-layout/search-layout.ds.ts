@@ -1,7 +1,8 @@
 import { LayoutDataSource } from '@n7-frontend/core';
 import { SearchService } from 'n7-boilerplate-lib/lib/common/services';
 import facetsConfig from './search-facets.config';
-import mockRequest from './search-mock-request';
+import fakeSearchRequest$ from './search-mock-request';
+import { withLatestFrom } from 'rxjs/operators';
 
 const SEARCH_ID = 'search-facets';
 
@@ -10,6 +11,9 @@ export class AwSearchLayoutDS extends LayoutDataSource {
   private configuration: any;
   private mainState: any;
   private search: SearchService;
+
+  public currentPage: any = 1; // pagination value (url param)
+  public pageSize: number = 10; // linked objects page size
 
   public options: any;
 
@@ -27,7 +31,8 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     const searchModel = this.search.model(SEARCH_ID),
       requestParams = searchModel.getRequestParams();
 
-    // FIXME: togliere
+    // FIXME: mettere logica definitiva 
+    // per la chiamata search
     /* 
     this.communication.request$('search', {
       onError: error => console.error(error),
@@ -35,14 +40,29 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     })
     */
 
-    mockRequest(requestParams, configKeys).subscribe(response => {
-      searchModel.updateFacets(response.facets);
-      searchModel.updateTotalCount(response.totalCount);
-
-      console.log('searchModel', searchModel.getTotalCount(), searchModel.getFacets());
-
-      this.one('facets-wrapper').update({ searchModel });
+    const fakeResultsRequest$ = this.communication.request$('getEntityDetails', {
+      onError: error => console.error(error),
+      params: { entityId: '55vf-entity-s3ar' }
     });
+
+    fakeResultsRequest$.pipe(
+      withLatestFrom(fakeSearchRequest$(requestParams, configKeys))
+    ).subscribe(([resultsResponse, searchResponse]) => {
+
+      searchModel.updateFacets(searchResponse.facets);
+      searchModel.updateTotalCount(searchResponse.totalCount);
+  
+      this.one('facets-wrapper').update({ searchModel });
+
+      this.one('aw-linked-objects').updateOptions({
+        context: null,
+        configKeys: this.configuration.get("config-keys"),
+        page: this.currentPage,
+        size: this.pageSize,
+      });
+
+      this.one('aw-linked-objects').update(resultsResponse.items);
+    })
 
   }
 }

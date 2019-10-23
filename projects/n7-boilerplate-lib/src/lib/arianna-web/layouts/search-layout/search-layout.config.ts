@@ -13,6 +13,7 @@ export const AwSearchLayoutConfig = {
    */
   widgets: [
     { id: 'facets-wrapper', dataSource: FacetsWrapperDS, eventHandler: FacetsWrapperEH },
+    { id: 'aw-linked-objects' },
   ],
   layoutDS: AwSearchLayoutDS,
   layoutEH: AwSearchLayoutEH,
