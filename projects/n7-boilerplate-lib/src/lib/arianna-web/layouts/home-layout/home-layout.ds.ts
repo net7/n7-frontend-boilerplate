@@ -64,7 +64,10 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     });
   }
 
-  public updateComponent = (id, data) => {
+  public updateComponent = (id, data, options) => {
+    if (options) {
+      this.one(id).updateOptions(options)
+    }
     this.one(id).update(data)
   }
 

@@ -44,7 +44,11 @@ export class AwHomeLayoutEH extends EventHandler {
             }
             this.dataSource.makeRequest$('autoComplete', params).subscribe(response => {
               this.emitOuter('facetswrapperresponse', { facetId: payload, response })
-              this.dataSource.updateComponent('aw-autocomplete-wrapper', { key: payload.value, response })
+              this.dataSource.updateComponent(
+                'aw-autocomplete-wrapper', // ID
+                { key: payload.value, response }, // DATA
+                { config: this.configuration } // OPTIONS
+              )
             })
           }
           break;
