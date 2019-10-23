@@ -5,9 +5,14 @@ export class FacetInputLink extends FacetInput {
   protected transform(){
     const facetId = this.getFacetId();
   
-    return this.data.map(({ label, value, counter, hidden }) => {
+    return this.data.map(({ label, value, counter, hidden, options }) => {
       // normalize value
       value = '' + value;
+      options = options || {};
+
+      let classes = [];
+      if(options.classes) classes.push(options.classes);
+      if(hidden) classes.push('is-hidden');
 
       return { 
         type: 'link', 
@@ -19,7 +24,8 @@ export class FacetInputLink extends FacetInput {
           source: 'input-link',
           value
         },
-        classes: hidden ? 'is-hidden' : '',
+        icon: options.icon || null,
+        classes: classes.join(' '),
         _meta: { facetId, value } 
       };
     });

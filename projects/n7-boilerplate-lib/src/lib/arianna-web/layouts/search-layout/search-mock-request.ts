@@ -33,7 +33,7 @@ const _getQueryLinksData = (configKeys) => {
     return {
       value: key,
       label: config.label,
-      count: Math.floor(Math.random() * 100),
+      counter: Math.floor(Math.random() * 100),
       
       // questi vanno aggiunti a mano lato front-end
       options: {
@@ -81,7 +81,7 @@ const _getEntityLinksData = () => {
     return {
       value: key,
       label: label,
-      count: Math.floor(Math.random() * 100),
+      counter: Math.floor(Math.random() * 100),
       metadata: {
         title: label,
         'entity-type': types[index]
