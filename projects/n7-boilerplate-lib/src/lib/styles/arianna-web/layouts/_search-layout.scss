@@ -1,0 +1,54 @@
+/**
+ * SEARCH
+ *
+ * Layout for search page
+ */
+
+/* ------------------------------------ *\
+    SEARCH
+\* ------------------------------------ */
+.aw-search {
+    margin: $space*3 auto $space*6 auto;
+    max-width: $page-max-width;
+
+    &__content-wrapper {
+        display: grid;
+        grid-template-columns: $aw-scheda-tree-width 1fr;    
+    }
+    
+    &__content {
+        margin-top: $space*3;
+        background-color: $color-background-base;
+        box-shadow: 0 2px 20px 0 rgba(0,0,0,0.08);
+    }
+}
+
+
+/* ------------------------------------ *\
+   #HEADER
+\* ------------------------------------ */
+.aw-search {
+    &__header {
+        
+    }
+}
+
+
+/* ------------------------------------ *\
+   #SIDEBAR
+\* ------------------------------------ */
+.aw-search {
+    &__sidebar {
+        
+    }
+}
+
+
+/* ------------------------------------ *\
+   #CONTENT
+\* ------------------------------------ */
+.aw-search {
+    &__content {
+        
+    }
+}

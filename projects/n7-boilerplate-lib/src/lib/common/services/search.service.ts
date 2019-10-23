@@ -20,11 +20,11 @@ const INPUTS_MAP = {
 };
 
 export interface ISearchConfig {
+  totalCount: number;
   facets: any;
   page: any;
   results: any;
   fields: any;
-  baseUrl: string;
 }
 
 export interface IFacet {
@@ -52,6 +52,7 @@ export class SearchModel {
   private _facets: IFacet[] = [];
   private _inputs: FacetInput[] = [];
   private _page: any;
+  private _totalCount: number | null;
   private _config: ISearchConfig;
   private _results$: Subject<any[]> = new Subject();
 
@@ -64,6 +65,7 @@ export class SearchModel {
     this._setPage();
     this._setInputs();
     this._setInputsData();
+    this._setTotalCount();
   }
 
   public getId = () => this._id;
@@ -71,6 +73,7 @@ export class SearchModel {
   public getFacets = () => this._facets;
   public getInputs = () => this._inputs;
   public getConfig = () => this._config;
+  public getTotalCount = () => this._totalCount;
   public getFields = () => this._config.fields;
   public getResults$ = () => this._results$;
 
@@ -108,6 +111,15 @@ export class SearchModel {
           input.setActive(value); 
         })
     });
+  }
+
+  public updateFacets(facets) {
+    facets.forEach(({ id, data }) => this.updateFacet(id, data));
+    this._setInputsData();
+  }
+
+  public updateTotalCount(totalCount) {
+    this._totalCount = totalCount;
   }
 
   public updateFacet(facetId, data) {
@@ -269,6 +281,10 @@ export class SearchModel {
 
   private _setPage(){
     this._page = this._config.page;
+  }
+
+  private _setTotalCount(){
+    this._totalCount = this._config.totalCount;
   }
 
   private _setInputs(){

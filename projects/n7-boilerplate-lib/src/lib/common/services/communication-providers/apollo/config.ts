@@ -231,5 +231,17 @@ export const ApolloProviderConfig = {
         }
       }
     }`
+  },
+  'search': {
+    queryName: 'search',
+    queryBody: `{
+      search(__PARAMS__){
+        totalCount
+        facets
+        filters
+        results
+        page
+      }
+    }`
   }
 };

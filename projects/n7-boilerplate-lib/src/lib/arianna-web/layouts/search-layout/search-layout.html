@@ -1,17 +1,22 @@
 <div class="aw-search" id="search-layout">
-    <div class="aw-search__content">
-
-        <!-- Left sidebar: tree -->
-        <div class="aw-search__facets">
-            <n7-facets-wrapper
-                [data]="lb.widgets['facets-wrapper'].ds.out$ | async"
-                [emit]="lb.widgets['facets-wrapper'].emit">
-            </n7-facets-wrapper>
+    <div class="aw-search__header">
+        #TODO: header
+    </div>
+    <div class="aw-search__content-wrapper">
+        <!-- Left sidebar: facets -->
+        <div class="aw-search__sidebar">
+            <div class="aw-search__facets">
+                <n7-facets-wrapper
+                    [data]="lb.widgets['facets-wrapper'].ds.out$ | async"
+                    [emit]="lb.widgets['facets-wrapper'].emit">
+                </n7-facets-wrapper>
+            </div>
         </div>
-
-        <!-- Search details -->
-        <div class="aw-search__search-wrapper">
-            #TODO: results
+        <div class="aw-search__content">
+            <!-- Search details -->
+            <div class="aw-search__search-wrapper">
+                #TODO: results
+            </div>
         </div>
     </div>
 </div>
