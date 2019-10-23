@@ -29,7 +29,7 @@ function unpackData (data, page, size, keys, totalPages, context) {
   data.forEach(el => {
     let item = {
       image: el.thumbnail,
-      title: el.item.label,
+      title: el.item.label.length > 50 ? el.item.label.slice(0, 50) + '[...]' : el.item.label,
       payload: el.item.id,
       classes: context == 'entita' ? 'is-fullwidth' : '',
       metadata: [
@@ -39,11 +39,11 @@ function unpackData (data, page, size, keys, totalPages, context) {
             { // Artista: Mimmo Jodice
               // label: el.item.info[0].key,
               label: 'Autore',
-              value: el.item.info[0].value
+              value: el.item.info[0] ? el.item.info[0].value : 'Sconosciuto'
             },
             {
               // olio su tela
-              value: el.item.info[1].value
+              value: el.item.info[1] ? el.item.info[1].label : ''
             }
           ]
         },

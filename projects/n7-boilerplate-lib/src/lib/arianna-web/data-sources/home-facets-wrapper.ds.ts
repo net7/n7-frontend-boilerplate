@@ -52,7 +52,6 @@ export class AwHomeFacetsWrapperDS extends DataSource {
         }]
       });
     });
-    console.log({facetData})
     // zipping arrays to render widgets with separate data (see home-layout.html)
     var widgetData: any[] = []
     headers.map((h, i) => {
