@@ -8,16 +8,18 @@ export class AwLinkedObjectsDS extends DataSource {
   public context: string
 
   protected transform(data) {
-    const KEYS = this.options.configKeys
+    const CONFIG = this.options.config
     this.pageSize = this.options.size
     this.currentPage = Number(this.options.page)
     this.totalPages = Math.floor(data.length / Number(this.pageSize))
     this.context = this.options.context
-    return unpackData(data, this.currentPage, this.pageSize, KEYS, this.totalPages, this.context)
+    return unpackData(data, this.currentPage, this.pageSize, CONFIG, this.totalPages, this.context)
   }
 }
 
-function unpackData (data, page, size, keys, totalPages, context) {
+function unpackData (data, page, size, config, totalPages, context) {
+  const keys = config.get('config-keys')
+  const lengthLimit = config.get('home-layout')['max-item-length']
   // resize data
   if (size && page) {
     data = data.slice(page * size - size, page * size)
@@ -29,7 +31,10 @@ function unpackData (data, page, size, keys, totalPages, context) {
   data.forEach(el => {
     let item = {
       image: el.thumbnail,
-      title: el.item.label.length > 50 ? el.item.label.slice(0, 50) + '[...]' : el.item.label,
+      title:
+        // if there is a max string length in config, use it
+        lengthLimit && el.item.label.length > lengthLimit ?
+        el.item.label.slice(0, lengthLimit) + '...' : el.item.label,
       payload: el.item.id,
       classes: context == 'entita' ? 'is-fullwidth' : '',
       metadata: [

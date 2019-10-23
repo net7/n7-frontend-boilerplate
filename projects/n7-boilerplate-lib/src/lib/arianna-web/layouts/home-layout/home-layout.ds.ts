@@ -118,7 +118,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     } else {
       this.numOfItemsStr = null;
     }
-    this.one('aw-linked-objects').updateOptions({ context: 'home', configKeys: this.configuration.get('config-keys') })
+    this.one('aw-linked-objects').updateOptions({ context: 'home', config: this.configuration })
     this.one('aw-linked-objects').update(response.itemsPagination.items);
   }
 

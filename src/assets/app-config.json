@@ -74,7 +74,8 @@
         "text": "NAVIGA IL PATRIMONIO"
       }
     },
-    "results-limit": 10
+    "results-limit": 10,
+    "max-item-length": 50
   },
   "scheda-layout": {
     "bubble-chart": {
