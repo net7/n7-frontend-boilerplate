@@ -173,9 +173,7 @@ export class SearchModel {
   }
 
   public setInputData(facetId, data){
-    this._inputs
-      .filter(input => input.getFacetId() === facetId)
-      .forEach(input => input.setData(data));
+    this.getInputByFacetId(facetId).setData(data);
   }
 
   public filterTarget(target){
