@@ -14,6 +14,7 @@ export const AwSearchLayoutConfig = {
   widgets: [
     { id: 'facets-wrapper', dataSource: FacetsWrapperDS, eventHandler: FacetsWrapperEH },
     { id: 'aw-linked-objects' },
+    { id: 'aw-search-layout-tabs', hasStaticData: true },
   ],
   layoutDS: AwSearchLayoutDS,
   layoutEH: AwSearchLayoutEH,

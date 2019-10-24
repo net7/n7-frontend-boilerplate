@@ -6,6 +6,7 @@ export class AwSearchLayoutEH extends EventHandler {
       switch (type) {
         case 'aw-search-layout.init':
           this.dataSource.onInit(payload);
+          console.log(type, payload);
           break;
 
         default:
@@ -13,12 +14,18 @@ export class AwSearchLayoutEH extends EventHandler {
       }
     });
 
-    this.outerEvents$.subscribe(({ type, payload }) => {
-      switch (type) {
-        // TODO
-        default:
+    // listen to global events
+    EventHandler.globalEvents$.subscribe(({ type, payload }) => {
+      switch(type){
+        case 'global.queryparams':
+          console.log('global', type, payload);
+          this.emitOuter('queryparams', payload);
+          break;
+
+        default: 
           break;
       }
     });
   }
+
 }

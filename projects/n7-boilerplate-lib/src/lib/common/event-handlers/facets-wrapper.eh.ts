@@ -46,10 +46,11 @@ export class FacetsWrapperEH extends EventHandler {
       }
     });
 
-    // listen to outer events
-    EventHandler.globalEvents$.subscribe(({ type, payload }) => {
+    // listen to global events
+    this.outerEvents$.subscribe(({ type, payload }) => {
+      console.log(type, payload);
       switch(type){
-        case 'global.queryparams':
+        case 'search-layout.queryparams':
           if(!this._facetsChanged){
             this.dataSource.updateFiltersFromQueryParams(payload);
             this.dataSource.updateInputsFromFilters();

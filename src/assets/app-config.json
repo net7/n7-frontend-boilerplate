@@ -88,6 +88,14 @@
       "title": "Metadati"
     }
   },
+  "search-layout": {
+    "title": "Cerca nel patrimonio",
+    "results": [
+      "Nessun risultato", 
+      "Risultato",
+      "Risultati"
+    ]
+  },
   "config-keys": {
     "people": {
       "color": {

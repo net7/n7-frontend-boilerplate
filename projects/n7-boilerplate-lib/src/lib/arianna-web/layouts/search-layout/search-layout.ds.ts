@@ -12,10 +12,22 @@ export class AwSearchLayoutDS extends LayoutDataSource {
   private mainState: any;
   private search: SearchService;
 
+  public pageTitle: string;
+  public resultsTitle: string;
+  public totalCount: number;
   public currentPage: any = 1; // pagination value (url param)
   public pageSize: number = 10; // linked objects page size
 
   public options: any;
+
+  public orderByLabel: string = 'Ordina per';
+  public orderByOptions: any = [{
+    value: 'title',
+    label: 'Ordine alfabetico'
+  }, {
+    value: 'date',
+    label: 'Ordina per data'
+  }];
 
   onInit({configuration, mainState, options, communication, search }) {
     this.configuration = configuration;
@@ -23,6 +35,8 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     this.communication = communication;
     this.search = search;
     this.options = options;
+
+    this.pageTitle = this.configuration.get('search-layout').title;
 
     // FIXME: togliere
     const configKeys = this.configuration.get('config-keys');
@@ -48,6 +62,16 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     fakeResultsRequest$.pipe(
       withLatestFrom(fakeSearchRequest$(requestParams, configKeys))
     ).subscribe(([resultsResponse, searchResponse]) => {
+
+      this.totalCount = searchResponse.totalCount;
+      let resultsTitleIndex = 0;
+      // results title
+      if(this.totalCount > 1){
+        resultsTitleIndex = 2;
+      } else if(this.totalCount === 1) {
+        resultsTitleIndex = 1;
+      }
+      this.resultsTitle = this.configuration.get('search-layout').results[resultsTitleIndex];
 
       searchModel.updateFacets(searchResponse.facets);
       searchModel.updateTotalCount(searchResponse.totalCount);
