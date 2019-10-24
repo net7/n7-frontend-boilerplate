@@ -9,6 +9,11 @@ export class AwSearchLayoutEH extends EventHandler {
           console.log(type, payload);
           break;
 
+        case 'aw-search-layout.orderbychange':
+          // TODO
+          console.log('orderby', {type, payload});
+          break;
+
         default:
           break;
       }

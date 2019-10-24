@@ -30,7 +30,7 @@
                 </div>        
                 <div class="aw-search__results-header-right">
                     <label for="aw-search__results-select-orderby">{{ lb.dataSource.orderByLabel }}</label>
-                    <select id="aw-search__results-select-orderby">
+                    <select (change)="lb.eventHandler.emitInner('orderbychange', $event.target.value)" id="aw-search__results-select-orderby">
                         <option *ngFor="let option of lb.dataSource.orderByOptions" [value]="option.value">{{ option.label }}</option>
                     </select>
                 </div>     
