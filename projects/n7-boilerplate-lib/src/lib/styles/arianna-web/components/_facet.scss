@@ -1,0 +1,141 @@
+/**
+ * FACET
+ *
+ * Facet component including:
+ * - array of checkboxes;
+ * - search inpout with label;
+ * - list of results.
+ */
+ 
+/* ------------------------------------ *\
+   #FACET
+\* ------------------------------------ */
+.n7-facet {
+    /* General section inside facet */
+    &__section {
+
+    }
+}
+
+
+/* ------------------------------------ *\
+   #INPUT CHECKBOX
+\* ------------------------------------ */
+.n7-facet {
+    &__section-input-checkbox {
+        display: inline-block;
+        margin-right: $space*2;
+    }
+
+    &__input-checkbox-input {
+        margin-right: $space/2;
+    }
+
+    &__input-checkbox-label {
+        font-size: $font-size-s;
+    }
+}
+
+
+/* ------------------------------------ *\
+   #INPUT TEXT
+\* ------------------------------------ */
+.n7-facet {
+    &__section-input-text {
+    }
+
+    &__input-text-label {
+        display: block;
+        font-size: $font-size-s;
+    }
+
+    &__input-text-wrapper {
+        position: relative;
+    }
+
+    &__input-text[type="text"] {
+        width: 100%;
+        box-sizing: border-box;
+        padding-right: $space*4;
+    }
+
+    &__input-text-icon {
+        position: absolute;
+        bottom: 0;
+        right: $space;
+        line-height: $form-input-height;
+        color: $color-text-light;
+    }
+}
+
+
+/* ------------------------------------ *\
+   #LIST
+\* ------------------------------------ */
+.n7-facet {
+    &__section-input-links {
+        border-bottom: 1px solid $color-border-normal;
+    }
+
+    &__input-link {
+        
+    }
+
+    &__input-link-icon {
+    }
+
+    &__input-link-text {
+    }
+
+    &__input-link-counter {
+        background-color: $facet-counter-background;
+    }
+
+    /* Hover */
+    .n7-facet__input-link:hover {
+        .n7-facet__input-link-text {
+           
+        }
+    }
+
+    /* Active */
+    .n7-facet__input-link.is-active {
+        &:before {
+            content: "\e938";
+            font-family: 'n7-icon';
+            margin-right: $space;
+            color: $color-success;
+        }
+
+        .n7-facet__input-link-text {
+           
+        }
+    }
+}
+
+
+/* ------------------------------------ *\
+   #SELECT
+\* ------------------------------------ */
+.n7-facet {
+    &__section-input-select {
+        
+    }
+}
+
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: $breakpoint-laptop) {
+}
+
+@media all and (max-width: $breakpoint-ipad-portrait) {
+}
+
+@media all and (max-width: $breakpoint-smartphone-landscape) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}

@@ -1,0 +1,57 @@
+/**
+ * BREADCRUMBS
+ *
+ * Style for breadcrumbs for desktop and mobile
+ */
+ 
+/* ------------------------------------ *\
+    BREADCRUMBS
+\* ------------------------------------ */
+.n7-breadcrumbs {
+
+    &__list {
+        font-size: $font-size-s;
+
+        &:first-of-type {
+            .n7-breadcrumbs__label {
+                padding-left: 0;
+            }
+        }
+
+        &:last-of-type {
+            a {
+                color: $color-text-light;
+            }
+        }
+    }
+
+    &__item {
+       
+    }
+
+    &__label {
+        color: $color-text-light;
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: $breakpoint-laptop) {
+}
+
+@media all and (max-width: $breakpoint-ipad-portrait) {
+    
+    .n7-breadcrumbs {
+        &__item {
+        }
+    }
+    
+}
+
+@media all and (max-width: $breakpoint-smartphone-landscape) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}

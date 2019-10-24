@@ -10,6 +10,7 @@
 .aw-search {
     margin: $space*3 auto $space*6 auto;
     max-width: $page-max-width;
+    box-shadow: $search-box-shadow;
 
     &__content-wrapper {
         display: grid;
@@ -29,7 +30,59 @@
 \* ------------------------------------ */
 .aw-search {
     &__header {
-        
+        display: flex;
+        align-items: center;
+        padding: $space*3;
+        background: #ffffff;
+        border-bottom: 1px solid $color-border-normal;
+
+        &-title {
+            margin-bottom: 0;
+        }
+
+        &-left {
+            flex: 1;
+        }
+
+        &-right {
+            margin-left: auto;
+        }
+    }
+
+    .n7-nav {
+        &__list {
+            display: flex;
+        }
+
+        &__item {
+            padding: 0 $space*2;
+            font-size: $font-size-m;
+
+            &:last-of-type {
+                padding-right: 0;
+            }
+
+            &.is-selected {
+                .n7-nav__link {
+                    position: relative;
+                    color: $color-text;
+
+                    &::before {
+                        content: '';
+                        height: $search-nav-decoration-height;
+                        position: absolute;
+                        right: 0;
+                        bottom: -($space*3 + $search-nav-decoration-height + 1px);
+                        left: 0;
+                        background-color: $color-text;
+                    }
+                }
+            }
+        }
+
+        &__link {
+            color: $color-text-light;
+        }
     }
 }
 
@@ -39,7 +92,30 @@
 \* ------------------------------------ */
 .aw-search {
     &__sidebar {
-        
+        padding: $space*2;
+
+        .n7-facet {
+            &__input {
+                &-link {
+                    &.color-people {
+                        color: $color-people;
+                    }
+
+                    &.color-places {
+                        color: $color-places;
+                    }
+
+                    &.color-concepts {
+                        color: $color-concepts;
+                    }
+
+                    &.color-organizations {
+                        color: $color-organizations;
+                    }
+                }
+            }
+            
+        }
     }
 }
 
@@ -49,6 +125,18 @@
 \* ------------------------------------ */
 .aw-search {
     &__content {
-        
+        background: $color-background-layout;
+        box-shadow: none;
+
+        .n7-breadcrumbs {
+            padding: 0;
+        }
+    }
+
+    &__results {
+        &-wrapper {
+            padding: $space;
+            background: #ffffff;
+        }
     }
 }
