@@ -23,16 +23,16 @@
 \* ------------------------------------ */
 .n7-facet {
     &__section-input-checkbox {
-        display: inline-block;
-        margin-right: $space*2;
+     
     }
 
     &__input-checkbox-input {
-        margin-right: $space/2;
+       
     }
 
     &__input-checkbox-label {
         font-size: $font-size-s;
+        color: $facet-text-color;
     }
 }
 
@@ -160,7 +160,12 @@
 \* ------------------------------------ */
 .n7-facet {
     &__section-input-select {
-        
+        width: calc(50% - #{$space*2});
+
+        .n7-facet__section-input,
+        .n7-facet__input-select {
+            width: 100%;
+        }
     }
 }
 
