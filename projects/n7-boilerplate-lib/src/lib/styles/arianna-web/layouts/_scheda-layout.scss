@@ -22,16 +22,10 @@
     }
 
     &__tree {
+        align-self: start;
         width: $aw-scheda-tree-width;
 
-        .n7-sidebar-header {
-            position: sticky !important;
-            top: 0px !important;
-        }
-
         .n7-tree {
-            position: sticky !important;
-            top: $sidebar-header-height !important; // 44px is the sidebarheader height
             max-height: calc(100vh - 190px);
             overflow-y: auto;
         }
@@ -55,7 +49,7 @@
     TREE
 \* ------------------------------------ */
 .aw-scheda__tree {
-    align-self: start;
+    align-self: start; /* get the component have its content height */
     position: sticky;
     top: 0;
 
