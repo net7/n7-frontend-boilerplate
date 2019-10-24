@@ -11,8 +11,6 @@ export class FacetInputLink extends FacetInput {
       value = '' + value;
       options = options || {};
 
-      console.log(value, label, counter);
-
       let classes = [];
       if(options.classes) classes.push(options.classes);
       if(hidden) classes.push('is-hidden');

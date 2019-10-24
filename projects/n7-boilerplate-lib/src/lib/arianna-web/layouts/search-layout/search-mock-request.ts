@@ -20,7 +20,6 @@ export default (params, configKeys): Observable<any> => {
   // date to
   _getFacet('date-to', facets).data = _getDateToData();
   
-  console.log('mock', params);
   return of(params);
 }
 
