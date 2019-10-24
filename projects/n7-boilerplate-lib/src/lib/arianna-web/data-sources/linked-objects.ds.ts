@@ -102,6 +102,15 @@ function unpackData (data, page, size, config, totalPages, context) {
       previews: result 
     }
   }
+  if (context === 'home') {
+    return {
+      result,
+      actions: [
+        { label: 'Vedi Tutti 7805'},
+        { label: 'Vedi Altri 7795'}
+      ]
+    }
+  }
   return result;
 }
 

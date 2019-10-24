@@ -34,7 +34,6 @@
         </div>
 
         <!-- Linked objects -->
-        <!--<ng-container *ngIf="lb.dataSource.selectedBubbles.length>0"> -->
         <ng-container *ngIf="lb.dataSource.selectedBubbles.length > 0" >
             <div class="aw-home__bubble-results"
                 id="home-bubble-results"
@@ -56,7 +55,7 @@
                 </div>
                 <div class="aw-home__bubble-results-list-wrapper" >
                     <div class="aw-home__bubble-results-list" [attr.id]="'bubble-results-list'">
-                        <ng-container *ngFor="let widgetData of lb.widgets['aw-linked-objects'].ds.out$ | async;">
+                        <ng-container *ngFor="let widgetData of (lb.widgets['aw-linked-objects'].ds.out$ | async)?.result;">
                             <n7-item-preview
                                 [data]="widgetData"
                                 [emit]="lb.widgets['aw-linked-objects'].emit">
@@ -64,12 +63,15 @@
                         </ng-container>
                     </div>
                     <div *ngIf="lb.dataSource.hasScrollBackground" class="aw-home__bubble-results-list-wrapper-with-scroll"></div>
-
-                    <div class="aw-home__bubble-results-list-actions">
-                        <a class="n7-btn n7-btn-light n7-btn-l aw-home__bubble-results-list-view-all" href="">Vedi tutti</a>
-                        <a class="n7-btn n7-btn-light n7-btn-l aw-home__bubble-results-list-view-others" href="">Vedi altri</a>
+                    <!-- aw-linked-objects__actions -->
+                    <div *ngIf="(lb.widgets['aw-linked-objects'].ds.out$ | async)?.actions as action" class="aw-home__bubble-results-list-actions">
+                        <button class="n7-btn n7-btn-light n7-btn-l aw-home__bubble-results-list-view-all">
+                            {{action[0].label}}
+                        </button>
+                        <button class="n7-btn n7-btn-light n7-btn-l aw-home__bubble-results-list-view-others">
+                            {{action[1].label}}
+                        </button>
                     </div>
-
                 </div>
 
             </div>
@@ -83,7 +85,7 @@
         </n7-hero>
     </div>
 
-    <!-- adavanced autocomplete popover  -->
+    <!-- Adavanced autocomplete popover  -->
     <div id="aw-home-advanced-autocomplete-popover" style="display: none;">
         <n7-advanced-autocomplete
             [data]="lb.widgets['aw-home-autocomplete'].ds.out$ | async"
@@ -91,15 +93,8 @@
         </n7-advanced-autocomplete>
     </div>
 
-    <!-- simple autocomplete popover. DO NOT CHANGE parent div class! -->
-    <!-- creating one template for each facet -->
-    <!-- <div id="aw-simple-autocomplete__template">
-        <span>tippyJS</span>
-        <n7-simple-autocomplete
-            [data]="lb.widgets['aw-autocomplete-wrapper'].ds.out$ | async"
-            [emit]="lb.widgets['aw-autocomplete-wrapper'].emit">
-        </n7-simple-autocomplete>
-    </div> -->
+    <!-- Simple autocomplete popover. DO NOT CHANGE parent div class! -->
+    <!-- Creating one template for each facet -->
     <div *ngFor="let widgetData of lb.widgets['aw-home-facets-wrapper'].ds.out$ | async;"
          class="aw-simple-autocomplete__{{widgetData.header.payload}}"
          style="display: none;">
