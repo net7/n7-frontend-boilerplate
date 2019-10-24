@@ -73,18 +73,53 @@
    #LIST
 \* ------------------------------------ */
 .n7-facet {
-    &__section-input-links {
+    &__section-input-link {
+        margin-bottom: $space/2;
         border-bottom: 1px solid $color-border-normal;
+
+        &:last-of-type {
+            border-bottom: none;
+        }
     }
 
     &__input-link {
-        
+        padding-bottom: $space/2;
+
+        &.color-people {
+            .n7-facet__input-link-icon,
+            .n7-facet__input-link-text {
+                color: $color-people;
+            }
+        }
+
+        &.color-places {
+            .n7-facet__input-link-icon,
+            .n7-facet__input-link-text {
+                color: $color-places;
+            }
+        }
+
+        &.color-concepts {
+            .n7-facet__input-link-icon,
+            .n7-facet__input-link-text {
+                color: $color-concepts;
+            }
+        }
+
+        &.color-organizations {
+            .n7-facet__input-link-icon,
+            .n7-facet__input-link-text {
+                color: $color-organizations;
+            }
+        }
     }
 
     &__input-link-icon {
     }
 
     &__input-link-text {
+        font-size: $font-size-s;
+        color: $facet-text-color;
     }
 
     &__input-link-counter {

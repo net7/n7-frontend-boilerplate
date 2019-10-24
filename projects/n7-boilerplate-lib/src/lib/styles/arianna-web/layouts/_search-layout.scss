@@ -95,26 +95,6 @@
         padding: $space*2;
 
         .n7-facet {
-            &__input {
-                &-link {
-                    &.color-people {
-                        color: $color-people;
-                    }
-
-                    &.color-places {
-                        color: $color-places;
-                    }
-
-                    &.color-concepts {
-                        color: $color-concepts;
-                    }
-
-                    &.color-organizations {
-                        color: $color-organizations;
-                    }
-                }
-            }
-            
         }
     }
 }
@@ -134,6 +114,17 @@
     }
 
     &__results {
+        &-header {
+            display: flex;
+            align-items: center;
+            padding: $space 0;
+
+            &-right {
+                margin-left: auto;
+                padding-left: $space;
+            }
+        }
+
         &-wrapper {
             padding: $space;
             background: #ffffff;
