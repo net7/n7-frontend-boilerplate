@@ -85,6 +85,12 @@
     &__input-link {
         padding-bottom: $space/2;
 
+        &[class*="color-"] {
+            .n7-facet__input-link-text {
+                font-weight: $font-weight-bold;
+            }
+        }
+
         &.color-people {
             .n7-facet__input-link-icon,
             .n7-facet__input-link-text {
