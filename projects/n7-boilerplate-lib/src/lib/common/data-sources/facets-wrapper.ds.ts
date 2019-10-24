@@ -8,12 +8,12 @@ export class FacetsWrapperDS extends DataSource {
   public searchModel: SearchModel;
 
   protected transform(data) {
-    let groups = [];
-
     if(!this.searchModel) this.searchModel = data.searchModel;
 
     const id = this.searchModel.getId(),
       fields = this.searchModel.getFields();
+    
+    let groups = [];
 
     fields.forEach((fieldConfig, fieldIndex) => {
       const groupId = `group-${id}-${fieldIndex}`;
@@ -52,7 +52,6 @@ export class FacetsWrapperDS extends DataSource {
           groupId
         }
       })
-
     });
 
     return { 
@@ -104,6 +103,26 @@ export class FacetsWrapperDS extends DataSource {
       .map(sections => {
         sections.forEach(section => {
           if(section._meta.facetId === target){
+            const inputOutput = input.getOutput();
+            section.inputs = Array.isArray(inputOutput) ? inputOutput : [inputOutput];
+          }
+        });
+      });
+  }
+
+  public updateInputLinks(){
+    const linksFacetIds = this.searchModel.getInputs()
+      .filter(input => input.getType() === 'link')
+      .map(input => input.getFacetId());
+
+    this.output.groups
+      .map(group => group.facet)
+      .map(facet => facet.sections)
+      .map(sections => {
+        sections.forEach(section => {
+          if(linksFacetIds.indexOf(section._meta.facetId) !== -1){
+            const input = this.searchModel.getInputByFacetId(section._meta.facetId);
+            input.update();
             const inputOutput = input.getOutput();
             section.inputs = Array.isArray(inputOutput) ? inputOutput : [inputOutput];
           }

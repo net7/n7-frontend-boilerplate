@@ -1,8 +1,9 @@
 import { LayoutDataSource } from '@n7-frontend/core';
-import { SearchService } from 'n7-boilerplate-lib/lib/common/services';
+import { SearchService, SearchModel } from 'n7-boilerplate-lib/lib/common/services';
 import facetsConfig from './search-facets.config';
 import fakeSearchRequest$ from './search-mock-request';
-import { withLatestFrom } from 'rxjs/operators';
+import { withLatestFrom, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 const SEARCH_ID = 'search-facets';
 
@@ -11,6 +12,7 @@ export class AwSearchLayoutDS extends LayoutDataSource {
   private configuration: any;
   private mainState: any;
   private search: SearchService;
+  private searchModel: SearchModel;
 
   public pageTitle: string;
   public resultsTitle: string;
@@ -38,12 +40,18 @@ export class AwSearchLayoutDS extends LayoutDataSource {
 
     this.pageTitle = this.configuration.get('search-layout').title;
 
-    // FIXME: togliere
-    const configKeys = this.configuration.get('config-keys');
-
     if(!this.search.model(SEARCH_ID)) this.search.add(SEARCH_ID, facetsConfig);
-    const searchModel = this.search.model(SEARCH_ID),
-      requestParams = searchModel.getRequestParams();
+    this.searchModel = this.search.model(SEARCH_ID);
+
+    this.doSearchRequest$().subscribe(() => {
+      this.one('facets-wrapper').update({ searchModel: this.searchModel });
+    });
+  }
+
+  public doSearchRequest$(): Observable<any> {
+    // FIXME: togliere configKeys
+    // dovrebbe venire dall'API
+    const configKeys = this.configuration.get('config-keys');
 
     // FIXME: mettere logica definitiva 
     // per la chiamata search
@@ -54,39 +62,38 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     })
     */
 
+    const requestParams = this.searchModel.getRequestParams();
+
     const fakeResultsRequest$ = this.communication.request$('getEntityDetails', {
       onError: error => console.error(error),
       params: { entityId: '55vf-entity-s3ar' }
     });
 
-    fakeResultsRequest$.pipe(
-      withLatestFrom(fakeSearchRequest$(requestParams, configKeys))
-    ).subscribe(([resultsResponse, searchResponse]) => {
-
-      this.totalCount = searchResponse.totalCount;
-      let resultsTitleIndex = 0;
-      // results title
-      if(this.totalCount > 1){
-        resultsTitleIndex = 2;
-      } else if(this.totalCount === 1) {
-        resultsTitleIndex = 1;
-      }
-      this.resultsTitle = this.configuration.get('search-layout').results[resultsTitleIndex];
-
-      searchModel.updateFacets(searchResponse.facets);
-      searchModel.updateTotalCount(searchResponse.totalCount);
+    return fakeResultsRequest$.pipe(
+      withLatestFrom(fakeSearchRequest$(requestParams, configKeys)),
+      tap(([resultsResponse, searchResponse]) => {
+        this.totalCount = searchResponse.totalCount;
+        let resultsTitleIndex = 0;
+        // results title
+        if(this.totalCount > 1){
+          resultsTitleIndex = 2;
+        } else if(this.totalCount === 1) {
+          resultsTitleIndex = 1;
+        }
+        this.resultsTitle = this.configuration.get('search-layout').results[resultsTitleIndex];
   
-      this.one('facets-wrapper').update({ searchModel });
-
-      this.one('aw-linked-objects').updateOptions({
-        context: null,
-        configKeys: this.configuration.get("config-keys"),
-        page: this.currentPage,
-        size: this.pageSize,
-      });
-
-      this.one('aw-linked-objects').update(resultsResponse.items);
-    })
-
+        this.searchModel.updateFacets(searchResponse.facets);
+        this.searchModel.updateTotalCount(searchResponse.totalCount);
+        
+        this.one('aw-linked-objects').updateOptions({
+          context: null,
+          configKeys: this.configuration.get("config-keys"),
+          page: this.currentPage,
+          size: this.pageSize,
+        });
+  
+        this.one('aw-linked-objects').update(resultsResponse.items);
+      })
+    );
   }
 }

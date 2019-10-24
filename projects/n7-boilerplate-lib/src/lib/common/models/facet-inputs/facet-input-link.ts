@@ -1,6 +1,7 @@
 import { FacetInput } from './facet-input';
 
 export class FacetInputLink extends FacetInput {
+  private facetValue: string | string[];
 
   protected transform(){
     const facetId = this.getFacetId();
@@ -10,9 +11,12 @@ export class FacetInputLink extends FacetInput {
       value = '' + value;
       options = options || {};
 
+      console.log(value, label, counter);
+
       let classes = [];
       if(options.classes) classes.push(options.classes);
       if(hidden) classes.push('is-hidden');
+      if(this._isActive(this.facetValue, value)) classes.push('is-active');
 
       return { 
         type: 'link', 
@@ -32,17 +36,17 @@ export class FacetInputLink extends FacetInput {
   }
 
   public setActive(facetValue){
-    const { isArray } = this.config.filterConfig;
-
     this.output.forEach(config => {
-      if(isArray && Array.isArray(facetValue) && facetValue.indexOf(config._meta.value) !== -1){
-        config.classes = 'is-active';
-      } else if(facetValue === config._meta.value) {
-        config.classes = 'is-active';
-      } else {
-        config.classes = null;
-      }
+      config.classes = this._isActive(facetValue, config._meta.value) ? 'is-active' : null;
     });
   }
   
+  private _isActive(facetValue, value){
+    this.facetValue = facetValue;
+
+    return (
+      (Array.isArray(facetValue) && facetValue.indexOf(value) !== -1) || 
+      (facetValue === value)
+    );
+  }
 }

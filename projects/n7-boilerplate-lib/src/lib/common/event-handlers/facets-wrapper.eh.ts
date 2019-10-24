@@ -28,6 +28,10 @@ export class FacetsWrapperEH extends EventHandler {
 
             Object.keys(queryParams).forEach(key => queryParams[key] = queryParams[key] || null);
             
+            // signal
+            this.emitOuter('facetschange');
+
+            // router signal
             this.emitGlobal('navigate', {
               handler: 'router',
               path: [],
@@ -48,13 +52,17 @@ export class FacetsWrapperEH extends EventHandler {
 
     // listen to global events
     this.outerEvents$.subscribe(({ type, payload }) => {
-      console.log(type, payload);
       switch(type){
-        case 'search-layout.queryparams':
-          if(!this._facetsChanged){
+        case 'aw-search-layout.queryparams':
+          // FIXME: route queryparams
+          /* if(!this._facetsChanged){
             this.dataSource.updateFiltersFromQueryParams(payload);
             this.dataSource.updateInputsFromFilters();
-          }
+          } */
+          break;
+
+        case 'aw-search-layout.searchresponse':
+          this.dataSource.updateInputLinks();
           break;
 
         default: 
