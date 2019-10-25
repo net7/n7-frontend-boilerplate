@@ -105,11 +105,7 @@ export class SearchModel {
 
   public updateInputsFromFilters(){
     this._filters.forEach(({ facetId, value }) => {
-      this._inputs
-        .filter(input => input.getFacetId() === facetId)
-        .forEach(input => {
-          input.setActive(value); 
-        })
+      this.getInputByFacetId(facetId).setActive(value);
     });
   }
 

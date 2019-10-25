@@ -35,7 +35,14 @@ export class FacetInputLink extends FacetInput {
 
   public setActive(facetValue){
     this.output.forEach(config => {
-      config.classes = this._isActive(facetValue, config._meta.value) ? 'is-active' : null;
+      let classes = config.classes ? config.classes.split(' ') : [],
+        isActive = this._isActive(facetValue, config._meta.value);
+      if(!isActive){
+        classes = classes.filter(className => className !== 'is-active');
+      } else if(classes.indexOf('is-active') === -1) {
+        classes.push('is-active');
+      }
+      config.classes = classes.join(' ');
     });
   }
   
