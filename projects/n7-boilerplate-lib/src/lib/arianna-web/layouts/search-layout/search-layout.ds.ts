@@ -88,8 +88,10 @@ export class AwSearchLayoutDS extends LayoutDataSource {
         this.searchModel.updateTotalCount(searchResponse.totalCount);
         
         this.one('aw-linked-objects').updateOptions({
-          context: null,
+          context: 'search',
           configKeys: this.configuration.get("config-keys"),
+          // todo: swap to next line after merge
+          // config: this.configuration
           page: this.currentPage,
           size: this.pageSize,
         });
