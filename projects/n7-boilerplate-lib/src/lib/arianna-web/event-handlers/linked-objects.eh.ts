@@ -32,5 +32,16 @@ export class AwLinkedObjectsEH extends EventHandler {
             break;
       }
     });
+
+    this.outerEvents$.subscribe(({ type, payload }) => {
+      switch (type) {
+        case 'aw-home-layout.viewmore':
+          // this.dataSource.handleShowMoreClick()
+          console.log('current page: ', this.dataSource.currentPage)
+          break;
+        default:
+          break;
+      }
+    })
   }
 }
