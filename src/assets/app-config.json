@@ -138,5 +138,8 @@
   "paths": {
     "schedaBasePath": "/aw/patrimonio/",
     "entitaBasePath": "/aw/entita/"
+  },
+  "features-enabled" : {
+    "bubblechart": true
   }
 }

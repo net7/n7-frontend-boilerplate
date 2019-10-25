@@ -39,6 +39,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   public currentHoverEntity: any = null;
   public hasScrollBackground: boolean = false;
   public loadingBubbles = false;
+  public bubblesEnabled = false;
 
   onInit({ communication, mainState, configuration, tippy }) {
     this.communication = communication;
@@ -47,6 +48,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     this.lastWindowWidth = window.outerWidth;
     this.mainState = mainState;
     this.tippy = tippy;
+    this.bubblesEnabled = this.configuration.get('features-enabled') ? this.configuration.get('features-enabled')['bubblechart'] : false;
 
     this.one('aw-hero').update(this.configuration.get('home-layout')['top-hero']);
     this.one('aw-home-hero-patrimonio').update(this.configuration.get('home-layout')['bottom-hero']);

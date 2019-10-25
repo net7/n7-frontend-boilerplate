@@ -108,7 +108,9 @@ export class AwEntitaLayoutEH extends EventHandler {
             this.dataSource.loadContent(res);
             res['connectedEntities'] =res.entities
             let connectedEntities = {source: res};
-            this.emitOuter('filterbubbleresponse', connectedEntities);
+            if (this.dataSource.bubblesEnabled ) {
+              this.emitOuter('filterbubbleresponse', connectedEntities);
+            }
           }
         });
       } else {
