@@ -125,13 +125,15 @@ export class AwHomeLayoutEH extends EventHandler {
     this.dataSource.initialFilterRequest().subscribe((response) => {
       if (response) {
         this.dataSource.parseInitialRequest(response);
-        let bubblePayload = {
-          setBubbleChart: (bubbleCref) => this.dataSource._bubbleChart = bubbleCref,
-          source: response,
-          reset: false,
-          facetData: this.dataSource.facetData
-        };
-        this.emitOuter('filterbubbleresponse', bubblePayload);
+        if ( this.dataSource.bubblesEnabled ) {
+          let bubblePayload = {
+            setBubbleChart: (bubbleCref) => this.dataSource._bubbleChart = bubbleCref,
+            source: response,
+            reset: false,
+            facetData: this.dataSource.facetData
+          };
+          this.emitOuter('filterbubbleresponse', bubblePayload);
+        }
       }
     });
   }

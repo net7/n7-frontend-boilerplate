@@ -15,6 +15,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
   public currentId: string; // selected entity (url param)
   public currentPage: any; // pagination value (url param)
   public pageSize: number = 10; // linked objects page size
+  public bubblesEnabled: boolean;
 
   private communication: any;
 
@@ -25,6 +26,8 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     this.options       = options;
     this.router        = router;
     this.titleService  = titleService;
+    this.bubblesEnabled = this.configuration.get('features-enabled') ? this.configuration.get('features-enabled')['bubblechart'] : false;
+
   }
 
   getNavigation(id) {

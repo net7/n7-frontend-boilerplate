@@ -48,6 +48,7 @@
 
             <section
                 class="aw-scheda__bubble-chart"
+                *ngIf="lb.dataSource.bubblesEnabled"
             >
                 <div
                     [hidden] = "!lb.dataSource.hasBubbles"

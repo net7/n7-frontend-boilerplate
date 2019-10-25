@@ -59,7 +59,9 @@ export class AwSchedaLayoutEH extends EventHandler {
            if ( response.connectedEntities ){
              this.dataSource.hasBubbles = true;
              let connectedEntities = {source: response, connectedEntities: response.connectedEntities};
-             this.emitOuter('filterbubbleresponse', connectedEntities);
+             if( this.dataSource.bubblesEnabled ){
+               this.emitOuter('filterbubbleresponse', connectedEntities);
+             }
            }
           }
         });
