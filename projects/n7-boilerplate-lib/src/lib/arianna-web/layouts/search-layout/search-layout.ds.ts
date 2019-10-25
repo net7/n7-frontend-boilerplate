@@ -5,7 +5,7 @@ import fakeSearchRequest$ from './search-mock-request';
 import { withLatestFrom, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
-const SEARCH_ID = 'search-facets';
+const SEARCH_MODEL_ID = 'aw-search-layout';
 
 export class AwSearchLayoutDS extends LayoutDataSource {
   private communication: any;
@@ -40,13 +40,15 @@ export class AwSearchLayoutDS extends LayoutDataSource {
 
     this.pageTitle = this.configuration.get('search-layout').title;
 
-    if(!this.search.model(SEARCH_ID)) this.search.add(SEARCH_ID, facetsConfig);
-    this.searchModel = this.search.model(SEARCH_ID);
+    if(!this.search.model(SEARCH_MODEL_ID)) this.search.add(SEARCH_MODEL_ID, facetsConfig);
+    this.searchModel = this.search.model(SEARCH_MODEL_ID);
 
     this.doSearchRequest$().subscribe(() => {
       this.one('facets-wrapper').update({ searchModel: this.searchModel });
     });
   }
+
+  public getSearchModelId = () => SEARCH_MODEL_ID;
 
   public doSearchRequest$(): Observable<any> {
     // FIXME: togliere configKeys

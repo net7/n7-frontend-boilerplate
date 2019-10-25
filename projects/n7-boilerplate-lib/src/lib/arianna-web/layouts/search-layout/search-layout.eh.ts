@@ -33,18 +33,6 @@ export class AwSearchLayoutEH extends EventHandler {
           break;
       }
     });
-
-    // listen to global events
-    EventHandler.globalEvents$.subscribe(({ type, payload }) => {
-      switch(type){
-        case 'global.queryparams':
-          this.emitOuter('queryparams', payload);
-          break;
-
-        default: 
-          break;
-      }
-    });
   }
 
   private _listenToFacetsChange(){
@@ -52,7 +40,7 @@ export class AwSearchLayoutEH extends EventHandler {
       debounceTime(500)
     ).subscribe(() => {
       this.dataSource.doSearchRequest$().subscribe(() => {
-        this.emitOuter('searchresponse');
+        this.emitGlobal('searchresponse', this.dataSource.getSearchModelId());
       });
     })
   }

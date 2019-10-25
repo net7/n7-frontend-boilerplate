@@ -51,18 +51,12 @@ export class FacetsWrapperEH extends EventHandler {
     });
 
     // listen to global events
-    this.outerEvents$.subscribe(({ type, payload }) => {
+    EventHandler.globalEvents$.subscribe(({ type, payload }) => {
       switch(type){
-        case 'aw-search-layout.queryparams':
-          // FIXME: route queryparams
-          /* if(!this._facetsChanged){
-            this.dataSource.updateFiltersFromQueryParams(payload);
-            this.dataSource.updateInputsFromFilters();
-          } */
-          break;
-
-        case 'aw-search-layout.searchresponse':
-          this.dataSource.updateInputLinks();
+        case 'global.searchresponse':
+          if(this.dataSource.searchModel.getId() === payload){
+            this.dataSource.updateInputLinks();
+          }
           break;
 
         default: 

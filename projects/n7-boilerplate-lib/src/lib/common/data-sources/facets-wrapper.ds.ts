@@ -1,5 +1,5 @@
 import { DataSource } from '@n7-frontend/core';
-import { SearchModel } from '../services/search.service';
+import { SearchModel, SearchService } from '../services/search.service';
 
 const HEADER_ICON_OPEN = 'n7-icon-angle-down';
 const HEADER_ICON_CLOSE = 'n7-icon-angle-right';
@@ -8,7 +8,10 @@ export class FacetsWrapperDS extends DataSource {
   public searchModel: SearchModel;
 
   protected transform(data) {
-    if(!this.searchModel) this.searchModel = data.searchModel;
+
+    if(!this.searchModel) {
+      this.searchModel = data.searchModel;
+    }
 
     const id = this.searchModel.getId(),
       fields = this.searchModel.getFields();
@@ -53,6 +56,15 @@ export class FacetsWrapperDS extends DataSource {
         }
       })
     });
+
+    // query params control
+    if(SearchService.queryParams){
+      this.searchModel.updateFiltersFromQueryParams(SearchService.queryParams);
+      this.searchModel.updateInputsFromFilters();
+
+      // reset queryparams
+      SearchService.queryParams = null;
+    }
 
     return { 
       groups, 
