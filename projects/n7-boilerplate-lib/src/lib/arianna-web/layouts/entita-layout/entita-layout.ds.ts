@@ -15,6 +15,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
   public currentId: string; // selected entity (url param)
   public currentPage: any; // pagination value (url param)
   public pageSize: number = 10; // linked objects page size
+  public bubblesEnabled: boolean;
 
   private communication: any;
 
@@ -25,6 +26,8 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     this.options       = options;
     this.router        = router;
     this.titleService  = titleService;
+    this.bubblesEnabled = this.configuration.get('features-enabled') ? this.configuration.get('features-enabled')['bubblechart'] : false;
+
   }
 
   getNavigation(id) {
@@ -88,7 +91,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
         });
         this.one('aw-entita-metadata-viewer').updateOptions({ context: this.selectedTab });
         this.one('aw-entita-metadata-viewer').update(res.fieldsTab);
-        this.one('aw-linked-objects').updateOptions({ size: 3, configKeys: this.configuration.get("config-keys"), context: 'entita' })
+        this.one('aw-linked-objects').updateOptions({ size: 3, config: this.configuration, context: 'entita' })
         this.one('aw-linked-objects').update(res.items);
       } break;
 
@@ -100,7 +103,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       case 'oggetti-collegati': {
         this.one('aw-linked-objects').updateOptions({
             context: this.selectedTab,
-            configKeys: this.configuration.get("config-keys"),
+            config: this.configuration,
             page: this.currentPage,
             size: this.pageSize,
           })

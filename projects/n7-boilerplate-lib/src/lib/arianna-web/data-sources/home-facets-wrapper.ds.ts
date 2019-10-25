@@ -5,16 +5,21 @@ export class AwHomeFacetsWrapperDS extends DataSource {
 
   private autoComplete = {}
 
-  protected transform(data) {
+  protected transform({facetData, lockedFacets}) {
     var headers: any[] = [];
     var inputs: any[] = [];
 
-    data.forEach(facet => {
+    facetData.forEach(facet => {
       /*
        For each facet on back-end, push a header-component
        and a facet-component (search input only) to each array.
        */
-
+      if (lockedFacets[facet.type.id.replace('toe-', '')]) {
+        // if bubble chart say lock this facet, lock it
+        facet.locked = true
+      } else {
+        facet.locked = false
+      }
       let headerClasses = [];
       let iconClasses = [facet.icon];
       if (!facet.enabled) headerClasses.push('is-disabled');
@@ -22,7 +27,6 @@ export class AwHomeFacetsWrapperDS extends DataSource {
         headerClasses.push(`color-${facet.type.configKey}`);
         iconClasses.push(`color-${facet.type.configKey}`);
       }
-
       // make array of headers data
       headers.push({
         iconLeft: iconClasses.join(' '),
@@ -48,7 +52,6 @@ export class AwHomeFacetsWrapperDS extends DataSource {
         }]
       });
     });
-
     // zipping arrays to render widgets with separate data (see home-layout.html)
     var widgetData: any[] = []
     headers.map((h, i) => {
@@ -70,10 +73,11 @@ export class AwHomeFacetsWrapperDS extends DataSource {
       if (!ac.tippy) {
         const target = '.' + id; // target the correct this.autoComplete[id] input class
         ac.tippy = tippy(target, {
-          content: '<span>Loading tippy</span>',
+          content: '<span>Loading results</span>',
           trigger: 'manual',
           interactive: true,
           arrow: false,
+          flip: false,
           appendTo: 'parent',
           theme: 'light-border aw-home__facet-tippy',
           placement: 'bottom-start',

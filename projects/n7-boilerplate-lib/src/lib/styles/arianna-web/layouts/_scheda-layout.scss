@@ -17,21 +17,15 @@
         margin: 0 auto;
         max-width: $page-max-width;
         display: grid;
-        grid-template-columns: $aw-scheda-tree-width 1fr;
+        grid-template-columns: $aw-scheda-tree-width minmax($bubble-chart-column-container-min-width,1fr);
         grid-column-gap: 0;
     }
 
     &__tree {
+        align-self: start;
         width: $aw-scheda-tree-width;
 
-        .n7-sidebar-header {
-            position: sticky !important;
-            top: 0px !important;
-        }
-
         .n7-tree {
-            position: sticky !important;
-            top: $sidebar-header-height !important; // 44px is the sidebarheader height
             max-height: calc(100vh - 190px);
             overflow-y: auto;
         }
@@ -55,6 +49,7 @@
     TREE
 \* ------------------------------------ */
 .aw-scheda__tree {
+    align-self: start; /* get the component have its content height */
     position: sticky;
     top: 0;
 
@@ -156,7 +151,7 @@
     /* Bubble chart */
     .aw-scheda__bubble-chart {
         .n7-bubble-chart {
-            padding: 0 $aw-scheda-content-padding $aw-scheda-content-padding $aw-scheda-content-padding;
+            padding: 0 0 $aw-scheda-content-padding;
         }
     }
     

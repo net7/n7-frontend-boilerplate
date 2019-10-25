@@ -24,6 +24,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   public metadataSectionTitle: string;
   public hasMetadata: boolean;
   public hasBubbles: boolean;
+  public bubblesEnabled: boolean;
   public hasSimilarItems: boolean;
   public imageViewerIstance: any;
   /**
@@ -42,7 +43,8 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     this.similarItemsSectionTitle = this.configuration.get('scheda-layout')['related-items']['title'];
     this.metadataSectionTitle = this.configuration.get('scheda-layout')['metadata']['title'];
     this.hasSimilarItems = false;
-    this.hasBubbles = false;
+    this.bubblesEnabled = this.configuration.get('features-enabled') ? this.configuration.get('features-enabled')['bubblechart'] : false;
+
   }
 
   getNavigation( id ) {
@@ -185,7 +187,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       /* Similar item */
       if ( response.similarItems ) {
         this.hasSimilarItems = true;
-        this.one('aw-linked-objects').updateOptions({ context: 'scheda', configKeys: this.configuration.get("config-keys") })
+        this.one('aw-linked-objects').updateOptions({ context: 'scheda', config: this.configuration })
         this.one('aw-linked-objects').update(response.similarItems);
       } else {
         this.hasSimilarItems = false;

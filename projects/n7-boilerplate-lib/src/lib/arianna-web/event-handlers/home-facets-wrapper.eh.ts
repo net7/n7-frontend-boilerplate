@@ -22,12 +22,16 @@ export class AwHomeFacetsWrapperEH extends EventHandler {
       }
     });
 
-    this.outerEvents$.subscribe(({type, payload}) => {
+    this.outerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
         case 'aw-home-layout.facetswrapperresponse':
           this.dataSource.tippyMaker(payload.response, payload.facetId.inputPayload)
           break;
+        case 'aw-home-layout.filterbubbleresponse':
+          // console.log({type, payload})
+          break;
         default:
+          // console.warn('unhandled outer event of type', type)
           // silent ignore
           break;
       }

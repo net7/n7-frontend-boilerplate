@@ -44,7 +44,11 @@ export class AwHomeLayoutEH extends EventHandler {
             }
             this.dataSource.makeRequest$('autoComplete', params).subscribe(response => {
               this.emitOuter('facetswrapperresponse', { facetId: payload, response })
-              this.dataSource.updateComponent('aw-autocomplete-wrapper', { key: payload.value, response })
+              this.dataSource.updateComponent(
+                'aw-autocomplete-wrapper', // ID
+                { key: payload.value, response }, // DATA
+                { config: this.configuration } // OPTIONS
+              )
             })
           }
           break;
@@ -72,6 +76,7 @@ export class AwHomeLayoutEH extends EventHandler {
               if (this.dataSource.onBubbleSelected(payload.bubble)) {
                 this.dataSource.filterRequest().subscribe((response) => {
                   if (response) {
+                    // console.log('filterRequest() returned: ', response)
                     this.emitOuter('filterbubbleresponse', this.dataSource.getBubblePayload(response));
                     this.dataSource.updateBubbles(response);
                   }
@@ -120,13 +125,15 @@ export class AwHomeLayoutEH extends EventHandler {
     this.dataSource.initialFilterRequest().subscribe((response) => {
       if (response) {
         this.dataSource.parseInitialRequest(response);
-        let bubblePayload = {
-          setBubbleChart: (bubbleCref) => this.dataSource._bubbleChart = bubbleCref,
-          source: response,
-          reset: false,
-          facetData: this.dataSource.facetData
-        };
-        this.emitOuter('filterbubbleresponse', bubblePayload);
+        if ( this.dataSource.bubblesEnabled ) {
+          let bubblePayload = {
+            setBubbleChart: (bubbleCref) => this.dataSource._bubbleChart = bubbleCref,
+            source: response,
+            reset: false,
+            facetData: this.dataSource.facetData
+          };
+          this.emitOuter('filterbubbleresponse', bubblePayload);
+        }
       }
     });
   }

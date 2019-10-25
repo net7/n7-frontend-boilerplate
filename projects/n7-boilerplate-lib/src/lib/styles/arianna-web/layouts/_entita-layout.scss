@@ -9,10 +9,11 @@
 \* ------------------------------------ */
 .aw-entity {
     display: grid;
-    grid-template-columns: $aw-scheda-tree-width 1fr;
+    grid-template-columns: $aw-scheda-tree-width minmax($bubble-chart-column-container-min-width,1fr);
     
     margin: $space*3 auto $space*6 auto;
     max-width: $page-max-width;
+    position: relative;
     
     &__content {
         margin-top: $space*3;
@@ -73,6 +74,10 @@
     }
 
     &__sidebar {
+        align-self: start; /* in order to give the element its content height, otherwise it will be fullheight and it won't look sticky */
+        position: sticky;  /* not supported in explorer 11 */
+        top: 0;
+
         .n7-nav {
             background-color: $color-background-base;
             box-shadow: 0 2px 20px 0 rgba(0,0,0,0.08);
@@ -179,6 +184,7 @@
     &-layout__button-wrapper {
         display: flex;
         justify-content: flex-end;
+        padding-top: $space*1.5;
     }
 
     .n7-breadcrumbs {

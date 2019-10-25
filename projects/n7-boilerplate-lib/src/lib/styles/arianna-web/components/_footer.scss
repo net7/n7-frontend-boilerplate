@@ -8,66 +8,28 @@
    #FOOTER
 \* ------------------------------------ */
 .n7-footer {
-    // display: flex;
     padding-top: $space*6;
     padding-bottom: $space*6;
     background-color: $color-gray-02;
     border-top: 1px solid $color-border-normal;
-    // align-items: center;
-    // justify-content: center;
-    // padding: $space*5;
-
-    &__content {
-        // display: flex;
-        // max-width: $page-max-width;
-        // margin-right: auto;
-        // margin-left: auto;
-    }
 
     &__column {
-        // flex: 1;
-        // padding: 0 $grid-gutter-h/2;
 
-        &:first-of-type {
-            // padding-left: 0;
+        &-title {
+            margin-bottom: $space*2;
         }
 
-        &:last-of-type {
-            // padding-right: 0;
+        &-text {
+            line-height: 1.8;
         }
 
         &-nav {
-            &-list {
-                // padding-left: 0;
-                // list-style: none;
-                // font-size: $font-size-xs;
-            }
-
             &-item {
-                // margin-bottom: $space/2;
+                margin-bottom: $space;
             }
 
             &-link {
-                // text-decoration: underline;
-            }
-        }
-
-        &-title,
-        &-text {
-            // font-size: $font-size-xs;
-        }
-
-        &-images {
-            // padding-top: $space;
-            
-            img {
-                // width: auto;
-                // height: $footer-image-height;
-                // margin-right: $space/2;
-
-                &:last-of-type {
-                    // margin-right: 0;
-                }
+                color: $color-text;
             }
         }
     }
