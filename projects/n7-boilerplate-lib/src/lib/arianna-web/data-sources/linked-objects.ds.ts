@@ -31,7 +31,7 @@ function unpackData (data, page, size, keys, totalPages, context) {
       image: el.thumbnail,
       title: el.item.label,
       payload: el.item.id,
-      classes: context == 'entita' ? 'is-fullwidth' : '',
+      classes: ['entita', 'search'].includes(context) ? 'is-fullwidth' : '',
       metadata: [
         {
           classes: 'n7-objects__metadata-artist',
