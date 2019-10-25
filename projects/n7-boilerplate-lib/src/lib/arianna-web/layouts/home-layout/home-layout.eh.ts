@@ -76,7 +76,7 @@ export class AwHomeLayoutEH extends EventHandler {
               if (this.dataSource.onBubbleSelected(payload.bubble)) {
                 this.dataSource.filterRequest().subscribe((response) => {
                   if (response) {
-                    console.log('filterRequest() returned: ', response)
+                    // console.log('filterRequest() returned: ', response)
                     this.emitOuter('filterbubbleresponse', this.dataSource.getBubblePayload(response));
                     this.dataSource.updateBubbles(response);
                   }

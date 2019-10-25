@@ -1,0 +1,14 @@
+<div *ngIf="data" class="n7-facets-wrapper {{ data.classes || '' }}">
+    <div *ngFor="let group of data.groups" class="n7-facets-wrapper__group {{ group.classes || '' }}">
+        <n7-facet-header
+            [data]="group.header"
+            [emit]="headerEmit.bind(this)"
+        ></n7-facet-header>
+
+        <n7-facet
+            *ngIf="group.isOpen"
+            [data]="group.facet"
+            [emit]="facetEmit.bind(this)"
+        ></n7-facet>
+    </div>
+</div>
