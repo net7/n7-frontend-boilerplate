@@ -81,6 +81,9 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       text: this.myResponse.entity.label,
       color: this.myResponse.entity.typeOfEntity.configKey
     }
+
+    this.one('aw-entita-nav').updateOptions({bubblesEnabled: this.bubblesEnabled});
+
     switch (this.selectedTab) { // make dynamic content depending on request
       case 'overview': {
         this.one('aw-bubble-chart').updateOptions({
