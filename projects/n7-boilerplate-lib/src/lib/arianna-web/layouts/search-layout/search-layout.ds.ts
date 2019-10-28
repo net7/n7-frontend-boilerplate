@@ -24,11 +24,23 @@ export class AwSearchLayoutDS extends LayoutDataSource {
 
   public orderByLabel: string = 'Ordina per';
   public orderByOptions: any = [{
-    value: 'title',
-    label: 'Ordine alfabetico'
+    value: 'score_DESC',
+    label: 'Ordine per rilevanza (DESC)'
   }, {
-    value: 'date',
-    label: 'Ordina per data'
+    value: 'score_ASC',
+    label: 'Ordine per rilevanza (ASC)'
+  }, {
+    value: 'text_DESC',
+    label: 'Ordine alfabetico (DESC)'
+  }, {
+    value: 'text_ASC',
+    label: 'Ordine alfabetico (ASC)'
+  }, {
+    value: 'date_DESC',
+    label: 'Ordina per data (DESC)'
+  }, {
+    value: 'date_ASC',
+    label: 'Ordina per data (ASC)'
   }];
 
   onInit({configuration, mainState, options, communication, search }) {
@@ -46,6 +58,13 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     this.doSearchRequest$().subscribe(() => {
       this.one('facets-wrapper').update({ searchModel: this.searchModel });
     });
+  }
+
+  onOrderByChange(payload){
+    const [orderBy, direction] = payload.split('_');
+
+    this.searchModel.setSearchConfigOrderBy(orderBy);
+    this.searchModel.setSearchConfigDirection(direction);
   }
 
   public getSearchModelId = () => SEARCH_MODEL_ID;

@@ -146,7 +146,7 @@ export default {
     order: {
       type: 'score', // score | text | date
       key: 'author', // docPath, elastic key, ecc
-      direction: 'ASC', // ASC | DESC
+      direction: 'DESC', // ASC | DESC
     }, 
     fields: {
       title: {

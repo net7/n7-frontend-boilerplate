@@ -14,8 +14,8 @@ export class AwSearchLayoutEH extends EventHandler {
           break;
 
         case 'aw-search-layout.orderbychange':
-          // TODO: orderby
-          console.log('orderby', {type, payload});
+          this.dataSource.onOrderByChange(payload);
+          this.facetsChange$.next();
           break;
 
         default:

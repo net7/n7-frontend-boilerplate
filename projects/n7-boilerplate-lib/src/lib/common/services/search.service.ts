@@ -195,6 +195,14 @@ export class SearchModel {
     targetInput.update();
   }
 
+  public setSearchConfigOrderBy(orderBy){
+    this._config.results.order.type = orderBy;
+  }
+
+  public setSearchConfigDirection(direction){
+    this._config.results.order.direction = direction;
+  }
+
   private _filterData(searchIns, item){
     searchIns.forEach(([searchIn, value]) => {
       searchIn.forEach(({ key, operator }) => {

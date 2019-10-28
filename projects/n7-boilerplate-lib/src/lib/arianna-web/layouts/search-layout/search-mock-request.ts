@@ -3,6 +3,8 @@ import { Observable, of } from 'rxjs';
 export default (params, configKeys): Observable<any> => {
   params.totalCount = Math.floor(Math.random() * 1000);
 
+  console.log('fake-search-request----------->', params);
+
   let { facets } = params;
 
   // query links
