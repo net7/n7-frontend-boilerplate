@@ -203,6 +203,14 @@ export class SearchModel {
     this._config.results.order.direction = direction;
   }
 
+  public setPageConfigOffset(offset){
+    this._config.page.offset = offset;
+  }
+
+  public setPageConfigLimit(limit){
+    this._config.page.limit = limit;
+  }
+
   private _filterData(searchIns, item){
     searchIns.forEach(([searchIn, value]) => {
       searchIn.forEach(({ key, operator }) => {

@@ -29,6 +29,18 @@ export class AwSearchLayoutEH extends EventHandler {
           this.facetsChange$.next();
           break;
 
+        case 'aw-linked-objects.pagination':
+          this.dataSource.onPaginationChange(payload).subscribe(changed => {
+            if(changed) this.facetsChange$.next();
+          });
+          break;
+
+        case 'aw-linked-objects.goto':
+            this.dataSource.onPaginationGoToChange(payload).subscribe(changed => {
+              if(changed) this.facetsChange$.next();
+            });
+            break;
+    
         default:
           break;
       }

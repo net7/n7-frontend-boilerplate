@@ -3,7 +3,7 @@ import { SearchService, SearchModel } from 'n7-boilerplate-lib/lib/common/servic
 import facetsConfig from './search-facets.config';
 import fakeSearchRequest$ from './search-mock-request';
 import { withLatestFrom, tap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 const SEARCH_MODEL_ID = 'aw-search-layout';
 
@@ -67,6 +67,16 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     this.searchModel.setSearchConfigDirection(direction);
   }
 
+  onPaginationChange(payload): Observable<boolean> {
+    const page = payload.replace('page-', '');
+    return this._updateSearchPage(page);
+  }
+
+  onPaginationGoToChange(payload){
+    const page = payload.replace('goto-', '');
+    this._updateSearchPage(page);
+  }
+
   public getSearchModelId = () => SEARCH_MODEL_ID;
 
   public doSearchRequest$(): Observable<any> {
@@ -118,5 +128,20 @@ export class AwSearchLayoutDS extends LayoutDataSource {
         this.one('aw-linked-objects').update(resultsResponse.items);
       })
     );
+  }
+
+  private _updateSearchPage(page){
+    if(+page === this.currentPage) return of(false);
+
+    this.currentPage = +page;
+
+    const searchConfig = this.searchModel.getConfig(),
+      pageConfig = searchConfig.page,
+      { limit } = pageConfig,
+      newOffset = (this.currentPage - 1) * limit;
+
+    this.searchModel.setPageConfigOffset(newOffset);
+
+    return of(true);
   }
 }
