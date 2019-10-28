@@ -71,6 +71,11 @@
     BUBBLE-CHART
 \* ------------------------------------ */
 .aw-home {
+
+    &__bubble-chart-wrapper {
+        overflow: hidden;
+    }
+
     /* Bubble facets and chart wrapper */
     &__bubble-wrapper {
         display: grid;
@@ -369,12 +374,6 @@
     .tag-toe-places {
         background-color: $color-places;
     }
-
-    //TODO
-    .aw-home__bubble-chart-wrapper {
-        overflow: hidden;
-    }
-
 }
 
 
@@ -395,8 +394,12 @@
                     font-weight: $bottom-hero-title-font-weight;
                 }
 
+                .n7-hero__text {
+                    margin-bottom: $space*3;
+                }
+
                 .n7-hero__input-wrapper {
-                    margin-top: $space*3;
+                    // margin-top: $space*3;
                 }
 
                 .n7-hero__image {
