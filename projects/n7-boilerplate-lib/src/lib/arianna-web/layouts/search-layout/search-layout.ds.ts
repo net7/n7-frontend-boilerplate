@@ -77,6 +77,12 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     this._updateSearchPage(page);
   }
 
+  onResultsLimitChange(payload){
+    this.pageSize = payload;
+    this.searchModel.setPageConfigLimit(payload);
+    this.searchModel.setPageConfigOffset(0);
+  }
+
   public getSearchModelId = () => SEARCH_MODEL_ID;
 
   public doSearchRequest$(): Observable<any> {

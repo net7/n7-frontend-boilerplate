@@ -35,6 +35,11 @@ export class AwSearchLayoutEH extends EventHandler {
           });
           break;
 
+        case 'aw-linked-objects.change':
+          this.dataSource.onResultsLimitChange(payload);
+          this.facetsChange$.next();
+          break;
+
         case 'aw-linked-objects.goto':
             this.dataSource.onPaginationGoToChange(payload).subscribe(changed => {
               if(changed) this.facetsChange$.next();
