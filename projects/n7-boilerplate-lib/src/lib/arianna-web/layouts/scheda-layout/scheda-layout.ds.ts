@@ -185,10 +185,10 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       }*/
 
       /* Similar item */
-      if ( response.similarItems ) {
+      if ( response.items ) {
         this.hasSimilarItems = true;
         this.one('aw-linked-objects').updateOptions({ context: 'scheda', config: this.configuration })
-        this.one('aw-linked-objects').update(response.similarItems);
+        this.one('aw-linked-objects').update(response);
       } else {
         this.hasSimilarItems = false;
         this.one('aw-linked-objects').update(null);
