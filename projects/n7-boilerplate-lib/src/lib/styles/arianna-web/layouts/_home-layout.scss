@@ -299,6 +299,13 @@
                     font-weight: $font-weight-bold;
                 }
             }
+
+            > *:last-child {
+                > .n7-item-preview {
+                    border-bottom: none;
+                }
+            }
+            
         }
 
         &-list-wrapper {
