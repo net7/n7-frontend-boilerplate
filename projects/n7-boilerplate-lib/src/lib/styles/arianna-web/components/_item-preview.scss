@@ -100,8 +100,10 @@
         &-group {
             margin-bottom: 0;
 
-            &:last-of-type {
+            &.n7-objects__metadata-linked {
                 margin-left: auto;
+                flex: 1 0 auto;
+                text-align: right;
             }
         }
     }
