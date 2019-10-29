@@ -24,24 +24,24 @@ export class AwSearchLayoutDS extends LayoutDataSource {
 
   public orderByLabel: string = 'Ordina per';
   public orderByOptions: any = [{
+    value: 'text_DESC',
+    label: 'Ordine alfabetico (DESC)'
+  }, {
+    value: 'text_ASC',
+    label: 'Ordine alfabetico (ASC)'
+  }, /* {
     value: 'score_DESC',
     label: 'Ordine per rilevanza (DESC)'
   }, {
     value: 'score_ASC',
     label: 'Ordine per rilevanza (ASC)'
   }, {
-    value: 'text_DESC',
-    label: 'Ordine alfabetico (DESC)'
-  }, {
-    value: 'text_ASC',
-    label: 'Ordine alfabetico (ASC)'
-  }, {
     value: 'date_DESC',
     label: 'Ordina per data (DESC)'
   }, {
     value: 'date_ASC',
     label: 'Ordina per data (ASC)'
-  }];
+  } */];
 
   onInit({configuration, mainState, options, communication, search }) {
     this.configuration = configuration;
@@ -80,6 +80,9 @@ export class AwSearchLayoutDS extends LayoutDataSource {
   onResultsLimitChange(payload){
     this.pageSize = payload;
     this.searchModel.setPageConfigLimit(payload);
+    
+    // reset page & offset
+    this.currentPage = 1;
     this.searchModel.setPageConfigOffset(0);
   }
 
