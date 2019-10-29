@@ -149,8 +149,8 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
         /*Metadata section*/
         let group = { group: [] };
 
-        if ( response.fields ){
-          this.hasMetadata = true;
+        this.hasMetadata = response.fields != null;
+        if (  this.hasMetadata ){
           response.fields.forEach(field => {
             let items = [];
             field.fields.forEach(item => {
