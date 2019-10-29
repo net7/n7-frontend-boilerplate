@@ -299,6 +299,15 @@
                     font-weight: $font-weight-bold;
                 }
             }
+
+            > *:last-child {
+                > .n7-item-preview {
+                    margin-bottom: 0;
+                    padding-bottom: 0;
+                    border-bottom: none;
+                }
+            }
+            
         }
 
         &-list-wrapper {
