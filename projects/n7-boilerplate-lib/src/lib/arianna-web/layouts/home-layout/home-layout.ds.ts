@@ -414,6 +414,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         trigger: 'manual',
         interactive: true,
         arrow: false,
+        flip: false,
         appendTo: 'parent',
         theme: 'light-border',
         placement: 'bottom-start',
