@@ -1,13 +1,20 @@
 import { FacetInput } from './facet-input';
 
 export class FacetInputLink extends FacetInput {
+  private facetValue: string | string[];
 
   protected transform(){
     const facetId = this.getFacetId();
   
-    return this.data.map(({ label, value, counter, hidden }) => {
+    return this.data.map(({ label, value, counter, hidden, options }) => {
       // normalize value
       value = '' + value;
+      options = options || {};
+
+      let classes = [];
+      if(options.classes) classes.push(options.classes);
+      if(hidden) classes.push('is-hidden');
+      if(this._isActive(this.facetValue, value)) classes.push('is-active');
 
       return { 
         type: 'link', 
@@ -19,24 +26,32 @@ export class FacetInputLink extends FacetInput {
           source: 'input-link',
           value
         },
-        classes: hidden ? 'is-hidden' : '',
+        icon: options.icon || null,
+        classes: classes.join(' '),
         _meta: { facetId, value } 
       };
     });
   }
 
   public setActive(facetValue){
-    const { isArray } = this.config.filterConfig;
-
     this.output.forEach(config => {
-      if(isArray && Array.isArray(facetValue) && facetValue.indexOf(config._meta.value) !== -1){
-        config.classes = 'is-active';
-      } else if(facetValue === config._meta.value) {
-        config.classes = 'is-active';
-      } else {
-        config.classes = null;
+      let classes = config.classes ? config.classes.split(' ') : [],
+        isActive = this._isActive(facetValue, config._meta.value);
+      if(!isActive){
+        classes = classes.filter(className => className !== 'is-active');
+      } else if(classes.indexOf('is-active') === -1) {
+        classes.push('is-active');
       }
+      config.classes = classes.join(' ');
     });
   }
   
+  private _isActive(facetValue, value){
+    this.facetValue = facetValue;
+
+    return (
+      (Array.isArray(facetValue) && facetValue.indexOf(value) !== -1) || 
+      (facetValue === value)
+    );
+  }
 }

@@ -1,0 +1,187 @@
+/**
+ * FACET
+ *
+ * Facet component including:
+ * - array of checkboxes;
+ * - search inpout with label;
+ * - list of results.
+ */
+ 
+/* ------------------------------------ *\
+   #FACET
+\* ------------------------------------ */
+.n7-facet {
+    /* General section inside facet */
+    &__section {
+
+    }
+}
+
+
+/* ------------------------------------ *\
+   #INPUT CHECKBOX
+\* ------------------------------------ */
+.n7-facet {
+    &__section-input-checkbox {
+     
+    }
+
+    &__input-checkbox-input {
+       
+    }
+
+    &__input-checkbox-label {
+        font-size: $font-size-s;
+        color: $facet-text-color;
+    }
+}
+
+
+/* ------------------------------------ *\
+   #INPUT TEXT
+\* ------------------------------------ */
+.n7-facet {
+    &__section-input-text {
+    }
+
+    &__input-text-label {
+        display: block;
+        font-size: $font-size-s;
+    }
+
+    &__input-text-wrapper {
+        position: relative;
+    }
+
+    &__input-text[type="text"] {
+        width: 100%;
+        box-sizing: border-box;
+        padding-right: $space*4;
+    }
+
+    &__input-text-icon {
+        position: absolute;
+        bottom: 0;
+        right: $space;
+        line-height: $form-input-height;
+        color: $color-text-light;
+    }
+}
+
+
+/* ------------------------------------ *\
+   #LIST
+\* ------------------------------------ */
+.n7-facet {
+    &__section-input-link {
+        margin-bottom: $space/2;
+        border-bottom: 1px solid $color-border-normal;
+
+        &:last-of-type {
+            border-bottom: none;
+        }
+    }
+
+    &__input-link {
+        padding-bottom: $space/2;
+
+        &[class*="color-"] {
+            .n7-facet__input-link-text {
+                font-weight: $font-weight-bold;
+            }
+        }
+
+        &.color-people {
+            .n7-facet__input-link-icon,
+            .n7-facet__input-link-text {
+                color: $color-people;
+            }
+        }
+
+        &.color-places {
+            .n7-facet__input-link-icon,
+            .n7-facet__input-link-text {
+                color: $color-places;
+            }
+        }
+
+        &.color-concepts {
+            .n7-facet__input-link-icon,
+            .n7-facet__input-link-text {
+                color: $color-concepts;
+            }
+        }
+
+        &.color-organizations {
+            .n7-facet__input-link-icon,
+            .n7-facet__input-link-text {
+                color: $color-organizations;
+            }
+        }
+    }
+
+    &__input-link-icon {
+    }
+
+    &__input-link-text {
+        font-size: $font-size-s;
+        color: $facet-text-color;
+    }
+
+    &__input-link-counter {
+        background-color: $facet-counter-background;
+    }
+
+    /* Hover */
+    .n7-facet__input-link:hover {
+        .n7-facet__input-link-text {
+           
+        }
+    }
+
+    /* Active */
+    .n7-facet__input-link.is-active {
+        &:before {
+            content: "\e938";
+            font-family: 'n7-icon';
+            margin-right: $space;
+            color: $color-success;
+        }
+
+        .n7-facet__input-link-text {
+           
+        }
+    }
+}
+
+
+/* ------------------------------------ *\
+   #SELECT
+\* ------------------------------------ */
+.n7-facet {
+    &__section-input-select {
+        width: calc(50% - #{$space*2});
+
+        .n7-facet__section-input,
+        .n7-facet__input-select {
+            width: 100%;
+        }
+    }
+}
+
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: $breakpoint-laptop) {
+}
+
+@media all and (max-width: $breakpoint-ipad-portrait) {
+}
+
+@media all and (max-width: $breakpoint-smartphone-landscape) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}

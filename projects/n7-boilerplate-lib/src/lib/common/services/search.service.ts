@@ -20,11 +20,11 @@ const INPUTS_MAP = {
 };
 
 export interface ISearchConfig {
+  totalCount: number;
   facets: any;
   page: any;
   results: any;
   fields: any;
-  baseUrl: string;
 }
 
 export interface IFacet {
@@ -52,6 +52,7 @@ export class SearchModel {
   private _facets: IFacet[] = [];
   private _inputs: FacetInput[] = [];
   private _page: any;
+  private _totalCount: number | null;
   private _config: ISearchConfig;
   private _results$: Subject<any[]> = new Subject();
 
@@ -64,6 +65,7 @@ export class SearchModel {
     this._setPage();
     this._setInputs();
     this._setInputsData();
+    this._setTotalCount();
   }
 
   public getId = () => this._id;
@@ -71,6 +73,7 @@ export class SearchModel {
   public getFacets = () => this._facets;
   public getInputs = () => this._inputs;
   public getConfig = () => this._config;
+  public getTotalCount = () => this._totalCount;
   public getFields = () => this._config.fields;
   public getResults$ = () => this._results$;
 
@@ -102,12 +105,17 @@ export class SearchModel {
 
   public updateInputsFromFilters(){
     this._filters.forEach(({ facetId, value }) => {
-      this._inputs
-        .filter(input => input.getFacetId() === facetId)
-        .forEach(input => {
-          input.setActive(value); 
-        })
+      this.getInputByFacetId(facetId).setActive(value);
     });
+  }
+
+  public updateFacets(facets) {
+    facets.forEach(({ id, data }) => this.updateFacet(id, data));
+    this._setInputsData();
+  }
+
+  public updateTotalCount(totalCount) {
+    this._totalCount = totalCount;
   }
 
   public updateFacet(facetId, data) {
@@ -161,9 +169,7 @@ export class SearchModel {
   }
 
   public setInputData(facetId, data){
-    this._inputs
-      .filter(input => input.getFacetId() === facetId)
-      .forEach(input => input.setData(data));
+    this.getInputByFacetId(facetId).setData(data);
   }
 
   public filterTarget(target){
@@ -187,6 +193,22 @@ export class SearchModel {
     // update
     targetInput.setData(facetData);
     targetInput.update();
+  }
+
+  public setSearchConfigOrderBy(orderBy){
+    this._config.results.order.type = orderBy;
+  }
+
+  public setSearchConfigDirection(direction){
+    this._config.results.order.direction = direction;
+  }
+
+  public setPageConfigOffset(offset){
+    this._config.page.offset = offset;
+  }
+
+  public setPageConfigLimit(limit){
+    this._config.page.limit = limit;
   }
 
   private _filterData(searchIns, item){
@@ -271,6 +293,10 @@ export class SearchModel {
     this._page = this._config.page;
   }
 
+  private _setTotalCount(){
+    this._totalCount = this._config.totalCount;
+  }
+
   private _setInputs(){
     this._config.fields.forEach((sectionConfig, sectionIndex) => {
       sectionConfig.inputs.forEach((inputConfig, inputIndex) => {
@@ -292,6 +318,7 @@ export class SearchModel {
 })
 export class SearchService {
   private _models: any = {};
+  static queryParams: any;
 
   public add(id: string, config: ISearchConfig){
     if(this._models[id]) throw Error(`Search model "${id}" already exists!`);

@@ -19,5 +19,8 @@ export * from './scheda-breadcrumbs.eh';
 export * from './sidebar-header.eh';
 export * from './tree.eh';
 
+// Search layout
+export * from './search-layout-tabs.eh';
+
 // Other layouts
 export * from './table.eh';

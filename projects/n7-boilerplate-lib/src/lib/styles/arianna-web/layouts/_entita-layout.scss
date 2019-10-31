@@ -199,25 +199,25 @@
     .n7-breadcrumbs {
         padding: 0;
 
-        &__item {
-            font-size: $font-size-s;
+        // &__item {
+        //     font-size: $font-size-s;
 
-            &:first-of-type {
-                .n7-breadcrumbs__label {
-                    padding-left: 0;
-                }
-            }
+        //     &:first-of-type {
+        //         .n7-breadcrumbs__label {
+        //             padding-left: 0;
+        //         }
+        //     }
 
-            &:last-of-type {
-                a {
-                    color: $color-text-light;
-                }
-            }
-        }
+        //     &:last-of-type {
+        //         a {
+        //             color: $color-text-light;
+        //         }
+        //     }
+        // }
 
-        &__label {
-            color: $color-text-light;
-        }
+        // &__label {
+        //     color: $color-text-light;
+        // }
     }
 
     .n7-metadata-viewer {
