@@ -38,6 +38,18 @@
 /* ------------------------------------ *\
    #MEDIA-QUERIES
 \* ------------------------------------ */
+@media all and (max-width: $page-max-width + $space*4) {
+
+    /* Layout utility class */
+    .n7-footer {
+            &__content {
+            padding-left: $space*2;
+            padding-right: $space*2;
+        }
+    }
+
+}
+
 @media all and (max-width: $breakpoint-laptop) {
 }
 

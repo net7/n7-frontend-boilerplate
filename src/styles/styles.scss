@@ -53,6 +53,12 @@
 
 
 // ------------------------------------ //
+// #COMMON LAYOUTS
+// ------------------------------------ //
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/common/layouts/main-layout";
+
+
+// ------------------------------------ //
 // #ARIANNA COMPONENTS
 // ------------------------------------ //
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/advanced-autocomplete";
@@ -66,7 +72,6 @@
 // ------------------------------------ //
 // #ARIANNA WEB LAYOUTS
 // ------------------------------------ //
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/layouts/main-layout";
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/layouts/home-layout";
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/layouts/scheda-layout";
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/layouts/entita-layout";

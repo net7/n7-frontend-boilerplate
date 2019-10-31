@@ -40,7 +40,6 @@
     .n7-sidebar-header {
         position: relative;
         z-index: 6;
-        box-shadow: 0 2px 20px 0 rgba(0,0,0,0.10);
     }
 }
 
@@ -52,6 +51,7 @@
     align-self: start; /* get the component have its content height */
     position: sticky;
     top: 0;
+    box-shadow: 0 2px 20px 0 rgba(0,0,0,0.10);
 
     .n7-tree {
         background-color: $color-background-base;
@@ -129,7 +129,8 @@
     .aw-scheda__description {
         padding: $aw-scheda-content-padding;
         columns: 2;
-        line-height: 1.65;
+        font-size: $font-size-m;
+        line-height: 1.70;
     }
 
     /* Metadata */
@@ -178,7 +179,21 @@
 /* ------------------------------------ *\
    #MEDIA-QUERIES
 \* ------------------------------------ */
-@media all and (max-width: $breakpoint-laptop) {
+@media all and (max-width: 1120px) {
+
+    .aw-scheda__scheda-wrapper {
+        /* Description text */
+        .aw-scheda__description {
+            columns: 1;
+        }
+
+        /* Metadata */
+        .aw-scheda__metadata {
+            .n7-metadata-viewer {
+                columns: 1;
+            }
+        }
+    }
 }
 
 @media all and (max-width: $breakpoint-ipad-portrait) {
