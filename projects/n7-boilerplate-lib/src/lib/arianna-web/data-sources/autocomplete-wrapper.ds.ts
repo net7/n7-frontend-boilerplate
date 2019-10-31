@@ -23,14 +23,13 @@ export class AwAutocompleteWrapperDS extends DataSource {
           suffix = suffix.slice(0, maxLength) + '...'
         }
         suggestion.push({
+          match: match.input.slice(match[1].length, match[1].length + key.length),
           prefix,
           suffix,
-          match: match.input.slice(match[1].length, match[1].length + key.length),
           payload: el.item.id
         })
       }
     });
-    return { typed: key, append: suggestion }
-    // return { suggestion } // use this version after updating components
+    return { suggestion }
   }
 }
