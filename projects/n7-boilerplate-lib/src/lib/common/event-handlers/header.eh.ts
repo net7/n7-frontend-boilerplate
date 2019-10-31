@@ -8,6 +8,7 @@ export class HeaderEH extends EventHandler {
         case 'header.click':
           // navigate control
           // if(payload.source === 'navigate'){
+          this.dataSource.selectNavItem(payload);
           this.emitGlobal('navigate', {
             handler: 'router',
             path: [payload]
