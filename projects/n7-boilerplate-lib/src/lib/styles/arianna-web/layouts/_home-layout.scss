@@ -71,6 +71,11 @@
     BUBBLE-CHART
 \* ------------------------------------ */
 .aw-home {
+
+    &__bubble-chart-wrapper {
+        overflow: hidden;
+    }
+
     /* Bubble facets and chart wrapper */
     &__bubble-wrapper {
         display: grid;
@@ -227,6 +232,14 @@
                 }
             }
         }
+
+        /* Disabled */
+        &.is-disabled {
+            .n7-facet-header__icon-left,
+            .n7-facet-header__text {
+                opacity: 0.7;
+            }
+        }
     }
 
     .n7-facet {
@@ -235,6 +248,8 @@
 
         &__section {
             position: relative;
+            margin-left: 0;
+            margin-right: 0;
         }
 
         &__input-text:disabled {
@@ -286,6 +301,15 @@
                     font-weight: $font-weight-bold;
                 }
             }
+
+            > *:last-child {
+                > .n7-item-preview {
+                    margin-bottom: 0;
+                    padding-bottom: 0;
+                    border-bottom: none;
+                }
+            }
+            
         }
 
         &-list-wrapper {
@@ -361,12 +385,6 @@
     .tag-toe-places {
         background-color: $color-places;
     }
-
-    //TODO
-    .aw-home__bubble-chart-wrapper {
-        overflow: hidden;
-    }
-
 }
 
 
@@ -387,8 +405,12 @@
                     font-weight: $bottom-hero-title-font-weight;
                 }
 
+                .n7-hero__text {
+                    margin-bottom: $space*3;
+                }
+
                 .n7-hero__input-wrapper {
-                    margin-top: $space*3;
+                    // margin-top: $space*3;
                 }
 
                 .n7-hero__image {

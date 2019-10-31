@@ -6,7 +6,7 @@
     </div>
 
     <!-- Bubble chart -->
-    <div class="aw-home__bubble-wrapper"
+    <div class="aw-home__bubble-wrapper n7-side-auto-padding"
         [ngClass]="{ 'has-results' : lb.dataSource.selectedBubbles.length > 0 }"
         *ngIf="lb.dataSource.bubblesEnabled"
     >
@@ -71,7 +71,9 @@
                         <button class="n7-btn n7-btn-light n7-btn-l aw-home__bubble-results-list-view-all">
                             {{action[0].label}}
                         </button>
-                        <button class="n7-btn n7-btn-light n7-btn-l aw-home__bubble-results-list-view-others">
+                        <button *ngIf="action[1]" 
+                                class="n7-btn n7-btn-light n7-btn-l aw-home__bubble-results-list-view-others"
+                                (click)="lb.eventHandler.emitOuter('viewmore', 'linked-objects')">
                             {{action[1].label}}
                         </button>
                     </div>

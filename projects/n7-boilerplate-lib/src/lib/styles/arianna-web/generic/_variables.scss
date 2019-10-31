@@ -8,6 +8,7 @@
 // #LAYOUT
 // ------------------------------------ //
 $page-max-width: 1350px;
+$page-min-width: 960px;
 
 
 // ------------------------------------ //
@@ -182,7 +183,7 @@ $header-active-item-color: $color-gray-02;
 // $header-user-thumb-size-mobile: 38px;
 // $header-search-input-height: 36px;
 // $header-search-input-height-mobile: 28px;
-// $header-breakpoint-mobile: 1180px;
+$header-breakpoint-mobile: 0px;
 // $header-breakpoint-mobile-small: 600px;
 
 

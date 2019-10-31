@@ -174,11 +174,20 @@
 
             }
         }
+
+        > *:last-child {
+            > .n7-item-preview {
+                margin-bottom: 0;
+                padding-bottom: 0;
+                border-bottom: none;
+            }
+        }
     }
 
     &__overview-description {
         column-count: 2;
-        line-height: 1.4;
+        font-size: $font-size-m;
+        line-height: 1.70;
     }
 
     &-layout__button-wrapper {
@@ -238,6 +247,19 @@
 /* ------------------------------------ *\
    #MEDIA-QUERIES
 \* ------------------------------------ */
+@media all and (max-width: 1120px) {
+
+    .aw-entity {
+        &__overview-description {
+            column-count: 1;
+        }
+
+        .n7-metadata-viewer {
+            column-count: 1;
+        }
+    }
+}
+
 @media all and (max-width: $breakpoint-laptop) {
 }
 

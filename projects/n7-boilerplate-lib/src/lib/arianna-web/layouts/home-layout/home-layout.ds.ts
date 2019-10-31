@@ -55,6 +55,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     // update streams
     this.mainState.update('headTitle', 'Arianna Web > Home');
     this.mainState.update('pageTitle', 'Arianna Web: Home Layout');
+    this.mainState.updateCustom('currentNav', 'aw/home');
     // listen autocomplete changes
     this._listenAutoCompleteChanges();
   }
@@ -123,8 +124,12 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     } else {
       this.numOfItemsStr = null;
     }
-    this.one('aw-linked-objects').updateOptions({ context: 'home', config: this.configuration })
-    this.one('aw-linked-objects').update(response.itemsPagination.items);
+    this.one('aw-linked-objects').updateOptions({
+      context: 'home',
+      config: this.configuration,
+      // page: 1,
+    })
+    this.one('aw-linked-objects').update(response.itemsPagination);
   }
 
   onBubbleTooltipClick(source: string, payload) {
@@ -409,6 +414,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         trigger: 'manual',
         interactive: true,
         arrow: false,
+        flip: false,
         appendTo: 'parent',
         theme: 'light-border',
         placement: 'bottom-start',

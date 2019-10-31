@@ -9,9 +9,9 @@ export class AwEntitaNavDS extends DataSource {
     const selected = param.selected
     const navigation = { items: [], payload: 'entita-nav' }
 
-    navigation.items.push({ 
-      text: 'OVERVIEW', 
-      payload: 'overview', 
+    navigation.items.push({
+      text: 'OVERVIEW',
+      payload: 'overview',
       classes: selected == 'overview' ? 'is-selected' : ''
     })
     if (data.fieldsTab) {
@@ -27,7 +27,7 @@ export class AwEntitaNavDS extends DataSource {
         payload: 'oggetti-collegati',
         classes: selected == 'oggetti-collegati' ? 'is-selected' : ''
       })    }
-    if (data.entities) {
+    if (data.entities && this.options['bubblesEnabled']) {
       navigation.items.push({
         text: 'ENTITÀ COLLEGATE',
         payload: 'entita-collegate',

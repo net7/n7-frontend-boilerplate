@@ -1,5 +1,5 @@
 <div class="aw-scheda" id="scheda-layout">
-    <div class="aw-scheda__content"
+    <div class="aw-scheda__content n7-side-auto-padding"
          [ngClass]="{ 'is-collapsed' : lb.dataSource.sidebarCollapsed }">
 
          <!-- Left sidebar: tree -->
@@ -38,7 +38,7 @@
             </section>
 
             <section class="aw-scheda__metadata"
-                [hidden] = "!lb.hasMetadata"
+                [hidden] = "!lb.dataSource.hasMetadata"
             >
                 <div class="aw-scheda__inner-title">{{lb.dataSource.metadataSectionTitle}}</div>
                 <n7-metadata-viewer
