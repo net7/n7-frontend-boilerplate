@@ -1,5 +1,6 @@
 import { LayoutDataSource } from '@n7-frontend/core';
 import tippy from 'tippy.js';
+import { Subject } from 'rxjs';
 
 export class MainLayoutDS extends LayoutDataSource {
   protected configuration: any;
@@ -18,15 +19,18 @@ export class MainLayoutDS extends LayoutDataSource {
     this.route = route;
     this.titleService = titleService;
     this.options = options;
+    this.mainState.addCustom('currentNav', new Subject());
 
     // update header
-    this.one('header').update(this.configuration.get('header'));
+    this.one('header').update({"items": this.configuration.get('header')});
 
     // main state updates
     this.mainState.get$('headTitle').subscribe(val => this.titleService.setTitle(val));
     this.mainState.get$('pageTitle').subscribe(val => this.pageTitle = val);
     this.mainState.get$('subnav').subscribe(val => this.one('subnav').update(val));
     this.mainState.get$('breadcrumbs').subscribe(val => this.one('breadcrumbs').update(val));
+
+    this.mainState.getCustom$('currentNav').subscribe(val => this.one('header').update({"items": this.configuration.get('header'), 'selected': val}));
 
     // mainState test
     /* this.mainState.addCustom('customNav', new Subject());
@@ -35,7 +39,7 @@ export class MainLayoutDS extends LayoutDataSource {
 
     this.mainState.update('pageTitle', 'hola');
     this.mainState.updateCustom('customNav', {'hello': 'mundo!'});
-    
+
     setTimeout(() => {
       this.mainState.update('pageTitle', 'chao');
       this.mainState.updateCustom('customNav', {'hello': 'world!'});
@@ -69,7 +73,7 @@ export class MainLayoutDS extends LayoutDataSource {
       this._onRouterNavigate();
     }
   }
-  
+
   private _onRouterNavigate(){
     // hide tippy
     tippy.hideAll();

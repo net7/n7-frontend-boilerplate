@@ -1,5 +1,4 @@
-<div class="aw-entity" *ngIf="lb.dataSource">
-
+<div class="aw-entity n7-side-auto-padding" *ngIf="lb.dataSource">
     <div class="aw-entity__sidebar">
         <!-- Custom header -->
         <div class="aw-entity__sidebar-title-wrapper color-{{lb.dataSource.navHeader.color}}">
@@ -83,7 +82,10 @@
             </ng-container>
         </div>
 
-        <div class="aw-entity__content-section aw-entity__content-section-overview">
+        <div
+            class="aw-entity__content-section aw-entity__content-section-overview"
+            *ngIf="lb.dataSource.bubblesEnabled"
+        >
             <div class="aw-entity__content-section-header">
                 <h2 class="aw-entity__content-section-title">Entità collegate</h2>
                 <button class="n7-btn n7-btn-light" (click)="lb.eventHandler.emitInner('showmore', 'entita-collegate')">

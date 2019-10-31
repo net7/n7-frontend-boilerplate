@@ -8,6 +8,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   private tippy: any;
   private configuration: any;
   private facetData: any[] = null;
+  private lockedFacets = {};
   private facetInputs: any = {};
   // all the bubbles as they have been given by apollo
   // (the objects in the allBubbles are not the same bubble objects
@@ -38,22 +39,39 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   public currentHoverEntity: any = null;
   public hasScrollBackground: boolean = false;
   public loadingBubbles = false;
+  public bubblesEnabled = false;
 
   onInit({ communication, mainState, configuration, tippy }) {
     this.communication = communication;
-    this.tippy = tippy;
-    this.mainState = mainState;
     this.configuration = configuration;
-    this.lastWindowWidth = window.outerWidth;
     this.facetData = [];
+    this.lastWindowWidth = window.outerWidth;
+    this.mainState = mainState;
+    this.tippy = tippy;
+    this.bubblesEnabled = this.configuration.get('features-enabled') ? this.configuration.get('features-enabled')['bubblechart'] : false;
 
     this.one('aw-hero').update(this.configuration.get('home-layout')['top-hero']);
     this.one('aw-home-hero-patrimonio').update(this.configuration.get('home-layout')['bottom-hero']);
     // update streams
     this.mainState.update('headTitle', 'Arianna Web > Home');
     this.mainState.update('pageTitle', 'Arianna Web: Home Layout');
+    this.mainState.updateCustom('currentNav', 'aw/home');
     // listen autocomplete changes
     this._listenAutoCompleteChanges();
+  }
+
+  public makeRequest$(query, params) {
+    return this.communication.request$(query, {
+      onError: (error) => console.error(error),
+      params
+    });
+  }
+
+  public updateComponent = (id, data, options) => {
+    if (options) {
+      this.one(id).updateOptions(options)
+    }
+    this.one(id).update(data)
   }
 
   initialFilterRequest() {
@@ -72,7 +90,10 @@ export class AwHomeLayoutDS extends LayoutDataSource {
           enabled: true,
         });
     });
-    this.one('aw-home-facets-wrapper').update(this.facetData);
+    this.one('aw-home-facets-wrapper').update({
+      facetData: this.facetData,
+      lockedFacets: this.lockedFacets
+    });
     this.one('aw-bubble-chart').updateOptions({
       context: 'home',
       configKeys: this.configuration.get("config-keys"),
@@ -103,8 +124,12 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     } else {
       this.numOfItemsStr = null;
     }
-    this.one('aw-linked-objects').updateOptions({ context: 'home', configKeys: this.configuration.get('config-keys') })
-    this.one('aw-linked-objects').update(response.itemsPagination.items);
+    this.one('aw-linked-objects').updateOptions({
+      context: 'home',
+      config: this.configuration,
+      // page: 1,
+    })
+    this.one('aw-linked-objects').update(response.itemsPagination);
   }
 
   onBubbleTooltipClick(source: string, payload) {
@@ -163,12 +188,30 @@ export class AwHomeLayoutDS extends LayoutDataSource {
 
   private filterRequest() {
     let selectedEntitiesIds = [];
-    if (this.entityBubbleIdMap)
+    if (this.entityBubbleIdMap) {
+      let k = this.configuration.get('config-keys')
+      let activeBubbles = {
+        places: false,
+        people: false,
+        concepts: false,
+        organizations: false,
+      }
       this.selectedBubbles.forEach((sB) => {
+        let c = sB.color
+        let findTypeFromColor = (obj, color) => {
+          return Object.keys(obj).find(key => obj[key].color.hex === color)
+        }
+        activeBubbles[findTypeFromColor(k, c)] = true
         let entityId = this.entityBubbleIdMap[sB.id];
         if (entityId)
           selectedEntitiesIds.push(entityId);
       });
+      this.lockedFacets = activeBubbles
+      this.one('aw-home-facets-wrapper').update({
+        facetData: this.facetData,
+        lockedFacets: this.lockedFacets
+      });
+    }
     return this.communication.request$('globalFilter', {
       onError: (error) => console.error(error),
       params: {
@@ -249,7 +292,10 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         }
       }
     });
-    this.one('aw-home-facets-wrapper').update(this.facetData);
+    this.one('aw-home-facets-wrapper').update({
+      facetData: this.facetData,
+      lockedFacets: this.lockedFacets
+    });
     if (updateBubbles) {
       let disableFacetsIds = [];
       this.facetData.forEach((fD) => {
@@ -368,6 +414,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         trigger: 'manual',
         interactive: true,
         arrow: false,
+        flip: false,
         appendTo: 'parent',
         theme: 'light-border',
         placement: 'bottom-start',
@@ -381,16 +428,5 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       this.autocompletePopover.show();
     }
     this.autocompletePopoverOpen = !this.autocompletePopoverOpen;
-  }
-
-  public makeRequest$(query, params) {
-    return this.communication.request$(query, {
-      onError: (error) => console.error(error),
-      params: params
-    });
-  }
-
-  public updateComponent = (comp, data) => {
-    this.one(comp).update(data)
   }
 }

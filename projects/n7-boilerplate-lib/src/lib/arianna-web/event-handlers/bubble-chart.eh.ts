@@ -39,6 +39,7 @@ export class AwBubbleChartEH extends EventHandler {
           this.emitOuter('bubble-tooltip-select-click', event.payload);
             break;
         default:
+          console.warn('unhandled inner event of type', event.type)
           break;
       }
     });

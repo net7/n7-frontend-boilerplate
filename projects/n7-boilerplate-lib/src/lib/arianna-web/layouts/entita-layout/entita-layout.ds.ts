@@ -15,16 +15,19 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
   public currentId: string; // selected entity (url param)
   public currentPage: any; // pagination value (url param)
   public pageSize: number = 10; // linked objects page size
+  public bubblesEnabled: boolean;
 
   private communication: any;
 
   onInit({ configuration, mainState, router, options, titleService, communication }) {
     this.communication = communication;
     this.configuration = configuration;
-    this.mainState     = mainState;
-    this.options       = options;
-    this.router        = router;
-    this.titleService  = titleService;
+    this.mainState = mainState;
+    this.options = options;
+    this.router = router;
+    this.titleService = titleService;
+    this.bubblesEnabled = this.configuration.get('features-enabled') ? this.configuration.get('features-enabled')['bubblechart'] : false;
+
   }
 
   getNavigation(id) {
@@ -42,7 +45,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       Updates selected tab on tab change
     */
     this.selectedTab = tab
-    this.updateWidgets( this.myResponse )
+    this.updateWidgets(this.myResponse)
   }
 
   updateWidgets(data) {
@@ -50,7 +53,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       Updates the widgets on this layout, based on route
     */
     const selected = this.selectedTab
-    this.one('aw-entita-nav').update( { data, selected } )
+    this.one('aw-entita-nav').update({ data, selected })
   }
 
   loadItem(id, tab) {
@@ -62,7 +65,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       this.selectedTab = tab // store selected tab from url
       return this.communication.request$('getEntityDetails', {
         onError: error => console.error(error),
-        params: {entityId: id}
+        params: { entityId: id }
       })
     }
     else {
@@ -71,25 +74,28 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
   }
 
   loadContent(res) {
-    console.log('Apollo responded with: ', {res})
+    console.log('Apollo responded with: ', { res })
     this.myResponse = res
     this.navHeader = { // always render nav header
-      icon: this.configuration.get("config-keys")[this.myResponse.entity.typeOfEntity.configKey].icon,
+      icon: this.configuration.get('config-keys')[this.myResponse.entity.typeOfEntity.configKey].icon,
       text: this.myResponse.entity.label,
       color: this.myResponse.entity.typeOfEntity.configKey
     }
+
+    this.one('aw-entita-nav').updateOptions({bubblesEnabled: this.bubblesEnabled});
+
     switch (this.selectedTab) { // make dynamic content depending on request
       case 'overview': {
         this.one('aw-bubble-chart').updateOptions({
           context: 'scheda',
-          configKeys: this.configuration.get("config-keys"),
+          configKeys: this.configuration.get('config-keys'),
           bubbleContainerId: 'overviewBubbleChartContainer',
           containerId: 'bubble-chart-container-overview',
         });
         this.one('aw-entita-metadata-viewer').updateOptions({ context: this.selectedTab });
         this.one('aw-entita-metadata-viewer').update(res.fieldsTab);
-        this.one('aw-linked-objects').updateOptions({ size: 3, configKeys: this.configuration.get("config-keys"), context: 'entita' })
-        this.one('aw-linked-objects').update(res.items);
+        this.one('aw-linked-objects').updateOptions({ size: 3, config: this.configuration, context: 'entita' })
+        this.one('aw-linked-objects').update(res);
       } break;
 
       case 'campi': {
@@ -99,18 +105,18 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
 
       case 'oggetti-collegati': {
         this.one('aw-linked-objects').updateOptions({
-            context: this.selectedTab,
-            configKeys: this.configuration.get("config-keys"),
-            page: this.currentPage,
-            size: this.pageSize,
-          })
-        this.one('aw-linked-objects').update(res.items);
+          context: this.selectedTab,
+          config: this.configuration,
+          page: this.currentPage,
+          size: this.pageSize,
+        })
+        this.one('aw-linked-objects').update(res);
       } break;
 
       case 'entita-collegate': {
         this.one('aw-bubble-chart').updateOptions({
           context: 'scheda',
-          configKeys: this.configuration.get("config-keys"),
+          configKeys: this.configuration.get('config-keys'),
           bubbleContainerId: 'bubbleChartContainer',
           containerId: 'bubble-chart-container',
         });

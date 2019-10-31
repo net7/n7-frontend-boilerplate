@@ -162,7 +162,7 @@ export const ApolloProviderConfig = {
             id
             icon
           }
-          similarItems {
+          items {
             thumbnail
               item {
                 label

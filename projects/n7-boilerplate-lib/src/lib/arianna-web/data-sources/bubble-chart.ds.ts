@@ -151,7 +151,9 @@ export class AwBubbleChartDS extends DataSource {
     }
     else {
       for ( let i = 0; i < response.connectedEntities.length; i++ ){
-        const color = this.options.configKeys[response.connectedEntities[i].entity.typeOfEntity.configKey] ? this.options.configKeys[response.connectedEntities[i].entity.typeOfEntity.configKey]['color']['hex'] : "";
+        const color = this.options.configKeys ?
+          this.options.configKeys[response.connectedEntities[i].entity.typeOfEntity.configKey] ? this.options.configKeys[response.connectedEntities[i].entity.typeOfEntity.configKey]['color']['hex'] : "" :
+          null;
         this.allBubbles.push(
           {
             id: this.convertEntityIdToBubbleId( response.connectedEntities[i].entity.id ),

@@ -16,19 +16,24 @@ export class AwTreeDS extends DataSource {
     if ( !data ) {
       data = this.output;
     }
-
     data.items.forEach( (it) => {
       const classes = it['classes'];
       if( it['_meta'] == id ) {
-        if ( classes.indexOf("is-expanded") > -1 ) {
-          it['classes'] = classes.replace(/is-expanded/g, "is-collapsed");
+        if ( classes.indexOf('is-expanded') > -1 ) {
+          it['classes'] = classes.replace(/is-expanded/g, 'is-collapsed');
+          if ( it['toggle'] ){
+            it['toggle']['icon'] = 'n7-icon-angle-right';
+          }
         } else {
-          it['classes'] = classes.replace(/is-collapsed/g, "is-expanded");
+          it['classes'] = classes.replace(/is-collapsed/g, 'is-expanded');
+          if ( it['toggle'] ){
+            it['toggle']['icon'] = 'n7-icon-angle-down';
+          }
         }
       } else if ( parents.indexOf( it['_meta'] ) >= 0 ) {
           it['classes'] = classes + ' is-expanded';
       }
-      if( typeof it['items'] != "undefined" && it['items'].length > 0 ) {
+      if( typeof it['items'] != 'undefined' && it['items'].length > 0 ) {
         this.updateTree(it, parents, id);
       }
     });
