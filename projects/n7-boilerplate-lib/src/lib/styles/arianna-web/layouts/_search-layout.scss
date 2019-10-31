@@ -37,18 +37,18 @@
         padding: $space*3;
         background: #ffffff;
         border-bottom: 1px solid $color-border-normal;
+    }
 
-        &-title {
-            margin-bottom: 0;
-        }
+    &__header-title {
+        margin-bottom: 0;
+    }
 
-        &-left {
-            flex: 1;
-        }
+    &__header-left {
+        flex: 1;
+    }
 
-        &-right {
-            margin-left: auto;
-        }
+    &__header-right {
+        margin-left: auto;
     }
 
     .n7-nav {
@@ -144,36 +144,38 @@
 
     &__total {
         font-size: $font-size-xl;
+    }
 
-        &-number {
-            font-weight: $font-weight-bold;
-        }
+    &__total-number {
+        font-weight: $font-weight-bold;
+    }
 
-        &-title {
-            font-weight: $font-weight-normal;
+    &__total-title {
+        font-weight: $font-weight-normal;
+    }
+
+    &__results-header {
+        display: flex;
+        align-items: center;
+        padding: 0 $space*2 $space*2;
+    }
+
+    &__results-header-right {
+        margin-left: auto;
+        padding-left: $space;
+    }
+
+    &__results-wrapper {
+        padding: $space;
+        background: #ffffff;
+
+        .n7-breadcrumbs {
+            background-color: transparent;
         }
     }
 
-    &__results {
-        &-header {
-            display: flex;
-            align-items: center;
-            padding: 0 $space*2 $space*2;
-
-            &-right {
-                margin-left: auto;
-                padding-left: $space;
-            }
-        }
-
-        &-wrapper {
-            padding: $space;
-            background: #ffffff;
-        }
-
-        &-select-orderby-label {
-            margin-right: $space;
-        }
+    &__results-select-orderby-label {
+        margin-right: $space;
     }
 
     .n7-pagination {
