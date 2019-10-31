@@ -104,6 +104,7 @@
     /* Breadcrumbs */
     .n7-breadcrumbs {
         height: $sidebar-header-height;
+        overflow: hidden;
         padding-left: $space*2;
         box-sizing: border-box;
         background-color: $color-background-medium;
@@ -179,6 +180,17 @@
 /* ------------------------------------ *\
    #MEDIA-QUERIES
 \* ------------------------------------ */
+@media all and (max-width: 1179px) {
+
+    .aw-scheda__scheda-wrapper {
+        .n7-inner-title__tools {
+            margin-left: 39px;
+            padding-top: $space/2;
+        }
+    }
+
+}
+
 @media all and (max-width: 1120px) {
 
     .aw-scheda__scheda-wrapper {
