@@ -127,14 +127,14 @@ export class AwSearchLayoutDS extends LayoutDataSource {
         
         this.one('aw-linked-objects').updateOptions({
           context: 'search',
-          configKeys: this.configuration.get("config-keys"),
+          config: this.configuration,
           // todo: swap to next line after merge
           // config: this.configuration
           page: this.currentPage,
           size: this.pageSize,
         });
   
-        this.one('aw-linked-objects').update(resultsResponse.items);
+        this.one('aw-linked-objects').update({ items: resultsResponse.items });
       })
     );
   }
