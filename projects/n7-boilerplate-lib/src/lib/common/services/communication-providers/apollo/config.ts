@@ -58,6 +58,21 @@ export const ApolloProviderConfig = {
         }
         itemsPagination {
           totalCount
+          items {
+            item {
+              id
+              label
+              info {
+                  key
+                  value
+
+              }
+            }
+            relatedTypesOfEntity {
+              type
+              count
+            }
+          }
         }
       }
       }`

@@ -14,7 +14,7 @@ export class AwHomeFacetsWrapperDS extends DataSource {
        For each facet on back-end, push a header-component
        and a facet-component (search input only) to each array.
        */
-      if (lockedFacets[facet.type.id.replace('toe-', '')]) {
+      if (lockedFacets[facet.type]) {
         // if bubble chart say lock this facet, lock it
         facet.locked = true
       } else {
@@ -23,9 +23,9 @@ export class AwHomeFacetsWrapperDS extends DataSource {
       let headerClasses = [];
       let iconClasses = [facet.icon];
       if (!facet.enabled) headerClasses.push('is-disabled');
-      if (facet.type.configKey) {
-        headerClasses.push(`color-${facet.type.configKey}`);
-        iconClasses.push(`color-${facet.type.configKey}`);
+      if (facet.configKey) {
+        headerClasses.push(`color-${facet.configKey}`);
+        iconClasses.push(`color-${facet.configKey}`);
       }
       // make array of headers data
       headers.push({
@@ -34,7 +34,7 @@ export class AwHomeFacetsWrapperDS extends DataSource {
         additionalText: facet.count,
         iconRight: (facet.enabled ? 'n7-icon-eye' : 'n7-icon-eye-slash'),
         classes: headerClasses.join(' ') + (facet.locked ? ' is-blocked' : ' not-blocked'),
-        payload: facet.type.id,
+        payload: facet.type ,
       });
       // make array of inputs data
       inputs.push({
@@ -44,10 +44,10 @@ export class AwHomeFacetsWrapperDS extends DataSource {
             placeholder: facet['input-placeholder'],
             icon: 'n7-icon-search',
             disabled: !facet.enabled,
-            inputPayload: String(facet.type.id) + '-search',
-            iconPayload: String(facet.type.id) + '-search',
-            enterPayload: String(facet.type.id) + '-search',
-            classes: String(facet.type.id) + '-search',
+            inputPayload: String(facet.type) + '-search',
+            iconPayload: String(facet.type) + '-search',
+            enterPayload: String(facet.type) + '-search',
+            classes: String(facet.type) + '-search',
           }]
         }]
       });

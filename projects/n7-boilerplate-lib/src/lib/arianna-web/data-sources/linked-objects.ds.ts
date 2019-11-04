@@ -50,17 +50,17 @@ function unpackData(data, page, size, config, totalPages, context) {
           classes: 'n7-objects__metadata-artist',
           items: el.item.info.map(({ value, key }) => ({
             label: key === 'author' ? 'Artista' : null,
-            value 
+            value
           }))
         },
         {
           classes: 'n7-objects__metadata-linked',
-          items: el.relatedTOEData.map(toe => {
+          items: el.relatedTypesOfEntity.map(toe => {
             return { // Persone: 6, Organizz: 12, Luoghi: 2, Concetti: 32
               value: toe.count,
               // icon: 'n7-icon-bell' // TODO: link icon to config key
-              icon: keys[toe.type.configKey].icon,
-              classes: 'color-' + toe.type.configKey
+              icon: keys[toe.type].icon,
+              classes: 'color-' + toe.type
             }
           })
         }
