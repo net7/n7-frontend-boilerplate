@@ -136,7 +136,15 @@ export class AwBubbleChartDS extends DataSource {
     }
 
     if( response.entitiesData ) {
-      for (let i = 0 ; i < response.entitiesData.length; i++) {
+
+      for ( let i = 0 ; i < response.entitiesData.length; i++ ) {
+
+        this.allBubbles.push({
+          ...response.entitiesData[i],
+          color: this.options.configKeys[response.entitiesData[i].entity.typeOfEntity]['color']['hex']
+        })
+      }
+      /*for (let i = 0 ; i < response.entitiesData.length; i++) {
 
         let currentToE = response.entitiesData[i];
 
@@ -147,7 +155,7 @@ export class AwBubbleChartDS extends DataSource {
               color: this.options.configKeys[currentToE.countData.type.configKey]['color']['hex']
             });
         }
-      }
+      }*/
     }
     else {
       for ( let i = 0; i < response.connectedEntities.length; i++ ){
@@ -187,13 +195,18 @@ export class AwBubbleChartDS extends DataSource {
   }
 
   filterBubblesBasedOnFacetsEnabled() {
+    var count = 0;
     let result = this.allBubbles.filter(
       (bubble) => {
         for ( var i = 0; i < this.facetData.length; i++ ){
-          if ( bubble.entity.typeOfEntity.id === this.facetData[i].type.id ) {
+          if ( bubble.entity.typeOfEntity === this.facetData[i].type ) {
             if ( !this.facetData[i].enabled ) { return false; }
           }
         }
+        if( count > this.options.maxNumber ) {
+          return false;
+        }
+        count++;
         return true;
       }
     );

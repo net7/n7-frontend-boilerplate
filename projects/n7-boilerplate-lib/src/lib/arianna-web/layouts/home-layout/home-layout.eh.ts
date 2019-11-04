@@ -123,6 +123,7 @@ export class AwHomeLayoutEH extends EventHandler {
 
   private loadFilters() {
     this.dataSource.initialFilterRequest().subscribe((response) => {
+      console.log(response);
       if (response) {
         this.dataSource.parseInitialRequest(response);
         if ( this.dataSource.bubblesEnabled ) {

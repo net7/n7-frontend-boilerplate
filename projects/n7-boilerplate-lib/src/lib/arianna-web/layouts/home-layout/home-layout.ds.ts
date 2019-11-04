@@ -76,19 +76,33 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   initialFilterRequest() {
     return this.communication.request$('globalFilter', {
       onError: (error) => console.error(error),
+      params: {
+        entitiesListSize: this.configuration.get("home-layout")['max-bubble-num'] * 4
+      },
     })
   }
 
   parseInitialRequest(response) {
-    response.entitiesData.forEach((ent) => {
-      const teoConfigData = this.configuration.get("config-keys")[ent.countData.type.configKey];
-      if (teoConfigData)
+
+
+    response.typeOfEntityData.forEach((toe) => {
+       this.facetData.push({
+          ...toe,
+          enabled: true,
+        });
+    });
+
+
+    /*response.entitiesData.forEach((ent) => {
+      const teoConfigData = this.configuration.get("config-keys")[ent.entity.typeOfEntity.toLowerCase()];
+
         this.facetData.push({
           ...ent.countData,
           ...teoConfigData,
           enabled: true,
         });
-    });
+    });*/
+
     this.one('aw-home-facets-wrapper').update({
       facetData: this.facetData,
       lockedFacets: this.lockedFacets
@@ -98,6 +112,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       configKeys: this.configuration.get("config-keys"),
       bubbleContainerId: 'bubbleChartContainer',
       containerId: 'bubble-chart-container',
+      maxNumber: this.configuration.get("home-layout")['max-bubble-num']
     });
     this.renderPreviewsFromApolloQuery(response);
   }
@@ -211,7 +226,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       onError: (error) => console.error(error),
       params: {
         selectedEntitiesIds,
-        itemsPagination: { offset: 0, limit: this.configuration.get('home-layout')['results-limit'] }
+        Page: { offset: 0, limit: this.configuration.get('home-layout')['results-limit'] }
       },
     })
   }

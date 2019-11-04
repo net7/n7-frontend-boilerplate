@@ -68,7 +68,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   loadItem( id ) {
     if ( id ) {
       const maxSimilarItems = this.configuration.get('scheda-layout')['related-items']['max-related-items'];
-      return  this.communication.request$('getItemDetails', {
+      return  this.communication.request$('getItem', {
         onError: (error) => console.error(error),
         params: { itemId: id, maxSimilarItems }
       })

@@ -46,49 +46,21 @@ export const ApolloProviderConfig = {
     queryBody: `{
       globalFilter(__PARAMS__){
         entitiesData {
-          countData {
-            type {
+          entity {
               id
               label
-              configKey
-            }
-            count
-          }
-          entitiesCountData {
-            entity {
-              id
-              label
-              typeOfEntity {
-                id
-              }
-            }
-            count
-          }
+              typeOfEntity
+          } count
+        }
+        typeOfEntityData {
+          type
+          count
         }
         itemsPagination {
           totalCount
-          items {
-            item {
-              id
-              label
-              info {
-                key
-                value
-              }
-            }
-            thumbnail
-            relatedTOEData {
-              type {
-                id
-                label
-                configKey
-              }
-              count
-            }
-          }
         }
       }
-    }`
+      }`
   },
   'getEntityDetails': {
     queryName: 'getEntityDetails',
@@ -150,10 +122,10 @@ export const ApolloProviderConfig = {
     }
     `
   },
-  'getItemDetails': {
-    queryName: 'getItemDetails',
+  'getItem': {
+    queryName: 'getItem',
     queryBody: `{
-        getItemDetails(__PARAMS__){
+      getItem(__PARAMS__){
           title
           text
           subTitle
