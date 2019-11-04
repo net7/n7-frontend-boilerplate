@@ -94,7 +94,11 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
         });
         this.one('aw-entita-metadata-viewer').updateOptions({ context: this.selectedTab });
         this.one('aw-entita-metadata-viewer').update(res.fieldsTab);
-        this.one('aw-linked-objects').updateOptions({ size: 3, config: this.configuration, context: 'entita' })
+        this.one('aw-linked-objects').updateOptions({ 
+          size: 3,
+          config: this.configuration,
+          context: 'entita'
+        })
         this.one('aw-linked-objects').update(res);
       } break;
 
@@ -108,6 +112,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
           context: this.selectedTab,
           config: this.configuration,
           page: this.currentPage,
+          pagination: true,
           size: this.pageSize,
         })
         this.one('aw-linked-objects').update(res);

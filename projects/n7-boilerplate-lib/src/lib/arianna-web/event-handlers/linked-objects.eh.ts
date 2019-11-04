@@ -13,8 +13,8 @@ export class AwLinkedObjectsEH extends EventHandler {
           } else if (payload.startsWith('goto')) {
             let targetPage = Number(payload.replace('goto-', ''))
             // kill impossible page navigations
-            if ( targetPage > this.dataSource.totalPages ) return;
-            else if ( targetPage < 1 || targetPage === this.dataSource.currentPage ) return;
+            if (targetPage > this.dataSource.totalPages) return;
+            else if (targetPage < 1 || targetPage === this.dataSource.currentPage) return;
             else this.emitOuter('goto', payload)
           } else {
             // navigate to the patrimonio page of this item
@@ -27,18 +27,23 @@ export class AwLinkedObjectsEH extends EventHandler {
         case 'aw-linked-objects.change':
           this.emitOuter('change', Number(payload.value))
           break;
-          default:
-            console.warn('unhandled event type: ', type, ' with payload: ', payload)
-            break;
+        default:
+          console.warn('unhandled event type: ', type, ' with payload: ', payload)
+          break;
       }
     });
 
     this.outerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
         case 'aw-home-layout.viewmore':
+          this.emitOuter('datarequest', {
+            currentPage: this.dataSource.currentPage
+          })
           // this.dataSource.handleShowMoreClick()
-          console.log('current page: ', this.dataSource.currentPage)
           break;
+        case 'aw-home-layout.dataresponse':
+          let { res } = payload
+          this.dataSource.handleShowMoreClick(res)
         default:
           break;
       }

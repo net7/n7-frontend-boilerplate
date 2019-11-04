@@ -6,13 +6,15 @@ export class AwLinkedObjectsDS extends DataSource {
   public totalPages: number
   public pageSize: number
   public context: string
+  public loadedData: any
 
   protected transform(data) {
     this.pageSize = this.options.size
-    this.currentPage = <number>this.options.page
+    this.currentPage = this.options.page ? <number>this.options.page : 1
     this.totalPages = Math.floor(data.length / this.pageSize)
     this.context = this.options.context
-    return this.unpackData(data)
+    this.loadedData = { ...this.unpackData(data) }
+    return this.loadedData
   }
 
   public handleShowMoreClick = incomingData => {
@@ -20,8 +22,9 @@ export class AwLinkedObjectsDS extends DataSource {
       Called by button <Mostra Altri>, adds the incoming
       data to the linked objects component.
     */
-    console.log('showing more stuff')
-    // TODO
+    this.currentPage += 1
+    let newData: any = this.unpackData(incomingData.itemsPagination)
+    this.loadedData.result = this.loadedData.result.concat(newData.result)
   }
 
   public makePagination = (totalPages, currentPage) => {
@@ -118,7 +121,7 @@ export class AwLinkedObjectsDS extends DataSource {
       }
       result.push(item);
     });
-    if (page) { // if I'm on a page, render pagination data.
+    if (this.options.pagination) { // if I'm on a page, render pagination data.
       let sizeOptions = [10, 25, 50]
       return {
         pagination: {
@@ -155,7 +158,7 @@ export class AwLinkedObjectsDS extends DataSource {
           ]
       }
     }
-    console.log('linked objects result', result)
+    // console.log('linked objects result', result)
     return result;
   }
 }

@@ -40,6 +40,8 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   public hasScrollBackground: boolean = false;
   public loadingBubbles = false;
   public bubblesEnabled = false;
+  public resultsLimit = -1;
+  public selectedEntitiesIds = [];
 
   onInit({ communication, mainState, configuration, tippy }) {
     this.communication = communication;
@@ -49,6 +51,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     this.mainState = mainState;
     this.tippy = tippy;
     this.bubblesEnabled = this.configuration.get('features-enabled') ? this.configuration.get('features-enabled')['bubblechart'] : false;
+    this.resultsLimit = this.configuration.get('home-layout')['results-limit']
 
     this.one('aw-hero').update(this.configuration.get('home-layout')['top-hero']);
     this.one('aw-home-hero-patrimonio').update(this.configuration.get('home-layout')['bottom-hero']);
@@ -187,7 +190,6 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   }
 
   private filterRequest() {
-    let selectedEntitiesIds = [];
     if (this.entityBubbleIdMap) {
       let k = this.configuration.get('config-keys')
       let activeBubbles = {
@@ -204,7 +206,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         activeBubbles[findTypeFromColor(k, c)] = true
         let entityId = this.entityBubbleIdMap[sB.id];
         if (entityId)
-          selectedEntitiesIds.push(entityId);
+          this.selectedEntitiesIds.push(entityId);
       });
       this.lockedFacets = activeBubbles
       this.one('aw-home-facets-wrapper').update({
@@ -215,8 +217,11 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     return this.communication.request$('globalFilter', {
       onError: (error) => console.error(error),
       params: {
-        selectedEntitiesIds,
-        itemsPagination: { offset: 0, limit: this.configuration.get('home-layout')['results-limit'] }
+        selectedEntitiesIds: this.selectedEntitiesIds,
+        itemsPagination: { 
+          offset: 0,
+          limit: this.resultsLimit
+        }
       },
     })
   }
