@@ -224,11 +224,13 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         lockedFacets: this.lockedFacets
       });
     }
+
+
     return this.communication.request$('globalFilter', {
       onError: (error) => console.error(error),
       params: {
         selectedEntitiesIds,
-        Page: { offset: 0, limit: this.configuration.get('home-layout')['results-limit'] }
+        itemsPagination: { offset: 0, limit: this.configuration.get('home-layout')['results-limit'] }
       },
     })
   }

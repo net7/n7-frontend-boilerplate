@@ -36,7 +36,7 @@ export class AwHomeLayoutEH extends EventHandler {
           if (payload.value) {
             let params = {
               input: payload.value,
-              typeOfConfigKey: payload.inputPayload.replace('-search', ''),
+              typeOfEntity: payload.inputPayload.replace('-search', ''),
               itemsPagination: {
                 // offset: 0, limit: this.configuration.get('home-layout')['results-limit']
                 offset: 0, limit: this.configuration.get('home-layout')['results-limit']

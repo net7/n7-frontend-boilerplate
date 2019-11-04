@@ -9,10 +9,10 @@ export class AwAutocompleteWrapperDS extends DataSource {
     const config = this.options.config
     const maxLength = config.get('home-layout')['max-item-length'] / 2
 
-    response.items.forEach(el => {
+    response.entities.forEach(el => {
       // divide prefix and suffix
       // let match = el.item.label.match(regex)
-      let match = regex.exec(el.item.label)
+      let match = regex.exec(el.entity.label)
       if (match) {
         let prefix = match[1]
         let suffix = match[2]
@@ -23,7 +23,7 @@ export class AwAutocompleteWrapperDS extends DataSource {
         if (maxLength && (suffix.length > maxLength)) {
           suffix = suffix.slice(0, maxLength) + '...'
         }
-        append.push({ prefix, suffix, payload: el.item.id })
+        append.push({ prefix, suffix, payload: el.entity.id })
       }
     });
     return { typed: key, append }

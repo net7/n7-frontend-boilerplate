@@ -200,21 +200,13 @@ export const ApolloProviderConfig = {
     queryBody: `{
       autoComplete(__PARAMS__){
         totalCount
-        items {
-          item {
-            id
-            label
-            info {
-              key
-              value
-            }
-            icon
+        entities {
+          entity {
+              id
+              label
+              typeOfEntity
           }
-          thumbnail
-          typeOfEntity {
-            id
-            configKey
-          }
+          count
         }
       }
     }`

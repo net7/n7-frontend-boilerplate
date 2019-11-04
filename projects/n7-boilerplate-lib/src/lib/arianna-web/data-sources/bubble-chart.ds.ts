@@ -63,6 +63,20 @@ export class AwBubbleChartDS extends DataSource {
     data.bubbles.forEach( bubble => {
       let bId = bubble.id;
       let bubblePercentage = ( bubble.count - (minBubbleCount/3) )/( (maxBubbleCount*3) - (minBubbleCount/3) );
+
+      let bubbleAverage =  totalCount / numOfBubbles;
+      //to understand if there is a large difference of count between bubbles
+      let coeff = maxBubbleCount - bubbleAverage;
+
+      if ( coeff > 20 ) {
+        if ( bubble.count - coeff >= 0 ){
+          bubblePercentage = ( (bubble.count - bubbleAverage) - (minBubbleCount/3) )/( (maxBubbleCount*3) - (minBubbleCount/3) )
+        } else {
+          bubblePercentage = ( (bubble.count + maxBubbleCount - coeff ) - (minBubbleCount/3) )/( (maxBubbleCount*3) - (minBubbleCount/3) )
+        }
+      }
+
+
       let bubbleRadius = (Math.log(containerSize)/10)*(bubblePercentage*3)*(70-Math.sqrt(numOfBubbles));
       let bubbleData = {
         id: bId,
@@ -87,9 +101,9 @@ export class AwBubbleChartDS extends DataSource {
             x_function: (d) => d.x,
             y_function: (d) => d.y+(d.radius/9),
             "user_select":"none",
-            fontSize_function: (d) => d.radius/6,
+            //fontSize_function: (d) => d.radius/3,
             color: "white",
-            "classes":""
+            "classes":"aw-bubble-num"
         }
         ],
         x: cWidth/2+50,
