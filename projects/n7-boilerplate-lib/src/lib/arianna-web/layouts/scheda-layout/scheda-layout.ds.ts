@@ -133,7 +133,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
         }
 
         let titleObj = {
-          icon: response.item.icon,
+          icon: response.icon,
           title: {
             main: {
               text: response.title,

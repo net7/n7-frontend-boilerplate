@@ -106,7 +106,7 @@ export class AwEntitaLayoutEH extends EventHandler {
         this.dataSource.loadItem(params.get('id'), params.get('tab')).subscribe((res) => {
           if (res) {
             this.dataSource.loadContent(res);
-            res['connectedEntities'] =res.entities
+            res['entitiesData'] =res.entities
             let connectedEntities = {source: res};
             if (this.dataSource.bubblesEnabled && params.get('tab') === 'entita-collegate') {
               this.emitOuter('filterbubbleresponse', connectedEntities);

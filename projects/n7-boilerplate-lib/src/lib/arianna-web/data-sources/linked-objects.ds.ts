@@ -95,11 +95,11 @@ export class AwLinkedObjectsDS extends DataSource {
           },
           {
             classes: 'n7-objects__metadata-linked',
-            items: el.relatedTOEData.map(toe => {
+            items: el.relatedTypesOfEntity.map(toe => {
               return { // Persone: 6, Organizz: 12, Luoghi: 2, Concetti: 32
                 value: toe.count,
                 // icon: 'n7-icon-bell' // TODO: link icon to config key
-                icon: keys[toe.type.configKey].icon,
+                icon:  keys[toe.type] ? keys[toe.type].icon : "",
                 classes: 'color-' + toe.type.configKey
               }
             })

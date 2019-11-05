@@ -14,12 +14,15 @@ export class AwHomeFacetsWrapperDS extends DataSource {
        For each facet on back-end, push a header-component
        and a facet-component (search input only) to each array.
        */
-      if (lockedFacets[facet.type]) {
-        // if bubble chart say lock this facet, lock it
-        facet.locked = true
-      } else {
-        facet.locked = false
+      if(Object.keys(lockedFacets).length) {
+        if (lockedFacets[facet.type]) {
+          // if bubble chart say lock this facet, lock it
+          facet.locked = true
+        } else {
+          facet.locked = false
+        }
       }
+
       let headerClasses = [];
       let iconClasses = [facet.icon];
       if (!facet.enabled) headerClasses.push('is-disabled');

@@ -93,10 +93,13 @@
   "search-layout": {
     "title": "Cerca nel patrimonio",
     "results": [
-      "Nessun risultato", 
+      "Nessun risultato",
       "Risultato",
       "Risultati"
     ]
+  },
+  "entita-layout": {
+    "max-bubble-num": 30
   },
   "config-keys": {
     "persone": {

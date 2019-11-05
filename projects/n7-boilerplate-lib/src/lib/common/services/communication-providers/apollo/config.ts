@@ -59,6 +59,7 @@ export const ApolloProviderConfig = {
         itemsPagination {
           totalCount
           items {
+            thumbnail
             item {
               id
               label
@@ -78,33 +79,20 @@ export const ApolloProviderConfig = {
       }`
   },
   'getEntityDetails': {
-    queryName: 'getEntityDetails',
+    queryName: 'getEntity',
     queryBody: `{
-      getEntityDetails(__PARAMS__){
+      getEntity(__PARAMS__){
         overviewTab
-        entity {
-          label
-          id
-          typeOfEntity {
-            configKey
-          }
-        }
+        label
+        id
+        typeOfEntity
         fieldsTab {
+          id
           label
           fields {
             key
             value
           }
-        }
-        entities {
-          entity {
-            id
-            label
-            typeOfEntity {
-              configKey
-            }
-          }
-          count
         }
         extraTab
         wikiTab {
@@ -112,26 +100,27 @@ export const ApolloProviderConfig = {
           url
         }
         items {
-          breadcrumbs {
-            link
-            label
-          }
-          item {
-            id
-            label
-            info {
-              key
-              value
-            }
-          }
           thumbnail
-          relatedTOEData {
-            type {
-              id
-              configKey
+          item {
+            label
+            id
+            info {
+                key
+                value
             }
+          }
+          relatedTypesOfEntity {
+            type
             count
           }
+        }
+        entities {
+          entity {
+              id
+              label
+              typeOfEntity
+          }
+          count
         }
       }
     }
@@ -143,12 +132,8 @@ export const ApolloProviderConfig = {
       getItem(__PARAMS__){
           title
           text
-          subTitle
           image
-           item {
-            id
-            icon
-          }
+          icon
           items {
             thumbnail
               item {
@@ -159,12 +144,9 @@ export const ApolloProviderConfig = {
                   value
                 }
               }
-            relatedTOEData {
+            relatedTypesOfEntity {
               count
-              type {
-                label
-                configKey
-              }
+              type
             }
           }
           connectedEntities {
@@ -172,11 +154,7 @@ export const ApolloProviderConfig = {
             entity{
              id
             label
-              typeOfEntity {
-                id
-                label
-                configKey
-              }
+            typeOfEntity
             }
           }
           fields {

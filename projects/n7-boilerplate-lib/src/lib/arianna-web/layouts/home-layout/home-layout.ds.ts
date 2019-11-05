@@ -90,6 +90,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
        this.facetData.push({
           ...toe,
           enabled: true,
+          locked: false,
           configKey: toe.type,
           ...teoConfigData
         });
@@ -287,13 +288,13 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     let updateBubbles = false;
     let enabledFacets = this.facetData.filter(f => f.enabled).length - 1;
     this.facetData.forEach(f => {
-      if (f.type.id === facetId && f.locked === true) {
+      if (f.type === facetId && f.locked === true) {
         // if user clicked on a locked facet, ignore it
         return
       }
-      if (f.type.id === facetId) {
+      if (f.type === facetId) {
         // if this is the clicked facet
-        if (f.enabled && enabledFacets >= 1) {
+        if (f.enabled && enabledFacets > 0 ) {
           f.enabled = false;
           f.locked = false;
           updateBubbles = true;
@@ -304,12 +305,13 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         }
       } else {
         // if this is another facet
-        if (enabledFacets === 1 && f.enabled) {
+        if (enabledFacets <= 1 && f.enabled) {
           f.locked = true;
         } else {
           f.locked = false;
         }
       }
+
     });
     this.one('aw-home-facets-wrapper').update({
       facetData: this.facetData,

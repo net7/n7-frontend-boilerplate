@@ -15,6 +15,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
   public currentId: string; // selected entity (url param)
   public currentPage: any; // pagination value (url param)
   public pageSize: number = 10; // linked objects page size
+  public bubblesSize: number = 10; // related entities (bubbles) page size
   public bubblesEnabled: boolean;
 
   private communication: any;
@@ -27,6 +28,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     this.router = router;
     this.titleService = titleService;
     this.bubblesEnabled = this.configuration.get('features-enabled') ? this.configuration.get('features-enabled')['bubblechart'] : false;
+    this.bubblesSize = this.configuration.get('entita-layout') ? this.configuration.get('entita-layout')['max-bubble-num'] : 20;
 
   }
 
@@ -36,7 +38,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
      */
     return this.communication.request$('getEntityDetails', {
       onError: (error) => console.error(error),
-      params: { entityId: id }
+      params: { entityId: id, entitiesListSize: this.bubblesSize }
     })
   }
 
@@ -65,7 +67,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       this.selectedTab = tab // store selected tab from url
       return this.communication.request$('getEntityDetails', {
         onError: error => console.error(error),
-        params: { entityId: id }
+        params: {entityId: id, entitiesListSize: this.bubblesSize}
       })
     }
     else {
@@ -77,9 +79,9 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     console.log('Apollo responded with: ', { res })
     this.myResponse = res
     this.navHeader = { // always render nav header
-      icon: this.configuration.get('config-keys')[this.myResponse.entity.typeOfEntity.configKey].icon,
-      text: this.myResponse.entity.label,
-      color: this.myResponse.entity.typeOfEntity.configKey
+      icon: this.configuration.get("config-keys")[this.myResponse.typeOfEntity].icon,
+      text: this.myResponse.label,
+      color: this.myResponse.typeOfEntity
     }
 
     this.one('aw-entita-nav').updateOptions({bubblesEnabled: this.bubblesEnabled});
