@@ -74,35 +74,28 @@
                     TUTTI GLI OGGETTI COLLEGATI <i class="n7-icon-angle-right"></i>
                 </button>
             </div>
-            <ng-container *ngFor="let preview of (lb.widgets['aw-linked-objects'].ds.out$ | async)?.result;">
-                <n7-breadcrumbs *ngIf="preview.breadcrumbs"
-                [data]="preview.breadcrumbs">
+            <ng-container *ngFor="let preview of lb.widgets['aw-linked-objects'].ds.out$ | async">
+                <n7-breadcrumbs [data]="preview.breadcrumbs">
                 </n7-breadcrumbs>
                 <n7-item-preview [data]="preview" [emit]="lb.widgets['aw-linked-objects'].emit">
                 </n7-item-preview>
             </ng-container>
         </div>
 
-        <div
-            class="aw-entity__content-section aw-entity__content-section-overview"
-            *ngIf="lb.dataSource.bubblesEnabled"
-        >
+        <div class="aw-entity__content-section aw-entity__content-section-overview"
+            *ngIf="lb.dataSource.bubblesEnabled">
             <div class="aw-entity__content-section-header">
                 <h2 class="aw-entity__content-section-title">Entità collegate</h2>
                 <button class="n7-btn n7-btn-light" (click)="lb.eventHandler.emitInner('showmore', 'entita-collegate')">
                     TUTTE LE ENTITÀ COLLEGATE <i class="n7-icon-angle-right"></i>
                 </button>
             </div>
-            <div  [style.overflow]="'hidden'">
-                <aw-bubble-chart-wrapper
-                [hover]="lb.widgets['aw-bubble-chart'].ds.currentHoverEntity"
-                [emit]="lb.widgets['aw-bubble-chart'].emit"
-                [container]="'bubble-chart-container-overview'"
-                [buttons]="['goto']"
-                >
-                    <n7-bubble-chart
-                    [data]="lb.widgets['aw-bubble-chart'].ds.out$ | async"
-                    [emit]="lb.widgets['aw-bubble-chart'].emit">
+            <div [style.overflow]="'hidden'">
+                <aw-bubble-chart-wrapper [hover]="lb.widgets['aw-bubble-chart'].ds.currentHoverEntity"
+                    [emit]="lb.widgets['aw-bubble-chart'].emit" [container]="'bubble-chart-container-overview'"
+                    [buttons]="['goto']">
+                    <n7-bubble-chart [data]="lb.widgets['aw-bubble-chart'].ds.out$ | async"
+                        [emit]="lb.widgets['aw-bubble-chart'].emit">
                     </n7-bubble-chart>
                 </aw-bubble-chart-wrapper>
             </div>
@@ -144,16 +137,11 @@
         <div class="aw-entity__content-section-header aw-entity__content-section-header-decorated">
             <h2 class="aw-entity__content-section-title">Entità collegate</h2>
         </div>
-        <div  [style.overflow]="'hidden'">
-            <aw-bubble-chart-wrapper
-            [hover]="lb.widgets['aw-bubble-chart'].ds.currentHoverEntity"
-            [emit]="lb.widgets['aw-bubble-chart'].emit"
-            [container]="'bubble-chart-container'"
-            [buttons]="['goto']"
-            >
-                <n7-bubble-chart
-                [data]="lb.widgets['aw-bubble-chart'].ds.out$ | async"
-                [emit]="lb.widgets['aw-bubble-chart'].emit">
+        <div [style.overflow]="'hidden'">
+            <aw-bubble-chart-wrapper [hover]="lb.widgets['aw-bubble-chart'].ds.currentHoverEntity"
+                [emit]="lb.widgets['aw-bubble-chart'].emit" [container]="'bubble-chart-container'" [buttons]="['goto']">
+                <n7-bubble-chart [data]="lb.widgets['aw-bubble-chart'].ds.out$ | async"
+                    [emit]="lb.widgets['aw-bubble-chart'].emit">
                 </n7-bubble-chart>
             </aw-bubble-chart-wrapper>
         </div>
