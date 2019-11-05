@@ -27,6 +27,7 @@ export class AwEntitaLayoutEH extends EventHandler {
 
         case 'aw-entita-layout.showmore':
           if (payload) {
+            this.dataSource.handleNavUpdate(payload)
             this.emitGlobal('navigate', {
               path: [
                 this.configuration.get("paths").entitaBasePath
@@ -50,7 +51,7 @@ export class AwEntitaLayoutEH extends EventHandler {
         case 'aw-entita-nav.click':
           if (payload) {
             this.dataSource.selectedTab = payload;
-            this.dataSource.handleNavUpdate( payload )
+            this.dataSource.handleNavUpdate(payload)
             this.emitGlobal('navigate', {
               path: [
                 this.configuration.get("paths").entitaBasePath
@@ -81,11 +82,11 @@ export class AwEntitaLayoutEH extends EventHandler {
           this.dataSource.pageSize = payload;
           this.listenRoute() // reloads the page content with the new page size
         case "aw-bubble-chart.bubble-tooltip-goto-click":
-            if(!payload || !payload.entityId) return;
-            this.emitGlobal('navigate', {
-              handler: 'router',
-              path: [`aw/entita/${payload.entityId}/overview`]
-            });
+          if (!payload || !payload.entityId) return;
+          this.emitGlobal('navigate', {
+            handler: 'router',
+            path: [`aw/entita/${payload.entityId}/overview`]
+          });
           break;
         default:
           break;
@@ -106,8 +107,8 @@ export class AwEntitaLayoutEH extends EventHandler {
         this.dataSource.loadItem(params.get('id'), params.get('tab')).subscribe((res) => {
           if (res) {
             this.dataSource.loadContent(res);
-            res['connectedEntities'] =res.entities
-            let connectedEntities = {source: res};
+            res['connectedEntities'] = res.entities
+            let connectedEntities = { source: res };
             if (this.dataSource.bubblesEnabled && params.get('tab') === 'entita-collegate') {
               this.emitOuter('filterbubbleresponse', connectedEntities);
             }

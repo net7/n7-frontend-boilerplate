@@ -10,7 +10,6 @@ export class AwLinkedObjectsDS extends DataSource {
   public loadedData: any
 
   protected transform(data) {
-    console.log('loading linked-objects.ds with data: ', data)
     this.pageSize = this.options.size
     this.totalObjects = data.totalCount
     this.currentPage = this.options.page ? <number>this.options.page : 1
@@ -27,6 +26,10 @@ export class AwLinkedObjectsDS extends DataSource {
       Can receive a boolean argument to force the button to be
       enabled or disabled. (Used while data is loading)
     */
+    if (!this.loadedData.actions) {
+      // if not using actions, don't check
+      return
+    }
     if (typeof force !== 'undefined') {
       this.loadedData.actions[1].disabled = !force
       return
