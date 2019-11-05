@@ -36,6 +36,7 @@ export class AwLinkedObjectsEH extends EventHandler {
     this.outerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
         case 'aw-home-layout.viewmore':
+          this.dataSource.checkForMore(false)
           this.emitOuter('datarequest', {
             currentPage: this.dataSource.currentPage
           })

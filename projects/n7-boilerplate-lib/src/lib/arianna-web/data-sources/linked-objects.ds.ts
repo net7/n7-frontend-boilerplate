@@ -4,17 +4,39 @@ export class AwLinkedObjectsDS extends DataSource {
 
   public currentPage: number
   public totalPages: number
+  public totalObjects: number
   public pageSize: number
   public context: string
   public loadedData: any
 
   protected transform(data) {
+    console.log('loading linked-objects.ds with data: ', data)
     this.pageSize = this.options.size
+    this.totalObjects = data.totalCount
     this.currentPage = this.options.page ? <number>this.options.page : 1
     this.totalPages = Math.floor(data.length / this.pageSize)
     this.context = this.options.context
     this.loadedData = this.unpackData(data)
+    this.checkForMore() // checks if <Show More> button should be enabled
     return this.loadedData
+  }
+
+  public checkForMore = (force?: boolean) => {
+    /*
+      Checks if it is possible to load more item previews.
+      Can receive a boolean argument to force the button to be
+      enabled or disabled. (Used while data is loading)
+    */
+    if (typeof force !== 'undefined') {
+      this.loadedData.actions[1].disabled = !force
+      return
+    }
+    if (this.loadedData.result.length >= this.totalObjects) {
+      this.loadedData.actions[1].disabled = true
+    } else {
+      this.loadedData.actions[1].disabled = false
+    }
+    return
   }
 
   public handleShowMoreClick = incomingData => {
@@ -25,6 +47,7 @@ export class AwLinkedObjectsDS extends DataSource {
     this.currentPage += 1
     let newData: any = this.unpackData(incomingData.itemsPagination)
     this.loadedData.result = this.loadedData.result.concat(newData.result)
+    this.checkForMore()
   }
 
   public makePagination = (totalPages, currentPage) => {
@@ -147,15 +170,19 @@ export class AwLinkedObjectsDS extends DataSource {
       }
     }
     if (context === 'home') {
+      let actions = [
+        {
+          label: 'Mostra Tutti (' + totalCount + ')'
+        },
+        lengthLimit ?
+          {
+            label: 'Mostra Altri (' + resultsLimit + ')',
+            disabled: false,
+          } : null,
+      ]
       return {
         result,
-        actions:
-          [
-            { label: 'Mostra Tutti (' + totalCount + ')' },
-            lengthLimit ?
-              { label: 'Mostra Altri (' + resultsLimit + ')' } :
-              null,
-          ]
+        actions
       }
     }
     return result;

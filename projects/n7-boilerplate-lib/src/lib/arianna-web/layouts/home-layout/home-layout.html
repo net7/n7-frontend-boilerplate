@@ -73,7 +73,8 @@
                         </button>
                         <button *ngIf="action[1]" 
                                 class="n7-btn n7-btn-light n7-btn-l aw-home__bubble-results-list-view-others"
-                                (click)="lb.eventHandler.emitOuter('viewmore', 'linked-objects')">
+                                (click)="lb.eventHandler.emitOuter('viewmore', 'linked-objects')"
+                                [disabled]="action[1].disabled">
                             {{action[1].label}}
                         </button>
                     </div>
