@@ -53,20 +53,30 @@
 
 
 // ------------------------------------ //
+// #COMMON LAYOUTS
+// ------------------------------------ //
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/common/layouts/main-layout";
+
+
+// ------------------------------------ //
 // #ARIANNA COMPONENTS
 // ------------------------------------ //
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/advanced-autocomplete";
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/breadcrumbs";
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/bubble-popup-menu";
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/facet";
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/facet-header";
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/footer";
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/header";
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/item-preview";
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/simple-autocomplete";
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/tippy-tooltip";
 
 
 // ------------------------------------ //
 // #ARIANNA WEB LAYOUTS
 // ------------------------------------ //
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/layouts/main-layout";
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/layouts/home-layout";
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/layouts/scheda-layout";
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/layouts/entita-layout";
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/layouts/search-layout";

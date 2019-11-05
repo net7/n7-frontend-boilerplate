@@ -149,7 +149,7 @@ export const ApolloProviderConfig = {
             id
             icon
           }
-          similarItems {
+          items {
             thumbnail
               item {
                 label
@@ -208,6 +208,18 @@ export const ApolloProviderConfig = {
           }
           count
         }
+      }
+    }`
+  },
+  'search': {
+    queryName: 'search',
+    queryBody: `{
+      search(__PARAMS__){
+        totalCount
+        facets
+        filters
+        results
+        page
       }
     }`
   }

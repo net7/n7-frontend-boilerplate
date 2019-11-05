@@ -28,6 +28,10 @@ export class FacetsWrapperEH extends EventHandler {
 
             Object.keys(queryParams).forEach(key => queryParams[key] = queryParams[key] || null);
             
+            // signal
+            this.emitOuter('facetschange');
+
+            // router signal
             this.emitGlobal('navigate', {
               handler: 'router',
               path: [],
@@ -46,13 +50,12 @@ export class FacetsWrapperEH extends EventHandler {
       }
     });
 
-    // listen to outer events
+    // listen to global events
     EventHandler.globalEvents$.subscribe(({ type, payload }) => {
       switch(type){
-        case 'global.queryparams':
-          if(!this._facetsChanged){
-            this.dataSource.updateFiltersFromQueryParams(payload);
-            this.dataSource.updateInputsFromFilters();
+        case 'global.searchresponse':
+          if(this.dataSource.searchModel.getId() === payload){
+            this.dataSource.updateInputLinks();
           }
           break;
 

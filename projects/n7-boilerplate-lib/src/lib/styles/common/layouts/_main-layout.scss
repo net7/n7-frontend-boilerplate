@@ -8,6 +8,11 @@
 /* ------------------------------------ *\
     MAIN LAYOUT
 \* ------------------------------------ */
+.n7-main-layout {
+    min-width: $page-min-width;
+    background-color: $color-background-layout;
+}
+
 
 /* ------------------------------------ *\
     STICKY FOOTER
@@ -17,5 +22,18 @@
     min-height: 100%;
     display: grid;
     grid-template-rows: 1fr auto;
-    background-color: $color-background-layout;
+}
+
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: $page-max-width + $space*4) {
+
+    /* Layout utility class */
+    .n7-side-auto-padding {
+        padding-left: $space*2;
+        padding-right: $space*2;
+    }
+
 }

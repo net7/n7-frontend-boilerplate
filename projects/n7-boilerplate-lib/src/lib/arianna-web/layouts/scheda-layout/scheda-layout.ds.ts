@@ -45,6 +45,9 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     this.hasSimilarItems = false;
     this.bubblesEnabled = this.configuration.get('features-enabled') ? this.configuration.get('features-enabled')['bubblechart'] : false;
 
+    this.mainState.update('headTitle', 'Arianna Web > Patrimonio');
+    this.mainState.update('pageTitle', 'Arianna Web: patrimonio Layout');
+    this.mainState.updateCustom('currentNav', 'aw/patrimonio');
   }
 
   getNavigation( id ) {
@@ -70,7 +73,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       const maxSimilarItems = this.configuration.get('scheda-layout')['related-items']['max-related-items'];
       return  this.communication.request$('getItem', {
         onError: (error) => console.error(error),
-        params: { itemId: id, maxSimilarItems }
+        params: { itemId: id, maxSimilarItems: maxSimilarItems }
       })
     } else {
       /* TODO: valori statici, da prendere da config */
@@ -97,6 +100,8 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
   loadContent(response) {
       if(response){
+        console.log( "apollo response: ");
+        console.log(response);
         this.contentParts = [];
         let content = {};
 
@@ -144,8 +149,8 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
         /*Metadata section*/
         let group = { group: [] };
 
-        if ( response.fields ){
-          this.hasMetadata = true;
+        this.hasMetadata = response.fields != null;
+        if (  this.hasMetadata ){
           response.fields.forEach(field => {
             let items = [];
             field.fields.forEach(item => {
@@ -185,10 +190,10 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       }*/
 
       /* Similar item */
-      if ( response.similarItems ) {
+      if ( response.items ) {
         this.hasSimilarItems = true;
         this.one('aw-linked-objects').updateOptions({ context: 'scheda', config: this.configuration })
-        this.one('aw-linked-objects').update(response.similarItems);
+        this.one('aw-linked-objects').update(response);
       } else {
         this.hasSimilarItems = false;
         this.one('aw-linked-objects').update(null);

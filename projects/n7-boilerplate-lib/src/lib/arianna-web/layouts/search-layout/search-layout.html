@@ -1,17 +1,54 @@
-<div class="aw-search" id="search-layout">
-    <div class="aw-search__content">
-
-        <!-- Left sidebar: tree -->
-        <div class="aw-search__facets">
-            <n7-facets-wrapper
-                [data]="lb.widgets['facets-wrapper'].ds.out$ | async"
-                [emit]="lb.widgets['facets-wrapper'].emit">
-            </n7-facets-wrapper>
+<div class="aw-search n7-side-auto-padding" id="search-layout">
+    <div class="aw-search__header">
+        <div class="aw-search__header-left">
+            <h1 class="aw-search__header-title">{{ lb.dataSource.pageTitle }}</h1>
+        </div>        
+        <!--
+        <div class="aw-search__header-right">
+            <n7-nav
+                [data]="lb.widgets['aw-search-layout-tabs'].ds.out$ | async"
+                [emit]="lb.widgets['aw-search-layout-tabs'].emit">
+            </n7-nav>
         </div>
-
-        <!-- Search details -->
-        <div class="aw-search__search-wrapper">
-            #TODO: results
+        -->
+    </div>
+    <div class="aw-search__content-wrapper">
+        <!-- Left sidebar: facets -->
+        <div class="aw-search__sidebar">
+            <div class="aw-search__facets">
+                <n7-facets-wrapper
+                    [data]="lb.widgets['facets-wrapper'].ds.out$ | async"
+                    [emit]="lb.widgets['facets-wrapper'].emit">
+                </n7-facets-wrapper>
+            </div>
+        </div>
+        <div class="aw-search__content">
+            <div class="aw-search__results-header">
+                <div class="aw-search__results-header-left">
+                    <h3 class="aw-search__total">
+                        <span class="aw-search__total-number">{{ lb.dataSource.totalCount }}</span>&nbsp;
+                        <span class="aw-search__total-title">{{ lb.dataSource.resultsTitle }}</span>
+                    </h3>
+                </div>        
+                <div class="aw-search__results-header-right">
+                    <label class="aw-search__results-select-orderby-label" for="aw-search__results-select-orderby">{{ lb.dataSource.orderByLabel }}</label>
+                    <select (change)="lb.eventHandler.emitInner('orderbychange', $event.target.value)" id="aw-search__results-select-orderby">
+                        <option *ngFor="let option of lb.dataSource.orderByOptions" [value]="option.value">{{ option.label }}</option>
+                    </select>
+                </div>     
+            </div>
+            <!-- Search details -->
+            <div class="aw-search__results-wrapper">
+                <ng-container *ngFor="let preview of (lb.widgets['aw-linked-objects'].ds.out$ | async)?.previews">
+                    <n7-breadcrumbs [data]="preview.breadcrumbs">
+                    </n7-breadcrumbs>
+                    <n7-item-preview [data]="preview" [emit]="lb.widgets['aw-linked-objects'].emit">
+                    </n7-item-preview>
+                </ng-container>
+                <n7-pagination [data]="(lb.widgets['aw-linked-objects'].ds.out$ | async)?.pagination"
+                    [emit]="lb.widgets['aw-linked-objects'].emit">
+                </n7-pagination>
+            </div>
         </div>
     </div>
 </div>

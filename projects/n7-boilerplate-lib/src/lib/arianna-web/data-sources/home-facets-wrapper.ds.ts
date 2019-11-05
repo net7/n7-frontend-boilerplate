@@ -5,7 +5,7 @@ export class AwHomeFacetsWrapperDS extends DataSource {
 
   private autoComplete = {}
 
-  protected transform({facetData, lockedFacets}) {
+  protected transform({ facetData, lockedFacets }) {
     var headers: any[] = [];
     var inputs: any[] = [];
 
@@ -33,8 +33,13 @@ export class AwHomeFacetsWrapperDS extends DataSource {
         text: facet.label,
         additionalText: facet.count,
         iconRight: (facet.enabled ? 'n7-icon-eye' : 'n7-icon-eye-slash'),
-        classes: headerClasses.join(' ') + (facet.locked ? ' is-blocked' : ' not-blocked'),
-        payload: facet.type ,
+        classes: headerClasses.join(' ') + (
+          facet.locked ? ' is-blocked' : (
+            // if every other facet is disabled → Lock this facet
+            facetData.every(f => {
+              return !f.enabled || (f.type === facet.type)
+            }) ? ' is-blocked' : ' not-blocked')),
+        payload: facet.type,
       });
       // make array of inputs data
       inputs.push({

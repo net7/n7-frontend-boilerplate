@@ -5,7 +5,7 @@ export class AwAutocompleteWrapperDS extends DataSource {
   protected transform(data) {
     const { key, response } = data
     const regex = new RegExp('(.*?)' + key + '(.*)', 'i') // 'i' = case insensitive
-    const append = []
+    const suggestion = []
     const config = this.options.config
     const maxLength = config.get('home-layout')['max-item-length'] / 2
 
@@ -23,9 +23,14 @@ export class AwAutocompleteWrapperDS extends DataSource {
         if (maxLength && (suffix.length > maxLength)) {
           suffix = suffix.slice(0, maxLength) + '...'
         }
-        append.push({ prefix, suffix, payload: el.entity.id })
+        suggestion.push({
+          match: match.input.slice(match[1].length, match[1].length + key.length),
+          prefix,
+          suffix,
+          payload: el.item.id
+        })
       }
     });
-    return { typed: key, append }
+    return { suggestion }
   }
 }

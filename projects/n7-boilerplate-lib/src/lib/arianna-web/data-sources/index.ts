@@ -22,3 +22,6 @@ export * from './scheda-breadcrumbs.ds';
 export * from './scheda-metadata.ds';
 export * from './scheda-image.ds';
 export * from './scheda-inner-title.ds';
+
+// Search layout
+export * from './search-layout-tabs.ds';

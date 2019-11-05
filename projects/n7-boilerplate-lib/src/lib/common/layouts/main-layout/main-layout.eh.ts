@@ -1,6 +1,7 @@
 import { EventHandler } from '@n7-frontend/core';
 import { Subject } from 'rxjs';
-import { takeUntil, first, filter } from 'rxjs/operators';
+import { takeUntil, first, filter, delay } from 'rxjs/operators';
+import { SearchService } from '../../services';
 
 export class MainLayoutEH extends EventHandler {
   private destroyed$: Subject<any> = new Subject();
@@ -49,12 +50,12 @@ export class MainLayoutEH extends EventHandler {
         if(Object.keys(params).length) return true;
         return false;
       }),
-      first()
+      first(),
     ).subscribe(params => {
-      // setTimeout for fixing route event timings
-      setTimeout(() => {
-        this.emitGlobal('queryparams', params);
-      });
+      this.emitGlobal('queryparams', params);
+
+      // to use in searchs
+      SearchService.queryParams = params;
     });
   } 
   

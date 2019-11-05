@@ -1,216 +1,47 @@
-import { LayoutDataSource, LayoutBuilder } from '@n7-frontend/core';
-import { SearchService } from 'n7-boilerplate-lib/lib/common/services';
+import { LayoutDataSource } from '@n7-frontend/core';
+import { SearchService, SearchModel } from 'n7-boilerplate-lib/lib/common/services';
+import facetsConfig from './search-facets.config';
+import fakeSearchRequest$ from './search-mock-request';
+import { withLatestFrom, tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 
-const SEARCH_CONFIG = {
-  facets: [{
-    id: 'query', 
-    type: 'value',
-    data: []
-  }, {
-    id: 'query-all', 
-    type: 'value',
-    data: [{
-      value: '1',
-      label: 'Cerca in tutti campi delle schede'
-    }]
-  }, {
-    id: 'query-links', 
-    type: 'value',
-    data: []
-  }, {
-    id: 'entity-types',
-    type: 'value',
-    operator: 'OR',
-    limit: 10,
-    order: 'count', // count | text
-  }, {
-    id: 'entity-search', 
-    type: 'value',
-    data: []
-  }, {
-    id: 'entity-links', 
-    type: 'value',
-    metadata: ['title', 'entity-type'],
-    data: [{
-      value: 'milano',
-      label: 'Milano',
-      count: 1,
-      metadata: {
-        title: 'Milano',
-        'entity-type': 'places'
-      }
-    }, {
-      value: 'roma',
-      label: 'Comune di Roma',
-      count: 2,
-      metadata: {
-        title: 'Comune di Roma',
-        'entity-type': 'places'
-      }
-    }, {
-      value: 'spazio',
-      label: 'Spazio',
-      count: 3,
-      metadata: {
-        title: 'Spazio',
-        'entity-type': 'concepts'
-      }
-    }, {
-      value: 'rodolfo-marna',
-      label: 'Rodolfo Marna',
-      count: 4,
-      metadata: {
-        title: 'Rodolfo Marna',
-        'entity-type': 'people'
-      }
-    }, {
-      value: 'alighiero-boetti',
-      label: 'Alighiero Boetti',
-      count: 5,
-      metadata: {
-        title: 'Alighiero Boetti',
-        'entity-type': 'people'
-      }
-    }]
-  }, {
-    id: 'date-from', 
-    type: 'value',
-    data: []
-  }, {
-    id: 'date-to', 
-    type: 'value',
-    data: []
-  }],
-  fields: [{
-    inputs: [{
-      type: 'text',
-      facetId: 'query',
-      placeholder: 'Cerca...',
-      // icon: 'n7-icon-search',
-      filterConfig: {
-        delay: 500,
-        minChars: 3, 
-        searchIn: [{
-          key: 'source.title',
-          operator: 'LIKE'
-        }]
-      } 
-    }, {
-      type: 'checkbox',
-      facetId: 'query-all',
-      filterConfig: {
-        searchIn: [{
-          key: 'query-all',
-          operator: '='
-        }]
-      }
-    }, {
-      type: 'link',
-      facetId: 'query-links',
-      filterConfig: {
-        isArray: true,
-        searchIn: [{
-          key: 'source.entityType',
-          operator: '='
-        }]
-      } 
-    }]
-  }, {
-    header: {
-      label: 'Relazione con',
-      classes: 'related-class'
-    },
-    inputs: [{
-      type: 'checkbox',
-      facetId: 'entity-types',
-      filterConfig: {
-        isArray: true,
-        context: 'internal',
-        target: 'entity-links',
-        searchIn: [{
-          key: 'entity-type',
-          operator: '='
-        }]
-      } 
-    }, {
-      type: 'text',
-      facetId: 'entity-search',
-      placeholder: 'Cerca entità',
-      // icon: 'n7-icon-search',
-      filterConfig: {
-        delay: 500,
-        minChars: 3, 
-        context: 'internal',
-        target: 'entity-links',
-        searchIn: [{
-          key: 'title',
-          operator: 'LIKE'
-        }]
-      } 
-    }, {
-      type: 'link',
-      facetId: 'entity-links',
-      filterConfig: {
-        limit: 20,
-        searchIn: [{
-          key: 'source.id',
-          operator: '='
-        }]
-      } 
-    }]
-  }, {
-    header: {
-      label: 'Data',
-      classes: 'date-class'
-    },
-    inputs: [{
-      type: 'select',
-      facetId: 'date-from',
-      label: 'Dal',
-      filterConfig: {
-        searchIn: [{
-          key: 'source.dateStart',
-          operator: '>='
-        }]
-      } 
-    }, {
-      type: 'select',
-      facetId: 'date-to',
-      label: 'Al',
-      filterConfig: {
-        searchIn: [{
-          key: 'source.dateEnd',
-          operator: '<='
-        }]
-      } 
-    }]
-  }],
-  results: {
-    order: {
-      type: 'score', // score | text | date
-      key: 'author', // docPath, elastic key, ecc
-      direction: 'ASC', // ASC | DESC
-    }, 
-    fields: {
-      title: {
-        highlight: true,
-        limit: 50,
-      }
-    },
-  },
-  page: null,
-  baseUrl: ''
-}
-
-const SEARCH_ID = 'search-facets';
+const SEARCH_MODEL_ID = 'aw-search-layout';
 
 export class AwSearchLayoutDS extends LayoutDataSource {
   private communication: any;
   private configuration: any;
   private mainState: any;
   private search: SearchService;
+  private searchModel: SearchModel;
+
+  public pageTitle: string;
+  public resultsTitle: string;
+  public totalCount: number;
+  public currentPage: any = 1; // pagination value (url param)
+  public pageSize: number = 10; // linked objects page size
 
   public options: any;
+
+  public orderByLabel: string = 'Ordina per';
+  public orderByOptions: any = [{
+    value: 'text_DESC',
+    label: 'Ordine alfabetico (DESC)'
+  }, {
+    value: 'text_ASC',
+    label: 'Ordine alfabetico (ASC)'
+  }, /* {
+    value: 'score_DESC',
+    label: 'Ordine per rilevanza (DESC)'
+  }, {
+    value: 'score_ASC',
+    label: 'Ordine per rilevanza (ASC)'
+  }, {
+    value: 'date_DESC',
+    label: 'Ordina per data (DESC)'
+  }, {
+    value: 'date_ASC',
+    label: 'Ordina per data (ASC)'
+  } */];
 
   onInit({configuration, mainState, options, communication, search }) {
     this.configuration = configuration;
@@ -219,38 +50,107 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     this.search = search;
     this.options = options;
 
-    // FIXME: togliere
-    const configKeys = this.configuration.get('config-keys'),
-      queryLinksData = Object.keys(configKeys).map(key => {
-        const config = configKeys[key];
-        return {
-          value: key,
-          label: config.label,
-          count: 1,
+    this.pageTitle = this.configuration.get('search-layout').title;
 
-          // questi vanno aggiunti a mano lato front-end
-          icon: config.icon,
-          classes: `color-${key}`
-        };
-      }),
-      entityTypesData = Object.keys(configKeys).map(key => {
-        const config = configKeys[key];
-        return {
-          value: key,
-          label: config.label,
-        };
-      });
+    if(!this.search.model(SEARCH_MODEL_ID)) this.search.add(SEARCH_MODEL_ID, facetsConfig);
+    this.searchModel = this.search.model(SEARCH_MODEL_ID);
 
-    SEARCH_CONFIG.facets.filter(facet => facet.id === 'query-links').forEach(facet => {
-      facet.data = queryLinksData;
+    this.doSearchRequest$().subscribe(() => {
+      this.one('facets-wrapper').update({ searchModel: this.searchModel });
+    });
+  }
+
+  onOrderByChange(payload){
+    const [orderBy, direction] = payload.split('_');
+
+    this.searchModel.setSearchConfigOrderBy(orderBy);
+    this.searchModel.setSearchConfigDirection(direction);
+  }
+
+  onPaginationChange(payload): Observable<boolean> {
+    const page = payload.replace('page-', '');
+    return this._updateSearchPage(page);
+  }
+
+  onPaginationGoToChange(payload){
+    const page = payload.replace('goto-', '');
+    this._updateSearchPage(page);
+  }
+
+  onResultsLimitChange(payload){
+    this.pageSize = payload;
+    this.searchModel.setPageConfigLimit(payload);
+    
+    // reset page & offset
+    this.currentPage = 1;
+    this.searchModel.setPageConfigOffset(0);
+  }
+
+  public getSearchModelId = () => SEARCH_MODEL_ID;
+
+  public doSearchRequest$(): Observable<any> {
+    // FIXME: togliere configKeys
+    // dovrebbe venire dall'API
+    const configKeys = this.configuration.get('config-keys');
+
+    // FIXME: mettere logica definitiva 
+    // per la chiamata search
+    /* 
+    this.communication.request$('search', {
+      onError: error => console.error(error),
+      params: requestParams
+    })
+    */
+
+    const requestParams = this.searchModel.getRequestParams();
+
+    const fakeResultsRequest$ = this.communication.request$('getEntityDetails', {
+      onError: error => console.error(error),
+      params: { entityId: '55vf-entity-s3ar' }
     });
 
-    SEARCH_CONFIG.facets.filter(facet => facet.id === 'entity-types').forEach(facet => {
-      facet.data = entityTypesData;
-    });
+    return fakeResultsRequest$.pipe(
+      withLatestFrom(fakeSearchRequest$(requestParams, configKeys)),
+      tap(([resultsResponse, searchResponse]) => {
+        this.totalCount = searchResponse.totalCount;
+        let resultsTitleIndex = 0;
+        // results title
+        if(this.totalCount > 1){
+          resultsTitleIndex = 2;
+        } else if(this.totalCount === 1) {
+          resultsTitleIndex = 1;
+        }
+        this.resultsTitle = this.configuration.get('search-layout').results[resultsTitleIndex];
+  
+        this.searchModel.updateFacets(searchResponse.facets);
+        this.searchModel.updateTotalCount(searchResponse.totalCount);
+        
+        this.one('aw-linked-objects').updateOptions({
+          context: 'search',
+          config: this.configuration,
+          // todo: swap to next line after merge
+          // config: this.configuration
+          page: this.currentPage,
+          size: this.pageSize,
+        });
+  
+        this.one('aw-linked-objects').update({ items: resultsResponse.items });
+      })
+    );
+  }
 
-    if(!this.search.model(SEARCH_ID)) this.search.add(SEARCH_ID, SEARCH_CONFIG);
-    const searchModel = this.search.model(SEARCH_ID);
-    this.one('facets-wrapper').update({ searchModel });
+  private _updateSearchPage(page){
+    if(+page === this.currentPage) return of(false);
+
+    this.currentPage = +page;
+
+    const searchConfig = this.searchModel.getConfig(),
+      pageConfig = searchConfig.page,
+      { limit } = pageConfig,
+      newOffset = (this.currentPage - 1) * limit;
+
+    this.searchModel.setPageConfigOffset(newOffset);
+
+    return of(true);
   }
 }
