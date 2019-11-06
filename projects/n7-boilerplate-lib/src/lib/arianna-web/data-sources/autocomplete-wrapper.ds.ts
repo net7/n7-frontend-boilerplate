@@ -27,7 +27,7 @@ export class AwAutocompleteWrapperDS extends DataSource {
           match: match.input.slice(match[1].length, match[1].length + key.length),
           prefix,
           suffix,
-          payload: el.item.id
+          payload: el.entity.id
         })
       }
     });
