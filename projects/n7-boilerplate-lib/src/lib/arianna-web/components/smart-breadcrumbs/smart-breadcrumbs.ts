@@ -57,17 +57,28 @@ export interface ISmartBreadcrumbsData {
 export class SmartBreadcrumbsComponent implements AfterViewInit {
     @Input() data: ISmartBreadcrumbsData;
     @Input() emit: any;
-    @ViewChild('bcol', { read: ElementRef, static:false }) bcol:ElementRef
-    @ViewChild('bcdiv', {read: ElementRef, static:false }) bcdiv:ElementRef
+    @ViewChild('bcol', { read: ElementRef, static: false }) bcol: ElementRef
+    @ViewChild('bcdiv', { read: ElementRef, static: false }) bcdiv: ElementRef
 
     ngAfterViewInit() {
-        let parentLength = this.bcdiv.nativeElement.clientWidth
-        let childLength = this.bcol.nativeElement.clientWidth
-        let liArray = this.bcol.nativeElement.children
+        let
+            parentWidth = this.bcdiv.nativeElement.clientWidth,
+            childWidth = this.bcol.nativeElement.clientWidth,
+            liArray = this.bcol.nativeElement.children
+
         // collapse condition
-        if ( parentLength === childLength ) {
-            for ( let i = 1; i < liArray.length - 1; i++ ) {
-                liArray[i].children[0].innerText = '__'
+        if (parentWidth === childWidth) {
+            let i = 1;
+            while (parentWidth === childWidth && i < liArray.length - 1) {
+                if (i > 1) {
+                    liArray[i].remove()
+                } else {
+                    liArray[i].children[0].innerText = '…'
+                }
+                i++
+                // update widths
+                parentWidth = this.bcdiv.nativeElement.clientWidth
+                childWidth = this.bcol.nativeElement.clientWidth
             }
         }
     }
