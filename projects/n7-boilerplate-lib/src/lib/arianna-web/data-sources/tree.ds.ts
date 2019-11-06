@@ -45,6 +45,10 @@ export class AwTreeDS extends DataSource {
       data = this.output;
     }
 
+    if( this.currentItem && this.currentItem["_meta"] == id ){
+      return;
+    }
+
     data.items.forEach( (it) => {
         if ( it['_meta'] == id && it['classes'].indexOf('is-active') < 0 ) {
             it['classes'] = it['classes'] + ' is-active';
