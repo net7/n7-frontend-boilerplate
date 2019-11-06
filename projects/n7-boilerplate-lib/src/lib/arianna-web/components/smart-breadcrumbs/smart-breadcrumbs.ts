@@ -69,14 +69,16 @@ export class SmartBreadcrumbsComponent implements AfterViewInit {
         // collapse condition
         if (parentWidth === childWidth) {
             let i = 1;
-            while (this.bcdiv.nativeElement.clientWidth === this.bcol.nativeElement.clientWidth && i < liArray.length - 1) {
-                if ( i > 1 ) {
+            while (parentWidth === childWidth && i < liArray.length - 1) {
+                if (i > 1) {
                     liArray[i].remove()
-                    liArray[1].children[0].innerText = '…'
                 } else {
                     liArray[i].children[0].innerText = '…'
                 }
                 i++
+                // update widths
+                parentWidth = this.bcdiv.nativeElement.clientWidth
+                childWidth = this.bcol.nativeElement.clientWidth
             }
         }
     }
