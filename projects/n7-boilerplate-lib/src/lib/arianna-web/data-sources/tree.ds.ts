@@ -134,6 +134,10 @@ export class AwTreeDS extends DataSource {
 
       treeItem['items'] = [];
       data[key].forEach( item => {
+        if ( item['img'] != "" ) {
+          treeItem['iconright'] = "n7-icon-images";
+        }
+
         treeItem['items'].push( this.parseTree(item, true, currParents) );
       })
     }
