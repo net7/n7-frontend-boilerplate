@@ -39,10 +39,9 @@
         <!-- Linked objects -->
         <ng-container *ngIf="lb.dataSource.selectedBubbles.length > 0" >
             <div class="aw-home__bubble-results"
-                id="home-bubble-results"
-                [ngStyle]="{ 'display': 'flex' , 'flex-direction': 'column', 'transition': 'opacity 1s ease-in-out;' }"
-                [style.opacity]="lb.dataSource.loadingBubbles ? '0' : '1'"
-            >
+                 id="home-bubble-results"
+                 [ngStyle]="{ 'display': 'flex' , 'flex-direction': 'column', 'transition': 'opacity 1s ease-in-out;' }"
+                 [style.opacity]="lb.dataSource.loadingBubbles ? '0' : '1'">
                 <div *ngIf="lb.dataSource.numOfItemsStr">
                     <h1 class="aw-home__bubble-results-title"><strong class="aw-home__bubble-results-title-counter">
                         {{ lb.dataSource.numOfItemsStr }}</strong> <span> Oggetti culturali</span>
@@ -57,7 +56,9 @@
                     </ng-container>
                 </div>
                 <div class="aw-home__bubble-results-list-wrapper" >
-                    <div class="aw-home__bubble-results-list" [attr.id]="'bubble-results-list'">
+                    <div class="aw-home__bubble-results-list" 
+                        [attr.id]="'bubble-results-list'" 
+                        (scroll)="lb.eventHandler.emitOuter('scroll', $event.target)">
                         <ng-container *ngFor="let widgetData of (lb.widgets['aw-linked-objects'].ds.out$ | async)?.result;">
                             <n7-item-preview
                                 [data]="widgetData"

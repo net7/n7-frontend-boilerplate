@@ -36,15 +36,25 @@ export class AwLinkedObjectsEH extends EventHandler {
     this.outerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
         case 'aw-home-layout.viewmore':
+          // ask home-layout for more data
           this.dataSource.checkForMore(false)
           this.emitOuter('datarequest', {
             currentPage: this.dataSource.currentPage
           })
-          // this.dataSource.handleShowMoreClick()
           break;
         case 'aw-home-layout.dataresponse':
+          // handle incoming data from home-layout
           let { res } = payload
           this.dataSource.handleShowMoreClick(res)
+        case 'aw-home-layout.scroll':
+          // this.dataSource.handleListScroll(payload)
+          if (payload.scrollTop > payload.scrollTopMax - 150 && this.dataSource.loadingData == false) {
+            this.dataSource.loadingData = true
+            this.emitOuter('datarequest', {
+              currentPage: this.dataSource.currentPage
+            })
+          }
+          break;
         default:
           break;
       }

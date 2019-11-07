@@ -8,6 +8,7 @@ export class AwLinkedObjectsDS extends DataSource {
   public pageSize: number
   public context: string
   public loadedData: any
+  public loadingData: boolean = false
 
   protected transform(data) {
     this.pageSize = this.options.size
@@ -51,6 +52,13 @@ export class AwLinkedObjectsDS extends DataSource {
     let newData: any = this.unpackData(incomingData.itemsPagination)
     this.loadedData.result = this.loadedData.result.concat(newData.result)
     this.checkForMore()
+    this.loadingData = false
+  }
+
+  public handleListScroll = target => {
+    if (target.scrollTop > target.scrollTopMax - 150) {
+      console.log('end of page')
+    }
   }
 
   public makePagination = (totalPages, currentPage) => {
