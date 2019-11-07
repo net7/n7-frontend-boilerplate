@@ -2,7 +2,8 @@
 // BREADCRUMBS.ts
 //---------------------------
 
-import { Component, Input, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, Input, ViewChild, ElementRef, AfterViewInit, ɵɵresolveBody } from '@angular/core';
+import tippy from 'tippy.js';
 
 /**
  * Interface for a single BreadcrumbsComponent's "Item"
@@ -68,13 +69,17 @@ export class SmartBreadcrumbsComponent implements AfterViewInit {
 
         // collapse condition
         if (parentWidth === childWidth) {
-            let i = 1;
+            let tippyData = document.createElement('ol')
+            let i = 1
+            tippyData.className = 'n7-smart-breadcrumbs__tippy-content'
             while (parentWidth === childWidth && i < liArray.length - 1) {
                 if (i > 1) {
-                    liArray[i].remove()
+                    tippyData.appendChild(liArray[i])
                 } else {
+                    tippyData.appendChild(liArray[i])
                     liArray[i].children[0].innerText = '…'
                 }
+                this.tippyBuilder(liArray[i], tippyData)
                 i++
                 // update widths
                 parentWidth = this.bcdiv.nativeElement.clientWidth
@@ -87,4 +92,22 @@ export class SmartBreadcrumbsComponent implements AfterViewInit {
         if (!this.emit) return;
         this.emit('click', payload);
     }
+
+    tippyBuilder = (node, content) => {
+        /*
+            Builds tippy data for a node.
+        */
+        document.body.appendChild(content)
+        tippy(node, {
+            content,
+            // allowHTML: true,
+            // trigger: 'manual',
+            interactive: true,
+            arrow: true,
+            theme: 'light-border no-padding',
+            // placement: 'bottom',
+            // maxWidth: 500,
+        })
+    }
+
 }
