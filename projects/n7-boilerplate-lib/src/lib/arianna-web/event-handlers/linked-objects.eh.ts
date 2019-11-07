@@ -45,19 +45,26 @@ export class AwLinkedObjectsEH extends EventHandler {
         case 'aw-home-layout.dataresponse':
           // handle incoming data from home-layout
           let { res } = payload
-          this.dataSource.handleShowMoreClick(res)
+          this.dataSource.handleIncomingData(res)
         case 'aw-home-layout.scroll':
-          // this.dataSource.handleListScroll(payload)
-          if (payload.scrollTop > payload.scrollTopMax - 150 && this.dataSource.loadingData == false) {
-            this.dataSource.loadingData = true
-            this.emitOuter('datarequest', {
-              currentPage: this.dataSource.currentPage
-            })
-          }
+          this.handleScroll(payload)
           break;
         default:
           break;
       }
     })
+  }
+
+  public handleScroll = target => {
+    /*
+      Check if the target element is scrolled near the end while data is not already loading.
+      If the condition is met, a request for more data is sent.
+    */
+    if (target.scrollTop > target.scrollTopMax - 150 && this.dataSource.loadedData.isLoading == false) {
+      this.dataSource.loadedData.isLoading = true
+      this.emitOuter('datarequest', {
+        currentPage: this.dataSource.currentPage
+      })
+    }
   }
 }

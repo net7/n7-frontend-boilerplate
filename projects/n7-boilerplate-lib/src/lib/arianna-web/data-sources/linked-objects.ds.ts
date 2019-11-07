@@ -1,4 +1,5 @@
 import { DataSource } from '@n7-frontend/core';
+import { LOADER_MOCK } from "@n7-frontend/components";
 
 export class AwLinkedObjectsDS extends DataSource {
 
@@ -18,6 +19,7 @@ export class AwLinkedObjectsDS extends DataSource {
     this.context = this.options.context
     this.loadedData = this.unpackData(data)
     this.checkForMore() // checks if <Show More> button should be enabled
+    this.loadedData.loaderData = LOADER_MOCK
     return this.loadedData
   }
 
@@ -43,7 +45,7 @@ export class AwLinkedObjectsDS extends DataSource {
     return
   }
 
-  public handleShowMoreClick = incomingData => {
+  public handleIncomingData = incomingData => {
     /*
       Called by button <Mostra Altri>, adds the incoming
       data to the linked objects component.
@@ -52,13 +54,7 @@ export class AwLinkedObjectsDS extends DataSource {
     let newData: any = this.unpackData(incomingData.itemsPagination)
     this.loadedData.result = this.loadedData.result.concat(newData.result)
     this.checkForMore()
-    this.loadingData = false
-  }
-
-  public handleListScroll = target => {
-    if (target.scrollTop > target.scrollTopMax - 150) {
-      console.log('end of page')
-    }
+    this.loadedData.isLoading = false
   }
 
   public makePagination = (totalPages, currentPage) => {
@@ -193,7 +189,8 @@ export class AwLinkedObjectsDS extends DataSource {
       ]
       return {
         result,
-        actions
+        actions,
+        isLoading: false,
       }
     }
     return result;
