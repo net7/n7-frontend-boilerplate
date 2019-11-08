@@ -78,14 +78,6 @@
             box-shadow: 0 2px 20px 0 rgba(0,0,0,0.08);
         }
 
-        &.is-sticky {
-            .n7-nav {
-                height: calc(100% - 70px); /* space for sidebar header */
-                overflow-y: auto;
-                overflow-x: hidden;
-            }
-        }
-
         .n7-nav__item {
             /* Current item */
             position: relative;
