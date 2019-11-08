@@ -55,15 +55,17 @@ export class AwEntitaLayoutEH extends EventHandler {
 
           }
           break;
-        case 'aw-linked-objects.pagination':
-          this.dataSource.currentPage = payload.split('-')[1]
-          this.emitGlobal('navigate', {
-            handler: 'router',
-            path: [`aw/entita/${this.route.snapshot.params.id}/oggetti-collegati/${payload.split('-')[1]}`]
-          });
-          break
-        case 'aw-linked-objects.goto':
-          let targetPage = Number(payload.replace('goto-', ''))
+          case 'aw-linked-objects.pagination':
+            this.dataSource.currentPage = payload.split('-')[1];
+            this.dataSource.handlePageNavigation()
+            /*this.emitGlobal('navigate', {
+              handler: 'router',
+              path: [`aw/entita/${this.route.snapshot.params.id}/oggetti-collegati/${payload.split('-')[1]}`]
+            });*/
+            break
+            case 'aw-linked-objects.goto':
+              this.dataSource.currentPage  = Number(payload.replace('goto-', ''))
+              this.dataSource.handlePageNavigation()
           // this.emitGlobal('navigate', {
           //   handler: 'router',
           //   path: [`aw/entita/${this.route.snapshot.params.id}/oggetti-collegati/${targetPage}`]
@@ -71,7 +73,7 @@ export class AwEntitaLayoutEH extends EventHandler {
           break
         case 'aw-linked-objects.change':
           this.dataSource.pageSize = payload;
-          this.listenRoute() // reloads the page content with the new page size
+          this.listenRoute("", true) // reloads the page content with the new page size
         case "aw-bubble-chart.bubble-tooltip-goto-click":
           if (!payload || !payload.entityId) return;
           this.emitGlobal('navigate', {
@@ -94,12 +96,12 @@ export class AwEntitaLayoutEH extends EventHandler {
   /**
    * Listens to routing events of this layout.
    */
-  private listenRoute( selectedItem = "") {
+  private listenRoute( selectedItem = "", forceReload = false) {
     // get URL parameters with angular's paramMap
     this.route.paramMap.subscribe(params => {
       // look for id
       if (params.get('id')) {
-        if (this.dataSource.currentId == params.get('id')) return;
+        if (this.dataSource.currentId == params.get('id') && !forceReload ) return;
         // get item from response with id === id and return as promise
         this.dataSource.loadItem(params.get('id'), params.get('tab')).subscribe((res) => {
           if (res) {

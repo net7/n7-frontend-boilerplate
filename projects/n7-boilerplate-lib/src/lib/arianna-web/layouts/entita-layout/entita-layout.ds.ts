@@ -50,6 +50,18 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
   /*
     Updates selected tab on tab change
   */
+  handlePageNavigation = () => {
+    this.currentPage =
+    this.one('aw-linked-objects').updateOptions({
+      context: this.selectedTab,
+      config: this.configuration,
+      page: this.currentPage,
+      pagination: true,
+      size: this.pageSize,
+    })
+    this.one('aw-linked-objects').update(this.myResponse);
+  };
+
   handleNavUpdate = tab => {
     this.selectedTab = tab
     this.updateWidgets(this.myResponse)
