@@ -94,13 +94,12 @@
 \* ------------------------------------ */
 .aw-search {
     &__sidebar {
-        height: 100vh;
-        align-self: start;
         padding: $space*2 0 $space*4 $space*2;
-        position: sticky;
-        top: 0;
-        overflow-y: auto;
-        overflow-x: hidden;
+
+        &.is-sticky {
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
 
         .n7-facet {
             &__section {

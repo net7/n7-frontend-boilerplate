@@ -296,10 +296,15 @@
             &-actions {
                 display: flex;
                 justify-content: center;
+                border-top: 1px solid $color-border-normal;
 
                 .n7-btn {
                     font-weight: $font-weight-bold;
                 }
+            }
+
+            .n7-item-preview {
+                border-bottom: 1px solid $color-border-normal;
             }
 
             > *:last-child {

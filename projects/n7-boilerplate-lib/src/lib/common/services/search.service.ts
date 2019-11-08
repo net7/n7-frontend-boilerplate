@@ -318,7 +318,7 @@ export class SearchModel {
 })
 export class SearchService {
   private _models: any = {};
-  static queryParams: any;
+  static queryParams: any = null;
 
   public add(id: string, config: ISearchConfig){
     if(this._models[id]) throw Error(`Search model "${id}" already exists!`);

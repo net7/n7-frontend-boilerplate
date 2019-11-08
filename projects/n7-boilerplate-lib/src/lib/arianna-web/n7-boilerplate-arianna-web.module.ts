@@ -12,6 +12,7 @@ import { AwWorksLayoutComponent } from './layouts/works-layout/works-layout';
 import { AwSearchLayoutComponent } from './layouts/search-layout/search-layout';
 // COMPONENTS
 import { BubbleChartWrapperComponent } from './components/bubble-chart-wrapper/bubble-chart-wrapper';
+import { SmartBreadcrumbsComponent } from './components/smart-breadcrumbs/smart-breadcrumbs';
 
 const COMPONENTS = [
   AwAboutLayoutComponent,
@@ -20,7 +21,8 @@ const COMPONENTS = [
   AwSchedaLayoutComponent,
   AwWorksLayoutComponent,
   AwSearchLayoutComponent,
-  BubbleChartWrapperComponent
+  BubbleChartWrapperComponent,
+  SmartBreadcrumbsComponent
 ];
 
 

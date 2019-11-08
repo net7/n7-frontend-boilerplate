@@ -22,14 +22,9 @@ export class AwBubbleChartEH extends EventHandler {
           this.emitOuter('mouse_enter', event.payload);
           break;
         case 'aw-bubble-chart.mouse_leave':
-         /*   this.dataSource.onBubbleMouseLeave(
-              {
-                bubblePayload:event.payload.bubblePayload,
-                bubble:event.payload.bubble
-              });*/
           this.emitOuter('mouse_leave', event.payload);
           break;
-          case "aw-bubble-chart.bubble-tooltip-close-click":
+        case "aw-bubble-chart.bubble-tooltip-close-click":
             this.emitOuter('bubble-tooltip-close-click', event.payload);
             break;
         case "aw-bubble-chart.bubble-tooltip-goto-click":
@@ -66,7 +61,7 @@ export class AwBubbleChartEH extends EventHandler {
         case 'aw-entita-layout.filterbubbleresponse':
         case 'aw-home-layout.filterbubbleresponse':
           if( payload.source ){
-            this.dataSource.setAllBubblesFromApolloQuery(payload);
+            this.dataSource.setAllBubblesFromApolloQuery(payload, payload.reload);
             this.emitOuter('bubble-filtered',
             {
               'allBubbles': this.dataSource.getAllBubbles(),
