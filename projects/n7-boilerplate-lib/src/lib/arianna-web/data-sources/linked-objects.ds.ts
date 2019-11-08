@@ -100,7 +100,7 @@ export class AwLinkedObjectsDS extends DataSource {
                 value: toe.count,
                 // icon: 'n7-icon-bell' // TODO: link icon to config key
                 icon:  keys[toe.type] ? keys[toe.type].icon : "",
-                classes: 'color-' + toe.type.configKey
+                classes: 'color-' + toe.type
               }
             })
           }
