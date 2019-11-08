@@ -14,7 +14,7 @@ export class AwEntitaNavDS extends DataSource {
       payload: 'overview',
       classes: selected == 'overview' ? 'is-selected' : ''
     })
-    if (data.fieldsTab) {
+    if (data.fields) {
       navigation.items.push({
         text: 'CAMPI',
         payload: 'campi',

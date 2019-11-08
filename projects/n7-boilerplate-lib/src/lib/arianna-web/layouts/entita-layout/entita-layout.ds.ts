@@ -95,14 +95,14 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
           containerId: 'bubble-chart-container-overview',
         });
         this.one('aw-entita-metadata-viewer').updateOptions({ context: this.selectedTab });
-        this.one('aw-entita-metadata-viewer').update(res.fieldsTab);
+        this.one('aw-entita-metadata-viewer').update(res.fields);
         this.one('aw-linked-objects').updateOptions({ size: 3, config: this.configuration, context: 'entita' })
         this.one('aw-linked-objects').update(res);
       } break;
 
       case 'campi': {
         this.one('aw-entita-metadata-viewer').updateOptions({ context: this.selectedTab });
-        this.one('aw-entita-metadata-viewer').update(res.fieldsTab);
+        this.one('aw-entita-metadata-viewer').update(res.fields);
       } break;
 
       case 'oggetti-collegati': {

@@ -107,9 +107,9 @@ export class AwEntitaLayoutEH extends EventHandler {
           if (res) {
             this.dataSource.loadContent(res);
             res['entitiesData'] =res.entities
-            let connectedEntities = {source: res};
+            let relatedEntities = {source: res};
             if (this.dataSource.bubblesEnabled && params.get('tab') === 'entita-collegate') {
-              this.emitOuter('filterbubbleresponse', connectedEntities);
+              this.emitOuter('filterbubbleresponse', relatedEntities);
             }
           }
         });

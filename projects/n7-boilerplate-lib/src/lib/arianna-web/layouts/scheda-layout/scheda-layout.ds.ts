@@ -181,15 +181,6 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
         this.one('aw-scheda-breadcrumbs').update(breadcrumbs);
       }
 
-      /*if ( response.connectedEntities ) {
-        this.hasBubbles = true;
-        this.setAllBubblesFromApolloQuery(response);
-      } else {
-        this.hasBubbles = false;
-        this.one('aw-scheda-bubble-chart').update(null);
-      }*/
-
-      /* Similar item */
       if ( response.items ) {
         this.hasSimilarItems = true;
         this.one('aw-linked-objects').updateOptions({ context: 'scheda', config: this.configuration })
@@ -205,17 +196,17 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   }
 
   setAllBubblesFromApolloQuery( response: any, reset?: boolean ){
-    if ( !response || !response.connectedEntities ) { return; }
+    if ( !response || !response.relatedEntities ) { return; }
     this.allBubbles = [];
 
-    for ( let i = 0; i < response.connectedEntities.length; i++ ){
+    for ( let i = 0; i < response.relatedEntities.length; i++ ){
 
-      const color = this.configuration.get('config-keys')[response.connectedEntities[i].entity.typeOfEntity.configKey] ? this.configuration.get('config-keys')[response.connectedEntities[i].entity.typeOfEntity.configKey]['color']['hex'] : "";
+      const color = this.configuration.get('config-keys')[response.relatedEntities[i].entity.typeOfEntity.configKey] ? this.configuration.get('config-keys')[response.relatedEntities[i].entity.typeOfEntity.configKey]['color']['hex'] : "";
 
       this.allBubbles.push(
         {
-          id: this.convertEntityIdToBubbleId( response.connectedEntities[i].entity.id ),
-          ...response.connectedEntities[i],
+          id: this.convertEntityIdToBubbleId( response.relatedEntities[i].entity.id ),
+          ...response.relatedEntities[i],
           color: color
         });
     }

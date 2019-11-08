@@ -160,28 +160,17 @@ export class AwBubbleChartDS extends DataSource {
           color: this.options.configKeys[response.entitiesData[i].entity.typeOfEntity]['color']['hex']
         })
       }
-      /*for (let i = 0 ; i < response.entitiesData.length; i++) {
 
-        let currentToE = response.entitiesData[i];
-
-        for ( var j = 0; j < currentToE.entitiesCountData.length; j++) {
-          this.allBubbles.push(
-            {
-              ...currentToE.entitiesCountData[j],
-              color: this.options.configKeys[currentToE.countData.type.configKey]['color']['hex']
-            });
-        }
-      }*/
     }
     else {
-      for ( let i = 0; i < response.connectedEntities.length; i++ ){
+      for ( let i = 0; i < response.relatedEntities.length; i++ ){
         const color = this.options.configKeys ?
-          this.options.configKeys[response.connectedEntities[i].entity.typeOfEntity.configKey] ? this.options.configKeys[response.connectedEntities[i].entity.typeOfEntity.configKey]['color']['hex'] : "" :
+          this.options.configKeys[response.relatedEntities[i].entity.typeOfEntity.configKey] ? this.options.configKeys[response.relatedEntities[i].entity.typeOfEntity.configKey]['color']['hex'] : "" :
           null;
         this.allBubbles.push(
           {
-            id: this.convertEntityIdToBubbleId( response.connectedEntities[i].entity.id ),
-            ...response.connectedEntities[i],
+            id: this.convertEntityIdToBubbleId( response.relatedEntities[i].entity.id ),
+            ...response.relatedEntities[i],
             color: color
           });
       }

@@ -86,7 +86,7 @@ export const ApolloProviderConfig = {
         label
         id
         typeOfEntity
-        fieldsTab {
+        fields {
           id
           label
           fields {
@@ -114,7 +114,7 @@ export const ApolloProviderConfig = {
             count
           }
         }
-        entities {
+        relatedEntities {
           entity {
               id
               label
@@ -149,7 +149,7 @@ export const ApolloProviderConfig = {
               type
             }
           }
-          connectedEntities {
+          relatedEntities {
             count
             entity{
              id
