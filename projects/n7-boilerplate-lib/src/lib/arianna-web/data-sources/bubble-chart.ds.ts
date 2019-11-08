@@ -142,7 +142,7 @@ export class AwBubbleChartDS extends DataSource {
     return bubblesData;
   }
 
-  setAllBubblesFromApolloQuery(data: any, reset?: boolean ) {
+  setAllBubblesFromApolloQuery( data: any, reset = true ) {
     const response = data.source;
    // if ( !response || !response.entitiesData ) {return; }
     this.allBubbles = [];
@@ -193,7 +193,9 @@ export class AwBubbleChartDS extends DataSource {
       }
     });
 
-    this.update(data);
+    if(reset) {
+      this.update(data);
+    }
   }
 
   private convertEntityIdToBubbleId(entityId: string): string {
@@ -326,11 +328,15 @@ export class AwBubbleChartDS extends DataSource {
         // (if the resize only effects the window's hight then the bubble chart
         // doesn't get reset)
           const container = document.getElementById(this.options.containerId);
-          let bubblePayload = {
-            width: container.offsetWidth,
-            reset: true
-          };
-          this.update(bubblePayload);
+          //check if element is visible on page
+          if(container.offsetParent != null) {
+
+            let bubblePayload = {
+              width: container.offsetWidth,
+              reset: true
+            };
+            this.update(bubblePayload);
+          }
         })
         this.windowResizeSet = true;
     }

@@ -115,6 +115,23 @@ export class AwHomeLayoutEH extends EventHandler {
             this.dataSource.renderItemTags();
           });
           break;
+        case 'aw-linked-objects.datarequest':
+          let { currentPage } = payload
+          let params = {
+            selectedEntitiesIds: this.dataSource.selectedEntitiesIds,
+            itemsPagination: {
+              offset: currentPage * this.dataSource.resultsLimit ,
+              limit: this.dataSource.resultsLimit
+            }
+          }
+          this.dataSource.makeRequest$('globalFilter', params).subscribe( res => {
+            if (res) {
+              this.emitOuter('dataresponse', { res })
+            } else {
+              console.log('Unable to fetch additional data.')
+            }
+          })
+          break;
         default:
           break;
       }

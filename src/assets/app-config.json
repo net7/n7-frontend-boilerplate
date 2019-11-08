@@ -88,6 +88,11 @@
     },
     "metadata": {
       "title": "Metadati"
+    },
+    "tree": {
+      "icon-expand": "n7-icon-angle-right",
+      "icon-collapse": "n7-icon-angle-down",
+      "icon-image": "n7-icon-image"
     }
   },
   "search-layout": {
@@ -102,7 +107,7 @@
     "max-bubble-num": 30
   },
   "config-keys": {
-    "persone": {
+    "persona": {
       "color": {
         "hex": "#3a81f2",
         "rgb": [
@@ -115,7 +120,7 @@
       "label": "Persone",
       "input-placeholder": "Cerca una persona"
     },
-    "luoghi": {
+    "luogo": {
       "color": {
         "hex": "#f2cd3a",
         "rgb": [
@@ -128,7 +133,7 @@
       "label": "Luoghi",
       "input-placeholder": "Cerca un luogo"
     },
-    "concetti": {
+    "concetto": {
       "color": {
         "hex": "#5eab7b",
         "rgb": [94, 171, 123]
@@ -137,7 +142,7 @@
       "label": "Concetti",
       "input-placeholder": "Cerca un concetto"
     },
-    "organizzazioni": {
+    "organizzazione": {
       "color": {
         "hex": "#c48731",
         "rgb": [196, 135, 49]

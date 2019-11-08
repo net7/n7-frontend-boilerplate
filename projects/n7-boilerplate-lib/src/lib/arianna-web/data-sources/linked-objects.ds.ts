@@ -1,27 +1,60 @@
 import { DataSource } from '@n7-frontend/core';
+import { LOADER_MOCK } from "@n7-frontend/components";
 
 export class AwLinkedObjectsDS extends DataSource {
 
   public currentPage: number
   public totalPages: number
+  public totalObjects: number
   public pageSize: number
   public context: string
+  public loadedData: any
+  public loadingData: boolean = false
 
   protected transform(data) {
     this.pageSize = this.options.size
-    this.currentPage = <number>this.options.page
-    this.totalPages = Math.floor(data.length / this.pageSize)
+    this.totalObjects = data.totalCount
+    this.currentPage = this.options.page ? <number>this.options.page : 1
+    this.totalPages = Math.ceil(data.items.length / this.pageSize)
     this.context = this.options.context
-    return this.unpackData(data)
+    this.loadedData = this.unpackData(data)
+    this.checkForMore() // checks if <Show More> button should be enabled
+    this.loadedData.loaderData = LOADER_MOCK
+    return this.loadedData
   }
 
-  public handleShowMoreClick = incomingData => {
+  public checkForMore = (force?: boolean) => {
+    /*
+      Checks if it is possible to load more item previews.
+      Can receive a boolean argument to force the button to be
+      enabled or disabled. (Used while data is loading)
+    */
+    if (!this.loadedData.actions) {
+      // if not using actions, don't check
+      return
+    }
+    if (typeof force !== 'undefined') {
+      this.loadedData.actions[1].disabled = !force
+      return
+    }
+    if (this.loadedData.result.length >= this.totalObjects) {
+      this.loadedData.actions[1].disabled = true
+    } else {
+      this.loadedData.actions[1].disabled = false
+    }
+    return
+  }
+
+  public handleIncomingData = incomingData => {
     /*
       Called by button <Mostra Altri>, adds the incoming
       data to the linked objects component.
     */
-    console.log('showing more stuff')
-    // TODO
+    this.currentPage += 1
+    let newData: any = this.unpackData(incomingData.itemsPagination)
+    this.loadedData.result = this.loadedData.result.concat(newData.result)
+    this.checkForMore()
+    this.loadedData.isLoading = false
   }
 
   public makePagination = (totalPages, currentPage) => {
@@ -96,7 +129,7 @@ export class AwLinkedObjectsDS extends DataSource {
           {
             classes: 'n7-objects__metadata-linked',
             items: el.relatedTypesOfEntity.map(toe => {
-              return { // Persone: 6, Organizz: 12, Luoghi: 2, Concetti: 32
+              return { // persona: 6, Organizz: 12, Luoghi: 2, Concetti: 32
                 value: toe.count,
                 // icon: 'n7-icon-bell' // TODO: link icon to config key
                 icon:  keys[toe.type] ? keys[toe.type].icon : "",
@@ -118,7 +151,7 @@ export class AwLinkedObjectsDS extends DataSource {
       }
       result.push(item);
     });
-    if (page) { // if I'm on a page, render pagination data.
+    if (this.options.pagination) { // if I'm on a page, render pagination data.
       let sizeOptions = [10, 25, 50]
       return {
         pagination: {
@@ -144,18 +177,22 @@ export class AwLinkedObjectsDS extends DataSource {
       }
     }
     if (context === 'home') {
+      let actions = [
+        {
+          label: 'Mostra Tutti (' + totalCount + ')'
+        },
+        lengthLimit ?
+          {
+            label: 'Mostra Altri (' + resultsLimit + ')',
+            disabled: false,
+          } : null,
+      ]
       return {
         result,
-        actions:
-          [
-            { label: 'Mostra Tutti (' + totalCount + ')' },
-            lengthLimit ?
-              { label: 'Mostra Altri (' + resultsLimit + ')' } :
-              null,
-          ]
+        actions,
+        isLoading: false,
       }
     }
-    console.log('linked objects result', result)
-    return result;
+    return {previews: result};
   }
 }

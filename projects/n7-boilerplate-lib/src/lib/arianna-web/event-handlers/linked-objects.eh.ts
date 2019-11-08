@@ -13,8 +13,8 @@ export class AwLinkedObjectsEH extends EventHandler {
           } else if (payload.startsWith('goto')) {
             let targetPage = Number(payload.replace('goto-', ''))
             // kill impossible page navigations
-            if ( targetPage > this.dataSource.totalPages ) return;
-            else if ( targetPage < 1 || targetPage === this.dataSource.currentPage ) return;
+            if (targetPage > this.dataSource.totalPages) return;
+            else if (targetPage < 1 || targetPage === this.dataSource.currentPage) return;
             else this.emitOuter('goto', payload)
           } else {
             // navigate to the patrimonio page of this item
@@ -27,21 +27,44 @@ export class AwLinkedObjectsEH extends EventHandler {
         case 'aw-linked-objects.change':
           this.emitOuter('change', Number(payload.value))
           break;
-          default:
-            console.warn('unhandled event type: ', type, ' with payload: ', payload)
-            break;
+        default:
+          console.warn('unhandled event type: ', type, ' with payload: ', payload)
+          break;
       }
     });
 
     this.outerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
         case 'aw-home-layout.viewmore':
-          // this.dataSource.handleShowMoreClick()
-          console.log('current page: ', this.dataSource.currentPage)
+          // ask home-layout for more data
+          this.dataSource.checkForMore(false)
+          this.emitOuter('datarequest', {
+            currentPage: this.dataSource.currentPage
+          })
+          break;
+        case 'aw-home-layout.dataresponse':
+          // handle incoming data from home-layout
+          let { res } = payload
+          this.dataSource.handleIncomingData(res)
+        case 'aw-home-layout.scroll':
+          this.handleScroll(payload)
           break;
         default:
           break;
       }
     })
+  }
+
+  public handleScroll = target => {
+    /*
+      Check if the target element is scrolled near the end while data is not already loading.
+      If the condition is met, a request for more data is sent.
+    */
+    if (target.scrollTop > target.scrollTopMax - 150 && this.dataSource.loadedData.isLoading == false) {
+      this.dataSource.loadedData.isLoading = true
+      this.emitOuter('datarequest', {
+        currentPage: this.dataSource.currentPage
+      })
+    }
   }
 }

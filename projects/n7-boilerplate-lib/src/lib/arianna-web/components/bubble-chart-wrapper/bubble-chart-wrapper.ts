@@ -17,4 +17,10 @@ export class BubbleChartWrapperComponent {
   onClick(type, payload) {
     this.emit(type, payload);
   }
+  onMouseOut(type) {
+    this.emit(type);
+  }
+  onDestroy() {
+    console.log("destroyed");
+  }
 }
