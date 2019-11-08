@@ -15,7 +15,7 @@ export class AwLinkedObjectsDS extends DataSource {
     this.pageSize = this.options.size
     this.totalObjects = data.totalCount
     this.currentPage = this.options.page ? <number>this.options.page : 1
-    this.totalPages = Math.floor(data.length / this.pageSize)
+    this.totalPages = Math.ceil(data.items.length / this.pageSize)
     this.context = this.options.context
     this.loadedData = this.unpackData(data)
     this.checkForMore() // checks if <Show More> button should be enabled
