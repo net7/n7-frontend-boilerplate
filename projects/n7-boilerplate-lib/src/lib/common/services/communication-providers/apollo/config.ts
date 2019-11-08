@@ -87,11 +87,22 @@ export const ApolloProviderConfig = {
         id
         typeOfEntity
         fields {
-          id
-          label
-          fields {
+          ...
+          on KeyValueField {
             key
             value
+          }
+          ... on
+          KeyValueFieldGroup {
+            label
+            fields
+            {
+              ...
+              on KeyValueField {
+                key
+                value
+              }
+            }
           }
         }
         extraTab
@@ -99,7 +110,7 @@ export const ApolloProviderConfig = {
           text
           url
         }
-        items {
+        relatedItems {
           thumbnail
           item {
             label
@@ -158,10 +169,8 @@ export const ApolloProviderConfig = {
             }
           }
           fields {
-            id
             label
             fields {
-              id
               key
               value
             }

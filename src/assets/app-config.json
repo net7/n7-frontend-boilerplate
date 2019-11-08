@@ -142,6 +142,15 @@
       "label": "Concetti",
       "input-placeholder": "Cerca un concetto"
     },
+    "cose notevoli": {
+      "color": {
+        "hex": "#5eab7b",
+        "rgb": [94, 171, 123]
+      },
+      "icon": "n7-icon-lightbulb",
+      "label": "Cose notevoli",
+      "input-placeholder": "Cerca un concetto"
+    },
     "organizzazione": {
       "color": {
         "hex": "#c48731",

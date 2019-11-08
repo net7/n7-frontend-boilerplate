@@ -134,7 +134,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     console.log('Apollo responded with: ', { res })
     this.myResponse = res
     this.navHeader = { // always render nav header
-      icon: this.configuration.get("config-keys")[this.myResponse.typeOfEntity].icon,
+      icon: this.configuration.get("config-keys")[this.myResponse.typeOfEntity] ? this.configuration.get("config-keys")[this.myResponse.typeOfEntity].icon : "",
       text: this.myResponse.label,
       color: this.myResponse.typeOfEntity
     }
@@ -147,7 +147,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       containerId: 'bubble-chart-container-overview',
     });
     this.one('aw-entita-metadata-viewer').updateOptions({ context: this.selectedTab });
-    this.one('aw-entita-metadata-viewer').update(res.fieldsTab);
+    this.one('aw-entita-metadata-viewer').update(res.fields);
 
     if( this.selectedTab == 'oggetti-collegati' ) {
       this.one('aw-linked-objects').updateOptions({

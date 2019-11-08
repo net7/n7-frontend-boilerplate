@@ -6,12 +6,12 @@ export class AwEntitaMetadataViewerDS extends DataSource {
     /*
       // console.log('metadata options: ', this.options);
       - - -
-      Access and use this.options if the rendering 
+      Access and use this.options if the rendering
       changes based on context.
     */
-   
+   const unpackedData =  AwEntitaMetadataViewerDS.unpackFields(data);
     return {
-      group: AwEntitaMetadataViewerDS.unpackFields(data),
+      group: unpackedData,
     }
   }
 

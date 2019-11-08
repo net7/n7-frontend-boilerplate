@@ -157,7 +157,7 @@ export class AwBubbleChartDS extends DataSource {
 
         this.allBubbles.push({
           ...response.entitiesData[i],
-          color: this.options.configKeys[response.entitiesData[i].entity.typeOfEntity]['color']['hex']
+          color: this.options.configKeys[response.entitiesData[i].entity.typeOfEntity] ? this.options.configKeys[response.entitiesData[i].entity.typeOfEntity]['color']['hex'] : ""
         })
       }
 

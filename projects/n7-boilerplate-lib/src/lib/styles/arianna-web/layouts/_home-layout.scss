@@ -193,28 +193,28 @@
             }
         }
 
-        &.color-persone {
+        &.color-persona {
             .n7-facet-header__icon-left,
             .n7-facet-header__text {
                 color: $color-people;
             }
         }
 
-        &.color-luoghi {
+        &.color-luogo {
             .n7-facet-header__icon-left,
             .n7-facet-header__text {
                 color: $color-places;
             }
         }
 
-        &.color-concetti {
+        &.color-concetto {
             .n7-facet-header__icon-left,
             .n7-facet-header__text {
                 color: $color-concepts;
             }
         }
 
-        &.color-organizzazioni {
+        &.color-organizzazione {
             .n7-facet-header__icon-left,
             .n7-facet-header__text {
                 color: $color-organizations;
@@ -264,7 +264,7 @@
 
         .aw-home__facet-tippy-theme {
             padding: 0;
-            
+
             .tippy-content {
                 padding: 0;
             }
@@ -314,7 +314,7 @@
                     border-bottom: none;
                 }
             }
-            
+
         }
 
         &-list-wrapper {
