@@ -27,7 +27,7 @@
 
         &.is-sticky {
             .n7-tree {
-                height: calc(100% - 50px); /* space for sidebar header */
+                height: calc(100% - #{$sidebar-header-height}); /* space for sidebar header */
                 overflow-y: auto;
                 overflow-x: hidden;
             }
