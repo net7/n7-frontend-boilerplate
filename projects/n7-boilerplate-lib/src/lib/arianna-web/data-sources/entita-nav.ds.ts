@@ -5,7 +5,6 @@ export class AwEntitaNavDS extends DataSource {
   protected transform( param ){
     if (!param) return;
     const data = param.data
-    console.log('Entità nav with: ', { data })
     const selected = param.selected
     const navigation = { items: [], payload: 'entita-nav' }
 

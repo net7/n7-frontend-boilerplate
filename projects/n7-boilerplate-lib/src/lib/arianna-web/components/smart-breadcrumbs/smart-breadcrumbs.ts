@@ -61,7 +61,7 @@ export class SmartBreadcrumbsComponent implements AfterViewInit {
     @ViewChild('bcol', { read: ElementRef, static: false }) bcol: ElementRef
     @ViewChild('bcdiv', { read: ElementRef, static: false }) bcdiv: ElementRef
 
-    ngAfterViewInit() {
+    ngAfterViewInit = () => {
         let
             parentWidth = this.bcdiv.nativeElement.clientWidth,
             childWidth = this.bcol.nativeElement.clientWidth,
