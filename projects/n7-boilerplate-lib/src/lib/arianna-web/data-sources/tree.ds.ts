@@ -132,7 +132,7 @@ export class AwTreeDS extends DataSource {
 
       treeItem['items'] = [];
       data[key].forEach( item => {
-        if ( item['img'] != "" ) {
+        if ( item['img'] != "" && item['img'] != null ) {
           treeItem['iconright'] = "n7-icon-images";
         }
 
