@@ -4,6 +4,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
   protected configuration: any;
   protected mainState: any;
   protected router: any;
+  protected location: any;
   protected titleService: any;
 
   public options: any;
@@ -15,19 +16,23 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
   public currentId: string; // selected entity (url param)
   public currentPage: any; // pagination value (url param)
   public pageSize: number = 10; // linked objects page size
+  public bubblesSize: number = 10; // related entities (bubbles) page size
   public bubblesEnabled: boolean;
 
   private communication: any;
 
-  onInit({ configuration, mainState, router, options, titleService, communication }) {
+  onInit({ configuration, mainState, router, location, options, titleService, communication }) {
     this.communication = communication;
     this.configuration = configuration;
     this.mainState = mainState;
     this.options = options;
     this.router = router;
+    this.location = location;
     this.titleService = titleService;
+    this.currentId = "";
+    this.currentPage = 1;
     this.bubblesEnabled = this.configuration.get('features-enabled') ? this.configuration.get('features-enabled')['bubblechart'] : false;
-
+    this.bubblesSize = this.configuration.get('entita-layout') ? this.configuration.get('entita-layout')['max-bubble-num'] : this.bubblesSize;
   }
 
   getNavigation(id) {
@@ -40,26 +45,47 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     })
   }
 
+  /*
+    Updates selected tab on tab change
+  */
   handleNavUpdate = tab => {
-    /*
-      Updates selected tab on tab change
-    */
     this.selectedTab = tab
     this.updateWidgets(this.myResponse)
+    const page = tab == 'oggetti-collegati' ? "/1" : "";
+
+    if(tab == 'oggetti-collegati' ){
+      this.one('aw-linked-objects').updateOptions({
+        context: this.selectedTab,
+        config: this.configuration,
+        page: this.currentPage,
+        pagination: true,
+        size: this.pageSize,
+      })
+      this.one('aw-linked-objects').update(this.myResponse);
+    }
+
+    this.location.go(
+      this.configuration.get("paths").entitaBasePath
+        +
+        this.currentId
+        + '/'
+        + tab
+        + page
+    )
   }
 
+  /*
+    Updates the widgets on this layout, based on route
+  */
   updateWidgets(data) {
-    /*
-      Updates the widgets on this layout, based on route
-    */
     const selected = this.selectedTab
     this.one('aw-entita-nav').update({ data, selected })
   }
 
+  /*
+    Loads the data for the selected nav item, into the adjacent text block.
+  */
   loadItem(id, tab) {
-    /*
-      Loads the data for the selected nav item, into the adjacent text block.
-    */
     if (id && tab) {
       this.currentId = id // store selected item from url
       this.selectedTab = tab // store selected tab from url
@@ -94,7 +120,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
         });
         this.one('aw-entita-metadata-viewer').updateOptions({ context: this.selectedTab });
         this.one('aw-entita-metadata-viewer').update(res.fieldsTab);
-        this.one('aw-linked-objects').updateOptions({ 
+        this.one('aw-linked-objects').updateOptions({
           size: 3,
           config: this.configuration,
           context: 'entita'
