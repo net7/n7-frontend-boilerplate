@@ -38,7 +38,7 @@
                         <h2 class="aw-entity__content-section-title">Campi</h2>
                         <button
                             class="n7-btn n7-btn-light" (click)="lb.eventHandler.emitInner('showmore', 'campi')"
-                            [hidden]="lb.dataSource.selectedTab == 'campi'"
+                            *ngIf="lb.dataSource.selectedTab == 'overview'"
                         >
                             TUTTI I CAMPI <i class="n7-icon-angle-right"></i>
                         </button>
@@ -56,7 +56,7 @@
                     <h2 class="aw-entity__content-section-title">Oggetti collegati</h2>
 
                     <button class="n7-btn n7-btn-light"
-                    [hidden]="lb.dataSource.selectedTab == 'oggetti-collegati'"
+                    *ngIf="lb.dataSource.selectedTab == 'overview'"
                         (click)="lb.eventHandler.emitInner('showmore', 'oggetti-collegati')">
                         TUTTI GLI OGGETTI COLLEGATI <i class="n7-icon-angle-right"></i>
                     </button>
@@ -87,7 +87,10 @@
             >
                 <div class="aw-entity__content-section-header">
                     <h2 class="aw-entity__content-section-title">Entità collegate</h2>
-                    <button class="n7-btn n7-btn-light" (click)="lb.eventHandler.emitInner('showmore', 'entita-collegate')">
+                    <button class="n7-btn n7-btn-light"
+                    (click)="lb.eventHandler.emitInner('showmore', 'entita-collegate')"
+                    *ngIf="lb.dataSource.selectedTab == 'overview'"
+                    >
                         TUTTE LE ENTITÀ COLLEGATE <i class="n7-icon-angle-right"></i>
                     </button>
                 </div>
