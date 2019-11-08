@@ -87,15 +87,23 @@
     },
     "metadata": {
       "title": "Metadati"
+    },
+    "tree": {
+      "icon-expand": "n7-icon-angle-right",
+      "icon-collapse": "n7-icon-angle-down",
+      "icon-image": "n7-icon-image"
     }
   },
   "search-layout": {
     "title": "Cerca nel patrimonio",
     "results": [
-      "Nessun risultato", 
+      "Nessun risultato",
       "Risultato",
       "Risultati"
     ]
+  },
+  "entita-layout": {
+    "max-bubble-num": 30
   },
   "config-keys": {
     "people": {

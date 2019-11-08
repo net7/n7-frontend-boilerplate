@@ -193,6 +193,6 @@ export class AwLinkedObjectsDS extends DataSource {
         isLoading: false,
       }
     }
-    return result;
+    return {previews: result};
   }
 }
