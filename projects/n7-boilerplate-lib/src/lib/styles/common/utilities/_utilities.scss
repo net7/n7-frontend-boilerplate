@@ -1,0 +1,35 @@
+/**
+ * UTILITIES
+ *
+ * Helper classes for the projects, in order to manage various behaviour 
+ * ex. sticky sidebar
+ *
+ */
+
+/* ------------------------------------ *\
+   #STICKY-SIDEBAR
+\* ------------------------------------ */
+.is-sticky {
+    align-self: start; /* get the component have its content height when in grid layout */
+    position: sticky;
+    top: 0;
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: $breakpoint-laptop) {
+}
+
+@media all and (max-width: $breakpoint-ipad-portrait) {
+}
+
+@media all and (max-width: $breakpoint-smartphone-landscape) {
+}
+
+@media all and (max-width: $breakpoint-smartphone-portrait) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}

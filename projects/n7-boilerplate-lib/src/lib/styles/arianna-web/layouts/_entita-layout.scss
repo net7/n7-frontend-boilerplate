@@ -73,13 +73,17 @@
     }
 
     &__sidebar {
-        align-self: start; /* in order to give the element its content height, otherwise it will be fullheight and it won't look sticky */
-        position: sticky;  /* not supported in explorer 11 */
-        top: 0;
-
         .n7-nav {
             background-color: $color-background-base;
             box-shadow: 0 2px 20px 0 rgba(0,0,0,0.08);
+        }
+
+        &.is-sticky {
+            .n7-nav {
+                height: calc(100% - 70px); /* space for sidebar header */
+                overflow-y: auto;
+                overflow-x: hidden;
+            }
         }
 
         .n7-nav__item {
