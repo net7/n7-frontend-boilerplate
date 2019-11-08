@@ -9,6 +9,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   private configuration: any;
   private facetData: any[] = null;
   private lockedFacets = {};
+  private lockLastFacet: boolean = false;
   private facetInputs: any = {};
   // all the bubbles as they have been given by apollo
   // (the objects in the allBubbles are not the same bubble objects
@@ -218,7 +219,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       onError: (error) => console.error(error),
       params: {
         selectedEntitiesIds: this.selectedEntitiesIds,
-        itemsPagination: { 
+        itemsPagination: {
           offset: 0,
           limit: this.resultsLimit
         }
@@ -275,6 +276,9 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     this.facetData.forEach(f => {
       if (f.type.id === facetId && f.locked === true) {
         // if user clicked on a locked facet, ignore it
+        return
+      }
+      if (f.type.id === facetId && f.enabled === true && enabledFacets < 1) {
         return
       }
       if (f.type.id === facetId) {

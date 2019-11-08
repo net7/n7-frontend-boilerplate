@@ -39,20 +39,9 @@
         margin: 0;
         font-size: $font-size-xxl;
 
-        &-wrapper {
-            background: $entity-sidebar-title-background;
-            border-top: 1px solid $color-border-light;
-            border-right: 1px solid $color-border-light;
-            border-left: 1px solid $color-border-light;
-        }
-
         .aw-entity__sidebar-title-icon {
             margin-right: $space;
             // vertical-align: middle;
-        }
-
-        &-text {
-            font-weight: $font-weight-black;
         }
 
         .color-people & {
@@ -70,7 +59,17 @@
         .color-concepts & {
             color: $color-concepts;
         }
+    }
 
+    &__sidebar-title-wrapper {
+        background: $entity-sidebar-title-background;
+        border-top: 1px solid $color-border-light;
+        border-right: 1px solid $color-border-light;
+        border-left: 1px solid $color-border-light;
+    }
+
+    &__sidebar-title-text {
+        font-weight: $font-weight-black;
     }
 
     &__sidebar {
@@ -139,48 +138,40 @@
     &__content-section {
         padding: $space*3;
         border-bottom: 2px solid $color-border-light;
+    }
 
-        &-header {
-            display: flex;
-            margin-bottom: $space*2.6;
-            align-items: center;
+    &__content-section-header {
+        display: flex;
+        margin-bottom: $space*2.6;
+        align-items: center;
 
-            .n7-btn {
-                margin-left: auto;
-            }
-
-            &-decorated {
-                padding-bottom: calc(#{$space}*3 - 0.3em);
-                border-bottom: 1px solid $color-border-light;
-            }
+        .n7-btn {
+            margin-left: auto;
         }
 
-        &-title {
-            font-weight: $font-weight-normal;
-            font-size: $font-size-xxl;
+        &-decorated {
+            padding-bottom: calc(#{$space}*3 - 0.3em);
+            border-bottom: 1px solid $color-border-light;
         }
+    }
 
-        &-overview {
-            .n7-metadata-viewer {
-                &__group {
-                    margin-bottom: $space*2.5;
-                }
+    &__content-section-title {
+        font-weight: $font-weight-normal;
+        font-size: $font-size-xxl;
+    }
 
-                &__item {
-                    display: grid;
-                    grid-template-columns: 1fr 2fr;
-                    margin-bottom: $space*2.5;
-                }
-
+    &__content-section-overview {
+        .n7-metadata-viewer {
+            &__group {
+                margin-bottom: $space*2.5;
             }
-        }
 
-        > *:last-child {
-            > .n7-item-preview {
-                margin-bottom: 0;
-                padding-bottom: 0;
-                border-bottom: none;
+            &__item {
+                display: grid;
+                grid-template-columns: 1fr 2fr;
+                margin-bottom: $space*2.5;
             }
+
         }
     }
 
@@ -198,26 +189,7 @@
 
     .n7-breadcrumbs {
         padding: 0;
-
-        // &__item {
-        //     font-size: $font-size-s;
-
-        //     &:first-of-type {
-        //         .n7-breadcrumbs__label {
-        //             padding-left: 0;
-        //         }
-        //     }
-
-        //     &:last-of-type {
-        //         a {
-        //             color: $color-text-light;
-        //         }
-        //     }
-        // }
-
-        // &__label {
-        //     color: $color-text-light;
-        // }
+        background-color: transparent;
     }
 
     .n7-metadata-viewer {
@@ -239,6 +211,29 @@
                     margin-left: $space*3;
                 }
             }
+        }
+    }
+
+    /* List of objects in overview and Related Objects subpage */
+    &__overview-objects,
+    &__content-section-objects {
+        .n7-item-preview {
+            margin-top: 0;
+            padding-top: $space;
+        }
+
+        .aw-entity__content-section-list  {
+            > *:last-child {
+                > .n7-item-preview {
+                    padding-bottom: 0;
+                    margin-bottom: 0;
+                    border-bottom: none;
+                }
+            }
+        }
+
+        .n7-pagination {
+            margin-top: $space*4;
         }
     }
 }
