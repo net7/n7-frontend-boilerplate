@@ -3,8 +3,10 @@ import { DataSource } from '@n7-frontend/core';
 export class AwTreeDS extends DataSource {
 
   public currentItem: string;
+  public icons: any;
 
   protected transform(data) {
+    this.icons = this.options.icons
     return data;
   }
 

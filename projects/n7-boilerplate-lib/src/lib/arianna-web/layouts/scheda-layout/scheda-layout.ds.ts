@@ -31,7 +31,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   * If you are not using these variables (from your-layout.ts),
   * remove them from onInit() parameters and inside the function.
   */
-  onInit({configuration, mainState, router, options, titleService, communication }) {
+  onInit({ configuration, mainState, router, options, titleService, communication }) {
     this.configuration = configuration;
     this.mainState = mainState;
     this.router = router;
@@ -50,17 +50,17 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     this.mainState.updateCustom('currentNav', 'aw/patrimonio');
   }
 
-  getNavigation( id ) {
+  getNavigation(id) {
     return this.communication.request$('getTree', {
       onError: (error) => console.error(error),
       params: { treeId: id }
     })
   }
 
-  updateNavigation( data ) {
+  updateNavigation(data) {
     let header = {
       iconLeft: 'n7-icon-tree-icon',
-      text:  data['label'],
+      text: data['label'],
       iconRight: 'n7-icon-angle-left',
       classes: 'is-expanded',
       payload: 'header'
@@ -68,10 +68,10 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     this.one('aw-sidebar-header').update(header);
   }
 
-  loadItem( id ) {
-    if ( id ) {
+  loadItem(id) {
+    if (id) {
       const maxSimilarItems = this.configuration.get('scheda-layout')['related-items']['max-related-items'];
-      return  this.communication.request$('getItemDetails', {
+      return this.communication.request$('getItemDetails', {
         onError: (error) => console.error(error),
         params: { itemId: id, maxSimilarItems: maxSimilarItems }
       })
@@ -91,20 +91,23 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
         }
       ]
     }
-     /*Breadcrumb section*/
-     let breadcrumbs = {
+    /*Breadcrumb section*/
+    let breadcrumbs = {
       items: []
     };
     this.one('aw-scheda-breadcrumbs').update(breadcrumbs);
   }
 
   loadContent(response) {
-      if(response){
-        console.log('(Scheda) Apollo responded with: ', response)
-        this.contentParts = [];
-        let content = {};
+    if (response) {
+      console.log('(Scheda) Apollo responded with: ', response)
+      this.contentParts = [];
+      let content = {};
 
-        /* Related Entities */
+      this.one('aw-tree').updateOptions({
+        icons: this.configuration.get('scheda-layout')['tree']
+      })
+      /* Related Entities */
       this.one('aw-bubble-chart').updateOptions({
         context: 'scheda',
         configKeys: this.configuration.get("config-keys"),
@@ -112,108 +115,108 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
         containerId: 'bubble-chart-container',
       });
 
-        if ( response.text ){
-          content['content'] = response.text;
+      if (response.text) {
+        content['content'] = response.text;
+      }
+      this.contentParts.push(content);
+      if (response.image) {
+        const images = [{ type: 'image', url: response.image, buildPyramid: false }];
+        if (!this.imageViewerIstance) {
+          this.one('aw-scheda-image').update({
+            viewerId: 'scheda-layout-viewer',
+            _setViewer: (viewer) => {
+              this.imageViewerIstance = viewer;
+              viewer.open(images);
+            },
+          });
+        } else {
+          this.imageViewerIstance.open(images);
         }
-        this.contentParts.push(content);
-        if ( response.image ) {
-          const images =  [{type: 'image', url: response.image, buildPyramid: false}];
-          if( !this.imageViewerIstance ) {
-            this.one('aw-scheda-image').update({
-              viewerId: 'scheda-layout-viewer',
-              _setViewer : (viewer) => {
-                this.imageViewerIstance = viewer;
-                viewer.open(images);
-              },
-            });
-          } else {
-            this.imageViewerIstance.open(images);
+      }
+
+      let titleObj = {
+        icon: response.item.icon,
+        title: {
+          main: {
+            text: response.title,
+            classes: 'bold',
           }
-        }
+        },
+        tools: response.subTitle,
+        actions: {}
+      };
 
-        let titleObj = {
-          icon: response.item.icon,
-          title: {
-            main: {
-              text: response.title,
-              classes: 'bold',
+      this.one('aw-scheda-inner-title').update(titleObj);
+
+      /*Metadata section*/
+      let group = { group: [] };
+
+      this.hasMetadata = response.fields != null;
+      if (this.hasMetadata) {
+        response.fields.forEach(field => {
+          let items = [];
+          field.fields.forEach(item => {
+            items.push({ label: item.key, value: item.value })
+          });
+
+          group.group.push(
+            {
+              title: field.label,
+              items: items
             }
-          },
-          tools: response.subTitle,
-          actions: {}
-        };
-
-        this.one('aw-scheda-inner-title').update(titleObj);
-
-        /*Metadata section*/
-        let group = { group: [] };
-
-        this.hasMetadata = response.fields != null;
-        if (  this.hasMetadata ){
-          response.fields.forEach(field => {
-            let items = [];
-            field.fields.forEach(item => {
-              items.push( { label: item.key, value: item.value} )
-            });
-
-            group.group.push(
-              {
-                title: field.label,
-                items: items
-              }
-            );
+          );
         });
       }
       this.one('aw-scheda-metadata').update(group);
 
       /*Breadcrumb section*/
-        let breadcrumbs = {
-          items: []
-        };
+      let breadcrumbs = {
+        items: []
+      };
 
-        response.breadcrumbs.forEach(element => {
-          breadcrumbs.items.push({
-            label: element.label,
-            payload: element.link
-          })
-        });
-        this.one('aw-scheda-breadcrumbs').update(breadcrumbs);
-      }
+      response.breadcrumbs.forEach(element => {
+        breadcrumbs.items.push({
+          label: element.label,
+          payload: element.link
+        })
+      });
+      this.one('aw-scheda-breadcrumbs').update(breadcrumbs);
+    }
 
-      /*if ( response.connectedEntities ) {
-        this.hasBubbles = true;
-        this.setAllBubblesFromApolloQuery(response);
-      } else {
-        this.hasBubbles = false;
-        this.one('aw-scheda-bubble-chart').update(null);
-      }*/
+    /*if ( response.connectedEntities ) {
+      this.hasBubbles = true;
+      this.setAllBubblesFromApolloQuery(response);
+    } else {
+      this.hasBubbles = false;
+      this.one('aw-scheda-bubble-chart').update(null);
+    }*/
 
-      /* Similar item */
-      if ( response.items ) {
-        this.hasSimilarItems = true;
-        this.one('aw-linked-objects').updateOptions({ context: 'scheda', config: this.configuration })
-        this.one('aw-linked-objects').update(response);
-      } else {
-        this.hasSimilarItems = false;
-        this.one('aw-linked-objects').update(null);
-      }
+    /* Similar item */
+    if (response.items) {
+      this.hasSimilarItems = true;
+      this.one('aw-linked-objects').updateOptions({ context: 'scheda', config: this.configuration })
+      this.one('aw-linked-objects').update(response);
+    } else {
+      this.hasSimilarItems = false;
+      this.one('aw-linked-objects').update(null);
+    }
   }
 
   collapseSidebar() {
     this.sidebarCollapsed = !this.sidebarCollapsed;
   }
 
-  setAllBubblesFromApolloQuery( response: any, reset?: boolean ){
-    if ( !response || !response.connectedEntities ) { return; }
+  setAllBubblesFromApolloQuery(response: any, reset?: boolean) {
+    if (!response || !response.connectedEntities) { return; }
     this.allBubbles = [];
 
-    for ( let i = 0; i < response.connectedEntities.length; i++ ){
+    for (let i = 0; i < response.connectedEntities.length; i++) {
 
       const color = this.configuration.get('config-keys')[response.connectedEntities[i].entity.typeOfEntity.configKey] ? this.configuration.get('config-keys')[response.connectedEntities[i].entity.typeOfEntity.configKey]['color']['hex'] : "";
 
       this.allBubbles.push(
         {
-          id: this.convertEntityIdToBubbleId( response.connectedEntities[i].entity.id ),
+          id: this.convertEntityIdToBubbleId(response.connectedEntities[i].entity.id),
           ...response.connectedEntities[i],
           color: color
         });
@@ -222,13 +225,13 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       containerId: 'bubble-chart-container',
       width: window.innerWidth / 1.8,
       bubbles: this.allBubbles,
-      reset: ( reset ? reset : false )
+      reset: (reset ? reset : false)
     });
   }
 
-  private convertEntityIdToBubbleId( entityId: string ): string {
-    if( !entityId ) return null;
-    return ( 'B_' + entityId.replace(/-/g, '_') );
+  private convertEntityIdToBubbleId(entityId: string): string {
+    if (!entityId) return null;
+    return ('B_' + entityId.replace(/-/g, '_'));
   }
 
 

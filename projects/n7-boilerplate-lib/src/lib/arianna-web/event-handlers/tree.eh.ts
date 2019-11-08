@@ -20,7 +20,13 @@ export class AwTreeEH extends EventHandler {
           case 'aw-sidebar-header.click': this.dataSource.toggleSidebar(); break;
           case 'aw-scheda-layout.selectItem':
             this.dataSource.selectTreeItem( payload );
-            this.dataSource.updateTree( null, this.dataSource.currentItem.payload.parents, payload ); break;
+            if (typeof this.dataSource.currentItem !== 'undefined') {
+              this.dataSource.updateTree( null, this.dataSource.currentItem.payload.parents, payload ); 
+            } else {
+              console.warn('The object in the URL does not exist.')
+              // Maybe navigate to 404 here.
+            }
+            break;
           case 'aw-scheda-layout.navigationresponse':
             this.dataSource.parseData(payload); break;
           }
