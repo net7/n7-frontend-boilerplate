@@ -18,6 +18,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
   public pageSize: number = 10; // linked objects page size
   public bubblesSize: number = 10; // related entities (bubbles) page size
   public bubblesEnabled: boolean;
+  public bubbleLoaded: boolean;
 
   private communication: any;
 
@@ -31,6 +32,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     this.titleService = titleService;
     this.currentId = "";
     this.currentPage = 1;
+    this.bubbleLoaded = false;
     this.bubblesEnabled = this.configuration.get('features-enabled') ? this.configuration.get('features-enabled')['bubblechart'] : false;
     this.bubblesSize = this.configuration.get('entita-layout') ? this.configuration.get('entita-layout')['max-bubble-num'] : this.bubblesSize;
   }
@@ -62,6 +64,17 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
         size: this.pageSize,
       })
       this.one('aw-linked-objects').update(this.myResponse);
+    } else if (tab == "overview") {
+      this.one('aw-linked-objects').updateOptions({
+        size: 3,
+        config: this.configuration,
+        context: 'entita'
+      })
+      this.one('aw-linked-objects').update(this.myResponse);
+    }
+
+    if(tab == "overview" || tab == "entita-collegate"){
+      setTimeout( () => { this.updateBubbes(this.myResponse) } , 800 );
     }
 
     this.location.go(
@@ -80,6 +93,12 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
   updateWidgets(data) {
     const selected = this.selectedTab
     this.one('aw-entita-nav').update({ data, selected })
+  }
+  updateBubbes(data) {
+    if(!this.bubbleLoaded){
+      this.one('aw-bubble-chart').update(data);
+      this.bubbleLoaded = true;
+    }
   }
 
   /*
@@ -109,62 +128,30 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     }
 
     this.one('aw-entita-nav').updateOptions({bubblesEnabled: this.bubblesEnabled});
+    this.one('aw-bubble-chart').updateOptions({
+      context: 'scheda',
+      configKeys: this.configuration.get('config-keys'),
+      bubbleContainerId: 'overviewBubbleChartContainer',
+      containerId: 'bubble-chart-container-overview',
+    });
+    this.one('aw-entita-metadata-viewer').updateOptions({ context: this.selectedTab });
+    this.one('aw-entita-metadata-viewer').update(res.fieldsTab);
 
-    switch (this.selectedTab) { // make dynamic content depending on request
-      case 'overview': {
-        this.one('aw-bubble-chart').updateOptions({
-          context: 'scheda',
-          configKeys: this.configuration.get('config-keys'),
-          bubbleContainerId: 'overviewBubbleChartContainer',
-          containerId: 'bubble-chart-container-overview',
-        });
-        this.one('aw-entita-metadata-viewer').updateOptions({ context: this.selectedTab });
-        this.one('aw-entita-metadata-viewer').update(res.fieldsTab);
-        this.one('aw-linked-objects').updateOptions({
-          size: 3,
-          config: this.configuration,
-          context: 'entita'
-        })
-        this.one('aw-linked-objects').update(res);
-      } break;
-
-      case 'campi': {
-        this.one('aw-entita-metadata-viewer').updateOptions({ context: this.selectedTab });
-        this.one('aw-entita-metadata-viewer').update(res.fieldsTab);
-      } break;
-
-      case 'oggetti-collegati': {
-        this.one('aw-linked-objects').updateOptions({
-          context: this.selectedTab,
-          config: this.configuration,
-          page: this.currentPage,
-          pagination: true,
-          size: this.pageSize,
-        })
-        this.one('aw-linked-objects').update(res);
-      } break;
-
-      case 'entita-collegate': {
-        this.one('aw-bubble-chart').updateOptions({
-          context: 'scheda',
-          configKeys: this.configuration.get('config-keys'),
-          bubbleContainerId: 'bubbleChartContainer',
-          containerId: 'bubble-chart-container',
-        });
-      } break;
-
-      case 'maxxi': {
-        // maxxi
-      } break;
-
-      case 'wiki': {
-        // wiki
-      } break;
-
-      default:
-        // the url is aw/entita/something/ ??? → unknown
-        console.warn('Unhandled navigation page');
-        break;
+    if( this.selectedTab == 'oggetti-collegati' ) {
+      this.one('aw-linked-objects').updateOptions({
+        context: this.selectedTab,
+        config: this.configuration,
+        page: this.currentPage,
+        pagination: true,
+        size: this.pageSize,
+      })
+    } else {
+      this.one('aw-linked-objects').updateOptions({
+        size: 3,
+        config: this.configuration,
+        context: 'entita'
+      })
     }
+    this.one('aw-linked-objects').update(res);
   }
 }

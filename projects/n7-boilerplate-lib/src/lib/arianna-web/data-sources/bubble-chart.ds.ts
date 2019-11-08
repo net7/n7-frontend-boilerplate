@@ -126,7 +126,7 @@ export class AwBubbleChartDS extends DataSource {
     return bubblesData;
   }
 
-  setAllBubblesFromApolloQuery(data: any, reset?: boolean ) {
+  setAllBubblesFromApolloQuery( data: any, reset = true ) {
     const response = data.source;
    // if ( !response || !response.entitiesData ) {return; }
     this.allBubbles = [];
@@ -180,7 +180,9 @@ export class AwBubbleChartDS extends DataSource {
       }
     });
 
-    this.update(data);
+    if(reset) {
+      this.update(data);
+    }
   }
 
   private convertEntityIdToBubbleId(entityId: string): string {

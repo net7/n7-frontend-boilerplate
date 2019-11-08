@@ -16,14 +16,14 @@ export class AwEntitaLayoutEH extends EventHandler {
           this.configuration = payload.configuration;
           this.route = payload.route;
           this.entityId = this.route.snapshot.params.id || "";
-          this.dataSource.currentPage = this.route.snapshot.params.page || '';
+          this.dataSource.currentPage = this.route.snapshot.params.page || 1;
           this.listenRoute(this.entityId);
           //this.loadNavigation(this.entityId);
           break;
 
         case 'aw-entita-layout.destroy':
           this.destroyed$.next();
-          break;
+        break;
 
         case 'aw-entita-layout.showmore':
           if (payload) {
@@ -52,15 +52,7 @@ export class AwEntitaLayoutEH extends EventHandler {
           if (payload) {
             this.dataSource.selectedTab = payload;
             this.dataSource.handleNavUpdate(payload)
-            /*const page = payload == 'oggetti-collegati' ? "/1" : "";
-            this.dataSource.location.go(
-              this.configuration.get("paths").entitaBasePath
-                +
-                this.entityId
-                + '/' +
-                payload
-                + page
-            )*/
+
           }
           break;
         case 'aw-linked-objects.pagination':
@@ -87,6 +79,11 @@ export class AwEntitaLayoutEH extends EventHandler {
             path: [`aw/entita/${payload.entityId}/overview`]
           });
           break;
+          case 'aw-bubble-chart.bubble-filtered':
+            if (this.dataSource.selectedTab == "overview" || this.dataSource.selectedTab == "entita-collegate") {
+              this.dataSource.updateBubbes(payload);
+            }
+          break
         default:
           break;
       }
@@ -108,8 +105,13 @@ export class AwEntitaLayoutEH extends EventHandler {
           if (res) {
             this.dataSource.loadContent(res);
             res['connectedEntities'] = res.entities
-            let connectedEntities = { source: res };
+            let connectedEntities = {
+              source: res,
+              reload: false
+            };
+
             this.emitOuter('filterbubbleresponse', connectedEntities);
+
             this.dataSource.updateWidgets(res);
             if (selectedItem) {
               this.emitOuter('selectItem', selectedItem);

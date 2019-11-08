@@ -61,7 +61,7 @@ export class AwBubbleChartEH extends EventHandler {
         case 'aw-entita-layout.filterbubbleresponse':
         case 'aw-home-layout.filterbubbleresponse':
           if( payload.source ){
-            this.dataSource.setAllBubblesFromApolloQuery(payload);
+            this.dataSource.setAllBubblesFromApolloQuery(payload, payload.reload);
             this.emitOuter('bubble-filtered',
             {
               'allBubbles': this.dataSource.getAllBubbles(),

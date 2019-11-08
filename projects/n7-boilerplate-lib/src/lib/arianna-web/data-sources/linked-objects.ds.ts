@@ -188,6 +188,6 @@ export class AwLinkedObjectsDS extends DataSource {
         actions
       }
     }
-    return result;
+    return {previews: result};
   }
 }
