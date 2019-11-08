@@ -87,6 +87,9 @@
     },
     "metadata": {
       "title": "Metadati"
+    },
+    "tree": {
+      "icon-image": "n7-icon-image"
     }
   },
   "search-layout": {

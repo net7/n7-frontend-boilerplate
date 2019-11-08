@@ -100,8 +100,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
   loadContent(response) {
       if(response){
-        console.log( "apollo response: ");
-        console.log(response);
+        console.log('(Scheda) Apollo responded with: ', response)
         this.contentParts = [];
         let content = {};
 

@@ -4,10 +4,6 @@ export class AwTreeDS extends DataSource {
 
   public currentItem: string;
 
-  toggleNav() {
-
-  }
-
   protected transform(data) {
     return data;
   }
@@ -19,7 +15,7 @@ export class AwTreeDS extends DataSource {
     data.items.forEach( (it) => {
       const classes = it['classes'];
       if( it['_meta'] == id ) {
-        if ( classes.indexOf('is-expanded') > -1 ) {
+        if ( classes && classes.indexOf('is-expanded') > -1 ) {
           it['classes'] = classes.replace(/is-expanded/g, 'is-collapsed');
           if ( it['toggle'] ){
             it['toggle']['icon'] = 'n7-icon-angle-right';
@@ -30,7 +26,7 @@ export class AwTreeDS extends DataSource {
             it['toggle']['icon'] = 'n7-icon-angle-down';
           }
         }
-      } else if ( parents.indexOf( it['_meta'] ) >= 0 ) {
+      } else if ( parents && parents.indexOf( it['_meta'] ) >= 0 ) {
           it['classes'] = classes + ' is-expanded';
       }
       if( typeof it['items'] != 'undefined' && it['items'].length > 0 ) {
@@ -74,7 +70,7 @@ export class AwTreeDS extends DataSource {
     this.update(sidebarData);
   }
 
-  private parseData(data) {
+  public parseData(data) {
     let treeObj = {
       items: []
     };
