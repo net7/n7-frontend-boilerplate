@@ -131,7 +131,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
   }
 
   loadContent(res) {
-    console.log('Apollo responded with: ', { res })
+    console.log('(entita) Apollo responded with: ', { res })
     this.myResponse = res
     this.navHeader = { // always render nav header
       icon: this.configuration.get("config-keys")[this.myResponse.typeOfEntity] ? this.configuration.get("config-keys")[this.myResponse.typeOfEntity].icon : "",

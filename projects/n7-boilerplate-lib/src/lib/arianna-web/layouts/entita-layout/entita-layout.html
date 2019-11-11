@@ -8,10 +8,12 @@
             </h1>
         </div>
         <!-- Navigation -->
-        <n7-nav [data]="lb.widgets['aw-entita-nav'].ds.out$ | async" [emit]="lb.widgets['aw-entita-nav'].emit">
+        <n7-nav
+            [data]="lb.widgets['aw-entita-nav'].ds.out$ | async" 
+            [emit]="lb.widgets['aw-entita-nav'].emit">
         </n7-nav>
     </div>
-<!-- lb.dataSource.selectedTab -->
+    <!-- lb.dataSource.selectedTab -->
     <div class="aw-entity__content">
         <section>
             <div class="aw-entity__content-section" [hidden]="lb.dataSource.selectedTab != 'overview'">
@@ -50,8 +52,7 @@
             </ng-container>
 
             <div class="aw-entity__content-section aw-entity__content-section-overview"
-            [hidden]="lb.dataSource.selectedTab != 'overview' && lb.dataSource.selectedTab != 'oggetti-collegati'"
-            >
+                [hidden]="lb.dataSource.selectedTab != 'overview' && lb.dataSource.selectedTab != 'oggetti-collegati'">
                 <div class="aw-entity__content-section-header">
                     <h2 class="aw-entity__content-section-title">Oggetti collegati</h2>
 
@@ -83,14 +84,12 @@
 
             <div class="aw-entity__content-section aw-entity__content-section-overview"
                 *ngIf="lb.dataSource.bubblesEnabled"
-                [hidden]="lb.dataSource.selectedTab != 'overview' && lb.dataSource.selectedTab != 'entita-collegate'"
-            >
+                [hidden]="lb.dataSource.selectedTab != 'overview' && lb.dataSource.selectedTab != 'entita-collegate'">
                 <div class="aw-entity__content-section-header">
                     <h2 class="aw-entity__content-section-title">Entità collegate</h2>
                     <button class="n7-btn n7-btn-light"
                     (click)="lb.eventHandler.emitInner('showmore', 'entita-collegate')"
-                    *ngIf="lb.dataSource.selectedTab == 'overview'"
-                    >
+                    *ngIf="lb.dataSource.selectedTab == 'overview'">
                         TUTTE LE ENTITÀ COLLEGATE <i class="n7-icon-angle-right"></i>
                     </button>
                 </div>
@@ -106,8 +105,7 @@
             </div>
             <div class="aw-entity__content-section aw-entity__content-section-maxxi"
                 *ngIf="lb.dataSource.myResponse.extraTab"
-                [hidden]="lb.dataSource.selectedTab != 'maxxi'"
-            >
+                [hidden]="lb.dataSource.selectedTab != 'maxxi'">
                 <div class="aw-entity__content-section-header aw-entity__content-section-header-decorated">
                     <h2 class="aw-entity__content-section-title">Descrizione Maxxi</h2>
                 </div>
@@ -117,8 +115,7 @@
             </div>
             <div class="aw-entity__content-section aw-entity__content-section-wiki"
             *ngIf="lb.dataSource.myResponse.wikiTab"
-            [hidden]="lb.dataSource.selectedTab != 'wiki'"
-            >
+            [hidden]="lb.dataSource.selectedTab != 'wiki'">
                 <div class="aw-entity__content-section-header aw-entity__content-section-header-decorated">
                     <h2 class="aw-entity__content-section-title">Descrizione Wikipedia</h2>
                 </div>

@@ -20,7 +20,7 @@ export class AwEntitaNavDS extends DataSource {
         classes: selected == 'campi' ? 'is-selected' : ''
       })
     }
-    if (data.items) {
+    if (data.relatedItems) {
       navigation.items.push({
         text: 'OGGETTI-COLLEGATI',
         payload: 'oggetti-collegati',
