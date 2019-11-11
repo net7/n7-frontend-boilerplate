@@ -217,6 +217,11 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         concepts: false,
         organizations: false,
       }
+
+      if ( this.selectedBubbles.length <= 0 ){
+        this.selectedEntitiesIds = [];
+      }
+
       this.selectedBubbles.forEach((sB) => {
         let c = sB.color
         let findTypeFromColor = (obj, color) => {
@@ -227,6 +232,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         if (entityId)
           this.selectedEntitiesIds.push(entityId);
       });
+
       this.lockedFacets = activeBubbles
       this.one('aw-home-facets-wrapper').update({
         facetData: this.facetData,

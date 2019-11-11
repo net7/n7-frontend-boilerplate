@@ -62,7 +62,7 @@ export class AwHomeLayoutEH extends EventHandler {
           if (!payload || !payload.entityId) return;
           this.emitGlobal('navigate', {
             handler: 'router',
-            path: [`aw/entita/${payload.entityId}/overview`]
+            path: [`aw/entita/${payload.entityId}`]
           });
           break;
         case "aw-bubble-chart.bubble-tooltip-select-click":
