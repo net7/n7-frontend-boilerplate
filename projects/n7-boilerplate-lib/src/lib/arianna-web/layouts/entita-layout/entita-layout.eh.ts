@@ -78,12 +78,15 @@ export class AwEntitaLayoutEH extends EventHandler {
           if (!payload || !payload.entityId) return;
           this.emitGlobal('navigate', {
             handler: 'router',
-            path: [`aw/entita/${payload.entityId}/overview`]
+            path: [`aw/entita/${payload.entityId}`]
           });
           break;
           case 'aw-bubble-chart.bubble-filtered':
             if (this.dataSource.selectedTab == "overview" || this.dataSource.selectedTab == "entita-collegate") {
-              this.dataSource.updateBubbes(payload);
+              payload.reload = true;
+              payload.reset = true;
+              this.emitOuter('filterbubbleresponse', payload);
+              //this.dataSource.updateBubbes(payload);
             }
           break
         default:

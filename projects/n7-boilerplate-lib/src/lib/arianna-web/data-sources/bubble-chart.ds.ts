@@ -19,6 +19,7 @@ export class AwBubbleChartDS extends DataSource {
   private maxBubblesSelectable:number = 3;
   private tippy;
   private windowResizeSet = false;
+  private maxBubbleRadius = 150;
 
   protected transform(data){
     if ( !data ){ return null; }
@@ -68,18 +69,20 @@ export class AwBubbleChartDS extends DataSource {
 
 
       //to understand if there is a large difference of count between bubbles
-      let coeff = maxBubbleCount - bubbleAverage;
+      let coeff = maxBubbleCount / bubbleAverage;
 
-     /*if ( coeff > 20 ) {
+      /* if ( coeff > 20 ) {
         if ( bubble.count - coeff >= 0 ){
           bubblePercentage = ( (bubble.count) - (minBubbleCount/3) )/( (maxBubbleCount*3) - (minBubbleCount/3) )
         } else {
-          bubblePercentage = ( (bubble.count - (minBubbleCount/3)) - (minBubbleCount/3) )/( ((maxBubbleCount - coeff) *3) - (minBubbleCount/3) )
         }
+        bubblePercentage = ( (bubble.count - (minBubbleCount/3)) - (minBubbleCount/3) )/( ((maxBubbleCount - coeff) *3) - (minBubbleCount/3) )
       }*/
-
+      bubblePercentage = ( bubble.count * (coeff/3) - (minBubbleCount/3) )/( (maxBubbleCount*3) - (minBubbleCount/3) );
 
       let bubbleRadius = (Math.log(containerSize)/10)*(bubblePercentage*3)*(70-Math.sqrt(numOfBubbles));
+      if ( bubbleRadius > this.maxBubbleRadius ) bubbleRadius = this.maxBubbleRadius;
+
       let bubbleData = {
         id: bId,
         texts: [
@@ -157,7 +160,7 @@ export class AwBubbleChartDS extends DataSource {
 
         this.allBubbles.push({
           ...response.entitiesData[i],
-          color: this.options.configKeys[response.entitiesData[i].entity.typeOfEntity] ? this.options.configKeys[response.entitiesData[i].entity.typeOfEntity]['color']['hex'] : ""
+          color: this.options.configKeys[response.entitiesData[i].entity.typeOfEntity.replace(" ", "-")] ? this.options.configKeys[response.entitiesData[i].entity.typeOfEntity.replace(" ", "-")]['color']['hex'] : ""
         })
       }
 
