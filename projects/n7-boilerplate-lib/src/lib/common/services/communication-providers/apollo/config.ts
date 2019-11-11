@@ -10,7 +10,6 @@ export const ApolloProviderConfig = {
       }
     `
   },
-
   'getTree': {
     queryName: 'getTreeOfItems',
     queryBody: `
@@ -140,47 +139,64 @@ export const ApolloProviderConfig = {
   'getItem': {
     queryName: 'getItem',
     queryBody: `{
-      getItem(__PARAMS__){
-          title
-          text
-          image
-          icon
-          items {
-            thumbnail
-              item {
-                label
-                icon
-                info {
-                  key
-                  value
-                }
+      getItem(__PARAMS__) {
+        id
+        label
+        info {
+          key
+          value
+        }
+        icon
+        title
+        subTitle
+        image
+        text
+        fields {
+          ...
+          on KeyValueField {
+            key
+            value
+          }
+          ... on KeyValueFieldGroup {
+            label
+            fields {
+              ...
+              on KeyValueField {
+                key
+                value
               }
-            relatedTypesOfEntity {
-              count
-              type
             }
+          }
           }
           relatedEntities {
             count
             entity{
-             id
-            label
-            typeOfEntity
+              id
+              label
+              typeOfEntity
             }
           }
-          fields {
-            label
-            fields {
-              key
-              value
-            }
+          relatedItems {
+            thumbnail
+            item {
+              label
+              id
+              info {
+                key
+                value
+              }
           }
-          breadcrumbs {
-            label
-            link
+          relatedTypesOfEntity {
+            type
+            count
           }
         }
-      }`
+        breadcrumbs {
+          label
+          link
+        }
+      }
+    }`
   },
   'autoComplete': {
     queryName: 'autoComplete',

@@ -32,19 +32,19 @@ export class AwSchedaLayoutEH extends EventHandler {
     this.outerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
         case 'aw-tree.click':
-          if ( payload ) {
-            this.emitGlobal('navigate', {path: [this.configuration.get('paths').schedaBasePath + payload], handler: 'router'});
+          if (payload) {
+            this.emitGlobal('navigate', { path: [this.configuration.get('paths').schedaBasePath + payload], handler: 'router' });
           }
           break;
         case 'aw-sidebar-header.click': this.dataSource.collapseSidebar();
-        break;
+          break;
         case "aw-bubble-chart.bubble-tooltip-goto-click":
-          if(!payload || !payload.entityId) return;
+          if (!payload || !payload.entityId) return;
           this.emitGlobal('navigate', {
             handler: 'router',
             path: [`aw/entita/${payload.entityId}/overview`]
           });
-        break;
+          break;
 
       }
     });
@@ -52,17 +52,18 @@ export class AwSchedaLayoutEH extends EventHandler {
 
   private listenRoute() {
     this.route.paramMap.subscribe(params => {
-     if ( params.get('id') ) {
-       this.dataSource.loadItem(params.get('id')).subscribe((response) => {
-         if ( response ) {
-           this.dataSource.loadContent(response);
-           if ( response.relatedEntities ){
-             this.dataSource.hasBubbles = true;
-             let relatedEntities = {source: response, relatedEntities: response.relatedEntities};
-             if( this.dataSource.bubblesEnabled ){
-               this.emitOuter('filterbubbleresponse', relatedEntities);
-             }
-           }
+      if (params.get('id')) {
+        this.dataSource.loadItem(params.get('id')).subscribe((response) => {
+          console.log('getItem() res: ', response)
+          if (response) {
+            this.dataSource.loadContent(response);
+            if (response.relatedEntities) {
+              this.dataSource.hasBubbles = true;
+              let relatedEntities = { source: response, relatedEntities: response.relatedEntities };
+              if (this.dataSource.bubblesEnabled) {
+                this.emitOuter('filterbubbleresponse', relatedEntities);
+              }
+            }
           }
         });
       } else {
@@ -71,13 +72,13 @@ export class AwSchedaLayoutEH extends EventHandler {
     });
   }
 
-  private loadNavigation( selectedItem ) {
+  private loadNavigation(selectedItem) {
     this.dataSource.getNavigation('patrimonio').subscribe((response) => {
-      if( response ){
+      if (response) {
         this.dataSource.updateNavigation(response);
         this.emitOuter('navigationresponse', response);
       }
-      if ( selectedItem ) {
+      if (selectedItem) {
         this.emitOuter('selectItem', selectedItem);
       }
     });

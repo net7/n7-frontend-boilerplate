@@ -23,7 +23,7 @@ export class AwEntitaLayoutEH extends EventHandler {
 
         case 'aw-entita-layout.destroy':
           this.destroyed$.next();
-        break;
+          break;
 
         case 'aw-entita-layout.showmore':
           if (payload) {
@@ -55,17 +55,17 @@ export class AwEntitaLayoutEH extends EventHandler {
 
           }
           break;
-          case 'aw-linked-objects.pagination':
-            this.dataSource.currentPage = payload.split('-')[1];
-            this.dataSource.handlePageNavigation()
-            /*this.emitGlobal('navigate', {
-              handler: 'router',
-              path: [`aw/entita/${this.route.snapshot.params.id}/oggetti-collegati/${payload.split('-')[1]}`]
-            });*/
-            break
-            case 'aw-linked-objects.goto':
-              this.dataSource.currentPage  = Number(payload.replace('goto-', ''))
-              this.dataSource.handlePageNavigation()
+        case 'aw-linked-objects.pagination':
+          this.dataSource.currentPage = payload.split('-')[1];
+          this.dataSource.handlePageNavigation()
+          /*this.emitGlobal('navigate', {
+            handler: 'router',
+            path: [`aw/entita/${this.route.snapshot.params.id}/oggetti-collegati/${payload.split('-')[1]}`]
+          });*/
+          break
+        case 'aw-linked-objects.goto':
+          this.dataSource.currentPage = Number(payload.replace('goto-', ''))
+          this.dataSource.handlePageNavigation()
           // this.emitGlobal('navigate', {
           //   handler: 'router',
           //   path: [`aw/entita/${this.route.snapshot.params.id}/oggetti-collegati/${targetPage}`]
@@ -81,10 +81,10 @@ export class AwEntitaLayoutEH extends EventHandler {
             path: [`aw/entita/${payload.entityId}/overview`]
           });
           break;
-          case 'aw-bubble-chart.bubble-filtered':
-            if (this.dataSource.selectedTab == "overview" || this.dataSource.selectedTab == "entita-collegate") {
-              this.dataSource.updateBubbes(payload);
-            }
+        case 'aw-bubble-chart.bubble-filtered':
+          if (this.dataSource.selectedTab == "overview" || this.dataSource.selectedTab == "entita-collegate") {
+            this.dataSource.updateBubbes(payload);
+          }
           break
         default:
           break;
@@ -96,14 +96,14 @@ export class AwEntitaLayoutEH extends EventHandler {
   /**
    * Listens to routing events of this layout.
    */
-  private listenRoute( selectedItem = "", forceReload = false) {
+  private listenRoute(selectedItem = "", forceReload = false) {
     // get URL parameters with angular's paramMap
     this.route.paramMap.subscribe(params => {
       // look for id
       if (params.get('id')) {
-        if (this.dataSource.currentId == params.get('id') && !forceReload ) return;
+        if (this.dataSource.currentId == params.get('id') && !forceReload) return;
         // get item from response with id === id and return as promise
-        this.dataSource.loadItem(params.get('id'), params.get('tab')).subscribe((res) => {
+        this.dataSource.loadItem(params.get('id'), params.get('tab')).subscribe(res => {
           if (res) {
             this.dataSource.loadContent(res);
             this.dataSource.bubbleLoaded = false;
