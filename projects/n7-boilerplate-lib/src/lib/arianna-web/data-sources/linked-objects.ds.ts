@@ -12,10 +12,15 @@ export class AwLinkedObjectsDS extends DataSource {
   public loadingData: boolean = false
 
   protected transform(data) {
+    console.log('Linked Objects transforming data: ', data)
     this.pageSize = this.options.size
     this.totalObjects = data.totalCount
     this.currentPage = this.options.page ? <number>this.options.page : 1
-    this.totalPages = Math.ceil(data.relatedItems.length / this.pageSize)
+    if (data.items) {
+      this.totalPages = Math.ceil(data.items.length / this.pageSize)
+    } else if (data.relatedItems) {
+      this.totalPages = Math.ceil(data.relatedItems.length / this.pageSize)
+    }
     this.context = this.options.context
     this.loadedData = this.unpackData(data)
     this.checkForMore() // checks if <Show More> button should be enabled
@@ -91,7 +96,7 @@ export class AwLinkedObjectsDS extends DataSource {
       context = this.context,       // parent layout name
       size = this.pageSize          // items per page (if using pagination)
     var
-      d = data.relatedItems                // items to iterate over
+      d = data.items ? data.items : data.relatedItems                // items to iterate over
 
     if (config) {
       var keys = config.get('config-keys')

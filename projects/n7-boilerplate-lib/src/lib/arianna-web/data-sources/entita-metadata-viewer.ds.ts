@@ -8,7 +8,6 @@ export class AwEntitaMetadataViewerDS extends DataSource {
       changes based on context.
     */
     const unpackedData = AwEntitaMetadataViewerDS.unpackFields(data);
-    console.log('Questi sono i metadati: ', { group: unpackedData })
     return {
       group: unpackedData,
     }
