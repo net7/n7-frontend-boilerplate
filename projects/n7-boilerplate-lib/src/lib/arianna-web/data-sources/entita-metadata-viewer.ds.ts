@@ -2,35 +2,41 @@ import { DataSource } from '@n7-frontend/core';
 
 export class AwEntitaMetadataViewerDS extends DataSource {
 
-  protected transform(data){
+  protected transform(data) {
     /*
-      // console.log('metadata options: ', this.options);
-      - - -
       Access and use this.options if the rendering
       changes based on context.
     */
-   const unpackedData =  AwEntitaMetadataViewerDS.unpackFields(data);
+    const unpackedData = AwEntitaMetadataViewerDS.unpackFields(data);
+    console.log('Questi sono i metadati: ', { group: unpackedData })
     return {
       group: unpackedData,
     }
   }
 
-  static unpackFields( fields ) {
+  static unpackFields(fields) {
     /*
       Recursive unpacking for rendering res.fields
       - - -
       This function transforms the response object tree
       into an array, usable by metadata-viewer-component
     */
-    var extracted = []     // holds transformed object
+    var extracted = [] // holds transformed object
+    // if the server returns an array of key-value tuples
+    if (fields instanceof Array) {
+      extracted = fields.map(el => {
+        return { label: el.key, value: el.value }
+      })
+      return [{ items: extracted }]
+    }
     if (!fields) return [] // if is empty → quit
-    for ( let i = 0; i < fields.length; i++ ) {
+    for (let i = 0; i < fields.length; i++) {
       var thisField = fields[i]     // rename current field
       var title = thisField.label   // field title
       var label = thisField.key     // item label
       var value = thisField.value   // item value
       var group = thisField.fields  // child group
-      var temp:any = {}             // temporary object
+      var temp: any = {}             // temporary object
 
       if (title) { // if there is a title, use it
         temp.title = title
