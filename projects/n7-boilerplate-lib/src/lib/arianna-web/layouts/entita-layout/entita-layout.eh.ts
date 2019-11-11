@@ -106,7 +106,7 @@ export class AwEntitaLayoutEH extends EventHandler {
         this.dataSource.loadItem(params.get('id'), params.get('tab')).subscribe((res) => {
           if (res) {
             this.dataSource.loadContent(res);
-            res['connectedEntities'] = res.entities
+            this.dataSource.bubbleLoaded = false;
             let connectedEntities = {
               source: res,
               reload: false

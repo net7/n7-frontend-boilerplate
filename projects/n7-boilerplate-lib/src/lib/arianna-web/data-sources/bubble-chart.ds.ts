@@ -70,13 +70,13 @@ export class AwBubbleChartDS extends DataSource {
       //to understand if there is a large difference of count between bubbles
       let coeff = maxBubbleCount - bubbleAverage;
 
-     if ( coeff > 20 ) {
+     /*if ( coeff > 20 ) {
         if ( bubble.count - coeff >= 0 ){
           bubblePercentage = ( (bubble.count) - (minBubbleCount/3) )/( (maxBubbleCount*3) - (minBubbleCount/3) )
         } else {
           bubblePercentage = ( (bubble.count - (minBubbleCount/3)) - (minBubbleCount/3) )/( ((maxBubbleCount - coeff) *3) - (minBubbleCount/3) )
         }
-      }
+      }*/
 
 
       let bubbleRadius = (Math.log(containerSize)/10)*(bubblePercentage*3)*(70-Math.sqrt(numOfBubbles));
@@ -165,7 +165,7 @@ export class AwBubbleChartDS extends DataSource {
     else {
       for ( let i = 0; i < response.relatedEntities.length; i++ ){
         const color = this.options.configKeys ?
-          this.options.configKeys[response.relatedEntities[i].entity.typeOfEntity.configKey] ? this.options.configKeys[response.relatedEntities[i].entity.typeOfEntity.configKey]['color']['hex'] : "" :
+          this.options.configKeys[response.relatedEntities[i].entity.typeOfEntity.replace(" ", "-")] ? this.options.configKeys[response.relatedEntities[i].entity.typeOfEntity.replace(" ", "-")]['color']['hex'] : "" :
           null;
         this.allBubbles.push(
           {

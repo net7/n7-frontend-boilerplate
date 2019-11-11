@@ -90,7 +90,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   parseInitialRequest(response) {
 
     response.typeOfEntityData.forEach((toe) => {
-      const teoConfigData = this.configuration.get("config-keys")[toe.type];
+      const teoConfigData = this.configuration.get("config-keys")[toe.type.replace(" ", "-")];
        this.facetData.push({
           ...toe,
           enabled: true,
