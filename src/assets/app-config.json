@@ -54,6 +54,34 @@
       }
     }
   },
+  "item-preview": {
+    "image": "image",
+    "title": {
+      "data": "item.label",
+      "maxLength": "80"
+    },
+    "text": {
+      "data": "item.label",
+      "maxLength": "50"
+    },
+    "metadata": {
+      "info": {
+        "value": "item.info",
+        "customLabel": "Artista"
+      },
+      "toe": {
+        "data": "relatedTypesOfEntity",
+        "value": "count",
+        "icon": "type"
+      },
+      "breadcrumbs": {
+        "data": "breadcrumbs",
+        "label": "label",
+        "payload": "link"
+      }
+    },
+    "payload": "item.id"
+  },
   "home-layout": {
     "top-hero": {
       "title": "Arte, architettura e fotografia nel XXI secolo",

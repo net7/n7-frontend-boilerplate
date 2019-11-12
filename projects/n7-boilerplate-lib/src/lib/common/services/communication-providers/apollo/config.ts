@@ -91,6 +91,14 @@ export const ApolloProviderConfig = {
             item {
               id
               label
+              fields
+              {
+                ...
+                on KeyValueField {
+                  key
+                  value
+                }
+              }
             }
             relatedTypesOfEntity {
               type

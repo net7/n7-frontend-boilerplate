@@ -1,5 +1,5 @@
 import { DataSource } from '@n7-frontend/core';
-import { LOADER_MOCK } from "@n7-frontend/components";
+import * as _ from "lodash"; // used for cherry-picking object keys from app-config.json
 
 export class AwLinkedObjectsDS extends DataSource {
 
@@ -10,9 +10,9 @@ export class AwLinkedObjectsDS extends DataSource {
   public context: string
   public loadedData: any
   public loadingData: boolean = false
+  // public paths: any = this.options.paths // use dynamic object paths from config
 
   protected transform(data) {
-    console.log('Linked Objects transforming data: ', data)
     this.pageSize = this.options.size
     this.totalObjects = data.totalCount
     this.currentPage = this.options.page ? <number>this.options.page : 1
@@ -24,7 +24,7 @@ export class AwLinkedObjectsDS extends DataSource {
     this.context = this.options.context
     this.loadedData = this.unpackData(data)
     this.checkForMore() // checks if <Show More> button should be enabled
-    this.loadedData.loaderData = LOADER_MOCK
+    this.loadedData.loaderData = {}
     return this.loadedData
   }
 
@@ -89,12 +89,13 @@ export class AwLinkedObjectsDS extends DataSource {
       }
     */
     const
-      config = this.options.config, // app-config.json
-      totalCount = data.totalCount, // total amount of items available on backend
-      totalPages = this.totalPages, // calculated number of pages
-      page = this.currentPage,      // current page (if using pagination)
-      context = this.context,       // parent layout name
-      size = this.pageSize          // items per page (if using pagination)
+      config = this.options.config,       // app-config.json
+      paths = config.get('item-preview'), // item preview dynamic paths
+      totalCount = data.totalCount,       // total amount of items available on backend
+      totalPages = this.totalPages,       // calculated number of pages
+      page = this.currentPage,            // current page (if using pagination)
+      context = this.context,             // parent layout name
+      size = this.pageSize                // items per page (if using pagination)
     var
       d = data.items ? data.items : data.relatedItems                // items to iterate over
 
@@ -116,40 +117,45 @@ export class AwLinkedObjectsDS extends DataSource {
     var result = []
     d.forEach(el => {
       let item = {
-        image: el.thumbnail,
+        image: _.get(el, paths.image, el.image),
         title:
           // if there is a max string length in config, use it
-          lengthLimit && el.item.label.length > lengthLimit ?
-            el.item.label.slice(0, lengthLimit) + '...' : el.item.label,
-        payload: el.item.id,
+          Number(paths.title.maxLength) && _.get(el, paths.title, el.item.label).length > Number(paths.title.maxLength) ?
+            _.get(el, paths.title, el.item.label).slice(0, Number(paths.title.maxLength)) + '…' :
+            _.get(el, paths.title, el.item.label),
+        text:
+          Number(paths.text.maxLength) && _.get(el, paths.text.data, el.item.text).length > Number(paths.text.maxLength) ?
+            _.get(el, paths.text.data, el.item.text).slice(0, Number(paths.text.maxLength)) + '…' :
+            _.get(el, paths.text.data, el.item.text),
+        payload: _.get(el, paths.payload, el.item.id),
         classes: ['entita', 'search'].includes(context) ? 'is-fullwidth' : '',
         metadata: [
-          {
+          _.get(el, paths.metadata.info.value, el.item.info) ? {
             classes: 'n7-objects__metadata-artist',
-            items: el.item.info.map(({ value, key }) => ({
-              label: key === 'author' ? 'Artista' : null,
+            items: _.get(el, paths.metadata.info.value, el.item.info).map(value => ({
+              label: paths.metadata.info.customLabel ? paths.metadata.info.customLabel : null,
               value
             }))
-          },
+          } : {},
           {
             classes: 'n7-objects__metadata-linked',
-            items: el.relatedTypesOfEntity.map(toe => {
+            items: _.get(el, paths.metadata.toe.data, el.relatedTypesOfEntity).map(toe => {
               return { // persona: 6, Organizz: 12, Luoghi: 2, Concetti: 32
-                value: toe.count,
+                value: _.get(toe, paths.metadata.toe.value, toe.count),
                 // icon: 'n7-icon-bell' // TODO: link icon to config key
-                icon:  keys[toe.type] ? keys[toe.type].icon : "",
-                classes: 'color-' + toe.type
+                icon: keys[_.get(toe, paths.metadata.toe.icon, toe.type)] ? keys[_.get(toe, paths.metadata.toe.icon, toe.type)].icon : "",
+                classes: 'color-' + _.get(toe, paths.metadata.toe.icon, toe.type)
               }
             })
           }
         ]
       };
-      if (el.breadcrumbs) {
+      if (_.get(el, paths.metadata.breadcrumbs.data, el.breadcrumbs)) {
         item['breadcrumbs'] = { // n7-breadcrumbs uses this as it's own data
-          items: el.breadcrumbs.map(crumb => {
+          items: _.get(el, paths.metadata.breadcrumbs.data, el.breadcrumbs).map(crumb => {
             return {
-              label: crumb.label,
-              payload: crumb.link,
+              label: _.get(crumb, paths.metadata.breadcrumbs.label, crumb.label),
+              payload: _.get(crumb, paths.metadata.breadcrumbs.payload, crumb.link),
             }
           })
         };
@@ -198,6 +204,6 @@ export class AwLinkedObjectsDS extends DataSource {
         isLoading: false,
       }
     }
-    return {previews: result};
+    return { previews: result };
   }
 }
