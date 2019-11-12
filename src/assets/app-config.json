@@ -54,6 +54,28 @@
       }
     }
   },
+  "item-preview": {
+    "image": "",
+    "title": "item.label",
+    "text": {
+      "data": "item.id",
+      "maxLength": "50"
+    },
+    "metadata": {
+      "info": "item.info",
+      "toe": {
+        "data": "relatedTypesOfEntity",
+        "value": "count",
+        "icon": "type"
+      },
+      "breadcrumbs": {
+        "data": "breadcrumbs",
+        "label": "label",
+        "payload": "link"
+      }
+    },
+    "payload": "item.id"
+  },
   "home-layout": {
     "top-hero": {
       "title": "Arte, architettura e fotografia nel XXI secolo",
