@@ -14,14 +14,13 @@ export const ApolloProviderConfig = {
     queryName: 'getTreeOfItems',
     queryBody: `
     {
-      getTreeOfItems(treeId: "patrimonioId" ) {
+      getTreeOfItems{
         id
         label
         icon
         branches {
           label
           id
-          icon
           img
           branches {
             label
@@ -33,6 +32,36 @@ export const ApolloProviderConfig = {
               id
               icon
               img
+              branches {
+                label
+                id
+                icon
+                img
+                branches {
+                  label
+                  id
+                  icon
+                  img
+                  branches {
+                    label
+                    id
+                    icon
+                    img
+                    branches {
+                      label
+                      id
+                      icon
+                      img
+                      branches {
+                        label
+                        id
+                        icon
+                        img
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -109,9 +138,13 @@ export const ApolloProviderConfig = {
           item {
             label
             id
-            info {
+            fields
+            {
+              ...
+              on KeyValueField {
                 key
                 value
+              }
             }
           }
           relatedTypesOfEntity {
@@ -137,10 +170,6 @@ export const ApolloProviderConfig = {
       getItem(__PARAMS__) {
         id
         label
-        info {
-          key
-          value
-        }
         icon
         title
         subTitle

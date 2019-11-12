@@ -75,6 +75,7 @@ export class AwSchedaLayoutEH extends EventHandler {
   private loadNavigation(selectedItem) {
     this.dataSource.getNavigation('patrimonio').subscribe((response) => {
       if (response) {
+        console.log("Apollo responded with tree:", response);
         this.dataSource.updateNavigation(response);
         this.emitOuter('navigationresponse', response);
       }

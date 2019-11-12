@@ -214,6 +214,13 @@
             }
         }
 
+        &.color-cosa-notevole {
+            .n7-facet-header__icon-left,
+            .n7-facet-header__text {
+                color: $color-concepts;
+            }
+        }
+
         &.color-organizzazione {
             .n7-facet-header__icon-left,
             .n7-facet-header__text {

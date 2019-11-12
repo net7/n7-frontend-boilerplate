@@ -95,7 +95,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
           ...toe,
           enabled: true,
           locked: false,
-          configKey: toe.type,
+          configKey: toe.type.replace(" ", "-"),
           ...teoConfigData
         });
     });
@@ -304,10 +304,10 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         // if user clicked on a locked facet, ignore it
         return
       }
-      if (f.type.id === facetId && f.enabled === true && enabledFacets < 1) {
+      if (f.type === facetId && f.enabled === true && enabledFacets < 1) {
         return
       }
-      if (f.type.id === facetId) {
+      if (f.type === facetId) {
         // if this is the clicked facet
         if (f.enabled && enabledFacets > 0 ) {
           f.enabled = false;

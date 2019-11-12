@@ -19,7 +19,8 @@ export class AwBubbleChartDS extends DataSource {
   private maxBubblesSelectable:number = 3;
   private tippy;
   private windowResizeSet = false;
-  private maxBubbleRadius = 150;
+  private maxBubbleRadius = 100;
+  private minBubbleRadius = 10;
 
   protected transform(data){
     if ( !data ){ return null; }
@@ -81,8 +82,13 @@ export class AwBubbleChartDS extends DataSource {
       bubblePercentage = ( bubble.count * (coeff/3) - (minBubbleCount/3) )/( (maxBubbleCount*3) - (minBubbleCount/3) );
 
       let bubbleRadius = (Math.log(containerSize)/10)*(bubblePercentage*3)*(70-Math.sqrt(numOfBubbles));
-      if ( bubbleRadius > this.maxBubbleRadius ) bubbleRadius = this.maxBubbleRadius;
+      if ( bubbleRadius > this.maxBubbleRadius ) {
+        bubbleRadius = this.maxBubbleRadius;
+      } else if ( bubbleRadius < this.minBubbleRadius ) {
+        bubbleRadius = this.minBubbleRadius;
+      }
 
+      console.log("bubble text " +  bubble.entity.label +" bubble length " +  bubble.entity.label.length + " radius: " + bubbleRadius + " limit: " + this.thresholdShowTitle  )
       let bubbleData = {
         id: bId,
         texts: [

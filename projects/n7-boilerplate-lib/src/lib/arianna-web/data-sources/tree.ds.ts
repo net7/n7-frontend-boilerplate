@@ -76,7 +76,7 @@ export class AwTreeDS extends DataSource {
     let treeObj = {
       items: []
     };
-    if( data['branches']) {
+    if( data['branches'] && data['branches'].length > 0 ) {
       data['branches'].forEach( item => {
         treeObj['items'].push( this.parseTree(item, false, []) );
       });
@@ -87,7 +87,7 @@ export class AwTreeDS extends DataSource {
   private parseTree(data, toggle, parents) {
     var currParents = [...parents];
     let treeItem = {};
-    const showToggle =  toggle && data['branches'] != null;
+    const showToggle =  toggle && data['branches'] != null && data['branches'].length > 0 ;
     if( showToggle ){
       treeItem['toggle'] = {
         icon: 'n7-icon-angle-right',

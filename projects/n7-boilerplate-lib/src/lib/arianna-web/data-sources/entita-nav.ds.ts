@@ -26,7 +26,7 @@ export class AwEntitaNavDS extends DataSource {
         payload: 'oggetti-collegati',
         classes: selected == 'oggetti-collegati' ? 'is-selected' : ''
       })    }
-    if (data.entities && this.options['bubblesEnabled']) {
+    if (data.relatedEntities && this.options['bubblesEnabled']) {
       navigation.items.push({
         text: 'ENTITÀ COLLEGATE',
         payload: 'entita-collegate',

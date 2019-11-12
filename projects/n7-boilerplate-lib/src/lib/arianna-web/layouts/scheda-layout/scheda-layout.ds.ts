@@ -182,7 +182,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       this.one('aw-scheda-breadcrumbs').update(breadcrumbs);
     }
 
-      if ( response.items ) {
+      if ( response.relatedItems ) {
         this.hasSimilarItems = true;
         this.one('aw-linked-objects').updateOptions({ context: 'scheda', config: this.configuration })
         this.one('aw-linked-objects').update(response);
