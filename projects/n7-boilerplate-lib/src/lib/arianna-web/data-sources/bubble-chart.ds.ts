@@ -21,6 +21,7 @@ export class AwBubbleChartDS extends DataSource {
   private windowResizeSet = false;
   private maxBubbleRadius = 100;
   private minBubbleRadius = 10;
+  private maxBubbleTextRadiusRatio = 6;
 
   protected transform(data){
     if ( !data ){ return null; }
@@ -88,13 +89,36 @@ export class AwBubbleChartDS extends DataSource {
         bubbleRadius = this.minBubbleRadius;
       }
 
-      console.log("bubble text " +  bubble.entity.label +" bubble length " +  bubble.entity.label.length + " radius: " + bubbleRadius + " limit: " + this.thresholdShowTitle  )
-      let bubbleData = {
-        id: bId,
-        texts: [
+      //console.log("bubble text " +  bubble.entity.label +" bubble length " +  bubble.entity.label.length + " radius: " + bubbleRadius + " limit: " + this.thresholdShowTitle  )
+      let label = bubble.entity.label;
+
+      let texts = [];
+      // check if text is larger than radius
+      if( bubbleRadius / bubble.entity.label.length < this.maxBubbleTextRadiusRatio ) {
+        const index = bubbleRadius / this.maxBubbleTextRadiusRatio;
+        const spaceIndex = bubble.entity.label.indexOf(" ", index - 5)
+        const label1 = bubble.entity.label.slice(0, spaceIndex);
+        const label2 = bubble.entity.label.slice(spaceIndex, index *2);
+        //label = [bubble.entity.label.slice(0, index), "\n", bubble.entity.label.slice(index)].join('');
+
+        texts.push(
           {
             id:bId+"_label0",
-            label: (d) => { if(d.radius<this.thresholdShowTitle) return null; return bubble.entity.label },
+            label: (d) => { if(d.radius<this.thresholdShowTitle) return null; return label1 },
+            x_function: (d) => d.x,
+            y_function: (d) => {
+              let mNum = (d.radius/9);
+              if(d.radius<this.thresholdShowValue) mNum=0;
+              return d.y-mNum -20;
+            },
+            "user_select":"none",
+            fontSize_function: (d) => d.radius/5,
+            color: "white",
+            "classes":""
+          },
+          {
+            id:bId+"_label01",
+            label: (d) => { if(d.radius<this.thresholdShowTitle) return null; return label2 },
             x_function: (d) => d.x,
             y_function: (d) => {
               let mNum = (d.radius/9);
@@ -105,7 +129,31 @@ export class AwBubbleChartDS extends DataSource {
             fontSize_function: (d) => d.radius/5,
             color: "white",
             "classes":""
+          }
+
+
+        )
+      } else {
+        texts.push({
+          id:bId+"_label0",
+          label: (d) => { if(d.radius<this.thresholdShowTitle) return null; return label },
+          x_function: (d) => d.x,
+          y_function: (d) => {
+            let mNum = (d.radius/9);
+            if(d.radius<this.thresholdShowValue) mNum=0;
+            return d.y-mNum;
           },
+          "user_select":"none",
+          fontSize_function: (d) => d.radius/5,
+          color: "white",
+          "classes":""
+        });
+      }
+
+      let bubbleData = {
+        id: bId,
+        texts: [
+          ...texts,
           {
             id:bId+"_label1",
             label: (d) => { if(d.radius<this.thresholdShowValue) return null; return bubble.count },
