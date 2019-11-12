@@ -120,8 +120,8 @@ export class AwLinkedObjectsDS extends DataSource {
         image: _.get(el, paths.image, el.image),
         title:
           // if there is a max string length in config, use it
-          lengthLimit && _.get(el, paths.title, el.item.label).length > lengthLimit ?
-            _.get(el, paths.title, el.item.label).slice(0, lengthLimit) + '…' :
+          Number(paths.title.maxLength) && _.get(el, paths.title, el.item.label).length > Number(paths.title.maxLength) ?
+            _.get(el, paths.title, el.item.label).slice(0, Number(paths.title.maxLength)) + '…' :
             _.get(el, paths.title, el.item.label),
         text:
           Number(paths.text.maxLength) && _.get(el, paths.text.data, el.item.text).length > Number(paths.text.maxLength) ?
@@ -130,10 +130,10 @@ export class AwLinkedObjectsDS extends DataSource {
         payload: _.get(el, paths.payload, el.item.id),
         classes: ['entita', 'search'].includes(context) ? 'is-fullwidth' : '',
         metadata: [
-          _.get(el, paths.metadata.info, el.item.info) ? {
+          _.get(el, paths.metadata.info.value, el.item.info) ? {
             classes: 'n7-objects__metadata-artist',
-            items: _.get(el, paths.metadata.info, el.item.info).map(({ value, key }) => ({
-              label: key === 'author' ? 'Artista' : null,
+            items: _.get(el, paths.metadata.info.value, el.item.info).map(value => ({
+              label: paths.metadata.info.customLabel ? paths.metadata.info.customLabel : null,
               value
             }))
           } : {},
