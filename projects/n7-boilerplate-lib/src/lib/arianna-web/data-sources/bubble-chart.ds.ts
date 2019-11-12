@@ -19,7 +19,7 @@ export class AwBubbleChartDS extends DataSource {
   private maxBubblesSelectable:number = 3;
   private tippy;
   private windowResizeSet = false;
-  private maxBubbleRadius = 150;
+  private maxBubbleRadius = 100;
 
   protected transform(data){
     if ( !data ){ return null; }
