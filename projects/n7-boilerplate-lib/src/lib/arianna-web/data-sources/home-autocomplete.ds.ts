@@ -5,47 +5,49 @@ export class AwHomeAutocompleteDS extends DataSource {
 
   protected transform(data){
 
-    const { items, totalCount } = data,
+    const { entities, totalCount } = data,
           { config } = this.options;
 
     let itemIds = [],
       groups = {};
 
-    items.forEach(({ item, typeOfEntity }) => {
-      if(!groups[typeOfEntity.id]) {
-        const { label, icon } = config[typeOfEntity.configKey];
-        groups[typeOfEntity.id] = {
+    entities.forEach(
+      ({ entity, count }) => {
+        console.log(entity);
+      if(!groups[entity.typeOfEntity]) {
+        const { label, icon } = config[entity.typeOfEntity.replace(" ", "-")];
+        groups[entity.typeOfEntity.replace(" ", "-")] = {
           title: label,
           icon,
-          classes: `color-${typeOfEntity.configKey}`,
+          classes: `color-${entity.typeOfEntity.replace(" ", "-")}`,
           items: [],
         };
       }
 
-      if(itemIds.indexOf(item.id) === -1){
-        let metaDataValue: string = '';
-        item.info.forEach(infoData => {
+      if(itemIds.indexOf(entity.id) === -1){
+        let metaDataValue: string = ' ';
+        /*entity.info.forEach(infoData => {
           if(infoData.key === 'author') metaDataValue = `di ${infoData.value}`;
-        });
-        groups[typeOfEntity.id].items.push({
-          label: item.label, 
-          value: metaDataValue, 
-          payload: { 
+        });*/
+        groups[entity.typeOfEntity.replace(" ", "-")].items.push({
+          label: entity.label,
+          value: metaDataValue,
+          payload: {
             source: 'item',
-            id: item.id 
+            id: entity.id
           }
         });
       }
     });
 
     const results = Object.keys(groups).map(key => ({ group: {...groups[key]} }));
-    return { 
+    return {
       results,
       actions: {
         showMore: {
           text: `Visualizza tutti i ${totalCount} risultati`,
-          payload: { 
-            source: 'showMore' 
+          payload: {
+            source: 'showMore'
           }
         }
       },

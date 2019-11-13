@@ -153,16 +153,26 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
         if (  this.hasMetadata ){
           response.fields.forEach(field => {
             let items = [];
-            field.fields.forEach(item => {
-              items.push( { label: item.key, value: item.value} )
-            });
+              if( field.fields ) {
+                field.fields.forEach(item => {
+                items.push( { label: item.key, value: item.value} )
+              });
 
-            group.group.push(
-              {
-                title: field.label,
-                items: items
-              }
-            );
+
+              group.group.push(
+                {
+                  title: field.label,
+                  items: items
+                }
+                );
+            } else {
+              items.push( { label: field.key, value: field.value} )
+              group.group.push(
+                {
+                  items: items
+                }
+                )
+            }
         });
       }
 
@@ -173,13 +183,15 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
         items: []
       };
 
-      response.breadcrumbs.forEach(element => {
-        breadcrumbs.items.push({
-          label: element.label,
-          payload: element.link
-        })
-      });
-      this.one('aw-scheda-breadcrumbs').update(breadcrumbs);
+      if( response.breadcrumb ){
+        response.breadcrumbs.forEach(element => {
+          breadcrumbs.items.push({
+            label: element.label,
+            payload: element.link
+          })
+        });
+        this.one('aw-scheda-breadcrumbs').update(breadcrumbs);
+      }
     }
 
       if ( response.relatedItems ) {
@@ -188,7 +200,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
         this.one('aw-linked-objects').update(response);
       } else {
         this.hasSimilarItems = false;
-        this.one('aw-linked-objects').update(null);
+        this.one('aw-linked-objects').update([]);
       }
   }
 
