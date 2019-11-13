@@ -213,10 +213,6 @@ export const ApolloProviderConfig = {
             item {
               label
               id
-              info {
-                key
-                value
-              }
           }
           relatedTypesOfEntity {
             type
