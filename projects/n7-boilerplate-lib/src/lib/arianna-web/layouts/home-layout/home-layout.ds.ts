@@ -197,6 +197,11 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     }
   }
 
+  public handleSimpleAutocompleteClick = payload => {
+    console.log('clicked on result w/ id:', payload)
+    // TODO: do GlobalFilter and update components
+  }
+
   public getBubblePayload(response) {
     let bubblePayolad = {
       reset: true,

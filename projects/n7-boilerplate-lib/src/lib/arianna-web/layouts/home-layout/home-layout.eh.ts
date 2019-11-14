@@ -1,7 +1,5 @@
 import { EventHandler } from '@n7-frontend/core';
-import { fromEvent, Subject, interval } from 'rxjs';
-// import { takeUntil } from 'rxjs/operators';
-// import { debounce, debounceTime } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 export class AwHomeLayoutEH extends EventHandler {
   private destroyed$: Subject<any> = new Subject();
@@ -120,17 +118,20 @@ export class AwHomeLayoutEH extends EventHandler {
           let params = {
             selectedEntitiesIds: this.dataSource.selectedEntitiesIds,
             itemsPagination: {
-              offset: currentPage * this.dataSource.resultsLimit ,
+              offset: currentPage * this.dataSource.resultsLimit,
               limit: this.dataSource.resultsLimit
             }
           }
-          this.dataSource.makeRequest$('globalFilter', params).subscribe( res => {
+          this.dataSource.makeRequest$('globalFilter', params).subscribe(res => {
             if (res) {
               this.emitOuter('dataresponse', { res })
             } else {
               console.log('Unable to fetch additional data.')
             }
           })
+          break;
+        case 'aw-autocomplete-wrapper.clickresult':
+          this.dataSource.handleSimpleAutocompleteClick(payload)
           break;
         default:
           break;
@@ -140,10 +141,10 @@ export class AwHomeLayoutEH extends EventHandler {
 
   private loadFilters() {
     this.dataSource.initialFilterRequest().subscribe((response) => {
-      console.log(response);
+      console.log('(home) Apollo responded with:', response);
       if (response) {
         this.dataSource.parseInitialRequest(response);
-        if ( this.dataSource.bubblesEnabled ) {
+        if (this.dataSource.bubblesEnabled) {
           let bubblePayload = {
             setBubbleChart: (bubbleCref) => this.dataSource._bubbleChart = bubbleCref,
             source: response,
