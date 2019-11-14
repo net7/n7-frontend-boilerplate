@@ -51,7 +51,6 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     Updates selected tab on tab change
   */
   handlePageNavigation = () => {
-    this.currentPage =
     this.one('aw-linked-objects').updateOptions({
       context: this.selectedTab,
       config: this.configuration,
@@ -60,6 +59,13 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       size: this.pageSize,
     })
     this.one('aw-linked-objects').update({items: this.myResponse.relatedItems});
+    this.location.go(
+      this.configuration.get("paths").entitaBasePath
+        +
+        this.currentId
+        + '/oggetti-collegati/'
+        + this.currentPage
+    )
   };
 
   handleNavUpdate = tab => {

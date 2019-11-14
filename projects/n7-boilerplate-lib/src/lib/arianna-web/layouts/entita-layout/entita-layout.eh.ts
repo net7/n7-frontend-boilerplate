@@ -52,12 +52,11 @@ export class AwEntitaLayoutEH extends EventHandler {
           if (payload) {
             this.dataSource.selectedTab = payload;
             this.dataSource.handleNavUpdate(payload)
-
           }
           break;
-        case 'aw-linked-objects.pagination':
-          this.dataSource.currentPage = payload.split('-')[1];
-          this.dataSource.handlePageNavigation()
+          case 'aw-linked-objects.pagination':
+            this.dataSource.currentPage = payload.split('-')[1];
+            this.dataSource.handlePageNavigation()
           /*this.emitGlobal('navigate', {
             handler: 'router',
             path: [`aw/entita/${this.route.snapshot.params.id}/oggetti-collegati/${payload.split('-')[1]}`]
