@@ -13,7 +13,6 @@ export class AwLinkedObjectsDS extends DataSource {
   public paths: any // use dynamic object paths from config
 
   protected transform(data) {
-    console.log('transforming this data: ', data)
     this.paths = this.options.config.get('item-preview')
     this.pageSize = this.options.size
     this.totalObjects = data.totalCount
@@ -94,15 +93,33 @@ export class AwLinkedObjectsDS extends DataSource {
       Called by this.unpackData() when this.options.page is defined.
       Returns the data for <n7-pagination> component.
     */
-    let result = [],
-      limit = this.paths.paginationLimit
+    let result = []
+    let limit = this.paths.paginationLimit - 1
     // always push the first page
     if (limit) {
-      for (let i = 1; i < limit; i++) {
+      let lastPage: number, firstPage: number
+      if (currentPage > Math.floor(limit / 2)) {
+        // when currentPage is after half-point 
+        // (example: [ 14 ][ 15 ][!16!][ 17 ][ 18 ])
+        if (currentPage < (totalPages - Math.floor(limit/2))) {
+          lastPage = currentPage / 1 + Math.floor(limit / 2)
+          firstPage = currentPage / 1 - Math.floor(limit / 2)
+        } else {
+          lastPage = totalPages
+          firstPage = currentPage - limit + (totalPages - currentPage)
+        }
+      } else {
+        // when currentPage is before half-point 
+        // (example: [ 1 ][!2!][ 3 ][ 4 ][ 5 ])
+        lastPage = limit + 1
+        firstPage = 1
+      }
+      // console.log({ currentPage, limit, lastPage, firstPage })
+      for (let i = firstPage; i <= lastPage; i++) {
         result.push({
-          text: String(i + 1),
-          payload: 'page-' + String(i + 1),
-          classes: currentPage == i + 1 ? 'is-active' : ''
+          text: String(i),
+          payload: 'page-' + String(i),
+          classes: currentPage == i ? 'is-active' : ''
         })
       }
     } else {
