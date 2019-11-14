@@ -1,5 +1,5 @@
 import { DataSource } from '@n7-frontend/core';
-import * as _ from "lodash"; // used for cherry-picking object keys from app-config.json
+import { get as _get } from "lodash" // used for cherry-picking object keys from app-config.json
 
 export class AwLinkedObjectsDS extends DataSource {
 
@@ -10,9 +10,11 @@ export class AwLinkedObjectsDS extends DataSource {
   public context: string
   public loadedData: any
   public loadingData: boolean = false
-  // public paths: any = this.options.paths // use dynamic object paths from config
+  public paths: any // use dynamic object paths from config
 
   protected transform(data) {
+    console.log('transforming this data: ', data)
+    this.paths = this.options.config.get('item-preview')
     this.pageSize = this.options.size
     this.totalObjects = data.totalCount
     this.currentPage = this.options.page ? <number>this.options.page : 1
@@ -67,15 +69,26 @@ export class AwLinkedObjectsDS extends DataSource {
       Called by this.unpackData() when this.options.page is defined.
       Returns the data for <n7-pagination> component.
     */
-    let result = []
+    let result = [],
+      limit = this.paths.paginationLimit
     // always push the first page
-    result.push({
-      text: '1',
-      payload: 'page-1',
-      classes: currentPage == 1 ? 'is-active' : ''
-    })
-    for (let i = 1; i < totalPages; i++) {
-      result.push({ text: String(i + 1), payload: 'page-' + String(i + 1), classes: currentPage == i + 1 ? 'is-active' : '' })
+    if (limit) {
+      for (let i = 1; i < limit; i++) {
+        result.push({
+          text: String(i + 1),
+          payload: 'page-' + String(i + 1),
+          classes: currentPage == i + 1 ? 'is-active' : ''
+        })
+      }
+    } else {
+      result.push({
+        text: '1',
+        payload: 'page-1',
+        classes: currentPage == 1 ? 'is-active' : ''
+      })
+      for (let i = 1; i < totalPages; i++) {
+        result.push({ text: String(i + 1), payload: 'page-' + String(i + 1), classes: currentPage == i + 1 ? 'is-active' : '' })
+      }
     }
     return result
   }
@@ -97,7 +110,7 @@ export class AwLinkedObjectsDS extends DataSource {
       context = this.context,             // parent layout name
       size = this.pageSize                // items per page (if using pagination)
     var
-      d = data.items ? data.items : data.relatedItems                // items to iterate over
+      d = data.items ? data.items : data.relatedItems // items to iterate over
 
     if (config) {
       var keys = config.get('config-keys')
@@ -117,45 +130,46 @@ export class AwLinkedObjectsDS extends DataSource {
     var result = []
     d.forEach(el => {
       let item = {
-        image: _.get(el, paths.image, el.image),
+        image: _get(el, paths.image, el.image),
         title:
           // if there is a max string length in config, use it
-          Number(paths.title.maxLength) && _.get(el, paths.title, el.item.label).length > Number(paths.title.maxLength) ?
-            _.get(el, paths.title, el.item.label).slice(0, Number(paths.title.maxLength)) + '…' :
-            _.get(el, paths.title, el.item.label),
+          Number(paths.title.maxLength) && _get(el, paths.title, el.item.label).length > Number(paths.title.maxLength) ?
+            _get(el, paths.title, el.item.label).slice(0, Number(paths.title.maxLength)) + '…' :
+            _get(el, paths.title, el.item.label),
         text:
-          Number(paths.text.maxLength) && _.get(el, paths.text.data, el.item.text).length > Number(paths.text.maxLength) ?
-            _.get(el, paths.text.data, el.item.text).slice(0, Number(paths.text.maxLength)) + '…' :
-            _.get(el, paths.text.data, el.item.text),
-        payload: _.get(el, paths.payload, el.item.id),
+          Number(paths.text.maxLength) && _get(el, paths.text.data, el.item.text).length > Number(paths.text.maxLength) ?
+            _get(el, paths.text.data, el.item.text).slice(0, Number(paths.text.maxLength)) + '…' :
+            _get(el, paths.text.data, el.item.text),
+        payload: _get(el, paths.payload, el.item.id),
         classes: ['entita', 'search'].includes(context) ? 'is-fullwidth' : '',
         metadata: [
-          _.get(el, paths.metadata.info.value, el.item.info) ? {
+          _get(el, paths.metadata.info.data, el.item.fields) ? {
             classes: 'n7-objects__metadata-artist',
-            items: _.get(el, paths.metadata.info.value, el.item.info).map(value => ({
-              label: paths.metadata.info.customLabel ? paths.metadata.info.customLabel : null,
-              value
+            items: _get(el, paths.metadata.info.data, el.item.fields).map(data => ({
+              label: paths.metadata.info.customLabel ? paths.metadata.info.customLabel : _get(data, paths.metadata.info.label, data.key),
+              value: _get(data, paths.metadata.info.value, data.value)
             }))
           } : {},
           {
             classes: 'n7-objects__metadata-linked',
-            items: _.get(el, paths.metadata.toe.data, el.relatedTypesOfEntity).map(toe => {
-              return { // persona: 6, Organizz: 12, Luoghi: 2, Concetti: 32
-                value: _.get(toe, paths.metadata.toe.value, toe.count),
-                // icon: 'n7-icon-bell' // TODO: link icon to config key
-                icon: keys[_.get(toe, paths.metadata.toe.icon, toe.type)] ? keys[_.get(toe, paths.metadata.toe.icon, toe.type)].icon : "",
-                classes: 'color-' + _.get(toe, paths.metadata.toe.icon, toe.type)
-              }
-            })
+            items: _get(el, paths.metadata.toe.data, el.relatedTypesOfEntity) ?
+              _get(el, paths.metadata.toe.data, el.relatedTypesOfEntity).map(toe => {
+                return { // persona: 6, Organizz: 12, Luoghi: 2, Concetti: 32
+                  value: _get(toe, paths.metadata.toe.value, toe.count),
+                  // icon: 'n7-icon-bell' // TODO: link icon to config key
+                  icon: keys[_get(toe, paths.metadata.toe.icon, toe.type)] ? keys[_get(toe, paths.metadata.toe.icon, toe.type)].icon : "",
+                  classes: 'color-' + _get(toe, paths.metadata.toe.icon, toe.type)
+                }
+              }) : null
           }
         ]
       };
-      if (_.get(el, paths.metadata.breadcrumbs.data, el.breadcrumbs)) {
+      if (_get(el, paths.metadata.breadcrumbs.data, el.breadcrumbs)) {
         item['breadcrumbs'] = { // n7-breadcrumbs uses this as it's own data
-          items: _.get(el, paths.metadata.breadcrumbs.data, el.breadcrumbs).map(crumb => {
+          items: _get(el, paths.metadata.breadcrumbs.data, el.breadcrumbs).map(crumb => {
             return {
-              label: _.get(crumb, paths.metadata.breadcrumbs.label, crumb.label),
-              payload: _.get(crumb, paths.metadata.breadcrumbs.payload, crumb.link),
+              label: _get(crumb, paths.metadata.breadcrumbs.label, crumb.label),
+              payload: _get(crumb, paths.metadata.breadcrumbs.payload, crumb.link),
             }
           })
         };
@@ -164,25 +178,21 @@ export class AwLinkedObjectsDS extends DataSource {
     });
     if (this.options.pagination) { // if I'm on a page, render pagination data.
       let sizeOptions = [10, 25, 50]
-      return {
-        pagination: {
-          first: { payload: `goto-${1}`, classes: page == 1 ? 'is-disabled' : '' },
-          prev: { payload: `goto-${page - 1}`, classes: page == 1 ? 'is-disabled' : '' },
-          next: { payload: `goto-${page + 1}`, classes: page == totalPages ? 'is-disabled' : '' },
-          last: { payload: `goto-${totalPages}`, classes: page == totalPages ? 'is-disabled' : '' },
-          links: this.makePagination(totalPages, page),
-          select: {
-            label: 'Numero di risultati',
-            options: sizeOptions.map(o => {
-              return {
-                text: o,
-                selected: o == size,
-                // disables options greater than total items
-                // disabled: o > totalPages*size
-              }
-            }),
-            payload: 'select-size'
-          }
+      this.loadedData.pagination = {
+        first: { payload: `goto-${1}`, classes: page == 1 ? 'is-disabled' : '' },
+        prev: { payload: `goto-${page - 1}`, classes: page == 1 ? 'is-disabled' : '' },
+        next: { payload: `goto-${page + 1}`, classes: page == totalPages ? 'is-disabled' : '' },
+        last: { payload: `goto-${totalPages}`, classes: page == totalPages ? 'is-disabled' : '' },
+        links: this.makePagination(totalPages, page),
+        select: {
+          label: 'Numero di risultati',
+          options: sizeOptions.map(o => {
+            return {
+              text: o,
+              selected: o == size,
+            }
+          }),
+          payload: 'select-size'
         },
         previews: result
       }

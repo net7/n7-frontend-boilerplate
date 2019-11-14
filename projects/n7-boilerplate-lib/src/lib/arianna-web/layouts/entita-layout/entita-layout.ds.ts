@@ -59,7 +59,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       pagination: true,
       size: this.pageSize,
     })
-    this.one('aw-linked-objects').update(this.myResponse);
+    this.one('aw-linked-objects').update({items: this.myResponse.relatedItems});
   };
 
   handleNavUpdate = tab => {
@@ -75,14 +75,14 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
         pagination: true,
         size: this.pageSize,
       })
-      this.one('aw-linked-objects').update(this.myResponse);
+      this.one('aw-linked-objects').update({items: this.myResponse.relatedItems});
     } else if (tab == "overview") {
       this.one('aw-linked-objects').updateOptions({
         size: 3,
         config: this.configuration,
         context: 'entita'
       })
-      this.one('aw-linked-objects').update(this.myResponse);
+      this.one('aw-linked-objects').update({items: this.myResponse.relatedItems});
     }
 
     if(tab == "overview" || tab == "entita-collegate"){
@@ -164,6 +164,6 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
         context: 'entita'
       })
     }
-    this.one('aw-linked-objects').update(res);
+    this.one('aw-linked-objects').update({items: res.relatedItems});
   }
 }

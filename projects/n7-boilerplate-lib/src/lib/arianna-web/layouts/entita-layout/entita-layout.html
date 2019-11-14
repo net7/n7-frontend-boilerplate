@@ -62,15 +62,6 @@
                         TUTTI GLI OGGETTI COLLEGATI <i class="n7-icon-angle-right"></i>
                     </button>
                 </div>
-               <!--  <ng-container *ngFor="let preview of lb.widgets['aw-linked-objects'].ds.out$ | async">
-                    <n7-smart-breadcrumbs [data]="preview.breadcrumbs">
-                    </n7-smart-breadcrumbs>
-                    <n7-item-preview [data]="preview" [emit]="lb.widgets['aw-linked-objects'].emit">
-                    </n7-item-preview>
-                    <n7-pagination [data]="(lb.widgets['aw-linked-objects'].ds.out$ | async)?.pagination"
-                        [emit]="lb.widgets['aw-linked-objects'].emit">
-                    </n7-pagination>
-                </ng-container> -->
                 <ng-container *ngFor="let preview of (lb.widgets['aw-linked-objects'].ds.out$ | async)?.previews">
                     <n7-smart-breadcrumbs [data]="preview.breadcrumbs">
                     </n7-smart-breadcrumbs>

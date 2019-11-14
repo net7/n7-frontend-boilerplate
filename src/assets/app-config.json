@@ -66,8 +66,10 @@
     },
     "metadata": {
       "info": {
-        "value": "item.info",
-        "customLabel": "Artista"
+        "data": "item.fields",
+        "value": "value",
+        "label": "key",
+        "customLabel": ""
       },
       "toe": {
         "data": "relatedTypesOfEntity",
@@ -80,7 +82,8 @@
         "payload": "link"
       }
     },
-    "payload": "item.id"
+    "payload": "item.id",
+    "paginationLimit": "5"
   },
   "home-layout": {
     "top-hero": {
