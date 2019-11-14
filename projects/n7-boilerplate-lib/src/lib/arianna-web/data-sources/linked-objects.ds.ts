@@ -99,7 +99,7 @@ export class AwLinkedObjectsDS extends DataSource {
     if (limit) {
       let lastPage: number, firstPage: number
       if (currentPage > Math.floor(limit / 2)) {
-        // when currentPage is after half-point 
+        // when currentPage is after half-point
         // (example: [ 14 ][ 15 ][!16!][ 17 ][ 18 ])
         if (currentPage < (totalPages - Math.floor(limit/2))) {
           lastPage = currentPage / 1 + Math.floor(limit / 2)
@@ -109,7 +109,7 @@ export class AwLinkedObjectsDS extends DataSource {
           firstPage = currentPage - limit + (totalPages - currentPage)
         }
       } else {
-        // when currentPage is before half-point 
+        // when currentPage is before half-point
         // (example: [ 1 ][!2!][ 3 ][ 4 ][ 5 ])
         lastPage = limit + 1
         firstPage = 1
@@ -199,8 +199,8 @@ export class AwLinkedObjectsDS extends DataSource {
                 return { // persona: 6, Organizz: 12, Luoghi: 2, Concetti: 32
                   value: _get(toe, paths.metadata.toe.value, toe.count),
                   // icon: 'n7-icon-bell' // TODO: link icon to config key
-                  icon: keys[_get(toe, paths.metadata.toe.icon, toe.type)] ? keys[_get(toe, paths.metadata.toe.icon, toe.type)].icon : "",
-                  classes: 'color-' + _get(toe, paths.metadata.toe.icon, toe.type)
+                  icon: keys[_get(toe, paths.metadata.toe.icon, toe.type).replace(" ", "-")] ? keys[_get(toe, paths.metadata.toe.icon, toe.type).replace(" ", "-")].icon : "",
+                  classes: 'color-' + _get(toe, paths.metadata.toe.icon, toe.type).replace(" ", "-")
                 }
               }) : null
           }

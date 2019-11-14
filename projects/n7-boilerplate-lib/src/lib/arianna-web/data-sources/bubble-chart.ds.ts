@@ -80,7 +80,11 @@ export class AwBubbleChartDS extends DataSource {
         }
         bubblePercentage = ( (bubble.count - (minBubbleCount/3)) - (minBubbleCount/3) )/( ((maxBubbleCount - coeff) *3) - (minBubbleCount/3) )
       }*/
-      bubblePercentage = ( bubble.count * (coeff/3) - (minBubbleCount/3) )/( (maxBubbleCount*3) - (minBubbleCount/3) );
+
+      /* In case of few bubbles */
+      if( coeff > 1 ) {
+        bubblePercentage = ( bubble.count * (coeff/3) - (minBubbleCount/3) )/( (maxBubbleCount*3) - (minBubbleCount/3) );
+      }
 
       let bubbleRadius = (Math.log(containerSize)/10)*(bubblePercentage*3)*(70-Math.sqrt(numOfBubbles));
       if ( bubbleRadius > this.maxBubbleRadius ) {
