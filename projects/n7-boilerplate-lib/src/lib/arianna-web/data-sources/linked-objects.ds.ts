@@ -25,6 +25,9 @@ export class AwLinkedObjectsDS extends DataSource {
     }
     this.context = this.options.context
     this.loadedData = this.unpackData(data)
+    if (this.options.pagination) {
+      this.addPagination(this.currentPage, this.totalPages, this.pageSize)
+    }
     this.checkForMore() // checks if <Show More> button should be enabled
     this.loadedData.loaderData = {}
     return this.loadedData
@@ -62,6 +65,28 @@ export class AwLinkedObjectsDS extends DataSource {
     this.loadedData.result = this.loadedData.result.concat(newData.result)
     this.checkForMore()
     this.loadedData.isLoading = false
+  }
+
+  public addPagination = (page, totalPages, size) => {
+    let sizeOptions = [10, 25, 50]
+    this.loadedData.pagination = {
+      first: { payload: `goto-${1}`, classes: page == 1 ? 'is-disabled' : '' },
+      prev: { payload: `goto-${page - 1}`, classes: page == 1 ? 'is-disabled' : '' },
+      next: { payload: `goto-${page + 1}`, classes: page == totalPages ? 'is-disabled' : '' },
+      last: { payload: `goto-${totalPages}`, classes: page == totalPages ? 'is-disabled' : '' },
+      links: this.makePagination(totalPages, page),
+      select: {
+        label: 'Numero di risultati',
+        options: sizeOptions.map(o => {
+          return {
+            text: o,
+            selected: o == size,
+          }
+        }),
+        payload: 'select-size'
+      },
+      // previews: result
+    }
   }
 
   public makePagination = (totalPages, currentPage) => {
@@ -176,27 +201,6 @@ export class AwLinkedObjectsDS extends DataSource {
       }
       result.push(item);
     });
-    if (this.options.pagination) { // if I'm on a page, render pagination data.
-      let sizeOptions = [10, 25, 50]
-      this.loadedData.pagination = {
-        first: { payload: `goto-${1}`, classes: page == 1 ? 'is-disabled' : '' },
-        prev: { payload: `goto-${page - 1}`, classes: page == 1 ? 'is-disabled' : '' },
-        next: { payload: `goto-${page + 1}`, classes: page == totalPages ? 'is-disabled' : '' },
-        last: { payload: `goto-${totalPages}`, classes: page == totalPages ? 'is-disabled' : '' },
-        links: this.makePagination(totalPages, page),
-        select: {
-          label: 'Numero di risultati',
-          options: sizeOptions.map(o => {
-            return {
-              text: o,
-              selected: o == size,
-            }
-          }),
-          payload: 'select-size'
-        },
-        previews: result
-      }
-    }
     if (context === 'home') {
       let actions = [
         {
