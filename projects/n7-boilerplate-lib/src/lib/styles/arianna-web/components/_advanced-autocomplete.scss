@@ -34,16 +34,16 @@
             color: $color-places;
         }
 
-        &.color-organizzazione {
-            color: $color-organizations;
-        }
-
         &.color-concetto {
             color: $color-concepts;
         }
 
         &.color-cosa-notevole {
-            color: $color-concepts;
+            color: $color-things;
+        }
+
+        &.color-organizzazione {
+            color: $color-organizations;
         }
     }
 
