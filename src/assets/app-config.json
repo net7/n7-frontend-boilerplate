@@ -149,7 +149,8 @@
       },
       "icon": "n7-icon-biography",
       "label": "Persone",
-      "input-placeholder": "Cerca una persona"
+      "input-placeholder": "Cerca una persona",
+      "main-metadata": "data_nascita"
     },
     "luogo": {
       "color": {
@@ -163,6 +164,7 @@
       "icon": "n7-icon-map1",
       "label": "Luoghi",
       "input-placeholder": "Cerca un luogo"
+
     },
     "concetto": {
       "color": {

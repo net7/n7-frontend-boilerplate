@@ -10,10 +10,9 @@ export class AwHomeAutocompleteDS extends DataSource {
 
     let itemIds = [],
       groups = {};
-
+    console.log(entities);
     entities.forEach(
       ({ entity, count }) => {
-        console.log(entity);
       if(!groups[entity.typeOfEntity]) {
         const { label, icon } = config[entity.typeOfEntity.replace(" ", "-")];
         groups[entity.typeOfEntity.replace(" ", "-")] = {
@@ -26,9 +25,12 @@ export class AwHomeAutocompleteDS extends DataSource {
 
       if(itemIds.indexOf(entity.id) === -1){
         let metaDataValue: string = ' ';
-        /*entity.info.forEach(infoData => {
-          if(infoData.key === 'author') metaDataValue = `di ${infoData.value}`;
-        });*/
+        if (entity.fields){
+          const meta = config[entity.typeOfEntity.replace(" ", "-")]['main-metadata'];
+          entity.fields.forEach(infoData => {
+            if( infoData.key === meta) metaDataValue = ` - ${infoData.value}`;
+          });
+        }
         groups[entity.typeOfEntity.replace(" ", "-")].items.push({
           label: entity.label,
           value: metaDataValue,
