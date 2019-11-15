@@ -70,6 +70,7 @@ export class AwHomeLayoutEH extends EventHandler {
         case 'aw-bubble-chart.click':
           if (payload.source === 'bubble') {
             if (payload.bubble) {
+              console.log({payload})
               this.dataSource.updateBubbleFilter(payload);
               if (this.dataSource.onBubbleSelected(payload.bubble)) {
                 this.dataSource.filterRequest().subscribe((response) => {
@@ -131,7 +132,7 @@ export class AwHomeLayoutEH extends EventHandler {
           })
           break;
         case 'aw-autocomplete-wrapper.clickresult':
-          this.dataSource.handleSimpleAutocompleteClick(payload)
+          this.handleSimpleAutocompleteClick(payload)
           break;
         default:
           break;
@@ -156,4 +157,46 @@ export class AwHomeLayoutEH extends EventHandler {
       }
     });
   }
+
+  public handleSimpleAutocompleteClick = payload => {
+    let thebubble = this.dataSource.allBubbles.find(b => {
+      let s = 'B_' + payload.replace(/-/g, '_')
+      return b.id == s
+    })
+    if (thebubble) {
+      this.dataSource.onBubbleSelected(thebubble)
+    }
+    if (this.dataSource.selectedEntitiesIds.indexOf(payload) < 0) {
+      this.dataSource.selectedEntitiesIds.push(payload)
+      this.dataSource.communication.request$('globalFilter', {
+        onError: (error) => console.error(error),
+        params: {
+          selectedEntitiesIds: this.dataSource.selectedEntitiesIds,
+          itemsPagination: {
+            offset: 0,
+            limit: this.dataSource.resultsLimit
+          }
+        },
+      }).subscribe(res => {
+        if (res) {
+          this.dataSource.updateBubbleFilter({
+            allBubbles: this.dataSource.allBubbles,
+            bubble: thebubble,
+            bubblePayload: { id: thebubble.id },
+            entityIdmap: this.dataSource.entityBubbleIdMap,
+            source: 'bubble'
+          })
+          this.dataSource.filterRequest().subscribe(res => {
+            if (res) {
+              this.emitOuter('filterbubbleresponse', this.dataSource.getBubblePayload(res))
+              this.dataSource.updateBubbles(res)
+            }
+          })
+          // this.renderPreviewsFromApolloQuery(res)
+        }
+      })
+    }
+  }
+
 }
+

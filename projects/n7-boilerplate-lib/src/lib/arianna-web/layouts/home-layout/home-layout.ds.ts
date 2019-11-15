@@ -88,29 +88,16 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   }
 
   parseInitialRequest(response) {
-
     response.typeOfEntityData.forEach((toe) => {
       const teoConfigData = this.configuration.get("config-keys")[toe.type.replace(" ", "-")];
-       this.facetData.push({
-          ...toe,
-          enabled: true,
-          locked: false,
-          configKey: toe.type.replace(" ", "-"),
-          ...teoConfigData
-        });
+      this.facetData.push({
+        ...toe,
+        enabled: true,
+        locked: false,
+        configKey: toe.type.replace(" ", "-"),
+        ...teoConfigData
+      });
     });
-
-
-    /*response.entitiesData.forEach((ent) => {
-      const teoConfigData = this.configuration.get("config-keys")[ent.entity.typeOfEntity.toLowerCase()];
-
-        this.facetData.push({
-          ...ent.countData,
-          ...teoConfigData,
-          enabled: true,
-        });
-    });*/
-
     this.one('aw-home-facets-wrapper').update({
       facetData: this.facetData,
       lockedFacets: this.lockedFacets
@@ -197,20 +184,15 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     }
   }
 
-  public handleSimpleAutocompleteClick = payload => {
-    console.log('clicked on result w/ id:', payload)
-    // TODO: do GlobalFilter and update components
-  }
-
   public getBubblePayload(response) {
-    let bubblePayolad = {
+    let bubblePayload = {
       reset: true,
       setBubbleChart: (bubbleCref) => this._bubbleChart = bubbleCref,
       facetData: this.facetData,
       source: response,
       selectedBubbles: this.selectedBubbles
     };
-    return bubblePayolad;
+    return bubblePayload;
   }
 
   private filterRequest() {
@@ -222,11 +204,9 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         concepts: false,
         organizations: false,
       }
-
-      if ( this.selectedBubbles.length <= 0 ){
+      if (this.selectedBubbles.length <= 0) {
         this.selectedEntitiesIds = [];
       }
-
       this.selectedBubbles.forEach((sB) => {
         let c = sB.color
         let findTypeFromColor = (obj, color) => {
@@ -237,15 +217,12 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         if (entityId)
           this.selectedEntitiesIds.push(entityId);
       });
-
       this.lockedFacets = activeBubbles
       this.one('aw-home-facets-wrapper').update({
         facetData: this.facetData,
         lockedFacets: this.lockedFacets
       });
     }
-
-
     return this.communication.request$('globalFilter', {
       onError: (error) => console.error(error),
       params: {
