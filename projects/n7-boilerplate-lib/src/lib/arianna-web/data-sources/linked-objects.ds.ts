@@ -70,8 +70,8 @@ export class AwLinkedObjectsDS extends DataSource {
     let sizeOptions = [10, 25, 50]
     this.loadedData.pagination = {
       first: { payload: `goto-${1}`, classes: page == 1 ? 'is-disabled' : '' },
-      prev: { payload: `goto-${page - 1}`, classes: page == 1 ? 'is-disabled' : '' },
-      next: { payload: `goto-${page + 1}`, classes: page == totalPages ? 'is-disabled' : '' },
+      prev: { payload: `goto-${page/1 - 1}`, classes: page == 1 ? 'is-disabled' : '' },
+      next: { payload: `goto-${page/1 + 1}`, classes: page == totalPages ? 'is-disabled' : '' },
       last: { payload: `goto-${totalPages}`, classes: page == totalPages ? 'is-disabled' : '' },
       links: this.makePagination(totalPages, page),
       select: {
