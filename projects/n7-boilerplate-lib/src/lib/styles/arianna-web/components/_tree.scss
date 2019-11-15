@@ -1,0 +1,194 @@
+/**
+ * TREE
+ *
+ * Component to navigate a tree.
+ */
+
+/* ------------------------------------ *\
+   #TREE-ITEMS
+\* ------------------------------------ */
+.n7-tree {
+    /* First level elements */
+    &__item-contents {
+        // display: flex;
+        // border-bottom: 1px solid $color-border-normal;
+    }
+
+    &__item-text {
+        // display: block;
+        // margin: 0 $space*1;
+        // padding: $space*1 0;
+        // font-size: $font-size-m;
+        // font-weight: $font-weight-bold;
+        // line-height: 1.4;
+    }
+
+    /* Sub level elements */
+    &__children-wrapper {
+        .n7-tree__n7-tree__item {
+        }
+
+        .n7-tree__item-text {
+            // font-size: $font-size-s;
+            // font-weight: $font-weight-normal;
+        }
+    }
+    
+    &__item-toggle {
+        flex-shrink: 0;
+        // display: flex;
+        // align-items: center;
+        // justify-content: center;
+        // width: 40px;
+        // text-align: center;
+        // font-size: $font-size-l;
+        // border-right: 1px solid $color-border-light;
+        // color: $color-text;
+        // cursor: pointer;
+
+        &:hover {
+            // color: $color-text-link;
+            // background-color: $color-background-medium;
+        }
+    }
+
+    &__item-details {
+        // display: flex;
+        // align-items: center;
+        // flex-grow: 2;
+        // cursor: pointer;
+
+        &:hover {
+            .n7-tree__item-text {
+                // color: $color-text-link;
+            }
+        }
+    }
+
+    &__item-icon {
+        // display: flex;
+        // align-items: center;
+        // justify-content: center;
+        // width: $tree-image-size;
+        // margin-left: $space*1;
+        // color: $color-text-light;
+        // flex-shrink: 0;
+    }
+
+    /* Icon on the right */
+    &__item-right-icon {
+        // display: flex;
+        // align-items: center;
+        // justify-content: center;
+        // width: $tree-image-size;
+        // margin-left: auto;
+        // color: $color-text-light;
+        // flex-shrink: 0;
+    }
+
+    &__item-img {
+        // margin-left: $space*1;
+        // width: $tree-image-size;
+        // height: $tree-image-size;
+        // object-fit: cover;
+        // flex-shrink: 0;
+    }
+
+    /* is-active */
+    &__item.is-active {
+        > .n7-tree__item-contents {
+            .n7-tree__item-text {
+                // font-weight: $font-weight-bold;
+            }
+        }
+    }
+
+    /* is-collapsed: all children are hidden */
+    &__item.is-collapsed {
+        .n7-tree__children-wrapper {
+            // display: none;
+        }
+    }
+}
+
+
+/* ------------------------------------ *\
+   #INDENTATION
+\* ------------------------------------ */
+/* stylelint-disable */
+.n7-tree__children-wrapper .n7-tree__children-wrapper {
+    /* 3rd level */
+    .n7-tree__item-contents {
+        // padding-left: $space;
+    }
+    .n7-tree__item-toggle {
+        // border-left: 1px solid $color-border-light;
+    }
+    .n7-tree__children-wrapper {
+        /* 4th level */
+        .n7-tree__item-contents {
+            // padding-left: $space*2;
+        }
+
+        .n7-tree__children-wrapper {
+            /* 5th level */
+            .n7-tree__item-contents {
+                // padding-left: $space*3;
+            }
+
+            .n7-tree__children-wrapper {
+                /* 6th level */
+                .n7-tree__item-contents {
+                    // padding-left: $space*4;
+                }
+
+                .n7-tree__children-wrapper {
+                    /* 7th level */
+                    .n7-tree__item-contents {
+                        // padding-left: $space*5;
+                    }
+
+                    .n7-tree__children-wrapper {
+                        /* 8th level */
+                        .n7-tree__item-contents {
+                            // padding-left: $space*6;
+                        }
+
+                        .n7-tree__children-wrapper {
+                            /* 9th level */
+                            .n7-tree__item-contents {
+                                // padding-left: $space*7;
+                            }
+
+                            .n7-tree__children-wrapper {
+                                /* 10th level */
+                                .n7-tree__item-contents {
+                                    // padding-left: $space*8;
+                                }
+
+                                /* All flats */
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+/* stylelint-enable */
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: $breakpoint-laptop) {
+}
+
+@media all and (max-width: $breakpoint-ipad-portrait) {
+}
+
+@media all and (max-width: $breakpoint-smartphone-landscape) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}

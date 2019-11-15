@@ -34,14 +34,11 @@
 
             <ng-container *ngIf="lb.dataSource.myResponse.fields">
                 <div class="aw-entity__content-section aw-entity__content-section-overview"
-                    [hidden]="lb.dataSource.selectedTab != 'overview' && lb.dataSource.selectedTab != 'campi'"
-                >
+                    [hidden]="lb.dataSource.selectedTab != 'overview' && lb.dataSource.selectedTab != 'campi'">
                     <div class="aw-entity__content-section-header">
                         <h2 class="aw-entity__content-section-title">Campi</h2>
                         <button
-                            class="n7-btn n7-btn-light" (click)="lb.eventHandler.emitInner('showmore', 'campi')"
-                            *ngIf="lb.dataSource.selectedTab == 'overview'"
-                        >
+                            class="n7-btn n7-btn-light" (click)="lb.eventHandler.emitInner('showmore', 'campi')">
                             TUTTI I CAMPI <i class="n7-icon-angle-right"></i>
                         </button>
                     </div>

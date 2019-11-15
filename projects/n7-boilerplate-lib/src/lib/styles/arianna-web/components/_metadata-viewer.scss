@@ -1,0 +1,53 @@
+/**
+ * METADATA-VIEWER
+ *
+ * Component to display metadata organized and nested in groups.
+ */
+ 
+/* ------------------------------------ *\
+   #METADATA-VIEWER
+\* ------------------------------------ */
+.n7-metadata-viewer {
+    &__group-wrapper {
+        .n7-metadata-viewer__group-wrapper {
+            // padding-left: $space*2;
+        }
+    }
+    
+    &__group {
+        // margin-bottom: $space*2;
+        break-inside: auto;
+    }
+
+    &__group-title {
+        // margin-bottom: $space*2;
+        // font-size: $font-size-xl;
+        // font-weight: $font-weight-bold;
+    }
+
+    &__item {
+        // margin-bottom: $space*1.5;
+        break-inside: avoid;
+    }
+
+    &__item-label {
+        // font-weight: $font-weight-bold;
+    }
+}
+
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: $breakpoint-laptop) {
+}
+
+@media all and (max-width: $breakpoint-ipad-portrait) {
+}
+
+@media all and (max-width: $breakpoint-smartphone-landscape) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}

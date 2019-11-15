@@ -31,21 +31,22 @@
         padding: $space*2;
         background-color: $color-background-light;
         border: 1px solid $color-border-light;
+        box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.08);
     }
 
     &__sidebar-title {
         display: flex;
         align-items: center;
         margin: 0;
-        font-size: $font-size-xxl;
+        font-size: $font-size-xl;
 
         .aw-entity__sidebar-title-icon {
-            margin-right: $space;
-            // vertical-align: middle;
+            margin-right: $space*1.5;
         }
 
         &-text {
             font-weight: $font-weight-black;
+            line-height: 1.15;
         }
 
         .color-persona & {
@@ -172,7 +173,7 @@
 
             &__item {
                 display: grid;
-                grid-template-columns: 1fr 2fr;
+                grid-template-columns: 200px 1fr;
                 margin-bottom: $space*2.5;
             }
 
@@ -197,7 +198,7 @@
     }
 
     .n7-metadata-viewer {
-        column-count: 2;
+        // column-count: 2;
         &__group {
             &-title {
                 font-size: $font-size-l;
