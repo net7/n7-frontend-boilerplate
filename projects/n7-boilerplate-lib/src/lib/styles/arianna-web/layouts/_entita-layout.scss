@@ -219,27 +219,24 @@
         }
     }
 
-    /* List of objects in overview and Related Objects subpage */
-    &__overview-objects,
-    &__content-section-objects {
+    /* List of objects in overview and elated objects */
+    &__content-item-previews {
         .n7-item-preview {
             margin-top: 0;
             padding-top: $space;
         }
 
-        .aw-entity__content-section-list  {
-            > *:last-child {
-                > .n7-item-preview {
-                    padding-bottom: 0;
-                    margin-bottom: 0;
-                    border-bottom: none;
-                }
+        > *:last-child {
+            > .n7-item-preview {
+                padding-bottom: 0;
+                margin-bottom: 0;
+                border-bottom: none;
             }
         }
+    }
 
-        .n7-pagination {
-            margin-top: $space*4;
-        }
+    .n7-pagination {
+        margin-top: $space*4;
     }
 }
 
