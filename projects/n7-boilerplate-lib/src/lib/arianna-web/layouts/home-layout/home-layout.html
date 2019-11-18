@@ -66,9 +66,11 @@
                             </n7-item-preview>
                         </ng-container>
                         <ng-container *ngIf="(lb.widgets['aw-linked-objects'].ds.out$ | async)?.isLoading">
-                            <n7-loader
-                                [data]="(lb.widgets['aw-linked-objects'].ds.out$ | async)?.loaderData">
-                            </n7-loader>
+                            <div class="aw-home__bubble-results-list-loader">
+                                <n7-loader
+                                    [data]="(lb.widgets['aw-linked-objects'].ds.out$ | async)?.loaderData">
+                                </n7-loader>
+                            </div>
                         </ng-container>
                     </div>
                     <div *ngIf="lb.dataSource.hasScrollBackground" class="aw-home__bubble-results-list-wrapper-with-scroll"></div>
@@ -77,12 +79,6 @@
                         <button class="n7-btn n7-btn-light n7-btn-l aw-home__bubble-results-list-view-all">
                             {{action[0].label}}
                         </button>
-                        <!-- <button *ngIf="action[1]" 
-                                class="n7-btn n7-btn-light n7-btn-l aw-home__bubble-results-list-view-others"
-                                (click)="lb.eventHandler.emitOuter('viewmore', 'linked-objects')"
-                                [disabled]="action[1].disabled">
-                            {{action[1].label}}
-                        </button> -->
                     </div>
                 </div>
 

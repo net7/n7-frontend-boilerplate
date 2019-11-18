@@ -7,61 +7,58 @@
 /* ------------------------------------ *\
     HERO
 \* ------------------------------------ */
-.aw-home {
-    &__top-hero {
-        .n7-hero {
+.aw-home__top-hero {
+    .n7-hero {
+        height: $top-hero-height;
+
+        &__title {
+            font-size: $font-size-xxxl;
+            font-weight: $top-hero-title-font-weight;
+        }
+
+        &__text {
+            font-size: $font-size-xl;
+        }
+
+        &__text-wrapper {
             height: $top-hero-height;
+            max-width: $top-hero-text-max-width;
+        }
 
-            &__title {
-                font-size: $font-size-xxxl;
-                font-weight: $top-hero-title-font-weight;
-            }
+        &__input {
+            height: $top-hero-input-height;
+            padding-right: $space*2;
+            padding-left: $space*2;
+            border-radius: $top-hero-input-border-radius 0 0 $top-hero-input-border-radius;
+            box-shadow: $top-hero-input-box-shadow;
+            line-height: $top-hero-input-height;
+            font-size: $font-size-l;
 
-            &__text {
-                font-size: $font-size-xl;
-
-                &-wrapper {
-                    height: $top-hero-height;
-                    max-width: $top-hero-text-max-width;
-                }
-            }
-
-            &__input {
-                height: $top-hero-input-height;
-                padding-right: $space*2;
-                padding-left: $space*2;
-                border-radius: $top-hero-input-border-radius 0 0 $top-hero-input-border-radius;
-                box-shadow: $top-hero-input-box-shadow;
-                line-height: $top-hero-input-height;
-                font-size: $font-size-l;
-
-                @include placeholder {
-                    font-size: $font-size-l;
-                }
-            }
-
-            &__btn {
-                height: $top-hero-button-height;
-                border-radius: 0 $top-hero-input-border-radius $top-hero-input-border-radius 0;
-                border: none;
+            @include placeholder {
                 font-size: $font-size-l;
             }
+        }
 
-            &__input-wrapper {
-                display: flex;
-                min-width: 100%;
-            }
+        &__btn {
+            height: $top-hero-button-height;
+            border-radius: 0 $top-hero-input-border-radius $top-hero-input-border-radius 0;
+            border: none;
+            font-size: $font-size-l;
+        }
 
-            /* Autocomplete */
-            .tippy-popper {
-                width: 100%;
-                max-width: 100%;
-            }
+        &__input-wrapper {
+            display: flex;
+            min-width: 100%;
+        }
 
-            .tippy-tooltip, .tippy-content {
-                padding: 0;
-            }
+        /* Autocomplete */
+        .tippy-popper {
+            width: 100%;
+            max-width: 100%;
+        }
 
+        .tippy-tooltip, .tippy-content {
+            padding: 0;
         }
     }
 }
@@ -71,7 +68,6 @@
     BUBBLE-CHART
 \* ------------------------------------ */
 .aw-home {
-
     &__bubble-chart-wrapper {
         overflow: hidden;
     }
@@ -141,12 +137,13 @@
             margin-bottom: $space/2;
             font-size: $font-size-l;
             font-weight: $font-weight-bold;
-            &-wrapper {
-                display: flex;
-                flex-flow: column nowrap;
-                width: 100%;
-                border-left: 1px solid $color-border-normal;
-            }
+        }
+
+        &__text-wrapper {
+            display: flex;
+            flex-flow: column nowrap;
+            width: 100%;
+            border-left: 1px solid $color-border-normal;
         }
 
         &__secondary-text {
@@ -327,15 +324,16 @@
         &-list-wrapper {
             border-top: 1px solid $color-border-normal;
             position: relative;
-            &-with-scroll {
-                position: absolute;
-                top: $bubble-results-height - 50px;
-                bottom: 0;
-                width: 100%;
-                height: 50px;
-                background: $color-background-layout;
-                background: $gradient-item-preview-list;
-            }
+        }
+
+        &-list-wrapper-with-scroll {
+            position: absolute;
+            top: $bubble-results-height - 50px;
+            bottom: 0;
+            width: 100%;
+            height: 50px;
+            background: $color-background-layout;
+            background: $gradient-item-preview-list;
         }
     }
 
@@ -372,6 +370,22 @@
                 font-size: $n7-tag-icon-font-size;
                 text-align: center;
                 line-height: $n7-tag-icon-size;
+            }
+        }
+    }
+
+    /* Results-loader */
+    .aw-home__bubble-results-list-loader {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: $space*1.5 0 $space*2 0;
+
+        .n7-loader {
+            &, &:after {
+                width: 40px !important;
+                height: 40px !important;
             }
         }
     }
