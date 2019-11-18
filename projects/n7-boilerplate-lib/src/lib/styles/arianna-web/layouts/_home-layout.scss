@@ -419,6 +419,35 @@
 
 
 /* ------------------------------------ *\
+    OUTER-LINKS
+\* ------------------------------------ */
+.aw-home__outer-links {
+    padding: $space*4 0;
+    background-color: $color-background-base;
+}
+
+.aw-home__outer-links-wrapper {
+    max-width: $page-max-width;
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: $grid-gutter-h;
+
+    .n7-item-preview.is-vertical.has-image {
+        border-bottom: 0;
+        margin-bottom: 0;
+        padding-bottom: 0;
+
+        .n7-item-preview__image {
+            height: 200px;
+            border-radius: $border-radius;
+        }
+    }
+}
+
+
+/* ------------------------------------ *\
     BOTTOM-HERO
 \* ------------------------------------ */
 .aw-home {
