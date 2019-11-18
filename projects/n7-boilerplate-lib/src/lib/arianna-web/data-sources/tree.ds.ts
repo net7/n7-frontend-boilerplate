@@ -36,6 +36,9 @@ export class AwTreeDS extends DataSource {
         }
       } else if ( parents && parents.indexOf( it['_meta'] ) >= 0 ) {
           it['classes'] = classes.replace(/is-collapsed/g, 'is-expanded');
+          if ( it['toggle'] ){
+            it['toggle']['icon'] = 'n7-icon-angle-down';
+          }
       }
       if( typeof it['items'] != 'undefined' && it['items'].length > 0 ) {
         this.updateTreeData(it, parents, id);
