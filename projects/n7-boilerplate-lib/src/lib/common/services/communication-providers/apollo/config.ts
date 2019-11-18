@@ -226,12 +226,72 @@ export const ApolloProviderConfig = {
       }
     }`
   },
+  'getNode': {
+    queryName: 'getNode',
+    queryBody: `{
+      getNode(__PARAMS__) {
+        ... on Item {
+          id
+          label
+          icon
+          title
+          subTitle
+          image
+          text
+          fields {
+            ...
+            on KeyValueField {
+              key
+              value
+            }
+            ... on KeyValueFieldGroup {
+              label
+              fields {
+                ...
+                on KeyValueField {
+                  key
+                  value
+                }
+              }
+            }
+          }
+          relatedEntities {
+              count
+              entity{
+                id
+                label
+                typeOfEntity
+              }
+          }
+          relatedItems {
+              thumbnail
+              item {
+                label
+                id
+            }
+            relatedTypesOfEntity {
+              type
+              count
+            }
+          }
+          breadcrumbs {
+            label
+            link
+          }
+        }
+        ... on Node {
+          id
+          label
+        }
+      }
+    }`
+  },
   'autoComplete': {
     queryName: 'autoComplete',
     queryBody: `{
       autoComplete(__PARAMS__){
         totalCount
-        entities {
+ x       entities {
           entity {
               id
               label
