@@ -95,7 +95,7 @@ export class AwTreeDS extends DataSource {
     this.update(treeObj);
     if (response['currentItem'] == response['currentItem'] != null) {
       //this.currentItem = response['currentItem'];
-      this.selectTreeItem(response['currentItem']);
+      this.selectTreeItem(response['currentItem'], null);
       this.updateTree(null, this.currentItem.parents, response['currentItem']);
 
     }
