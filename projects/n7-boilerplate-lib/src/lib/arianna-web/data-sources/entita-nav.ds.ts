@@ -13,7 +13,7 @@ export class AwEntitaNavDS extends DataSource {
       payload: 'overview',
       classes: selected == 'overview' ? 'is-selected' : ''
     })
-    if (data.fields) {
+    if (data.fields && data.fields.length > 0) {
       navigation.items.push({
         text: 'CAMPI',
         payload: 'campi',

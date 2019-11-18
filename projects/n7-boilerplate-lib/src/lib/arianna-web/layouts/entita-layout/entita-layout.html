@@ -16,7 +16,7 @@
     <!-- lb.dataSource.selectedTab -->
     <div class="aw-entity__content">
         <section>
-            <div class="aw-entity__content-section" [hidden]="lb.dataSource.selectedTab != 'overview'">
+            <div *ngIf="lb.dataSource.myResponse.wikiTab || lb.dataSource.myResponse.extraTab" class="aw-entity__content-section" [hidden]="lb.dataSource.selectedTab != 'overview'">
                 <div class="aw-entity__overview-description">
                     {{lb.dataSource.myResponse.extraTab}}
                 </div>
@@ -32,7 +32,7 @@
                 </div>
             </div>
 
-            <ng-container *ngIf="lb.dataSource.myResponse.fields">
+            <ng-container *ngIf="lb.dataSource.myResponse.fields && lb.dataSource.myResponse.fields.length > 0">
                 <div class="aw-entity__content-section aw-entity__content-section-overview"
                     [hidden]="lb.dataSource.selectedTab != 'overview' && lb.dataSource.selectedTab != 'campi'">
                     <div class="aw-entity__content-section-header">
