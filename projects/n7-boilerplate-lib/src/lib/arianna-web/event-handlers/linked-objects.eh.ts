@@ -60,7 +60,7 @@ export class AwLinkedObjectsEH extends EventHandler {
       Check if the target element is scrolled near the end while data is not already loading.
       If the condition is met, a request for more data is sent.
     */
-    if (target.scrollTop > target.scrollTopMax - 150 && this.dataSource.loadedData.isLoading == false) {
+    if (target.scrollTop + target.clientHeight >= target.scrollHeight - 150 && this.dataSource.loadedData.isLoading == false) {
       this.dataSource.loadedData.isLoading = true
       this.emitOuter('datarequest', {
         currentPage: this.dataSource.currentPage

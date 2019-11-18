@@ -107,7 +107,7 @@
     },
     "results-limit": 10,
     "max-item-length": 50,
-    "max-bubble-num": 50
+    "max-bubble-num": 125
   },
   "scheda-layout": {
     "bubble-chart": {
