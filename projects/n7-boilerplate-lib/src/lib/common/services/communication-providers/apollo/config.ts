@@ -291,7 +291,7 @@ export const ApolloProviderConfig = {
     queryBody: `{
       autoComplete(__PARAMS__){
         totalCount
- x       entities {
+        entities {
           entity {
               id
               label
