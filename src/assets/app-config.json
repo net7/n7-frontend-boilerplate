@@ -132,7 +132,8 @@
       "Nessun risultato",
       "Risultato",
       "Risultati"
-    ]
+    ],
+    "entities": ["opera", "fondo", "persona", "luogo", "cosa-notevole", "organizzazione"] 
   },
   "entita-layout": {
     "max-bubble-num": 30
@@ -192,6 +193,24 @@
       "icon": "n7-icon-building",
       "label": "Organizzazioni",
       "input-placeholder": "Cerca un'organizzazione"
+    },
+    "opera": {
+      "color": {
+        "hex": "#a798c2",
+        "rgb": [167,152,194]
+      },
+      "icon": "n7-icon-image",
+      "label": "Opere d'arte",
+      "input-placeholder": ""
+    },
+    "fondo": {
+      "color": {
+        "hex": "#cc6f5c",
+        "rgb": [204,111,92]
+      },
+      "icon": "n7-icon-archive",
+      "label": "Fondi",
+      "input-placeholder": ""
     }
   },
   "paths": {
