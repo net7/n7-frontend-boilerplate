@@ -21,7 +21,7 @@ export class AwTreeEH extends EventHandler {
           case 'aw-scheda-layout.selectItem':
             this.dataSource.selectTreeItem( payload );
             if (typeof this.dataSource.currentItem !== 'undefined') {
-              this.dataSource.updateTree( null, this.dataSource.currentItem.payload.parents, payload ); 
+              this.dataSource.updateTree( null, this.dataSource.currentItem.payload.toggle.parents, payload );
             } else {
               console.warn('The object in the URL does not exist.')
               // Maybe navigate to 404 here.

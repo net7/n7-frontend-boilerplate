@@ -77,11 +77,11 @@ export class AwSchedaLayoutEH extends EventHandler {
       if (response) {
         console.log("Apollo responded with tree:", response);
         this.dataSource.updateNavigation(response);
-        this.emitOuter('navigationresponse', response);
+        this.emitOuter('navigationresponse', {tree: response, currentItem: selectedItem});
       }
-      if (selectedItem) {
+      /*if (selectedItem) {
         this.emitOuter('selectItem', selectedItem);
-      }
+      }*/
     });
   }
 }

@@ -138,7 +138,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
         icon: response.icon,
         title: {
           main: {
-            text: response.title,
+            text: response.title || response.label,
             classes: 'bold',
           }
         },
@@ -200,7 +200,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
         this.one('aw-linked-objects').update(response);
       } else {
         this.hasSimilarItems = false;
-        this.one('aw-linked-objects').update([]);
+        //this.one('aw-linked-objects').update([]);
       }
   }
 
@@ -209,7 +209,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   }
 
   setAllBubblesFromApolloQuery( response: any, reset?: boolean ){
-    if ( !response || !response.relatedEntities ) { return; }
+    if ( !response || !response.relatedEntities ) { this.hasBubbles = false; return; }
     this.allBubbles = [];
 
     for ( let i = 0; i < response.relatedEntities.length; i++ ){

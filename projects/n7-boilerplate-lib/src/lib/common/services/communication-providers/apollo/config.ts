@@ -282,6 +282,24 @@ export const ApolloProviderConfig = {
         ... on Node {
           id
           label
+          img
+          fields {
+            ...
+            on KeyValueField {
+              key
+              value
+            }
+            ... on KeyValueFieldGroup {
+              label
+              fields {
+                ...
+                on KeyValueField {
+                  key
+                  value
+                }
+              }
+            }
+          }
         }
       }
     }`

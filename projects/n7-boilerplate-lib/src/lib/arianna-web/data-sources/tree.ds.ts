@@ -2,7 +2,7 @@ import { DataSource } from '@n7-frontend/core';
 
 export class AwTreeDS extends DataSource {
 
-  public currentItem: string;
+  public currentItem: any;
   public icons: any;
 
   protected transform(data) {
@@ -10,7 +10,13 @@ export class AwTreeDS extends DataSource {
     return data;
   }
 
-  updateTree(data, parents, id){
+  updateTree(data, parents, id) {
+
+    const tree = this.updateTreeData(data, parents, id);
+    this.update(tree);
+
+  }
+  private updateTreeData(data, parents, id){
     if ( !data ) {
       data = this.output;
     }
@@ -29,13 +35,13 @@ export class AwTreeDS extends DataSource {
           }
         }
       } else if ( parents && parents.indexOf( it['_meta'] ) >= 0 ) {
-          it['classes'] = classes + ' is-expanded';
+          it['classes'] = classes.replace(/is-collapsed/g, 'is-expanded');
       }
       if( typeof it['items'] != 'undefined' && it['items'].length > 0 ) {
-        this.updateTree(it, parents, id);
+        this.updateTreeData(it, parents, id);
       }
     });
-    this.update(data);
+    return data;
   }
 
   selectTreeItem(id, data){
@@ -72,16 +78,24 @@ export class AwTreeDS extends DataSource {
     this.update(sidebarData);
   }
 
-  public parseData(data) {
+  public parseData(response) {
     let treeObj = {
       items: []
     };
+
+    var data = response['tree'];
     if( data['branches'] && data['branches'].length > 0 ) {
       data['branches'].forEach( item => {
         treeObj['items'].push( this.parseTree(item, false, []) );
       });
     }
     this.update(treeObj);
+    if (response['currentItem'] == response['currentItem'] != null) {
+      //this.currentItem = response['currentItem'];
+      this.selectTreeItem(response['currentItem']);
+      this.updateTree(null, this.currentItem.parents, response['currentItem']);
+
+    }
   }
 
   private parseTree(data, toggle, parents) {
@@ -120,6 +134,8 @@ export class AwTreeDS extends DataSource {
         default :  data[key]; break;
       }
       treeItem['classes'] = 'is-collapsed';
+      treeItem['parents'] = currParents;
+
     }
     else if( data['branches'] != null ) {
       currParents.push(data['id']);
