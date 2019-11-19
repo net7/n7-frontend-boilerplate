@@ -280,7 +280,8 @@ export class AwHomeLayoutDS extends LayoutDataSource {
 
   handleFacetHeaderClick(facetId) {
     let updateBubbles = false;
-    let enabledFacets = this.facetData.filter(f => f.enabled).length - 1;
+    let enabledFacets = this.facetData.filter(f => f.enabled).length;
+    let lockedFacets = this.facetData.filter(f => f.locked).length;
     this.facetData.forEach(f => {
       f.type = f.type.replace(/ /g, '-') // fix for space in facet type string ('cose notevoli')
       if (f.type === facetId && f.locked === true) {
@@ -290,9 +291,9 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       if (f.type === facetId && f.enabled === true && enabledFacets < 1) {
         return
       }
-      if (f.type === facetId) {
-        // if this is the clicked facet
-        if (f.enabled && enabledFacets > 0) {
+      if (f.type === facetId) { // if this is the clicked facet
+        console.log(`${f.type} is the clicked facet`)
+        if (f.enabled && enabledFacets > 1) {
           f.enabled = false;
           f.locked = false;
           updateBubbles = true;
@@ -301,11 +302,10 @@ export class AwHomeLayoutDS extends LayoutDataSource {
           f.locked = false;
           updateBubbles = true;
         }
-      } else {
-        // if this is another facet
-        if (enabledFacets <= 1 && f.enabled) {
+      } else { // if this is another facet
+        if (enabledFacets <= 2 && f.enabled) {
           f.locked = true;
-        } else {
+        } if (enabledFacets >= 1 && f.locked) {
           f.locked = false;
         }
       }
@@ -343,6 +343,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       });
       this.one('aw-bubble-chart').update(this.getBubblePayload(null));
     }
+    console.log({lockedFacets, enabledFacets})
   }
 
   renderItemTags() {
@@ -354,7 +355,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         if (this.allBubbles[i].id === sBubble.id) {
           label = this.allBubbles[i].entity.label;
           tagsData.push({
-            label, 
+            label,
             icon: "n7-icon-close",
             payload: sBubble.id,
             classes: "tag-" + this.allBubbles[i].entity.typeOfEntity
