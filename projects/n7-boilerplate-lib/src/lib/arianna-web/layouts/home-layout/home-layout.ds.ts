@@ -350,12 +350,14 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     this.selectedBubbles.forEach((sBubble) => {
       let label = '';
       for (var i = 0; i < this.allBubbles.length; i++) {
+        console.log('render tags', this.allBubbles[i])
         if (this.allBubbles[i].id === sBubble.id) {
           label = this.allBubbles[i].entity.label;
           tagsData.push({
-            label, icon: "n7-icon-close",
+            label, 
+            icon: "n7-icon-close",
             payload: sBubble.id,
-            classes: "tag-" + this.allBubbles[i].entity.typeOfEntity.id
+            classes: "tag-" + this.allBubbles[i].entity.typeOfEntity
           });
           break;
         }
