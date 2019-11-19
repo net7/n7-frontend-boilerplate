@@ -30,7 +30,7 @@
                 [data]="lb.widgets['aw-scheda-image'].ds.out$ | async">
             </n7-image-viewer>
 
-            <section class="aw-scheda__description">
+            <section class="aw-scheda__description" *ngIf="lb.dataSource.contentParts.content">
                 <div *ngFor="let part of lb.dataSource.contentParts">
                     <div [innerHTML]="part.content"></div>
                 </div>
