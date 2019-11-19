@@ -99,6 +99,10 @@ export const ApolloProviderConfig = {
                   value
                 }
               }
+              breadcrumbs {
+                label
+                link
+              }
             }
             relatedTypesOfEntity {
               type
@@ -153,6 +157,10 @@ export const ApolloProviderConfig = {
                 key
                 value
               }
+            }
+            breadcrumbs {
+              label
+              link
             }
           }
           relatedTypesOfEntity {
