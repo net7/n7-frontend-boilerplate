@@ -43,6 +43,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   public bubblesEnabled = false;
   public resultsLimit = -1;
   public selectedEntitiesIds = [];
+  public outerLinks:any;
 
   onInit({ communication, mainState, configuration, tippy }) {
     this.communication = communication;
@@ -62,6 +63,9 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     this.mainState.updateCustom('currentNav', 'aw/home');
     // listen autocomplete changes
     this._listenAutoCompleteChanges();
+
+    this.outerLinks = this.configuration.get('home-layout')['outer-links'];
+
   }
 
   public makeRequest$(query, params) {
@@ -70,6 +74,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       params
     });
   }
+
 
   public updateComponent = (id, data, options) => {
     if (options) {
@@ -354,7 +359,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         if (this.allBubbles[i].id === sBubble.id) {
           label = this.allBubbles[i].entity.label;
           tagsData.push({
-            label, 
+            label,
             icon: "n7-icon-close",
             payload: sBubble.id,
             classes: "tag-" + this.allBubbles[i].entity.typeOfEntity

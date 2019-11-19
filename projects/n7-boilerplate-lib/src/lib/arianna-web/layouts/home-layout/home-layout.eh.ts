@@ -14,6 +14,12 @@ export class AwHomeLayoutEH extends EventHandler {
           this.loadFilters();
           this.configuration = payload.configuration;
           break;
+        case 'aw-home-layout.outerlinkclick':
+          this.emitGlobal('navigate', {
+            handler: 'router',
+            path: payload
+          });
+        break;
         case 'aw-home-layout.destroy':
           this.destroyed$.next();
           break;
@@ -196,6 +202,10 @@ export class AwHomeLayoutEH extends EventHandler {
         }
       })
     }
+  }
+
+  public outerLinkClick(type, payload){
+    window.open(payload, "_blank");
   }
 
 }
