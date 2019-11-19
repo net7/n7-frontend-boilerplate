@@ -281,7 +281,6 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   handleFacetHeaderClick(facetId) {
     let updateBubbles = false;
     let enabledFacets = this.facetData.filter(f => f.enabled).length;
-    let lockedFacets = this.facetData.filter(f => f.locked).length;
     this.facetData.forEach(f => {
       f.type = f.type.replace(/ /g, '-') // fix for space in facet type string ('cose notevoli')
       if (f.type === facetId && f.locked === true) {
@@ -343,7 +342,6 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       });
       this.one('aw-bubble-chart').update(this.getBubblePayload(null));
     }
-    console.log({lockedFacets, enabledFacets})
   }
 
   renderItemTags() {
