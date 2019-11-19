@@ -66,6 +66,10 @@
     },
     "metadata": {
       "info": {
+        "selection": [
+          {"key": "fase", "forceLabel": "Fase"},
+          {"key": "intitolazione", "forceLabel": "Titolo"}
+        ],
         "data": "item.fields",
         "value": "value",
         "label": "key",

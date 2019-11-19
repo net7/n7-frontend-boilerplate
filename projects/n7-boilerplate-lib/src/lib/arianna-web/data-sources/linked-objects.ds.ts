@@ -29,6 +29,7 @@ export class AwLinkedObjectsDS extends DataSource {
     }
     this.checkForMore() // checks if <Show More> button should be enabled
     this.loadedData.loaderData = {}
+    console.log({ loadedData: this.loadedData })
     return this.loadedData
   }
 
@@ -70,8 +71,8 @@ export class AwLinkedObjectsDS extends DataSource {
     let sizeOptions = [10, 25, 50]
     this.loadedData.pagination = {
       first: { payload: `goto-${1}`, classes: page == 1 ? 'is-disabled' : '' },
-      prev: { payload: `goto-${page/1 - 1}`, classes: page == 1 ? 'is-disabled' : '' },
-      next: { payload: `goto-${page/1 + 1}`, classes: page == totalPages ? 'is-disabled' : '' },
+      prev: { payload: `goto-${page / 1 - 1}`, classes: page == 1 ? 'is-disabled' : '' },
+      next: { payload: `goto-${page / 1 + 1}`, classes: page == totalPages ? 'is-disabled' : '' },
       last: { payload: `goto-${totalPages}`, classes: page == totalPages ? 'is-disabled' : '' },
       links: this.makePagination(totalPages, page),
       select: {
@@ -101,7 +102,7 @@ export class AwLinkedObjectsDS extends DataSource {
       if (currentPage > Math.floor(limit / 2)) {
         // when currentPage is after half-point
         // (example: [ 14 ][ 15 ][!16!][ 17 ][ 18 ])
-        if (currentPage < (totalPages - Math.floor(limit/2))) {
+        if (currentPage < (totalPages - Math.floor(limit / 2))) {
           lastPage = currentPage / 1 + Math.floor(limit / 2)
           firstPage = currentPage / 1 - Math.floor(limit / 2)
         } else {
@@ -187,10 +188,17 @@ export class AwLinkedObjectsDS extends DataSource {
         metadata: [
           _get(el, paths.metadata.info.data, el.item.fields) ? {
             classes: 'n7-objects__metadata-artist',
-            items: _get(el, paths.metadata.info.data, el.item.fields).map(data => ({
-              label: paths.metadata.info.customLabel ? paths.metadata.info.customLabel : _get(data, paths.metadata.info.label, data.key),
-              value: _get(data, paths.metadata.info.value, data.value)
-            }))
+            items: _get(el, paths.metadata.info.data, el.item.fields).filter(data => {
+              for (let i = 0; i < paths.metadata.info.selection.length; i++) {
+                if (data.key == paths.metadata.info.selection[i].key) {
+                  return { label: 'label ok', value: 'value ok' }
+                  // ({
+                  //   label: paths.metadata.info.selection[i].forceLabel.length > 0 ? paths.metadata.info.selection[i].forceLabel : data.key,
+                  //   value: _get(data, 'value', data.value)
+                  // })
+                }
+              }
+            })
           } : {},
           {
             classes: 'n7-objects__metadata-linked',
