@@ -18,7 +18,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   private autocompletePopover: any;
   private autocompletePopoverOpen: boolean = false;
   private autocompleteChanged$: Subject<string> = new Subject();
-  // the bubbles currently selected (this are saved from the event handler's
+  // the bubbles currently selected (these are saved from the event handler's
   // and correspond exactly to the bubblechart's bubble objects)
   public selectedBubbles: any[] = [];
   public numOfItemsStr: string = null;
@@ -282,6 +282,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     let updateBubbles = false;
     let enabledFacets = this.facetData.filter(f => f.enabled).length - 1;
     this.facetData.forEach(f => {
+      f.type = f.type.replace(/ /g, '-') // fix for space in facet type string ('cose notevoli')
       if (f.type === facetId && f.locked === true) {
         // if user clicked on a locked facet, ignore it
         return
@@ -291,7 +292,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       }
       if (f.type === facetId) {
         // if this is the clicked facet
-        if (f.enabled && enabledFacets > 0 ) {
+        if (f.enabled && enabledFacets > 0) {
           f.enabled = false;
           f.locked = false;
           updateBubbles = true;
@@ -308,7 +309,6 @@ export class AwHomeLayoutDS extends LayoutDataSource {
           f.locked = false;
         }
       }
-
     });
     this.one('aw-home-facets-wrapper').update({
       facetData: this.facetData,
@@ -317,25 +317,25 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     if (updateBubbles) {
       let disableFacetsIds = [];
       this.facetData.forEach((fD) => {
-        if (!fD.enabled) disableFacetsIds.push(fD.type.id);
+        if (!fD.enabled) disableFacetsIds.push(fD.type); // this is probably useless
       });
-      if (disableFacetsIds) {
-        let filteredSelectedBubbles = this.selectedBubbles.filter((bubble) => {
-          let typeOfEntity = "";
+      if (disableFacetsIds.length > 0) {
+        let filteredSelectedBubbles = this.selectedBubbles.filter(bubble => {
           for (var i = 0; i < this.allBubbles.length; i++) {
             if (this.allBubbles[i].id === bubble.id) {
-              typeOfEntity = this.allBubbles[i].entity.typeOfEntity.id;
-              break;
+              if (disableFacetsIds.includes(
+                this.allBubbles[i].entity.typeOfEntity.id
+              )) {
+                return false
+              }
             }
           }
-          if (disableFacetsIds.includes(typeOfEntity)) return false;
-          return true;
         });
         if (filteredSelectedBubbles.length != this.selectedBubbles.length) {
           this.selectedBubbles = filteredSelectedBubbles;
         };
       }
-      this.allBubbles.forEach((bubble) => {
+      this.allBubbles.forEach(bubble => {
         bubble.selected = false;
         for (var i = 0; i < this.selectedBubbles.length; i++) {
           if (this.selectedBubbles[i].id === bubble.id) bubble.selected = true;

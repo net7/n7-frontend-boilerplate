@@ -269,7 +269,7 @@ export class AwBubbleChartDS extends DataSource {
     let result = this.allBubbles.filter(
       (bubble) => {
         for ( var i = 0; i < this.facetData.length; i++ ){
-          if ( bubble.entity.typeOfEntity === this.facetData[i].type ) {
+          if (bubble.entity.typeOfEntity.replace(/ /g, '-') === this.facetData[i].type.replace(/ /g, '-') ) {
             if ( !this.facetData[i].enabled ) { return false; }
           }
         }
