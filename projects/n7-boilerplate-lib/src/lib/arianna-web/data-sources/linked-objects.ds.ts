@@ -176,30 +176,30 @@ export class AwLinkedObjectsDS extends DataSource {
         image: _get(el, paths.image, el.image),
         title:
           // if there is a max string length in config, use it
-          Number(paths.title.maxLength) && _get(el, paths.title, el.item.label).length > Number(paths.title.maxLength) ?
-            _get(el, paths.title, el.item.label).slice(0, Number(paths.title.maxLength)) + '…' :
+          +paths.title.maxLength && _get(el, paths.title, el.item.label).length > +paths.title.maxLength ?
+            _get(el, paths.title, el.item.label).slice(0, +paths.title.maxLength) + '…' :
             _get(el, paths.title, el.item.label),
         text:
-          Number(paths.text.maxLength) && _get(el, paths.text.data, el.item.text).length > Number(paths.text.maxLength) ?
-            _get(el, paths.text.data, el.item.text).slice(0, Number(paths.text.maxLength)) + '…' :
+          +paths.text.maxLength && _get(el, paths.text.data, el.item.text).length > +paths.text.maxLength ?
+            _get(el, paths.text.data, el.item.text).slice(0, +paths.text.maxLength) + '…' :
             _get(el, paths.text.data, el.item.text),
         payload: _get(el, paths.payload, el.item.id),
         classes: ['entita', 'search'].includes(context) ? 'is-fullwidth' : '',
         metadata: [
           _get(el, paths.metadata.info.data, el.item.fields) ? {
             classes: 'n7-objects__metadata-artist',
-            items: _get(el, paths.metadata.info.data, el.item.fields).filter(data => {
+            items: _get(el, paths.metadata.info.data, el.item.fields).map(data => {
               for (let i = 0; i < paths.metadata.info.selection.length; i++) {
-                if (data.key == paths.metadata.info.selection[i].key) {
-                  return { label: 'label ok', value: 'value ok' }
-                  // ({
-                  //   label: paths.metadata.info.selection[i].forceLabel.length > 0 ? paths.metadata.info.selection[i].forceLabel : data.key,
-                  //   value: _get(data, 'value', data.value)
-                  // })
+                if (data.key == paths.metadata.info.selection[i].key) { // if the selected key (config) is in data, use it
+                  return ({
+                    label: paths.metadata.info.selection[i].forceLabel ? paths.metadata.info.selection[i].forceLabel : data.key,
+                    value: data.value
+                  })
                 }
               }
+              return {} // if no data was found for this key, return empty object.
             })
-          } : {},
+          } : {}, // if metadata.data is missing, use empty object
           {
             classes: 'n7-objects__metadata-linked',
             items: _get(el, paths.metadata.toe.data, el.relatedTypesOfEntity) ?
