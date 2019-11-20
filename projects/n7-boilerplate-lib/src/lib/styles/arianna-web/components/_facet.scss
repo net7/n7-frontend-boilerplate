@@ -125,6 +125,20 @@
                 color: $color-organizations;
             }
         }
+
+        &.color-opera {
+            .n7-facet__input-link-icon,
+            .n7-facet__input-link-text {
+                color: $color-opera;
+            }
+        }
+
+        &.color-fondo {
+            .n7-facet__input-link-icon,
+            .n7-facet__input-link-text {
+                color: $color-fondo;
+            }
+        }
     }
 
     &__input-link-icon {
