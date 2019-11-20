@@ -160,7 +160,7 @@
       "Risultato",
       "Risultati"
     ],
-    "entities": ["opera", "fondo", "persona", "luogo", "cosa-notevole", "organizzazione"]
+    "enabledEntities": ["opera", "fondo", "persona", "luogo", "cosa-notevole", "organizzazione"] 
   },
   "entita-layout": {
     "max-bubble-num": 30

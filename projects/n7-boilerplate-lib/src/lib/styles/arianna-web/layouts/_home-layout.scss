@@ -225,6 +225,20 @@
             }
         }
 
+        &.color-opera {
+            .n7-facet-header__icon-left,
+            .n7-facet-header__text {
+                color: $color-opera;
+            }
+        }
+
+        &.color-fondo {
+            .n7-facet-header__icon-left,
+            .n7-facet-header__text {
+                color: $color-fondo;
+            }
+        }
+
         /* Blocked */
         &.is-blocked {
             .n7-facet-header__icon-right {
@@ -413,7 +427,15 @@
     }
 
     .tag-toe-cosa-notevole {
-        background-color: $color-places;
+        background-color: $color-things;
+    }
+
+    .tag-toe-opera {
+        background-color: $color-opera;
+    }
+
+    .tag-toe-fondo {
+        background-color: $color-fondo;
     }
 }
 
