@@ -8,6 +8,14 @@ export class AwHomeFacetsWrapperDS extends DataSource {
     const headers: any[] = [];
     const inputs: any[] = [];
 
+    // when facet data changes, destroy every tippy and reset autocomplete data.
+    Object.keys(this.autoComplete).forEach( id => {
+      if (this.autoComplete[id] && this.autoComplete[id].tippy) {
+        this.autoComplete[id].tippy.destroy()
+      }
+    })
+    this.autoComplete = {} // reset
+
     facetData.forEach(facet => {
       /*
        For each facet on back-end, push a header-component
@@ -109,7 +117,6 @@ export class AwHomeFacetsWrapperDS extends DataSource {
     }
 
     const ac = this.autoComplete[id];
-    console.log({res})
     if (res.entities.length > 0 && ac.tippy) {
       ac.tippy.show();
     } else {
