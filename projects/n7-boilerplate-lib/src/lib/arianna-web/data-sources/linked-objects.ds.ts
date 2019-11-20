@@ -179,7 +179,7 @@ export class AwLinkedObjectsDS extends DataSource {
           +paths.title.maxLength && _get(el, paths.title, el.item.label).length > +paths.title.maxLength ?
             _get(el, paths.title, el.item.label).slice(0, +paths.title.maxLength) + '…' :
             _get(el, paths.title, el.item.label),
-        text:
+        text: !paths.text ? null : // make text block (in config) optional
           +paths.text.maxLength && _get(el, paths.text.data, el.item.text).length > +paths.text.maxLength ?
             _get(el, paths.text.data, el.item.text).slice(0, +paths.text.maxLength) + '…' :
             _get(el, paths.text.data, el.item.text),
