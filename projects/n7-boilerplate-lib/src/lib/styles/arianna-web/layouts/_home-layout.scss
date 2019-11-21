@@ -449,21 +449,34 @@
 }
 
 .aw-home__outer-links-wrapper {
+    display: flex;
     max-width: $page-max-width;
     margin: 0 auto;
 
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-column-gap: $grid-gutter-h;
-
     .n7-item-preview.is-vertical.has-image {
         border-bottom: 0;
-        margin-bottom: 0;
+        margin: 0 $grid-gutter-h/2;
         padding-bottom: 0;
 
         .n7-item-preview__image {
             height: 200px;
             border-radius: $border-radius;
+        }
+    }
+
+    > * {
+        flex: 1;
+    }
+
+    > *:first-child {
+        .n7-item-preview.is-vertical.has-image {
+            margin-left: 0;
+        }
+    }
+
+    > *:last-child {
+        .n7-item-preview.is-vertical.has-image {
+            margin-right: 0;
         }
     }
 }
