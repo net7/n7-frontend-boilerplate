@@ -144,6 +144,10 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       // page: 1,
     })
     this.one('aw-linked-objects').update(response.itemsPagination);
+    if (document.getElementById('bubble-results-list')) { 
+      // reset scroll position of result list
+      document.getElementById('bubble-results-list').scrollTo(0,0)
+    }
   }
 
   onBubbleTooltipClick(source: string, payload) {
