@@ -90,8 +90,13 @@
     <div
     *ngIf="lb.dataSource.outerLinks && lb.dataSource.outerLinks.length > 0"
      class="aw-home__outer-links">
-        <div class="aw-home__outer-links-wrapper n7-side-auto-padding">
-            <!-- Item preview -->
+        <section class="aw-home__outer-links-wrapper n7-side-auto-padding">
+            <h2 class="aw-home__outer-links-title"
+                *ngIf="lb.dataSource.outerLinksTitle">
+                {{ lb.dataSource.outerLinksTitle }}
+            </h2>
+            <div class="aw-home__outer-links-items">
+                <!-- Item preview -->
                 <n7-item-preview
                     *ngFor="let outerLink of lb.dataSource.outerLinks"
                     [data]="outerLink"
@@ -99,7 +104,8 @@
                 >
                 </n7-item-preview>
             <!-- END // Item preview -->
-        </div>
+            </div>
+        </section>
     </div>
     <!-- END // Outer links -->
 

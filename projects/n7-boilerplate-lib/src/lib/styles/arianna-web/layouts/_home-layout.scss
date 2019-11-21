@@ -444,11 +444,19 @@
     OUTER-LINKS
 \* ------------------------------------ */
 .aw-home__outer-links {
-    padding: $space*4 0;
+    padding: $space*6 0;
     background-color: $color-background-base;
 }
 
-.aw-home__outer-links-wrapper {
+.aw-home__outer-links-title {
+    margin-bottom: $space*3;
+    text-align: center;
+    font-size: $font-size-xxl;
+    font-weight: $font-weight-bold;
+    color: $color-text;
+}
+
+.aw-home__outer-links-items {
     display: flex;
     max-width: $page-max-width;
     margin: 0 auto;
