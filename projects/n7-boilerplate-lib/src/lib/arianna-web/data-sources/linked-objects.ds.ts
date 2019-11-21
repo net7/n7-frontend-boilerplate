@@ -29,7 +29,6 @@ export class AwLinkedObjectsDS extends DataSource {
     }
     this.checkForMore() // checks if <Show More> button should be enabled
     this.loadedData.loaderData = {}
-    console.log({ loadedData: this.loadedData })
     return this.loadedData
   }
 

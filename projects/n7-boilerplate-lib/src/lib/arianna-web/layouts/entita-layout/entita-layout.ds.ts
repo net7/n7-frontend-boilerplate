@@ -37,6 +37,13 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     this.bubblesSize = this.configuration.get('entita-layout') ? this.configuration.get('entita-layout')['max-bubble-num'] : this.bubblesSize;
   }
 
+  public updateComponent = (id, data, options?) => {
+    if (options) {
+      this.one(id).updateOptions(options)
+    }
+    this.one(id).update(data)
+  }
+
   getNavigation(id) {
     /*
       Requests data from communication provider

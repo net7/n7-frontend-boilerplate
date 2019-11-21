@@ -54,9 +54,9 @@ export class AwEntitaLayoutEH extends EventHandler {
             this.dataSource.handleNavUpdate(payload)
           }
           break;
-          case 'aw-linked-objects.pagination':
-            this.dataSource.currentPage = payload.split('-')[1];
-            this.dataSource.handlePageNavigation()
+        case 'aw-linked-objects.pagination':
+          this.dataSource.currentPage = payload.split('-')[1];
+          this.dataSource.handlePageNavigation()
           /*this.emitGlobal('navigate', {
             handler: 'router',
             path: [`aw/entita/${this.route.snapshot.params.id}/oggetti-collegati/${payload.split('-')[1]}`]
@@ -70,9 +70,22 @@ export class AwEntitaLayoutEH extends EventHandler {
           //   path: [`aw/entita/${this.route.snapshot.params.id}/oggetti-collegati/${targetPage}`]
           // });
           break
-        case 'aw-linked-objects.change':
+        case 'aw-linked-objects.change': // changed page size value (pagination)
           this.dataSource.pageSize = payload;
-          this.listenRoute("", true) // reloads the page content with the new page size
+          this.dataSource.currentPage = 1 // reset page
+          let options = {
+            context: this.dataSource.selectedTab,
+            config: this.dataSource.configuration,
+            page: this.dataSource.currentPage,
+            pagination: true,
+            size: this.dataSource.pageSize,
+          }
+          this.dataSource.updateComponent(
+            'aw-linked-objects',
+            { items: this.dataSource.myResponse.relatedItems },
+            options
+          )
+        // this.listenRoute("", true) // reloads the page content with the new page size
         case "aw-bubble-chart.bubble-tooltip-goto-click":
           if (!payload || !payload.entityId) return;
           this.emitGlobal('navigate', {
@@ -80,13 +93,13 @@ export class AwEntitaLayoutEH extends EventHandler {
             path: [`aw/entita/${payload.entityId}`]
           });
           break;
-          case 'aw-bubble-chart.bubble-filtered':
-            if (this.dataSource.selectedTab == "overview" || this.dataSource.selectedTab == "entita-collegate") {
-              payload.reload = true;
-              payload.reset = true;
-              this.emitOuter('filterbubbleresponse', payload);
-              //this.dataSource.updateBubbes(payload);
-            }
+        case 'aw-bubble-chart.bubble-filtered':
+          if (this.dataSource.selectedTab == "overview" || this.dataSource.selectedTab == "entita-collegate") {
+            payload.reload = true;
+            payload.reset = true;
+            this.emitOuter('filterbubbleresponse', payload);
+            //this.dataSource.updateBubbes(payload);
+          }
           break
         default:
           break;

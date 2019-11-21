@@ -24,8 +24,8 @@ export class AwLinkedObjectsEH extends EventHandler {
             });
           }
           break;
-        case 'aw-linked-objects.change':
-          this.emitOuter('change', Number(payload.value))
+        case 'aw-linked-objects.change': // changed page size value (pagination)
+          this.emitOuter('change', +payload.value)
           break;
         default:
           console.warn('unhandled event type: ', type, ' with payload: ', payload)
