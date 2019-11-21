@@ -150,7 +150,11 @@
     "tree": {
       "icon-expand": "n7-icon-angle-right",
       "icon-collapse": "n7-icon-angle-down",
-      "icon-image": "n7-icon-image"
+      "icon-image": "n7-icon-image",
+      "icon-map": [
+        {"oc-type-foo": "n7-icon-building"},
+        {"oc-type-bar": "n7-icon-biography"}
+      ]
     }
   },
   "search-layout": {
