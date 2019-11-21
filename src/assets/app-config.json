@@ -250,5 +250,8 @@
   },
   "features-enabled" : {
     "bubblechart": true
+  },
+  "labels": {
+    "struttura_funzioni": "Funzioni principali"
   }
 }
