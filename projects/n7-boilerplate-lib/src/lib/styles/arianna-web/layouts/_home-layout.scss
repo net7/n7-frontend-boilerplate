@@ -225,17 +225,17 @@
             }
         }
 
-        &.color-opera {
+        &.color-oggetto-culturale {
             .n7-facet-header__icon-left,
             .n7-facet-header__text {
-                color: $color-opera;
+                color: $color-oggetto-culturale;
             }
         }
 
-        &.color-fondo {
+        &.color-aggregazione {
             .n7-facet-header__icon-left,
             .n7-facet-header__text {
-                color: $color-fondo;
+                color: $color-aggregazione;
             }
         }
 
@@ -430,12 +430,12 @@
         background-color: $color-things;
     }
 
-    .tag-opera {
-        background-color: $color-opera;
+    .tag-oggetto-culturale {
+        background-color: $color-oggetto-culturale;
     }
 
-    .tag-fondo {
-        background-color: $color-fondo;
+    .tag-aggregazione {
+        background-color: $color-aggregazione;
     }
 }
 

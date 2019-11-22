@@ -168,7 +168,7 @@
       "Risultato",
       "Risultati"
     ],
-    "enabledEntities": ["opera", "fondo", "persona", "luogo", "cosa-notevole", "organizzazione"] 
+    "enabledEntities": ["oggetto-culturale", "aggregazione", "persona", "luogo", "cosa-notevole", "organizzazione"] 
   },
   "entita-layout": {
     "max-bubble-num": 30
@@ -229,16 +229,16 @@
       "label": "Organizzazioni",
       "input-placeholder": "Cerca un'organizzazione"
     },
-    "opera": {
+    "oggetto-culturale": {
       "color": {
         "hex": "#a798c2",
         "rgb": [167,152,194]
       },
       "icon": "n7-icon-image",
-      "label": "Opere d'arte",
+      "label": "Oggetti Culturali",
       "input-placeholder": ""
     },
-    "fondo": {
+    "aggregazione": {
       "color": {
         "hex": "#cc6f5c",
         "rgb": [204,111,92]
