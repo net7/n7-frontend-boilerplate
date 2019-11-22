@@ -137,7 +137,8 @@
     },
     "results-limit": 10,
     "max-item-length": 50,
-    "max-bubble-num": 125
+    "max-bubble-num": 125,
+    "autocomplete-fallback": "Nessun risultato trovato"
   },
   "scheda-layout": {
     "bubble-chart": {

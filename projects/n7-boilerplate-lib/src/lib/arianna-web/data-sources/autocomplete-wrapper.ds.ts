@@ -10,6 +10,15 @@ export class AwAutocompleteWrapperDS extends DataSource {
     const maxLength = config.get('home-layout')['max-item-length'] / 2
 
     response.entities.forEach(el => {
+      if (el.entity.id == 'fallback') { // build and return fallback data
+        suggestion.push({
+          match: '',
+          payload: 'fallback-simple-autocomplete',
+          prefix: el.entity.label,
+          suffix: ''
+        })
+        return { suggestion }
+      }
       // divide prefix and suffix
       // let match = el.item.label.match(regex)
       let match = regex.exec(el.entity.label)
@@ -31,6 +40,7 @@ export class AwAutocompleteWrapperDS extends DataSource {
         })
       }
     });
+    console.log({ suggestion })
     return { suggestion }
   }
 }

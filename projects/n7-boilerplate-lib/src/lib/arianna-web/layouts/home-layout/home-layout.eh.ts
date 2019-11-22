@@ -19,7 +19,7 @@ export class AwHomeLayoutEH extends EventHandler {
             handler: 'router',
             path: payload
           });
-        break;
+          break;
         case 'aw-home-layout.destroy':
           this.destroyed$.next();
           break;
@@ -47,12 +47,35 @@ export class AwHomeLayoutEH extends EventHandler {
               }
             }
             this.dataSource.makeRequest$('autoComplete', params).subscribe(response => {
-              this.emitOuter('facetswrapperresponse', { facetId: payload, response })
-              this.dataSource.updateComponent(
-                'aw-autocomplete-wrapper', // ID
-                { key: payload.value, response }, // DATA
-                { config: this.configuration } // OPTIONS
-              )
+              if (response.entities.length < 1) {
+                let fallback = {
+                  totalcount: 0,
+                  entities: [
+                    {
+                      entity: {
+                        id: 'fallback',
+                        label: // use fallback string from configuration
+                          this.configuration.get('home-layout')['autocomplete-fallback'] ?
+                            this.configuration.get('home-layout')['autocomplete-fallback'] :
+                            'Nessun risultato trovato'
+                      }
+                    }
+                  ]
+                }
+                this.emitOuter('facetswrapperresponse', { facetId: payload, response: fallback })
+                this.dataSource.updateComponent(
+                  'aw-autocomplete-wrapper',
+                  { key: payload.value, response: fallback },
+                  { config: this.configuration }
+                )
+              } else {
+                this.emitOuter('facetswrapperresponse', { facetId: payload, response })
+                this.dataSource.updateComponent(
+                  'aw-autocomplete-wrapper', // ID
+                  { key: payload.value, response }, // DATA
+                  { config: this.configuration } // OPTIONS
+                )
+              }
             })
           }
           break;
@@ -76,7 +99,7 @@ export class AwHomeLayoutEH extends EventHandler {
         case 'aw-bubble-chart.click':
           if (payload.source === 'bubble') {
             if (payload.bubble) {
-              console.log({payload})
+              console.log({ payload })
               this.dataSource.updateBubbleFilter(payload);
               if (this.dataSource.onBubbleSelected(payload.bubble)) {
                 this.dataSource.filterRequest().subscribe((response) => {
@@ -204,7 +227,7 @@ export class AwHomeLayoutEH extends EventHandler {
     }
   }
 
-  public outerLinkClick(type, payload){
+  public outerLinkClick(type, payload) {
     window.open(payload, "_blank");
   }
 

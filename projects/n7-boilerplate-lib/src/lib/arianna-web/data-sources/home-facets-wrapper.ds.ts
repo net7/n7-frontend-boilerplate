@@ -53,7 +53,7 @@ export class AwHomeFacetsWrapperDS extends DataSource {
             })
               ? ' is-blocked'
               : ' not-blocked'),
-        payload: facet.type.replace(' ', '-')
+        payload: facet.type.replace(/ /g, '-')
       });
       // make array of inputs data
       inputs.push({
@@ -122,7 +122,5 @@ export class AwHomeFacetsWrapperDS extends DataSource {
     } else {
       ac.tippy.hide();
     }
-
-    console.log(this.autoComplete)
   }
 }
