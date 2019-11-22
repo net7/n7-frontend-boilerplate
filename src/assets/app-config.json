@@ -67,8 +67,8 @@
     "metadata": {
       "info": {
         "selection": [
-          {"key": "fase", "forceLabel": "custom-Fase"},
-          {"key": "intitolazione", "forceLabel": "custom-Titolo"}
+          {"key": "fase", "forceLabel": "Fase"},
+          {"key": "intitolazione", "forceLabel": "Intitolaz."}
         ],
         "data": "item.fields",
         "value": "value",
@@ -109,29 +109,32 @@
         "text": "NAVIGA IL PATRIMONIO"
       }
     },
-    "outer-links": [
-      {
-        "image": "https://picsum.photos/200",
-        "title": "Accedi all'archivio della Direzione dei lavori pubblici",
-        "text": "Il complesso di fondi è costituito dalla documentazione prodotta dalle strutture burocratiche afferenti alla Direzione generale dei lavori pubblici",
-        "payload": "http://www.google.it",
-        "classes": "is-vertical"
-      },
-      {
-        "title": "Direzione generale delle politiche sociali",
-        "image": "https://picsum.photos/200",
-        "text": "Il complesso di fondi è costituito dalla documentazione prodotta dalle strutture burocratiche afferenti alla Direzione generale dei lavori pubblici",
-        "payload": "www.google.it",
-        "classes": "is-vertical"
-      },
-      {
-        "title": "Direzione generale dell'organizzazione e del personale",
-        "image": "https://picsum.photos/200",
-        "text": "Il complesso di fondi è costituito dalla documentazione prodotta dalle strutture burocratiche afferenti alla Direzione generale dei lavori pubblici",
-        "payload": "www.google.it",
-        "classes": "is-vertical"
-      }
-    ],
+    "outer-links": {
+      "title": "Sezioni dell'archivio",
+      "test": [
+        {
+          "image": "https://picsum.photos/200",
+          "title": "Accedi all'archivio della Direzione dei lavori pubblici",
+          "text": "Il complesso di fondi è costituito dalla documentazione prodotta dalle strutture burocratiche afferenti alla Direzione generale dei lavori pubblici",
+          "payload": "http://www.google.it",
+          "classes": "is-vertical"
+        },
+        {
+          "title": "Direzione generale delle politiche sociali",
+          "image": "https://picsum.photos/200",
+          "text": "Strutture burocratiche afferenti alla Direzione generale dei lavori pubblici",
+          "payload": "http://www.google.it",
+          "classes": "is-vertical"
+        },
+        {
+          "title": "Direzione generale dell'organizzazione e del personale",
+          "image": "https://picsum.photos/200",
+          "text": "Il complesso di fondi è costituito dalla documentazione prodotta dalle strutture burocratiche afferenti alla Direzione generale",
+          "payload": "http://www.google.it",
+          "classes": "is-vertical"
+        }
+      ]
+    },
     "results-limit": 10,
     "max-item-length": 50,
     "max-bubble-num": 125
@@ -250,5 +253,8 @@
   },
   "features-enabled" : {
     "bubblechart": true
+  },
+  "labels": {
+    "struttura_funzioni": "Funzioni principali"
   }
 }

@@ -44,6 +44,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   public resultsLimit = -1;
   public selectedEntitiesIds = [];
   public outerLinks:any;
+  public outerLinksTitle:string;
 
   onInit({ communication, mainState, configuration, tippy }) {
     this.communication = communication;
@@ -64,8 +65,8 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     // listen autocomplete changes
     this._listenAutoCompleteChanges();
 
-    this.outerLinks = this.configuration.get('home-layout')['outer-links'];
-
+    this.outerLinks = this.configuration.get('home-layout')['outer-links']['test'];
+    this.outerLinksTitle = this.configuration.get('home-layout')['outer-links']['title'];
   }
 
   public makeRequest$(query, params) {

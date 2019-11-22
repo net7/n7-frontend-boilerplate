@@ -159,7 +159,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       bubbleContainerId: 'overviewBubbleChartContainer',
       containerId: 'bubble-chart-container-overview',
     });
-    this.one('aw-entita-metadata-viewer').updateOptions({ context: this.selectedTab });
+    this.one('aw-entita-metadata-viewer').updateOptions({ context: this.selectedTab, labels: this.configuration.get("labels") });
     this.one('aw-entita-metadata-viewer').update(res.fields);
 
     if( this.selectedTab == 'oggetti-collegati' ) {
