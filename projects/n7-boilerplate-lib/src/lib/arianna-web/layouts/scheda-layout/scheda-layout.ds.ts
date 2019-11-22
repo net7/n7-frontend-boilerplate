@@ -147,36 +147,10 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       };
 
       this.one('aw-scheda-inner-title').update(titleObj);
-      /*Metadata section*/
-      let group = { group: [] };
+      
       this.hasMetadata = response.fields != null;
-        if (  this.hasMetadata ){
-          response.fields.forEach(field => {
-            let items = [];
-              if( field.fields ) {
-                field.fields.forEach(item => {
-                items.push( { label: item.key, value: item.value} )
-              });
-
-
-              group.group.push(
-                {
-                  title: field.label,
-                  items: items
-                }
-                );
-            } else {
-              items.push( { label: field.key, value: field.value} )
-              group.group.push(
-                {
-                  items: items
-                }
-                )
-            }
-        });
-      }
-
-      this.one('aw-scheda-metadata').update(group);
+      this.one('aw-scheda-metadata').updateOptions({ labels: this.configuration.get("labels") });
+      this.one('aw-scheda-metadata').update(response);
 
       /*Breadcrumb section*/
       let breadcrumbs = {
