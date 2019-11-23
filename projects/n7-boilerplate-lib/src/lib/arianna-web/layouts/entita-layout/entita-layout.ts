@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
+import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { AbstractLayout } from "../../../common/models/abstract-layout";

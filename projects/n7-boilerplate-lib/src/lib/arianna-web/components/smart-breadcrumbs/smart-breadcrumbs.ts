@@ -2,7 +2,7 @@
 // BREADCRUMBS.ts
 //---------------------------
 
-import { Component, Input, ViewChild, ElementRef, AfterViewInit, ɵɵresolveBody } from '@angular/core';
+import { Component, Input, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import tippy from 'tippy.js';
 
 /**

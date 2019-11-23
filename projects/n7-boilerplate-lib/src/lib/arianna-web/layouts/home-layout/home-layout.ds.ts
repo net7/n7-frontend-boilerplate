@@ -1,6 +1,6 @@
 import { LayoutDataSource } from '@n7-frontend/core';
 import { fromEvent, Subject } from 'rxjs';
-import { debounce, debounceTime } from 'rxjs/operators';
+import { debounceTime } from 'rxjs/operators';
 
 export class AwHomeLayoutDS extends LayoutDataSource {
   private communication: any;

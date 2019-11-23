@@ -1,7 +1,5 @@
 import { EventHandler } from '@n7-frontend/core';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { resolveSanitizationFn } from '@angular/compiler/src/render3/view/template';
 
 export class AwSchedaLayoutEH extends EventHandler {
   private destroyed$: Subject<any> = new Subject();

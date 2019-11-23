@@ -1,8 +1,7 @@
 import { DataSource } from '@n7-frontend/core';
-import { BUBBLECHART_MOCK } from '@n7-frontend/components';
 import tippy from 'tippy.js';
 import { fromEvent, interval } from 'rxjs';
-import { debounce, debounceTime } from 'rxjs/operators';
+import { debounce } from 'rxjs/operators';
 
 export class AwBubbleChartDS extends DataSource {
 
