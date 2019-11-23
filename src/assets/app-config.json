@@ -67,8 +67,8 @@
     "metadata": {
       "info": {
         "selection": [
-          {"key": "fase", "forceLabel": "Fase"},
-          {"key": "intitolazione", "forceLabel": "Intitolaz."}
+          { "key": "fase" },
+          { "key": "intitolazione" }
         ],
         "data": "item.fields",
         "value": "value",
@@ -256,6 +256,8 @@
     "bubblechart": true
   },
   "labels": {
-    "struttura_funzioni": "Funzioni principali"
+    "struttura_funzioni": "Funzioni principali",
+    "fase": "Fase",
+    "intitolazione": "Intitolaz."
   }
 }

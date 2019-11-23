@@ -1,4 +1,5 @@
 import { DataSource } from '@n7-frontend/core';
+import helpers from "../../common/helpers";
 import { get as _get } from "lodash" // used for cherry-picking object keys from app-config.json
 
 export class AwLinkedObjectsDS extends DataSource {
@@ -150,7 +151,8 @@ export class AwLinkedObjectsDS extends DataSource {
       totalPages = this.totalPages,       // calculated number of pages
       page = this.currentPage,            // current page (if using pagination)
       context = this.context,             // parent layout name
-      size = this.pageSize                // items per page (if using pagination)
+      size = this.pageSize,               // items per page (if using pagination)
+      labels = config.get("labels");
     var
       d = data.items ? data.items : data.relatedItems // items to iterate over
 
@@ -191,7 +193,7 @@ export class AwLinkedObjectsDS extends DataSource {
               for (let i = 0; i < paths.metadata.info.selection.length; i++) {
                 if (data.key == paths.metadata.info.selection[i].key) { // if the selected key (config) is in data, use it
                   return ({
-                    label: paths.metadata.info.selection[i].forceLabel ? paths.metadata.info.selection[i].forceLabel : data.key,
+                    label: helpers.prettifySnakeCase(data.key, labels[data.key]),
                     value: data.value
                   })
                 }
