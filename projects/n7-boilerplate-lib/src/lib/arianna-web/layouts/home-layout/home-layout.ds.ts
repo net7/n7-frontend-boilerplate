@@ -45,6 +45,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   public selectedEntitiesIds = [];
   public outerLinks:any;
   public outerLinksTitle:string;
+  public homeAutocompleteQuery: string;
 
   onInit({ communication, mainState, configuration, tippy }) {
     this.communication = communication;
@@ -416,6 +417,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     this.autocompleteChanged$.pipe(
       debounceTime(500)
     ).subscribe(value => {
+      this.homeAutocompleteQuery = value;
       if (value) {
         this.communication.request$('autoComplete', {
           onError: (error) => console.error(error),

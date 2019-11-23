@@ -163,6 +163,25 @@ export class AwHomeLayoutEH extends EventHandler {
         case 'aw-autocomplete-wrapper.clickresult':
           this.handleSimpleAutocompleteClick(payload)
           break;
+        case 'aw-home-autocomplete.click':
+            const { source } = payload;
+            let basePath;
+            if(source === "item"){
+              basePath = this.configuration.get("paths").entitaBasePath;
+              this.emitGlobal('navigate', {
+                handler: 'router',
+                path: [ basePath, payload.id ]
+              });
+            } else if(source === "showMore") {
+              const query = this.dataSource.homeAutocompleteQuery;
+              basePath = this.configuration.get("paths").searchBasePath;
+              this.emitGlobal('navigate', {
+                handler: 'router',
+                path: [ basePath ],
+                queryParams: { query }
+              });
+            }
+            break;
         default:
           break;
       }

@@ -250,7 +250,8 @@
   },
   "paths": {
     "schedaBasePath": "/aw/patrimonio/",
-    "entitaBasePath": "/aw/entita/"
+    "entitaBasePath": "/aw/entita/",
+    "searchBasePath": "/aw/ricerca/"
   },
   "features-enabled" : {
     "bubblechart": true
