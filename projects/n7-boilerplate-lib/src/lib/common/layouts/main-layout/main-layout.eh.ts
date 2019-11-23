@@ -50,7 +50,7 @@ export class MainLayoutEH extends EventHandler {
         if(Object.keys(params).length) return true;
         return false;
       }),
-      first(),
+      // first(),
     ).subscribe(params => {
       this.emitGlobal('queryparams', params);
 
