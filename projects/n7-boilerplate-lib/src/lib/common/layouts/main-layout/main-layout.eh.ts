@@ -1,6 +1,6 @@
 import { EventHandler } from '@n7-frontend/core';
 import { Subject } from 'rxjs';
-import { takeUntil, first, filter, delay } from 'rxjs/operators';
+import { takeUntil, first, filter } from 'rxjs/operators';
 import { SearchService } from '../../services';
 
 export class MainLayoutEH extends EventHandler {
@@ -50,7 +50,7 @@ export class MainLayoutEH extends EventHandler {
         if(Object.keys(params).length) return true;
         return false;
       }),
-      first(),
+      // first(),
     ).subscribe(params => {
       this.emitGlobal('queryparams', params);
 

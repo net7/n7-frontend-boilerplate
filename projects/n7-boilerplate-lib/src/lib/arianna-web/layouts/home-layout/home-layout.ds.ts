@@ -1,6 +1,6 @@
 import { LayoutDataSource } from '@n7-frontend/core';
 import { fromEvent, Subject } from 'rxjs';
-import { debounce, debounceTime } from 'rxjs/operators';
+import { debounceTime } from 'rxjs/operators';
 
 export class AwHomeLayoutDS extends LayoutDataSource {
   private communication: any;
@@ -18,7 +18,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   private autocompletePopover: any;
   private autocompletePopoverOpen: boolean = false;
   private autocompleteChanged$: Subject<string> = new Subject();
-  // the bubbles currently selected (this are saved from the event handler's
+  // the bubbles currently selected (these are saved from the event handler's
   // and correspond exactly to the bubblechart's bubble objects)
   public selectedBubbles: any[] = [];
   public numOfItemsStr: string = null;
@@ -43,6 +43,9 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   public bubblesEnabled = false;
   public resultsLimit = -1;
   public selectedEntitiesIds = [];
+  public outerLinks:any;
+  public outerLinksTitle:string;
+  public homeAutocompleteQuery: string;
 
   onInit({ communication, mainState, configuration, tippy }) {
     this.communication = communication;
@@ -62,6 +65,9 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     this.mainState.updateCustom('currentNav', 'aw/home');
     // listen autocomplete changes
     this._listenAutoCompleteChanges();
+
+    this.outerLinks = this.configuration.get('home-layout')['outer-links']['test'];
+    this.outerLinksTitle = this.configuration.get('home-layout')['outer-links']['title'];
   }
 
   public makeRequest$(query, params) {
@@ -71,7 +77,8 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     });
   }
 
-  public updateComponent = (id, data, options) => {
+
+  public updateComponent = (id, data, options?) => {
     if (options) {
       this.one(id).updateOptions(options)
     }
@@ -81,18 +88,22 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   initialFilterRequest() {
     return this.communication.request$('globalFilter', {
       onError: (error) => console.error(error),
+      params: {
+        entitiesListSize: this.configuration.get("home-layout")['max-bubble-num'] * 4
+      },
     })
   }
 
   parseInitialRequest(response) {
-    response.entitiesData.forEach((ent) => {
-      const teoConfigData = this.configuration.get("config-keys")[ent.countData.type.configKey];
-      if (teoConfigData)
-        this.facetData.push({
-          ...ent.countData,
-          ...teoConfigData,
-          enabled: true,
-        });
+    response.typeOfEntityData.forEach((toe) => {
+      const teoConfigData = this.configuration.get("config-keys")[toe.type.replace(" ", "-")];
+      this.facetData.push({
+        ...toe,
+        enabled: true,
+        locked: false,
+        configKey: toe.type.replace(" ", "-"),
+        ...teoConfigData
+      });
     });
     this.one('aw-home-facets-wrapper').update({
       facetData: this.facetData,
@@ -103,6 +114,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       configKeys: this.configuration.get("config-keys"),
       bubbleContainerId: 'bubbleChartContainer',
       containerId: 'bubble-chart-container',
+      maxNumber: this.configuration.get("home-layout")['max-bubble-num']
     });
     this.renderPreviewsFromApolloQuery(response);
   }
@@ -134,6 +146,10 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       // page: 1,
     })
     this.one('aw-linked-objects').update(response.itemsPagination);
+    if (document.getElementById('bubble-results-list')) { 
+      // reset scroll position of result list
+      document.getElementById('bubble-results-list').scrollTo(0,0)
+    }
   }
 
   onBubbleTooltipClick(source: string, payload) {
@@ -180,14 +196,14 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   }
 
   public getBubblePayload(response) {
-    let bubblePayolad = {
+    let bubblePayload = {
       reset: true,
       setBubbleChart: (bubbleCref) => this._bubbleChart = bubbleCref,
       facetData: this.facetData,
       source: response,
       selectedBubbles: this.selectedBubbles
     };
-    return bubblePayolad;
+    return bubblePayload;
   }
 
   private filterRequest() {
@@ -198,6 +214,9 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         people: false,
         concepts: false,
         organizations: false,
+      }
+      if (this.selectedBubbles.length <= 0) {
+        this.selectedEntitiesIds = [];
       }
       this.selectedBubbles.forEach((sB) => {
         let c = sB.color
@@ -272,18 +291,19 @@ export class AwHomeLayoutDS extends LayoutDataSource {
 
   handleFacetHeaderClick(facetId) {
     let updateBubbles = false;
-    let enabledFacets = this.facetData.filter(f => f.enabled).length - 1;
+    let enabledFacets = this.facetData.filter(f => f.enabled).length;
     this.facetData.forEach(f => {
-      if (f.type.id === facetId && f.locked === true) {
+      f.type = f.type.replace(/ /g, '-') // fix for space in facet type string ('cose notevoli')
+      if (f.type === facetId && f.locked === true) {
         // if user clicked on a locked facet, ignore it
         return
       }
-      if (f.type.id === facetId && f.enabled === true && enabledFacets < 1) {
+      if (f.type === facetId && f.enabled === true && enabledFacets < 1) {
         return
       }
-      if (f.type.id === facetId) {
-        // if this is the clicked facet
-        if (f.enabled && enabledFacets >= 1) {
+      if (f.type === facetId) { // if this is the clicked facet
+        console.log(`${f.type} is the clicked facet`)
+        if (f.enabled && enabledFacets > 1) {
           f.enabled = false;
           f.locked = false;
           updateBubbles = true;
@@ -292,11 +312,10 @@ export class AwHomeLayoutDS extends LayoutDataSource {
           f.locked = false;
           updateBubbles = true;
         }
-      } else {
-        // if this is another facet
-        if (enabledFacets === 1 && f.enabled) {
+      } else { // if this is another facet
+        if (enabledFacets <= 2 && f.enabled) {
           f.locked = true;
-        } else {
+        } if (enabledFacets >= 1 && f.locked) {
           f.locked = false;
         }
       }
@@ -308,25 +327,25 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     if (updateBubbles) {
       let disableFacetsIds = [];
       this.facetData.forEach((fD) => {
-        if (!fD.enabled) disableFacetsIds.push(fD.type.id);
+        if (!fD.enabled) disableFacetsIds.push(fD.type); // this is probably useless
       });
-      if (disableFacetsIds) {
-        let filteredSelectedBubbles = this.selectedBubbles.filter((bubble) => {
-          let typeOfEntity = "";
+      if (disableFacetsIds.length > 0) {
+        let filteredSelectedBubbles = this.selectedBubbles.filter(bubble => {
           for (var i = 0; i < this.allBubbles.length; i++) {
             if (this.allBubbles[i].id === bubble.id) {
-              typeOfEntity = this.allBubbles[i].entity.typeOfEntity.id;
-              break;
+              if (disableFacetsIds.includes(
+                this.allBubbles[i].entity.typeOfEntity.id
+              )) {
+                return false
+              }
             }
           }
-          if (disableFacetsIds.includes(typeOfEntity)) return false;
-          return true;
         });
         if (filteredSelectedBubbles.length != this.selectedBubbles.length) {
           this.selectedBubbles = filteredSelectedBubbles;
         };
       }
-      this.allBubbles.forEach((bubble) => {
+      this.allBubbles.forEach(bubble => {
         bubble.selected = false;
         for (var i = 0; i < this.selectedBubbles.length; i++) {
           if (this.selectedBubbles[i].id === bubble.id) bubble.selected = true;
@@ -344,9 +363,10 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         if (this.allBubbles[i].id === sBubble.id) {
           label = this.allBubbles[i].entity.label;
           tagsData.push({
-            label, icon: "n7-icon-close",
+            label,
+            icon: "n7-icon-close",
             payload: sBubble.id,
-            classes: "tag-" + this.allBubbles[i].entity.typeOfEntity.id
+            classes: `tag-${this.allBubbles[i].entity.typeOfEntity.replace(/ /g, '-')}`
           });
           break;
         }
@@ -397,6 +417,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     this.autocompleteChanged$.pipe(
       debounceTime(500)
     ).subscribe(value => {
+      this.homeAutocompleteQuery = value;
       if (value) {
         this.communication.request$('autoComplete', {
           onError: (error) => console.error(error),

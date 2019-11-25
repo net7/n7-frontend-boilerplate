@@ -37,13 +37,20 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     this.bubblesSize = this.configuration.get('entita-layout') ? this.configuration.get('entita-layout')['max-bubble-num'] : this.bubblesSize;
   }
 
+  public updateComponent = (id, data, options?) => {
+    if (options) {
+      this.one(id).updateOptions(options)
+    }
+    this.one(id).update(data)
+  }
+
   getNavigation(id) {
     /*
       Requests data from communication provider
      */
     return this.communication.request$('getEntityDetails', {
       onError: (error) => console.error(error),
-      params: { entityId: id }
+      params: { entityId: id, entitiesListSize: this.bubblesSize }
     })
   }
 
@@ -51,7 +58,6 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     Updates selected tab on tab change
   */
   handlePageNavigation = () => {
-    this.currentPage =
     this.one('aw-linked-objects').updateOptions({
       context: this.selectedTab,
       config: this.configuration,
@@ -59,7 +65,14 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       pagination: true,
       size: this.pageSize,
     })
-    this.one('aw-linked-objects').update(this.myResponse);
+    this.one('aw-linked-objects').update({items: this.myResponse.relatedItems});
+    this.location.go(
+      this.configuration.get("paths").entitaBasePath
+        +
+        this.currentId
+        + '/oggetti-collegati/'
+        + this.currentPage
+    )
   };
 
   handleNavUpdate = tab => {
@@ -75,14 +88,14 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
         pagination: true,
         size: this.pageSize,
       })
-      this.one('aw-linked-objects').update(this.myResponse);
+      this.one('aw-linked-objects').update({items: this.myResponse.relatedItems});
     } else if (tab == "overview") {
       this.one('aw-linked-objects').updateOptions({
         size: 3,
         config: this.configuration,
         context: 'entita'
       })
-      this.one('aw-linked-objects').update(this.myResponse);
+      this.one('aw-linked-objects').update({items: this.myResponse.relatedItems});
     }
 
     if(tab == "overview" || tab == "entita-collegate"){
@@ -122,7 +135,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       this.selectedTab = tab // store selected tab from url
       return this.communication.request$('getEntityDetails', {
         onError: error => console.error(error),
-        params: { entityId: id }
+        params: {entityId: id, entitiesListSize: this.bubblesSize}
       })
     }
     else {
@@ -131,12 +144,12 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
   }
 
   loadContent(res) {
-    console.log('Apollo responded with: ', { res })
+    console.log('(entita) Apollo responded with: ', { res })
     this.myResponse = res
     this.navHeader = { // always render nav header
-      icon: this.configuration.get('config-keys')[this.myResponse.entity.typeOfEntity.configKey].icon,
-      text: this.myResponse.entity.label,
-      color: this.myResponse.entity.typeOfEntity.configKey
+      icon: this.configuration.get("config-keys")[this.myResponse.typeOfEntity] ? this.configuration.get("config-keys")[this.myResponse.typeOfEntity].icon : "",
+      text: this.myResponse.label,
+      color: this.myResponse.typeOfEntity
     }
 
     this.one('aw-entita-nav').updateOptions({bubblesEnabled: this.bubblesEnabled});
@@ -146,8 +159,8 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       bubbleContainerId: 'overviewBubbleChartContainer',
       containerId: 'bubble-chart-container-overview',
     });
-    this.one('aw-entita-metadata-viewer').updateOptions({ context: this.selectedTab });
-    this.one('aw-entita-metadata-viewer').update(res.fieldsTab);
+    this.one('aw-entita-metadata-viewer').updateOptions({ context: this.selectedTab, labels: this.configuration.get("labels") });
+    this.one('aw-entita-metadata-viewer').update(res.fields);
 
     if( this.selectedTab == 'oggetti-collegati' ) {
       this.one('aw-linked-objects').updateOptions({
@@ -164,6 +177,6 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
         context: 'entita'
       })
     }
-    this.one('aw-linked-objects').update(res);
+    this.one('aw-linked-objects').update({items: res.relatedItems});
   }
 }

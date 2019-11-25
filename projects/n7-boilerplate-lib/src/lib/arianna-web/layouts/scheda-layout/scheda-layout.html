@@ -11,7 +11,7 @@
             <n7-tree
                 [data]="lb.widgets['aw-tree'].ds.out$ | async"
                 [emit]="lb.widgets['aw-tree'].emit"
-                [hidden]="lb.dataSource.sidebarCollapsed"
+                *ngIf="!lb.dataSource.sidebarCollapsed"
             ></n7-tree>
         </div>
 
@@ -19,28 +19,28 @@
         <div class="aw-scheda__scheda-wrapper">
             <n7-breadcrumbs
                 [data]="lb.widgets['aw-scheda-breadcrumbs'].ds.out$ | async"
-                [emit]="lb.widgets['aw-scheda-breadcrumbs'].emit"
-            ></n7-breadcrumbs>
+                [emit]="lb.widgets['aw-scheda-breadcrumbs'].emit">
+            </n7-breadcrumbs>
 
             <n7-inner-title
-            [data]="lb.widgets['aw-scheda-inner-title'].ds.out$ | async"
-            ></n7-inner-title>
+                [data]="lb.widgets['aw-scheda-inner-title'].ds.out$ | async">
+            </n7-inner-title>
 
             <n7-image-viewer
-                [data]="lb.widgets['aw-scheda-image'].ds.out$ | async"
-            >
+                [data]="lb.widgets['aw-scheda-image'].ds.out$ | async">
             </n7-image-viewer>
 
-            <section class="aw-scheda__description">
+            <section class="aw-scheda__description" *ngIf="lb.dataSource.contentParts.content">
                 <div *ngFor="let part of lb.dataSource.contentParts">
                     <div [innerHTML]="part.content"></div>
                 </div>
             </section>
 
             <section class="aw-scheda__metadata"
-                [hidden] = "!lb.dataSource.hasMetadata"
-            >
-                <div class="aw-scheda__inner-title">{{lb.dataSource.metadataSectionTitle}}</div>
+                     *ngIf="lb.dataSource.hasMetadata">
+                <div class="aw-scheda__inner-title">
+                    {{lb.dataSource.metadataSectionTitle}}
+                </div>
                 <n7-metadata-viewer
                     [data]="lb.widgets['aw-scheda-metadata'].ds.out$ | async">
                 </n7-metadata-viewer>
@@ -48,35 +48,35 @@
 
             <section
                 class="aw-scheda__bubble-chart"
-                *ngIf="lb.dataSource.bubblesEnabled"
-            >
+                *ngIf="lb.dataSource.bubblesEnabled">
                 <div
-                    [hidden] = "!lb.dataSource.hasBubbles"
+                    *ngIf = "lb.dataSource.hasBubbles"
                     class="aw-scheda__inner-title">{{lb.dataSource.bubbleChartSectionTitle}}
                 </div>
-                <div  [style.overflow]="'hidden'">
+                <div [style.overflow]="'hidden'">
                     <aw-bubble-chart-wrapper
-                    [hover]="lb.widgets['aw-bubble-chart'].ds.currentHoverEntity"
-                    [emit]="lb.widgets['aw-bubble-chart'].emit"
-                    [container]="'bubble-chart-container'"
-                    [buttons]="['goto']"
-                    >
+                        [hover]="lb.widgets['aw-bubble-chart'].ds.currentHoverEntity"
+                        [emit]="lb.widgets['aw-bubble-chart'].emit"
+                        [container]="'bubble-chart-container'"
+                        [buttons]="['goto']">
                         <n7-bubble-chart
-                        [data]="lb.widgets['aw-bubble-chart'].ds.out$ | async"
-                        [emit]="lb.widgets['aw-bubble-chart'].emit">
+                            [data]="lb.widgets['aw-bubble-chart'].ds.out$ | async"
+                            [emit]="lb.widgets['aw-bubble-chart'].emit">
                         </n7-bubble-chart>
                     </aw-bubble-chart-wrapper>
                 </div>
             </section>
 
             <section
-                [hidden] = "!lb.dataSource.hasSimilarItems"
+                *ngIf = "lb.dataSource.hasSimilarItems"
                 id="related-item-container" class="aw-scheda__related">
                 <div class="aw-scheda__inner-title">{{lb.dataSource.similarItemsSectionTitle}}</div>
                 <div class="aw-scheda__related-items">
-                    <ng-container *ngFor="let widgetData of lb.widgets['aw-linked-objects'].ds.out$ | async;">
+                    <!--<ng-container *ngFor="let widgetData of lb.widgets['aw-linked-objects'].ds.out$ | async;">-->
+                    <ng-container *ngFor="let preview of (lb.widgets['aw-linked-objects'].ds.out$ | async)?.previews">
                         <n7-item-preview
-                            [data]="widgetData"
+                            [data]="preview"
+                            [emit]="lb.widgets['aw-linked-objects'].emit"
                             >
                         </n7-item-preview>
                     </ng-container>

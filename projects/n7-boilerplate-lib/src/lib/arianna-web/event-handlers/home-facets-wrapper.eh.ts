@@ -16,19 +16,17 @@ export class AwHomeFacetsWrapperEH extends EventHandler {
         // press return while typing in search
         case 'aw-home-facets-wrapper.enter':
           this.emitOuter('enter', payload);
+          break;
         default:
-          console.warn('unhandled inner event of type:', type)
+          console.warn('unhandled inner event of type:', type);
           break;
       }
     });
 
     this.outerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
-        case 'aw-home-layout.facetswrapperresponse':
-          this.dataSource.tippyMaker(payload.response, payload.facetId.inputPayload)
-          break;
-        case 'aw-home-layout.filterbubbleresponse':
-          // console.log({type, payload})
+        case 'aw-home-layout.facetswrapperresponse': // incoming autocomplete response
+          this.dataSource.tippyMaker(payload.response, payload.facetId.inputPayload);
           break;
         default:
           // console.warn('unhandled outer event of type', type)

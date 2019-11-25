@@ -1,7 +1,5 @@
 import { EventHandler } from '@n7-frontend/core';
-import { fromEvent, Subject, interval } from 'rxjs';
-// import { takeUntil } from 'rxjs/operators';
-// import { debounce, debounceTime } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 export class AwHomeLayoutEH extends EventHandler {
   private destroyed$: Subject<any> = new Subject();
@@ -15,6 +13,12 @@ export class AwHomeLayoutEH extends EventHandler {
           this.dataSource.onInit(payload);
           this.loadFilters();
           this.configuration = payload.configuration;
+          break;
+        case 'aw-home-layout.outerlinkclick':
+          this.emitGlobal('navigate', {
+            handler: 'router',
+            path: payload
+          });
           break;
         case 'aw-home-layout.destroy':
           this.destroyed$.next();
@@ -36,19 +40,42 @@ export class AwHomeLayoutEH extends EventHandler {
           if (payload.value) {
             let params = {
               input: payload.value,
-              typeOfConfigKey: payload.inputPayload.replace('-search', ''),
+              typeOfEntity: payload.inputPayload.replace('-search', ''),
               itemsPagination: {
                 // offset: 0, limit: this.configuration.get('home-layout')['results-limit']
                 offset: 0, limit: this.configuration.get('home-layout')['results-limit']
               }
             }
             this.dataSource.makeRequest$('autoComplete', params).subscribe(response => {
-              this.emitOuter('facetswrapperresponse', { facetId: payload, response })
-              this.dataSource.updateComponent(
-                'aw-autocomplete-wrapper', // ID
-                { key: payload.value, response }, // DATA
-                { config: this.configuration } // OPTIONS
-              )
+              if (response.entities.length < 1) {
+                let fallback = {
+                  totalcount: 0,
+                  entities: [
+                    {
+                      entity: {
+                        id: 'fallback',
+                        label: // use fallback string from configuration
+                          this.configuration.get('home-layout')['autocomplete-fallback'] ?
+                            this.configuration.get('home-layout')['autocomplete-fallback'] :
+                            'Nessun risultato trovato'
+                      }
+                    }
+                  ]
+                }
+                this.emitOuter('facetswrapperresponse', { facetId: payload, response: fallback })
+                this.dataSource.updateComponent(
+                  'aw-autocomplete-wrapper',
+                  { key: payload.value, response: fallback },
+                  { config: this.configuration }
+                )
+              } else {
+                this.emitOuter('facetswrapperresponse', { facetId: payload, response })
+                this.dataSource.updateComponent(
+                  'aw-autocomplete-wrapper', // ID
+                  { key: payload.value, response }, // DATA
+                  { config: this.configuration } // OPTIONS
+                )
+              }
             })
           }
           break;
@@ -62,7 +89,7 @@ export class AwHomeLayoutEH extends EventHandler {
           if (!payload || !payload.entityId) return;
           this.emitGlobal('navigate', {
             handler: 'router',
-            path: [`aw/entita/${payload.entityId}/overview`]
+            path: [`aw/entita/${payload.entityId}`]
           });
           break;
         case "aw-bubble-chart.bubble-tooltip-select-click":
@@ -72,6 +99,7 @@ export class AwHomeLayoutEH extends EventHandler {
         case 'aw-bubble-chart.click':
           if (payload.source === 'bubble') {
             if (payload.bubble) {
+              console.log({ payload })
               this.dataSource.updateBubbleFilter(payload);
               if (this.dataSource.onBubbleSelected(payload.bubble)) {
                 this.dataSource.filterRequest().subscribe((response) => {
@@ -120,11 +148,11 @@ export class AwHomeLayoutEH extends EventHandler {
           let params = {
             selectedEntitiesIds: this.dataSource.selectedEntitiesIds,
             itemsPagination: {
-              offset: currentPage * this.dataSource.resultsLimit ,
+              offset: currentPage * this.dataSource.resultsLimit,
               limit: this.dataSource.resultsLimit
             }
           }
-          this.dataSource.makeRequest$('globalFilter', params).subscribe( res => {
+          this.dataSource.makeRequest$('globalFilter', params).subscribe(res => {
             if (res) {
               this.emitOuter('dataresponse', { res })
             } else {
@@ -132,6 +160,28 @@ export class AwHomeLayoutEH extends EventHandler {
             }
           })
           break;
+        case 'aw-autocomplete-wrapper.clickresult':
+          this.handleSimpleAutocompleteClick(payload)
+          break;
+        case 'aw-home-autocomplete.click':
+            const { source } = payload;
+            let basePath;
+            if(source === "item"){
+              basePath = this.configuration.get("paths").entitaBasePath;
+              this.emitGlobal('navigate', {
+                handler: 'router',
+                path: [ basePath, payload.id ]
+              });
+            } else if(source === "showMore") {
+              const query = this.dataSource.homeAutocompleteQuery;
+              basePath = this.configuration.get("paths").searchBasePath;
+              this.emitGlobal('navigate', {
+                handler: 'router',
+                path: [ basePath ],
+                queryParams: { query }
+              });
+            }
+            break;
         default:
           break;
       }
@@ -140,9 +190,10 @@ export class AwHomeLayoutEH extends EventHandler {
 
   private loadFilters() {
     this.dataSource.initialFilterRequest().subscribe((response) => {
+      console.log('(home) Apollo responded with:', response);
       if (response) {
         this.dataSource.parseInitialRequest(response);
-        if ( this.dataSource.bubblesEnabled ) {
+        if (this.dataSource.bubblesEnabled) {
           let bubblePayload = {
             setBubbleChart: (bubbleCref) => this.dataSource._bubbleChart = bubbleCref,
             source: response,
@@ -154,4 +205,50 @@ export class AwHomeLayoutEH extends EventHandler {
       }
     });
   }
+
+  public handleSimpleAutocompleteClick = payload => {
+    let thebubble = this.dataSource.allBubbles.find(b => {
+      let s = 'B_' + payload.replace(/-/g, '_')
+      return b.id == s
+    })
+    if (thebubble) {
+      this.dataSource.onBubbleSelected(thebubble)
+    }
+    if (this.dataSource.selectedEntitiesIds.indexOf(payload) < 0) {
+      this.dataSource.selectedEntitiesIds.push(payload)
+      this.dataSource.communication.request$('globalFilter', {
+        onError: (error) => console.error(error),
+        params: {
+          selectedEntitiesIds: this.dataSource.selectedEntitiesIds,
+          itemsPagination: {
+            offset: 0,
+            limit: this.dataSource.resultsLimit
+          }
+        },
+      }).subscribe(res => {
+        if (res) {
+          this.dataSource.updateBubbleFilter({
+            allBubbles: this.dataSource.allBubbles,
+            bubble: thebubble,
+            bubblePayload: { id: thebubble.id },
+            entityIdmap: this.dataSource.entityBubbleIdMap,
+            source: 'bubble'
+          })
+          this.dataSource.filterRequest().subscribe(res => {
+            if (res) {
+              this.emitOuter('filterbubbleresponse', this.dataSource.getBubblePayload(res))
+              this.dataSource.updateBubbles(res)
+            }
+          })
+          // this.renderPreviewsFromApolloQuery(res)
+        }
+      })
+    }
+  }
+
+  public outerLinkClick(type, payload) {
+    window.open(payload, "_blank");
+  }
+
 }
+

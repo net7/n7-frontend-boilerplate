@@ -3,7 +3,7 @@
     "defaultProvider": "apollo",
     "providers": {
       "apollo": {
-        "baseUrl": "https://n7-ariannaweb-graphql-git-develop.net7.now.sh/"
+        "baseUrl": "https://n7-ariannaweb-graphql-git-resolver-elasticsearch-homepage.net7.now.sh/"
       },
       "rest": {
         "baseUrl": "https://jsonplaceholder.typicode.com/",
@@ -54,6 +54,41 @@
       }
     }
   },
+  "item-preview": {
+    "image": "image",
+    "title": {
+      "data": "item.label",
+      "maxLength": "80"
+    },
+    "text": {
+      "data": "item.label",
+      "maxLength": "50"
+    },
+    "metadata": {
+      "info": {
+        "selection": [
+          { "key": "fase" },
+          { "key": "intitolazione" }
+        ],
+        "data": "item.fields",
+        "value": "value",
+        "label": "key",
+        "customLabel": ""
+      },
+      "toe": {
+        "data": "relatedTypesOfEntity",
+        "value": "count",
+        "icon": "type"
+      },
+      "breadcrumbs": {
+        "data": "breadcrumbs",
+        "label": "label",
+        "payload": "link"
+      }
+    },
+    "payload": "item.id",
+    "paginationLimit": "5"
+  },
   "home-layout": {
     "top-hero": {
       "title": "Arte, architettura e fotografia nel XXI secolo",
@@ -74,8 +109,36 @@
         "text": "NAVIGA IL PATRIMONIO"
       }
     },
+    "outer-links": {
+      "title": "Sezioni dell'archivio",
+      "test": [
+        {
+          "image": "https://picsum.photos/200",
+          "title": "Accedi all'archivio della Direzione dei lavori pubblici",
+          "text": "Il complesso di fondi è costituito dalla documentazione prodotta dalle strutture burocratiche afferenti alla Direzione generale dei lavori pubblici",
+          "payload": "http://www.google.it",
+          "classes": "is-vertical"
+        },
+        {
+          "title": "Direzione generale delle politiche sociali",
+          "image": "https://picsum.photos/200",
+          "text": "Strutture burocratiche afferenti alla Direzione generale dei lavori pubblici",
+          "payload": "http://www.google.it",
+          "classes": "is-vertical"
+        },
+        {
+          "title": "Direzione generale dell'organizzazione e del personale",
+          "image": "https://picsum.photos/200",
+          "text": "Il complesso di fondi è costituito dalla documentazione prodotta dalle strutture burocratiche afferenti alla Direzione generale",
+          "payload": "http://www.google.it",
+          "classes": "is-vertical"
+        }
+      ]
+    },
     "results-limit": 10,
-    "max-item-length": 50
+    "max-item-length": 50,
+    "max-bubble-num": 125,
+    "autocomplete-fallback": "Nessun risultato trovato"
   },
   "scheda-layout": {
     "bubble-chart": {
@@ -91,7 +154,11 @@
     "tree": {
       "icon-expand": "n7-icon-angle-right",
       "icon-collapse": "n7-icon-angle-down",
-      "icon-image": "n7-icon-image"
+      "icon-image": "n7-icon-image",
+      "icon-map": [
+        {"oc-type-foo": "n7-icon-building"},
+        {"oc-type-bar": "n7-icon-biography"}
+      ]
     }
   },
   "search-layout": {
@@ -100,13 +167,14 @@
       "Nessun risultato",
       "Risultato",
       "Risultati"
-    ]
+    ],
+    "enabledEntities": ["oggetto-culturale", "aggregazione", "persona", "luogo", "cosa-notevole", "organizzazione"] 
   },
   "entita-layout": {
     "max-bubble-num": 30
   },
   "config-keys": {
-    "people": {
+    "persona": {
       "color": {
         "hex": "#3a81f2",
         "rgb": [
@@ -117,9 +185,10 @@
       },
       "icon": "n7-icon-biography",
       "label": "Persone",
-      "input-placeholder": "Cerca una persona"
+      "input-placeholder": "Cerca una persona",
+      "main-metadata": "data_nascita"
     },
-    "places": {
+    "luogo": {
       "color": {
         "hex": "#f2cd3a",
         "rgb": [
@@ -131,8 +200,9 @@
       "icon": "n7-icon-map1",
       "label": "Luoghi",
       "input-placeholder": "Cerca un luogo"
+
     },
-    "concepts": {
+    "concetto": {
       "color": {
         "hex": "#5eab7b",
         "rgb": [94, 171, 123]
@@ -141,7 +211,16 @@
       "label": "Concetti",
       "input-placeholder": "Cerca un concetto"
     },
-    "organizations": {
+    "cosa-notevole": {
+      "color": {
+        "hex": "#5eab7b",
+        "rgb": [94, 171, 123]
+      },
+      "icon": "n7-icon-lightbulb",
+      "label": "Cose notevoli",
+      "input-placeholder": "Cerca un concetto"
+    },
+    "organizzazione": {
       "color": {
         "hex": "#c48731",
         "rgb": [196, 135, 49]
@@ -149,13 +228,37 @@
       "icon": "n7-icon-building",
       "label": "Organizzazioni",
       "input-placeholder": "Cerca un'organizzazione"
+    },
+    "oggetto-culturale": {
+      "color": {
+        "hex": "#a798c2",
+        "rgb": [167,152,194]
+      },
+      "icon": "n7-icon-image",
+      "label": "Oggetti Culturali",
+      "input-placeholder": ""
+    },
+    "aggregazione": {
+      "color": {
+        "hex": "#cc6f5c",
+        "rgb": [204,111,92]
+      },
+      "icon": "n7-icon-archive",
+      "label": "Fondi",
+      "input-placeholder": ""
     }
   },
   "paths": {
     "schedaBasePath": "/aw/patrimonio/",
-    "entitaBasePath": "/aw/entita/"
+    "entitaBasePath": "/aw/entita/",
+    "searchBasePath": "/aw/ricerca/"
   },
   "features-enabled" : {
     "bubblechart": true
+  },
+  "labels": {
+    "struttura_funzioni": "Funzioni principali",
+    "fase": "Fase",
+    "intitolazione": "Intitolaz."
   }
 }

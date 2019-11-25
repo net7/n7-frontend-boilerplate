@@ -12,17 +12,17 @@ export class AwBubbleChartEH extends EventHandler {
           event.payload.allBubbles = this.dataSource.getAllBubbles();
           this.emitOuter('click', event.payload);
           break;
-        case 'aw-bubble-chart.mouse_enter':
+        case 'aw-bubble-chart.mouseenter':
           const currBubble = this.dataSource.onBubbleMouseEnter(
             {
               bubblePayload:event.payload.bubblePayload,
               bubble:event.payload.bubble
             });
           event.payload.currBubble = currBubble;
-          this.emitOuter('mouse_enter', event.payload);
+          this.emitOuter('mouseenter', event.payload);
           break;
-        case 'aw-bubble-chart.mouse_leave':
-          this.emitOuter('mouse_leave', event.payload);
+        case 'aw-bubble-chart.mouseleave':
+          this.emitOuter('mouseleave', event.payload);
           break;
         case "aw-bubble-chart.bubble-tooltip-close-click":
             this.emitOuter('bubble-tooltip-close-click', event.payload);

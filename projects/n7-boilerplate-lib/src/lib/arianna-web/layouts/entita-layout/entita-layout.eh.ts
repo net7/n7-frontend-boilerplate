@@ -23,7 +23,7 @@ export class AwEntitaLayoutEH extends EventHandler {
 
         case 'aw-entita-layout.destroy':
           this.destroyed$.next();
-        break;
+          break;
 
         case 'aw-entita-layout.showmore':
           if (payload) {
@@ -52,39 +52,54 @@ export class AwEntitaLayoutEH extends EventHandler {
           if (payload) {
             this.dataSource.selectedTab = payload;
             this.dataSource.handleNavUpdate(payload)
-
           }
           break;
-          case 'aw-linked-objects.pagination':
-            this.dataSource.currentPage = payload.split('-')[1];
-            this.dataSource.handlePageNavigation()
-            /*this.emitGlobal('navigate', {
-              handler: 'router',
-              path: [`aw/entita/${this.route.snapshot.params.id}/oggetti-collegati/${payload.split('-')[1]}`]
-            });*/
-            break
-            case 'aw-linked-objects.goto':
-              this.dataSource.currentPage  = Number(payload.replace('goto-', ''))
-              this.dataSource.handlePageNavigation()
+        case 'aw-linked-objects.pagination':
+          this.dataSource.currentPage = payload.split('-')[1];
+          this.dataSource.handlePageNavigation()
+          /*this.emitGlobal('navigate', {
+            handler: 'router',
+            path: [`aw/entita/${this.route.snapshot.params.id}/oggetti-collegati/${payload.split('-')[1]}`]
+          });*/
+          break
+        case 'aw-linked-objects.goto':
+          this.dataSource.currentPage = Number(payload.replace('goto-', ''))
+          this.dataSource.handlePageNavigation()
           // this.emitGlobal('navigate', {
           //   handler: 'router',
           //   path: [`aw/entita/${this.route.snapshot.params.id}/oggetti-collegati/${targetPage}`]
           // });
           break
-        case 'aw-linked-objects.change':
+        case 'aw-linked-objects.change': // changed page size value (pagination)
           this.dataSource.pageSize = payload;
-          this.listenRoute("", true) // reloads the page content with the new page size
+          this.dataSource.currentPage = 1 // reset page
+          let options = {
+            context: this.dataSource.selectedTab,
+            config: this.dataSource.configuration,
+            page: this.dataSource.currentPage,
+            pagination: true,
+            size: this.dataSource.pageSize,
+          }
+          this.dataSource.updateComponent(
+            'aw-linked-objects',
+            { items: this.dataSource.myResponse.relatedItems },
+            options
+          )
+        // this.listenRoute("", true) // reloads the page content with the new page size
         case "aw-bubble-chart.bubble-tooltip-goto-click":
           if (!payload || !payload.entityId) return;
           this.emitGlobal('navigate', {
             handler: 'router',
-            path: [`aw/entita/${payload.entityId}/overview`]
+            path: [`aw/entita/${payload.entityId}`]
           });
           break;
-          case 'aw-bubble-chart.bubble-filtered':
-            if (this.dataSource.selectedTab == "overview" || this.dataSource.selectedTab == "entita-collegate") {
-              this.dataSource.updateBubbes(payload);
-            }
+        case 'aw-bubble-chart.bubble-filtered':
+          if (this.dataSource.selectedTab == "overview" || this.dataSource.selectedTab == "entita-collegate") {
+            payload.reload = true;
+            payload.reset = true;
+            this.emitOuter('filterbubbleresponse', payload);
+            //this.dataSource.updateBubbes(payload);
+          }
           break
         default:
           break;
@@ -96,17 +111,17 @@ export class AwEntitaLayoutEH extends EventHandler {
   /**
    * Listens to routing events of this layout.
    */
-  private listenRoute( selectedItem = "", forceReload = false) {
+  private listenRoute(selectedItem = "", forceReload = false) {
     // get URL parameters with angular's paramMap
     this.route.paramMap.subscribe(params => {
       // look for id
       if (params.get('id')) {
-        if (this.dataSource.currentId == params.get('id') && !forceReload ) return;
+        if (this.dataSource.currentId == params.get('id') && !forceReload) return;
         // get item from response with id === id and return as promise
-        this.dataSource.loadItem(params.get('id'), params.get('tab')).subscribe((res) => {
+        this.dataSource.loadItem(params.get('id'), params.get('tab')).subscribe(res => {
           if (res) {
             this.dataSource.loadContent(res);
-            res['connectedEntities'] = res.entities
+            this.dataSource.bubbleLoaded = false;
             let connectedEntities = {
               source: res,
               reload: false

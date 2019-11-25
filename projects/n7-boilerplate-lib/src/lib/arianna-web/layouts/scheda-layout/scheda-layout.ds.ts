@@ -71,9 +71,9 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   loadItem(id) {
     if (id) {
       const maxSimilarItems = this.configuration.get('scheda-layout')['related-items']['max-related-items'];
-      return this.communication.request$('getItemDetails', {
+      return  this.communication.request$('getNode', {
         onError: (error) => console.error(error),
-        params: { itemId: id, maxSimilarItems: maxSimilarItems }
+        params: { id: id, maxSimilarItems: maxSimilarItems }
       })
     } else {
       /* TODO: valori statici, da prendere da config */
@@ -135,10 +135,10 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       }
 
       let titleObj = {
-        icon: response.item.icon,
+        icon: response.icon,
         title: {
           main: {
-            text: response.title,
+            text: response.title || response.label,
             classes: 'bold',
           }
         },
@@ -147,77 +147,53 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       };
 
       this.one('aw-scheda-inner-title').update(titleObj);
-
-      /*Metadata section*/
-      let group = { group: [] };
-
+      
       this.hasMetadata = response.fields != null;
-      if (this.hasMetadata) {
-        response.fields.forEach(field => {
-          let items = [];
-          field.fields.forEach(item => {
-            items.push({ label: item.key, value: item.value })
-          });
-
-          group.group.push(
-            {
-              title: field.label,
-              items: items
-            }
-          );
-        });
-      }
-      this.one('aw-scheda-metadata').update(group);
+      this.one('aw-scheda-metadata').updateOptions({ labels: this.configuration.get("labels") });
+      this.one('aw-scheda-metadata').update(response);
 
       /*Breadcrumb section*/
       let breadcrumbs = {
         items: []
       };
 
-      response.breadcrumbs.forEach(element => {
-        breadcrumbs.items.push({
-          label: element.label,
-          payload: element.link
-        })
-      });
-      this.one('aw-scheda-breadcrumbs').update(breadcrumbs);
+      if( response.breadcrumb ){
+        response.breadcrumbs.forEach(element => {
+          breadcrumbs.items.push({
+            label: element.label,
+            payload: element.link
+          })
+        });
+        this.one('aw-scheda-breadcrumbs').update(breadcrumbs);
+      }
     }
 
-    /*if ( response.connectedEntities ) {
-      this.hasBubbles = true;
-      this.setAllBubblesFromApolloQuery(response);
-    } else {
-      this.hasBubbles = false;
-      this.one('aw-scheda-bubble-chart').update(null);
-    }*/
-
-    /* Similar item */
-    if (response.items) {
-      this.hasSimilarItems = true;
-      this.one('aw-linked-objects').updateOptions({ context: 'scheda', config: this.configuration })
-      this.one('aw-linked-objects').update(response);
-    } else {
-      this.hasSimilarItems = false;
-      this.one('aw-linked-objects').update(null);
-    }
+      if ( response.relatedItems ) {
+        this.hasSimilarItems = true;
+        this.one('aw-linked-objects').updateOptions({ context: 'scheda', config: this.configuration })
+        this.one('aw-linked-objects').update(response);
+      } else {
+        this.hasSimilarItems = false;
+        //this.one('aw-linked-objects').update([]);
+      }
   }
 
   collapseSidebar() {
     this.sidebarCollapsed = !this.sidebarCollapsed;
   }
 
-  setAllBubblesFromApolloQuery(response: any, reset?: boolean) {
-    if (!response || !response.connectedEntities) { return; }
+  setAllBubblesFromApolloQuery( response: any, reset?: boolean ){
+    if ( !response || !response.relatedEntities ) { this.hasBubbles = false; return; }
     this.allBubbles = [];
 
-    for (let i = 0; i < response.connectedEntities.length; i++) {
+    for ( let i = 0; i < response.relatedEntities.length; i++ ){
 
-      const color = this.configuration.get('config-keys')[response.connectedEntities[i].entity.typeOfEntity.configKey] ? this.configuration.get('config-keys')[response.connectedEntities[i].entity.typeOfEntity.configKey]['color']['hex'] : "";
+      const color = this.configuration.get('config-keys')[response.relatedEntities[i].entity.typeOfEntity.configKey] ? this.configuration.get('config-keys')[response.relatedEntities[i].entity.typeOfEntity.configKey]['color']['hex'] : "";
 
       this.allBubbles.push(
         {
-          id: this.convertEntityIdToBubbleId(response.connectedEntities[i].entity.id),
-          ...response.connectedEntities[i],
+          id: this.convertEntityIdToBubbleId( response.relatedEntities[i].entity.id ),
+          ...response.relatedEntities[i],
           color: color
         });
     }

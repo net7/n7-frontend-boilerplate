@@ -8,11 +8,11 @@ export class AwHomeBubbleChartEH extends EventHandler {
         case 'aw-home-bubble-chart.click':
           this.emitOuter('click',event.payload);
           break;
-        case 'aw-home-bubble-chart.mouse_enter':
-          this.emitOuter('mouse_enter',event.payload);
+        case 'aw-home-bubble-chart.mouseenter':
+          this.emitOuter('mouseenter',event.payload);
           break;
-        case 'aw-home-bubble-chart.mouse_leave':
-          this.emitOuter('mouse_leave',event.payload);
+        case 'aw-home-bubble-chart.mouseleave':
+          this.emitOuter('mouseleave',event.payload);
           break;
         default:
           break;

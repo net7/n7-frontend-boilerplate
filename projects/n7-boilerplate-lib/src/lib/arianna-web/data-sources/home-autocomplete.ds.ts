@@ -1,51 +1,54 @@
 import { DataSource } from '@n7-frontend/core';
-import { ADVANCED_AUTOCOMPLETE_MOCK } from '@n7-frontend/components';
 
 export class AwHomeAutocompleteDS extends DataSource {
 
   protected transform(data){
 
-    const { items, totalCount } = data,
+    const { entities, totalCount } = data,
           { config } = this.options;
 
     let itemIds = [],
       groups = {};
-
-    items.forEach(({ item, typeOfEntity }) => {
-      if(!groups[typeOfEntity.id]) {
-        const { label, icon } = config[typeOfEntity.configKey];
-        groups[typeOfEntity.id] = {
+    console.log(entities);
+    entities.forEach(
+      ({ entity, count }) => {
+      if(!groups[entity.typeOfEntity]) {
+        const { label, icon } = config[entity.typeOfEntity.replace(" ", "-")];
+        groups[entity.typeOfEntity.replace(" ", "-")] = {
           title: label,
           icon,
-          classes: `color-${typeOfEntity.configKey}`,
+          classes: `color-${entity.typeOfEntity.replace(" ", "-")}`,
           items: [],
         };
       }
 
-      if(itemIds.indexOf(item.id) === -1){
-        let metaDataValue: string = '';
-        item.info.forEach(infoData => {
-          if(infoData.key === 'author') metaDataValue = `di ${infoData.value}`;
-        });
-        groups[typeOfEntity.id].items.push({
-          label: item.label, 
-          value: metaDataValue, 
-          payload: { 
+      if(itemIds.indexOf(entity.id) === -1){
+        let metaDataValue: string = ' ';
+        if (entity.fields){
+          const meta = config[entity.typeOfEntity.replace(" ", "-")]['main-metadata'];
+          entity.fields.forEach(infoData => {
+            if( infoData.key === meta) metaDataValue = ` - ${infoData.value}`;
+          });
+        }
+        groups[entity.typeOfEntity.replace(" ", "-")].items.push({
+          label: entity.label,
+          value: metaDataValue,
+          payload: {
             source: 'item',
-            id: item.id 
+            id: entity.id
           }
         });
       }
     });
 
     const results = Object.keys(groups).map(key => ({ group: {...groups[key]} }));
-    return { 
+    return {
       results,
       actions: {
         showMore: {
           text: `Visualizza tutti i ${totalCount} risultati`,
-          payload: { 
-            source: 'showMore' 
+          payload: {
+            source: 'showMore'
           }
         }
       },

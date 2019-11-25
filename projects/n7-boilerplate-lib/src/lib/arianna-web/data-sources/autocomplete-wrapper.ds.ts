@@ -9,9 +9,19 @@ export class AwAutocompleteWrapperDS extends DataSource {
     const config = this.options.config
     const maxLength = config.get('home-layout')['max-item-length'] / 2
 
-    response.items.forEach(el => {
+    response.entities.forEach(el => {
+      if (el.entity.id == 'fallback') { // build and return fallback data
+        suggestion.push({
+          match: '',
+          payload: 'fallback-simple-autocomplete',
+          prefix: el.entity.label,
+          suffix: ''
+        })
+        return { suggestion }
+      }
       // divide prefix and suffix
-      let match = regex.exec(el.item.label)
+      // let match = el.item.label.match(regex)
+      let match = regex.exec(el.entity.label)
       if (match) {
         let prefix = match[1]
         let suffix = match[2]
@@ -26,10 +36,11 @@ export class AwAutocompleteWrapperDS extends DataSource {
           match: match.input.slice(match[1].length, match[1].length + key.length),
           prefix,
           suffix,
-          payload: el.item.id
+          payload: el.entity.id
         })
       }
     });
+    console.log({ suggestion })
     return { suggestion }
   }
 }

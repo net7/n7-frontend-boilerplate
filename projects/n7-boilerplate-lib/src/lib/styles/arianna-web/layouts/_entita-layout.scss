@@ -10,11 +10,11 @@
 .aw-entity {
     display: grid;
     grid-template-columns: $aw-scheda-tree-width minmax($bubble-chart-column-container-min-width,1fr);
-    
+
     margin: $space*3 auto $space*6 auto;
     max-width: $page-max-width;
     position: relative;
-    
+
     &__content {
         margin-top: $space*3;
         background-color: $color-background-base;
@@ -31,33 +31,50 @@
         padding: $space*2;
         background-color: $color-background-light;
         border: 1px solid $color-border-light;
+        box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.08);
     }
 
     &__sidebar-title {
         display: flex;
         align-items: center;
         margin: 0;
-        font-size: $font-size-xxl;
+        font-size: $font-size-xl;
 
         .aw-entity__sidebar-title-icon {
-            margin-right: $space;
-            // vertical-align: middle;
+            margin-right: $space*1.5;
         }
 
-        .color-people & {
+        &-text {
+            font-weight: $font-weight-black;
+            line-height: 1.15;
+        }
+
+        .color-persona & {
             color: $color-people;
         }
 
-        .color-places & {
+        .color-luogo & {
             color: $color-places;
         }
 
-        .color-organizations & {
+        .color-concetto & {
+            color: $color-concepts;
+        }
+
+        .color-cosa-notevole & {
+            color: $color-things;
+        }
+
+        .color-organizzazione & {
             color: $color-organizations;
         }
 
-        .color-concepts & {
-            color: $color-concepts;
+        .color-oggetto-culturale & {
+            color: $color-oggetto-culturale;
+        }
+
+        .color-aggregazione & {
+            color: $color-aggregazione;
         }
     }
 
@@ -164,7 +181,7 @@
 
             &__item {
                 display: grid;
-                grid-template-columns: 1fr 2fr;
+                grid-template-columns: 200px 1fr;
                 margin-bottom: $space*2.5;
             }
 
@@ -189,7 +206,7 @@
     }
 
     .n7-metadata-viewer {
-        column-count: 2;
+        // column-count: 2;
         &__group {
             &-title {
                 font-size: $font-size-l;
@@ -210,27 +227,24 @@
         }
     }
 
-    /* List of objects in overview and Related Objects subpage */
-    &__overview-objects,
-    &__content-section-objects {
+    /* List of objects in overview and elated objects */
+    &__content-item-previews {
         .n7-item-preview {
             margin-top: 0;
             padding-top: $space;
         }
 
-        .aw-entity__content-section-list  {
-            > *:last-child {
-                > .n7-item-preview {
-                    padding-bottom: 0;
-                    margin-bottom: 0;
-                    border-bottom: none;
-                }
+        > *:last-child {
+            > .n7-item-preview {
+                padding-bottom: 0;
+                margin-bottom: 0;
+                border-bottom: none;
             }
         }
+    }
 
-        .n7-pagination {
-            margin-top: $space*4;
-        }
+    .n7-pagination {
+        margin-top: $space*4;
     }
 }
 

@@ -24,8 +24,8 @@ export class AwLinkedObjectsEH extends EventHandler {
             });
           }
           break;
-        case 'aw-linked-objects.change':
-          this.emitOuter('change', Number(payload.value))
+        case 'aw-linked-objects.change': // changed page size value (pagination)
+          this.emitOuter('change', +payload.value)
           break;
         default:
           console.warn('unhandled event type: ', type, ' with payload: ', payload)
@@ -60,7 +60,7 @@ export class AwLinkedObjectsEH extends EventHandler {
       Check if the target element is scrolled near the end while data is not already loading.
       If the condition is met, a request for more data is sent.
     */
-    if (target.scrollTop > target.scrollTopMax - 150 && this.dataSource.loadedData.isLoading == false) {
+    if (target.scrollTop + target.clientHeight >= target.scrollHeight - 150 && this.dataSource.loadedData.isLoading == false) {
       this.dataSource.loadedData.isLoading = true
       this.emitOuter('datarequest', {
         currentPage: this.dataSource.currentPage

@@ -3,7 +3,7 @@
  *
  * Search bar autocomplete component which shows datas preview matching the typed words or words parts
  */
- 
+
 /* ------------------------------------ *\
    #ADVANCED-AUTOCOMPLETE
 \* ------------------------------------ */
@@ -26,20 +26,32 @@
 
     .n7-advanced-autocomplete__group-title-wrapper {
         // color: $color-text-light;
-        &.color-people {
+        &.color-persona {
             color: $color-people;
         }
 
-        &.color-places {
+        &.color-luogo {
             color: $color-places;
         }
 
-        &.color-organizations {
+        &.color-concetto {
+            color: $color-concepts;
+        }
+
+        &.color-cosa-notevole {
+            color: $color-things;
+        }
+
+        &.color-organizzazione {
             color: $color-organizations;
         }
 
-        &.color-concepts {
-            color: $color-concepts;
+        &.color-oggetto-culturale {
+            color: $color-oggetto-culturale;
+        }
+
+        &.color-aggregazione {
+            color: $color-aggregazione;
         }
     }
 
@@ -126,12 +138,12 @@
 }
 
 @media all and (max-width: $breakpoint-ipad-portrait - 1) {
-    
+
     .n7-advanced-autocomplete {
         &__results {
             // padding: $space*1.5 $space*1.5;
         }
-    
+
         &__group {
             // display: block;
             // margin-bottom: $space*1.5;
@@ -147,7 +159,7 @@
             // margin-bottom: $space*1.5;
         }
 
-        
+
         &__action-bar {
             // flex-flow: column nowrap;
 

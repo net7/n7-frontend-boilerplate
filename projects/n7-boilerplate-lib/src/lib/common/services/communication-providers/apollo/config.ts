@@ -10,19 +10,17 @@ export const ApolloProviderConfig = {
       }
     `
   },
-
   'getTree': {
     queryName: 'getTreeOfItems',
     queryBody: `
     {
-      getTreeOfItems(treeId: "patrimonioId" ) {
+      getTreeOfItems{
         id
         label
         icon
         branches {
           label
           id
-          icon
           img
           branches {
             label
@@ -34,6 +32,36 @@ export const ApolloProviderConfig = {
               id
               icon
               img
+              branches {
+                label
+                id
+                icon
+                img
+                branches {
+                  label
+                  id
+                  icon
+                  img
+                  branches {
+                    label
+                    id
+                    icon
+                    img
+                    branches {
+                      label
+                      id
+                      icon
+                      img
+                      branches {
+                        label
+                        id
+                        icon
+                        img
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -46,159 +74,212 @@ export const ApolloProviderConfig = {
     queryBody: `{
       globalFilter(__PARAMS__){
         entitiesData {
-          countData {
-            type {
+          entity {
               id
               label
-              configKey
-            }
-            count
-          }
-          entitiesCountData {
-            entity {
-              id
-              label
-              typeOfEntity {
-                id
-              }
-            }
-            count
-          }
+              typeOfEntity
+          } count
+        }
+        typeOfEntityData {
+          type
+          count
         }
         itemsPagination {
           totalCount
           items {
+            thumbnail
             item {
               id
               label
-              info {
-                key
-                value
+              fields
+              {
+                ...
+                on KeyValueField {
+                  key
+                  value
+                }
+              }
+              breadcrumbs {
+                label
+                link
               }
             }
-            thumbnail
-            relatedTOEData {
-              type {
-                id
-                label
-                configKey
-              }
+            relatedTypesOfEntity {
+              type
               count
             }
           }
         }
       }
-    }`
+      }`
   },
   'getEntityDetails': {
-    queryName: 'getEntityDetails',
+    queryName: 'getEntity',
     queryBody: `{
-      getEntityDetails(__PARAMS__){
+      getEntity(__PARAMS__){
         overviewTab
-        entity {
-          label
-          id
-          typeOfEntity {
-            configKey
-          }
-        }
-        fieldsTab {
-          label
-          fields {
+        label
+        id
+        typeOfEntity
+        fields {
+          ...
+          on KeyValueField {
             key
             value
           }
-        }
-        entities {
-          entity {
-            id
+          ... on
+          KeyValueFieldGroup {
             label
-            typeOfEntity {
-              configKey
+            fields
+            {
+              ...
+              on KeyValueField {
+                key
+                value
+              }
             }
           }
-          count
         }
         extraTab
         wikiTab {
           text
           url
         }
-        items {
-          breadcrumbs {
-            link
-            label
-          }
-          item {
-            id
-            label
-            info {
-              key
-              value
-            }
-          }
+        relatedItems {
           thumbnail
-          relatedTOEData {
-            type {
-              id
-              configKey
+          item {
+            label
+            id
+            fields
+            {
+              ...
+              on KeyValueField {
+                key
+                value
+              }
             }
+            breadcrumbs {
+              label
+              link
+            }
+          }
+          relatedTypesOfEntity {
+            type
             count
           }
+        }
+        relatedEntities {
+          entity {
+              id
+              label
+              typeOfEntity
+          }
+          count
         }
       }
     }
     `
   },
-  'getItemDetails': {
-    queryName: 'getItemDetails',
+  'getItem': {
+    queryName: 'getItem',
     queryBody: `{
-        getItemDetails(__PARAMS__){
+      getItem(__PARAMS__) {
+        id
+        label
+        icon
+        title
+        subTitle
+        image
+        text
+        fields {
+          ...
+          on KeyValueField {
+            key
+            value
+          }
+          ... on KeyValueFieldGroup {
+            label
+            fields {
+              ...
+              on KeyValueField {
+                key
+                value
+              }
+            }
+          }
+          }
+          relatedEntities {
+            count
+            entity{
+              id
+              label
+              typeOfEntity
+            }
+          }
+          relatedItems {
+            thumbnail
+            item {
+              label
+              id
+          }
+          relatedTypesOfEntity {
+            type
+            count
+          }
+        }
+        breadcrumbs {
+          label
+          link
+        }
+      }
+    }`
+  },
+  'getNode': {
+    queryName: 'getNode',
+    queryBody: `{
+      getNode(__PARAMS__) {
+        ... on Item {
+          id
+          label
+          icon
           title
-          text
           subTitle
           image
-           item {
-            id
-            icon
-          }
-          items {
-            thumbnail
-              item {
-                label
-                icon
-                info {
+          text
+          fields {
+            ...
+            on KeyValueField {
+              key
+              value
+            }
+            ... on KeyValueFieldGroup {
+              label
+              fields {
+                ...
+                on KeyValueField {
                   key
                   value
                 }
               }
-            relatedTOEData {
-              count
-              type {
-                label
-                configKey
-              }
             }
           }
-          connectedEntities {
-            count
-            entity{
-             id
-            label
-              typeOfEntity {
+          relatedEntities {
+              count
+              entity{
                 id
                 label
-                configKey
+                typeOfEntity
               }
-            }
           }
-          fields {
-            id
-            label
-            fields {
-              id
-              key
-              value
+          relatedItems {
+              thumbnail
+              item {
+                label
+                id
+            }
+            relatedTypesOfEntity {
+              type
+              count
             }
           }
           breadcrumbs {
@@ -206,28 +287,62 @@ export const ApolloProviderConfig = {
             link
           }
         }
-      }`
+        ... on Node {
+          id
+          label
+          img
+          fields {
+            ...
+            on KeyValueField {
+              key
+              value
+            }
+            ... on KeyValueFieldGroup {
+              label
+              fields {
+                ...
+                on KeyValueField {
+                  key
+                  value
+                }
+              }
+            }
+          }
+        }
+      }
+    }`
   },
   'autoComplete': {
     queryName: 'autoComplete',
     queryBody: `{
       autoComplete(__PARAMS__){
         totalCount
-        items {
-          item {
-            id
-            label
-            info {
-              key
-              value
-            }
-            icon
+        entities {
+          entity {
+              id
+              label
+              typeOfEntity
+              fields {
+                ...
+                on KeyValueField {
+                  key
+                  value
+                }
+                ... on
+                KeyValueFieldGroup {
+                  label
+                  fields
+                  {
+                    ...
+                    on KeyValueField {
+                      key
+                      value
+                    }
+                  }
+                }
+              }
           }
-          thumbnail
-          typeOfEntity {
-            id
-            configKey
-          }
+          count
         }
       }
     }`

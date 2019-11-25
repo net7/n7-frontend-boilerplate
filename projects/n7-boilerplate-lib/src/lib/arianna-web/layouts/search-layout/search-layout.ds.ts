@@ -89,6 +89,7 @@ export class AwSearchLayoutDS extends LayoutDataSource {
   public getSearchModelId = () => SEARCH_MODEL_ID;
 
   public doSearchRequest$(): Observable<any> {
+    const enabledEntities = this.configuration.get('search-layout').enabledEntities;
     // FIXME: togliere configKeys
     // dovrebbe venire dall'API
     const configKeys = this.configuration.get('config-keys');
@@ -106,11 +107,11 @@ export class AwSearchLayoutDS extends LayoutDataSource {
 
     const fakeResultsRequest$ = this.communication.request$('getEntityDetails', {
       onError: error => console.error(error),
-      params: { entityId: '55vf-entity-s3ar' }
+      params: { entityId: '0263a407-d0dd-4647-98e2-109b0b0c05f3' }
     });
 
     return fakeResultsRequest$.pipe(
-      withLatestFrom(fakeSearchRequest$(requestParams, configKeys)),
+      withLatestFrom(fakeSearchRequest$(requestParams, configKeys, enabledEntities)),
       tap(([resultsResponse, searchResponse]) => {
         this.totalCount = searchResponse.totalCount;
         let resultsTitleIndex = 0;

@@ -8,13 +8,22 @@
 // #ENTITIES-COLORS
 // ------------------------------------ //
 $color-people: #3a81f2; // Fallback
-$color-people: var(--color-people);
+$color-people: var(--color-persona);
 
 $color-places: #f2cd3a; // Fallback
-$color-places: var(--color-places);
+$color-places: var(--color-luogo);
 
 $color-concepts: #5eab7b; // Fallback
-$color-concepts: var(--color-concepts);
+$color-concepts: var(--color-concetto);
 
 $color-organizations: #c48731; // Fallback
-$color-organizations: var(--color-organizations);
+$color-organizations: var(--color-organizzazione);
+
+$color-things: #c43631; // Fallback
+$color-things: var(--color-cosa-notevole);
+
+$color-oggetto-culturale: #a798c2; // Fallback
+$color-oggetto-culturale: var(--color-oggetto-culturale);
+
+$color-aggregazione: #cc6f5c; // Fallback
+$color-aggregazione: var(--color-aggregazione);

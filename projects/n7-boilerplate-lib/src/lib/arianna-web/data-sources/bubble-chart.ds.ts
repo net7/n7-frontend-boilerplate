@@ -1,8 +1,7 @@
 import { DataSource } from '@n7-frontend/core';
-import { BUBBLECHART_MOCK } from '@n7-frontend/components';
 import tippy from 'tippy.js';
 import { fromEvent, interval } from 'rxjs';
-import { debounce, debounceTime } from 'rxjs/operators';
+import { debounce } from 'rxjs/operators';
 
 export class AwBubbleChartDS extends DataSource {
 
@@ -19,6 +18,9 @@ export class AwBubbleChartDS extends DataSource {
   private maxBubblesSelectable:number = 3;
   private tippy;
   private windowResizeSet = false;
+  private maxBubbleRadius = 100;
+  private minBubbleRadius = 10;
+  private maxBubbleTextRadiusRatio = 6;
 
   protected transform(data){
     if ( !data ){ return null; }
@@ -62,14 +64,64 @@ export class AwBubbleChartDS extends DataSource {
 
     data.bubbles.forEach( bubble => {
       let bId = bubble.id;
+
+      let bubbleAverage =  totalCount / numOfBubbles;
       let bubblePercentage = ( bubble.count - (minBubbleCount/3) )/( (maxBubbleCount*3) - (minBubbleCount/3) );
+
+
+      //to understand if there is a large difference of count between bubbles
+      let coeff = maxBubbleCount / bubbleAverage;
+
+      /* if ( coeff > 20 ) {
+        if ( bubble.count - coeff >= 0 ){
+          bubblePercentage = ( (bubble.count) - (minBubbleCount/3) )/( (maxBubbleCount*3) - (minBubbleCount/3) )
+        } else {
+        }
+        bubblePercentage = ( (bubble.count - (minBubbleCount/3)) - (minBubbleCount/3) )/( ((maxBubbleCount - coeff) *3) - (minBubbleCount/3) )
+      }*/
+
+      /* In case of few bubbles */
+      if( coeff > 1 ) {
+        bubblePercentage = ( bubble.count * (coeff/3) - (minBubbleCount/3) )/( (maxBubbleCount*3) - (minBubbleCount/3) );
+      }
+
       let bubbleRadius = (Math.log(containerSize)/10)*(bubblePercentage*3)*(70-Math.sqrt(numOfBubbles));
-      let bubbleData = {
-        id: bId,
-        texts: [
+      if ( bubbleRadius > this.maxBubbleRadius ) {
+        bubbleRadius = this.maxBubbleRadius;
+      } else if ( bubbleRadius < this.minBubbleRadius ) {
+        bubbleRadius = this.minBubbleRadius;
+      }
+
+      //console.log("bubble text " +  bubble.entity.label +" bubble length " +  bubble.entity.label.length + " radius: " + bubbleRadius + " limit: " + this.thresholdShowTitle  )
+      let label = bubble.entity.label;
+
+      let texts = [];
+      // check if text is larger than radius
+      if( bubbleRadius / bubble.entity.label.length < this.maxBubbleTextRadiusRatio ) {
+        const index = bubbleRadius / this.maxBubbleTextRadiusRatio;
+        const spaceIndex = bubble.entity.label.indexOf(" ", index - 5)
+        const label1 = bubble.entity.label.slice(0, spaceIndex);
+        const label2 = bubble.entity.label.slice(spaceIndex, index *2);
+        //label = [bubble.entity.label.slice(0, index), "\n", bubble.entity.label.slice(index)].join('');
+
+        texts.push(
           {
             id:bId+"_label0",
-            label: (d) => { if(d.radius<this.thresholdShowTitle) return null; return bubble.entity.label },
+            label: (d) => { if(d.radius<this.thresholdShowTitle) return null; return label1 },
+            x_function: (d) => d.x,
+            y_function: (d) => {
+              let mNum = (d.radius/9);
+              if(d.radius<this.thresholdShowValue) mNum=0;
+              return d.y-mNum -20;
+            },
+            "user_select":"none",
+            fontSize_function: (d) => d.radius/5,
+            color: "white",
+            "classes":""
+          },
+          {
+            id:bId+"_label01",
+            label: (d) => { if(d.radius<this.thresholdShowTitle) return null; return label2 },
             x_function: (d) => d.x,
             y_function: (d) => {
               let mNum = (d.radius/9);
@@ -80,16 +132,40 @@ export class AwBubbleChartDS extends DataSource {
             fontSize_function: (d) => d.radius/5,
             color: "white",
             "classes":""
+          }
+
+
+        )
+      } else {
+        texts.push({
+          id:bId+"_label0",
+          label: (d) => { if(d.radius<this.thresholdShowTitle) return null; return label },
+          x_function: (d) => d.x,
+          y_function: (d) => {
+            let mNum = (d.radius/9);
+            if(d.radius<this.thresholdShowValue) mNum=0;
+            return d.y-mNum;
           },
+          "user_select":"none",
+          fontSize_function: (d) => d.radius/5,
+          color: "white",
+          "classes":""
+        });
+      }
+
+      let bubbleData = {
+        id: bId,
+        texts: [
+          ...texts,
           {
             id:bId+"_label1",
             label: (d) => { if(d.radius<this.thresholdShowValue) return null; return bubble.count },
             x_function: (d) => d.x,
             y_function: (d) => d.y+(d.radius/9),
             "user_select":"none",
-            fontSize_function: (d) => d.radius/6,
+            //fontSize_function: (d) => d.radius/3,
             color: "white",
-            "classes":""
+            "classes":"aw-bubble-num"
         }
         ],
         x: cWidth/2+50,
@@ -136,28 +212,25 @@ export class AwBubbleChartDS extends DataSource {
     }
 
     if( response.entitiesData ) {
-      for (let i = 0 ; i < response.entitiesData.length; i++) {
 
-        let currentToE = response.entitiesData[i];
+      for ( let i = 0 ; i < response.entitiesData.length; i++ ) {
 
-        for ( var j = 0; j < currentToE.entitiesCountData.length; j++) {
-          this.allBubbles.push(
-            {
-              ...currentToE.entitiesCountData[j],
-              color: this.options.configKeys[currentToE.countData.type.configKey]['color']['hex']
-            });
-        }
+        this.allBubbles.push({
+          ...response.entitiesData[i],
+          color: this.options.configKeys[response.entitiesData[i].entity.typeOfEntity.replace(" ", "-")] ? this.options.configKeys[response.entitiesData[i].entity.typeOfEntity.replace(" ", "-")]['color']['hex'] : ""
+        })
       }
+
     }
     else {
-      for ( let i = 0; i < response.connectedEntities.length; i++ ){
+      for ( let i = 0; i < response.relatedEntities.length; i++ ){
         const color = this.options.configKeys ?
-          this.options.configKeys[response.connectedEntities[i].entity.typeOfEntity.configKey] ? this.options.configKeys[response.connectedEntities[i].entity.typeOfEntity.configKey]['color']['hex'] : "" :
+          this.options.configKeys[response.relatedEntities[i].entity.typeOfEntity.replace(" ", "-")] ? this.options.configKeys[response.relatedEntities[i].entity.typeOfEntity.replace(" ", "-")]['color']['hex'] : "" :
           null;
         this.allBubbles.push(
           {
-            id: this.convertEntityIdToBubbleId( response.connectedEntities[i].entity.id ),
-            ...response.connectedEntities[i],
+            id: this.convertEntityIdToBubbleId( response.relatedEntities[i].entity.id ),
+            ...response.relatedEntities[i],
             color: color
           });
       }
@@ -191,13 +264,18 @@ export class AwBubbleChartDS extends DataSource {
   }
 
   filterBubblesBasedOnFacetsEnabled() {
+    var count = 0;
     let result = this.allBubbles.filter(
       (bubble) => {
         for ( var i = 0; i < this.facetData.length; i++ ){
-          if ( bubble.entity.typeOfEntity.id === this.facetData[i].type.id ) {
+          if (bubble.entity.typeOfEntity.replace(/ /g, '-') === this.facetData[i].type.replace(/ /g, '-') ) {
             if ( !this.facetData[i].enabled ) { return false; }
           }
         }
+        if( count > this.options.maxNumber ) {
+          return false;
+        }
+        count++;
         return true;
       }
     );

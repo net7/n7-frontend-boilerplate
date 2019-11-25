@@ -1,6 +1,6 @@
 import { Observable, of } from 'rxjs';
 
-export default (params, configKeys): Observable<any> => {
+export default (params, configKeys, enabledEntities): Observable<any> => {
   params.totalCount = Math.floor(Math.random() * 1000);
 
   console.log('fake-search-request----------->', params);
@@ -8,10 +8,10 @@ export default (params, configKeys): Observable<any> => {
   let { facets } = params;
 
   // query links
-  _getFacet('query-links', facets).data = _getQueryLinksData(configKeys);
+  _getFacet('query-links', facets).data = _getQueryLinksData(configKeys, enabledEntities);
 
   // entity types
-  _getFacet('entity-types', facets).data = _getEntityTypesData(configKeys);
+  _getFacet('entity-types', facets).data = _getEntityTypesData(configKeys, enabledEntities);
 
   // entity links
   _getFacet('entity-links', facets).data = _getEntityLinksData();
@@ -29,8 +29,8 @@ const _getFacet = (id, facets) => {
   return facets.filter(f => f.id === id)[0];
 }
 
-const _getQueryLinksData = (configKeys) => {
-  return Object.keys(configKeys).map(key => {
+const _getQueryLinksData = (configKeys, enabledEntities) => {
+  return enabledEntities.map(key => {
     const config = configKeys[key];
     return {
       value: key,
@@ -46,8 +46,8 @@ const _getQueryLinksData = (configKeys) => {
   });
 }
 
-const _getEntityTypesData = (configKeys) => {
-  return Object.keys(configKeys).map(key => {
+const _getEntityTypesData = (configKeys, enabledEntities) => {
+  return enabledEntities.map(key => {
     const config = configKeys[key];
     return {
       value: key,

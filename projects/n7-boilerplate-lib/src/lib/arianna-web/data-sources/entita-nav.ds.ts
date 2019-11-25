@@ -13,20 +13,20 @@ export class AwEntitaNavDS extends DataSource {
       payload: 'overview',
       classes: selected == 'overview' ? 'is-selected' : ''
     })
-    if (data.fieldsTab) {
+    if (data.fields && data.fields.length > 0) {
       navigation.items.push({
         text: 'CAMPI',
         payload: 'campi',
         classes: selected == 'campi' ? 'is-selected' : ''
       })
     }
-    if (data.items) {
+    if (data.relatedItems) {
       navigation.items.push({
         text: 'OGGETTI-COLLEGATI',
         payload: 'oggetti-collegati',
         classes: selected == 'oggetti-collegati' ? 'is-selected' : ''
       })    }
-    if (data.entities && this.options['bubblesEnabled']) {
+    if (data.relatedEntities && this.options['bubblesEnabled']) {
       navigation.items.push({
         text: 'ENTITÀ COLLEGATE',
         payload: 'entita-collegate',

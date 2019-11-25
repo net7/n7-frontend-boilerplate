@@ -7,61 +7,58 @@
 /* ------------------------------------ *\
     HERO
 \* ------------------------------------ */
-.aw-home {
-    &__top-hero {
-        .n7-hero {
+.aw-home__top-hero {
+    .n7-hero {
+        height: $top-hero-height;
+
+        &__title {
+            font-size: $font-size-xxxl;
+            font-weight: $top-hero-title-font-weight;
+        }
+
+        &__text {
+            font-size: $font-size-xl;
+        }
+
+        &__text-wrapper {
             height: $top-hero-height;
+            max-width: $top-hero-text-max-width;
+        }
 
-            &__title {
-                font-size: $font-size-xxxl;
-                font-weight: $top-hero-title-font-weight;
-            }
+        &__input {
+            height: $top-hero-input-height;
+            padding-right: $space*2;
+            padding-left: $space*2;
+            border-radius: $top-hero-input-border-radius 0 0 $top-hero-input-border-radius;
+            box-shadow: $top-hero-input-box-shadow;
+            line-height: $top-hero-input-height;
+            font-size: $font-size-l;
 
-            &__text {
-                font-size: $font-size-xl;
-
-                &-wrapper {
-                    height: $top-hero-height;
-                    max-width: $top-hero-text-max-width;
-                }
-            }
-
-            &__input {
-                height: $top-hero-input-height;
-                padding-right: $space*2;
-                padding-left: $space*2;
-                border-radius: $top-hero-input-border-radius 0 0 $top-hero-input-border-radius;
-                box-shadow: $top-hero-input-box-shadow;
-                line-height: $top-hero-input-height;
-                font-size: $font-size-l;
-
-                @include placeholder {
-                    font-size: $font-size-l;
-                }
-            }
-
-            &__btn {
-                height: $top-hero-button-height;
-                border-radius: 0 $top-hero-input-border-radius $top-hero-input-border-radius 0;
-                border: none;
+            @include placeholder {
                 font-size: $font-size-l;
             }
+        }
 
-            &__input-wrapper {
-                display: flex;
-                min-width: 100%;
-            }
+        &__btn {
+            height: $top-hero-button-height;
+            border-radius: 0 $top-hero-input-border-radius $top-hero-input-border-radius 0;
+            border: none;
+            font-size: $font-size-l;
+        }
 
-            /* Autocomplete */
-            .tippy-popper {
-                width: 100%;
-                max-width: 100%;
-            }
+        &__input-wrapper {
+            display: flex;
+            min-width: 100%;
+        }
 
-            .tippy-tooltip, .tippy-content {
-                padding: 0;
-            }
+        /* Autocomplete */
+        .tippy-popper {
+            width: 100%;
+            max-width: 100%;
+        }
 
+        .tippy-tooltip, .tippy-content {
+            padding: 0;
         }
     }
 }
@@ -71,7 +68,6 @@
     BUBBLE-CHART
 \* ------------------------------------ */
 .aw-home {
-
     &__bubble-chart-wrapper {
         overflow: hidden;
     }
@@ -141,12 +137,13 @@
             margin-bottom: $space/2;
             font-size: $font-size-l;
             font-weight: $font-weight-bold;
-            &-wrapper {
-                display: flex;
-                flex-flow: column nowrap;
-                width: 100%;
-                border-left: 1px solid $color-border-normal;
-            }
+        }
+
+        &__text-wrapper {
+            display: flex;
+            flex-flow: column nowrap;
+            width: 100%;
+            border-left: 1px solid $color-border-normal;
         }
 
         &__secondary-text {
@@ -193,31 +190,52 @@
             }
         }
 
-        &.color-people {
+        &.color-persona {
             .n7-facet-header__icon-left,
             .n7-facet-header__text {
                 color: $color-people;
             }
         }
 
-        &.color-places {
+        &.color-luogo {
             .n7-facet-header__icon-left,
             .n7-facet-header__text {
                 color: $color-places;
             }
         }
 
-        &.color-concepts {
+        &.color-concetto {
             .n7-facet-header__icon-left,
             .n7-facet-header__text {
                 color: $color-concepts;
             }
         }
 
-        &.color-organizations {
+        &.color-cosa-notevole {
+            .n7-facet-header__icon-left,
+            .n7-facet-header__text {
+                color: $color-things;
+            }
+        }
+
+        &.color-organizzazione {
             .n7-facet-header__icon-left,
             .n7-facet-header__text {
                 color: $color-organizations;
+            }
+        }
+
+        &.color-oggetto-culturale {
+            .n7-facet-header__icon-left,
+            .n7-facet-header__text {
+                color: $color-oggetto-culturale;
+            }
+        }
+
+        &.color-aggregazione {
+            .n7-facet-header__icon-left,
+            .n7-facet-header__text {
+                color: $color-aggregazione;
             }
         }
 
@@ -264,7 +282,7 @@
 
         .aw-home__facet-tippy-theme {
             padding: 0;
-            
+
             .tippy-content {
                 padding: 0;
             }
@@ -314,21 +332,22 @@
                     border-bottom: none;
                 }
             }
-            
+
         }
 
         &-list-wrapper {
             border-top: 1px solid $color-border-normal;
             position: relative;
-            &-with-scroll {
-                position: absolute;
-                top: $bubble-results-height - 50px;
-                bottom: 0;
-                width: 100%;
-                height: 50px;
-                background: $color-background-layout;
-                background: $gradient-item-preview-list;
-            }
+        }
+
+        &-list-wrapper-with-scroll {
+            position: absolute;
+            top: $bubble-results-height - 50px;
+            bottom: 0;
+            width: 100%;
+            height: 50px;
+            background: $color-background-layout;
+            background: $gradient-item-preview-list;
         }
     }
 
@@ -369,26 +388,104 @@
         }
     }
 
+    /* Results-loader */
+    .aw-home__bubble-results-list-loader {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: $space*1.5 0 $space*2 0;
+
+        .n7-loader {
+            &, &:after {
+                width: 40px !important;
+                height: 40px !important;
+            }
+        }
+    }
+
     .aw-home__bubble-tags-title {
         margin-right: $space/2;
         font-weight: $font-weight-normal;
     }
 
     /* Tag colors */
-    .tag-toe-people {
+    .tag-persona {
         background-color: $color-people;
     }
 
-    .tag-toe-organizations {
+    .tag-organizzazione {
         background-color: $color-organizations;
     }
 
-    .tag-toe-concepts {
+    .tag-concetto {
         background-color: $color-concepts;
     }
 
-    .tag-toe-places {
+    .tag-luogo {
         background-color: $color-places;
+    }
+
+    .tag-cosa-notevole {
+        background-color: $color-things;
+    }
+
+    .tag-oggetto-culturale {
+        background-color: $color-oggetto-culturale;
+    }
+
+    .tag-aggregazione {
+        background-color: $color-aggregazione;
+    }
+}
+
+
+/* ------------------------------------ *\
+    OUTER-LINKS
+\* ------------------------------------ */
+.aw-home__outer-links {
+    padding: $space*6 0;
+    background-color: $color-background-base;
+}
+
+.aw-home__outer-links-title {
+    margin-bottom: $space*3;
+    text-align: center;
+    font-size: $font-size-xxl;
+    font-weight: $font-weight-bold;
+    color: $color-text;
+}
+
+.aw-home__outer-links-items {
+    display: flex;
+    max-width: $page-max-width;
+    margin: 0 auto;
+
+    .n7-item-preview.is-vertical.has-image {
+        border-bottom: 0;
+        margin: 0 $grid-gutter-h/2;
+        padding-bottom: 0;
+
+        .n7-item-preview__image {
+            height: 200px;
+            border-radius: $border-radius;
+        }
+    }
+
+    > * {
+        flex: 1;
+    }
+
+    > *:first-child {
+        .n7-item-preview.is-vertical.has-image {
+            margin-left: 0;
+        }
+    }
+
+    > *:last-child {
+        .n7-item-preview.is-vertical.has-image {
+            margin-right: 0;
+        }
     }
 }
 
