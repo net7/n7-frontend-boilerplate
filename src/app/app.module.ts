@@ -4,7 +4,8 @@ import { RouterModule } from '@angular/router';
 import { 
   N7BoilerplateCommonModule,
   N7BoilerplateAriannaWebModule,
-  JsonConfigService
+  N7BoilerplateDataVizModule,
+  JsonConfigService,
 } from 'n7-boilerplate-lib';
 import globalConfig from './config/global';
 import layoutsConfig from './config/layouts';
@@ -28,6 +29,7 @@ const JSON_PATH = './assets/app-config.json';
       layouts: layoutsConfig
     }),
     N7BoilerplateAriannaWebModule,
+    N7BoilerplateDataVizModule,
   ],
   providers: [{
     provide: APP_INITIALIZER,

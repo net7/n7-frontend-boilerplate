@@ -1,13 +1,19 @@
 
 import { Routes } from '@angular/router';
+
+//Arianna web import layout
 import {
+  //COMMON
   Page404LayoutComponent,
+  //AW
   AwHomeLayoutComponent,
   AwAboutLayoutComponent,
   AwSchedaLayoutComponent,
   AwWorksLayoutComponent,
   AwEntitaLayoutComponent,
   AwSearchLayoutComponent,
+  //DV
+  DvExampleLayout,
 } from 'n7-boilerplate-lib';
 
 export const APP_ROUTES: Routes = [
@@ -26,6 +32,9 @@ export const APP_ROUTES: Routes = [
     redirectTo: '/aw/home',
     pathMatch: 'full'
   },
+
+  //DataViv routes
+  { path: 'dv/example', component: DvExampleLayout },
 
   // altri moduli...
 

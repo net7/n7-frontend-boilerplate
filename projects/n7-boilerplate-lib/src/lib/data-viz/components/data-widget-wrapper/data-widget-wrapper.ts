@@ -5,6 +5,6 @@ import { Component, Input } from '@angular/core';
     templateUrl: './data-widget-wrapper.html'
 })
 export class DataWidgetWrapperComponent {
-
+    
 }
   
