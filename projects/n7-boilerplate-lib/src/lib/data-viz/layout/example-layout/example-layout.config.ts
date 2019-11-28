@@ -1,6 +1,6 @@
 import { DvExampleLayoutDS } from './example-layout.ds';
 import { DvExampleLayoutEH } from './example-layout.eh';
-import * as DS from '../../data-source';
+import * as DS from '../../data-sources';
 import * as EH from '../../event-handlers';
 
 export const DvExampleLayoutConfig = {
