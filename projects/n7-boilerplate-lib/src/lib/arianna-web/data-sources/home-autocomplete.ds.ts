@@ -23,11 +23,11 @@ export class AwHomeAutocompleteDS extends DataSource {
       }
 
       if(itemIds.indexOf(entity.id) === -1){
-        let metaDataValue: string = ' ';
+        let metaDataValue: any;
         if (entity.fields){
           const meta = config[entity.typeOfEntity.replace(" ", "-")]['main-metadata'];
           entity.fields.forEach(infoData => {
-            if( infoData.key === meta) metaDataValue = ` - ${infoData.value}`;
+            if( infoData.key === meta) metaDataValue = { key: infoData.key, value: infoData.value };
           });
         }
         groups[entity.typeOfEntity.replace(" ", "-")].items.push({
@@ -41,7 +41,14 @@ export class AwHomeAutocompleteDS extends DataSource {
       }
     });
 
-    const results = Object.keys(groups).map(key => ({ group: {...groups[key]} }));
+    const results = Object.keys(groups).map(key => ({ 
+      group: {
+        title: groups[key].title,
+        icon: groups[key].icon,
+        classes: groups[key].classes,
+      }, 
+      items: groups[key].items 
+    }));
     return {
       results,
       actions: {

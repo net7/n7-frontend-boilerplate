@@ -148,13 +148,14 @@ export default {
       key: 'author', // docPath, elastic key, ecc
       direction: 'DESC', // ASC | DESC
     }, 
-    fields: {
-      title: {
-        highlight: true,
-        limit: 50,
-      }
-    },
-    items: []
+
+    // FIXME: collegare API
+    // e controllare nuovo formato results.fields
+    fields: [{
+      id: 'title',
+      highlight: true,
+      limit: 50,
+    }]
   },
   page: { offset: 0, limit: 10 }
 }
