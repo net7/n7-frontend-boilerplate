@@ -1,16 +1,22 @@
-import { DvExampleLayoutDS } from './example-layout.ds';
-import { DvExampleLayoutEH } from './example-layout.eh';
-import * as DS from '../../data-source';
+import { ExampleLayoutDS } from './example-layout.ds';
+import { ExampleLayoutEH } from './example-layout.eh';
+import * as DS from '../../data-sources';
 import * as EH from '../../event-handlers';
 
-export const DvExampleLayoutConfig = {
-    layoutId: 'dv-example-layout',
-    widgets: [],
-    layoutDS: DvExampleLayoutDS,
-    layoutEH: DvExampleLayoutEH,
-    widgetsDataSources: DS,
-    widgetsEventHandlers: EH,
-    layoutOptions: {
-      // TODO
-    }
-  };
+export const ExampleLayoutConfig = {
+  layoutId: 'dv-example-layout',
+  /**
+   * Array of components you want to use
+   * in this leyout
+   */
+  widgets: [
+    { id: 'dv-inner-title' },
+  ],
+  layoutDS: ExampleLayoutDS,
+  layoutEH: ExampleLayoutEH,
+  widgetsDataSources: DS,
+  widgetsEventHandlers: EH,
+  options: {
+    // TODO
+  }
+};
