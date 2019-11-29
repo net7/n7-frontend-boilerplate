@@ -47,7 +47,7 @@ export class AwHomeLayoutEH extends EventHandler {
               }
             }
             this.dataSource.makeRequest$('autoComplete', params).subscribe(response => {
-              if (response.entities.length < 1) {
+              if (response.results.length < 1) {
                 let fallback = {
                   totalcount: 0,
                   entities: [

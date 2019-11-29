@@ -317,32 +317,51 @@ export const ApolloProviderConfig = {
     queryBody: `{
       autoComplete(__PARAMS__){
         totalCount
-        entities {
-          entity {
+        results {
+          ... on EntityCountData {
+            count
+            entity {
               id
               label
               typeOfEntity
               fields {
-                ...
-                on KeyValueField {
+                ... on KeyValueField {
                   key
                   value
                 }
-                ... on
-                KeyValueFieldGroup {
+                ... on KeyValueFieldGroup {
                   label
-                  fields
-                  {
-                    ...
-                    on KeyValueField {
+                  fields {
+                    ... on KeyValueField {
                       key
                       value
                     }
                   }
                 }
               }
+            }
           }
-          count
+          ... on ItemListing {
+            item {
+              id
+              label
+              fields {
+                ... on KeyValueField {
+                  key
+                  value
+                }
+                ... on KeyValueFieldGroup {
+                  label
+                  fields {
+                    ... on KeyValueField {
+                      key
+                      value
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }`
