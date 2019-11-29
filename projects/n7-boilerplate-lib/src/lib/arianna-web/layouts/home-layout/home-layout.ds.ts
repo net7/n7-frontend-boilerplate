@@ -413,7 +413,10 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   }
 
   private _listenAutoCompleteChanges() {
-    this.one('aw-home-autocomplete').updateOptions({ config: this.configuration.get('config-keys') });
+    this.one('aw-home-autocomplete').updateOptions({
+      config: this.configuration.get('config-keys'),
+      labels: this.configuration.get('labels')
+    });
     this.autocompleteChanged$.pipe(
       debounceTime(500)
     ).subscribe(value => {

@@ -1,18 +1,13 @@
 import { DataSource } from '@n7-frontend/core';
+import helpers from '../../common/helpers';
 
 export class AwHomeAutocompleteDS extends DataSource {
   protected transform(data) {
     const { results, totalCount } = data,
       { config } = this.options,
+      labels = this.options.labels || {},
       itemIds = [],
-      groups = {
-        'oggetto-culturale': {
-          title: config['oggetto-culturale'].label,
-          icon: config['oggetto-culturale'].icon,
-          classes: `color-oggetto-culturale`,
-          items: []
-        }
-      };
+      groups = {};
 
     results.forEach(({ item, entity }) => {
       const groupId = entity ? entity.typeOfEntity.replace(' ', '-') : 'oggetto-culturale',
@@ -34,8 +29,8 @@ export class AwHomeAutocompleteDS extends DataSource {
         const metadata = [];
         if (currentItem.fields) {
           currentItem.fields.forEach(({ key, value }) => {
-            if (key === mainMetadata) {
-              metadata.push({ key, value });
+            if (mainMetadata && key === mainMetadata) {
+              metadata.push({ key: helpers.prettifySnakeCase(key, labels[key]), value });
             }
           });
         }
