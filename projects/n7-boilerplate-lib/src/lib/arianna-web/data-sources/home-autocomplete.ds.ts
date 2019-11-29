@@ -1,56 +1,64 @@
 import { DataSource } from '@n7-frontend/core';
 
 export class AwHomeAutocompleteDS extends DataSource {
+  protected transform(data) {
+    const { results, totalCount } = data,
+      { config } = this.options,
+      itemIds = [],
+      groups = {
+        'oggetto-culturale': {
+          title: config['oggetto-culturale'].label,
+          icon: config['oggetto-culturale'].icon,
+          classes: `color-oggetto-culturale`,
+          items: []
+        }
+      };
 
-  protected transform(data){
+    results.forEach(({ item, entity }) => {
+      const groupId = entity ? entity.typeOfEntity.replace(' ', '-') : 'oggetto-culturale',
+        groupConfig = config[groupId],
+        mainMetadata = groupConfig['main-metadata'],
+        currentItem = item || entity;
 
-    const { entities, totalCount } = data,
-          { config } = this.options;
-
-    let itemIds = [],
-      groups = {};
-    console.log(entities);
-    entities.forEach(
-      ({ entity, count }) => {
-      if(!groups[entity.typeOfEntity]) {
-        const { label, icon } = config[entity.typeOfEntity.replace(" ", "-")];
-        groups[entity.typeOfEntity.replace(" ", "-")] = {
+      if (!groups[groupId]) {
+        const { label, icon } = groupConfig;
+        groups[groupId] = {
           title: label,
           icon,
-          classes: `color-${entity.typeOfEntity.replace(" ", "-")}`,
-          items: [],
+          classes: `color-${groupId}`,
+          items: []
         };
       }
 
-      if(itemIds.indexOf(entity.id) === -1){
-        let metaDataValue: any;
-        if (entity.fields){
-          const meta = config[entity.typeOfEntity.replace(" ", "-")]['main-metadata'];
-          entity.fields.forEach(infoData => {
-            if( infoData.key === meta) metaDataValue = { key: infoData.key, value: infoData.value };
+      if (itemIds.indexOf(currentItem.id) === -1) {
+        const metadata = [];
+        if (currentItem.fields) {
+          currentItem.fields.forEach(({ key, value }) => {
+            if (key === mainMetadata) {
+              metadata.push({ key, value });
+            }
           });
         }
-        groups[entity.typeOfEntity.replace(" ", "-")].items.push({
-          label: entity.label,
-          value: metaDataValue,
+        groups[groupId].items.push({
+          title: currentItem.label,
+          metadata,
           payload: {
             source: 'item',
-            id: entity.id
+            id: currentItem.id
           }
         });
       }
     });
 
-    const results = Object.keys(groups).map(key => ({ 
-      group: {
-        title: groups[key].title,
-        icon: groups[key].icon,
-        classes: groups[key].classes,
-      }, 
-      items: groups[key].items 
-    }));
     return {
-      results,
+      results: Object.keys(groups).map(key => ({
+        group: {
+          title: groups[key].title,
+          icon: groups[key].icon,
+          classes: groups[key].classes
+        },
+        items: groups[key].items
+      })),
       actions: {
         showMore: {
           text: `Visualizza tutti i ${totalCount} risultati`,
@@ -59,7 +67,8 @@ export class AwHomeAutocompleteDS extends DataSource {
           }
         }
       },
-      fallback: 'Spiacenti, non è stato trovato nessun risultato. <br> Riprova con una nuova ricerca.'
+      fallback:
+        'Spiacenti, non è stato trovato nessun risultato. <br> Riprova con una nuova ricerca.'
     };
   }
 }
