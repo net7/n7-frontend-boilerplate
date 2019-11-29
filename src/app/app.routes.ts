@@ -12,7 +12,7 @@ import {
   AwEntitaLayoutComponent,
   AwSearchLayoutComponent,
   //DV
-  ExampleLayoutComponent,
+  DvExampleLayoutComponent,
 } from 'n7-boilerplate-lib';
 
 export const APP_ROUTES: Routes = [
@@ -33,7 +33,7 @@ export const APP_ROUTES: Routes = [
   },
 
   //DataViv routes
-  { path: 'dv/example', component: ExampleLayoutComponent },
+  { path: 'dv/example', component: DvExampleLayoutComponent },
 
   // altri moduli...
 

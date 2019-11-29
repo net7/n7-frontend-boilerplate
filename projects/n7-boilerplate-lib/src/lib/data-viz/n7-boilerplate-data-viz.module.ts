@@ -6,11 +6,11 @@ import { N7BoilerplateCommonModule } from '../common/n7-boilerplate-common.modul
 //COMPONENTS
 import { DataWidgetWrapperComponent } from './components/data-widget-wrapper/data-widget-wrapper';
 // LAYOUTS
-import { ExampleLayoutComponent } from './layout/example-layout/example-layout';
+import { DvExampleLayoutComponent } from './layout/example-layout/example-layout';
 
 const COMPONENTS = [
   DataWidgetWrapperComponent,
-  ExampleLayoutComponent,
+  DvExampleLayoutComponent,
 ];
 
 @NgModule({
