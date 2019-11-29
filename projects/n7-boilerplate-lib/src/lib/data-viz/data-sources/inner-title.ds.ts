@@ -4,6 +4,17 @@ import { INNER_TITLE_MOCK } from "@n7-frontend/components";
 export class DvInnerTitleDS extends DataSource {
 
 	protected transform(data){
-		return INNER_TITLE_MOCK
+		return {
+			title: {
+				main: {
+					text:"Dipendenti",
+					classes: "n7-main-widget-title",
+				},
+				secondary: {
+					text: "Dipendeti al 10/10/10",
+					classes: "n7-secondary-widget-title",
+				}
+			},
+		}
 	}
 }
