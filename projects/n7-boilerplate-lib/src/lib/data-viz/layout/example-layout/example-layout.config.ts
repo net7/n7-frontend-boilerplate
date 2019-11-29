@@ -12,6 +12,7 @@ export const DvExampleLayoutConfig = {
   widgets: [
     { id: 'dv-inner-title', hasStaticData: true },
     { id: 'dv-widget', hasStaticData: true },
+    { id: 'dv-graph', hasStaticData: true },
   ],
   layoutDS: DvExampleLayoutDS,
   layoutEH: DvExampleLayoutEH,

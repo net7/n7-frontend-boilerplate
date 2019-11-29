@@ -6,5 +6,8 @@
         <n7-data-widget
             [data]="lb.widgets['dv-widget'].ds.out$ | async">
         </n7-data-widget>
+        <n7-chart
+            [data]="lb.widgets['dv-graph'].ds.out$ | async">
+        </n7-chart>
     </dv-data-widget-wrapper>
 </div>
