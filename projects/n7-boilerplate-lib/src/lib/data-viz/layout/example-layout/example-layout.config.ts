@@ -10,7 +10,7 @@ export const ExampleLayoutConfig = {
    * in this leyout
    */
   widgets: [
-    { id: 'dv-inner-title' },
+    { id: 'dv-inner-title', hasStaticData: true },
   ],
   layoutDS: ExampleLayoutDS,
   layoutEH: ExampleLayoutEH,
