@@ -8,8 +8,9 @@ export class AwAutocompleteWrapperDS extends DataSource {
     const suggestion = []
     const config = this.options.config
     const maxLength = config.get('home-layout')['max-item-length'] / 2
-
-    response.entities.forEach(el => {
+    const fResults = response.results.filter(el => typeof el.entity == 'object') // filter only entities (no cultural objects)
+    
+    fResults.forEach(el => {
       if (el.entity.id == 'fallback') { // build and return fallback data
         suggestion.push({
           match: '',
@@ -40,7 +41,6 @@ export class AwAutocompleteWrapperDS extends DataSource {
         })
       }
     });
-    console.log({ suggestion })
     return { suggestion }
   }
 }

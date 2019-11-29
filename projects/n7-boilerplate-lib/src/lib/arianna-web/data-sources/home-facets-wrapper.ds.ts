@@ -117,7 +117,7 @@ export class AwHomeFacetsWrapperDS extends DataSource {
     }
 
     const ac = this.autoComplete[id];
-    if (res.entities.length > 0 && ac.tippy) {
+    if (res.results.length > 0 && ac.tippy) {
       ac.tippy.show();
     } else {
       ac.tippy.hide();
