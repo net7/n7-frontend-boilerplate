@@ -3,6 +3,6 @@ import { FOOTER_MOCK } from "@n7-frontend/components";
 
 export class FooterDS extends DataSource {
   protected transform(data) {
-    return FOOTER_MOCK;
+    return data;
   }
 }

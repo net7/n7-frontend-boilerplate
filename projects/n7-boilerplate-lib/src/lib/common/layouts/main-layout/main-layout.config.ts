@@ -12,8 +12,7 @@ export const MainLayoutConfig = {
   }, {
     id: 'breadcrumbs'
   }, {
-    id: 'footer',
-    hasStaticData: true
+    id: 'footer'
   }],
   layoutDS: MainLayoutDS,
   layoutEH: MainLayoutEH,

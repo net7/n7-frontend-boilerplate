@@ -23,7 +23,7 @@ export class RestProvider implements ICommunicationProvider {
   }
 
   request$(requestId, options: any = {}){
-    let { params, method, httpOptions } = options;
+    let { params, method, httpOptions, urlParams = '' } = options;
     let point = RestProviderConfig[requestId];
 
     // default method
@@ -39,7 +39,7 @@ export class RestProvider implements ICommunicationProvider {
     if(method === 'POST' || method === 'PUT'){
       return this.http[method.toLowerCase()](this.providerConfig.baseUrl + point, params, httpOptions);
     } else if(method === 'GET' || method === 'DELETE'){
-      return this.http[method.toLowerCase()](this.providerConfig.baseUrl + point, httpOptions);
+      return this.http[method.toLowerCase()](this.providerConfig.baseUrl + point + urlParams, httpOptions);
     } else {
       throw Error(`Rest method ${method} not supported`);
     }
