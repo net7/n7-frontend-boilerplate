@@ -4,13 +4,14 @@ import * as DS from '../../data-sources';
 import * as EH from '../../event-handlers';
 
 export const DvHomeLayoutConfig = {
-  layoutId: 'dv-example-layout',
+  layoutId: 'dv-nav-layout',
   /**
    * Array of components you want to use
    * in this leyout
    */
   widgets: [
-
+    {id: "dv-home-inner-title", hasStaticData: true},
+    {id: "dv-nav", hasStaticData: true},
   ],
   layoutDS: DvHomeLayoutDS,
   layoutEH: DvHomeLayoutEH,

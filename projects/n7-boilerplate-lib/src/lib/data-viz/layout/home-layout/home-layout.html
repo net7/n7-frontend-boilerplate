@@ -1,1 +1,14 @@
-<p> home layout! </p>
+<section class="dv-home">
+    <n7-inner-title
+        [data]="lb.widgets['dv-home-inner-title'].ds.out$ | async"
+        >
+    </n7-inner-title>
+    <n7-nav
+        [data]="lb.widgets['dv-nav'].ds.out$ | async"
+        [emit]="lb.widgets['dv-nav'].emit"
+        >
+    </n7-nav>
+    <span>
+        <!-- template_container -->
+    </span>
+</section>

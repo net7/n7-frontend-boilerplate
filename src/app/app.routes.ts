@@ -33,7 +33,7 @@ export const APP_ROUTES: Routes = [
     pathMatch: 'full'
   },
 
-  //DataViv routes
+  //DataViz routes
   { path: 'dv/example', component: DvExampleLayoutComponent },
   { path: 'dv/home', component: DvHomeLayoutComponent },
   
