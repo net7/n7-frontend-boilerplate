@@ -7,6 +7,7 @@ import facetsConfig from './search-facets.config';
 import fakeSearchRequest$ from './search-mock-request';
 import { withLatestFrom, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
+import helpers from 'n7-boilerplate-lib/lib/common/helpers';
 
 const SEARCH_MODEL_ID = 'aw-search-layout';
 
@@ -16,16 +17,18 @@ export class AwSearchLayoutDS extends LayoutDataSource {
   private mainState: any;
   private search: SearchService;
   private searchModel: SearchModel;
+  private prettifyLabels: any;
+  private configKeys: any;
 
   public pageTitle: string;
   public resultsTitle: string;
   public totalCount: number;
   public currentPage: any = 1; // pagination value (url param)
-  public pageSize: number = 10; // linked objects page size
+  public pageSize = 10; // linked objects page size
 
   public options: any;
 
-  public orderByLabel: string = 'Ordina per';
+  public orderByLabel = 'Ordina per';
   public orderByOptions: any = [
     {
       value: 'text_DESC',
@@ -55,6 +58,8 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     this.communication = communication;
     this.search = search;
     this.options = options;
+    this.prettifyLabels = this.configuration.get('labels');
+    this.configKeys = this.configuration.get('config-keys');
 
     this.pageTitle = this.configuration.get('search-layout').title;
 
@@ -97,11 +102,10 @@ export class AwSearchLayoutDS extends LayoutDataSource {
   public getSearchModelId = () => SEARCH_MODEL_ID;
 
   public doSearchRequest$(): Observable<any> {
-    const enabledEntities = this.configuration.get('search-layout').enabledEntities;
-
     const requestParams = this.searchModel.getRequestParams();
     const requestPayload = {
       searchParameters: {
+        // FIXME: togliere totalCount
         totalCount: 100,
         ...requestParams
       }
@@ -122,6 +126,11 @@ export class AwSearchLayoutDS extends LayoutDataSource {
         this.resultsTitle = this.configuration.get('search-layout').results[
           resultsTitleIndex
         ];
+
+        // facets labels
+        this._addFacetsLabels(facets);
+        // facets options
+        this._addFacetsOptions(facets);
 
         this.searchModel.updateFacets(facets);
         this.searchModel.updateTotalCount(totalCount);
@@ -153,5 +162,25 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     this.searchModel.setPageConfigOffset(newOffset);
 
     return of(true);
+  }
+
+  private _addFacetsLabels(facets) {
+    facets
+      .map(({data}) => data)
+      .foreach(({ label }) => label = helpers.prettifySnakeCase(label, this.prettifyLabels[label]));
+  }
+
+  private _addFacetsOptions(facets) {
+    facets
+      .filter(facet => facet.id === 'query-links')
+      .forEach(facet => {
+        facet.data.forEach(dataItem => {
+          const config = this.configKeys[dataItem.id];
+          dataItem.options = {
+            icon: config.icon,
+            classes: `color-${dataItem.id}`
+          };
+        });
+      });
   }
 }
