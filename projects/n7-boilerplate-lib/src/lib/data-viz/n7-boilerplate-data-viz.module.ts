@@ -7,10 +7,12 @@ import { N7BoilerplateCommonModule } from '../common/n7-boilerplate-common.modul
 import { DataWidgetWrapperComponent } from './components/data-widget-wrapper/data-widget-wrapper';
 // LAYOUTS
 import { DvExampleLayoutComponent } from './layout/example-layout/example-layout';
+import { DvHomeLayoutComponent } from './layout/home-layout/home-layout';
 
 const COMPONENTS = [
-  DataWidgetWrapperComponent,
   DvExampleLayoutComponent,
+  DvHomeLayoutComponent,
+  DataWidgetWrapperComponent,
 ];
 
 @NgModule({
