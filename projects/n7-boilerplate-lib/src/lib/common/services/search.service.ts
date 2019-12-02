@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { 
-  FacetInput, 
+import {
+  FacetInput,
   FacetInputCheckbox,
   FacetInputText,
   FacetInputLink,
-  FacetInputSelect,
+  FacetInputSelect
 } from '../models';
 
 export type FilterOperators = '=' | '>' | '<' | '>=' | '<=' | '<>' | 'LIKE';
@@ -13,10 +13,10 @@ export type FacetTypes = 'value' | 'range';
 export type FacetOperators = 'OR' | 'AND';
 
 const INPUTS_MAP = {
-  'checkbox': FacetInputCheckbox,
-  'text': FacetInputText,
-  'link': FacetInputLink,
-  'select': FacetInputSelect,
+  checkbox: FacetInputCheckbox,
+  text: FacetInputText,
+  link: FacetInputLink,
+  select: FacetInputSelect
 };
 
 export interface ISearchConfig {
@@ -28,7 +28,7 @@ export interface ISearchConfig {
 }
 
 export interface IFacet {
-  id: string,
+  id: string;
   type: FacetTypes;
   operator: FacetOperators;
   data?: any;
@@ -38,9 +38,9 @@ export interface IFilter {
   facetId: string;
   value: number | string | (number | string)[] | null;
   searchIn: Array<{
-    key: string;  
+    key: string;
     operator?: FilterOperators;
-  }>;  
+  }>;
   isArray?: boolean;
   context?: 'internal' | 'external';
   target?: string;
@@ -56,7 +56,7 @@ export class SearchModel {
   private _config: ISearchConfig;
   private _results$: Subject<any[]> = new Subject();
 
-  constructor(id: string, config: ISearchConfig){
+  constructor(id: string, config: ISearchConfig) {
     this._id = id;
     this._config = config;
 
@@ -77,14 +77,17 @@ export class SearchModel {
   public getFields = () => this._config.fields;
   public getResults$ = () => this._results$;
 
-  public setResults = (results) => this._results$.next(results);
-  
+  public setResults = results => this._results$.next(results);
+
   public updateFilter(facetId, value, remove?: boolean) {
     const selectedFilters = this.getFiltersByFacetId(facetId);
     selectedFilters.forEach(filter => {
-      if(Array.isArray(filter.value) && remove){
+      if (Array.isArray(filter.value) && remove) {
         filter.value = filter.value.filter(item => item !== value);
-      } else if(Array.isArray(filter.value) && filter.value.indexOf(value) === -1){
+      } else if (
+        Array.isArray(filter.value) &&
+        filter.value.indexOf(value) === -1
+      ) {
         filter.value.push(value);
       } else {
         filter.value = !remove ? value : null;
@@ -103,7 +106,7 @@ export class SearchModel {
     });
   }
 
-  public updateInputsFromFilters(){
+  public updateInputsFromFilters() {
     this._filters.forEach(({ facetId, value }) => {
       this.getInputByFacetId(facetId).setActive(value);
     });
@@ -119,19 +122,19 @@ export class SearchModel {
   }
 
   public updateFacet(facetId, data) {
-    let selectedFacets = this._facets.filter(facet => facet.id === facetId);
-    if(!selectedFacets.length){
-      throw Error(`Facet with id "${facetId}" does not exists`);
+    const selectedFacets = this._facets.filter(facet => facet.id === facetId);
+    if (!selectedFacets.length) {
+      throw Error(`Facet with id '${facetId}' does not exists`);
     }
 
-    selectedFacets.forEach(facet => facet.data = data);
+    selectedFacets.forEach(facet => (facet.data = data));
   }
 
-  public reset(){
-    this._filters.forEach(filter => filter.value = null);
+  public reset() {
+    this._filters.forEach(filter => (filter.value = null));
   }
 
-  public getRequestParams(){
+  public getRequestParams() {
     return {
       facets: this._facets,
       page: this._page,
@@ -139,46 +142,52 @@ export class SearchModel {
       filters: this._filters
         .filter(filter => filter.context !== 'internal')
         .map(({ facetId, value, searchIn }) => ({ facetId, value, searchIn }))
-    }
+    };
   }
 
-  public getInternalFilters(){
+  public getInternalFilters() {
     return this._filters
-        .filter(filter => { 
-          return (filter.context === 'internal') && (
-            (Array.isArray(filter.value) && filter.value.length) || 
-            (!Array.isArray(filter.value) && filter.value)
-          );
-        })
-        .map(({ facetId, value, searchIn }) => ({ facetId, value, searchIn }));
+      .filter(filter => {
+        return (
+          filter.context === 'internal' &&
+          ((Array.isArray(filter.value) && filter.value.length) ||
+            (!Array.isArray(filter.value) && filter.value))
+        );
+      })
+      .map(({ facetId, value, searchIn }) => ({ facetId, value, searchIn }));
   }
 
-  public filtersAsQueryParams(filters){
-    let queryParams: any = {};
-    filters.forEach(filter => queryParams[filter.facetId] = Array.isArray(filter.value) ? filter.value.join(',') : filter.value);
+  public filtersAsQueryParams(filters) {
+    const queryParams: any = {};
+    filters.forEach(
+      filter =>
+        (queryParams[filter.facetId] = Array.isArray(filter.value)
+          ? filter.value.join(',')
+          : filter.value)
+    );
 
     return queryParams;
   }
 
-  public getFiltersByFacetId(facetId: string){
+  public getFiltersByFacetId(facetId: string) {
     return this._filters.filter(filter => filter.facetId === facetId);
   }
 
-  public getInputByFacetId(facetId: string){
+  public getInputByFacetId(facetId: string) {
     return this._inputs.filter(input => input.getFacetId() === facetId)[0];
   }
 
-  public setInputData(facetId, data){
+  public setInputData(facetId, data) {
     this.getInputByFacetId(facetId).setData(data);
   }
 
-  public filterTarget(target){
+  public filterTarget(target) {
     const inputs = this._inputs.filter(input => input.getTarget() === target),
       targetInput = this.getInputByFacetId(target),
-      facet = this._facets.filter(facet => facet.id === target)[0],
+      facet = this._facets.filter(f => f.id === target)[0],
       facetData = facet.data;
 
-    let searchIns = [];
+    const searchIns = [];
     inputs.forEach(input => {
       const filter = this.getFiltersByFacetId(input.getFacetId())[0],
         searchIn = input.getSearchIn(),
@@ -188,127 +197,135 @@ export class SearchModel {
     });
 
     // filter
-    facetData.forEach(item => this._filterData(searchIns, item))
+    facetData.forEach(item => this._filterData(searchIns, item));
 
     // update
     targetInput.setData(facetData);
     targetInput.update();
   }
 
-  public setSearchConfigOrderBy(orderBy){
+  public setSearchConfigOrderBy(orderBy) {
     this._config.results.order.type = orderBy;
   }
 
-  public setSearchConfigDirection(direction){
+  public setSearchConfigDirection(direction) {
     this._config.results.order.direction = direction;
   }
 
-  public setPageConfigOffset(offset){
+  public setPageConfigOffset(offset) {
     this._config.page.offset = offset;
   }
 
-  public setPageConfigLimit(limit){
+  public setPageConfigLimit(limit) {
     this._config.page.limit = limit;
   }
 
-  private _filterData(searchIns, item){
+  private _filterData(searchIns, item) {
     searchIns.forEach(([searchIn, value]) => {
       searchIn.forEach(({ key, operator }) => {
-        switch(operator){
+        switch (operator) {
           // '=' EQUALS
           case '=':
-            if(Array.isArray(value)){
-              item.hidden = !(!value.length || value.indexOf(item.metadata[key]) !== -1);
+            if (Array.isArray(value)) {
+              item.hidden = !(
+                !value.length || value.indexOf(item.metadata[key]) !== -1
+              );
             } else {
               item.hidden = !(value && value === item.metadata[key]);
             }
             break;
           // '>' GREATER THAN
           case '>':
-            if(!Array.isArray(value)){
+            if (!Array.isArray(value)) {
               item.hidden = !(value && value > item.metadata[key]);
-            } 
+            }
             break;
           // '<' LESS THAN
-          case '<': 
-            if(!Array.isArray(value)){
+          case '<':
+            if (!Array.isArray(value)) {
               item.hidden = !(value && value < item.metadata[key]);
-            } 
+            }
             break;
           // '>=' GREATER OR EQUALS
-          case '>=': 
-            if(!Array.isArray(value)){
+          case '>=':
+            if (!Array.isArray(value)) {
               item.hidden = !(value && value >= item.metadata[key]);
-            } 
+            }
             break;
           // '<=' LESS OR EQUALS
-          case '<=': 
-            if(!Array.isArray(value)){
+          case '<=':
+            if (!Array.isArray(value)) {
               item.hidden = !(value && value <= item.metadata[key]);
-            } 
+            }
             break;
           // '<>' NOT EQUAL
-          case '<>': 
-            if(!Array.isArray(value)){
+          case '<>':
+            if (!Array.isArray(value)) {
               item.hidden = !(value && value !== item.metadata[key]);
-            } 
+            }
             break;
           //  'LIKE'
           case 'LIKE':
-            if(
-              value && 
-              item.metadata[key] && 
-              typeof value === 'string' && 
+            if (
+              value &&
+              item.metadata[key] &&
+              typeof value === 'string' &&
               typeof item.metadata[key] === 'string'
-            ){
+            ) {
               const haystack = item.metadata[key].toLowerCase(),
-                needle = value.toLocaleLowerCase(); 
-                
+                needle = value.toLocaleLowerCase();
+
               item.hidden = !(haystack.indexOf(needle) !== -1);
-            }  
+            }
             break;
           default:
             console.warn(`SearchIn: operator ${operator} not supported`);
             break;
         }
-      })
+      });
     });
   }
 
-  private _setFilters(){
+  private _setFilters() {
     this._config.fields.forEach(field => {
-      field.inputs.forEach(input => this._filters.push({ 
-        ...input.filterConfig,
-        facetId: input.facetId,
-        value: input.filterConfig.isArray ? [] : null
-      }));
+      field.inputs.forEach(input =>
+        this._filters.push({
+          ...input.filterConfig,
+          facetId: input.facetId,
+          value: input.filterConfig.isArray ? [] : null
+        })
+      );
     });
   }
 
-  private _setFacets(){
+  private _setFacets() {
     this._facets = this._config.facets;
   }
 
-  private _setPage(){
+  private _setPage() {
     this._page = this._config.page;
   }
 
-  private _setTotalCount(){
+  private _setTotalCount() {
     this._totalCount = this._config.totalCount;
   }
 
-  private _setInputs(){
+  private _setInputs() {
     this._config.fields.forEach((sectionConfig, sectionIndex) => {
       sectionConfig.inputs.forEach((inputConfig, inputIndex) => {
         const inputModel = INPUTS_MAP[inputConfig.type];
-        if(!inputModel) throw Error(`Input type ${inputConfig.type} not supported`);
+        if (!inputModel) {
+          throw Error(`Input type ${inputConfig.type} not supported`);
+        }
 
-        this._inputs.push(new inputModel({ ...inputConfig, inputIndex, sectionIndex }));
-      })
+        this._inputs.push(
+          new inputModel({ ...inputConfig, inputIndex, sectionIndex })
+        );
+      });
     });
   }
 
-  private _setInputsData(){
+  private _setInputsData() {
     this._facets.forEach(facet => this.setInputData(facet.id, facet.data));
   }
 }
@@ -317,11 +334,13 @@ export class SearchModel {
   providedIn: 'root'
 })
 export class SearchService {
-  private _models: any = {};
   static queryParams: any = null;
+  private _models: any = {};
 
-  public add(id: string, config: ISearchConfig){
-    if(this._models[id]) throw Error(`Search model "${id}" already exists!`);
+  public add(id: string, config: ISearchConfig) {
+    if (this._models[id]) {
+      throw Error(`Search model '${id}' already exists!`);
+    }
 
     this._models[id] = new SearchModel(id, config);
   }

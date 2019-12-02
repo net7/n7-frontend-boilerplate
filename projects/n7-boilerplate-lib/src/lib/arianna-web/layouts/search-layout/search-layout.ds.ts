@@ -1,5 +1,8 @@
 import { LayoutDataSource } from '@n7-frontend/core';
-import { SearchService, SearchModel } from 'n7-boilerplate-lib/lib/common/services';
+import {
+  SearchService,
+  SearchModel
+} from 'n7-boilerplate-lib/lib/common/services';
 import facetsConfig from './search-facets.config';
 import fakeSearchRequest$ from './search-mock-request';
 import { withLatestFrom, tap } from 'rxjs/operators';
@@ -23,13 +26,15 @@ export class AwSearchLayoutDS extends LayoutDataSource {
   public options: any;
 
   public orderByLabel: string = 'Ordina per';
-  public orderByOptions: any = [{
-    value: 'text_DESC',
-    label: 'Ordine alfabetico (DESC)'
-  }, {
-    value: 'text_ASC',
-    label: 'Ordine alfabetico (ASC)'
-  }, /* {
+  public orderByOptions: any = [
+    {
+      value: 'text_DESC',
+      label: 'Ordine alfabetico (DESC)'
+    },
+    {
+      value: 'text_ASC',
+      label: 'Ordine alfabetico (ASC)'
+    } /* {
     value: 'score_DESC',
     label: 'Ordine per rilevanza (DESC)'
   }, {
@@ -41,9 +46,10 @@ export class AwSearchLayoutDS extends LayoutDataSource {
   }, {
     value: 'date_ASC',
     label: 'Ordina per data (ASC)'
-  } */];
+  } */
+  ];
 
-  onInit({configuration, mainState, options, communication, search }) {
+  onInit({ configuration, mainState, options, communication, search }) {
     this.configuration = configuration;
     this.mainState = mainState;
     this.communication = communication;
@@ -52,7 +58,9 @@ export class AwSearchLayoutDS extends LayoutDataSource {
 
     this.pageTitle = this.configuration.get('search-layout').title;
 
-    if(!this.search.model(SEARCH_MODEL_ID)) this.search.add(SEARCH_MODEL_ID, facetsConfig);
+    if (!this.search.model(SEARCH_MODEL_ID)) {
+      this.search.add(SEARCH_MODEL_ID, facetsConfig);
+    }
     this.searchModel = this.search.model(SEARCH_MODEL_ID);
 
     this.doSearchRequest$().subscribe(() => {
@@ -60,7 +68,7 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     });
   }
 
-  onOrderByChange(payload){
+  onOrderByChange(payload) {
     const [orderBy, direction] = payload.split('_');
 
     this.searchModel.setSearchConfigOrderBy(orderBy);
@@ -72,15 +80,15 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     return this._updateSearchPage(page);
   }
 
-  onPaginationGoToChange(payload){
+  onPaginationGoToChange(payload) {
     const page = payload.replace('goto-', '');
     this._updateSearchPage(page);
   }
 
-  onResultsLimitChange(payload){
+  onResultsLimitChange(payload) {
     this.pageSize = payload;
     this.searchModel.setPageConfigLimit(payload);
-    
+
     // reset page & offset
     this.currentPage = 1;
     this.searchModel.setPageConfigOffset(0);
@@ -90,58 +98,50 @@ export class AwSearchLayoutDS extends LayoutDataSource {
 
   public doSearchRequest$(): Observable<any> {
     const enabledEntities = this.configuration.get('search-layout').enabledEntities;
-    // FIXME: togliere configKeys
-    // dovrebbe venire dall'API
-    const configKeys = this.configuration.get('config-keys');
-
-    // FIXME: mettere logica definitiva 
-    // per la chiamata search
-    /* 
-    this.communication.request$('search', {
-      onError: error => console.error(error),
-      params: requestParams
-    })
-    */
 
     const requestParams = this.searchModel.getRequestParams();
-
-    const fakeResultsRequest$ = this.communication.request$('getEntityDetails', {
+    const requestPayload = {
+      searchParameters: {
+        totalCount: 100,
+        ...requestParams
+      }
+    };
+    return this.communication.request$('search', {
       onError: error => console.error(error),
-      params: { entityId: '0263a407-d0dd-4647-98e2-109b0b0c05f3' }
-    });
-
-    return fakeResultsRequest$.pipe(
-      withLatestFrom(fakeSearchRequest$(requestParams, configKeys, enabledEntities)),
-      tap(([resultsResponse, searchResponse]) => {
-        this.totalCount = searchResponse.totalCount;
+      params: requestPayload
+    }).pipe(
+      tap(({ totalCount, results, facets }) => {
+        this.totalCount = totalCount;
         let resultsTitleIndex = 0;
         // results title
-        if(this.totalCount > 1){
+        if (this.totalCount > 1) {
           resultsTitleIndex = 2;
-        } else if(this.totalCount === 1) {
+        } else if (this.totalCount === 1) {
           resultsTitleIndex = 1;
         }
-        this.resultsTitle = this.configuration.get('search-layout').results[resultsTitleIndex];
-  
-        this.searchModel.updateFacets(searchResponse.facets);
-        this.searchModel.updateTotalCount(searchResponse.totalCount);
-        
+        this.resultsTitle = this.configuration.get('search-layout').results[
+          resultsTitleIndex
+        ];
+
+        this.searchModel.updateFacets(facets);
+        this.searchModel.updateTotalCount(totalCount);
+
         this.one('aw-linked-objects').updateOptions({
           context: 'search',
           config: this.configuration,
-          // todo: swap to next line after merge
-          // config: this.configuration
           page: this.currentPage,
-          size: this.pageSize,
+          size: this.pageSize
         });
-  
-        this.one('aw-linked-objects').update({ items: resultsResponse.items });
+
+        this.one('aw-linked-objects').update({ items: results.items });
       })
     );
   }
 
-  private _updateSearchPage(page){
-    if(+page === this.currentPage) return of(false);
+  private _updateSearchPage(page) {
+    if (+page === this.currentPage) {
+      return of(false);
+    }
 
     this.currentPage = +page;
 
