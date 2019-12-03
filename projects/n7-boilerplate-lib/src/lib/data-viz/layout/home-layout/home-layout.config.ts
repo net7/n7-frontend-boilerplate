@@ -12,6 +12,9 @@ export const DvHomeLayoutConfig = {
   widgets: [
     {id: "dv-home-inner-title", hasStaticData: true},
     {id: "dv-nav", hasStaticData: true},
+    {id: "dv-inner-title", hasStaticData: true},
+    {id: "dv-widget", hasStaticData: true},
+    {id: "dv-graph", hasStaticData: true},
   ],
   layoutDS: DvHomeLayoutDS,
   layoutEH: DvHomeLayoutEH,

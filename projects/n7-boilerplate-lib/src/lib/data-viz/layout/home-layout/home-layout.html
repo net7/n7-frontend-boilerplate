@@ -1,14 +1,48 @@
 <section class="dv-home">
     <n7-inner-title
-        [data]="lb.widgets['dv-home-inner-title'].ds.out$ | async"
-        >
+        [data]="lb.widgets['dv-home-inner-title'].ds.out$ | async" >
     </n7-inner-title>
     <n7-nav
         [data]="lb.widgets['dv-nav'].ds.out$ | async"
-        [emit]="lb.widgets['dv-nav'].emit"
-        >
+        [emit]="lb.widgets['dv-nav'].emit" >
     </n7-nav>
-    <span>
-        <!-- template_container -->
-    </span>
+    <ng-container *ngIf="!lb.dataSource.navSelected; then WorkingTime">
+
+    </ng-container>
+    <ng-container *ngIf="lb.dataSource.navSelected == 'WorkingTime'; then WorkingTime">
+
+    </ng-container>
+    <ng-container *ngIf="lb.dataSource.navSelected == 'Temperature'; then Temperature">
+
+    </ng-container>
+    <ng-container *ngIf="lb.dataSource.navSelected == 'FunctioningTime' ; then FunctioningTime">
+
+    </ng-container>
+    <ng-container *ngIf="lb.dataSource.navSelected == 'FanSpeed'; then FanSpeed">
+
+    </ng-container>
+    <ng-container *ngIf="lb.dataSource.navSelected == 'TensionAndPower'; then TensionAndPower">
+
+    </ng-container>
+    <ng-container *ngIf="lb.dataSource.navSelected == 'Status'; then Status">
+
+    </ng-container>
 </section>
+
+<ng-template #WorkingTime>
+    <n7-inner-title
+        [data]="lb.widgets['dv-inner-title'].ds.out$ | async">
+    </n7-inner-title>
+    <n7-data-widget
+        [data]="lb.widgets['dv-widget'].ds.out$ | async">
+    </n7-data-widget>
+    <n7-chart
+        [data]="lb.widgets['dv-graph'].ds.out$ | async">
+    </n7-chart>
+</ng-template>
+
+<ng-template #Temperature>Temperature</ng-template>
+<ng-template #FunctioningTime>FunctioningTime</ng-template>
+<ng-template #FanSpeed>FanSpeed</ng-template>
+<ng-template #TensionAndPower>TensionAndPower</ng-template>
+<ng-template #Status>Status</ng-template>

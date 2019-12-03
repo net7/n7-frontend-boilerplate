@@ -4,8 +4,6 @@ export class DvHomeLayoutDS extends LayoutDataSource {
   private navSelected = ''
 
   onInit({ communication, configuration }) {
-    /*
-      Home layout initial setup
-    */
+
   }
 }

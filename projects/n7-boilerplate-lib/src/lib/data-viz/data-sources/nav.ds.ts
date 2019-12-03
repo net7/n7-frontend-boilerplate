@@ -5,12 +5,12 @@ export class DvNavDS extends DataSource {
 	protected transform(data){
         return {
 			items: [
-				{text: "Woking time", payload:"/working-time"},
-				{text: "Temperature", payload:"/temperature"},
-				{text: "Functioning time", payload:"/functioning-time"},
-				{text: "Fan speed", payload:"/fan-speed"},
-				{text: "Tension and power", payload:"/tension-and-power"},
-				{text: "Status", payload:"/status"},
+				{text: "Woking time", payload:"WorkingTime"},
+				{text: "Temperature", payload:"Temperature"},
+				{text: "Functioning time", payload:"FunctioningTime"},
+				{text: "Fan speed", payload:"FanSpeed"},
+				{text: "Tension and power", payload:"TensionAndPower"},
+				{text: "Status", payload:"Status"},
 			]
 		};
 	}
