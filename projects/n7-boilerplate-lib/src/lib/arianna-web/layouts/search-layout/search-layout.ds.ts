@@ -4,8 +4,7 @@ import {
   SearchModel
 } from 'n7-boilerplate-lib/lib/common/services';
 import facetsConfig from './search-facets.config';
-import fakeSearchRequest$ from './search-mock-request';
-import { withLatestFrom, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import helpers from 'n7-boilerplate-lib/lib/common/helpers';
 
@@ -166,19 +165,24 @@ export class AwSearchLayoutDS extends LayoutDataSource {
 
   private _addFacetsLabels(facets) {
     facets
-      .map(({data}) => data)
-      .foreach(({ label }) => label = helpers.prettifySnakeCase(label, this.prettifyLabels[label]));
+      .filter(f => Array.isArray(f.data))
+      .forEach(f => {
+        f.data.forEach(dataItem => {
+          const key = dataItem.label;
+          dataItem.label = helpers.prettifySnakeCase(key, this.prettifyLabels[key]);
+        });
+      });
   }
 
   private _addFacetsOptions(facets) {
     facets
-      .filter(facet => facet.id === 'query-links')
-      .forEach(facet => {
-        facet.data.forEach(dataItem => {
-          const config = this.configKeys[dataItem.id];
+      .filter(f => f.value === 'query-links')
+      .forEach(f => {
+        f.data.forEach(dataItem => {
+          const config = this.configKeys[dataItem.value];
           dataItem.options = {
             icon: config.icon,
-            classes: `color-${dataItem.id}`
+            classes: `color-${dataItem.value}`
           };
         });
       });

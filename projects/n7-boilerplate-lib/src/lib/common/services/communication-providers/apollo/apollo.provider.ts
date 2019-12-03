@@ -69,7 +69,7 @@ export class ApolloProvider implements ICommunicationProvider {
             const subParamsStr = this.makeParamsStr(val);
             arrStr.push(`{ ${subParamsStr} }`);
           } else {
-            if (typeof val === 'number' || typeof val === 'boolean') {
+            if (typeof val === 'number' || typeof val === 'boolean' || val === null) {
               arrStr.push(`${val}`);
             } else {
               arrStr.push(`"${val}"`);
@@ -83,7 +83,7 @@ export class ApolloProvider implements ICommunicationProvider {
       } else if (typeof params[key] === 'string' && key.indexOf('$') === 0) {
         paramsStr.push(`${key.replace('$', '')}: ${params[key]}`);
       } else {
-        if (typeof params[key] === 'number' || typeof params[key] === 'boolean') {
+        if (typeof params[key] === 'number' || typeof params[key] === 'boolean' || params[key] === null) {
           paramsStr.push(`${key}: ${params[key]}`);
         } else {
           paramsStr.push(`${key}: "${params[key]}"`);

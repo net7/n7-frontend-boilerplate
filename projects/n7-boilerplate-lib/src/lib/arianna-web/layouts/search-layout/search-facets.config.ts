@@ -8,9 +8,10 @@ export default {
     {
       id: 'query-all',
       type: 'value',
+      hasStaticData: true,
       data: [
         {
-          value: "1",
+          value: '1',
           label: 'Cerca in tutti campi delle schede'
         }
       ]
@@ -33,7 +34,7 @@ export default {
     {
       id: 'entity-links',
       type: 'value',
-      metadata: ['title', 'entity-type']
+      searchData: ['entity-type']
     },
     {
       id: 'date-from',
@@ -105,7 +106,7 @@ export default {
             target: 'entity-links',
             searchIn: [
               {
-                key: 'entity-type',
+                key: 'searchData.entity-type',
                 operator: '='
               }
             ]
@@ -123,7 +124,7 @@ export default {
             target: 'entity-links',
             searchIn: [
               {
-                key: 'title',
+                key: 'label',
                 operator: 'LIKE'
               }
             ]

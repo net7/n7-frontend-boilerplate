@@ -1,3 +1,4 @@
+import { get as _get } from 'lodash';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import {
@@ -31,6 +32,8 @@ export interface IFacet {
   id: string;
   type: FacetTypes;
   operator: FacetOperators;
+  hasStaticData?: boolean;
+  searchData?: string[];
   data?: any;
 }
 
@@ -136,7 +139,7 @@ export class SearchModel {
 
   public getRequestParams() {
     return {
-      facets: this._facets,
+      facets: this._getRequestFacets(),
       page: this._page,
       results: this._config.results,
       filters: this._filters
@@ -223,56 +226,57 @@ export class SearchModel {
   private _filterData(searchIns, item) {
     searchIns.forEach(([searchIn, value]) => {
       searchIn.forEach(({ key, operator }) => {
+        const refValue = _get(item, key, null);
         switch (operator) {
           // '=' EQUALS
           case '=':
             if (Array.isArray(value)) {
               item.hidden = !(
-                !value.length || value.indexOf(item.metadata[key]) !== -1
+                !value.length || value.indexOf(refValue) !== -1
               );
             } else {
-              item.hidden = !(value && value === item.metadata[key]);
+              item.hidden = !(value && value === refValue);
             }
             break;
           // '>' GREATER THAN
           case '>':
             if (!Array.isArray(value)) {
-              item.hidden = !(value && value > item.metadata[key]);
+              item.hidden = !(value && value > refValue);
             }
             break;
           // '<' LESS THAN
           case '<':
             if (!Array.isArray(value)) {
-              item.hidden = !(value && value < item.metadata[key]);
+              item.hidden = !(value && value < refValue);
             }
             break;
           // '>=' GREATER OR EQUALS
           case '>=':
             if (!Array.isArray(value)) {
-              item.hidden = !(value && value >= item.metadata[key]);
+              item.hidden = !(value && value >= refValue);
             }
             break;
           // '<=' LESS OR EQUALS
           case '<=':
             if (!Array.isArray(value)) {
-              item.hidden = !(value && value <= item.metadata[key]);
+              item.hidden = !(value && value <= refValue);
             }
             break;
           // '<>' NOT EQUAL
           case '<>':
             if (!Array.isArray(value)) {
-              item.hidden = !(value && value !== item.metadata[key]);
+              item.hidden = !(value && value !== refValue);
             }
             break;
           //  'LIKE'
           case 'LIKE':
             if (
               value &&
-              item.metadata[key] &&
+              refValue &&
               typeof value === 'string' &&
-              typeof item.metadata[key] === 'string'
+              typeof refValue === 'string'
             ) {
-              const haystack = item.metadata[key].toLowerCase(),
+              const haystack = refValue.toLowerCase(),
                 needle = value.toLocaleLowerCase();
 
               item.hidden = !(haystack.indexOf(needle) !== -1);
@@ -327,6 +331,19 @@ export class SearchModel {
 
   private _setInputsData() {
     this._facets.forEach(facet => this.setInputData(facet.id, facet.data));
+  }
+
+  private _getRequestFacets() {
+    const results: IFacet[] = [];
+    this._facets.forEach(f => {
+      const facetConfig = {...f};
+      if (!f.hasStaticData) {
+        delete facetConfig.data;
+      }
+      delete facetConfig.hasStaticData;
+      results.push(facetConfig);
+    });
+    return results;
   }
 }
 
