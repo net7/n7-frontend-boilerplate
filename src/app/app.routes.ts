@@ -1,7 +1,6 @@
 
 import { Routes } from '@angular/router';
 
-//Arianna web import layout
 import {
   //COMMON
   Page404LayoutComponent,
@@ -13,7 +12,8 @@ import {
   AwEntitaLayoutComponent,
   AwSearchLayoutComponent,
   //DV
-  DvExampleLayout,
+  DvExampleLayoutComponent,
+  DvHomeLayoutComponent,
 } from 'n7-boilerplate-lib';
 
 export const APP_ROUTES: Routes = [
@@ -33,8 +33,10 @@ export const APP_ROUTES: Routes = [
     pathMatch: 'full'
   },
 
-  //DataViv routes
-  { path: 'dv/example', component: DvExampleLayout },
+  //DataViz routes
+  { path: 'dv/example', component: DvExampleLayoutComponent },
+  { path: 'dv/home', component: DvHomeLayoutComponent },
+  
 
   // altri moduli...
 

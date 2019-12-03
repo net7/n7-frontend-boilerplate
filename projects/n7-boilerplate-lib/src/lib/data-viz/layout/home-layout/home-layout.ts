@@ -1,12 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AbstractLayout } from '../../../common/models/abstract-layout'
-import { DvExampleLayoutConfig as config } from './example-layout.config';
+import { DvHomeLayoutConfig as config } from './home-layout.config';
 
 @Component({
-    selector: 'dv-example-layout',
-    templateUrl: './example-layout.html'
+    selector: 'dv-home-layout',
+    templateUrl: './home-layout.html'
 })
-export class DvExampleLayoutComponent extends AbstractLayout implements OnInit, OnDestroy {
+export class DvHomeLayoutComponent extends AbstractLayout implements OnInit, OnDestroy {
     constructor(){
         super(config);
     }

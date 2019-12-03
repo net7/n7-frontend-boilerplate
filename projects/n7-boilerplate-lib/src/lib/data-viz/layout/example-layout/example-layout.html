@@ -1,5 +1,13 @@
-<div class="" *ngIf="lb.dataSource">
-   <dv-data-widget-wrapper>
-      Example layout!
-   </dv-data-widget-wrapper>
+<div class="dv-example-layout" id="example-layout">
+    <dv-data-widget-wrapper>
+        <n7-inner-title
+            [data]="lb.widgets['dv-inner-title'].ds.out$ | async">
+        </n7-inner-title>
+        <n7-data-widget
+            [data]="lb.widgets['dv-widget'].ds.out$ | async">
+        </n7-data-widget>
+        <n7-chart
+            [data]="lb.widgets['dv-graph'].ds.out$ | async">
+        </n7-chart>
+    </dv-data-widget-wrapper>
 </div>
