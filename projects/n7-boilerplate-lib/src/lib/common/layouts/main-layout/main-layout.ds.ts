@@ -12,7 +12,7 @@ export class MainLayoutDS extends LayoutDataSource {
   public options: any;
   public pageTitle: string;
 
-  onInit({ configuration, mainState, router, options, titleService, route }){
+  onInit({ configuration, mainState, router, options, titleService, route }) {
     this.configuration = configuration;
     this.mainState = mainState;
     this.router = router;
@@ -22,7 +22,13 @@ export class MainLayoutDS extends LayoutDataSource {
     this.mainState.addCustom('currentNav', new Subject());
 
     // update header
-    this.one('header').update({"items": this.configuration.get('header')});
+    if (this.configuration.get('header')) {
+      this.one('header').update({ 'items': this.configuration.get('header') });
+    }
+
+    if (this.configuration.get('footer')) {
+      this.one('footer').update({ 'items': this.configuration.get('footer') });
+    }
 
     // main state updates
     this.mainState.get$('headTitle').subscribe(val => this.titleService.setTitle(val));
@@ -30,7 +36,7 @@ export class MainLayoutDS extends LayoutDataSource {
     this.mainState.get$('subnav').subscribe(val => this.one('subnav').update(val));
     this.mainState.get$('breadcrumbs').subscribe(val => this.one('breadcrumbs').update(val));
 
-    this.mainState.getCustom$('currentNav').subscribe(val => this.one('header').update({"items": this.configuration.get('header'), 'selected': val}));
+    this.mainState.getCustom$('currentNav').subscribe(val => this.one('header').update({ "items": this.configuration.get('header'), 'selected': val }));
 
     // mainState test
     /* this.mainState.addCustom('customNav', new Subject());
@@ -51,15 +57,15 @@ export class MainLayoutDS extends LayoutDataSource {
     }, 5000); */
   }
 
-  onNavigate(payload){
+  onNavigate(payload) {
     // router navigation
-    if(payload.handler === 'router'){
+    if (payload.handler === 'router') {
       const { path, queryParams } = payload;
 
       // path control
-      if(!path) throw Error('onNavigate: no path for router navigate');
+      if (!path) throw Error('onNavigate: no path for router navigate');
 
-      if(queryParams){
+      if (queryParams) {
         this.router.navigate(path, {
           relativeTo: this.route,
           queryParams: queryParams,
@@ -74,7 +80,7 @@ export class MainLayoutDS extends LayoutDataSource {
     }
   }
 
-  private _onRouterNavigate(){
+  private _onRouterNavigate() {
     // hide tippy
     tippy.hideAll();
   }
