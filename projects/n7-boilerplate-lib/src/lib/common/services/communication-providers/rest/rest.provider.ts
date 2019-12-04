@@ -17,32 +17,33 @@ export class RestProvider implements ICommunicationProvider {
   ) {
     try {
       this.providerConfig = this.config.get('communication').providers.rest;
-    } catch(err) {
+    } catch (err) {
       throw Error('No config found for rest provider!');
     }
   }
 
-  request$(requestId, options: any = {}){
-    let { params, method, httpOptions } = options;
+  request$(requestId, options: any = {}) {
+    let { params, method, httpOptions, urlParams = '' } = options;
     let point = RestProviderConfig[requestId];
 
     // default method
-    if(!method) method = this.providerConfig.defaultMethod || 'GET';
+    if (!method) { method = this.providerConfig.defaultMethod || 'GET'; }
 
-    if(this.providerConfig.config && this.providerConfig.config[requestId]){
+    if (this.providerConfig.config && this.providerConfig.config[requestId]) {
       point = this.providerConfig.config[requestId];
     }
 
     // config point control
-    if(!point) throw Error(`No config found for requestId "${requestId}"`);
-
-    if(method === 'POST' || method === 'PUT'){
-      return this.http[method.toLowerCase()](this.providerConfig.baseUrl + point, params, httpOptions);
-    } else if(method === 'GET' || method === 'DELETE'){
-      return this.http[method.toLowerCase()](this.providerConfig.baseUrl + point, httpOptions);
-    } else {
-      throw Error(`Rest method ${method} not supported`);
+    if (!point) {
+        throw Error(`No config found for requestId "${requestId}"`);
     }
-  }
+    if (method === 'POST' || method === 'PUT') {
+      return this.http[method.toLowerCase()](this.providerConfig.baseUrl + point, params, httpOptions);
+    } else if (method === 'GET' || method === 'DELETE') {
+      return this.http[method.toLowerCase()](this.providerConfig.baseUrl + point + urlParams, httpOptions);
+    } else {
+        throw Error(`Rest method ${method} not supported`);
+    }
 
+  }
 }
