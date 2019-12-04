@@ -5,16 +5,12 @@ import { DvComponentsLibModule } from '@n7-frontend/components';
 import { N7BoilerplateCommonModule } from '../common/n7-boilerplate-common.module';
 //COMPONENTS
 import { DataWidgetWrapperComponent } from './components/data-widget-wrapper/data-widget-wrapper';
-import { NavComponent } from './components/nav/nav';
 // LAYOUTS
 import { DvExampleLayoutComponent } from './layout/example-layout/example-layout';
-import { DvHomeLayoutComponent } from './layout/home-layout/home-layout';
 
 const COMPONENTS = [
   DataWidgetWrapperComponent,
   DvExampleLayoutComponent,
-  DvHomeLayoutComponent,
-  NavComponent,
 ];
 
 @NgModule({

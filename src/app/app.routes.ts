@@ -13,7 +13,6 @@ import {
   AwSearchLayoutComponent,
   //DV
   DvExampleLayoutComponent,
-  DvHomeLayoutComponent,
 } from 'n7-boilerplate-lib';
 
 export const APP_ROUTES: Routes = [
@@ -35,7 +34,7 @@ export const APP_ROUTES: Routes = [
 
   //DataViz routes
   { path: 'dv/example', component: DvExampleLayoutComponent },
-  { path: 'dv/home', component: DvHomeLayoutComponent },
+
   
 
   // altri moduli...
