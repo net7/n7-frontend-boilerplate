@@ -1,0 +1,80 @@
+/**
+ * DATA WIDGET WRAPPER
+ *
+ * Style for the component that wraps and inner title on top
+ * and data-widgets and/or graphs in the bottom section
+ */
+ 
+/* ------------------------------------ *\
+    DATA-WIDGET-WRAPPER
+\* ------------------------------------ */
+.dv-data-widget-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: $data-widget-wrapper-height;
+    overflow: hidden;
+}
+
+
+/* ------------------------------------ *\
+    INNER-TITLE
+\* ------------------------------------ */
+.dv-data-widget-wrapper__title {
+    height: 44px;
+    flex-shrink: 0;
+    flex-grow: 0;
+}
+
+.dv-data-widget-wrapper {
+    .n7-inner-title {
+        padding: 0;
+    }
+
+    .n7-inner-title__title {
+        font-size: $font-size-s;
+        color: $color-text;
+        font-weight: $font-weight-bold;
+    }
+
+    .n7-inner-title__subtitle {
+        font-size: $font-size-xs;
+        color: $color-text-light;
+    }
+}
+
+
+/* ------------------------------------ *\
+    CONTENT
+\* ------------------------------------ */
+.dv-data-widget-wrapper__content {
+    flex-shrink: 1;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.dv-data-widget-wrapper__content-row {
+    flex-shrink: 1;
+    flex-grow: 1;
+    flex-basis: 1px;
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: $breakpoint-laptop) {
+}
+
+@media all and (max-width: $breakpoint-ipad-portrait) {
+}
+
+@media all and (max-width: $breakpoint-smartphone-landscape) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}

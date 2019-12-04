@@ -35,9 +35,15 @@
 
 
 // ------------------------------------ //
-// #AW LAYOUTS VARIABLES
+// #AW VARIABLES
 // ------------------------------------ //
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/generic/variables";
+
+
+// ------------------------------------ //
+// #DV VARIABLES
+// ------------------------------------ //
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/data-viz/generic/variables";
 
 
 // ------------------------------------ //
@@ -73,6 +79,12 @@
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/simple-autocomplete";
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/tippy-tooltip";
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/tree";
+
+
+// ------------------------------------ //
+// #DATAVIZ COMPONENTS
+// ------------------------------------ //
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/data-viz/components/data-widget-wrapper";
 
 
 // ------------------------------------ //
