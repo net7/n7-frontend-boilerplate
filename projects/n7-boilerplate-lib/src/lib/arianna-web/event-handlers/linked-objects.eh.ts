@@ -17,11 +17,7 @@ export class AwLinkedObjectsEH extends EventHandler {
             else if (targetPage < 1 || targetPage === this.dataSource.currentPage) return;
             else this.emitOuter('goto', payload)
           } else {
-            // navigate to the patrimonio page of this item
-            this.emitGlobal('navigate', {
-              handler: 'router',
-              path: [`aw/patrimonio/${payload}`]
-            });
+            this.emitOuter('click', payload);
           }
           break;
         case 'aw-linked-objects.change': // changed page size value (pagination)

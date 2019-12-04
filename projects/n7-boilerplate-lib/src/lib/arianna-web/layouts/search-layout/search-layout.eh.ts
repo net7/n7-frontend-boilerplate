@@ -43,12 +43,20 @@ export class AwSearchLayoutEH extends EventHandler {
           break;
 
         case 'aw-linked-objects.goto':
-            this.dataSource.onPaginationGoToChange(payload).subscribe(changed => {
-              if (changed) {
-                this.facetsChange$.next();
-              }
-            });
-            break;
+          this.dataSource.onPaginationGoToChange(payload).subscribe(changed => {
+            if (changed) {
+              this.facetsChange$.next();
+            }
+          });
+          break;
+
+        case 'aw-linked-objects.click':
+          const paths = this.dataSource.configuration.get('paths');
+          this.emitGlobal('navigate', {
+            handler: 'router',
+            path: [paths.entitaBasePath, payload]
+          });
+          break;
         default:
           break;
       }
