@@ -2,15 +2,14 @@ import { FacetInput } from './facet-input';
 
 export class FacetInputText extends FacetInput {
 
-  protected transform(){
+  protected transform() {
     const facetId = this.getFacetId();
-  
     const payload = {
       facetId,
       source: 'input-text'
     };
 
-    return { 
+    return {
       type: 'text',
       id: this.getId(),
       label: this.config.label,
@@ -33,8 +32,7 @@ export class FacetInputText extends FacetInput {
     };
   }
 
-  public setActive(facetValue){
+  public setActive(facetValue) {
     this.output.value = facetValue || null;
   }
-  
 }

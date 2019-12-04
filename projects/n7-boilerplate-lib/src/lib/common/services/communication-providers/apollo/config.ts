@@ -404,10 +404,52 @@ export const ApolloProviderConfig = {
             ... on Entity {
               id
               label
+              typeOfEntity
+              fields {
+                ...
+                on KeyValueField {
+                  key
+                  value
+                }
+                ... on
+                KeyValueFieldGroup {
+                  label
+                  fields
+                  {
+                    ...
+                    on KeyValueField {
+                      key
+                      value
+                    }
+                  }
+                }
+              }
             }
             ... on Item {
               id
               label
+              icon
+              title
+              subTitle
+              image
+              text
+              fields {
+                ...
+                on KeyValueField {
+                  key
+                  value
+                }
+                ... on KeyValueFieldGroup {
+                  label
+                  fields {
+                    ...
+                    on KeyValueField {
+                      key
+                      value
+                    }
+                  }
+                }
+              }
             }
           }
         }

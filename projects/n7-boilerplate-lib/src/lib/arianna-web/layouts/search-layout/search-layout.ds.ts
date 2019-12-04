@@ -84,9 +84,9 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     return this._updateSearchPage(page);
   }
 
-  onPaginationGoToChange(payload) {
+  onPaginationGoToChange(payload): Observable<boolean> {
     const page = payload.replace('goto-', '');
-    this._updateSearchPage(page);
+    return this._updateSearchPage(page);
   }
 
   onResultsLimitChange(payload) {
@@ -138,10 +138,14 @@ export class AwSearchLayoutDS extends LayoutDataSource {
           context: 'search',
           config: this.configuration,
           page: this.currentPage,
+          pagination: true,
+          dynamicPagination: {
+            total: totalCount
+          },
           size: this.pageSize
         });
 
-        this.one('aw-linked-objects').update({ items: results.items });
+        this.one('aw-linked-objects').update({ items: this._normalizeItems(results.items) });
       })
     );
   }
@@ -186,5 +190,9 @@ export class AwSearchLayoutDS extends LayoutDataSource {
           };
         });
       });
+  }
+
+  private _normalizeItems(items) {
+    return items.map(singleItem => ({ item: { ...singleItem } }));
   }
 }
