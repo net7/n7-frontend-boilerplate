@@ -54,6 +54,51 @@
       }
     }
   },
+  "footer": {
+    "columns" : [
+      {
+        "classes": "col-class",
+        "title": "Arianna Web, archivio digitale online",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur hendrerit elit nunc, at porta ex accumsan id. Fusce quis lobortis sem, non ornare tellus.",
+        "images": [
+          {
+            "url": "https://via.placeholder.com/80",
+            "alttext": "Logo 1"
+          },
+          {
+            "url": "https://via.placeholder.com/80",
+            "alttext": "Logo 2"
+          }
+        ]
+      },
+      {
+        "title": "Privacy e info",
+        "links": [
+          {
+            "text": "Info su Arianna Web",
+            "payload": "https://www.google.it",
+            "classes": "link-class"
+          },
+          {
+            "text": "Privacy policy",
+            "payload": "https://www.google.it",
+            "classes": "link-class"
+          },
+          {
+            "text": "Cooklie policy",
+            "payload": "https://www.google.it"
+          },
+          {
+            "text": "Termini e condizioni",
+            "payload": "https://www.google.it"
+          }
+        ]
+      },
+      {
+        "text": "Arianna Web is powered by Hyperborea.<br><a href='#' target='_blank'>www.hyperborea.com</a>"
+      }
+    ]
+  },
   "item-preview": {
     "image": "image",
     "title": {
