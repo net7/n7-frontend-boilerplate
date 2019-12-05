@@ -1,13 +1,18 @@
 
 import { Routes } from '@angular/router';
+
 import {
+  //COMMON
   Page404LayoutComponent,
+  //AW
   AwHomeLayoutComponent,
   AwAboutLayoutComponent,
   AwSchedaLayoutComponent,
   AwWorksLayoutComponent,
   AwEntitaLayoutComponent,
   AwSearchLayoutComponent,
+  //DV
+  DvExampleLayoutComponent,
 } from 'n7-boilerplate-lib';
 
 export const APP_ROUTES: Routes = [
@@ -26,6 +31,11 @@ export const APP_ROUTES: Routes = [
     redirectTo: '/aw/home',
     pathMatch: 'full'
   },
+
+  //DataViz routes
+  { path: 'dv/example', component: DvExampleLayoutComponent },
+
+  
 
   // altri moduli...
 

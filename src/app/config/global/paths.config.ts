@@ -1,3 +1,3 @@
 export default {
-  schedaBasePath: "/aw/patrimonio/"
+  schedaBasePath: "/aw/patrimonio/",
 };

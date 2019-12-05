@@ -20,3 +20,11 @@ export * from './lib/arianna-web/data-sources';
 export * from './lib/arianna-web/event-handlers';
 export * from './lib/arianna-web/layouts';
 export * from './lib/arianna-web/components';
+
+// data viz
+export * from './lib/data-viz/n7-boilerplate-data-viz.module';
+export * from './lib/data-viz/data-sources';
+export * from './lib/data-viz/event-handlers';
+export * from './lib/data-viz/layout';
+export * from './lib/data-viz/components';
+

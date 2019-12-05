@@ -1,0 +1,21 @@
+<div class="dv-example-layout" id="example-layout">
+    <dv-data-widget-wrapper>
+        <div class="dv-data-widget-wrapper__title">
+            <n7-inner-title
+                [data]="lb.widgets['dv-inner-title'].ds.out$ | async">
+            </n7-inner-title>
+        </div>
+        <div class="dv-data-widget-wrapper__content">
+            <div class="dv-data-widget-wrapper__content-row">
+                <n7-data-widget
+                    [data]="lb.widgets['dv-widget'].ds.out$ | async">
+                </n7-data-widget>
+            </div>
+            <div class="dv-data-widget-wrapper__content-row">
+                <n7-chart
+                    [data]="lb.widgets['dv-graph'].ds.out$ | async">
+                </n7-chart>
+            </div>
+        </div>
+    </dv-data-widget-wrapper>
+</div>
