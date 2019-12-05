@@ -341,6 +341,15 @@ export class SearchModel {
         delete facetConfig.data;
       }
       delete facetConfig.hasStaticData;
+
+      // searchData control
+      if (Array.isArray(facetConfig.data)) {
+        facetConfig.data
+          .filter(dataItem => typeof dataItem.searchData !== 'undefined')
+          .forEach(dataItem => {
+            delete dataItem.searchData;
+          });
+      }
       results.push(facetConfig);
     });
     return results;
