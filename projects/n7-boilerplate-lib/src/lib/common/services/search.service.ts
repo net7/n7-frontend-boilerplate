@@ -20,6 +20,16 @@ const INPUTS_MAP = {
   select: FacetInputSelect
 };
 
+const FILTERS_MAP = {
+  '=' : '_filterDataEquals',
+  '>' : '_filterDataGreaterThan',
+  '<' : '_filterDataLessThan',
+  '>=' : '_filterDataGreaterOrEquals',
+  '<=' : '_filterDataLessOrEquals',
+  '<>' : '_filterDataNotEqual',
+  'LIKE': '_filterDataLike'
+};
+
 export interface ISearchConfig {
   totalCount: number;
   facets: any;
@@ -226,68 +236,84 @@ export class SearchModel {
   private _filterData(searchIns, item) {
     searchIns.forEach(([searchIn, value]) => {
       searchIn.forEach(({ key, operator }) => {
-        const refValue = _get(item, key, null);
-        switch (operator) {
-          // '=' EQUALS
-          case '=':
-            if (Array.isArray(value)) {
-              item.hidden = !(
-                !value.length || value.indexOf(refValue) !== -1
-              );
-            } else {
-              item.hidden = !(value && value === refValue);
+        let refValue = _get(item, key, null);
+        if (key.indexOf('searchData') !== -1 && Array.isArray(item.searchData)) {
+          const searchDataKey = key.replace('searchData.', '');
+          item.searchData.forEach(({ key: dataKey, value: dataValue }) => {
+            if (dataKey === searchDataKey) {
+              refValue = dataValue;
             }
-            break;
-          // '>' GREATER THAN
-          case '>':
-            if (!Array.isArray(value)) {
-              item.hidden = !(value && value > refValue);
-            }
-            break;
-          // '<' LESS THAN
-          case '<':
-            if (!Array.isArray(value)) {
-              item.hidden = !(value && value < refValue);
-            }
-            break;
-          // '>=' GREATER OR EQUALS
-          case '>=':
-            if (!Array.isArray(value)) {
-              item.hidden = !(value && value >= refValue);
-            }
-            break;
-          // '<=' LESS OR EQUALS
-          case '<=':
-            if (!Array.isArray(value)) {
-              item.hidden = !(value && value <= refValue);
-            }
-            break;
-          // '<>' NOT EQUAL
-          case '<>':
-            if (!Array.isArray(value)) {
-              item.hidden = !(value && value !== refValue);
-            }
-            break;
-          //  'LIKE'
-          case 'LIKE':
-            if (
-              value &&
-              refValue &&
-              typeof value === 'string' &&
-              typeof refValue === 'string'
-            ) {
-              const haystack = refValue.toLowerCase(),
-                needle = value.toLocaleLowerCase();
-
-              item.hidden = !(haystack.indexOf(needle) !== -1);
-            }
-            break;
-          default:
-            console.warn(`SearchIn: operator ${operator} not supported`);
-            break;
+          });
+        }
+        if (refValue === null) {
+          item.hidden = true;
+        } else if (FILTERS_MAP[operator]) {
+          item.hidden = this[FILTERS_MAP[operator]](value, refValue);
+        } else {
+          console.warn(`SearchIn: operator ${operator} not supported`);
         }
       });
     });
+  }
+
+  private _filterDataEquals(value, refValue) {
+    if (Array.isArray(value)) {
+      return !(
+        !value.length || value.indexOf(refValue) !== -1
+      );
+    } else {
+      return !(value && value === refValue);
+    }
+  }
+
+  private _filterDataGreaterThan(value, refValue) {
+    if (!Array.isArray(value)) {
+      return !(value && value > refValue);
+    }
+    return false;
+  }
+
+  private _filterDataLessThan(value, refValue) {
+    if (!Array.isArray(value)) {
+      return !(value && value < refValue);
+    }
+    return false;
+  }
+
+  private _filterDataGreaterOrEquals(value, refValue) {
+    if (!Array.isArray(value)) {
+      return !(value && value >= refValue);
+    }
+    return false;
+  }
+
+  private _filterDataLessOrEquals(value, refValue) {
+    if (!Array.isArray(value)) {
+      return !(value && value <= refValue);
+    }
+    return false;
+  }
+
+  private _filterDataNotEqual(value, refValue) {
+    if (!Array.isArray(value)) {
+      return !(value && value !== refValue);
+    }
+    return false;
+  }
+
+  private _filterDataLike(value, refValue) {
+    if (
+      value &&
+      refValue &&
+      typeof value === 'string' &&
+      typeof refValue === 'string'
+    ) {
+      const haystack = refValue.toLowerCase(),
+        needle = value.toLocaleLowerCase();
+
+      return !(haystack.indexOf(needle) !== -1);
+    }
+    return false;
   }
 
   private _setFilters() {
