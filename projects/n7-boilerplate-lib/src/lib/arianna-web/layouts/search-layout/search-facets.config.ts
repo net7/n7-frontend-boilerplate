@@ -36,14 +36,14 @@ export default {
       type: 'value',
       searchData: ['entity-type']
     },
-    {
+    /* {
       id: 'date-from',
       type: 'value'
     },
     {
       id: 'date-to',
       type: 'value'
-    }
+    } */
   ],
   fields: [
     {
@@ -145,7 +145,7 @@ export default {
         }
       ]
     },
-    {
+    /*{
       header: {
         label: 'Data',
         classes: 'date-class'
@@ -178,7 +178,7 @@ export default {
           }
         }
       ]
-    }
+    }*/
   ],
   results: {
     order: {

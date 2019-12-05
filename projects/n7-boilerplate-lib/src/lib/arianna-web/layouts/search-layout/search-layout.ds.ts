@@ -180,14 +180,17 @@ export class AwSearchLayoutDS extends LayoutDataSource {
 
   private _addFacetsOptions(facets) {
     facets
-      .filter(f => f.value === 'query-links')
+      .filter(f => f.id === 'query-links')
       .forEach(f => {
         f.data.forEach(dataItem => {
-          const config = this.configKeys[dataItem.value];
-          dataItem.options = {
-            icon: config.icon,
-            classes: `color-${dataItem.value}`
-          };
+          const key = dataItem.value.replace(' ', '-'),
+            config = this.configKeys[key];
+          if (config) {
+            dataItem.options = {
+              icon: config.icon,
+              classes: `color-${key}`
+            };
+          }
         });
       });
   }
