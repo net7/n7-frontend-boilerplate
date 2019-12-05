@@ -377,14 +377,13 @@ export const ApolloProviderConfig = {
           operator
           limit
           order
-          metadata
           data {
             label
             value
             counter
-            options {
-              icon
-              classes
+            searchData {
+              key
+              value
             }
           }
         }
