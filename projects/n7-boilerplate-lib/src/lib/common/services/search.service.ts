@@ -212,8 +212,6 @@ export class SearchModel {
     // filter
     facetData.forEach(item => this._filterData(searchIns, item));
 
-    console.log('hidden', facetData.filter(i => i.hidden).length);
-
     // update
     targetInput.setData(facetData);
     targetInput.update();
@@ -256,7 +254,6 @@ export class SearchModel {
           item.hidden = true;
         } else if (FILTERS_MAP[operator]) {
           item.hidden = this[FILTERS_MAP[operator]](value, refValue);
-          console.log('item.hidden', item.hidden, operator, value, refValue);
         } else {
           console.warn(`SearchIn: operator ${operator} not supported`);
         }
