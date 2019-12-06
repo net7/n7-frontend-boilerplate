@@ -212,6 +212,8 @@ export class SearchModel {
     // filter
     facetData.forEach(item => this._filterData(searchIns, item));
 
+    console.log('hidden', facetData.filter(i => i.hidden).length);
+
     // update
     targetInput.setData(facetData);
     targetInput.update();
@@ -234,8 +236,13 @@ export class SearchModel {
   }
 
   private _filterData(searchIns, item) {
+    // reset
+    item.hidden = false;
     searchIns.forEach(([searchIn, value]) => {
       searchIn.forEach(({ key, operator }) => {
+        if (item.hidden) {
+          return;
+        }
         let refValue = _get(item, key, null);
         if (key.indexOf('searchData') !== -1 && Array.isArray(item.searchData)) {
           const searchDataKey = key.replace('searchData.', '');
@@ -249,6 +256,7 @@ export class SearchModel {
           item.hidden = true;
         } else if (FILTERS_MAP[operator]) {
           item.hidden = this[FILTERS_MAP[operator]](value, refValue);
+          console.log('item.hidden', item.hidden, operator, value, refValue);
         } else {
           console.warn(`SearchIn: operator ${operator} not supported`);
         }
@@ -257,12 +265,26 @@ export class SearchModel {
   }
 
   private _filterDataEquals(value, refValue) {
-    if (Array.isArray(value)) {
-      return !(
-        !value.length || value.indexOf(refValue) !== -1
-      );
+    if (Array.isArray(refValue)) {
+      if (Array.isArray(value)) {
+        let inArray = value.length === 0 ? true : false;
+        refValue.forEach(rv => {
+          if (value.indexOf(rv) !== -1) {
+            inArray = true;
+          }
+        });
+        return !(inArray);
+      } else {
+        return !(value && refValue.indexOf(value) !== -1);
+      }
     } else {
-      return !(value && value === refValue);
+      if (Array.isArray(value)) {
+        return !(
+          !value.length || value.indexOf(refValue) !== -1
+        );
+      } else {
+        return !(value && value === refValue);
+      }
     }
   }
 
