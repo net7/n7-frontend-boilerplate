@@ -2,11 +2,11 @@ import { LayoutDataSource } from '@n7-frontend/core';
 import {
   SearchService,
   SearchModel
-} from 'n7-boilerplate-lib/lib/common/services';
+} from '../../../common/services';
 import facetsConfig from './search-facets.config';
 import { tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
-import helpers from 'n7-boilerplate-lib/lib/common/helpers';
+import helpers from '../../../common/helpers';
 
 const SEARCH_MODEL_ID = 'aw-search-layout';
 
