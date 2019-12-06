@@ -1,12 +1,15 @@
 import { EventHandler } from '@n7-frontend/core';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 export class FacetsWrapperEH extends EventHandler {
-  private _facetsChanged: boolean = false;
+  private _facetsChanged = false;
+  private internalFacetsChange$: Subject<any> = new Subject();
 
   public listen() {
     // listen to inner (widget) events
     this.innerEvents$.subscribe(({ type, payload }) => {
-      switch(type){
+      switch (type) {
         case 'facets-wrapper.facet':
           const { facetId } = payload.eventPayload.inputPayload,
             input = this.dataSource.getInputByFacetId(facetId),
@@ -17,9 +20,8 @@ export class FacetsWrapperEH extends EventHandler {
           this.dataSource.onFacetChange(payload);
 
           // internal
-          if(context === 'internal'){
-            this.dataSource.filterTarget(input.getTarget());
-            this.dataSource.updateFilteredTarget(input.getTarget());
+          if (context === 'internal') {
+            this.internalFacetsChange$.next(input.getTarget());
 
             // external
           } else {
@@ -27,7 +29,6 @@ export class FacetsWrapperEH extends EventHandler {
               queryParams = this.dataSource.filtersAsQueryParams(requestParams.filters);
 
             Object.keys(queryParams).forEach(key => queryParams[key] = queryParams[key] || null);
-            
             // signal
             this.emitOuter('facetschange');
 
@@ -45,23 +46,32 @@ export class FacetsWrapperEH extends EventHandler {
           this.dataSource.toggleGroup(payload);
           break;
 
-        default: 
+        default:
           break;
       }
     });
 
     // listen to global events
     EventHandler.globalEvents$.subscribe(({ type, payload }) => {
-      switch(type){
+      switch (type) {
         case 'global.searchresponse':
-          if(this.dataSource.searchModel.getId() === payload){
+          if (this.dataSource.searchModel.getId() === payload) {
             this.dataSource.updateInputLinks();
           }
           break;
 
-        default: 
+        default:
           break;
       }
     });
+
+    // internal facets change
+    this.internalFacetsChange$.pipe(
+      debounceTime(500)
+    ).subscribe(target => {
+      this.dataSource.filterTarget(target);
+      this.dataSource.updateFilteredTarget(target);
+    });
   }
+
 }

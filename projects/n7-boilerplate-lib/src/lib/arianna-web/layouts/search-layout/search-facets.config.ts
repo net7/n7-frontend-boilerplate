@@ -58,7 +58,7 @@ export default {
             minChars: 3,
             searchIn: [
               {
-                key: 'source.title',
+                key: 'label',
                 operator: 'LIKE'
               }
             ]
