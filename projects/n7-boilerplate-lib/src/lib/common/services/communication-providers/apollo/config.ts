@@ -371,10 +371,87 @@ export const ApolloProviderConfig = {
     queryBody: `{
       search(__PARAMS__){
         totalCount
-        facets
-        filters
-        results
-        page
+        facets {
+          id
+          type
+          operator
+          limit
+          order
+          data {
+            label
+            value
+            counter
+            searchData {
+              key
+              value
+            }
+          }
+        }
+        results {
+          order{
+            type
+            key
+            direction
+          }
+          fields
+          {
+            id
+            highlight
+            limit
+          }
+          items {
+            ... on Entity {
+              id
+              label
+              typeOfEntity
+              fields {
+                ...
+                on KeyValueField {
+                  key
+                  value
+                }
+                ... on
+                KeyValueFieldGroup {
+                  label
+                  fields
+                  {
+                    ...
+                    on KeyValueField {
+                      key
+                      value
+                    }
+                  }
+                }
+              }
+            }
+            ... on Item {
+              id
+              label
+              icon
+              title
+              subTitle
+              image
+              text
+              fields {
+                ...
+                on KeyValueField {
+                  key
+                  value
+                }
+                ... on KeyValueFieldGroup {
+                  label
+                  fields {
+                    ...
+                    on KeyValueField {
+                      key
+                      value
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }`
   }

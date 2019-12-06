@@ -100,7 +100,14 @@ export class AwEntitaLayoutEH extends EventHandler {
             this.emitOuter('filterbubbleresponse', payload);
             //this.dataSource.updateBubbes(payload);
           }
-          break
+          break;
+        case 'aw-linked-objects.click':
+          const paths = this.configuration.get('paths');
+          this.emitGlobal('navigate', {
+            handler: 'router',
+            path: [paths.schedaBasePath, payload]
+          });
+          break;
         default:
           break;
       }

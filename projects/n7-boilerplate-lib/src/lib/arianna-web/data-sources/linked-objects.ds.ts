@@ -18,7 +18,9 @@ export class AwLinkedObjectsDS extends DataSource {
     this.pageSize = this.options.size
     this.totalObjects = data.totalCount
     this.currentPage = this.options.page ? <number>this.options.page : 1
-    if (data.items) {
+    if (this.options.dynamicPagination && this.options.dynamicPagination.total) {
+      this.totalPages = Math.ceil(this.options.dynamicPagination.total / this.pageSize)
+    } else if (data.items) {
       this.totalPages = Math.ceil(data.items.length / this.pageSize)
     } else if (data.relatedItems) {
       this.totalPages = Math.ceil(data.relatedItems.length / this.pageSize)
@@ -152,7 +154,8 @@ export class AwLinkedObjectsDS extends DataSource {
       page = this.currentPage,            // current page (if using pagination)
       context = this.context,             // parent layout name
       size = this.pageSize,               // items per page (if using pagination)
-      labels = config.get("labels");
+      labels = config.get("labels"),
+      { dynamicPagination } = this.options;
     var
       d = data.items ? data.items : data.relatedItems // items to iterate over
 
@@ -165,7 +168,7 @@ export class AwLinkedObjectsDS extends DataSource {
       }
     }
     // resize data
-    if (size && page) {
+    if (!dynamicPagination && size && page) {
       d = d.slice(page * size - size, page * size)
     } else if (size) {
       d = d.slice(0, size)

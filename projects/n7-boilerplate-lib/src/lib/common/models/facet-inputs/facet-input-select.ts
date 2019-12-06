@@ -2,19 +2,19 @@ import { FacetInput } from './facet-input';
 
 export class FacetInputSelect extends FacetInput {
 
-  protected transform(){
+  protected transform() {
     const facetId = this.getFacetId();
 
-    return { 
+    return {
       type: 'select',
       id: this.getId(),
       label: this.config.label,
       disabled: this.config.disabled,
-      options: this.data.map(({ value, label }) => ({
+      options: this.data ? this.data.map(({ value, label }) => ({
         // normalize value
-        value: '' + value, 
+        value: '' + value,
         label
-      })),
+      })) : [],
       payload: {
         facetId,
         source: 'input-select',
@@ -28,5 +28,4 @@ export class FacetInputSelect extends FacetInput {
       .filter(option => option.value === facetValue)
       .forEach(option => option.selected = true);
   }
-  
 }

@@ -43,7 +43,15 @@ export class AwSchedaLayoutEH extends EventHandler {
             path: [`aw/entita/${payload.entityId}/overview`]
           });
           break;
-
+        case 'aw-linked-objects.click':
+          const paths = this.configuration.get('paths');
+          this.emitGlobal('navigate', {
+            handler: 'router',
+            path: [paths.schedaBasePath, payload]
+          });
+          break;
+        default:
+          break;
       }
     });
   }

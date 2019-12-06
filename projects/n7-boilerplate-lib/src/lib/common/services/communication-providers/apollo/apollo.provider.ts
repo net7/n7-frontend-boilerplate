@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http'
+import { HttpClient } from '@angular/common/http';
 import { ApolloProviderConfig } from './config';
 import { ConfigurationService } from '../../configuration.service';
 import { ICommunicationProvider } from '../communication-provider.interface';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-
 
 @Injectable({
   providedIn: 'root'
@@ -13,33 +12,33 @@ import { Observable } from 'rxjs';
 export class ApolloProvider implements ICommunicationProvider {
   private providerConfig: any;
 
-  constructor(
-    private config: ConfigurationService,
-    private http: HttpClient,
-  ) {
+  constructor(private config: ConfigurationService, private http: HttpClient) {
     try {
       this.providerConfig = this.config.get('communication').providers.apollo;
-    } catch(err) {
+    } catch (err) {
       throw Error('No config found for apollo provider!');
     }
   }
 
-  request$(requestId, options){
+  request$(requestId, options) {
     const { params, method, httpOptions } = options;
     let query = ApolloProviderConfig[requestId];
 
-    if(this.providerConfig.config && this.providerConfig.config[requestId]){
+    if (this.providerConfig.config && this.providerConfig.config[requestId]) {
       query = this.providerConfig.config[requestId];
     }
 
     query = query || {};
-    let { queryName, queryBody } = query;
+    const { queryName } = query;
+    let { queryBody } = query;
 
     // config query control
-    if(!queryName || !queryBody) throw Error(`No config found for requestId "${requestId}"`);
+    if (!queryName || !queryBody) {
+      throw Error(`No config found for requestId '${requestId}'`);
+    }
 
-    if(params){
-      let paramsStr = this.makeParamsStr(params);
+    if (params) {
+      const paramsStr = this.makeParamsStr(params);
       queryBody = queryBody.replace('__PARAMS__', paramsStr);
     } else {
       queryBody = queryBody.replace('(__PARAMS__)', '');
@@ -47,43 +46,50 @@ export class ApolloProvider implements ICommunicationProvider {
 
     let source$: Observable<any>;
 
-    if(method && method === 'GET'){
+    if (method && method === 'GET') {
       source$ = this.http.get(this.providerConfig.baseUrl);
     } else {
-      source$ = this.http.post(this.providerConfig.baseUrl, { query: queryBody }, httpOptions);  
+      source$ = this.http.post(
+        this.providerConfig.baseUrl,
+        { query: queryBody },
+        httpOptions
+      );
     }
 
-    return source$.pipe(
-      map((response: any) => response.data[queryName])
-    );
+    return source$.pipe(map((response: any) => response.data[queryName]));
   }
 
-  private makeParamsStr(params){
-    let paramsStr = [];
+  private makeParamsStr(params) {
+    const paramsStr = [];
     Object.keys(params).forEach(key => {
-      if(Array.isArray(params[key])){
-        let arrStr = [];
-        params[key].forEach( val => {
-          if(typeof(val)==='object'){
-            let subParamsStr = this.makeParamsStr(val);
+      if (Array.isArray(params[key])) {
+        const arrStr = [];
+        params[key].forEach(val => {
+          if (typeof val === 'object') {
+            const subParamsStr = this.makeParamsStr(val);
             arrStr.push(`{ ${subParamsStr} }`);
           } else {
-            if(!isNaN(val)) arrStr.push(`${val}`);
-            else arrStr.push(`"${val}"`)
+            if (typeof val === 'number' || typeof val === 'boolean' || val === null) {
+              arrStr.push(`${val}`);
+            } else {
+              arrStr.push(`"${val}"`);
+            }
           }
         });
         paramsStr.push(`${key}: [${arrStr.join(',')}]`);
-      } else if( typeof(params[key])==='object' && params[key] ){
-          let subParamsStr = this.makeParamsStr(params[key]);
-          paramsStr.push(`${key}: { ${subParamsStr} }`);
-      } else if( typeof(params[key])==='string' && key.indexOf('$') === 0){
+      } else if (typeof params[key] === 'object' && params[key]) {
+        const subParamsStr = this.makeParamsStr(params[key]);
+        paramsStr.push(`${key}: { ${subParamsStr} }`);
+      } else if (typeof params[key] === 'string' && key.indexOf('$') === 0) {
         paramsStr.push(`${key.replace('$', '')}: ${params[key]}`);
       } else {
-        if(!isNaN(params[key])) paramsStr.push(`${key}: ${params[key]}`);
-        else paramsStr.push(`${key}: "${params[key]}"`);
+        if (typeof params[key] === 'number' || typeof params[key] === 'boolean' || params[key] === null) {
+          paramsStr.push(`${key}: ${params[key]}`);
+        } else {
+          paramsStr.push(`${key}: "${params[key]}"`);
+        }
       }
     });
     return paramsStr.join(' ');
   }
-
 }
