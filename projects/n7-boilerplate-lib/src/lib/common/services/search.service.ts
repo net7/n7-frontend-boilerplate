@@ -79,6 +79,12 @@ export class SearchModel {
     this._setInputs();
     this._setInputsData();
     this._setTotalCount();
+
+    // query params control
+    if (SearchService.queryParams) {
+      this.updateFiltersFromQueryParams(SearchService.queryParams);
+      SearchService.queryParams = null;
+    }
   }
 
   public getId = () => this._id;

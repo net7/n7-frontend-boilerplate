@@ -57,15 +57,6 @@ export class FacetsWrapperDS extends DataSource {
       })
     });
 
-    // query params control
-    if(SearchService.queryParams){
-      this.searchModel.updateFiltersFromQueryParams(SearchService.queryParams);
-      this.searchModel.updateInputsFromFilters();
-
-      // reset queryparams
-      SearchService.queryParams = null;
-    }
-
     return { 
       groups, 
       classes: `n7-facets-wrapper__${this.searchModel.getId()}` 
