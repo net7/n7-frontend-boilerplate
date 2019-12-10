@@ -115,12 +115,16 @@ export class SearchModel {
   }
 
   public updateFiltersFromQueryParams(queryParams) {
-    Object.keys(queryParams).forEach(facetId => {
-      const selectedFilters = this.getFiltersByFacetId(facetId),
-        value = queryParams[facetId];
+    this._facets.forEach(({ id }) => {
+      const selectedFilters = this.getFiltersByFacetId(id),
+        value = queryParams[id];
 
       selectedFilters.forEach(filter => {
-        filter.value = filter.isArray ? value.split(',') : value;
+        if (filter.isArray) {
+          filter.value = value ? value.split(',') : [];
+        } else {
+          filter.value = value ? value : null;
+        }
       });
     });
   }

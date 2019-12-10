@@ -69,6 +69,7 @@ export class AwSearchLayoutDS extends LayoutDataSource {
 
     this.doSearchRequest$().subscribe(() => {
       this.one('facets-wrapper').update({ searchModel: this.searchModel });
+      this.searchModel.updateInputsFromFilters();
     });
   }
 

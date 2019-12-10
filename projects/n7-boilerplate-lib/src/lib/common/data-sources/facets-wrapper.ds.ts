@@ -138,10 +138,7 @@ export class FacetsWrapperDS extends DataSource {
   public updateFiltersFromQueryParams = (queryParams) => this.searchModel.updateFiltersFromQueryParams(queryParams);
   public getInputByFacetId = (facetId) => this.searchModel.getInputByFacetId(facetId);
   public filterTarget = (target) => this.searchModel.filterTarget(target);
-
-  public updateInputsFromFilters(){
-    this.searchModel.updateInputsFromFilters();
-  }
+  public updateInputsFromFilters = () => this.searchModel.updateInputsFromFilters();
 
   private _getSectionClasses(type){
     const classesMap = {

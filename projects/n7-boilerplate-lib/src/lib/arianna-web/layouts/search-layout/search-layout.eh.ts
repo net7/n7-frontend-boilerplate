@@ -3,6 +3,7 @@ import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
 export class AwSearchLayoutEH extends EventHandler {
+  private route: any;
   private facetsChange$: Subject<any> = new Subject();
 
   public listen() {
@@ -10,7 +11,9 @@ export class AwSearchLayoutEH extends EventHandler {
       switch (type) {
         case 'aw-search-layout.init':
           this.dataSource.onInit(payload);
+          this.route = payload.route;
           this._listenToFacetsChange();
+          this._listenToRouterChanges();
           break;
 
         case 'aw-search-layout.orderbychange':
@@ -26,7 +29,7 @@ export class AwSearchLayoutEH extends EventHandler {
     this.outerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
         case 'facets-wrapper.facetschange':
-          this.facetsChange$.next();
+          // this.facetsChange$.next();
           break;
 
         case 'aw-linked-objects.pagination':
@@ -72,4 +75,12 @@ export class AwSearchLayoutEH extends EventHandler {
       });
     });
   }
+
+  private _listenToRouterChanges() {
+    this.route.queryParams.subscribe(params => {
+      this.emitOuter('queryparamschange', params);
+      this.facetsChange$.next();
+    });
+  }
+
 }
