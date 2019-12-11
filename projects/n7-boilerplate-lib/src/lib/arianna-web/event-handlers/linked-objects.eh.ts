@@ -52,6 +52,12 @@ export class AwLinkedObjectsEH extends EventHandler {
   }
 
   public handleScroll = target => {
+    const { totalObjects, loadedData } = this.dataSource,
+      loadedTotal = Array.isArray(loadedData.result) ? loadedData.result.length : 0;
+
+    if (loadedTotal >= totalObjects) {
+      return;
+    }
     /*
       Check if the target element is scrolled near the end while data is not already loading.
       If the condition is met, a request for more data is sent.
