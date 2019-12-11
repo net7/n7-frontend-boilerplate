@@ -1,5 +1,5 @@
-import { DataSource } from "@n7-frontend/core";
-import helpers from "../../common/helpers";
+import { DataSource } from '@n7-frontend/core';
+import helpers from '../../common/helpers';
 
 export class AwEntitaMetadataViewerDS extends DataSource {
   protected transform(data) {
@@ -23,6 +23,7 @@ export class AwEntitaMetadataViewerDS extends DataSource {
     };
   }
 
+  // tslint:disable-next-line: member-ordering
   static unpackFields(fields) {
     /*
       Recursive unpacking for rendering res.fields
@@ -30,7 +31,7 @@ export class AwEntitaMetadataViewerDS extends DataSource {
       This function transforms the response object tree
       into an array, usable by metadata-viewer-component
     */
-    var extracted = []; // holds transformed object
+    let extracted = []; // holds transformed object
     // if the server returns an array of key-value tuples
     if (fields instanceof Array) {
       extracted = fields.map(el => {
@@ -38,14 +39,14 @@ export class AwEntitaMetadataViewerDS extends DataSource {
       });
       return [{ items: extracted }];
     }
-    if (!fields) return []; // if is empty → quit
+    if (!fields) { return []; } // if is empty → quit
     for (let i = 0; i < fields.length; i++) {
-      var thisField = fields[i]; // rename current field
-      var title = thisField.label; // field title
-      var label = thisField.key; // item label
-      var value = thisField.value; // item value
-      var group = thisField.fields; // child group
-      var temp: any = {}; // temporary object
+      const thisField = fields[i]; // rename current field
+      const title = thisField.label; // field title
+      const label = thisField.key; // item label
+      const value = thisField.value; // item value
+      const group = thisField.fields; // child group
+      const temp: any = {}; // temporary object
 
       if (title) {
         // if there is a title, use it

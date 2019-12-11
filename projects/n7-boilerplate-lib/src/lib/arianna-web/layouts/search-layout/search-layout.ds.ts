@@ -30,25 +30,13 @@ export class AwSearchLayoutDS extends LayoutDataSource {
   public orderByLabel = 'Ordina per';
   public orderByOptions: any = [
     {
-      value: 'text_DESC',
+      value: 'label_DESC',
       label: 'Ordine alfabetico (DESC)'
     },
     {
-      value: 'text_ASC',
+      value: 'label_ASC',
       label: 'Ordine alfabetico (ASC)'
-    } /* {
-    value: 'score_DESC',
-    label: 'Ordine per rilevanza (DESC)'
-  }, {
-    value: 'score_ASC',
-    label: 'Ordine per rilevanza (ASC)'
-  }, {
-    value: 'date_DESC',
-    label: 'Ordina per data (DESC)'
-  }, {
-    value: 'date_ASC',
-    label: 'Ordina per data (ASC)'
-  } */
+    }
   ];
 
   onInit({ configuration, mainState, options, communication, search }) {
@@ -69,6 +57,7 @@ export class AwSearchLayoutDS extends LayoutDataSource {
 
     this.doSearchRequest$().subscribe(() => {
       this.one('facets-wrapper').update({ searchModel: this.searchModel });
+      this.searchModel.updateInputsFromFilters();
     });
   }
 

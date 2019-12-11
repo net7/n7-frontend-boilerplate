@@ -79,6 +79,12 @@ export class SearchModel {
     this._setInputs();
     this._setInputsData();
     this._setTotalCount();
+
+    // query params control
+    if (SearchService.queryParams) {
+      this.updateFiltersFromQueryParams(SearchService.queryParams);
+      SearchService.queryParams = null;
+    }
   }
 
   public getId = () => this._id;
@@ -109,12 +115,16 @@ export class SearchModel {
   }
 
   public updateFiltersFromQueryParams(queryParams) {
-    Object.keys(queryParams).forEach(facetId => {
-      const selectedFilters = this.getFiltersByFacetId(facetId),
-        value = queryParams[facetId];
+    this._facets.forEach(({ id }) => {
+      const selectedFilters = this.getFiltersByFacetId(id),
+        value = queryParams[id];
 
       selectedFilters.forEach(filter => {
-        filter.value = filter.isArray ? value.split(',') : value;
+        if (filter.isArray) {
+          filter.value = value ? value.split(',') : [];
+        } else {
+          filter.value = value ? value : null;
+        }
       });
     });
   }
@@ -218,7 +228,7 @@ export class SearchModel {
   }
 
   public setSearchConfigOrderBy(orderBy) {
-    this._config.results.order.type = orderBy;
+    this._config.results.order.key = orderBy;
   }
 
   public setSearchConfigDirection(direction) {

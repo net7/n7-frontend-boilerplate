@@ -134,10 +134,11 @@ export default {
           type: 'link',
           facetId: 'entity-links',
           filterConfig: {
+            isArray: true,
             limit: 20,
             searchIn: [
               {
-                key: 'source.id',
+                key: 'relatedEntities.id',
                 operator: '='
               }
             ]
@@ -182,8 +183,8 @@ export default {
   ],
   results: {
     order: {
-      type: 'score', // score | text | date
-      key: 'author', // docPath, elastic key, ecc
+      type: 'text', // score | text | date
+      key: 'label', // docPath, elastic key, ecc
       direction: 'DESC' // ASC | DESC
     },
     fields: [

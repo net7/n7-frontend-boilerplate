@@ -5,6 +5,7 @@ import { debounceTime } from 'rxjs/operators';
 export class FacetsWrapperEH extends EventHandler {
   private _facetsChanged = false;
   private internalFacetsChange$: Subject<any> = new Subject();
+  private externalFacetsChange$: Subject<any> = new Subject();
 
   public listen() {
     // listen to inner (widget) events
@@ -22,22 +23,9 @@ export class FacetsWrapperEH extends EventHandler {
           // internal
           if (context === 'internal') {
             this.internalFacetsChange$.next(input.getTarget());
-
-            // external
+          // external
           } else {
-            const requestParams = this.dataSource.getRequestParams(),
-              queryParams = this.dataSource.filtersAsQueryParams(requestParams.filters);
-
-            Object.keys(queryParams).forEach(key => queryParams[key] = queryParams[key] || null);
-            // signal
-            this.emitOuter('facetschange');
-
-            // router signal
-            this.emitGlobal('navigate', {
-              handler: 'router',
-              path: [],
-              queryParams
-            });
+            this.externalFacetsChange$.next();
           }
 
           break;
@@ -48,6 +36,13 @@ export class FacetsWrapperEH extends EventHandler {
 
         default:
           break;
+      }
+    });
+
+    this.outerEvents$.subscribe(({ type, payload }) => {
+      if (type.indexOf('queryparamschange') !== -1 && this.dataSource.searchModel) {
+        this.dataSource.updateFiltersFromQueryParams(payload);
+        this.dataSource.updateInputsFromFilters();
       }
     });
 
@@ -71,6 +66,25 @@ export class FacetsWrapperEH extends EventHandler {
     ).subscribe(target => {
       this.dataSource.filterTarget(target);
       this.dataSource.updateFilteredTarget(target);
+    });
+
+    // internal facets change
+    this.externalFacetsChange$.pipe(
+      debounceTime(500)
+    ).subscribe(() => {
+      const requestParams = this.dataSource.getRequestParams(),
+      queryParams = this.dataSource.filtersAsQueryParams(requestParams.filters);
+
+      Object.keys(queryParams).forEach(key => queryParams[key] = queryParams[key] || null);
+      // signal
+      this.emitOuter('facetschange');
+
+      // router signal
+      this.emitGlobal('navigate', {
+        handler: 'router',
+        path: [],
+        queryParams
+      });
     });
   }
 
