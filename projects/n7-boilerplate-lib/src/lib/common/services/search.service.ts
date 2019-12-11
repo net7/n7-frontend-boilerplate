@@ -228,7 +228,7 @@ export class SearchModel {
   }
 
   public setSearchConfigOrderBy(orderBy) {
-    this._config.results.order.type = orderBy;
+    this._config.results.order.key = orderBy;
   }
 
   public setSearchConfigDirection(direction) {
