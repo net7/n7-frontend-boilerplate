@@ -134,6 +134,7 @@ export default {
           type: 'link',
           facetId: 'entity-links',
           filterConfig: {
+            isArray: true,
             limit: 20,
             searchIn: [
               {
