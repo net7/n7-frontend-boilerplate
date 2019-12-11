@@ -23,6 +23,15 @@ export class AwHomeLayoutEH extends EventHandler {
         case 'aw-home-layout.destroy':
           this.destroyed$.next();
           break;
+        case 'aw-home-layout.bubbleresultsviewallclick':
+          const entityLinks = this.dataSource.selectedBubbles.map(bubble => bubble.id).join(',');
+          const basePath = this.configuration.get('paths').searchBasePath;
+          this.emitGlobal('navigate', {
+            handler: 'router',
+            path: [ basePath ],
+            queryParams: { 'entity-links': entityLinks }
+          });
+          break;
         default:
           break;
       }

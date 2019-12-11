@@ -76,7 +76,7 @@
                     <div *ngIf="lb.dataSource.hasScrollBackground" class="aw-home__bubble-results-list-wrapper-with-scroll"></div>
                     <!-- aw-linked-objects__actions -->
                     <div *ngIf="(lb.widgets['aw-linked-objects'].ds.out$ | async)?.actions as action" class="aw-home__bubble-results-list-actions">
-                        <button class="n7-btn n7-btn-light n7-btn-l aw-home__bubble-results-list-view-all">
+                        <button (click)="lb.eventHandler.emitInner('bubbleresultsviewallclick')" class="n7-btn n7-btn-light n7-btn-l aw-home__bubble-results-list-view-all">
                             {{action[0].label}}
                         </button>
                     </div>
