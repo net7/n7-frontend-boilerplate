@@ -1,0 +1,8 @@
+<div class="dv-datepiker-wrapper {{ data.classes || ' '}}">
+    <div class="dv-select-container">
+        <select class="dv-datepicker-select">
+            <option *ngFor="let opt of data.options">{{opt.text}}</option>
+        </select>
+    </div>
+    <ng-content></ng-content>
+</div>
