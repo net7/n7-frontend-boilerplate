@@ -3,76 +3,73 @@ import { EventHandler } from '@n7-frontend/core';
 export class AwBubbleChartEH extends EventHandler {
 
   public listen() {
-    this.innerEvents$.subscribe(event => {
-      switch (event.type) {
-        case 'aw-bubble-chart.init':
-          break;
+    this.innerEvents$.subscribe(({ type, payload }) => {
+      switch (type) {
         case 'aw-bubble-chart.click':
-          event.payload.entityIdmap = this.dataSource.getEntityIdMap();
-          event.payload.allBubbles = this.dataSource.getAllBubbles();
-          this.emitOuter('click', event.payload);
+          this.toggleSelection(payload)
+          this.emitOuter('lockfilter', this.dataSource.chartData.find(el => payload == el.entity.id))
           break;
-        case 'aw-bubble-chart.mouseenter':
-          const currBubble = this.dataSource.onBubbleMouseEnter(
-            {
-              bubblePayload:event.payload.bubblePayload,
-              bubble:event.payload.bubble
-            });
-          event.payload.currBubble = currBubble;
-          this.emitOuter('mouseenter', event.payload);
+        case 'aw-bubble-chart.d3end': // end of d3.js draw()
+          this.dataSource.tippyMaker(this.dataSource.chartData) // make tooltips
           break;
-        case 'aw-bubble-chart.mouseleave':
-          this.emitOuter('mouseleave', event.payload);
+        case 'aw-bubble-chart.bubble-tooltip-goto-click':
+          this.emitGlobal('navigate', {
+            handler: 'router',
+            path: [`aw/entita/${this.dataSource.focusedBubble}`]
+          });
           break;
-        case "aw-bubble-chart.bubble-tooltip-close-click":
-            this.emitOuter('bubble-tooltip-close-click', event.payload);
-            break;
-        case "aw-bubble-chart.bubble-tooltip-goto-click":
-          this.emitOuter('bubble-tooltip-goto-click', event.payload);
-            break;
-        case "aw-bubble-chart.bubble-tooltip-select-click":
-          this.emitOuter('bubble-tooltip-select-click', event.payload);
-            break;
+        case 'aw-bubble-chart.bubble-tooltip-select-click':
+          this.toggleSelection(this.dataSource.focusedBubble)
+          this.emitOuter('lockfilter', this.dataSource.chartData.find(el => this.dataSource.focusedBubble == el.entity.id))
+          break;
         default:
-          console.warn('unhandled inner event of type', event.type)
+          console.warn('unhandled inner event of type', type, 'with payload', payload)
           break;
       }
     });
 
     this.outerEvents$.subscribe(({ type, payload }) => {
-      switch(type){
-        case "aw-home-layout.bubble-tooltip-select-click":
-              let selectData = {
-                'bubble': this.dataSource.onBubbleTooltipClick('select',payload),
-                'entityIdmap': this.dataSource.getEntityIdMap(),
-                'allBubbles': this.dataSource.getAllBubbles(),
-                'source': 'bubble'
-              };
-              this.emitOuter('click', selectData);
-              break;
-        case 'aw-home-layout.bubble-filter':
-          this.emitOuter('bubble-filtered',
-          {
-            'allBubbles': this.dataSource.getAllBubbles(),
-            'selected': this.dataSource.getSelectedBubbles()
-          });
+      switch (type) {
+        case 'aw-home-layout.tagclick':
+          this.toggleSelection(payload)
+          break;
+        case 'aw-home-layout.facetclick':
+          this.toggleSelection(payload)
+          break;
+        case 'aw-home-layout.togglefilter':
+          this.toggleFilter(payload)
           break;
         case 'aw-scheda-layout.filterbubbleresponse':
         case 'aw-entita-layout.filterbubbleresponse':
         case 'aw-home-layout.filterbubbleresponse':
-          if( payload.source ){
-            this.dataSource.setAllBubblesFromApolloQuery(payload, payload.reload);
-            this.emitOuter('bubble-filtered',
-            {
-              'allBubbles': this.dataSource.getAllBubbles(),
-              'selected': this.dataSource.getSelectedBubbles(),
-              'entityIdmap': this.dataSource.getEntityIdMap()
-            });
-          } else {
-            this.dataSource.update(payload);
-          }
+          this.dataSource.updateChart(payload)
+          break;
+        default:
           break;
       }
     });
   }
+
+  toggleSelection = id => {
+    /*
+      Expects the ID of a bubble.
+      Updates the graph with a new request
+    */
+    this.dataSource.handleBubbleClick(id)
+    this.emitOuter('selection', this.dataSource.selected)
+  }
+
+  toggleFilter = f => {
+    /*
+      Toggle the clicked filter in the filteres array and
+      redraw the graph.
+    */
+    if (this.dataSource.filters.includes(f)) {
+      this.dataSource.filters.splice(this.dataSource.filters.indexOf(f), 1)
+    } else {
+      this.dataSource.filters.push(f)
+    }
+    this.dataSource.updateChart(null) // null means "keep using the same response"
+  }
+
 }

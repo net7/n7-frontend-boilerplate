@@ -454,5 +454,15 @@ export const ApolloProviderConfig = {
         }
       }
     }`
+  },
+  'getMissingBubble': {
+    queryName: 'getEntity',
+    queryBody: `{
+      getEntity(__PARAMS__){
+        label
+        id
+        typeOfEntity
+      }
+    }`
   }
 };
