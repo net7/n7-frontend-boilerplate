@@ -31,9 +31,8 @@
         <!-- Linked objects -->
         <ng-container *ngIf="(lb.widgets['aw-bubble-chart'].ds.out$ | async)?.selected.length > 0;">
             <div class="aw-home__bubble-results" id="home-bubble-results"
-                [ngStyle]="{ 'display': 'flex' , 'flex-direction': 'column', 'transition': 'opacity 1s ease-in-out;' }"
                 [style.opacity]="lb.dataSource.loadingBubbles ? '0' : '1'">
-                <div *ngIf="lb.dataSource.numOfItemsStr">
+                <div *ngIf="lb.dataSource.numOfItemsStr" class="aw-home__bubble-results-title-wrapper">
                     <h1 class="aw-home__bubble-results-title"><strong class="aw-home__bubble-results-title-counter">
                             {{ lb.dataSource.numOfItemsStr }}</strong> <span> Oggetti culturali</span>
                     </h1>
