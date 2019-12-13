@@ -1,9 +1,10 @@
 <div class="aw-scheda" id="scheda-layout">
-    <div class="aw-scheda__content n7-side-auto-padding"
+    <div class="aw-scheda__content n7-side-auto-padding sticky-parent"
          [ngClass]="{ 'is-collapsed' : lb.dataSource.sidebarCollapsed }">
 
          <!-- Left sidebar: tree -->
-        <div class="aw-scheda__tree">
+        <div class="aw-scheda__tree sticky-target"
+            [ngClass]="{ 'is-sticky': lb.dataSource.sidebarIsSticky }">
             <n7-sidebar-header
                 [data]="lb.widgets['aw-sidebar-header'].ds.out$ | async"
                 [emit]="lb.widgets['aw-sidebar-header'].emit"

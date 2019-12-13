@@ -1,4 +1,5 @@
 import { LayoutDataSource } from '@n7-frontend/core';
+import { fromEvent } from 'rxjs';
 
 export class AwSchedaLayoutDS extends LayoutDataSource {
   /**
@@ -27,6 +28,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   public bubblesEnabled: boolean;
   public hasSimilarItems: boolean;
   public imageViewerIstance: any;
+  public sidebarIsSticky = false;
   /**
   * If you are not using these variables (from your-layout.ts),
   * remove them from onInit() parameters and inside the function.
@@ -48,6 +50,9 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     this.mainState.update('headTitle', 'Arianna Web > Patrimonio');
     this.mainState.update('pageTitle', 'Arianna Web: patrimonio Layout');
     this.mainState.updateCustom('currentNav', 'aw/patrimonio');
+
+    // sidebar sticky control
+    this._sidebarStickyControl();
   }
 
   getNavigation(id) {
@@ -210,5 +215,20 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     return ('B_' + entityId.replace(/-/g, '_'));
   }
 
+  private _sidebarStickyControl() {
+    const source$ = fromEvent(window, 'scroll');
 
+    source$.subscribe(() => {
+      const windowTop = window.pageYOffset,
+        windowBottom = window.scrollY + window.innerHeight,
+        wrapper = document.getElementsByClassName('sticky-parent')[0],
+        wrapperTop = wrapper['offsetTop'],
+        wrapperBottom = wrapperTop + wrapper.clientHeight,
+        target = document.getElementsByClassName('sticky-target')[0],
+        targetTop = target['offsetTop'],
+        targetBottom = targetTop + target.clientHeight;
+
+        this.sidebarIsSticky = wrapperTop <= windowTop;
+    });
+  }
 }

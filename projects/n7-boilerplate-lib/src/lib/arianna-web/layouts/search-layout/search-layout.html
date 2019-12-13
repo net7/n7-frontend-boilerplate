@@ -12,9 +12,11 @@
         </div>
         -->
     </div>
-    <div class="aw-search__content-wrapper">
+    <div class="aw-search__content-wrapper sticky-parent">
         <!-- Left sidebar: facets -->
-        <div class="aw-search__sidebar">
+        <div
+            class="aw-search__sidebar sticky-target" 
+            [ngClass]="{ 'is-sticky': lb.dataSource.sidebarIsSticky }">
             <div class="aw-search__facets">
                 <n7-facets-wrapper
                     [data]="lb.widgets['facets-wrapper'].ds.out$ | async"

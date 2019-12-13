@@ -4,8 +4,8 @@ import {
   SearchModel
 } from '../../../common/services';
 import facetsConfig from './search-facets.config';
-import { tap } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import { tap, debounceTime } from 'rxjs/operators';
+import { Observable, of, fromEvent } from 'rxjs';
 import helpers from '../../../common/helpers';
 
 const SEARCH_MODEL_ID = 'aw-search-layout';
@@ -24,6 +24,7 @@ export class AwSearchLayoutDS extends LayoutDataSource {
   public totalCount: number;
   public currentPage: any = 1; // pagination value (url param)
   public pageSize = 10; // linked objects page size
+  public sidebarIsSticky = false;
 
   public options: any;
 
@@ -59,6 +60,9 @@ export class AwSearchLayoutDS extends LayoutDataSource {
       this.one('facets-wrapper').update({ searchModel: this.searchModel });
       this.searchModel.updateInputsFromFilters();
     });
+
+    // sidebar sticky control
+    this._sidebarStickyControl();
   }
 
   onOrderByChange(payload) {
@@ -186,5 +190,15 @@ export class AwSearchLayoutDS extends LayoutDataSource {
 
   private _normalizeItems(items) {
     return items.map(singleItem => ({ item: { ...singleItem } }));
+  }
+
+  private _sidebarStickyControl() {
+    const source$ = fromEvent(window, 'scroll');
+
+    source$.subscribe(() => {
+      const windowOffsetTop = window.pageYOffset,
+        wrapperOffsetTop = document.getElementsByClassName('sticky-parent')[0]['offsetTop'];
+        this.sidebarIsSticky = wrapperOffsetTop <= windowOffsetTop;
+    });
   }
 }
