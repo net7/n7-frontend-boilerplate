@@ -185,7 +185,7 @@ export default {
     order: {
       type: 'text', // score | text | date
       key: 'label', // docPath, elastic key, ecc
-      direction: 'DESC' // ASC | DESC
+      direction: 'ASC' // ASC | DESC
     },
     fields: [
       {

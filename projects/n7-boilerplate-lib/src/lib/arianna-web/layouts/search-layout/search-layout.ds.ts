@@ -32,12 +32,12 @@ export class AwSearchLayoutDS extends LayoutDataSource {
   public orderByLabel = 'Ordina per';
   public orderByOptions: any = [
     {
-      value: 'label_DESC',
-      label: 'Ordine alfabetico (DESC)'
+      value: 'label_ASC',
+      label: 'Ordine alfabetico (A→Z)'
     },
     {
-      value: 'label_ASC',
-      label: 'Ordine alfabetico (ASC)'
+      value: 'label_DESC',
+      label: 'Ordine alfabetico (Z→A)'
     }
   ];
 
