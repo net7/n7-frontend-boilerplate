@@ -85,7 +85,6 @@ export class AwHomeLayoutDS extends LayoutDataSource {
             });
         });
         this.one('aw-home-facets-wrapper').update(facetData);
-        this.renderPreviewsFromApolloQuery(response);
     }
 
     renderPreviewsFromApolloQuery(response: any) {
