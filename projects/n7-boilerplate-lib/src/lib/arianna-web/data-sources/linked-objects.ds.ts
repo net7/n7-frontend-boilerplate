@@ -97,7 +97,12 @@ export class AwLinkedObjectsDS extends DataSource {
       Returns the data for <n7-pagination> component.
     */
     const result = [];
-    const limit = this.paths.paginationLimit - 1;
+    let limit = this.paths.paginationLimit - 1;
+
+    if (totalPages <= limit) {
+      limit = totalPages - 1;
+    }
+
     // always push the first page
     if (limit) {
       let lastPage: number, firstPage: number;
@@ -117,6 +122,7 @@ export class AwLinkedObjectsDS extends DataSource {
         lastPage = limit + 1;
         firstPage = 1;
       }
+
       // console.log({ currentPage, limit, lastPage, firstPage })
       for (let i = firstPage; i <= lastPage; i++) {
         result.push({
