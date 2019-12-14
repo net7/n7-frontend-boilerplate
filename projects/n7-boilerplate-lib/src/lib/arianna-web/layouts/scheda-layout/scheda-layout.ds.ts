@@ -1,7 +1,9 @@
 import { LayoutDataSource } from '@n7-frontend/core';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 export class AwSchedaLayoutDS extends LayoutDataSource {
+  private destroyed$: Subject<any> = new Subject();
   private communication: any;
   protected configuration: any;
   protected mainState: any;
@@ -12,7 +14,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   public options: any;
   public pageTitle: string;
   public hasBreadcrumb: boolean;
-  public contentParts: any;
+  public contentParts: any = {};
   public tree: any;
   public sidebarCollapsed: boolean;
   public bubbleChartSectionTitle: string;
@@ -24,6 +26,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   public hasSimilarItems: boolean;
   public imageViewerIstance: any;
   public sidebarIsSticky = false;
+  public treeMaxHeight = '100%';
 
   onInit({ configuration, mainState, router, options, titleService, communication }) {
     this.configuration = configuration;
@@ -46,6 +49,10 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
     // sidebar sticky control
     this._sidebarStickyControl();
+  }
+
+  onDestroy(){
+    this.destroyed$.next();
   }
 
   getNavigation(id) {
@@ -209,17 +216,28 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   private _sidebarStickyControl() {
     const source$ = fromEvent(window, 'scroll');
 
-    source$.subscribe(() => {
+    source$.pipe(
+      takeUntil(this.destroyed$)
+    ).subscribe(() => {
+      console.count('scroll-scheda');
       const windowTop = window.pageYOffset,
         windowBottom = window.scrollY + window.innerHeight,
         wrapper = document.getElementsByClassName('sticky-parent')[0],
         wrapperTop = wrapper['offsetTop'],
-        wrapperBottom = wrapperTop + wrapper.clientHeight,
-        target = document.getElementsByClassName('sticky-target')[0],
-        targetTop = target['offsetTop'],
-        targetBottom = targetTop + target.clientHeight;
+        wrapperBottom = wrapperTop + wrapper.clientHeight;
 
-      this.sidebarIsSticky = wrapperTop <= windowTop;
+        this.sidebarIsSticky = wrapperTop <= windowTop;
+
+        // tree height control
+        if (this.sidebarIsSticky && windowBottom < wrapperBottom) {
+          this.treeMaxHeight = (windowBottom - windowTop - 50) + 'px';
+        } else if (this.sidebarIsSticky && windowBottom >= wrapperBottom) {
+          this.treeMaxHeight = (wrapperBottom - windowTop - 50) + 'px';
+        } else if (windowBottom < wrapperBottom) {
+          this.treeMaxHeight = (windowBottom - wrapperTop - 50) + 'px';
+        } else {
+          this.treeMaxHeight = (wrapperBottom - wrapperTop - 50) + 'px';
+        }
     });
   }
 }

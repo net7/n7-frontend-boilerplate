@@ -4,13 +4,14 @@ import {
   SearchModel
 } from '../../../common/services';
 import facetsConfig from './search-facets.config';
-import { tap, debounceTime } from 'rxjs/operators';
-import { Observable, of, fromEvent } from 'rxjs';
+import { tap, debounceTime, takeUntil } from 'rxjs/operators';
+import { Observable, of, fromEvent, Subject } from 'rxjs';
 import helpers from '../../../common/helpers';
 
 const SEARCH_MODEL_ID = 'aw-search-layout';
 
 export class AwSearchLayoutDS extends LayoutDataSource {
+  private destroyed$: Subject<any> = new Subject();
   private communication: any;
   private configuration: any;
   private mainState: any;
@@ -63,6 +64,10 @@ export class AwSearchLayoutDS extends LayoutDataSource {
 
     // sidebar sticky control
     this._sidebarStickyControl();
+  }
+
+  onDestroy(){
+    this.destroyed$.next();
   }
 
   onOrderByChange(payload) {
@@ -195,7 +200,10 @@ export class AwSearchLayoutDS extends LayoutDataSource {
   private _sidebarStickyControl() {
     const source$ = fromEvent(window, 'scroll');
 
-    source$.subscribe(() => {
+    source$.pipe(
+      takeUntil(this.destroyed$)
+    ).subscribe(() => {
+      console.count('scroll-search');
       const windowOffsetTop = window.pageYOffset,
         wrapperOffsetTop = document.getElementsByClassName('sticky-parent')[0]['offsetTop'];
         this.sidebarIsSticky = wrapperOffsetTop <= windowOffsetTop;

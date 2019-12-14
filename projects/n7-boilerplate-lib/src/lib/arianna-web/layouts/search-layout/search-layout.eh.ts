@@ -16,6 +16,10 @@ export class AwSearchLayoutEH extends EventHandler {
           this._listenToRouterChanges();
           break;
 
+        case 'aw-search-layout.destroy':
+          this.dataSource.onDestroy();
+          break;
+
         case 'aw-search-layout.orderbychange':
           this.dataSource.onOrderByChange(payload);
           this.facetsChange$.next();

@@ -6,8 +6,15 @@
         <div class="aw-scheda__tree sticky-target" [ngClass]="{ 'is-sticky': lb.dataSource.sidebarIsSticky }">
             <n7-sidebar-header [data]="lb.widgets['aw-sidebar-header'].ds.out$ | async"
                 [emit]="lb.widgets['aw-sidebar-header'].emit"></n7-sidebar-header>
-            <n7-tree [data]="lb.widgets['aw-tree'].ds.out$ | async" [emit]="lb.widgets['aw-tree'].emit"
-                *ngIf="!lb.dataSource.sidebarCollapsed"></n7-tree>
+            <div class="aw-scheda__tree-content" 
+                [ngStyle]="{ 
+                    'max-height': lb.dataSource.treeMaxHeight, 
+                    'overflow': 'auto' 
+                }"
+            >
+                <n7-tree [data]="lb.widgets['aw-tree'].ds.out$ | async" [emit]="lb.widgets['aw-tree'].emit"
+                    *ngIf="!lb.dataSource.sidebarCollapsed"></n7-tree>
+            </div>
         </div>
 
         <!-- Scheda details -->

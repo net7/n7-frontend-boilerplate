@@ -20,6 +20,7 @@ export class AwSchedaLayoutEH extends EventHandler {
 
         case 'aw-scheda-layout.destroy':
           this.destroyed$.next();
+          this.dataSource.onDestroy();
           break;
 
         default:
