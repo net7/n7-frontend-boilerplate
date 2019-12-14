@@ -2,18 +2,13 @@ import { LayoutDataSource } from '@n7-frontend/core';
 import { fromEvent } from 'rxjs';
 
 export class AwSchedaLayoutDS extends LayoutDataSource {
-  /**
-  * If you are not using these variables (from your-layout.ts),
-  * remove them from here too.
-  */
   private communication: any;
   protected configuration: any;
   protected mainState: any;
   protected router: any;
   protected titleService: any;
-  private allBubbles: any[] = null;
-  public selectedBubbles: any[] = [];
-
+  // private allBubbles: any[] = null;
+  // public selectedBubbles: any[] = [];
   public options: any;
   public pageTitle: string;
   public hasBreadcrumb: boolean;
@@ -44,6 +39,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     this.hasSimilarItems = false;
     this.bubblesEnabled = this.configuration.get('features-enabled') ? this.configuration.get('features-enabled')['bubblechart'] : false;
 
+    this.one('aw-bubble-chart').updateOptions({ simple: true })
     this.mainState.update('headTitle', 'Arianna Web > Patrimonio');
     this.mainState.update('pageTitle', 'Arianna Web: patrimonio Layout');
     this.mainState.updateCustom('currentNav', 'aw/patrimonio');
@@ -205,10 +201,10 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   // });
   // }
 
-  private convertEntityIdToBubbleId(entityId: string): string {
-    if (!entityId) return null;
-    return ('B_' + entityId.replace(/-/g, '_'));
-  }
+  // private convertEntityIdToBubbleId(entityId: string): string {
+  //   if (!entityId) return null;
+  //   return ('B_' + entityId.replace(/-/g, '_'));
+  // }
 
   private _sidebarStickyControl() {
     const source$ = fromEvent(window, 'scroll');

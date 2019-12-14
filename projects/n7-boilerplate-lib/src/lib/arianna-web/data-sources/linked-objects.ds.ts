@@ -210,7 +210,7 @@ export class AwLinkedObjectsDS extends DataSource {
                   value: _get(toe, paths.metadata.toe.value, toe.count),
                   // icon: 'n7-icon-bell' // TODO: link icon to config key
                   icon: keys[
-                    _get(toe, paths.metadata.toe.icon, toe.type ).replace(' ', '-')]
+                    _get(toe, paths.metadata.toe.icon, toe.type).replace(' ', '-')]
                     ? keys[_get(toe, paths.metadata.toe.icon, toe.type).replace(' ', '-')].icon
                     : '',
                   classes: 'color-' + _get(toe, paths.metadata.toe.icon, toe.type).replace(' ', '-')

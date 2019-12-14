@@ -78,7 +78,7 @@ export class AwBubbleChartDS extends DataSource {
         `${bubble.entity.label}`
       let selectButton = element.getElementsByClassName('aw-bubble-popup-menu__link')[1]
       if (this.options.simple) {
-        selectButton.remove()
+        if (selectButton) selectButton.remove()
       } else {
         let toggleBubbleText = this.selected.includes(bubble.entity.id) ? `Deseleziona` : `Seleziona`
         selectButton.innerHTML = toggleBubbleText
