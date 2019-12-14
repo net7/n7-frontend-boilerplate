@@ -56,6 +56,8 @@ export class AwSearchLayoutDS extends LayoutDataSource {
       this.search.add(SEARCH_MODEL_ID, facetsConfig);
     }
     this.searchModel = this.search.model(SEARCH_MODEL_ID);
+    // reset
+    this.searchModel.updateFiltersFromQueryParams({});
 
     this.doSearchRequest$().subscribe(() => {
       this.one('facets-wrapper').update({ searchModel: this.searchModel });
