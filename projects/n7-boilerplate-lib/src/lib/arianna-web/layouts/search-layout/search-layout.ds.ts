@@ -56,8 +56,12 @@ export class AwSearchLayoutDS extends LayoutDataSource {
       this.search.add(SEARCH_MODEL_ID, facetsConfig);
     }
     this.searchModel = this.search.model(SEARCH_MODEL_ID);
-    // reset
-    this.searchModel.updateFiltersFromQueryParams({});
+
+    // query params control
+    if (SearchService.queryParams) {
+      this.searchModel.updateFiltersFromQueryParams(SearchService.queryParams);
+      SearchService.queryParams = null;
+    }
 
     this.doSearchRequest$().subscribe(() => {
       this.one('facets-wrapper').update({ searchModel: this.searchModel });
@@ -68,8 +72,10 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     this._sidebarStickyControl();
   }
 
-  onDestroy(){
+  onDestroy() {
     this.destroyed$.next();
+    // reset search
+    this.searchModel.updateFiltersFromQueryParams({});
   }
 
   onOrderByChange(payload) {
