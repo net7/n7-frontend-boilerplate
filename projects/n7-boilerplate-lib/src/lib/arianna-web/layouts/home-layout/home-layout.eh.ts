@@ -49,7 +49,7 @@ export class AwHomeLayoutEH extends EventHandler {
           if (payload.value) {
             let params = {
               input: payload.value,
-              typeOfEntity: payload.inputPayload.replace('-search', ''),
+              typeOfEntity: payload.inputPayload.replace(/-search/g, '').replace(/-/g, ' '),
               itemsPagination: {
                 offset: 0, limit: this.configuration.get('home-layout')['results-limit']
               }
@@ -109,6 +109,12 @@ export class AwHomeLayoutEH extends EventHandler {
               console.log('Unable to fetch additional data.')
             }
           })
+          break;
+        case 'aw-linked-objects.click':
+          this.emitGlobal('navigate', {
+            handler: 'router',
+            path: [this.configuration.get("paths").schedaBasePath, payload]
+          });
           break;
         case 'aw-autocomplete-wrapper.clickresult':
           this.handleSimpleAutocompleteClick(payload)

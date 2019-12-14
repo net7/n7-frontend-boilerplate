@@ -81,9 +81,9 @@ export class AwHomeFacetsWrapperDS extends DataSource {
                 placeholder: facet['input-placeholder'],
                 icon: 'n7-icon-search',
                 disabled: !facet.enabled,
-                inputPayload: String(facet.type) + '-search',
-                iconPayload: String(facet.type) + '-search',
-                enterPayload: String(facet.type) + '-search',
+                inputPayload: String(facet.type.replace(/ /g, '-')) + '-search',
+                iconPayload: String(facet.type.replace(/ /g, '-')) + '-search',
+                enterPayload: String(facet.type.replace(/ /g, '-')) + '-search',
                 classes: String(facet.type.replace(' ', '-')) + '-search'
               }
             ]
