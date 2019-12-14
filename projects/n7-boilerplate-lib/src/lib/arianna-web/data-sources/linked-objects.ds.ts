@@ -179,7 +179,11 @@ export class AwLinkedObjectsDS extends DataSource {
     const result = [];
     const enabledKeys = paths.metadata.info.selection.map(info => info.key);
     d.forEach(el => {
-      const item = {
+      const infoData = _get(el, paths.metadata.info.data, el.item.fields),
+        infoDataItems = infoData ? infoData.filter(data => enabledKeys.indexOf(data.keys) !== -1) : [],
+        toeData = _get(el, paths.metadata.toe.data, el.relatedTypesOfEntity),
+        breadcrumbs = _get(el, paths.metadata.breadcrumbs.data, el.breadcrumbs),
+        item = {
         image: _get(el, paths.image, el.image),
         title:
           // if there is a max string length in config, use it
@@ -192,34 +196,37 @@ export class AwLinkedObjectsDS extends DataSource {
             _get(el, paths.text.data, el.item.text),
         payload: _get(el, paths.payload, el.item.id),
         classes: ['entita', 'search'].includes(context) ? 'is-fullwidth' : '',
-        metadata: [
-          _get(el, paths.metadata.info.data, el.item.fields) ? {
-            classes: 'n7-objects__metadata-artist',
-            items: _get(el, paths.metadata.info.data, el.item.fields)
-              .filter(data => enabledKeys.indexOf(data.keys) !== -1)
-              .map(data => ({
-                label: helpers.prettifySnakeCase(data.key, labels[data.key]),
-                value: data.value
-              }))
-          } : {}, // if metadata.data is missing, use empty object
-          {
-            classes: 'n7-objects__metadata-linked',
-            items: _get(el, paths.metadata.toe.data, el.relatedTypesOfEntity) ?
-              _get(el, paths.metadata.toe.data, el.relatedTypesOfEntity).map(toe => {
-                return { // persona: 6, Organizz: 12, Luoghi: 2, Concetti: 32
-                  value: _get(toe, paths.metadata.toe.value, toe.count),
-                  // icon: 'n7-icon-bell' // TODO: link icon to config key
-                  icon: keys[
-                    _get(toe, paths.metadata.toe.icon, toe.type).replace(' ', '-')]
-                    ? keys[_get(toe, paths.metadata.toe.icon, toe.type).replace(' ', '-')].icon
-                    : '',
-                  classes: 'color-' + _get(toe, paths.metadata.toe.icon, toe.type).replace(' ', '-')
-                };
-              }) : null
-          }
-        ]
+        metadata: infoDataItems.length || toeData ? [] : null,
+        breadcrumbs: null
       };
-      if (_get(el, paths.metadata.breadcrumbs.data, el.breadcrumbs)) {
+      // metadata
+      if (infoDataItems.length) {
+        item.metadata.push({
+          classes: 'n7-objects__metadata-artist',
+          items: infoDataItems.map(data => ({
+              label: helpers.prettifySnakeCase(data.key, labels[data.key]),
+              value: data.value
+          }))
+        });
+      }
+      if (toeData) {
+        item.metadata.push({
+          classes: 'n7-objects__metadata-linked',
+          items: toeData.map(toe => {
+            return { // persona: 6, Organizz: 12, Luoghi: 2, Concetti: 32
+              value: _get(toe, paths.metadata.toe.value, toe.count),
+              // icon: 'n7-icon-bell' // TODO: link icon to config key
+              icon: keys[
+                _get(toe, paths.metadata.toe.icon, toe.type).replace(' ', '-')]
+                ? keys[_get(toe, paths.metadata.toe.icon, toe.type).replace(' ', '-')].icon
+                : '',
+              classes: 'color-' + _get(toe, paths.metadata.toe.icon, toe.type).replace(' ', '-')
+            };
+          })
+        });
+      }
+      // breadcrumbs
+      if (breadcrumbs) {
         item['breadcrumbs'] = { // n7-breadcrumbs uses this as it's own data
           items: _get(el, paths.metadata.breadcrumbs.data, el.breadcrumbs).map(crumb => {
             return {

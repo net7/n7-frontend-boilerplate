@@ -219,7 +219,6 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     source$.pipe(
       takeUntil(this.destroyed$)
     ).subscribe(() => {
-      console.count('scroll-scheda');
       const windowTop = window.pageYOffset,
         windowBottom = window.scrollY + window.innerHeight,
         wrapper = document.getElementsByClassName('sticky-parent')[0],

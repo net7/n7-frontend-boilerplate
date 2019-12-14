@@ -203,10 +203,9 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     source$.pipe(
       takeUntil(this.destroyed$)
     ).subscribe(() => {
-      console.count('scroll-search');
       const windowOffsetTop = window.pageYOffset,
         wrapperOffsetTop = document.getElementsByClassName('sticky-parent')[0]['offsetTop'];
-        this.sidebarIsSticky = wrapperOffsetTop <= windowOffsetTop;
+      this.sidebarIsSticky = wrapperOffsetTop <= windowOffsetTop;
     });
   }
 }
