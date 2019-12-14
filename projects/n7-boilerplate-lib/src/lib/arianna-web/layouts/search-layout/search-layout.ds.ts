@@ -76,6 +76,7 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     this.destroyed$.next();
     // reset search
     this.searchModel.updateFiltersFromQueryParams({});
+    SearchService.queryParams = null;
   }
 
   onOrderByChange(payload) {
