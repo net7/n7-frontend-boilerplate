@@ -19,11 +19,12 @@
             <div class="aw-bubble-popup-menu__actions">
                 <span class="aw-bubble-popup-menu__link" *ngIf="buttons.indexOf('goto') >= 0"
                     onclick="document.getElementById('bubble-popup-menu_gotobutton').click();">Vai alla scheda</span>
-                <ng-container *ngIf="buttons.length > 1"></ng-container>
-                <span class="aw-bubble-popup-menu__link" *ngIf="buttons.indexOf('select') >= 0"
-                    onclick="document.getElementById('bubble-popup-menu_selectbutton').click();">
-                    <!-- Set by tippy builder function -->
-                </span>
+                <ng-container>
+                    <span class="aw-bubble-popup-menu__link" *ngIf="buttons.indexOf('select') >= 0"
+                        onclick="document.getElementById('bubble-popup-menu_selectbutton').click();">
+                        <!-- Set by tippy builder function -->
+                    </span>
+                </ng-container>
             </div>
         </div>
     </div>

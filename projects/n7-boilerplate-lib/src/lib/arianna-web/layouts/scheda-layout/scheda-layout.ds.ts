@@ -29,10 +29,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   public hasSimilarItems: boolean;
   public imageViewerIstance: any;
   public sidebarIsSticky = false;
-  /**
-  * If you are not using these variables (from your-layout.ts),
-  * remove them from onInit() parameters and inside the function.
-  */
+
   onInit({ configuration, mainState, router, options, titleService, communication }) {
     this.configuration = configuration;
     this.mainState = mainState;
@@ -76,7 +73,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   loadItem(id) {
     if (id) {
       const maxSimilarItems = this.configuration.get('scheda-layout')['related-items']['max-related-items'];
-      return  this.communication.request$('getNode', {
+      return this.communication.request$('getNode', {
         onError: (error) => console.error(error),
         params: { id: id, maxSimilarItems: maxSimilarItems }
       })
@@ -113,12 +110,12 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
         icons: this.configuration.get('scheda-layout')['tree']
       })
       /* Related Entities */
-      this.one('aw-bubble-chart').updateOptions({
-        context: 'scheda',
-        configKeys: this.configuration.get("config-keys"),
-        bubbleContainerId: 'bubbleChartContainer',
-        containerId: 'bubble-chart-container',
-      });
+      // this.one('aw-bubble-chart').updateOptions({
+      // context: 'scheda',
+      // configKeys: this.configuration.get("config-keys"),
+      // bubbleContainerId: 'bubbleChartContainer',
+      // containerId: 'bubble-chart-container',
+      // });
 
       if (response.text) {
         content['content'] = response.text;
@@ -152,7 +149,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       };
 
       this.one('aw-scheda-inner-title').update(titleObj);
-      
+
       this.hasMetadata = response.fields != null;
       this.one('aw-scheda-metadata').updateOptions({ labels: this.configuration.get("labels") });
       this.one('aw-scheda-metadata').update(response);
@@ -162,7 +159,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
         items: []
       };
 
-      if( response.breadcrumb ){
+      if (response.breadcrumb) {
         response.breadcrumbs.forEach(element => {
           breadcrumbs.items.push({
             label: element.label,
@@ -173,42 +170,40 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       }
     }
 
-      if ( response.relatedItems ) {
-        this.hasSimilarItems = true;
-        this.one('aw-linked-objects').updateOptions({ context: 'scheda', config: this.configuration })
-        this.one('aw-linked-objects').update(response);
-      } else {
-        this.hasSimilarItems = false;
-        //this.one('aw-linked-objects').update([]);
-      }
+    if (response.relatedItems) {
+      this.hasSimilarItems = true;
+      this.one('aw-linked-objects').updateOptions({ context: 'scheda', config: this.configuration })
+      this.one('aw-linked-objects').update(response);
+    } else {
+      this.hasSimilarItems = false;
+      //this.one('aw-linked-objects').update([]);
+    }
   }
 
   collapseSidebar() {
     this.sidebarCollapsed = !this.sidebarCollapsed;
   }
 
-  setAllBubblesFromApolloQuery( response: any, reset?: boolean ){
-    if ( !response || !response.relatedEntities ) { this.hasBubbles = false; return; }
-    this.allBubbles = [];
+  // setAllBubblesFromApolloQuery( response: any, reset?: boolean ){
+  //   if ( !response || !response.relatedEntities ) { this.hasBubbles = false; return; }
+  //   this.allBubbles = [];
 
-    for ( let i = 0; i < response.relatedEntities.length; i++ ){
-
-      const color = this.configuration.get('config-keys')[response.relatedEntities[i].entity.typeOfEntity.configKey] ? this.configuration.get('config-keys')[response.relatedEntities[i].entity.typeOfEntity.configKey]['color']['hex'] : "";
-
-      this.allBubbles.push(
-        {
-          id: this.convertEntityIdToBubbleId( response.relatedEntities[i].entity.id ),
-          ...response.relatedEntities[i],
-          color: color
-        });
-    }
-    this.one('aw-scheda-bubble-chart').update({
-      containerId: 'bubble-chart-container',
-      width: window.innerWidth / 1.8,
-      bubbles: this.allBubbles,
-      reset: (reset ? reset : false)
-    });
-  }
+  //   for ( let i = 0; i < response.relatedEntities.length; i++ ){
+  // const color = this.configuration.get('config-keys')[response.relatedEntities[i].entity.typeOfEntity.configKey] ? this.configuration.get('config-keys')[response.relatedEntities[i].entity.typeOfEntity.configKey]['color']['hex'] : "";
+  // this.allBubbles.push(
+  //   {
+  //     id: this.convertEntityIdToBubbleId( response.relatedEntities[i].entity.id ),
+  //     ...response.relatedEntities[i],
+  //     color: color
+  //   });
+  // }
+  // this.one('aw-scheda-bubble-chart').update({
+  //   containerId: 'bubble-chart-container',
+  //   width: window.innerWidth / 1.8,
+  //   bubbles: this.allBubbles,
+  //   reset: (reset ? reset : false)
+  // });
+  // }
 
   private convertEntityIdToBubbleId(entityId: string): string {
     if (!entityId) return null;
@@ -228,7 +223,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
         targetTop = target['offsetTop'],
         targetBottom = targetTop + target.clientHeight;
 
-        this.sidebarIsSticky = wrapperTop <= windowTop;
+      this.sidebarIsSticky = wrapperTop <= windowTop;
     });
   }
 }

@@ -34,7 +34,6 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         this.tippy = tippy;
         this.resultsLimit = this.configuration.get('home-layout')['results-limit']
         this.bubblesEnabled = this.configuration.get('features-enabled') ? this.configuration.get('features-enabled')['bubblechart'] : false;
-
         this.one('aw-hero').update(this.configuration.get('home-layout')['top-hero']);
         this.one('aw-home-hero-patrimonio').update(this.configuration.get('home-layout')['bottom-hero']);
         // update streams
@@ -43,7 +42,6 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         this.mainState.updateCustom('currentNav', 'aw/home');
         // listen autocomplete changes
         this._listenAutoCompleteChanges();
-
         this.outerLinks = this.configuration.get('home-layout')['outer-links']['test'];
         this.outerLinksTitle = this.configuration.get('home-layout')['outer-links']['title'];
     }
@@ -68,7 +66,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         return this.communication.request$('globalFilter', {
             onError: (error) => console.error(error),
             params: {
-                entitiesListSize: 500
+                entitiesListSize: this.configuration.get('home-layout')['max-bubble-num']
             },
         })
     }

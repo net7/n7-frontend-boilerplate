@@ -1,6 +1,5 @@
 import { DataSource } from '@n7-frontend/core';
 import tippy, { createSingleton } from 'tippy.js';
-// import tippy from 'tippy.js/dist/tippy-bundle.esm';
 
 export class AwBubbleChartDS extends DataSource {
   public chartData: any = []      // data rendered into the graph
@@ -72,12 +71,19 @@ export class AwBubbleChartDS extends DataSource {
 
     const buildTooltip = bubble => {
       let element = document.getElementsByClassName('bubble-chart__tippy-template')[0]
-      element.getElementsByClassName('aw-bubble-popup-menu__text')[0].innerHTML =
+      let gotoButton = element.getElementsByClassName('aw-bubble-popup-menu__text')[0]
+      gotoButton.innerHTML =
         `È collegato a ${bubble.count} entità`
       element.getElementsByClassName('aw-bubble-popup-menu__title')[0].innerHTML =
         `${bubble.entity.label}`
-      let toggleBubbleText = this.selected.includes(bubble.entity.id) ? `Deseleziona` : `Seleziona`
-      element.getElementsByClassName('aw-bubble-popup-menu__link')[1].innerHTML = toggleBubbleText
+      let selectButton = element.getElementsByClassName('aw-bubble-popup-menu__link')[1]
+      if (this.options.simple) {
+        // element.removeChild(selectButton)
+      } else {
+        let toggleBubbleText = this.selected.includes(bubble.entity.id) ? `Deseleziona` : `Seleziona`
+        selectButton.innerHTML = toggleBubbleText
+      }
+      // console.log(element)
       return element.innerHTML
     }
     const focusBubble = id => {
@@ -117,10 +123,10 @@ export class AwBubbleChartDS extends DataSource {
     //   placement: 'top',
     //   delay: [150, 30],
     //   updateDuration: 400,
-      // onTrigger(ref) {
-      //   console.log({ref})
-      //   console.log('fired')
-      // }
+    // onTrigger(ref) {
+    //   console.log({ref})
+    //   console.log('fired')
+    // }
     // })
   }
 }

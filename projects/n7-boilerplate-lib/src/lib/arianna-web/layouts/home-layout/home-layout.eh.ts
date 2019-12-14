@@ -137,7 +137,7 @@ export class AwHomeLayoutEH extends EventHandler {
           this.dataSource.selectedBubbles = payload
           this.dataSource.makeRequest$('globalFilter', {
             selectedEntitiesIds,
-            entitiesListSize: 500
+            entitiesListSize: this.configuration.get('home-layout')['max-bubble-num']
           }).subscribe(res => {
             if (res && res.entitiesData.length > 0) {
               // if some linked objects exist for the selected entities:

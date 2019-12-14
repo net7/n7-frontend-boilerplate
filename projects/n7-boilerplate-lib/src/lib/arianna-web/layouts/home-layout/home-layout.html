@@ -19,7 +19,7 @@
         </div>
         <div class="aw-home__bubble-chart-wrapper"
             [style.overflow]="lb.dataSource.loadingBubbles ? 'visible' : 'hidden'">
-            <aw-bubble-chart-wrapper [hover]="lb.widgets['aw-bubble-chart'].ds.currentHoverEntity"
+            <aw-bubble-chart-wrapper
                 [emit]="lb.widgets['aw-bubble-chart'].emit" [container]="'bubble-chart-container'"
                 [buttons]="['select', 'goto']">
                 <n7-bubble-chart [data]="lb.widgets['aw-bubble-chart'].ds.out$ | async"

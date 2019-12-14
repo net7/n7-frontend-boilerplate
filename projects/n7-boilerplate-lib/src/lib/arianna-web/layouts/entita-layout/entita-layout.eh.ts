@@ -95,9 +95,8 @@ export class AwEntitaLayoutEH extends EventHandler {
           break;
         case 'aw-bubble-chart.bubble-filtered':
           if (this.dataSource.selectedTab == "overview" || this.dataSource.selectedTab == "entita-collegate") {
-            payload.reload = true;
-            payload.reset = true;
-            this.emitOuter('filterbubbleresponse', payload);
+            console.log('filter bubble response', {payload})
+            this.emitOuter('filterbubbleresponse', payload.relatedEntities);
             //this.dataSource.updateBubbes(payload);
           }
           break;
@@ -128,13 +127,9 @@ export class AwEntitaLayoutEH extends EventHandler {
         this.dataSource.loadItem(params.get('id'), params.get('tab')).subscribe(res => {
           if (res) {
             this.dataSource.loadContent(res);
-            this.dataSource.bubbleLoaded = false;
-            let connectedEntities = {
-              source: res,
-              reload: false
-            };
-
-            this.emitOuter('filterbubbleresponse', connectedEntities);
+            // remove the entity of this page
+            let entities = res.relatedEntities.filter(entity => entity.id !== params.get('id'))
+            this.emitOuter('filterbubbleresponse', entities);
 
             this.dataSource.updateWidgets(res);
             if (selectedItem) {
