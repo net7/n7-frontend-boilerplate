@@ -70,7 +70,7 @@ export class AwBubbleChartDS extends DataSource {
     this.tippyList = []
 
     const buildTooltip = bubble => {
-      let element = document.getElementsByClassName('bubble-chart__tippy-template')[0]
+      let element = <Element>document.getElementsByClassName('bubble-chart__tippy-template')[0].cloneNode(true)
       let gotoButton = element.getElementsByClassName('aw-bubble-popup-menu__text')[0]
       gotoButton.innerHTML =
         `È collegato a ${bubble.count} entità`
@@ -78,7 +78,7 @@ export class AwBubbleChartDS extends DataSource {
         `${bubble.entity.label}`
       let selectButton = element.getElementsByClassName('aw-bubble-popup-menu__link')[1]
       if (this.options.simple) {
-        // element.removeChild(selectButton)
+        selectButton.remove()
       } else {
         let toggleBubbleText = this.selected.includes(bubble.entity.id) ? `Deseleziona` : `Seleziona`
         selectButton.innerHTML = toggleBubbleText
