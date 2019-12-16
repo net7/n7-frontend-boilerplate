@@ -3,32 +3,35 @@ import { DATEPICKER_MOCK } from "@n7-frontend/components";
 
 export class DvDatepickerWrapperDS extends DataSource {
     protected transform(data){  
-        return [
+        return {
             //set select option
-            {
+           select: {
                 id:"dv-select",
-                options: [
+                icon: "n7-icon-angle-down",
+                label: "Last week",
+                items: [
                     {
-                        text: "last week",
+                        text: "Last week",
                         payload: "lastWeek",
                     },
                     {
-                        text: "last month",
+                        text: "Last month",
                         payload: "lastMonth",
                     },
                     {
-                        text: "last year",
+                        text: "Last year",
                         payload: "lastYear",
                     },
                     {
                         text: "Select Date",
+                        //this payload key is use for visualise the datepicker.
                         payload: "ByDate",
                     }
                 ],
                 classes:"dv-datepicker-select-dropdown",
             },
             //set picker
-            DATEPICKER_MOCK,
-        ]
+            datepicker: DATEPICKER_MOCK
+        }
     }
 }
