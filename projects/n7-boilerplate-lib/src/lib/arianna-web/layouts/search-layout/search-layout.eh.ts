@@ -1,8 +1,9 @@
 import { EventHandler } from '@n7-frontend/core';
 import { Subject } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, takeUntil } from 'rxjs/operators';
 
 export class AwSearchLayoutEH extends EventHandler {
+  private destroyed$: Subject<any> = new Subject();
   private route: any;
   private facetsChange$: Subject<any> = new Subject();
 
@@ -10,14 +11,15 @@ export class AwSearchLayoutEH extends EventHandler {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
         case 'aw-search-layout.init':
-          this.dataSource.onInit(payload);
           this.route = payload.route;
+          this.dataSource.onInit(payload);
           this._listenToFacetsChange();
           this._listenToRouterChanges();
           break;
 
         case 'aw-search-layout.destroy':
           this.dataSource.onDestroy();
+          this.destroyed$.next();
           break;
 
         case 'aw-search-layout.orderbychange':
@@ -75,13 +77,16 @@ export class AwSearchLayoutEH extends EventHandler {
       debounceTime(500)
     ).subscribe(() => {
       this.dataSource.doSearchRequest$().subscribe(() => {
+        this.dataSource.onSearchResponse();
         this.emitGlobal('searchresponse', this.dataSource.getSearchModelId());
       });
     });
   }
 
   private _listenToRouterChanges() {
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.pipe(
+      takeUntil(this.destroyed$)
+    ).subscribe(params => {
       this.emitOuter('queryparamschange', params);
       this.facetsChange$.next();
     });
