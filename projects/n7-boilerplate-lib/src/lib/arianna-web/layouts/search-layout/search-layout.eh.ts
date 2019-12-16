@@ -35,7 +35,7 @@ export class AwSearchLayoutEH extends EventHandler {
     this.outerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
         case 'facets-wrapper.facetschange':
-          // this.facetsChange$.next();
+          this.dataSource.resetPagination();
           break;
 
         case 'aw-linked-objects.pagination':

@@ -103,6 +103,10 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     return this._updateSearchPage(page);
   }
 
+  resetPagination() {
+    this._updateSearchPage(1);
+  }
+
   onResultsLimitChange(payload) {
     this.pageSize = payload;
     this.searchModel.setPageConfigLimit(payload);
