@@ -16,8 +16,8 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     public hasScrollBackground: boolean = false;
     public resultsLimit = -1;
     public selectedEntitiesIds = [];
-    public outerLinks:any;
-    public outerLinksTitle:string;
+    public outerLinks: any;
+    public outerLinksTitle: string;
     public homeAutocompleteQuery: string;
     // BUBBLE CHART DATA ↓
     public bubblesEnabled: boolean = false; // true if this Arianna Web project has the bubble chart module
@@ -44,6 +44,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         this._listenAutoCompleteChanges();
         this.outerLinks = this.configuration.get('home-layout')['outer-links']['test'];
         this.outerLinksTitle = this.configuration.get('home-layout')['outer-links']['title'];
+        this.one('aw-bubble-chart').updateOptions({ config: this.configuration })
     }
 
     public makeRequest$(query, params) {
@@ -178,49 +179,49 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     }
 
     private _scrollBackgroundControl() {
-      const el = document.getElementById('bubble-results-list'),
-        source$ = fromEvent(document.getElementById('bubble-results-list'), 'scroll');
-  
-      // height control
-      setTimeout(() => {
-        this._setHasScrollBackground(el);
-      }, 500);
-  
-      // scroll listen
-      source$.pipe(
-        debounceTime(50)
-      ).subscribe(({ target }: { target: any }) => {
-        this._setHasScrollBackground(target);
-      });
+        const el = document.getElementById('bubble-results-list'),
+            source$ = fromEvent(document.getElementById('bubble-results-list'), 'scroll');
+
+        // height control
+        setTimeout(() => {
+            this._setHasScrollBackground(el);
+        }, 500);
+
+        // scroll listen
+        source$.pipe(
+            debounceTime(50)
+        ).subscribe(({ target }: { target: any }) => {
+            this._setHasScrollBackground(target);
+        });
     }
-  
+
     private _setHasScrollBackground({ scrollTop, scrollHeight, clientHeight }) {
-      this.hasScrollBackground = scrollHeight > (scrollTop + clientHeight);
+        this.hasScrollBackground = scrollHeight > (scrollTop + clientHeight);
     }
 
     private _listenAutoCompleteChanges() {
-      this.one('aw-home-autocomplete').updateOptions({
-        config: this.configuration.get('config-keys'),
-        labels: this.configuration.get('labels')
-      });
-      this.autocompleteChanged$.pipe(
+        this.one('aw-home-autocomplete').updateOptions({
+            config: this.configuration.get('config-keys'),
+            labels: this.configuration.get('labels')
+        });
+        this.autocompleteChanged$.pipe(
             debounceTime(500)
         ).subscribe(value => {
-          this.homeAutocompleteQuery = value;
-          if (value) {
-              this.communication.request$('autoComplete', {
-                  onError: (error) => console.error(error),
-                  params: {
-                      input: value,
-                      itemsPagination: { offset: 0, limit: this.configuration.get('home-layout')['results-limit'] }
-                  }
-              }).subscribe((response) => {
-                  this.one('aw-home-autocomplete').update(response);
-                  if (!this.autocompletePopoverOpen) this._toggleAutocompletePopover();
-              });
-          } else {
-              this._toggleAutocompletePopover();
-          }
+            this.homeAutocompleteQuery = value;
+            if (value) {
+                this.communication.request$('autoComplete', {
+                    onError: (error) => console.error(error),
+                    params: {
+                        input: value,
+                        itemsPagination: { offset: 0, limit: this.configuration.get('home-layout')['results-limit'] }
+                    }
+                }).subscribe((response) => {
+                    this.one('aw-home-autocomplete').update(response);
+                    if (!this.autocompletePopoverOpen) this._toggleAutocompletePopover();
+                });
+            } else {
+                this._toggleAutocompletePopover();
+            }
         });
     }
 

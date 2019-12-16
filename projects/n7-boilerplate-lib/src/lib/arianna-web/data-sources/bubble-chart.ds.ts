@@ -11,14 +11,22 @@ export class AwBubbleChartDS extends DataSource {
   public focusedBubble: string    // id of the focused bubble
 
   protected transform(data) {
+    const { config } = this.options
+    const { fontRendering, transition } = config.get('bubble-chart')
+
+    // Object.keys(config.get('config-keys')).forEach(k => {
+    //   console.log(k.replace(/-/g, ' '))
+    // })
+
     if (data.response && data.response.entitiesData) {
       this.chartData = data.response.entitiesData
     }
     return {
+      fontRendering,
       containerId: 'bubbleChartContainer',
       width: 500,
       height: 500,
-      transition: 750,
+      transition,
       sizeRange: [.5, 500],
       selected: this.selected,
       colorMatch: {

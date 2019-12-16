@@ -55,7 +55,7 @@
     }
   },
   "footer": {
-    "columns" : [
+    "columns": [
       {
         "classes": "col-class",
         "title": "Arianna Web, archivio digitale online",
@@ -99,6 +99,19 @@
       }
     ]
   },
+  "bubble-chart": {
+    "fontRendering": {
+      "label": {
+        "family": "inherit",
+        "weight": "normal"
+      },
+      "counter": {
+        "family": "Consolas, monospace",
+        "weight": "normal"
+      }
+    },
+    "transition": 750
+  },
   "item-preview": {
     "image": "image",
     "title": {
@@ -112,8 +125,12 @@
     "metadata": {
       "info": {
         "selection": [
-          { "key": "fase" },
-          { "key": "intitolazione" }
+          {
+            "key": "fase"
+          },
+          {
+            "key": "intitolazione"
+          }
         ],
         "data": "item.fields",
         "value": "value",
@@ -201,8 +218,12 @@
       "icon-collapse": "n7-icon-angle-down",
       "icon-image": "n7-icon-image",
       "icon-map": [
-        {"oc-type-foo": "n7-icon-building"},
-        {"oc-type-bar": "n7-icon-biography"}
+        {
+          "oc-type-foo": "n7-icon-building"
+        },
+        {
+          "oc-type-bar": "n7-icon-biography"
+        }
       ]
     }
   },
@@ -213,7 +234,14 @@
       "Risultato",
       "Risultati"
     ],
-    "enabledEntities": ["oggetto-culturale", "aggregazione", "persona", "luogo", "cosa-notevole", "organizzazione"] 
+    "enabledEntities": [
+      "oggetto-culturale",
+      "aggregazione",
+      "persona",
+      "luogo",
+      "cosa-notevole",
+      "organizzazione"
+    ]
   },
   "entita-layout": {
     "max-bubble-num": 30
@@ -245,12 +273,15 @@
       "icon": "n7-icon-map1",
       "label": "Luoghi",
       "input-placeholder": "Cerca un luogo"
-
     },
     "concetto": {
       "color": {
         "hex": "#5eab7b",
-        "rgb": [94, 171, 123]
+        "rgb": [
+          94,
+          171,
+          123
+        ]
       },
       "icon": "n7-icon-lightbulb",
       "label": "Concetti",
@@ -259,7 +290,11 @@
     "cosa-notevole": {
       "color": {
         "hex": "#5eab7b",
-        "rgb": [94, 171, 123]
+        "rgb": [
+          94,
+          171,
+          123
+        ]
       },
       "icon": "n7-icon-lightbulb",
       "label": "Cose notevoli",
@@ -268,7 +303,11 @@
     "organizzazione": {
       "color": {
         "hex": "#c48731",
-        "rgb": [196, 135, 49]
+        "rgb": [
+          196,
+          135,
+          49
+        ]
       },
       "icon": "n7-icon-building",
       "label": "Organizzazioni",
@@ -277,7 +316,11 @@
     "oggetto-culturale": {
       "color": {
         "hex": "#a798c2",
-        "rgb": [167,152,194]
+        "rgb": [
+          167,
+          152,
+          194
+        ]
       },
       "icon": "n7-icon-image",
       "label": "Oggetti Culturali",
@@ -286,7 +329,11 @@
     "aggregazione": {
       "color": {
         "hex": "#cc6f5c",
-        "rgb": [204,111,92]
+        "rgb": [
+          204,
+          111,
+          92
+        ]
       },
       "icon": "n7-icon-archive",
       "label": "Fondi",
@@ -298,7 +345,7 @@
     "entitaBasePath": "/aw/entita/",
     "searchBasePath": "/aw/ricerca/"
   },
-  "features-enabled" : {
+  "features-enabled": {
     "bubblechart": true
   },
   "labels": {
