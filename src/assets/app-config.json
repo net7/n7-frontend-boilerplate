@@ -110,7 +110,8 @@
         "weight": "normal"
       }
     },
-    "transition": 750
+    "transition": 750,
+    "shuffle": true
   },
   "item-preview": {
     "image": "image",

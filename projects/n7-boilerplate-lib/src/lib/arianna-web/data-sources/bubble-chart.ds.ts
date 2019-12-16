@@ -12,7 +12,7 @@ export class AwBubbleChartDS extends DataSource {
 
   protected transform(data) {
     const { config } = this.options
-    const { fontRendering, transition } = config.get('bubble-chart')
+    const { fontRendering, transition, shuffle } = config.get('bubble-chart')
     const domain = [], range = []
     const colorConfig = config.get('config-keys')
 
@@ -29,6 +29,7 @@ export class AwBubbleChartDS extends DataSource {
       containerId: 'bubbleChartContainer',
       width: 500,
       height: 500,
+      shuffle,
       transition,
       sizeRange: [.5, 500],
       selected: this.selected,
