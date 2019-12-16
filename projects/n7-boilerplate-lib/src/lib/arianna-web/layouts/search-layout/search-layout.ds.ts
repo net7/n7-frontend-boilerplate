@@ -5,7 +5,7 @@ import {
   SearchModel
 } from '../../../common/services';
 import facetsConfig from './search-facets.config';
-import { tap, debounceTime, takeUntil } from 'rxjs/operators';
+import { tap, takeUntil } from 'rxjs/operators';
 import { Observable, of, fromEvent, Subject } from 'rxjs';
 import helpers from '../../../common/helpers';
 
@@ -27,6 +27,7 @@ export class AwSearchLayoutDS extends LayoutDataSource {
   public currentPage: any = 1; // pagination value (url param)
   public pageSize = 10; // linked objects page size
   public sidebarIsSticky = false;
+  public isFirstLoading = true;
 
   public options: any;
 
@@ -68,13 +69,6 @@ export class AwSearchLayoutDS extends LayoutDataSource {
       SearchService.queryParams = null;
     }
 
-    console.log('config', facetsConfig);
-
-    this.doSearchRequest$().subscribe(() => {
-      this.one('facets-wrapper').update({ searchModel: this.searchModel });
-      this.searchModel.updateInputsFromFilters();
-    });
-
     // sidebar sticky control
     this._sidebarStickyControl();
   }
@@ -82,6 +76,14 @@ export class AwSearchLayoutDS extends LayoutDataSource {
   onDestroy() {
     this.destroyed$.next();
     SearchService.queryParams = null;
+  }
+
+  onSearchResponse(){
+    if (this.isFirstLoading) {
+      this.isFirstLoading = false;
+      this.one('facets-wrapper').update({ searchModel: this.searchModel });
+      this.searchModel.updateInputsFromFilters();
+    }
   }
 
   onOrderByChange(payload) {
