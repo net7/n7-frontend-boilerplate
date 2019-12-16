@@ -107,9 +107,12 @@ export class AwLinkedObjectsDS extends DataSource {
     if (limit) {
       let lastPage: number, firstPage: number;
       if (currentPage > Math.floor(limit / 2)) {
+        if (totalPages === 2) {
+          lastPage = totalPages;
+          firstPage = 1;
         // when currentPage is after half-point
         // (example: [ 14 ][ 15 ][!16!][ 17 ][ 18 ])
-        if (currentPage < (totalPages - Math.floor(limit / 2))) {
+        } else if (currentPage < (totalPages - Math.floor(limit / 2))) {
           lastPage = currentPage / 1 + Math.floor(limit / 2);
           firstPage = currentPage / 1 - Math.floor(limit / 2);
         } else {
