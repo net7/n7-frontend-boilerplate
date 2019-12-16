@@ -1,24 +1,51 @@
 import { Component, Input } from '@angular/core';
 
-export interface ISelectData{
+export interface IDatePickerLabelData {
+    select: IDatePickerSelect,
+    datepicker: any;
+}
+
+export interface IDatePickerSelect {
     id: string,
-    options: SelectOptions[],
+    icon?: string,
+    lable: string,
+    items: ILabelItems[],
     classes?: string,
 }
-export interface SelectOptions {
+
+export interface ILabelItems {
     text: string,
     payload: any,
     classes?: string,
 }
 
-
 @Component({
     selector: 'dv-datepicker-wrapper',
-    templateUrl: './datepicker-wrapper.html'
+    templateUrl: './datepicker-wrapper.html',
+    host: {
+        "(document:click)": "DocumentClick('outClick')"
+    }
 })
 export class DatePikerWrapperComponent{
-    @Input() data: ISelectData;
+    @Input() data: IDatePickerLabelData;
     @Input() emit: any;
+    @Input() show: any;
+    @Input() label: string;
+
+    onClick(payload) {
+        if(!this.emit) return;
+        this.emit('click', payload);
+    }
+    
+    openDropDown() {
+        if(!this.emit) return;
+        this.emit('open', true);
+    }
+
+    DocumentClick(payload){
+        if(!this.emit) return;
+        this.emit('outside-click', true);
+    }
 
 }
   

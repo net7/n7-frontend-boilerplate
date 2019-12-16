@@ -18,13 +18,10 @@
             </div>
         </div>
     </dv-data-widget-wrapper>
-
-    <dv-datepicker-wrapper
-        [data]="(lb.widgets['dv-datepicker-wrapper'].ds.out$ | async)[0]"
-    >
-        <n7-datepicker 
-            [data]="(lb.widgets['dv-datepicker-wrapper'].ds.out$ | async)[1]"
-            [emit]="lb.widgets['dv-datepicker-wrapper'].emit">
-        </n7-datepicker>
+    <dv-datepicker-wrapper 
+        [data]="lb.widgets['dv-datepicker-wrapper'].ds.out$ | async"
+        [emit]="lb.widgets['dv-datepicker-wrapper'].emit"
+        [show]="lb.dataSource.showing"
+        [label]="lb.dataSource.labelValueDatepicker">
     </dv-datepicker-wrapper>
 </div>
