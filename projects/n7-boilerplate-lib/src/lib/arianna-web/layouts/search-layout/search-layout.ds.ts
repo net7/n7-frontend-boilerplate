@@ -1,3 +1,4 @@
+import { cloneDeep } from 'lodash';
 import { LayoutDataSource } from '@n7-frontend/core';
 import {
   SearchService,
@@ -52,9 +53,13 @@ export class AwSearchLayoutDS extends LayoutDataSource {
 
     this.pageTitle = this.configuration.get('search-layout').title;
 
-    if (!this.search.model(SEARCH_MODEL_ID)) {
-      this.search.add(SEARCH_MODEL_ID, facetsConfig);
+    // remove first
+    // stateless search
+    if (this.search.model(SEARCH_MODEL_ID)) {
+      this.search.remove(SEARCH_MODEL_ID);
     }
+
+    this.search.add(SEARCH_MODEL_ID, cloneDeep(facetsConfig));
     this.searchModel = this.search.model(SEARCH_MODEL_ID);
 
     // query params control
@@ -62,6 +67,8 @@ export class AwSearchLayoutDS extends LayoutDataSource {
       this.searchModel.updateFiltersFromQueryParams(SearchService.queryParams);
       SearchService.queryParams = null;
     }
+
+    console.log('config', facetsConfig);
 
     this.doSearchRequest$().subscribe(() => {
       this.one('facets-wrapper').update({ searchModel: this.searchModel });
@@ -74,8 +81,6 @@ export class AwSearchLayoutDS extends LayoutDataSource {
 
   onDestroy() {
     this.destroyed$.next();
-    // reset search
-    this.searchModel.updateFiltersFromQueryParams({});
     SearchService.queryParams = null;
   }
 

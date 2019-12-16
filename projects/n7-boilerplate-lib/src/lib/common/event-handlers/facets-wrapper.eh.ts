@@ -50,7 +50,7 @@ export class FacetsWrapperEH extends EventHandler {
     EventHandler.globalEvents$.subscribe(({ type, payload }) => {
       switch (type) {
         case 'global.searchresponse':
-          if (this.dataSource.searchModel.getId() === payload) {
+          if (this.dataSource.searchModel && this.dataSource.searchModel.getId() === payload) {
             this.dataSource.updateInputLinks();
           }
           break;

@@ -426,6 +426,12 @@ export class SearchService {
     this._models[id] = new SearchModel(id, config);
   }
 
+  public remove(id: string) {
+    if (this._models[id]) {
+      delete this._models[id];
+    }
+  }
+
   public model(id: string): SearchModel {
     return this._models[id] || null;
   }
