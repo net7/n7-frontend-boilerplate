@@ -1,6 +1,6 @@
 import { LayoutDataSource } from '@n7-frontend/core';
 import { Subject, forkJoin, fromEvent } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, takeUntil } from 'rxjs/operators';
 
 export class AwHomeLayoutDS extends LayoutDataSource {
     private communication: any;
@@ -19,6 +19,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     public outerLinks: any;
     public outerLinksTitle: string;
     public homeAutocompleteQuery: string;
+    private destroyed$: Subject<any> = new Subject();
     // BUBBLE CHART DATA ↓
     public bubblesEnabled: boolean = false; // true if this Arianna Web project has the bubble chart module
     public selectedBubbles: any[] = []      // array of IDs
@@ -45,6 +46,10 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         this.outerLinks = this.configuration.get('home-layout')['outer-links']['test'];
         this.outerLinksTitle = this.configuration.get('home-layout')['outer-links']['title'];
         this.one('aw-bubble-chart').updateOptions({ config: this.configuration })
+    }
+
+    onDestroy(){
+        this.destroyed$.next()
     }
 
     public makeRequest$(query, params) {
@@ -205,7 +210,8 @@ export class AwHomeLayoutDS extends LayoutDataSource {
             labels: this.configuration.get('labels')
         });
         this.autocompleteChanged$.pipe(
-            debounceTime(500)
+            debounceTime(500),
+            takeUntil(this.destroyed$)
         ).subscribe(value => {
             if (value) {
                 this.communication.request$('autoComplete', {

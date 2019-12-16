@@ -21,7 +21,7 @@ export class AwHomeLayoutEH extends EventHandler {
           });
           break;
         case 'aw-home-layout.destroy':
-          this.destroyed$.next();
+          this.dataSource.onDestroy()
           break;
         case 'aw-home-layout.bubbleresultsviewallclick':
           const entityLinks = this.dataSource.selectedBubbles.join(',');
