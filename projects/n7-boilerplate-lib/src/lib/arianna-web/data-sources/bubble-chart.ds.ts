@@ -13,10 +13,13 @@ export class AwBubbleChartDS extends DataSource {
   protected transform(data) {
     const { config } = this.options
     const { fontRendering, transition } = config.get('bubble-chart')
+    const domain = [], range = []
+    const colorConfig = config.get('config-keys')
 
-    // Object.keys(config.get('config-keys')).forEach(k => {
-    //   console.log(k.replace(/-/g, ' '))
-    // })
+    Object.keys(colorConfig).forEach(k => {
+      domain.push(k.replace(/-/g, ' '))
+      range.push(((colorConfig[k] || {}).color || {}).hex)
+    })
 
     if (data.response && data.response.entitiesData) {
       this.chartData = data.response.entitiesData
@@ -29,10 +32,7 @@ export class AwBubbleChartDS extends DataSource {
       transition,
       sizeRange: [.5, 500],
       selected: this.selected,
-      colorMatch: {
-        domain: ['persona', 'luogo', 'organizzazione', 'cosa notevole'],
-        range: ['#4d8df3', '#f2d04c', '#c99245', '#6cb286']
-      },
+      colorMatch: { domain, range },
       data: this.chartData,
       setDraw: draw => this.draw = draw
     }
