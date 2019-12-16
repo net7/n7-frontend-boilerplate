@@ -39,7 +39,17 @@ export class AwHomeLayoutEH extends EventHandler {
 
     this.outerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
+        case 'aw-hero.enter':
+        case 'aw-hero.click':
+          const query = payload.value;
+          this.emitGlobal('navigate', {
+            handler: 'router',
+            path: [this.configuration.get("paths").searchBasePath],
+            queryParams: { query }
+          });
+          break;
         case 'aw-hero.change':
+          this.dataSource.autocompleteValue = payload.value
           this.dataSource.onHeroChange(payload.value);
           break;
         case 'aw-home-facets-wrapper.click':

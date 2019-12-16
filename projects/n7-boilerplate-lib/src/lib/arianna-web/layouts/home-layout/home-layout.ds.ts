@@ -207,7 +207,6 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         this.autocompleteChanged$.pipe(
             debounceTime(500)
         ).subscribe(value => {
-            this.homeAutocompleteQuery = value;
             if (value) {
                 this.communication.request$('autoComplete', {
                     onError: (error) => console.error(error),

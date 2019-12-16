@@ -6,14 +6,18 @@ export class AwHeroEH extends EventHandler {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
         case 'aw-hero.click':
-          // TODO
+          this.emitOuter('click', this.dataSource.currentInputValue);
           break;
-
         case 'aw-hero.change':
+          this.dataSource.currentInputValue = payload
           this.emitOuter('change', payload);
+          break;
+        case 'aw-hero.enter':
+          this.emitOuter('enter', payload);
           break;
 
         default:
+          console.log('(hero) unhandled event of type', type)
           break;
       }
     });
