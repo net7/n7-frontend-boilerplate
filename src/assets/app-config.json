@@ -102,11 +102,11 @@
   "bubble-chart": {
     "fontRendering": {
       "label": {
-        "family": "inherit",
-        "weight": "normal"
+        "family": "'Source Sans Pro', sans-serif",
+        "weight": "bold"
       },
       "counter": {
-        "family": "Consolas, monospace",
+        "family": "'Source Sans Pro', sans-serif",
         "weight": "normal"
       }
     },
