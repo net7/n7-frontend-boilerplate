@@ -6,12 +6,14 @@ export class AwSearchLayoutEH extends EventHandler {
   private destroyed$: Subject<any> = new Subject();
   private route: any;
   private facetsChange$: Subject<any> = new Subject();
+  private configuration: any;
 
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
         case 'aw-search-layout.init':
           this.route = payload.route;
+          this.configuration = payload.configuration;
           this.dataSource.onInit(payload);
           this._listenToFacetsChange();
           this._listenToRouterChanges();
@@ -27,7 +29,16 @@ export class AwSearchLayoutEH extends EventHandler {
           this.facetsChange$.next();
           break;
 
+        case 'aw-search-layout.searchreset':
+          this.dataSource.resetButtonEnabled = false;
+          this.emitGlobal('navigate', {
+            handler: 'router',
+            path: [this.configuration.get('paths').searchBasePath]
+          });
+          break;
+
         default:
+          console.warn('(search) unhandled inner event of type', type)
           break;
       }
     });
