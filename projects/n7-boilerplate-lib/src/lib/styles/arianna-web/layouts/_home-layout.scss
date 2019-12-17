@@ -289,9 +289,6 @@
 
     /* Results */
     &__bubble-results {
-        // display: grid;
-        // grid-template-rows: 3;
-
         display: flex;
         flex-direction: column;
         height: calc(#{$bubble-section-height} - #{$space*8});
@@ -449,6 +446,11 @@
                 height: 40px !important;
             }
         }
+    }
+
+    /* No results */
+    &__bubble-results-fallback-text {
+        margin: $space*2 0;
     }
 }
 
