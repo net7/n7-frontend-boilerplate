@@ -7,8 +7,9 @@ export interface IDatePickerLabelData {
 
 export interface IDatePickerSelect {
     id: string,
+    hidden: boolean,
     icon?: string,
-    lable: string,
+    label: string,
     items: ILabelItems[],
     classes?: string,
 }
@@ -22,9 +23,6 @@ export interface ILabelItems {
 @Component({
     selector: 'dv-datepicker-wrapper',
     templateUrl: './datepicker-wrapper.html',
-    host: {
-        "(document:click)": "DocumentClick('outClick')"
-    }
 })
 export class DatePikerWrapperComponent{
     @Input() data: IDatePickerLabelData;
@@ -36,16 +34,16 @@ export class DatePikerWrapperComponent{
         if(!this.emit) return;
         this.emit('click', payload);
     }
-    
+
     openDropDown() {
         if(!this.emit) return;
         this.emit('open', true);
     }
 
-    DocumentClick(payload){
-        if(!this.emit) return;
-        this.emit('outside-click', true);
-    }
+    // closeDatepicker(){
+    //     if(!this.emit) return;
+    //     this.emit('close-datepicker', false);
+    // }
 
 }
   

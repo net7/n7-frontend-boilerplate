@@ -2,11 +2,14 @@ import { DataSource } from '@n7-frontend/core';
 import { DATEPICKER_MOCK } from "@n7-frontend/components";
 
 export class DvDatepickerWrapperDS extends DataSource {
-    protected transform(data){  
+    private _datepicker: any = null;
+
+    protected transform(data){ 
         return {
             //set select option
            select: {
                 id:"dv-select",
+                hidden: true,
                 icon: "n7-icon-angle-down",
                 label: "Last week",
                 items: [
@@ -31,7 +34,52 @@ export class DvDatepickerWrapperDS extends DataSource {
                 classes:"dv-datepicker-select-dropdown",
             },
             //set picker
-            datepicker: DATEPICKER_MOCK
+            datepicker: {
+                hidden: true,
+                data: {
+                    id: 'datepicker',
+                    libOptions: {
+                        dateFormat: 'Y-m-d',
+                        mode: 'range',
+                    },
+                    getInstance: (datepicker) => this._datepicker = datepicker,
+                    _elementId: 'datepicker',
+                    options: {
+                        dateFormat: 'Y-m-d',
+                        // defaultDate: [data.start_date, data.end_date],
+                        mode: "range"
+                    },
+                }
+            }
+        } 
+    }
+
+    open(){
+        setTimeout(() => this._datepicker.open());
+    }
+
+    openDropDown(){
+        if(this.output.select.hidden === false) {
+            this.output.select.hidden = true;
         }
+        else{
+            this.output.select.hidden = false;
+        }
+    }
+    setDatepicker(payload){
+        if (payload === "ByDate") {
+            this.open();
+            this.output.select.label = payload;
+            this.output.select.hidden = true;
+            this.output.datepicker.hidden = false;
+        }else{
+            this.output.select.label = payload;
+            this.output.select.hidden = true;
+            this.output.datepicker.hidden = true;
+        }
+    }
+    setDate(payload){
+        this.output.datepicker.hidden = true;
+        this.output.select.label = payload.dateStr;
     }
 }

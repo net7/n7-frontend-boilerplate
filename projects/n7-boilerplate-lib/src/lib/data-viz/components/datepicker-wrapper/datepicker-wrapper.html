@@ -1,16 +1,16 @@
-<div *ngIf="data" class="dv-dropdown {{ data.select.classes || '' }}" (click)="DocumentClick()">
+<div *ngIf="data" class="dv-dropdown {{ data.select.classes || '' }}">
     <div class="dv-datepicker-select-container" (click)="openDropDown()">
-        <input type="text" [value]="label" [readOnly]="true"/>
+        <input type="text" [value]="data.select.label" [readOnly]="true"/>
         <span class="{{data.select.icon}}"></span>
     </div>
-    <div class="dv-dropdown-select" [hidden]="!show.dropdown">
+    <div class="dv-dropdown-select" [hidden]="data.select.hidden">
         <ul class="dv-dropdown-list">
             <li class="dv-dropdown-option" *ngFor="let opt of data.select.items" (click)="onClick(opt.payload)">{{opt.text}}</li>
         </ul>
     </div>
     <n7-datepicker
-        [hidden] = "!show.datepicker"
-        [data]="data.datepicker"
+        [hidden]="data.datepicker.hidden"
+        [data]="data.datepicker.data"
         [emit]="emit">
     </n7-datepicker>
 </div>
