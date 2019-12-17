@@ -48,12 +48,14 @@
                     </n7-item-preview>
                 </ng-container>
                 <ng-container *ngIf="lb.dataSource.totalCount == 0">
-                    <p class="aw-search__fallback-string">
-                        {{ lb.dataSource.fallback }}
-                    </p>
-                    <button [disabled]="!lb.dataSource.resetButtonEnabled" class="aw-search__fallback-button" (click)="lb.eventHandler.emitInner('searchreset', {})">
-                        Resetta la ricerca
-                    </button>
+                    <div class="aw-search__fallback">
+                        <p class="aw-search__fallback-string">
+                            {{ lb.dataSource.fallback }}
+                        </p>
+                        <button [disabled]="!lb.dataSource.resetButtonEnabled" class="n7-btn aw-search__fallback-button" (click)="lb.eventHandler.emitInner('searchreset', {})">
+                            Resetta la ricerca
+                        </button>
+                    </div>
                 </ng-container>
                 <n7-pagination *ngIf="lb.dataSource.totalCount > 10"
                     [data]="(lb.widgets['aw-linked-objects'].ds.out$ | async)?.pagination"
