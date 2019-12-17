@@ -81,13 +81,13 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         this.firstBubbleResponse = response.entitiesData
         const facetData = []
         response.typeOfEntityData.forEach((toe) => {
-            const teoConfigData = this.configuration.get("config-keys")[toe.type.replace(" ", "-")];
+            const TOEconfigData = this.configuration.get("config-keys")[toe.type.replace(" ", "-")];
             facetData.push({
                 ...toe,
                 enabled: true,
                 locked: false,
                 configKey: toe.type.replace(" ", "-"),
-                ...teoConfigData
+                ...TOEconfigData
             });
         });
         this.one('aw-home-facets-wrapper').update(facetData);
@@ -206,7 +206,8 @@ export class AwHomeLayoutDS extends LayoutDataSource {
 
     private _listenAutoCompleteChanges() {
         this.one('aw-home-autocomplete').updateOptions({
-            config: this.configuration.get('config-keys'),
+            keys: this.configuration.get('config-keys'),
+            config: this.configuration,
             labels: this.configuration.get('labels')
         });
         this.autocompleteChanged$.pipe(

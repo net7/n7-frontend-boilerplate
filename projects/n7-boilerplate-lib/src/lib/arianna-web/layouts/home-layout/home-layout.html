@@ -19,8 +19,7 @@
         </div>
         <div class="aw-home__bubble-chart-wrapper"
             [style.overflow]="lb.dataSource.loadingBubbles ? 'visible' : 'hidden'">
-            <aw-bubble-chart-wrapper
-                [emit]="lb.widgets['aw-bubble-chart'].emit" [container]="'bubble-chart-container'"
+            <aw-bubble-chart-wrapper [emit]="lb.widgets['aw-bubble-chart'].emit" [container]="'bubble-chart-container'"
                 [buttons]="['select', 'goto']">
                 <n7-bubble-chart [data]="lb.widgets['aw-bubble-chart'].ds.out$ | async"
                     [emit]="lb.widgets['aw-bubble-chart'].emit">
@@ -30,8 +29,7 @@
 
         <!-- Linked objects -->
         <ng-container *ngIf="(lb.widgets['aw-bubble-chart'].ds.out$ | async)?.selected.length > 0;">
-            <div class="aw-home__bubble-results" id="home-bubble-results"
-                [style.opacity]="lb.dataSource.loadingBubbles ? '0' : '1'">
+            <div class="aw-home__bubble-results" id="home-bubble-results">
                 <div *ngIf="lb.dataSource.numOfItemsStr" class="aw-home__bubble-results-title-wrapper">
                     <h1 class="aw-home__bubble-results-title"><strong class="aw-home__bubble-results-title-counter">
                             {{ lb.dataSource.numOfItemsStr }}</strong> <span> Oggetti culturali</span>
@@ -48,6 +46,14 @@
                 <div class="aw-home__bubble-results-list-wrapper">
                     <div class="aw-home__bubble-results-list" [attr.id]="'bubble-results-list'"
                         (scroll)="lb.eventHandler.emitOuter('scroll', $event.target)">
+                        <div class="aw-home__bubble-results-fallback"
+                            *ngIf="(lb.widgets['aw-linked-objects'].ds.out$ | async)?.result.length < 1;">
+                            <p> {{ (lb.widgets['aw-linked-objects'].ds.out$ | async)?.fallback }} </p>
+                            <button class="aw-home__bubble-results-reset"
+                                (click)="lb.eventHandler.emitInner('clearselection')">
+                                Resetta la ricerca
+                            </button>
+                        </div>
                         <ng-container
                             *ngFor="let widgetData of (lb.widgets['aw-linked-objects'].ds.out$ | async)?.result;">
                             <n7-item-preview [data]="widgetData" [emit]="lb.widgets['aw-linked-objects'].emit">
@@ -63,8 +69,10 @@
                     <div *ngIf="lb.dataSource.hasScrollBackground"
                         class="aw-home__bubble-results-list-wrapper-with-scroll"></div>
                     <!-- aw-linked-objects__actions -->
-                    <div *ngIf="(lb.widgets['aw-linked-objects'].ds.out$ | async)?.actions as action" class="aw-home__bubble-results-list-actions">
-                        <button (click)="lb.eventHandler.emitInner('bubbleresultsviewallclick')" class="n7-btn n7-btn-light n7-btn-l aw-home__bubble-results-list-view-all">
+                    <div *ngIf="(lb.widgets['aw-linked-objects'].ds.out$ | async)?.actions as action"
+                        class="aw-home__bubble-results-list-actions">
+                        <button (click)="lb.eventHandler.emitInner('bubbleresultsviewallclick')"
+                            class="n7-btn n7-btn-light n7-btn-l aw-home__bubble-results-list-view-all">
                             {{action[0].label}}
                         </button>
                     </div>
@@ -75,23 +83,17 @@
     </div>
 
     <!-- Outer links -->
-    <div
-    *ngIf="lb.dataSource.outerLinks && lb.dataSource.outerLinks.length > 0"
-     class="aw-home__outer-links">
+    <div *ngIf="lb.dataSource.outerLinks && lb.dataSource.outerLinks.length > 0" class="aw-home__outer-links">
         <section class="aw-home__outer-links-wrapper n7-side-auto-padding">
-            <h2 class="aw-home__outer-links-title"
-                *ngIf="lb.dataSource.outerLinksTitle">
+            <h2 class="aw-home__outer-links-title" *ngIf="lb.dataSource.outerLinksTitle">
                 {{ lb.dataSource.outerLinksTitle }}
             </h2>
             <div class="aw-home__outer-links-items">
                 <!-- Item preview -->
-                <n7-item-preview
-                    *ngFor="let outerLink of lb.dataSource.outerLinks"
-                    [data]="outerLink"
-                    [emit]="lb.eventHandler.outerLinkClick.bind(lb.eventHandler)"
-                >
+                <n7-item-preview *ngFor="let outerLink of lb.dataSource.outerLinks" [data]="outerLink"
+                    [emit]="lb.eventHandler.outerLinkClick.bind(lb.eventHandler)">
                 </n7-item-preview>
-            <!-- END // Item preview -->
+                <!-- END // Item preview -->
             </div>
         </section>
     </div>

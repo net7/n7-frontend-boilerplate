@@ -162,7 +162,8 @@
       "backgroundImage": "https://i.imgur.com/FgsxSYR.png",
       "input": {
         "placeholder": "Cerca in MAXXI"
-      }
+      },
+      "fallback": "Nessun risultato, prova a <br> cambiare la ricerca."
     },
     "bottom-hero": {
       "title": "IL MAXXI",
@@ -201,7 +202,8 @@
     "results-limit": 10,
     "max-item-length": 50,
     "max-bubble-num": 125,
-    "autocomplete-fallback": "Nessun risultato trovato"
+    "autocomplete-fallback": "Nessun risultato, prova a\ncambiare la ricerca.",
+    "linked-objects-fallback": "Non sono stati trovati oggetti culturali collegati alle entità selezionate. Prova a cambiare le entità selezionate o resetta la ricerca."
   },
   "scheda-layout": {
     "bubble-chart": {

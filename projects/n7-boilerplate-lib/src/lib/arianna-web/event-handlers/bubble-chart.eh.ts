@@ -39,6 +39,10 @@ export class AwBubbleChartEH extends EventHandler {
         case 'aw-home-layout.togglefilter':
           this.toggleFilter(payload)
           break;
+        case 'aw-home-layout.clearselection':
+          this.dataSource.selected = []
+          this.emitOuter('selection', [])
+          break;
         case 'aw-scheda-layout.filterbubbleresponse':
         case 'aw-entita-layout.filterbubbleresponse':
         case 'aw-home-layout.filterbubbleresponse':
