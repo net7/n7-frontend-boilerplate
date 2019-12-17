@@ -4,14 +4,14 @@ import helpers from '../../common/helpers';
 export class AwHomeAutocompleteDS extends DataSource {
   protected transform(data) {
     const { results, totalCount } = data,
-      { config } = this.options,
-      labels = this.options.labels || {},
-      itemIds = [],
-      groups = {};
+          { keys, config } = this.options,
+          labels = this.options.labels || {},
+          itemIds = [],
+          groups = {};
 
     results.forEach(({ item, entity }) => {
       const groupId = entity ? entity.typeOfEntity.replace(' ', '-') : 'oggetto-culturale',
-        groupConfig = config[groupId],
+        groupConfig = keys[groupId],
         mainMetadata = groupConfig['main-metadata'],
         currentItem = item || entity;
 
@@ -62,8 +62,7 @@ export class AwHomeAutocompleteDS extends DataSource {
           }
         }
       },
-      fallback:
-        'Spiacenti, non è stato trovato nessun risultato. <br> Riprova con una nuova ricerca.'
+      fallback: ((config.get('home-layout') || {})["top-hero"] || {}).fallback
     };
   }
 }

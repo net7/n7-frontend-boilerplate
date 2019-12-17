@@ -59,7 +59,7 @@ export class AwLinkedObjectsDS extends DataSource {
 
   public handleIncomingData = incomingData => {
     /*
-      Called by button <Mostra Altri>, adds the incoming
+      Called by infinite scroller, adds the incoming
       data to the linked objects component.
     */
     this.currentPage += 1;
@@ -262,6 +262,7 @@ export class AwLinkedObjectsDS extends DataSource {
         result,
         actions,
         isLoading: false,
+        fallback: config.get('home-layout')['linked-objects-fallback']
       };
     }
     return { previews: result };

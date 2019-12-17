@@ -20,6 +20,8 @@ export class AwSearchLayoutDS extends LayoutDataSource {
   private searchModel: SearchModel;
   private prettifyLabels: any;
   private configKeys: any;
+  private fallback: string;
+  private resetButtonEnabled: boolean = true;
 
   public pageTitle: string;
   public resultsTitle: string;
@@ -51,6 +53,7 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     this.options = options;
     this.prettifyLabels = this.configuration.get('labels');
     this.configKeys = this.configuration.get('config-keys');
+    this.fallback = this.configuration.get('search-layout').fallback;
 
     this.pageTitle = this.configuration.get('search-layout').title;
 
@@ -79,6 +82,7 @@ export class AwSearchLayoutDS extends LayoutDataSource {
   }
 
   onSearchResponse(){
+    this.resetButtonEnabled = true;
     if (this.isFirstLoading) {
       this.isFirstLoading = false;
       this.one('facets-wrapper').update({ searchModel: this.searchModel });

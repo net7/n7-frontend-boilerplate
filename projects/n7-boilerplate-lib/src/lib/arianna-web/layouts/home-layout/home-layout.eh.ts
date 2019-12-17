@@ -21,25 +21,39 @@ export class AwHomeLayoutEH extends EventHandler {
           });
           break;
         case 'aw-home-layout.destroy':
-          this.destroyed$.next();
+          this.dataSource.onDestroy()
           break;
         case 'aw-home-layout.bubbleresultsviewallclick':
           const entityLinks = this.dataSource.selectedBubbles.join(',');
           const basePath = this.configuration.get('paths').searchBasePath;
           this.emitGlobal('navigate', {
             handler: 'router',
-            path: [ basePath ],
+            path: [basePath],
             queryParams: { 'entity-links': entityLinks }
           });
           break;
+        case 'aw-home-layout.clearselection':
+          this.emitOuter('clearselection')
+          break;
         default:
+          console.warn('(home) unhandled inner event of type: ', type)
           break;
       }
     });
 
     this.outerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
+        case 'aw-hero.enter':
+        case 'aw-hero.click':
+          const query = payload.value;
+          this.emitGlobal('navigate', {
+            handler: 'router',
+            path: [this.configuration.get("paths").searchBasePath],
+            queryParams: { query }
+          });
+          break;
         case 'aw-hero.change':
+          this.dataSource.autocompleteValue = payload.value
           this.dataSource.onHeroChange(payload.value);
           break;
         case 'aw-home-facets-wrapper.click':
@@ -139,37 +153,7 @@ export class AwHomeLayoutEH extends EventHandler {
           }
           break;
         case 'aw-bubble-chart.selection':
-          let selectedEntitiesIds = payload
-          this.dataSource.selectedBubbles = payload
-          this.dataSource.makeRequest$('globalFilter', {
-            selectedEntitiesIds,
-            entitiesListSize: this.configuration.get('home-layout')['max-bubble-num']
-          }).subscribe(res => {
-            if (res && res.entitiesData.length > 0) {
-              // if some linked objects exist for the selected entities:
-              this.dataSource.lastBubbleResponse = res.entitiesData
-              this.emitOuter('filterbubbleresponse', res.entitiesData);
-              this.dataSource.renderPreviewsFromApolloQuery(res)
-              this.dataSource.renderItemTags()
-            } else {
-              // if the backend returns an empty list of results:
-              const queryList = []
-              this.dataSource.selectedBubbles.forEach(b => {
-                let params = { entityId: b, entitiesListSize: 1 }
-                queryList.push( // make a query for each selected bubble
-                  this.dataSource.makeRequest$('getMissingBubble', params)
-                )
-              });
-              // await for every missing bubble and build a custom response
-              forkJoin(queryList).subscribe(forkres => {
-                let customBubbles = []
-                forkres.forEach(r => { customBubbles.push({ count: 0, entity: r }) });
-                this.emitOuter('filterbubbleresponse', customBubbles);
-                this.dataSource.renderPreviewsFromApolloQuery(res)
-                this.dataSource.renderItemTags()
-              })
-            }
-          })
+          this.handleChartSelection(payload)
           break;
         case 'aw-bubble-chart.lockfilter':
           this.emitOuter('lockfilter', payload) // let aw-home-facets-wrapper handle this event
@@ -200,6 +184,40 @@ export class AwHomeLayoutEH extends EventHandler {
 
   public outerLinkClick(type, payload) {
     window.open(payload, "_blank");
+  }
+
+  public handleChartSelection = payload => {
+    let selectedEntitiesIds = payload
+    this.dataSource.selectedBubbles = payload
+    this.dataSource.makeRequest$('globalFilter', {
+      selectedEntitiesIds,
+      entitiesListSize: this.configuration.get('home-layout')['max-bubble-num']
+    }).subscribe(res => {
+      if (res && res.entitiesData.length > 0) {
+        // if some linked objects exist for the selected entities:
+        this.dataSource.lastBubbleResponse = res.entitiesData
+        this.emitOuter('filterbubbleresponse', res.entitiesData);
+        this.dataSource.renderPreviewsFromApolloQuery(res)
+        this.dataSource.renderItemTags()
+      } else {
+        // if the backend returns an empty list of results:
+        const queryList = []
+        this.dataSource.selectedBubbles.forEach(b => {
+          let params = { entityId: b, entitiesListSize: 1 }
+          queryList.push( // make a query for each selected bubble
+            this.dataSource.makeRequest$('getMissingBubble', params)
+          )
+        });
+        // await for every missing bubble and build a custom response
+        forkJoin(queryList).subscribe(forkres => {
+          let customBubbles = []
+          forkres.forEach(r => { customBubbles.push({ count: 0, entity: r }) });
+          this.emitOuter('filterbubbleresponse', customBubbles);
+          this.dataSource.renderPreviewsFromApolloQuery(res)
+          this.dataSource.renderItemTags()
+        })
+      }
+    })
   }
 
 }
