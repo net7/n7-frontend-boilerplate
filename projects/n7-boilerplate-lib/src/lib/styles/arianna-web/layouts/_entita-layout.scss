@@ -246,6 +246,25 @@
     .n7-pagination {
         margin-top: $space*4;
     }
+
+    /* Bubble chart in overview */
+    .n7-bubble-chart {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        // padding: 0 $aw-scheda-content-padding $aw-scheda-content-padding $aw-scheda-content-padding;
+        height: $bubble-section-entity-overview;
+    }
+
+    #bubbleChartContainer {
+        height: 100%;
+    }
+
+    /* Bubble chart detail */
+
+    #bubbleChartContainer {
+
+    }
 }
 
 

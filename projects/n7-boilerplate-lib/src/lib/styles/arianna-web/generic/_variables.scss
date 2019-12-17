@@ -10,6 +10,10 @@
 $page-max-width: 1350px;
 $page-min-width: 960px;
 
+$bubble-section-patrimonio: 350px;
+$bubble-section-entity-overview: 350px;
+$bubble-section-entity-detail: 900px;
+
 
 // ------------------------------------ //
 // #SCHEDA-LAYOUT
@@ -233,7 +237,7 @@ $top-hero-title-font-weight: $font-weight-bold;
 // ------------------------------------ //
 // #BUBBLE-SECTION-HOMEPAGE
 // ------------------------------------ //
-$bubble-section-height: 750px;
+$bubble-section-height: 780px;
 $bubble-popover-title-font-weight: $font-weight-bold;
 $bubble-results-count-font-weight: $font-weight-bold;
 
