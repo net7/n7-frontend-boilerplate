@@ -1,8 +1,16 @@
 import { EventHandler } from '@n7-frontend/core';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 export class AwHomeFacetsWrapperEH extends EventHandler {
 
+  private changedInput$: Subject<any> = new Subject()
+
   public listen() {
+    this.changedInput$.pipe(debounceTime(500)).subscribe(payload => {
+      this.emitOuter('change', payload);
+    })
+
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
         // toggle visibility from facet header
@@ -15,7 +23,8 @@ export class AwHomeFacetsWrapperEH extends EventHandler {
           break;
         // change search input text
         case 'aw-home-facets-wrapper.change':
-          this.emitOuter('change', payload);
+          this.changedInput$.next(payload)
+
           break;
         // pressed return while typing in search
         case 'aw-home-facets-wrapper.enter':
