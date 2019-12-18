@@ -21,7 +21,8 @@ export class AwHomeAutocompleteDS extends DataSource {
           title: label,
           icon,
           classes: `color-${groupId}`,
-          items: []
+          items: [],
+          type: groupId
         };
       }
 
@@ -39,7 +40,8 @@ export class AwHomeAutocompleteDS extends DataSource {
           metadata,
           payload: {
             source: 'item',
-            id: currentItem.id
+            id: currentItem.id,
+            type: (groups[groupId] || {}).type
           }
         });
       }

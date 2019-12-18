@@ -134,10 +134,14 @@ export class AwHomeLayoutEH extends EventHandler {
           this.handleSimpleAutocompleteClick(payload)
           break;
         case 'aw-home-autocomplete.click':
-          const { source } = payload;
+          const { source, type } = payload;
           let basePath;
           if (source === "item") {
-            basePath = this.configuration.get("paths").entitaBasePath;
+            if (type === "oggetto-culturale") {
+              basePath = this.configuration.get("paths").schedaBasePath;
+            } else {
+              basePath = this.configuration.get("paths").entitaBasePath;
+            }
             this.emitGlobal('navigate', {
               handler: 'router',
               path: [basePath, payload.id]
