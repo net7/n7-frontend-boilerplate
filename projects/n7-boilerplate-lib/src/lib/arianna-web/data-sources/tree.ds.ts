@@ -23,8 +23,14 @@ export class AwTreeDS extends DataSource {
   }
 
   public build(id) {
-    const path = this._getTreePath(id);
-    if (this.currentId === id) {
+    const path = this._getTreePath(id),
+      oldPath = this._getTreePath(this.currentId),
+      oldPathIndex = oldPath.indexOf(id);
+
+    if (oldPathIndex > 0) {
+      path.splice(oldPathIndex);
+      this.currentId = null;
+    } else if (this.currentId === id) {
       const idIndex = path.indexOf(this.currentId);
       path.splice(idIndex);
       this.currentId = null;
