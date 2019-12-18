@@ -24,7 +24,6 @@ export class AwHomeFacetsWrapperEH extends EventHandler {
         // change search input text
         case 'aw-home-facets-wrapper.change':
           this.changedInput$.next(payload)
-
           break;
         // pressed return while typing in search
         case 'aw-home-facets-wrapper.enter':
@@ -50,6 +49,9 @@ export class AwHomeFacetsWrapperEH extends EventHandler {
               this.dataSource.lockedFacets[key].splice(this.dataSource.lockedFacets[key].indexOf(payload), 1)
             }
           });
+          this.dataSource.update(this.dataSource.lastData)
+          break;
+        case 'aw-home-layout.clearselection':
           this.dataSource.update(this.dataSource.lastData)
           break;
         default:

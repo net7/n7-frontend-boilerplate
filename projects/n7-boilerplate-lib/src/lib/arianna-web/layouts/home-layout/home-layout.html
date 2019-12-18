@@ -46,7 +46,7 @@
                 <div class="aw-home__bubble-results-list-wrapper">
                     <div class="aw-home__bubble-results-list" [attr.id]="'bubble-results-list'"
                         (scroll)="lb.eventHandler.emitOuter('scroll', $event.target)">
-                        
+
                         <div class="aw-home__bubble-results-fallback"
                             *ngIf="(lb.widgets['aw-linked-objects'].ds.out$ | async)?.result.length < 1;">
                             <p class="aw-home__bubble-results-fallback-text">
@@ -57,13 +57,13 @@
                                 Resetta la ricerca
                             </button>
                         </div>
-                        
+
                         <ng-container
                             *ngFor="let widgetData of (lb.widgets['aw-linked-objects'].ds.out$ | async)?.result;">
                             <n7-item-preview [data]="widgetData" [emit]="lb.widgets['aw-linked-objects'].emit">
                             </n7-item-preview>
                         </ng-container>
-                        
+
                         <ng-container *ngIf="(lb.widgets['aw-linked-objects'].ds.out$ | async)?.isLoading">
                             <div class="aw-home__bubble-results-list-loader">
                                 <n7-loader [data]="(lb.widgets['aw-linked-objects'].ds.out$ | async)?.loaderData">
@@ -74,14 +74,15 @@
                     <div *ngIf="lb.dataSource.hasScrollBackground"
                         class="aw-home__bubble-results-list-wrapper-with-scroll"></div>
                     <!-- aw-linked-objects__actions -->
-                    
-                    <div *ngIf="(lb.widgets['aw-linked-objects'].ds.out$ | async)?.actions as action"
-                        class="aw-home__bubble-results-list-actions">
-                        <button (click)="lb.eventHandler.emitInner('bubbleresultsviewallclick')"
-                            class="n7-btn n7-btn-light n7-btn-l aw-home__bubble-results-list-view-all">
-                            {{action[0].label}}
-                        </button>
-                    </div>
+                    <ng-container *ngIf="(lb.widgets['aw-linked-objects'].ds.out$ | async)?.result.length > 0;">
+                        <div *ngIf="(lb.widgets['aw-linked-objects'].ds.out$ | async)?.actions as action"
+                            class="aw-home__bubble-results-list-actions">
+                            <button (click)="lb.eventHandler.emitInner('bubbleresultsviewallclick')"
+                                class="n7-btn n7-btn-light n7-btn-l aw-home__bubble-results-list-view-all">
+                                {{action[0].label}}
+                            </button>
+                        </div>
+                    </ng-container>
                 </div>
 
             </div>
