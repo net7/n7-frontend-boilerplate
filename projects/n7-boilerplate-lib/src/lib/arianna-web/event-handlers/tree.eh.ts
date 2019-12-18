@@ -9,6 +9,8 @@ export class AwTreeEH extends EventHandler {
           this.dataSource.build(payload.id);
           break;
         case 'menuitem':
+          this.dataSource.setActive(payload.id);
+          this.dataSource.highlightActive();
           this.emitOuter('click', payload.id);
           break;
         default:
@@ -25,6 +27,9 @@ export class AwTreeEH extends EventHandler {
             this.dataSource.build(payload);
             break;
           case 'aw-scheda-layout.navigationresponse':
+            if (payload.currentItem) {
+              this.dataSource.setActive(payload.currentItem);
+            }
             const currentId = payload.currentItem || payload.tree.id;
             this.dataSource.load(payload);
             this.dataSource.build(currentId);

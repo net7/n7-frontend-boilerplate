@@ -59,9 +59,9 @@ export class AwSchedaLayoutEH extends EventHandler {
 
   private listenRoute() {
     this.route.paramMap.subscribe(params => {
-      if (params.get('id')) {
-        this.dataSource.loadItem(params.get('id')).subscribe((response) => {
-          console.log('getNode() res: ', response)
+      const paramId = params.get('id');
+      if (paramId) {
+        this.dataSource.loadItem(paramId).subscribe((response) => {
           if (response) {
             this.dataSource.loadContent(response);
             if (response.relatedEntities) {

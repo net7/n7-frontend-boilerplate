@@ -4,6 +4,7 @@ export class AwTreeDS extends DataSource {
   static dataCache: any = {};
   private rootId: string;
   private currentId: string;
+  private activeId: string;
 
   protected transform(tree) {
     if (!tree) {
@@ -40,6 +41,39 @@ export class AwTreeDS extends DataSource {
 
     const tree: any = this._getTree(path);
     this.update(tree);
+  }
+
+  public setActive(id) {
+    this.activeId = id;
+  }
+
+  public highlightActive() {
+    const control = (items) => {
+      items.forEach(item => {
+        const founded = item.meta === this.activeId,
+          hasActive = item.classes.indexOf('is-active') !== -1;
+
+        // clear is-active
+        if (hasActive && !founded) {
+          const currentClasses = item.classes.split(' ');
+          currentClasses.splice(currentClasses.indexOf('is-active'), 1);
+          item.classes = currentClasses.join(' ');
+        }
+
+        if (founded) {
+          const currentClasses = item.classes.split(' ');
+          if (currentClasses.indexOf('is-active') === -1) {
+            currentClasses.push('is-active');
+          }
+          item.classes = currentClasses.join(' ');
+        }
+
+        if (Array.isArray(item.items) && item.items.length) {
+          control(item.items);
+        }
+      });
+    };
+    control(this.output.items);
   }
 
   private _getCachedData = () => {
@@ -105,8 +139,15 @@ export class AwTreeDS extends DataSource {
   private _getTreeItem = (id, inPath) => {
     const { label, icon, img, hasBranches } = this._getCachedData().flatData[id];
     const defaultIcon = inPath ? 'n7-icon-angle-down' : 'n7-icon-angle-right';
+    const classes = [];
+    if (inPath) {
+      classes.push('is-expanded');
+    }
+    if (this.activeId === id) {
+      classes.push('is-active');
+    }
     return {
-      classes: inPath ? 'is-expanded is-active' : 'is-expanded',
+      classes: classes.join(' '),
       text: label || null,
       img: img || null,
       icon: icon || null,
