@@ -9,7 +9,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
 
   public options: any;
   public pageTitle: string;
-
+  public showFields: boolean = false;
   public myResponse: any = {}; // backend response object
   public selectedTab: string; // selected nav item
   public navHeader: any = {}; // nav-header (custom) data
@@ -102,6 +102,15 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
   updateWidgets(data) {
     const selected = this.selectedTab
     this.one('aw-entita-nav').update({ data, selected })
+    this.updateComponent(
+      'aw-entita-metadata-viewer',
+      this.myResponse.fields,
+      {
+        context: this.selectedTab,
+        config: this.configuration,
+        labels: this.configuration.get("labels")
+      }
+    )
   }
   /*
     Helper function to update the graph
@@ -130,13 +139,18 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
   loadContent(res) {
     // console.log('(entita) Apollo responded with: ', { res })
     this.myResponse = res
+    if (!res.fields || (((this.configuration.get('entita-layout') || {}).overview || {}).campi || {}).length < 1) {
+      this.showFields = false
+    } else {
+      this.showFields = true
+    }
     this.navHeader = { // always render nav header
       icon: this.configuration.get("config-keys")[this.myResponse.typeOfEntity] ? this.configuration.get("config-keys")[this.myResponse.typeOfEntity].icon : "",
       text: this.myResponse.label,
       color: this.myResponse.typeOfEntity.replace(/ /g, '-')
     }
     this.one('aw-entita-nav').updateOptions({ bubblesEnabled: this.bubblesEnabled });
-    this.one('aw-entita-metadata-viewer').updateOptions({ context: this.selectedTab, labels: this.configuration.get("labels") });
+    this.one('aw-entita-metadata-viewer').updateOptions({ context: this.selectedTab, labels: this.configuration.get("labels"), config: this.configuration });
     this.one('aw-entita-metadata-viewer').update(res.fields);
     if (this.selectedTab == 'oggetti-collegati') {
       this.one('aw-linked-objects').updateOptions({

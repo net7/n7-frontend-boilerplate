@@ -248,6 +248,10 @@
     "fallback": "La tua ricerca non ha dato risultati. Prova a cambiare i parametri oppure a resettare la ricerca cliccando sul pulsante sottostante."
   },
   "entita-layout": {
+    "overview": {
+      "campi": ["data_istituzione", "denominazione_autorita"],
+      "max-bubble-num": 30
+    },
     "max-bubble-num": 30
   },
   "config-keys": {

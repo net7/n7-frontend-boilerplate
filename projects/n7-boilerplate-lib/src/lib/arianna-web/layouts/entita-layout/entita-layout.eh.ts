@@ -52,6 +52,15 @@ export class AwEntitaLayoutEH extends EventHandler {
           if (payload) {
             this.dataSource.selectedTab = payload;
             this.dataSource.handleNavUpdate(payload)
+            // this.dataSource.updateComponent(
+            //   'aw-entita-metadata-viewer',
+            //   this.dataSource.myResponse.fields,
+            //   { 
+            //     context: this.dataSource.selectedTab,
+            //     config: this.dataSource.configuration,
+            //     labels: this.dataSource.configuration.get("labels")
+            //   }
+            // )
           }
           break;
         case 'aw-linked-objects.pagination':
@@ -95,7 +104,7 @@ export class AwEntitaLayoutEH extends EventHandler {
           break;
         case 'aw-bubble-chart.bubble-filtered':
           if (this.dataSource.selectedTab == "overview" || this.dataSource.selectedTab == "entita-collegate") {
-            console.log('filter bubble response', {payload})
+            console.log('filter bubble response', { payload })
             this.emitOuter('filterbubbleresponse', payload.relatedEntities);
             //this.dataSource.updateBubbes(payload);
           }

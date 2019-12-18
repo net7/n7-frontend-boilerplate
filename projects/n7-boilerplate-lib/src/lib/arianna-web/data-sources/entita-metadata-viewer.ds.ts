@@ -8,10 +8,17 @@ export class AwEntitaMetadataViewerDS extends DataSource {
       changes based on context.
     */
 
-    let { labels } = this.options;
+    let { context, labels, config } = this.options;
     labels = labels || {};
 
-    const unpackedData = AwEntitaMetadataViewerDS.unpackFields(data);
+    let unpackedData = []
+    if (context == 'overview') {
+      let configuredKeys = ((config.get('entita-layout') || {}).overview || {}).campi
+      let filteredData = data.filter(d => configuredKeys.includes(d.key))
+      unpackedData = AwEntitaMetadataViewerDS.unpackFields(filteredData)
+    } else {
+      unpackedData = AwEntitaMetadataViewerDS.unpackFields(data);
+    }
     // prettify labels
     unpackedData.forEach(section => {
       section.items

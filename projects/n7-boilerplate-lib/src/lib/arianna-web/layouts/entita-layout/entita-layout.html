@@ -31,7 +31,7 @@
                 </div>
             </div>
 
-            <ng-container *ngIf="lb.dataSource.myResponse.fields && lb.dataSource.myResponse.fields.length > 0">
+            <ng-container *ngIf="(lb.dataSource.myResponse.fields && lb.dataSource.selectedTab == 'campi') || (lb.dataSource.showFields && lb.dataSource.selectedTab == 'overview')">
                 <div class="aw-entity__content-section aw-entity__content-section-overview"
                     [hidden]="lb.dataSource.selectedTab != 'overview' && lb.dataSource.selectedTab != 'campi'">
                     <div class="aw-entity__content-section-header">

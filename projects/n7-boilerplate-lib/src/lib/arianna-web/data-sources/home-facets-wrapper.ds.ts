@@ -23,7 +23,7 @@ export class AwHomeFacetsWrapperDS extends DataSource {
     })
     this.autoComplete = {} // reset data
 
-    facetData.forEach(facet => {
+    facetData.forEach((facet, j) => {
       /*
        For each facet on back-end, push a header-component
        and a facet-component (search input only) to each array.
@@ -100,6 +100,7 @@ export class AwHomeFacetsWrapperDS extends DataSource {
           {
             inputs: [
               {
+                id: `${facet.type.replace(/ /g, '-')}-${j}`,
                 type: 'text',
                 placeholder: facet['input-placeholder'],
                 icon: 'n7-icon-search',
