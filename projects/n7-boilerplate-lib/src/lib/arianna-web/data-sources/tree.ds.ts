@@ -1,165 +1,121 @@
 import { DataSource } from '@n7-frontend/core';
 
 export class AwTreeDS extends DataSource {
+  static dataCache: any = {};
+  private rootId: string;
+  private currentId: string;
 
-  public currentItem: any;
-  public icons: any;
-
-  protected transform(data) {
-    this.icons = this.options.icons
-    return data;
-  }
-
-  updateTree(data, parents, id) {
-
-    const tree = this.updateTreeData(data, parents, id);
-    this.update(tree);
-
-  }
-  private updateTreeData(data, parents, id){
-    if ( !data ) {
-      data = this.output;
-    }
-    data.items.forEach( (it) => {
-      const classes = it['classes'];
-      if( it['_meta'] == id ) {
-        if ( classes && classes.indexOf('is-expanded') > -1 ) {
-          it['classes'] = classes.replace(/is-expanded/g, 'is-collapsed');
-          if ( it['toggle'] ){
-            it['toggle']['icon'] = 'n7-icon-angle-right';
-          }
-        } else {
-          it['classes'] = classes.replace(/is-collapsed/g, 'is-expanded');
-          if ( it['toggle'] ){
-            it['toggle']['icon'] = 'n7-icon-angle-down';
-          }
-        }
-      } else if ( parents && parents.indexOf( it['_meta'] ) >= 0 ) {
-          it['classes'] = classes.replace(/is-collapsed/g, 'is-expanded');
-          if ( it['toggle'] ){
-            it['toggle']['icon'] = 'n7-icon-angle-down';
-          }
-      }
-      if( typeof it['items'] != 'undefined' && it['items'].length > 0 ) {
-        this.updateTreeData(it, parents, id);
-      }
-    });
-    return data;
-  }
-
-  selectTreeItem(id, data){
-    if ( !data ) {
-      data = this.output;
-    }
-
-    if( this.currentItem && this.currentItem["_meta"] == id ){
+  protected transform(tree) {
+    if (!tree) {
       return;
     }
-
-    data.items.forEach( (it) => {
-        if ( it['_meta'] == id && it['classes'].indexOf('is-active') < 0 ) {
-            it['classes'] = it['classes'] + ' is-active';
-            this.currentItem = it;
-        } else {
-          const classes = it['classes'];
-          it['classes'] = classes.replace("is-active", "");
-        }
-        if( typeof it['items'] != "undefined" && it['items'].length > 0 ) {
-          this.selectTreeItem(id, it);
-        }
-    });
-    this.update(data);
+    return tree;
   }
 
-  toggleSidebar() {
-    let sidebarData = this.output;
-    if ( sidebarData.classes == "is-expanded" ) {
-      sidebarData.classes = "is-collapsed";
-    } else {
-        sidebarData.classes = "is-expanded";
+  public load(data) {
+    const { tree } = data;
+    this.rootId = tree.id;
+    // save in cache
+    if (!AwTreeDS.dataCache[this.rootId]) {
+      AwTreeDS.dataCache[this.rootId] = { flatIds: [], flatData: {} };
+      this._normalize(tree);
     }
-    this.update(sidebarData);
   }
 
-  public parseData(response) {
-    let treeObj = {
-      items: []
-    };
+  public build(id) {
+    const path = this._getTreePath(id);
+    if (this.currentId === id) {
+      const idIndex = path.indexOf(this.currentId);
+      path.splice(idIndex);
+      this.currentId = null;
+    } else {
+      this.currentId = id;
+    }
 
-    var data = response['tree'];
-    if( data['branches'] && data['branches'].length > 0 ) {
-      data['branches'].forEach( item => {
-        treeObj['items'].push( this.parseTree(item, false, []) );
+    const tree: any = this._getTree(path);
+    this.update(tree);
+  }
+
+  private _getCachedData = () => {
+    return AwTreeDS.dataCache[this.rootId];
+  }
+
+  private _normalize = ({ id, label, icon, img, branches }) => {
+    const hasBranches = !!(Array.isArray(branches) && branches.length);
+    this._getCachedData().flatData[id] = { id, label, icon, img, hasBranches };
+    if (hasBranches) {
+      branches.forEach(data => {
+        this._getCachedData().flatIds.push([id, data.id]);
+        this._normalize(data);
       });
     }
-    this.update(treeObj);
-    if (response['currentItem'] == response['currentItem'] != null) {
-      //this.currentItem = response['currentItem'];
-      this.selectTreeItem(response['currentItem'], null);
-      this.updateTree(null, this.currentItem.parents, response['currentItem']);
-
-    }
   }
 
-  private parseTree(data, toggle, parents) {
-    var currParents = [...parents];
-    let treeItem = {};
-    const showToggle =  toggle && data['branches'] != null && data['branches'].length > 0 ;
-    if( showToggle ){
-      treeItem['toggle'] = {
-        icon: 'n7-icon-angle-right',
-        payload: {
-            source: "toggle",
-            id: data['id'],
-            parents: currParents,
+  private _getParent = (id) => {
+    return this._getCachedData().flatIds
+      .filter(([, childId]) => childId === id)
+      .map(([parentId]) => parentId)[0] || null;
+  }
+
+  private _getTreePath = (id) => {
+    const ids = [id];
+    let currentId = id;
+    while (currentId) {
+      const parentId = this._getParent(currentId);
+      if (parentId) {
+        ids.push(parentId);
+      }
+      currentId = parentId;
+    }
+    return ids.reverse();
+  }
+
+  private _getTree = (path) => {
+    const tree = {};
+    let counter = 0;
+
+    const loadItems = (id, source) => {
+      counter += 1;
+      const nextParent = path[counter];
+      source.items = [];
+
+      this._getCachedData().flatIds
+        .filter(([parentId]) => parentId === id)
+        .forEach(([, childId], index) => {
+          const inPath = childId === nextParent;
+          const item = this._getTreeItem(childId, inPath);
+          source.items.push(item);
+          if (inPath) {
+            loadItems(childId, source.items[index]);
           }
-      }
-    }
-    Object.keys(data).forEach( key => {
-    if( key != "branches" ) {
-      switch (key) {
-        case "label": treeItem['text'] = data[key]; break;
-        case "img" : treeItem['img'] = data[key]; break;
-        case "icon" :
-            if (showToggle && data[key] != null){
-              treeItem['toggle']['icon'] = data[key];
-            } else {
-              treeItem['icon'] = data[key];
-            }
-            break;
-        case "id" :
-            treeItem['_meta'] =  data[key];
-            treeItem['payload'] = {
-              source: "menuItem",
-              id: data['id']
-            };
-            break;
-        default :  data[key]; break;
-      }
-      treeItem['classes'] = 'is-collapsed';
-      treeItem['parents'] = currParents;
+        });
+    };
 
-    }
-    else if( data['branches'] != null ) {
-      currParents.push(data['id']);
-
-      /*Handle cases with menu item with children but without toggle*/
-      if( !toggle ) {
-        treeItem['payload']['source'] = "ToggleMenuItem";
-        treeItem['payload']['parents'] = currParents;
-      }
-
-      treeItem['items'] = [];
-      data[key].forEach( item => {
-        if ( item['img'] != "" && item['img'] != null ) {
-          treeItem['iconright'] = "n7-icon-images";
-        }
-
-        treeItem['items'].push( this.parseTree(item, true, currParents) );
-      })
-    }
-    })
-    return treeItem;
+    // init
+    loadItems(path[0], tree);
+    return tree;
   }
 
+  private _getTreeItem = (id, inPath) => {
+    const { label, icon, img, hasBranches } = this._getCachedData().flatData[id];
+    const defaultIcon = inPath ? 'n7-icon-angle-down' : 'n7-icon-angle-right';
+    return {
+      classes: inPath ? 'is-expanded is-active' : 'is-expanded',
+      text: label || null,
+      img: img || null,
+      icon: icon || null,
+      toggle: hasBranches ? {
+        icon: icon || defaultIcon,
+        payload: {
+          source: 'toggle',
+          id: id,
+        }
+      } : null,
+      meta: id,
+      payload: {
+        id,
+        source: 'menuitem',
+      }
+    };
+  }
 }

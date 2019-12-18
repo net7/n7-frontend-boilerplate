@@ -1,8 +1,9 @@
 import { LayoutDataSource } from '@n7-frontend/core';
-import { fromEvent, Subject } from 'rxjs';
+import { fromEvent, Subject, of } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 export class AwSchedaLayoutDS extends LayoutDataSource {
+  static tree: any;
   private destroyed$: Subject<any> = new Subject();
   private communication: any;
   protected configuration: any;
@@ -56,11 +57,19 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   }
 
   getNavigation(id) {
+    if (AwSchedaLayoutDS.tree) {
+      return of(AwSchedaLayoutDS.tree);
+    }
     return this.communication.request$('getTree', {
       onError: (error) => console.error(error),
       params: { treeId: id }
-    })
+    });
   }
+
+  setTree(tree) {
+    AwSchedaLayoutDS.tree = tree;
+  }
+  getTree = () => AwSchedaLayoutDS.tree;
 
   updateNavigation(data) {
     let header = {
@@ -82,7 +91,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       })
     } else {
       /* TODO: valori statici, da prendere da config */
-      this.pageTitle = 'Collezione d\'Arte';
+      this.pageTitle = 'Collezione d\'Arte';  
       this.contentParts = [
         {
           type: 'text',
@@ -108,17 +117,6 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       console.log('(Scheda) Apollo responded with: ', response)
       this.contentParts = [];
       let content = {};
-
-      this.one('aw-tree').updateOptions({
-        icons: this.configuration.get('scheda-layout')['tree']
-      })
-      /* Related Entities */
-      // this.one('aw-bubble-chart').updateOptions({
-      // context: 'scheda',
-      // configKeys: this.configuration.get("config-keys"),
-      // bubbleContainerId: 'bubbleChartContainer',
-      // containerId: 'bubble-chart-container',
-      // });
 
       if (response.text) {
         content['content'] = response.text;
