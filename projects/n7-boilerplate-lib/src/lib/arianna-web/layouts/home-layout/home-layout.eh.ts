@@ -108,14 +108,14 @@ export class AwHomeLayoutEH extends EventHandler {
           this.emitOuter('tagclick', payload)
           break;
         case 'aw-linked-objects.datarequest':
-          let { currentPage } = payload
-          let params = {
-            selectedEntitiesIds: this.dataSource.selectedEntitiesIds,
+          const { currentPage } = payload;
+          const params = {
+            selectedEntitiesIds: this.dataSource.selectedBubbles,
             itemsPagination: {
               offset: currentPage * this.dataSource.resultsLimit,
               limit: this.dataSource.resultsLimit
             }
-          }
+          };
           this.dataSource.makeRequest$('globalFilter', params).subscribe(res => {
             if (res) {
               this.emitOuter('dataresponse', { res })
