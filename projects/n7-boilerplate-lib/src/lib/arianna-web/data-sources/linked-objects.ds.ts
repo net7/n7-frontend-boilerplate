@@ -189,7 +189,7 @@ export class AwLinkedObjectsDS extends DataSource {
     const enabledKeys = paths.metadata.info.selection.map(info => info.key);
     d.forEach(el => {
       const infoData = _get(el, paths.metadata.info.data, el.item.fields),
-        infoDataItems = infoData ? infoData.filter(data => enabledKeys.indexOf(data.keys) !== -1) : [],
+        infoDataItems = infoData ? infoData.filter(data => enabledKeys.indexOf(data.key) !== -1) : [],
         toeData = _get(el, paths.metadata.toe.data, el.relatedTypesOfEntity),
         breadcrumbs = _get(el, paths.metadata.breadcrumbs.data, el.breadcrumbs),
         item = {
