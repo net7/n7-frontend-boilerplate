@@ -85,7 +85,6 @@ export class AwHomeFacetsWrapperDS extends DataSource {
         iconClasses.push(`color-${facet.configKey}`);
       }
       // make array of headers data
-      console.log(facet.locked)
       headers.push({
         iconLeft: iconClasses.join(' '),
         text: facet.label,
@@ -125,7 +124,6 @@ export class AwHomeFacetsWrapperDS extends DataSource {
     headers.map((h, i) => {
       widgetData.push({ header: h, input: inputs[i] });
     });
-    console.log('widgetData', widgetData)
     return widgetData;
   }
 
