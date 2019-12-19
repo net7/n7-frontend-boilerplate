@@ -6,6 +6,7 @@ export class AwHomeFacetsWrapperDS extends DataSource {
   public lockedFacets = {}   // locked means that the eye cannot be closed
   public lastData = {}       // store the last response so the component can be rendered again with the same data
   public closedEyes = []     // list of closed eyes
+  public openTippy = ''      // tipe of entity of the currently open tippy
 
   protected transform(data) {
     this.lastData = data
@@ -15,6 +16,9 @@ export class AwHomeFacetsWrapperDS extends DataSource {
     const lockedFacets = this.lockedFacets // locked means that the eye cannot be closed
     const closedEyes = this.closedEyes     // list of closed eyes
 
+
+    console.log('lockedFacets', this.lockedFacets)
+    console.log('closedEyes', this.closedEyes)
     // when facet data changes, destroy every tippy and reset autocomplete data.
     Object.keys(this.autoComplete).forEach(id => {
       if (this.autoComplete[id] && this.autoComplete[id].tippy) {
