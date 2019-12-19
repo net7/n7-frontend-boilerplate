@@ -7,16 +7,18 @@ export class AwLinkedObjectsEH extends EventHandler {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
         case 'aw-linked-objects.click':
-          if (payload.startsWith('page')) {
-            // pagination routing is handled by the parent layout
-            this.emitOuter('pagination', payload)
-          } else if (payload.startsWith('goto')) {
-            let targetPage = Number(payload.replace('goto-', ''))
-            // kill impossible page navigations
-            if (targetPage > this.dataSource.totalPages) return;
-            else if (targetPage < 1 || targetPage === this.dataSource.currentPage) return;
-            else this.emitOuter('goto', payload)
-          } else {
+          if (typeof payload == 'string') { // click on pagination
+            if (payload.startsWith('page')) {
+              // pagination routing is handled by the parent layout
+              this.emitOuter('pagination', payload)
+            } else if (payload.startsWith('goto')) {
+              let targetPage = +payload.replace('goto-', '')
+              // kill impossible page navigations
+              if (targetPage > this.dataSource.totalPages) return;
+              else if (targetPage < 1 || targetPage === this.dataSource.currentPage) return;
+              else this.emitOuter('goto', payload)
+            }
+          } else { // click on a linked object
             this.emitOuter('click', payload);
           }
           break;

@@ -17,7 +17,7 @@ export class AwLinkedObjectsDS extends DataSource {
     this.paths = this.options.config.get('item-preview');
     this.pageSize = this.options.size;
     this.totalObjects = data.totalCount;
-    this.currentPage = this.options.page ? <number>this.options.page : 1;
+    this.currentPage = this.options.page ? +this.options.page : 1;
     if (this.options.dynamicPagination && this.options.dynamicPagination.total) {
       this.totalPages = Math.ceil(this.options.dynamicPagination.total / this.pageSize);
     } else if (data.items) {
@@ -110,8 +110,8 @@ export class AwLinkedObjectsDS extends DataSource {
         if (totalPages === 2) {
           lastPage = totalPages;
           firstPage = 1;
-        // when currentPage is after half-point
-        // (example: [ 14 ][ 15 ][!16!][ 17 ][ 18 ])
+          // when currentPage is after half-point
+          // (example: [ 14 ][ 15 ][!16!][ 17 ][ 18 ])
         } else if (currentPage < (totalPages - Math.floor(limit / 2))) {
           lastPage = currentPage / 1 + Math.floor(limit / 2);
           firstPage = currentPage / 1 - Math.floor(limit / 2);
@@ -126,7 +126,6 @@ export class AwLinkedObjectsDS extends DataSource {
         firstPage = 1;
       }
 
-      // console.log({ currentPage, limit, lastPage, firstPage })
       for (let i = firstPage; i <= lastPage; i++) {
         result.push({
           text: String(i),
@@ -193,28 +192,28 @@ export class AwLinkedObjectsDS extends DataSource {
         toeData = _get(el, paths.metadata.toe.data, el.relatedTypesOfEntity),
         breadcrumbs = _get(el, paths.metadata.breadcrumbs.data, el.breadcrumbs),
         item = {
-        image: _get(el, paths.image, el.image),
-        title:
-          // if there is a max string length in config, use it
-          +paths.title.maxLength && _get(el, paths.title, el.item.label).length > +paths.title.maxLength ?
-            _get(el, paths.title, el.item.label).slice(0, +paths.title.maxLength) + '…' :
-            _get(el, paths.title, el.item.label),
-        text: !paths.text ? null : // make text block (in config) optional
-          +paths.text.maxLength && _get(el, paths.text.data, el.item.text).length > +paths.text.maxLength ?
-            _get(el, paths.text.data, el.item.text).slice(0, +paths.text.maxLength) + '…' :
-            _get(el, paths.text.data, el.item.text),
-        payload: _get(el, paths.payload, el.item.id),
-        classes: ['entita', 'search'].includes(context) ? 'is-fullwidth' : '',
-        metadata: infoDataItems.length || toeData ? [] : null,
-        breadcrumbs: null
-      };
+          image: _get(el, paths.image, el.image),
+          title:
+            // if there is a max string length in config, use it
+            +paths.title.maxLength && _get(el, paths.title, el.item.label).length > +paths.title.maxLength ?
+              _get(el, paths.title, el.item.label).slice(0, +paths.title.maxLength) + '…' :
+              _get(el, paths.title, el.item.label),
+          text: !paths.text ? null : // make text block (in config) optional
+            +paths.text.maxLength && _get(el, paths.text.data, el.item.text).length > +paths.text.maxLength ?
+              _get(el, paths.text.data, el.item.text).slice(0, +paths.text.maxLength) + '…' :
+              _get(el, paths.text.data, el.item.text),
+          payload: { id: _get(el, paths.payload, el.item.id), type: el.item.typeOfEntity },
+          classes: ['entita', 'search'].includes(context) ? 'is-fullwidth' : '',
+          metadata: infoDataItems.length || toeData ? [] : null,
+          breadcrumbs: null
+        };
       // metadata
       if (infoDataItems.length) {
         item.metadata.push({
           classes: 'n7-objects__metadata-artist',
           items: infoDataItems.map(data => ({
-              label: helpers.prettifySnakeCase(data.key, labels[data.key]),
-              value: data.value
+            label: helpers.prettifySnakeCase(data.key, labels[data.key]),
+            value: data.value
           }))
         });
       }

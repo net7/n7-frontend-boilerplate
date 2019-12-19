@@ -74,7 +74,7 @@ export class AwSearchLayoutEH extends EventHandler {
           const paths = this.dataSource.configuration.get('paths');
           this.emitGlobal('navigate', {
             handler: 'router',
-            path: [paths.entitaBasePath, payload]
+            path: [payload.type == undefined ? paths.schedaBasePath : paths.entitaBasePath, payload.id]
           });
           break;
         default:

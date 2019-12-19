@@ -6,6 +6,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
   protected router: any;
   protected location: any;
   protected titleService: any;
+  protected route: any;
 
   public options: any;
   public pageTitle: string;
@@ -22,7 +23,8 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
 
   private communication: any;
 
-  onInit({ configuration, mainState, router, location, options, titleService, communication }) {
+  onInit({ configuration, mainState, router, route, location, options, titleService, communication }) {
+    this.route = route;
     this.communication = communication;
     this.configuration = configuration;
     this.mainState = mainState;
@@ -31,7 +33,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     this.location = location;
     this.titleService = titleService;
     this.currentId = "";
-    this.currentPage = 1;
+    this.currentPage = +this.route.snapshot.params.page;
     this.bubblesEnabled = this.configuration.get('features-enabled') ? this.configuration.get('features-enabled')['bubblechart'] : false;
     this.bubblesSize = this.configuration.get('entita-layout') ? this.configuration.get('entita-layout')['max-bubble-num'] : this.bubblesSize;
     this.one('aw-bubble-chart').updateOptions({ simple: true, config: this.configuration })
