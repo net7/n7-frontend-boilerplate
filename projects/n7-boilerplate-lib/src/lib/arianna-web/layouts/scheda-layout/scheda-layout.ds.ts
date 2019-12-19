@@ -3,7 +3,7 @@ import { fromEvent, Subject, of, merge } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 export class AwSchedaLayoutDS extends LayoutDataSource {
-  static tree: any;
+  static tree: any = null;
   private destroyed$: Subject<any> = new Subject();
   private stickyControlTrigger$: Subject<any> = new Subject();
   private communication: any;
