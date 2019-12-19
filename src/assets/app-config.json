@@ -251,9 +251,9 @@
   "entita-layout": {
     "overview": {
       "campi": ["data_istituzione", "denominazione_autorita"],
-      "max-bubble-num": 30
+      "entitiesQuerySize": 30
     },
-    "max-bubble-num": 30
+    "entitiesQuerySize": 30
   },
   "config-keys": {
     "persona": {
