@@ -48,7 +48,7 @@ export class AwSchedaLayoutEH extends EventHandler {
           const paths = this.configuration.get('paths');
           this.emitGlobal('navigate', {
             handler: 'router',
-            path: [paths.schedaBasePath, payload]
+            path: [paths.schedaBasePath, payload.id]
           });
           break;
         default:

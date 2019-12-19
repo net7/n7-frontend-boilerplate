@@ -127,7 +127,7 @@ export class AwHomeLayoutEH extends EventHandler {
         case 'aw-linked-objects.click':
           this.emitGlobal('navigate', {
             handler: 'router',
-            path: [this.configuration.get("paths").schedaBasePath, payload]
+            path: [this.configuration.get("paths").schedaBasePath, payload.id]
           });
           break;
         case 'aw-autocomplete-wrapper.clickresult':
