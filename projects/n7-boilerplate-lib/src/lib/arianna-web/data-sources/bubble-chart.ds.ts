@@ -9,12 +9,14 @@ export class AwBubbleChartDS extends DataSource {
   public closedEyes: any[] = []
   public tippyList: any[] = []    // list of tippy instances
   public focusedBubble: string    // id of the focused bubble
+  // public bubbleBasket: any[]
 
   protected transform(data) {
     const { config } = this.options
     const { fontRendering, transition, shuffle } = config.get('bubble-chart')
     const domain = [], range = []
     const colorConfig = config.get('config-keys')
+    const limit = config.get('bubble-chart').bubbleLimit
 
     Object.keys(colorConfig).forEach(k => {
       domain.push(k.replace(/-/g, ' '))
@@ -22,7 +24,9 @@ export class AwBubbleChartDS extends DataSource {
     })
 
     if (data.response && data.response.entitiesData) {
-      this.chartData = data.response.entitiesData
+      this.chartData = (limit && limit < data.response.entitiesData.length) ?
+        data.response.entitiesData.slice(0, limit) :
+        data.response.entitiesData
     }
     return {
       fontRendering,
@@ -44,14 +48,17 @@ export class AwBubbleChartDS extends DataSource {
       Redraws the graph with the incoming data.
       "res" should be Apollo's "response.entitiesData"
     */
-    if (res) {
-      this.chartData = res
-    } else if (res === null) {
+    if (res) console.log(res.length)
+    const limit = this.options.config.get('bubble-chart').bubbleLimit
+    if (res === null) {
       res = this.chartData
+    } else {
+      this.chartData = res
     }
     if (this.filters.length > 0) { // apply filters to the response before redrawing the graph
       res = this.chartData.filter(el => !this.filters.includes(el.entity.typeOfEntity.replace(/ /g, '-')))
     }
+    res = (limit && limit < res.length) ? res.slice(0, limit) : res
     if (!this.draw) {
       this.update(res) // component self-update
     } else {
@@ -104,23 +111,25 @@ export class AwBubbleChartDS extends DataSource {
     }
     // make new tooltips
     bubbles.forEach(b => {
-      let el = document.getElementById(b.entity.id).parentElement // selects a <g> element
-      this.tippyList.push( // add this tippy to the array of instances
-        tippy(el, {
-          content: buildTooltip(b),
-          interactive: true,
-          appendTo: document.body, // suppress interactive warning
-          arrow: true,
-          flip: false,
-          theme: 'light-border no-padding',
-          placement: 'top',
-          delay: [150, 30],
-          updateDuration: 400,
-          onMount() {
-            focusBubble(b.entity.id)
-          }
-        })
-      )
+      let el = (document.getElementById(b.entity.id) || {}).parentElement // selects a <g> element
+      if (el) {
+        this.tippyList.push( // add this tippy to the array of instances
+          tippy(el, {
+            content: buildTooltip(b),
+            interactive: true,
+            appendTo: document.body, // suppress interactive warning
+            arrow: true,
+            flip: false,
+            theme: 'light-border no-padding',
+            placement: 'top',
+            delay: [150, 30],
+            updateDuration: 400,
+            onMount() {
+              focusBubble(b.entity.id)
+            }
+          })
+        )
+      }
     });
 
     // createSingleton(this.tippyList, {

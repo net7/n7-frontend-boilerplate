@@ -72,7 +72,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         return this.communication.request$('globalFilter', {
             onError: (error) => console.error(error),
             params: {
-                entitiesListSize: this.configuration.get('home-layout')['max-bubble-num']
+                entitiesListSize: this.configuration.get('home-layout')['entitiesQuerySize']
             },
         })
     }
