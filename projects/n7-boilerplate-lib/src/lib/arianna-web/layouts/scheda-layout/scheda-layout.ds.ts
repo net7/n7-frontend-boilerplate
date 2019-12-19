@@ -1,10 +1,11 @@
 import { LayoutDataSource } from '@n7-frontend/core';
-import { fromEvent, Subject, of } from 'rxjs';
+import { fromEvent, Subject, of, merge } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 export class AwSchedaLayoutDS extends LayoutDataSource {
   static tree: any;
   private destroyed$: Subject<any> = new Subject();
+  private stickyControlTrigger$: Subject<any> = new Subject();
   private communication: any;
   protected configuration: any;
   protected mainState: any;
@@ -91,7 +92,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       })
     } else {
       /* TODO: valori statici, da prendere da config */
-      this.pageTitle = 'Collezione d\'Arte';  
+      this.pageTitle = 'Collezione d\'Arte';
       this.contentParts = [
         {
           type: 'text',
@@ -114,9 +115,8 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
   loadContent(response) {
     if (response) {
-      // console.log('(Scheda) Apollo responded with: ', response)
       this.contentParts = [];
-      let content = {};
+      const content = {};
 
       if (response.text) {
         content['content'] = response.text;
@@ -137,7 +137,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
         }
       }
 
-      let titleObj = {
+      const titleObj = {
         icon: response.icon,
         title: {
           main: {
@@ -155,8 +155,8 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       this.one('aw-scheda-metadata').updateOptions({ labels: this.configuration.get("labels") });
       this.one('aw-scheda-metadata').update(response);
 
-      /*Breadcrumb section*/
-      let breadcrumbs = {
+      // Breadcrumb section
+      const breadcrumbs = {
         items: []
       };
 
@@ -177,44 +177,22 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       this.one('aw-linked-objects').update(response);
     } else {
       this.hasSimilarItems = false;
-      //this.one('aw-linked-objects').update([]);
     }
+
+    // control sticky
+    setTimeout(() => {
+      this.stickyControlTrigger$.next();
+    });
   }
 
   collapseSidebar() {
     this.sidebarCollapsed = !this.sidebarCollapsed;
   }
 
-  // setAllBubblesFromApolloQuery( response: any, reset?: boolean ){
-  //   if ( !response || !response.relatedEntities ) { this.hasBubbles = false; return; }
-  //   this.allBubbles = [];
-
-  //   for ( let i = 0; i < response.relatedEntities.length; i++ ){
-  // const color = this.configuration.get('config-keys')[response.relatedEntities[i].entity.typeOfEntity.configKey] ? this.configuration.get('config-keys')[response.relatedEntities[i].entity.typeOfEntity.configKey]['color']['hex'] : "";
-  // this.allBubbles.push(
-  //   {
-  //     id: this.convertEntityIdToBubbleId( response.relatedEntities[i].entity.id ),
-  //     ...response.relatedEntities[i],
-  //     color: color
-  //   });
-  // }
-  // this.one('aw-scheda-bubble-chart').update({
-  //   containerId: 'bubble-chart-container',
-  //   width: window.innerWidth / 1.8,
-  //   bubbles: this.allBubbles,
-  //   reset: (reset ? reset : false)
-  // });
-  // }
-
-  // private convertEntityIdToBubbleId(entityId: string): string {
-  //   if (!entityId) return null;
-  //   return ('B_' + entityId.replace(/-/g, '_'));
-  // }
-
   private _sidebarStickyControl() {
     const source$ = fromEvent(window, 'scroll');
 
-    source$.pipe(
+    merge(source$, this.stickyControlTrigger$).pipe(
       takeUntil(this.destroyed$)
     ).subscribe(() => {
       const windowTop = window.pageYOffset,
