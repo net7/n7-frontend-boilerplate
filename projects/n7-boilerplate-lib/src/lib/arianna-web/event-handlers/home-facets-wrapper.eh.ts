@@ -23,6 +23,7 @@ export class AwHomeFacetsWrapperEH extends EventHandler {
           break;
         // change search input text
         case 'aw-home-facets-wrapper.change':
+          this.dataSource.openTippy = payload.inputPayload.replace('-search', '')
           this.changedInput$.next(payload)
           break;
         // pressed return while typing in search
@@ -52,7 +53,19 @@ export class AwHomeFacetsWrapperEH extends EventHandler {
           this.dataSource.update(this.dataSource.lastData)
           break;
         case 'aw-home-layout.clearselection':
+          this.dataSource.lockedFacets = {}
+          this.dataSource.closedEyes = []
+          this.dataSource.update(this.dataSource.lastData)
+          break;
         case 'aw-home-layout.facetclick':
+          let { openTippy } = this.dataSource
+          if (this.dataSource.lockedFacets[openTippy]) {
+            if (this.dataSource.lockedFacets[openTippy].indexOf(payload) == -1) {
+              this.dataSource.lockedFacets[openTippy].push(payload)
+            }
+          } else {
+            this.dataSource.lockedFacets[openTippy] = [payload]
+          }
           this.dataSource.update(this.dataSource.lastData)
           break;
         default:

@@ -6,6 +6,7 @@ export class AwHomeFacetsWrapperDS extends DataSource {
   public lockedFacets = {}   // locked means that the eye cannot be closed
   public lastData = {}       // store the last response so the component can be rendered again with the same data
   public closedEyes = []     // list of closed eyes
+  public openTippy = ''      // tipe of entity of the currently open tippy
 
   protected transform(data) {
     this.lastData = data
@@ -73,6 +74,8 @@ export class AwHomeFacetsWrapperDS extends DataSource {
         } else {
           facet.locked = false;
         }
+      } else {
+        facet.locked = false;
       }
       const headerClasses = [];
       const iconClasses = [facet.icon];
