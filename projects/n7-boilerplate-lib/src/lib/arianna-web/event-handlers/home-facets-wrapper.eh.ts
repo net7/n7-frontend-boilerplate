@@ -52,10 +52,10 @@ export class AwHomeFacetsWrapperEH extends EventHandler {
           this.dataSource.update(this.dataSource.lastData)
           break;
         case 'aw-home-layout.clearselection':
+        case 'aw-home-layout.facetclick':
           this.dataSource.update(this.dataSource.lastData)
           break;
         default:
-          // console.warn('unhandled outer event of type', type)
           break;
       }
     });
