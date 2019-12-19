@@ -21,7 +21,7 @@ export class AwSearchLayoutDS extends LayoutDataSource {
   private prettifyLabels: any;
   private configKeys: any;
   private fallback: string;
-  private resetButtonEnabled: boolean = true;
+  private resetButtonEnabled = true;
 
   public pageTitle: string;
   public resultsTitle: string;

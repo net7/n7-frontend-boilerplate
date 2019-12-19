@@ -52,6 +52,14 @@ export class FacetsWrapperEH extends EventHandler {
         case 'global.searchresponse':
           if (this.dataSource.searchModel && this.dataSource.searchModel.getId() === payload) {
             this.dataSource.updateInputLinks();
+            const internalFilters = this.dataSource.searchModel.getInternalFilters();
+
+            internalFilters.forEach(filter => {
+              const input = this.dataSource.searchModel.getInputByFacetId(filter.facetId);
+              const target = input.getTarget();
+              this.dataSource.filterTarget(target);
+              this.dataSource.updateFilteredTarget(target);
+            });
           }
           break;
 
