@@ -110,10 +110,11 @@ export class AwBubbleChartDS extends DataSource {
     }
     // make new tooltips
     bubbles.forEach(b => {
-      let el = (document.getElementById(b.entity.id) || {}).parentElement // selects a <g> element
-      if (el) {
+      let el = document.getElementById(b.entity.id)
+      let group = el ? el.parentElement : false // selects a <g> element
+      if (group) {
         this.tippyList.push( // add this tippy to the array of instances
-          tippy(el, {
+          tippy(group, {
             content: buildTooltip(b),
             interactive: true,
             appendTo: document.body, // suppress interactive warning
