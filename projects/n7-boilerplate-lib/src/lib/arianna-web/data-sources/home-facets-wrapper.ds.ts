@@ -16,9 +16,6 @@ export class AwHomeFacetsWrapperDS extends DataSource {
     const lockedFacets = this.lockedFacets // locked means that the eye cannot be closed
     const closedEyes = this.closedEyes     // list of closed eyes
 
-
-    console.log('lockedFacets', this.lockedFacets)
-    console.log('closedEyes', this.closedEyes)
     // when facet data changes, destroy every tippy and reset autocomplete data.
     Object.keys(this.autoComplete).forEach(id => {
       if (this.autoComplete[id] && this.autoComplete[id].tippy) {
@@ -77,6 +74,8 @@ export class AwHomeFacetsWrapperDS extends DataSource {
         } else {
           facet.locked = false;
         }
+      } else {
+        facet.locked = false;
       }
       const headerClasses = [];
       const iconClasses = [facet.icon];
@@ -86,6 +85,7 @@ export class AwHomeFacetsWrapperDS extends DataSource {
         iconClasses.push(`color-${facet.configKey}`);
       }
       // make array of headers data
+      console.log(facet.locked)
       headers.push({
         iconLeft: iconClasses.join(' '),
         text: facet.label,
@@ -125,6 +125,7 @@ export class AwHomeFacetsWrapperDS extends DataSource {
     headers.map((h, i) => {
       widgetData.push({ header: h, input: inputs[i] });
     });
+    console.log('widgetData', widgetData)
     return widgetData;
   }
 
