@@ -48,7 +48,6 @@ export class AwBubbleChartDS extends DataSource {
       Redraws the graph with the incoming data.
       "res" should be Apollo's "response.entitiesData"
     */
-    if (res) console.log(res.length)
     const limit = this.options.config.get('bubble-chart').bubbleLimit
     if (res === null) {
       res = this.chartData
