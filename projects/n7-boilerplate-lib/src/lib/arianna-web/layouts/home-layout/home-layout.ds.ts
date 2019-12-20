@@ -183,6 +183,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     onHeroChange(value) {
         this.autocompleteChanged$.next(value);
         this.homeAutocompleteIsLoading = true;
+        this.homeAutocompleteQuery = value;
         if (!this.autocompletePopoverOpen) {
             this._toggleAutocompletePopover();
         }
