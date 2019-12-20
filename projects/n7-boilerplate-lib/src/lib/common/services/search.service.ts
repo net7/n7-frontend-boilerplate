@@ -229,6 +229,11 @@ export class SearchModel {
 
     // update
     targetInput.setData(facetData);
+
+    if (targetInput.getConfig().emptyState) {
+      const isEmpty = !facetData.filter(data => !data.hidden).length;
+      targetInput.setIsEmpty(isEmpty);
+    }
     targetInput.update();
   }
 
