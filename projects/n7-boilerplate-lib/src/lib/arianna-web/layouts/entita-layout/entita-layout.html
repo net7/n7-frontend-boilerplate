@@ -84,7 +84,7 @@
                     </button>
                 </div>
                 <!-- SMALL BUBBLE CHART -->
-                <div class="aw-home__bubble-chart-wrapper__small" *ngIf="lb.dataSource.selectedTab == 'overview'">
+                <div class="aw-home__bubble-chart-wrapper-small" *ngIf="lb.dataSource.selectedTab == 'overview'">
                     <aw-bubble-chart-wrapper [emit]="lb.widgets['aw-bubble-chart'].emit"
                         [container]="'bubble-chart-container'" [buttons]="['select', 'goto']">
                         <n7-bubble-chart [data]="(lb.widgets['aw-bubble-chart'].ds.out$ | async)?.smallView"
