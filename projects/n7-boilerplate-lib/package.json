@@ -4,7 +4,7 @@
   "peerDependencies": {
     "@angular/common": "^8.2.4",
     "@angular/core": "^8.2.4",
-    "@n7-frontend/components": "git+ssh://git@github.com/net7/n7-frontend-components-dist.git#develop",
+    "@n7-frontend/components": "git+ssh://git@github.com/net7/n7-frontend-components-dist.git#master",
     "@n7-frontend/core": "git+ssh://git@github.com/net7/n7-frontend-core.git#develop",
     "@n7-frontend/icon-font": "git+ssh://git@github.com/net7/n7-icon-font.git#master"
   }

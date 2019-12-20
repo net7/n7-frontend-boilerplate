@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
 
-export interface IDatePickerLabelData {
-    select: IDatePickerSelect,
+export interface IDatepickerLabelData {
+    select: IDatepickerSelect,
     datepicker: any;
 }
 
-export interface IDatePickerSelect {
+export interface IDatepickerSelect {
     id: string,
     hidden: boolean,
     icon?: string,
@@ -24,8 +24,8 @@ export interface ILabelItems {
     selector: 'dv-datepicker-wrapper',
     templateUrl: './datepicker-wrapper.html',
 })
-export class DatePikerWrapperComponent{
-    @Input() data: IDatePickerLabelData;
+export class DatepickerWrapperComponent{
+    @Input() data: IDatepickerLabelData;
     @Input() emit: any;
     @Input() show: any;
     @Input() label: string;
@@ -39,11 +39,6 @@ export class DatePikerWrapperComponent{
         if(!this.emit) return;
         this.emit('open', true);
     }
-
-    // closeDatepicker(){
-    //     if(!this.emit) return;
-    //     this.emit('close-datepicker', false);
-    // }
 
 }
   
