@@ -22,7 +22,7 @@ export class AwBubbleChartDS extends DataSource {
       range.push(((colorConfig[k] || {}).color || {}).hex)
     })
 
-    return {
+    const commonParams = {
       fontRendering,
       containerId: 'bubbleChartContainer',
       width: 500,
@@ -32,7 +32,19 @@ export class AwBubbleChartDS extends DataSource {
       sizeRange: [.5, 500],
       selected: this.selected,
       colorMatch: { domain, range },
+    }
+    return {
+      ...commonParams,
       data: this.smartSlice(data),
+      /*
+        This custom output stream is used when
+        you need to display a smaller, simpler version
+        of the same visualization
+      */
+      smallView: {
+        ...commonParams,
+        data: this.smartSlice(data, (this.options.smallChartSize || null)),
+      },
       setDraw: draw => this.draw = draw
     }
   }
@@ -60,8 +72,8 @@ export class AwBubbleChartDS extends DataSource {
     }
   }
 
-  smartSlice = d => {
-    const l = this.options.config.get('bubble-chart').bubbleLimit
+  smartSlice = (d, length?) => {
+    const l = length ? length : this.options.limit
     if (l && l < d.length) {
       // return d.splice(d.length - l, l)
       return d.slice(0, l)

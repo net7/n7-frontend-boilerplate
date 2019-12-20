@@ -251,7 +251,7 @@
   "entita-layout": {
     "overview": {
       "campi": ["data_istituzione", "denominazione_autorita"],
-      "entitiesQuerySize": 30
+      "smallChartSize": 3
     },
     "entitiesQuerySize": 30
   },
