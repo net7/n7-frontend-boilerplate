@@ -1,59 +1,32 @@
 import { DataSource } from '@n7-frontend/core';
 
 export class DvDatepickerWrapperDS extends DataSource {
-    private _datepicker: any = null;
+    protected _datepicker: any = null;
 
     protected transform(data){ 
         return {
             //set select option
            select: {
-                id:"dv-select",
+                id: data.select.id,
                 hidden: true,
                 icon: "n7-icon-angle-down",
-                label: "Last week",
-                items: [
-                    {
-                        text: "Last week",
-                        payload: "lastWeek",
-                    },
-                    {
-                        text: "Last month",
-                        payload: "lastMonth",
-                    },
-                    {
-                        text: "Last year",
-                        payload: "lastYear",
-                    },
-                    {
-                        text: "Select Date",
-                        //this payload key is use for visualise the datepicker.
-                        payload: "ByDate",
-                    }
-                ],
+                label: data.select.label,
+                items: data.select.items,
                 classes:"dv-datepicker-select-dropdown",
             },
             //set picker
             datepicker: {
                 hidden: true,
                 data: {
-                    id: 'datepicker',
-                    libOptions: {
-                        dateFormat: 'Y-m-d',
-                        mode: 'range',
-                    },
+                    id: data.datepicker.id,
+                    libOptions: data.datepicker.libOptions,
                     getInstance: (datepicker) => this._datepicker = datepicker,
-                    _elementId: 'datepicker',
-                    options: {
-                        dateFormat: 'Y-m-d',
-                        // defaultDate: [data.start_date, data.end_date],
-                        mode: "range"
-                    },
                 }
             }
         } 
     }
 
-    open(){
+    openDatepicker(){
         setTimeout(() => this._datepicker.open());
     }
 
@@ -67,17 +40,16 @@ export class DvDatepickerWrapperDS extends DataSource {
     }
     setDatepicker(payload){
         if (payload === "ByDate") {
-            this.open();
-            this.output.select.label = payload;
+            this.openDatepicker();
             this.output.select.hidden = true;
             this.output.datepicker.hidden = false;
         }else{
-            this.output.select.label = payload;
             this.output.select.hidden = true;
             this.output.datepicker.hidden = true;
         }
     }
     setDate(payload){
+        let range_disable = [];
         this.output.datepicker.hidden = true;
         this.output.select.label = payload.dateStr;
     }

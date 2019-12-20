@@ -6,6 +6,7 @@ export class DvDatepickerWrapperEH extends EventHandler {
           console.log("DP-INNER --> "+type);
             switch(type){
               case 'dv-datepicker-wrapper.click':
+                this.emitOuter('set-select-lable', payload);
                 this.dataSource.setDatepicker(payload);
                 break;
               case 'dv-datepicker-wrapper.open':
