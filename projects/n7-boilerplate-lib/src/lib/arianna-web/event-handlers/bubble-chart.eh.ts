@@ -34,7 +34,9 @@ export class AwBubbleChartEH extends EventHandler {
           this.toggleSelection(payload)
           break;
         case 'aw-home-layout.facetclick':
-          this.toggleSelection(payload)
+          if (!this.dataSource.selected.includes(payload)) {
+            this.toggleSelection(payload)
+          }
           break;
         case 'aw-home-layout.togglefilter':
           this.toggleFilter(payload)
