@@ -114,13 +114,17 @@ export class SearchModel {
     });
   }
 
-  public updateFiltersFromQueryParams(queryParams) {
+  public clear() {
+    this.updateFiltersFromQueryParams({}, true);
+  }
+
+  public updateFiltersFromQueryParams(queryParams, clearAll: boolean = false) {
     this._facets.forEach(({ id }) => {
       const selectedFilters = this.getFiltersByFacetId(id),
         value = queryParams[id],
         isInternal = this.getInputByFacetId(id).getContext() === 'internal';
 
-      if (isInternal) {
+      if (isInternal && !clearAll) {
         return;
       }
 

@@ -31,6 +31,7 @@ export class AwSearchLayoutEH extends EventHandler {
 
         case 'aw-search-layout.searchreset':
           this.dataSource.resetButtonEnabled = false;
+          this.dataSource.searchModel.clear();
           this.emitGlobal('navigate', {
             handler: 'router',
             path: [this.configuration.get('paths').searchBasePath]
