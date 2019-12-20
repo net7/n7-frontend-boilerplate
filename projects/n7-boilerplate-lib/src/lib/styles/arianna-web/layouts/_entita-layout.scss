@@ -246,6 +246,31 @@
     .n7-pagination {
         margin-top: $space*4;
     }
+
+    /* Bubble chart */
+    .n7-bubble-chart {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }  
+
+    #bubbleChartContainer {
+        height: 100%;
+    }
+
+    /* Bubble chart in overview */
+    .aw-home__bubble-chart-wrapper-small {
+        .n7-bubble-chart {
+            height: $bubble-section-entity-overview;
+        }    
+    }
+    
+    /* Bubble chart detail */
+    .aw-home__bubble-chart-wrapper {
+        .n7-bubble-chart {
+            height: $bubble-section-entity-detail;
+        }
+    }    
 }
 
 

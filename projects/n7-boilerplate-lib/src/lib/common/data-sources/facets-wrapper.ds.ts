@@ -57,15 +57,6 @@ export class FacetsWrapperDS extends DataSource {
       })
     });
 
-    // query params control
-    if(SearchService.queryParams){
-      this.searchModel.updateFiltersFromQueryParams(SearchService.queryParams);
-      this.searchModel.updateInputsFromFilters();
-
-      // reset queryparams
-      SearchService.queryParams = null;
-    }
-
     return { 
       groups, 
       classes: `n7-facets-wrapper__${this.searchModel.getId()}` 
@@ -147,10 +138,7 @@ export class FacetsWrapperDS extends DataSource {
   public updateFiltersFromQueryParams = (queryParams) => this.searchModel.updateFiltersFromQueryParams(queryParams);
   public getInputByFacetId = (facetId) => this.searchModel.getInputByFacetId(facetId);
   public filterTarget = (target) => this.searchModel.filterTarget(target);
-
-  public updateInputsFromFilters(){
-    this.searchModel.updateInputsFromFilters();
-  }
+  public updateInputsFromFilters = () => this.searchModel.updateInputsFromFilters();
 
   private _getSectionClasses(type){
     const classesMap = {

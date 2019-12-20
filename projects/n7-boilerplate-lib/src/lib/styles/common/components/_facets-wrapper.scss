@@ -13,6 +13,12 @@
             display: none;
         }
     }
+    .n7-facet .n7-facet__input-link.empty-text-link:hover {
+        cursor: inherit;
+        .n7-facet__input-link-text {
+            color: $color-text;
+        }
+    }
 }
 
 /* ------------------------------------ *\

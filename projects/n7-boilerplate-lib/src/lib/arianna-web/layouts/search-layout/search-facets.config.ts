@@ -133,11 +133,15 @@ export default {
         {
           type: 'link',
           facetId: 'entity-links',
+          emptyState: {
+            label: 'La tua ricerca non ha dato risultati, prova a cambiare i filtri'
+          },
           filterConfig: {
+            isArray: true,
             limit: 20,
             searchIn: [
               {
-                key: 'source.id',
+                key: 'relatedEntities.id',
                 operator: '='
               }
             ]
@@ -182,9 +186,9 @@ export default {
   ],
   results: {
     order: {
-      type: 'score', // score | text | date
-      key: 'author', // docPath, elastic key, ecc
-      direction: 'DESC' // ASC | DESC
+      type: 'text', // score | text | date
+      key: 'label', // docPath, elastic key, ecc
+      direction: 'ASC' // ASC | DESC
     },
     fields: [
       {

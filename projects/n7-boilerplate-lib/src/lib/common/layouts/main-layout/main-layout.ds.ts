@@ -1,5 +1,5 @@
 import { LayoutDataSource } from '@n7-frontend/core';
-import tippy from 'tippy.js';
+import tippy, { hideAll } from 'tippy.js';
 import { Subject } from 'rxjs';
 
 export class MainLayoutDS extends LayoutDataSource {
@@ -82,6 +82,6 @@ export class MainLayoutDS extends LayoutDataSource {
 
   private _onRouterNavigate() {
     // hide tippy
-    tippy.hideAll();
+    hideAll();
   }
 }

@@ -1,22 +1,22 @@
 import { LayoutDataSource } from '@n7-frontend/core';
+import { fromEvent, Subject, of, merge } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 export class AwSchedaLayoutDS extends LayoutDataSource {
-  /**
-  * If you are not using these variables (from your-layout.ts),
-  * remove them from here too.
-  */
+  static tree: any = null;
+  private destroyed$: Subject<any> = new Subject();
+  private stickyControlTrigger$: Subject<any> = new Subject();
   private communication: any;
   protected configuration: any;
   protected mainState: any;
   protected router: any;
   protected titleService: any;
-  private allBubbles: any[] = null;
-  public selectedBubbles: any[] = [];
-
+  // private allBubbles: any[] = null;
+  // public selectedBubbles: any[] = [];
   public options: any;
   public pageTitle: string;
   public hasBreadcrumb: boolean;
-  public contentParts: any;
+  public contentParts: any = {};
   public tree: any;
   public sidebarCollapsed: boolean;
   public bubbleChartSectionTitle: string;
@@ -27,10 +27,9 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   public bubblesEnabled: boolean;
   public hasSimilarItems: boolean;
   public imageViewerIstance: any;
-  /**
-  * If you are not using these variables (from your-layout.ts),
-  * remove them from onInit() parameters and inside the function.
-  */
+  public sidebarIsSticky = false;
+  public treeMaxHeight = '100%';
+
   onInit({ configuration, mainState, router, options, titleService, communication }) {
     this.configuration = configuration;
     this.mainState = mainState;
@@ -44,18 +43,34 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     this.metadataSectionTitle = this.configuration.get('scheda-layout')['metadata']['title'];
     this.hasSimilarItems = false;
     this.bubblesEnabled = this.configuration.get('features-enabled') ? this.configuration.get('features-enabled')['bubblechart'] : false;
+    this.one('aw-bubble-chart').updateOptions({ simple: true, config: this.configuration, limit: this.configuration.get('bubble-chart').bubbleLimit })
 
     this.mainState.update('headTitle', 'Arianna Web > Patrimonio');
     this.mainState.update('pageTitle', 'Arianna Web: patrimonio Layout');
     this.mainState.updateCustom('currentNav', 'aw/patrimonio');
+
+    // sidebar sticky control
+    this._sidebarStickyControl();
+  }
+
+  onDestroy(){
+    this.destroyed$.next();
   }
 
   getNavigation(id) {
+    if (AwSchedaLayoutDS.tree) {
+      return of(AwSchedaLayoutDS.tree);
+    }
     return this.communication.request$('getTree', {
       onError: (error) => console.error(error),
       params: { treeId: id }
-    })
+    });
   }
+
+  setTree(tree) {
+    AwSchedaLayoutDS.tree = tree;
+  }
+  getTree = () => AwSchedaLayoutDS.tree;
 
   updateNavigation(data) {
     let header = {
@@ -71,7 +86,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   loadItem(id) {
     if (id) {
       const maxSimilarItems = this.configuration.get('scheda-layout')['related-items']['max-related-items'];
-      return  this.communication.request$('getNode', {
+      return this.communication.request$('getNode', {
         onError: (error) => console.error(error),
         params: { id: id, maxSimilarItems: maxSimilarItems }
       })
@@ -100,20 +115,8 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
   loadContent(response) {
     if (response) {
-      console.log('(Scheda) Apollo responded with: ', response)
       this.contentParts = [];
-      let content = {};
-
-      this.one('aw-tree').updateOptions({
-        icons: this.configuration.get('scheda-layout')['tree']
-      })
-      /* Related Entities */
-      this.one('aw-bubble-chart').updateOptions({
-        context: 'scheda',
-        configKeys: this.configuration.get("config-keys"),
-        bubbleContainerId: 'bubbleChartContainer',
-        containerId: 'bubble-chart-container',
-      });
+      const content = {};
 
       if (response.text) {
         content['content'] = response.text;
@@ -134,7 +137,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
         }
       }
 
-      let titleObj = {
+      const titleObj = {
         icon: response.icon,
         title: {
           main: {
@@ -147,17 +150,17 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       };
 
       this.one('aw-scheda-inner-title').update(titleObj);
-      
+
       this.hasMetadata = response.fields != null;
       this.one('aw-scheda-metadata').updateOptions({ labels: this.configuration.get("labels") });
       this.one('aw-scheda-metadata').update(response);
 
-      /*Breadcrumb section*/
-      let breadcrumbs = {
+      // Breadcrumb section
+      const breadcrumbs = {
         items: []
       };
 
-      if( response.breadcrumb ){
+      if (response.breadcrumb) {
         response.breadcrumbs.forEach(element => {
           breadcrumbs.items.push({
             label: element.label,
@@ -166,49 +169,53 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
         });
         this.one('aw-scheda-breadcrumbs').update(breadcrumbs);
       }
+
+      // update head title
+      this.mainState.update('headTitle', `Arianna Web > Patrimonio > ${response.title || response.label}`);
     }
 
-      if ( response.relatedItems ) {
-        this.hasSimilarItems = true;
-        this.one('aw-linked-objects').updateOptions({ context: 'scheda', config: this.configuration })
-        this.one('aw-linked-objects').update(response);
-      } else {
-        this.hasSimilarItems = false;
-        //this.one('aw-linked-objects').update([]);
-      }
+    if (response.relatedItems) {
+      this.hasSimilarItems = true;
+      this.one('aw-linked-objects').updateOptions({ context: 'scheda', config: this.configuration })
+      this.one('aw-linked-objects').update(response);
+    } else {
+      this.hasSimilarItems = false;
+    }
+
+    // control sticky
+    setTimeout(() => {
+      this.stickyControlTrigger$.next();
+    });
   }
 
   collapseSidebar() {
     this.sidebarCollapsed = !this.sidebarCollapsed;
   }
 
-  setAllBubblesFromApolloQuery( response: any, reset?: boolean ){
-    if ( !response || !response.relatedEntities ) { this.hasBubbles = false; return; }
-    this.allBubbles = [];
+  private _sidebarStickyControl() {
+    const source$ = fromEvent(window, 'scroll');
 
-    for ( let i = 0; i < response.relatedEntities.length; i++ ){
+    merge(source$, this.stickyControlTrigger$).pipe(
+      takeUntil(this.destroyed$)
+    ).subscribe(() => {
+      const windowTop = window.pageYOffset,
+        windowBottom = window.scrollY + window.innerHeight,
+        wrapper = document.getElementsByClassName('sticky-parent')[0],
+        wrapperTop = wrapper['offsetTop'],
+        wrapperBottom = wrapperTop + wrapper.clientHeight;
 
-      const color = this.configuration.get('config-keys')[response.relatedEntities[i].entity.typeOfEntity.configKey] ? this.configuration.get('config-keys')[response.relatedEntities[i].entity.typeOfEntity.configKey]['color']['hex'] : "";
+        this.sidebarIsSticky = wrapperTop <= windowTop;
 
-      this.allBubbles.push(
-        {
-          id: this.convertEntityIdToBubbleId( response.relatedEntities[i].entity.id ),
-          ...response.relatedEntities[i],
-          color: color
-        });
-    }
-    this.one('aw-scheda-bubble-chart').update({
-      containerId: 'bubble-chart-container',
-      width: window.innerWidth / 1.8,
-      bubbles: this.allBubbles,
-      reset: (reset ? reset : false)
+        // tree height control
+        if (this.sidebarIsSticky && windowBottom < wrapperBottom) {
+          this.treeMaxHeight = (windowBottom - windowTop - 50) + 'px';
+        } else if (this.sidebarIsSticky && windowBottom >= wrapperBottom) {
+          this.treeMaxHeight = (wrapperBottom - windowTop - 50) + 'px';
+        } else if (windowBottom < wrapperBottom) {
+          this.treeMaxHeight = (windowBottom - wrapperTop - 50) + 'px';
+        } else {
+          this.treeMaxHeight = (wrapperBottom - wrapperTop - 50) + 'px';
+        }
     });
   }
-
-  private convertEntityIdToBubbleId(entityId: string): string {
-    if (!entityId) return null;
-    return ('B_' + entityId.replace(/-/g, '_'));
-  }
-
-
 }

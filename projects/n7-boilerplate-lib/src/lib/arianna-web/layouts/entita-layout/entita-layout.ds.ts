@@ -6,23 +6,25 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
   protected router: any;
   protected location: any;
   protected titleService: any;
+  protected route: any;
 
   public options: any;
   public pageTitle: string;
-
+  public showFields: boolean = false;
   public myResponse: any = {}; // backend response object
   public selectedTab: string; // selected nav item
   public navHeader: any = {}; // nav-header (custom) data
   public currentId: string; // selected entity (url param)
   public currentPage: any; // pagination value (url param)
   public pageSize: number = 10; // linked objects page size
+  // BUBBLE CHART DATA ↓
   public bubblesSize: number = 10; // related entities (bubbles) page size
   public bubblesEnabled: boolean;
-  public bubbleLoaded: boolean;
 
   private communication: any;
 
-  onInit({ configuration, mainState, router, location, options, titleService, communication }) {
+  onInit({ configuration, mainState, router, route, location, options, titleService, communication }) {
+    this.route = route;
     this.communication = communication;
     this.configuration = configuration;
     this.mainState = mainState;
@@ -31,10 +33,18 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     this.location = location;
     this.titleService = titleService;
     this.currentId = "";
-    this.currentPage = 1;
-    this.bubbleLoaded = false;
+    this.currentPage = +this.route.snapshot.params.page;
     this.bubblesEnabled = this.configuration.get('features-enabled') ? this.configuration.get('features-enabled')['bubblechart'] : false;
-    this.bubblesSize = this.configuration.get('entita-layout') ? this.configuration.get('entita-layout')['max-bubble-num'] : this.bubblesSize;
+    this.bubblesSize = this.configuration.get('entita-layout') ? this.configuration.get('entita-layout')['entitiesQuerySize'] : this.bubblesSize;
+    this.one('aw-bubble-chart').updateOptions({
+      simple: true,
+      config: this.configuration,
+      limit: this.configuration.get('bubble-chart').bubbleLimit,
+      smallChartSize: this.configuration.get('entita-layout').overview.smallChartSize
+    });
+
+    // update head title
+    this.mainState.update('headTitle', 'Arianna Web > Entità');
   }
 
   public updateComponent = (id, data, options?) => {
@@ -65,22 +75,24 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       pagination: true,
       size: this.pageSize,
     })
-    this.one('aw-linked-objects').update({items: this.myResponse.relatedItems});
-    this.location.go(
-      this.configuration.get("paths").entitaBasePath
-        +
-        this.currentId
-        + '/oggetti-collegati/'
-        + this.currentPage
-    )
+    this.one('aw-linked-objects').update({ items: this.myResponse.relatedItems });
+    this.location.go(`${this.configuration.get('paths').entitaBasePath}${this.currentId}/oggetti-collegati/${this.currentPage}`)
   };
 
   handleNavUpdate = tab => {
     this.selectedTab = tab
+    // this.one('aw-bubble-chart').updateComponent(
+    //   'aw-bubble-chart',
+    //   this.myResponse.relatedEntities,
+    //   {
+    //     simple: true,
+    //     config: this.configuration,
+    //     limit: this.route.snapshot.params.tab == 'overview' ? 3 : this.configuration.get('bubble-chart').bubbleLimit
+    //   }
+    // );
     this.updateWidgets(this.myResponse)
     const page = tab == 'oggetti-collegati' ? "/1" : "";
-
-    if(tab == 'oggetti-collegati' ){
+    if (tab == 'oggetti-collegati') {
       this.one('aw-linked-objects').updateOptions({
         context: this.selectedTab,
         config: this.configuration,
@@ -88,28 +100,19 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
         pagination: true,
         size: this.pageSize,
       })
-      this.one('aw-linked-objects').update({items: this.myResponse.relatedItems});
+      this.one('aw-linked-objects').update({ items: this.myResponse.relatedItems });
     } else if (tab == "overview") {
       this.one('aw-linked-objects').updateOptions({
         size: 3,
         config: this.configuration,
         context: 'entita'
       })
-      this.one('aw-linked-objects').update({items: this.myResponse.relatedItems});
+      this.one('aw-linked-objects').update({ items: this.myResponse.relatedItems });
     }
-
-    if(tab == "overview" || tab == "entita-collegate"){
-      setTimeout( () => { this.updateBubbes(this.myResponse) } , 800 );
+    if (tab == "overview" || tab == "entita-collegate") {
+      setTimeout(() => { this.updateBubbes(this.myResponse) }, 800);
     }
-
-    this.location.go(
-      this.configuration.get("paths").entitaBasePath
-        +
-        this.currentId
-        + '/'
-        + tab
-        + page
-    )
+    this.location.go(`${this.configuration.get('paths').entitaBasePath}${this.currentId}/${tab}${page}`)
   }
 
   /*
@@ -118,12 +121,21 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
   updateWidgets(data) {
     const selected = this.selectedTab
     this.one('aw-entita-nav').update({ data, selected })
+    this.updateComponent(
+      'aw-entita-metadata-viewer',
+      this.myResponse.fields,
+      {
+        context: this.selectedTab,
+        config: this.configuration,
+        labels: this.configuration.get("labels")
+      }
+    )
   }
+  /*
+    Helper function to update the graph
+  */
   updateBubbes(data) {
-    if(!this.bubbleLoaded){
-      this.one('aw-bubble-chart').update(data);
-      this.bubbleLoaded = true;
-    }
+    this.one('aw-bubble-chart').update(data.relatedEntities);
   }
 
   /*
@@ -135,7 +147,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       this.selectedTab = tab // store selected tab from url
       return this.communication.request$('getEntityDetails', {
         onError: error => console.error(error),
-        params: {entityId: id, entitiesListSize: this.bubblesSize}
+        params: { entityId: id, entitiesListSize: this.bubblesSize }
       })
     }
     else {
@@ -144,25 +156,24 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
   }
 
   loadContent(res) {
-    console.log('(entita) Apollo responded with: ', { res })
+    // console.log('(entita) Apollo responded with: ', { res })
     this.myResponse = res
+    if ((res.fields || []).filter(field => ((this.configuration.get('entita-layout') || {}).overview || {}).campi.includes(field.key)).length > 0) {
+      // look at the response array, filtered by configuration values.
+      // if the filtered response has some values, show the fields section.
+      this.showFields = true
+    } else {
+      this.showFields = false
+    }
     this.navHeader = { // always render nav header
       icon: this.configuration.get("config-keys")[this.myResponse.typeOfEntity] ? this.configuration.get("config-keys")[this.myResponse.typeOfEntity].icon : "",
       text: this.myResponse.label,
-      color: this.myResponse.typeOfEntity
+      color: this.myResponse.typeOfEntity.replace(/ /g, '-')
     }
-
-    this.one('aw-entita-nav').updateOptions({bubblesEnabled: this.bubblesEnabled});
-    this.one('aw-bubble-chart').updateOptions({
-      context: 'scheda',
-      configKeys: this.configuration.get('config-keys'),
-      bubbleContainerId: 'overviewBubbleChartContainer',
-      containerId: 'bubble-chart-container-overview',
-    });
-    this.one('aw-entita-metadata-viewer').updateOptions({ context: this.selectedTab, labels: this.configuration.get("labels") });
+    this.one('aw-entita-nav').updateOptions({ bubblesEnabled: this.bubblesEnabled });
+    this.one('aw-entita-metadata-viewer').updateOptions({ context: this.selectedTab, labels: this.configuration.get("labels"), config: this.configuration });
     this.one('aw-entita-metadata-viewer').update(res.fields);
-
-    if( this.selectedTab == 'oggetti-collegati' ) {
+    if (this.selectedTab == 'oggetti-collegati') {
       this.one('aw-linked-objects').updateOptions({
         context: this.selectedTab,
         config: this.configuration,
@@ -177,6 +188,8 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
         context: 'entita'
       })
     }
-    this.one('aw-linked-objects').update({items: res.relatedItems});
+    this.one('aw-linked-objects').update({ items: res.relatedItems });
+    // update head title
+    this.mainState.update('headTitle', `Arianna Web > Entità > ${this.myResponse.label}`);
   }
 }

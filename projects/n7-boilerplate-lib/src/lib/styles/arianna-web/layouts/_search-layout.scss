@@ -180,4 +180,13 @@
     .n7-pagination {
         padding: $space 0;
     }
+
+    /* No results */
+    &__fallback {
+        padding: $space*2;
+    }
+
+    &__fallback-string {
+        margin-bottom: $space*2;
+    }
 }
