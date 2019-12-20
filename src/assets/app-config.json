@@ -3,7 +3,7 @@
     "defaultProvider": "apollo",
     "providers": {
       "apollo": {
-        "baseUrl": "https://n7-ariannaweb-graphql-git-resolver-elasticsearch-homepage.net7.now.sh/"
+        "baseUrl": "https://aw-unifi-graphql.netseven.it/"
       },
       "rest": {
         "baseUrl": "https://jsonplaceholder.typicode.com/",
@@ -347,6 +347,32 @@
       "icon": "n7-icon-archive",
       "label": "Fondi",
       "input-placeholder": ""
+    },
+    "famiglia": {
+      "color": {
+        "hex": "#5eab7b",
+        "rgb": [
+          94,
+          171,
+          123
+        ]
+      },
+      "icon": "n7-icon-lightbulb",
+      "label": "Famiglia",
+      "input-placeholder": "Cerca una famiglia"
+    },
+    "evento": {
+      "color": {
+        "hex": "#5eab7b",
+        "rgb": [
+          94,
+          171,
+          123
+        ]
+      },
+      "icon": "n7-icon-lightbulb",
+      "label": "Evento",
+      "input-placeholder": "Cerca un evento"
     }
   },
   "paths": {
