@@ -36,7 +36,10 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     this.currentPage = +this.route.snapshot.params.page;
     this.bubblesEnabled = this.configuration.get('features-enabled') ? this.configuration.get('features-enabled')['bubblechart'] : false;
     this.bubblesSize = this.configuration.get('entita-layout') ? this.configuration.get('entita-layout')['entitiesQuerySize'] : this.bubblesSize;
-    this.one('aw-bubble-chart').updateOptions({ simple: true, config: this.configuration })
+    this.one('aw-bubble-chart').updateOptions({ simple: true, config: this.configuration });
+
+    // update head title
+    this.mainState.update('headTitle', 'Arianna Web > Entità');
   }
 
   public updateComponent = (id, data, options?) => {
@@ -172,5 +175,8 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       })
     }
     this.one('aw-linked-objects').update({ items: res.relatedItems });
+
+    // update head title
+    this.mainState.update('headTitle', `Arianna Web > Entità > ${this.myResponse.label}`);
   }
 }

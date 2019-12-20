@@ -6,7 +6,7 @@ export class FacetInputLink extends FacetInput {
   protected transform() {
     const facetId = this.getFacetId();
 
-    return this.data.map(({ label, value, counter, hidden, options }) => {
+    const results: any[] = this.data.map(({ label, value, counter, hidden, options }) => {
       // normalize value
       value = '' + value;
       options = options || {};
@@ -31,6 +31,28 @@ export class FacetInputLink extends FacetInput {
         _meta: { facetId, value }
       };
     });
+
+    // empty state control
+    const itemEmpty = results.filter(item => item.id === 'empty')[0];
+    if (this.isEmpty) {
+      if (itemEmpty) {
+        itemEmpty.classes = 'empty-text-link';
+      } else {
+        const { label } = this.getConfig().emptyState,
+          emptyId = 'empty-link';
+        results.push({
+          type: 'link',
+          id: emptyId,
+          text: label,
+          classes: 'empty-text-link',
+          _meta: { facetId: emptyId, value: null }
+        });
+      }
+    } else if (itemEmpty) {
+      itemEmpty.classes = 'empty-text-link is-hidden';
+    }
+
+    return results;
   }
 
   public setActive(facetValue) {

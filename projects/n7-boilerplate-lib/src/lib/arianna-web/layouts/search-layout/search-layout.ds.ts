@@ -74,6 +74,8 @@ export class AwSearchLayoutDS extends LayoutDataSource {
 
     // sidebar sticky control
     this._sidebarStickyControl();
+
+    this.mainState.update('headTitle', 'Arianna Web > Ricerca');
   }
 
   onDestroy() {

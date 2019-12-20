@@ -12,6 +12,10 @@ export class FacetsWrapperEH extends EventHandler {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
         case 'facets-wrapper.facet':
+          // empty payload control
+          if (!payload.eventPayload.inputPayload) {
+            return;
+          }
           const { facetId } = payload.eventPayload.inputPayload,
             input = this.dataSource.getInputByFacetId(facetId),
             context = input.getContext();
