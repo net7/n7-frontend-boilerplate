@@ -36,7 +36,12 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     this.currentPage = +this.route.snapshot.params.page;
     this.bubblesEnabled = this.configuration.get('features-enabled') ? this.configuration.get('features-enabled')['bubblechart'] : false;
     this.bubblesSize = this.configuration.get('entita-layout') ? this.configuration.get('entita-layout')['entitiesQuerySize'] : this.bubblesSize;
-    this.one('aw-bubble-chart').updateOptions({ simple: true, config: this.configuration });
+    this.one('aw-bubble-chart').updateOptions({
+      simple: true,
+      config: this.configuration,
+      limit: this.configuration.get('bubble-chart').bubbleLimit,
+      smallChartSize: this.configuration.get('entita-layout').overview.smallChartSize
+    });
 
     // update head title
     this.mainState.update('headTitle', 'Arianna Web > Entità');
@@ -76,6 +81,15 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
 
   handleNavUpdate = tab => {
     this.selectedTab = tab
+    // this.one('aw-bubble-chart').updateComponent(
+    //   'aw-bubble-chart',
+    //   this.myResponse.relatedEntities,
+    //   {
+    //     simple: true,
+    //     config: this.configuration,
+    //     limit: this.route.snapshot.params.tab == 'overview' ? 3 : this.configuration.get('bubble-chart').bubbleLimit
+    //   }
+    // );
     this.updateWidgets(this.myResponse)
     const page = tab == 'oggetti-collegati' ? "/1" : "";
     if (tab == 'oggetti-collegati') {
@@ -175,7 +189,6 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       })
     }
     this.one('aw-linked-objects').update({ items: res.relatedItems });
-
     // update head title
     this.mainState.update('headTitle', `Arianna Web > Entità > ${this.myResponse.label}`);
   }
