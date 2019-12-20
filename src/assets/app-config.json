@@ -331,7 +331,7 @@
           194
         ]
       },
-      "icon": "n7-icon-image",
+      "icon": "n7-icon-file3",
       "label": "Oggetti Culturali",
       "input-placeholder": ""
     },
@@ -350,11 +350,11 @@
     },
     "famiglia": {
       "color": {
-        "hex": "#5eab7b",
+        "hex": "#CD6F5C",
         "rgb": [
-          94,
-          171,
-          123
+          205,
+          111,
+          92
         ]
       },
       "icon": "n7-icon-lightbulb",
@@ -363,14 +363,14 @@
     },
     "evento": {
       "color": {
-        "hex": "#5eab7b",
+        "hex": "#FFA100;",
         "rgb": [
           94,
           171,
           123
         ]
       },
-      "icon": "n7-icon-lightbulb",
+      "icon": "n7-icon-calendar-alt",
       "label": "Evento",
       "input-placeholder": "Cerca un evento"
     }
