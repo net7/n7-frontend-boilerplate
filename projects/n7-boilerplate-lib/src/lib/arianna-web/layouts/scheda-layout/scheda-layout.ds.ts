@@ -169,6 +169,9 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
         });
         this.one('aw-scheda-breadcrumbs').update(breadcrumbs);
       }
+
+      // update head title
+      this.mainState.update('headTitle', `Arianna Web > Patrimonio > ${response.title || response.label}`);
     }
 
     if (response.relatedItems) {
