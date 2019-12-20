@@ -26,6 +26,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     public lastBubbleResponse: any          // store last bubble response to refresh the graph with the same data
     public firstBubbleResponse: any         // store the first array of bubbles, to find them in case of zero results (entities data returned as empty array from backend)
     // BUBBLE CHART DATA ↑
+    public homeAutocompleteIsLoading = false;
 
     onInit({ communication, mainState, configuration, tippy }) {
         this.communication = communication;
@@ -181,6 +182,10 @@ export class AwHomeLayoutDS extends LayoutDataSource {
 
     onHeroChange(value) {
         this.autocompleteChanged$.next(value);
+        this.homeAutocompleteIsLoading = true;
+        if (!this.autocompletePopoverOpen) {
+            this._toggleAutocompletePopover();
+        }
     }
 
     private _scrollBackgroundControl() {
@@ -222,8 +227,8 @@ export class AwHomeLayoutDS extends LayoutDataSource {
                         itemsPagination: { offset: 0, limit: this.configuration.get('home-layout')['results-limit'] }
                     }
                 }).subscribe((response) => {
+                    this.homeAutocompleteIsLoading = false;
                     this.one('aw-home-autocomplete').update(response);
-                    if (!this.autocompletePopoverOpen) this._toggleAutocompletePopover();
                 });
             } else {
                 this._toggleAutocompletePopover();

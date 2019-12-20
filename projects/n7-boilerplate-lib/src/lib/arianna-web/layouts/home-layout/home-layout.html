@@ -115,7 +115,9 @@
 
     <!-- Adavanced autocomplete popover  -->
     <div id="aw-home-advanced-autocomplete-popover" style="display: none;">
-        <n7-advanced-autocomplete [data]="lb.widgets['aw-home-autocomplete'].ds.out$ | async"
+        <n7-loader data="{}" *ngIf="lb.dataSource.homeAutocompleteIsLoading"></n7-loader>
+        <n7-advanced-autocomplete *ngIf="!lb.dataSource.homeAutocompleteIsLoading"
+            [data]="lb.widgets['aw-home-autocomplete'].ds.out$ | async"
             [emit]="lb.widgets['aw-home-autocomplete'].emit">
         </n7-advanced-autocomplete>
     </div>
