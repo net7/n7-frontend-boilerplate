@@ -174,10 +174,7 @@ export class AwHomeLayoutEH extends EventHandler {
       if (!response) { return }
       this.dataSource.parseInitialRequest(response);
       if (this.dataSource.bubblesEnabled) {
-        this.emitOuter('filterbubbleresponse', {
-          response,
-          facetData: this.dataSource.facetData
-        });
+        this.emitOuter('filterbubbleresponse', response.entitiesData);
       }
     });
   }

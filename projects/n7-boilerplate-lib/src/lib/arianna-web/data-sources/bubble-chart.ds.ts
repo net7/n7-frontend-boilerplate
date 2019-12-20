@@ -16,18 +16,12 @@ export class AwBubbleChartDS extends DataSource {
     const { fontRendering, transition, shuffle } = config.get('bubble-chart')
     const domain = [], range = []
     const colorConfig = config.get('config-keys')
-    const limit = config.get('bubble-chart').bubbleLimit
 
     Object.keys(colorConfig).forEach(k => {
       domain.push(k.replace(/-/g, ' '))
       range.push(((colorConfig[k] || {}).color || {}).hex)
     })
 
-    if (data.response && data.response.entitiesData) {
-      this.chartData = (limit && limit < data.response.entitiesData.length) ?
-        data.response.entitiesData.slice(0, limit) :
-        data.response.entitiesData
-    }
     return {
       fontRendering,
       containerId: 'bubbleChartContainer',
@@ -38,7 +32,7 @@ export class AwBubbleChartDS extends DataSource {
       sizeRange: [.5, 500],
       selected: this.selected,
       colorMatch: { domain, range },
-      data: this.chartData,
+      data: this.smartSlice(data),
       setDraw: draw => this.draw = draw
     }
   }
@@ -46,24 +40,33 @@ export class AwBubbleChartDS extends DataSource {
   updateChart = res => {
     /*
       Redraws the graph with the incoming data.
-      "res" should be Apollo's "response.entitiesData"
+      "res" should be Apollo's "response.entitiesData".
+      When res is passed as null, the chart is rendered with the previous data.
     */
-    const limit = this.options.config.get('bubble-chart').bubbleLimit
     if (res === null) {
       res = this.chartData
     } else {
       this.chartData = res
     }
-    if (this.filters.length > 0) { // apply filters to the response before redrawing the graph
+    if (this.filters.length > 0) { // apply filters to the response
       res = this.chartData.filter(el => !this.filters.includes(el.entity.typeOfEntity.replace(/ /g, '-')))
     }
-    res = (limit && limit < res.length) ? res.slice(0, limit) : res
     if (!this.draw) {
-      this.update(res) // component self-update
+      this.update(this.smartSlice(res)) // component self-update
     } else {
-      this.output.data = res;
       this.output.selected = this.selected;
+      this.output.data = this.smartSlice(res);
       this.draw()
+    }
+  }
+
+  smartSlice = d => {
+    const l = this.options.config.get('bubble-chart').bubbleLimit
+    if (l && l < d.length) {
+      // return d.splice(d.length - l, l)
+      return d.slice(0, l)
+    } else {
+      return d
     }
   }
 
