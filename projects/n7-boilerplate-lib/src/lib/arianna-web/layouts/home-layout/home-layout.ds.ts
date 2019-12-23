@@ -181,10 +181,14 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     }
 
     onHeroChange(value) {
-        this.autocompleteChanged$.next(value);
-        this.homeAutocompleteIsLoading = true;
-        this.homeAutocompleteQuery = value;
-        if (!this.autocompletePopoverOpen) {
+        if (value) {
+            this.autocompleteChanged$.next(value);
+            this.homeAutocompleteIsLoading = true;
+            this.homeAutocompleteQuery = value;
+            if (!this.autocompletePopoverOpen) {
+                this._toggleAutocompletePopover();
+            }
+        } else if (this.autocompletePopoverOpen) {
             this._toggleAutocompletePopover();
         }
     }
@@ -220,20 +224,16 @@ export class AwHomeLayoutDS extends LayoutDataSource {
             debounceTime(500),
             takeUntil(this.destroyed$)
         ).subscribe(value => {
-            if (value) {
-                this.communication.request$('autoComplete', {
-                    onError: (error) => console.error(error),
-                    params: {
-                        input: value,
-                        itemsPagination: { offset: 0, limit: this.configuration.get('home-layout')['results-limit'] }
-                    }
-                }).subscribe((response) => {
-                    this.homeAutocompleteIsLoading = false;
-                    this.one('aw-home-autocomplete').update(response);
-                });
-            } else {
-                this._toggleAutocompletePopover();
-            }
+            this.communication.request$('autoComplete', {
+                onError: (error) => console.error(error),
+                params: {
+                    input: value,
+                    itemsPagination: { offset: 0, limit: this.configuration.get('home-layout')['results-limit'] }
+                }
+            }).subscribe((response) => {
+                this.homeAutocompleteIsLoading = false;
+                this.one('aw-home-autocomplete').update(response);
+            });
         });
     }
 
