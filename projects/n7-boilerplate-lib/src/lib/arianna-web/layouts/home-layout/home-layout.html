@@ -8,6 +8,7 @@
     <!-- Bubble chart -->
     <div class="aw-home__bubble-wrapper n7-side-auto-padding"
         [ngClass]="{ 'has-results' : lb.dataSource.selectedBubbles.length > 0 }" *ngIf="lb.dataSource.bubblesEnabled">
+        <div class="aw-home__facets-wrapper-loading" *ngIf="!(lb.widgets['aw-home-facets-wrapper'].ds.out$ | async)">#TODO: loaders</div>
         <div class="aw-home__facets-wrapper">
             <span class="aw-home__facet"
                 *ngFor="let widgetData of lb.widgets['aw-home-facets-wrapper'].ds.out$ | async;">
@@ -17,6 +18,8 @@
                 </n7-facet>
             </span>
         </div>
+
+        <div class="aw-home__bubble-chart-wrapper-loading" *ngIf="!(lb.widgets['aw-bubble-chart'].ds.out$ | async)">#TODO: loaders</div>
         <div class="aw-home__bubble-chart-wrapper"
             [style.overflow]="lb.dataSource.loadingBubbles ? 'visible' : 'hidden'">
             <aw-bubble-chart-wrapper [emit]="lb.widgets['aw-bubble-chart'].emit" [container]="'bubble-chart-container'"
@@ -115,7 +118,7 @@
 
     <!-- Adavanced autocomplete popover  -->
     <div id="aw-home-advanced-autocomplete-popover" style="display: none;">
-        <n7-loader data="{}" *ngIf="lb.dataSource.homeAutocompleteIsLoading"></n7-loader>
+        <n7-loader [data]="{}" *ngIf="lb.dataSource.homeAutocompleteIsLoading"></n7-loader>
         <n7-advanced-autocomplete *ngIf="!lb.dataSource.homeAutocompleteIsLoading"
             [data]="lb.widgets['aw-home-autocomplete'].ds.out$ | async"
             [emit]="lb.widgets['aw-home-autocomplete'].emit">
@@ -127,6 +130,7 @@
     <div *ngFor="let widgetData of lb.widgets['aw-home-facets-wrapper'].ds.out$ | async;"
         class="aw-simple-autocomplete__template" style="display: none;">
         <div class="aw-simple-autocomplete__tippy-wrapper">
+            <n7-loader [data]="{}" *ngIf="lb.dataSource.simpleAutocompleteIsLoading"></n7-loader>
             <n7-simple-autocomplete [data]="lb.widgets['aw-autocomplete-wrapper'].ds.out$ | async"
                 [emit]="lb.widgets['aw-autocomplete-wrapper'].emit">
             </n7-simple-autocomplete>
