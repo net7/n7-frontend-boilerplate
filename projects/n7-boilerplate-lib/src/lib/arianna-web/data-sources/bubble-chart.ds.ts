@@ -9,7 +9,6 @@ export class AwBubbleChartDS extends DataSource {
   public closedEyes: any[] = []
   public tippyList: any[] = []    // list of tippy instances
   public focusedBubble: string    // id of the focused bubble
-  // public bubbleBasket: any[]
 
   protected transform(data) {
     const { config } = this.options
@@ -23,29 +22,29 @@ export class AwBubbleChartDS extends DataSource {
     })
 
     const commonParams = {
-      fontRendering,
       containerId: 'bubbleChartContainer',
-      width: 500,
-      height: 500,
-      shuffle,
-      transition,
-      sizeRange: [.5, 500],
-      selected: this.selected,
+      setDraw: draw => this.draw = draw,
       colorMatch: { domain, range },
+      selected: this.selected,
+      sizeRange: [.5, 500],
+      fontRendering,
+      height: 500,
+      width: 500,
+      transition,
+      shuffle,
     }
+    /*
+      Two data streams are ouputted.
+      The default stream is for the normal visualization,
+      "smallView" is used for a compressed view of the same data.
+    */
     return {
       ...commonParams,
       data: this.smartSlice(data),
-      /*
-        This custom output stream is used when
-        you need to display a smaller, simpler version
-        of the same visualization
-      */
       smallView: {
         ...commonParams,
-        data: this.smartSlice(data, (this.options.smallChartSize || null)),
+        data: this.smartSlice(data, this.options.smallChartSize),
       },
-      setDraw: draw => this.draw = draw
     }
   }
 
@@ -75,7 +74,6 @@ export class AwBubbleChartDS extends DataSource {
   smartSlice = (d, length?) => {
     const l = length ? length : this.options.limit
     if (l && l < d.length) {
-      // return d.splice(d.length - l, l)
       return d.slice(0, l)
     } else {
       return d
