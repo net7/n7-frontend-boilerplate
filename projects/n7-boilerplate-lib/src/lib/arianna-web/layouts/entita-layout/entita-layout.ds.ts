@@ -43,6 +43,9 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       smallChartSize: this.configuration.get('entita-layout').overview.smallChartSize
     });
 
+    // navigation update
+    this.mainState.updateCustom('currentNav', 'entita');
+
     // update head title
     this.mainState.update('headTitle', 'Arianna Web > Entità');
   }

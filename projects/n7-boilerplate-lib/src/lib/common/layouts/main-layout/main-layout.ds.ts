@@ -1,6 +1,5 @@
 import { LayoutDataSource } from '@n7-frontend/core';
 import tippy, { hideAll } from 'tippy.js';
-import { Subject } from 'rxjs';
 
 export class MainLayoutDS extends LayoutDataSource {
   protected configuration: any;
@@ -19,7 +18,6 @@ export class MainLayoutDS extends LayoutDataSource {
     this.route = route;
     this.titleService = titleService;
     this.options = options;
-    this.mainState.addCustom('currentNav', new Subject());
 
     // update header
     if (this.configuration.get('header')) {
@@ -35,8 +33,6 @@ export class MainLayoutDS extends LayoutDataSource {
     this.mainState.get$('pageTitle').subscribe(val => this.pageTitle = val);
     this.mainState.get$('subnav').subscribe(val => this.one('subnav').update(val));
     this.mainState.get$('breadcrumbs').subscribe(val => this.one('breadcrumbs').update(val));
-
-    this.mainState.getCustom$('currentNav').subscribe(val => this.one('header').update({ "items": this.configuration.get('header'), 'selected': val }));
 
     // mainState test
     /* this.mainState.addCustom('customNav', new Subject());

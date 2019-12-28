@@ -21,27 +21,42 @@
         {
           "text": "Home",
           "payload": "aw/home",
-          "icon": "n7-icon-home"
+          "icon": "n7-icon-home",
+          "_meta": {
+            "id": "home"
+          }
         },
         {
           "text": "Patrimonio",
           "payload": "aw/patrimonio",
-          "icon": "n7-icon-tree-icon"
+          "icon": "n7-icon-tree-icon",
+          "_meta": {
+            "id": "patrimonio"
+          }
         },
         {
           "text": "Galleria",
           "payload": "aw/galleria",
-          "icon": "n7-icon-th"
+          "icon": "n7-icon-th",
+          "_meta": {
+            "id": "galleria"
+          }
         },
         {
           "text": "Ricerca",
           "payload": "aw/ricerca",
-          "icon": "n7-icon-search"
+          "icon": "n7-icon-search",
+          "_meta": {
+            "id": "ricerca"
+          }
         },
         {
           "text": "Utenti",
           "payload": "aw/utenti",
-          "icon": "n7-icon-facebook"
+          "icon": "n7-icon-facebook",
+          "_meta": {
+            "id": "utenti"
+          }
         }
       ]
     },

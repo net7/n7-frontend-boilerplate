@@ -41,7 +41,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         // update streams
         this.mainState.update('headTitle', 'Arianna Web > Home');
         this.mainState.update('pageTitle', 'Arianna Web: Home Layout');
-        this.mainState.updateCustom('currentNav', 'aw/home');
+        this.mainState.updateCustom('currentNav', 'home');
         // listen autocomplete changes
         this._listenAutoCompleteChanges();
         this.outerLinks = this.configuration.get('home-layout')['outer-links']['test'];

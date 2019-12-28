@@ -1,22 +1,18 @@
 import { DataSource } from '@n7-frontend/core';
+import { IHeaderData } from '@n7-frontend/components';
 
 export class HeaderDS extends DataSource {
-  protected transform(data) {
-
-    if (data.selected) {
-      this.selectNavItem(data.selected);
-    }
-
+  protected transform(data): IHeaderData {
     return data.items;
   }
 
-  public selectNavItem(selectedItem) {
-    this.output.nav.items.forEach( item => {
-      item.classes = "";
-      if ( item.payload == selectedItem ){
-        item.classes = "is-current";
+  public onCurrentNavChange (payload) {
+    this.output.nav.items.forEach(item => {
+      if (item._meta.id === payload) {
+        item.classes = 'is-current';
+      } else {
+        item.classes = '';
       }
-    })
-    this.update({'items': this.output});
+    });
   }
 }
