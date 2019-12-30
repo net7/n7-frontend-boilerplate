@@ -81,15 +81,6 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
 
   handleNavUpdate = tab => {
     this.selectedTab = tab
-    // this.one('aw-bubble-chart').updateComponent(
-    //   'aw-bubble-chart',
-    //   this.myResponse.relatedEntities,
-    //   {
-    //     simple: true,
-    //     config: this.configuration,
-    //     limit: this.route.snapshot.params.tab == 'overview' ? 3 : this.configuration.get('bubble-chart').bubbleLimit
-    //   }
-    // );
     this.updateWidgets(this.myResponse)
     const page = tab == 'oggetti-collegati' ? "/1" : "";
     if (tab == 'oggetti-collegati') {
@@ -110,7 +101,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       this.one('aw-linked-objects').update({ items: this.myResponse.relatedItems });
     }
     if (tab == "overview" || tab == "entita-collegate") {
-      setTimeout(() => { this.updateBubbes(this.myResponse) }, 800);
+      setTimeout(() => { this.updateBubbes(this.myResponse.relatedEntities) }, 800);
     }
     this.location.go(`${this.configuration.get('paths').entitaBasePath}${this.currentId}/${tab}${page}`)
   }
@@ -135,7 +126,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     Helper function to update the graph
   */
   updateBubbes(data) {
-    this.one('aw-bubble-chart').update(data.relatedEntities);
+    this.one('aw-bubble-chart').update(data);
   }
 
   /*
@@ -156,7 +147,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
   }
 
   loadContent(res) {
-    // console.log('(entita) Apollo responded with: ', { res })
+    console.log('(entita) Apollo responded with: ', { res })
     this.myResponse = res
     if ((res.fields || []).filter(field => ((this.configuration.get('entita-layout') || {}).overview || {}).campi.includes(field.key)).length > 0) {
       // look at the response array, filtered by configuration values.

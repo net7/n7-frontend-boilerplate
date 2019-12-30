@@ -67,6 +67,7 @@ export class AwBubbleChartDS extends DataSource {
     } else {
       this.output.selected = this.selected;
       this.output.data = this.smartSlice(res);
+      this.output.smallView.data = this.smartSlice(res, this.options.smallChartSize);
       this.draw()
     }
   }
