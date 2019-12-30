@@ -147,7 +147,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
   }
 
   loadContent(res) {
-    console.log('(entita) Apollo responded with: ', { res })
+    // console.log('(entita) Apollo responded with: ', { res })
     this.myResponse = res
     if ((res.fields || []).filter(field => ((this.configuration.get('entita-layout') || {}).overview || {}).campi.includes(field.key)).length > 0) {
       // look at the response array, filtered by configuration values.
