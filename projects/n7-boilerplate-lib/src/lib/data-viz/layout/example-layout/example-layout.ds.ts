@@ -1,6 +1,6 @@
 import { LayoutDataSource } from '@n7-frontend/core';
 
-export class DvExampleLayoutDS extends LayoutDataSource{
+export class DvExampleLayoutDS extends LayoutDataSource {
     private Items = [
         {
             text: "Last week",
@@ -20,6 +20,7 @@ export class DvExampleLayoutDS extends LayoutDataSource{
             payload: "ByDate",
         }
     ];
+
     private datepickerOptions = {
         dateFormat: 'Y-m-d',
         mode: 'range',
@@ -34,15 +35,10 @@ export class DvExampleLayoutDS extends LayoutDataSource{
         datepicker: {
             id:"datepicker",
             libOptions: this.datepickerOptions,
+        }
     }
 
-
-    }
     onInit(){
-        this.one('dv-datepicker-wrapper').update(this.datePickerExternalData);
-    }
-    setSelectLable(payload){
-        this.datePickerExternalData.select.label = payload;
         this.one('dv-datepicker-wrapper').update(this.datePickerExternalData);
     }
 }

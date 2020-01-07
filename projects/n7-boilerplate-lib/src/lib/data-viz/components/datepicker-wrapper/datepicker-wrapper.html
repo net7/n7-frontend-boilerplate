@@ -1,5 +1,5 @@
 <div *ngIf="data" class="dv-dropdown {{ data.select.classes || '' }}">
-    <div class="dv-datepicker-select-container" (click)="openDropDown()">
+    <div class="dv-datepicker-select-container" (click)="toggleDropDown(data.payload)">
         <input type="text" [value]="data.select.label" [readOnly]="true"/>
         <span class="{{data.select.icon}}"></span>
     </div>

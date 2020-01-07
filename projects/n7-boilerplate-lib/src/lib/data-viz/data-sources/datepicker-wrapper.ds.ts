@@ -4,15 +4,17 @@ export class DvDatepickerWrapperDS extends DataSource {
     protected _datepicker: any = null;
 
     protected transform(data){ 
+        if(!data){return};
+        
         return {
             //set select option
            select: {
                 id: data.select.id,
                 hidden: true,
-                icon: "n7-icon-angle-down",
+                icon: data.select.icon || "n7-icon-angle-down",
                 label: data.select.label,
                 items: data.select.items,
-                classes:"dv-datepicker-select-dropdown",
+                classes: data.select.classes,
             },
             //set picker
             datepicker: {
@@ -26,31 +28,37 @@ export class DvDatepickerWrapperDS extends DataSource {
         } 
     }
 
-    openDatepicker(){
+    openDatepicker() {
         setTimeout(() => this._datepicker.open());
     }
 
-    openDropDown(){
+    closeDatepicker() {
+        setTimeout(() => this._datepicker.close());
+    }
+
+    setLabel(paylod) {
+        this.output.select.label = paylod.dateStr;
+        this.output.datepicker.hidden = true;
+    }
+
+    toggleDropDown(){
         if(this.output.select.hidden === false) {
             this.output.select.hidden = true;
-        }
-        else{
+        }else{
             this.output.select.hidden = false;
         }
     }
-    setDatepicker(payload){
+
+    getDatepicker(payload) {
         if (payload === "ByDate") {
             this.openDatepicker();
             this.output.select.hidden = true;
             this.output.datepicker.hidden = false;
         }else{
+            this.closeDatepicker();
             this.output.select.hidden = true;
             this.output.datepicker.hidden = true;
         }
     }
-    setDate(payload){
-        let range_disable = [];
-        this.output.datepicker.hidden = true;
-        this.output.select.label = payload.dateStr;
-    }
+
 }
