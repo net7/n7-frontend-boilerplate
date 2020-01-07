@@ -40,8 +40,8 @@ export class DvDatepickerWrapperDS extends DataSource {
         this.output.datepicker.hidden = true;
     }
 
-    setLabel(paylod) {
-        this.output.select.label = paylod.dateStr;
+    setLabel(payload) {
+        this.output.select.label = payload.dateStr;
         this.output.datepicker.hidden = true;
     }
 
