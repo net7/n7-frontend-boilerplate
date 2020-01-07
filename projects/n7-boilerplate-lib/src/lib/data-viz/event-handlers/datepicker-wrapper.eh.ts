@@ -7,7 +7,7 @@ export class DvDatepickerWrapperEH extends EventHandler {
               case 'dv-datepicker-wrapper.click':
                 this.dataSource.getDatepicker(payload);
                 break;
-              case 'dv-datepicker-wrapper.open-close':
+              case 'dv-datepicker-wrapper.toggle':
                 this.dataSource.toggleDropDown();
                 break;
               case 'dv-datepicker-wrapper.change':
