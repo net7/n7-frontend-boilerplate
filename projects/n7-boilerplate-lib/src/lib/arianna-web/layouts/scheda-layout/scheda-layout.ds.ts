@@ -47,7 +47,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
     this.mainState.update('headTitle', 'Arianna Web > Patrimonio');
     this.mainState.update('pageTitle', 'Arianna Web: patrimonio Layout');
-    this.mainState.updateCustom('currentNav', 'aw/patrimonio');
+    this.mainState.updateCustom('currentNav', 'patrimonio');
 
     // sidebar sticky control
     this._sidebarStickyControl();
