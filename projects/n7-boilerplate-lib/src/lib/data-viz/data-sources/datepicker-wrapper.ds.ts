@@ -30,10 +30,14 @@ export class DvDatepickerWrapperDS extends DataSource {
 
     openDatepicker() {
         setTimeout(() => this._datepicker.open());
+        this.output.select.hidden = true;
+        this.output.datepicker.hidden = false;
     }
 
     closeDatepicker() {
         setTimeout(() => this._datepicker.close());
+        this.output.select.hidden = true;
+        this.output.datepicker.hidden = true;
     }
 
     setLabel(paylod) {
@@ -46,18 +50,6 @@ export class DvDatepickerWrapperDS extends DataSource {
             this.output.select.hidden = true;
         }else{
             this.output.select.hidden = false;
-        }
-    }
-
-    getDatepicker(payload) {
-        if (payload === "ByDate") {
-            this.openDatepicker();
-            this.output.select.hidden = true;
-            this.output.datepicker.hidden = false;
-        }else{
-            this.closeDatepicker();
-            this.output.select.hidden = true;
-            this.output.datepicker.hidden = true;
         }
     }
 
