@@ -354,7 +354,6 @@ export class SearchModel {
   private _filterDataLike(value, refValue) {
     if (
       value &&
-      refValue &&
       typeof value === 'string' &&
       typeof refValue === 'string'
     ) {
