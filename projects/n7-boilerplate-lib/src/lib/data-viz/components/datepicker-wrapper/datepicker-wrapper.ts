@@ -36,7 +36,7 @@ export class DatepickerWrapperComponent{
 
     toggleDropDown(payload) {
         if(!this.emit) return;
-        this.emit('open-close', payload);
+        this.emit('toggle', payload);
     }
 
 }
