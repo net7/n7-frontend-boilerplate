@@ -1,19 +1,63 @@
 import { FacetInput } from './facet-input';
 
+const RESULTS_LIMIT = 1000;
+
 export class FacetInputLink extends FacetInput {
   private facetValue: string | string[];
 
   protected transform() {
     const facetId = this.getFacetId();
+    const results = [];
+    let resultsCounter = 0;
 
-    const results: any[] = this.data.map(({ label, value, counter, hidden, options }) => {
+    for (const itemData of this.data) {
+      const { label, counter, hidden } = itemData;
+      let { value, options } = itemData;
+      if (hidden) {
+        continue;
+      }
+      resultsCounter += 1;
+
+      if (resultsCounter > RESULTS_LIMIT) {
+        break;
+      }
+
       // normalize value
       value = '' + value;
       options = options || {};
 
       const classes = [];
       if (options.classes) { classes.push(options.classes); }
-      if (hidden) { classes.push('is-hidden'); }
+      if (this._isActive(this.facetValue, value)) { classes.push('is-active'); }
+
+      results.push({
+        type: 'link',
+        id: this.getId(),
+        text: label,
+        counter,
+        payload: {
+          facetId,
+          source: 'input-link',
+          value
+        },
+        icon: options.icon || null,
+        classes: classes.join(' '),
+        _meta: { facetId, value }
+      });
+    }
+
+    /* const results: any[] = this.data.map(({ label, value, counter, hidden, options }) => {
+      if (hidden) {
+        return;
+      }
+
+      resultsCounter += 1;
+      // normalize value
+      value = '' + value;
+      options = options || {};
+
+      const classes = [];
+      if (options.classes) { classes.push(options.classes); }
       if (this._isActive(this.facetValue, value)) { classes.push('is-active'); }
 
       return {
@@ -31,6 +75,7 @@ export class FacetInputLink extends FacetInput {
         _meta: { facetId, value }
       };
     });
+     */
 
     // empty state control
     const itemEmpty = results.filter(item => item.id === 'empty')[0];
@@ -75,5 +120,9 @@ export class FacetInputLink extends FacetInput {
       (Array.isArray(facetValue) && facetValue.indexOf(value) !== -1) ||
       (facetValue === value)
     );
+  }
+
+  public clear(){
+    this.facetValue = [];
   }
 }

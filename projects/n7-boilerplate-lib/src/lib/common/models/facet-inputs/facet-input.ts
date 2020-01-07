@@ -37,6 +37,7 @@ export abstract class FacetInput {
   public getSearchIn = () => this.config.filterConfig.searchIn || null;
   public getType = () => this.config.type;
   public getOutput = () => this.output;
+  public clear() {}
 
   public setIsEmpty = (empty: boolean) => {
     this.isEmpty = empty;

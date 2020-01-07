@@ -116,6 +116,7 @@ export class SearchModel {
 
   public clear() {
     this.updateFiltersFromQueryParams({}, true);
+    this._clearInputs();
   }
 
   public updateFiltersFromQueryParams(queryParams, clearAll: boolean = false) {
@@ -257,6 +258,12 @@ export class SearchModel {
     this._config.page.limit = limit;
   }
 
+  private _clearInputs(){
+    this._inputs.forEach(input => {
+      input.clear();
+    });
+  }
+
   private _filterData(searchIns, item) {
     // reset
     item.hidden = false;
@@ -347,7 +354,6 @@ export class SearchModel {
   private _filterDataLike(value, refValue) {
     if (
       value &&
-      refValue &&
       typeof value === 'string' &&
       typeof refValue === 'string'
     ) {
