@@ -5,7 +5,11 @@ export class DvDatepickerWrapperEH extends EventHandler {
         this.innerEvents$.subscribe(({ type, payload }) => {
             switch(type){
               case 'dv-datepicker-wrapper.click':
-                this.dataSource.getDatepicker(payload);
+                if(payload === "ByDate") {
+                  this.dataSource.openDatepicker();
+                }else {
+                  this.dataSource.closeDatepicker();
+                }
                 break;
               case 'dv-datepicker-wrapper.toggle':
                 this.dataSource.toggleDropDown();
