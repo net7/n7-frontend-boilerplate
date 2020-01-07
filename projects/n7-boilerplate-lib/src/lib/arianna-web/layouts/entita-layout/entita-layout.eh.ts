@@ -18,7 +18,6 @@ export class AwEntitaLayoutEH extends EventHandler {
           this.entityId = this.route.snapshot.params.id || "";
           this.dataSource.currentPage = this.route.snapshot.params.page || 1;
           this.listenRoute(this.entityId);
-          //this.loadNavigation(this.entityId);
           break;
 
         case 'aw-entita-layout.destroy':
@@ -52,34 +51,17 @@ export class AwEntitaLayoutEH extends EventHandler {
           if (payload) {
             this.dataSource.selectedTab = payload;
             this.dataSource.handleNavUpdate(payload)
-            // this.dataSource.updateComponent(
-            //   'aw-entita-metadata-viewer',
-            //   this.dataSource.myResponse.fields,
-            //   { 
-            //     context: this.dataSource.selectedTab,
-            //     config: this.dataSource.configuration,
-            //     labels: this.dataSource.configuration.get("labels")
-            //   }
-            // )
           }
           break;
         case 'aw-linked-objects.pagination':
           console.log(payload)
           this.dataSource.currentPage = +payload.split('-')[1];
           this.dataSource.handlePageNavigation()
-          /*this.emitGlobal('navigate', {
-            handler: 'router',
-            path: [`aw/entita/${this.route.snapshot.params.id}/oggetti-collegati/${payload.split('-')[1]}`]
-          });*/
           break
         case 'aw-linked-objects.goto':
           console.log(payload)
           this.dataSource.currentPage = +payload.replace('goto-', '')
           this.dataSource.handlePageNavigation()
-          // this.emitGlobal('navigate', {
-          //   handler: 'router',
-          //   path: [`aw/entita/${this.route.snapshot.params.id}/oggetti-collegati/${targetPage}`]
-          // });
           break
         case 'aw-linked-objects.change': // changed page size value (pagination)
           this.dataSource.pageSize = payload;
@@ -107,7 +89,6 @@ export class AwEntitaLayoutEH extends EventHandler {
         case 'aw-bubble-chart.bubble-filtered':
           if (this.dataSource.selectedTab == "overview" || this.dataSource.selectedTab == "entita-collegate") {
             this.emitOuter('filterbubbleresponse', payload.relatedEntities);
-            //this.dataSource.updateBubbes(payload);
           }
           break;
         case 'aw-linked-objects.click':
@@ -138,13 +119,12 @@ export class AwEntitaLayoutEH extends EventHandler {
           if (res) {
             this.dataSource.loadContent(res);
             // remove the entity of this page
-            let entities = res.relatedEntities.filter(entity => entity.id !== params.get('id'))
-            this.emitOuter('filterbubbleresponse', entities);
-
+            const entities = res.relatedEntities.filter(entity => entity.id !== params.get('id'))
             this.dataSource.updateWidgets(res);
             if (selectedItem) {
               this.emitOuter('selectItem', selectedItem);
             }
+            this.emitOuter('filterbubbleresponse', entities);
           }
         });
       } else {
