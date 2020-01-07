@@ -7,14 +7,5 @@ export class DvExampleLayoutEH extends EventHandler {
       this.dataSource.onInit();
     });
     
-    this.outerEvents$.subscribe(({type, payload}) => {
-      switch(type){
-        case 'dv-datepicker-wrapper.set-select-lable':
-          console.log("DV-LY -->" + type);
-          this.dataSource.setSelectLable(payload);
-          break;
-      }
-      
-    });
   }
 }

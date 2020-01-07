@@ -8,7 +8,7 @@ export const DvExampleLayoutConfig = {
   /**
    * Array of components you want to use
    * in this leyout
-   */
+  */
   widgets: [
     { id: 'dv-inner-title', hasStaticData: true },
     { id: 'dv-widget', hasStaticData: true },

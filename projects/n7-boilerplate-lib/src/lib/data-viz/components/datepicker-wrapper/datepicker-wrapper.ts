@@ -1,20 +1,21 @@
 import { Component, Input } from '@angular/core';
 
-export interface IDatepickerLabelData {
-    select: IDatepickerSelect,
+export interface IDatepickerWrapperData {
+    select: ISelect,
     datepicker: any;
+    payload?: any;
 }
 
-export interface IDatepickerSelect {
+interface ISelect {
     id: string,
     hidden: boolean,
     icon?: string,
     label: string,
-    items: ILabelItems[],
+    items: IDropdownItems[],
     classes?: string,
 }
 
-export interface ILabelItems {
+interface IDropdownItems {
     text: string,
     payload: any,
     classes?: string,
@@ -25,19 +26,17 @@ export interface ILabelItems {
     templateUrl: './datepicker-wrapper.html',
 })
 export class DatepickerWrapperComponent{
-    @Input() data: IDatepickerLabelData;
+    @Input() data: IDatepickerWrapperData;
     @Input() emit: any;
-    @Input() show: any;
-    @Input() label: string;
 
     onClick(payload) {
         if(!this.emit) return;
         this.emit('click', payload);
     }
 
-    openDropDown() {
+    toggleDropDown(payload) {
         if(!this.emit) return;
-        this.emit('open', true);
+        this.emit('open-close', payload);
     }
 
 }
