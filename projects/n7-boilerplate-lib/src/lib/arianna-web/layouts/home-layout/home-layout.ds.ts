@@ -27,6 +27,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     public firstBubbleResponse: any         // store the first array of bubbles, to find them in case of zero results (entities data returned as empty array from backend)
     // BUBBLE CHART DATA ↑
     public homeAutocompleteIsLoading = false;
+    public resultsListIsLoading = false;
 
     onInit({ communication, mainState, configuration, tippy }) {
         this.communication = communication;
