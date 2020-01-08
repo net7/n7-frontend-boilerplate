@@ -148,8 +148,10 @@
     <div *ngFor="let widgetData of lb.widgets['aw-home-facets-wrapper'].ds.out$ | async;"
         class="aw-simple-autocomplete__template" style="display: none;">
         <div class="aw-simple-autocomplete__tippy-wrapper">
-            <n7-loader [data]="{}" *ngIf="lb.dataSource.simpleAutocompleteIsLoading"></n7-loader>
-            <n7-simple-autocomplete [data]="lb.widgets['aw-autocomplete-wrapper'].ds.out$ | async"
+            <n7-loader [data]="{}" *ngIf="(lb.widgets['aw-autocomplete-wrapper'].ds.out$ | async)?.loading"></n7-loader>
+            <n7-simple-autocomplete 
+                *ngIf="!(lb.widgets['aw-autocomplete-wrapper'].ds.out$ | async)?.loading"
+                [data]="lb.widgets['aw-autocomplete-wrapper'].ds.out$ | async"
                 [emit]="lb.widgets['aw-autocomplete-wrapper'].emit">
             </n7-simple-autocomplete>
         </div>

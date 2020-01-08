@@ -60,7 +60,18 @@ export class AwHomeLayoutEH extends EventHandler {
           this.emitOuter('togglefilter', payload)
           break;
         case 'aw-home-facets-wrapper.change':
-          if (payload.value) {
+          if (
+            !payload.value ||
+            (typeof payload.value === 'string' && payload.value.trim().length === 0)
+          ) {
+            this.emitOuter('facetswrapperclose', { facetId: payload });
+          } else if (payload.value) {
+            this.emitOuter('facetswrapperrequest', { facetId: payload });
+            // clear autocomplete results
+            this.dataSource.updateComponent(
+              'aw-autocomplete-wrapper',
+              { key: payload.value, response: null }
+            )
             let params = {
               input: payload.value,
               typeOfEntity: payload.inputPayload.replace(/-search/g, '').replace(/-/g, ' '),
@@ -84,14 +95,14 @@ export class AwHomeLayoutEH extends EventHandler {
                     }
                   ]
                 }
-                this.emitOuter('facetswrapperresponse', { facetId: payload, response: fallback })
+                // this.emitOuter('facetswrapperresponse', { facetId: payload, response: fallback })
                 this.dataSource.updateComponent(
                   'aw-autocomplete-wrapper',
                   { key: payload.value, response: fallback },
                   { config: this.configuration }
                 )
               } else {
-                this.emitOuter('facetswrapperresponse', { facetId: payload, response })
+                // this.emitOuter('facetswrapperresponse', { facetId: payload, response })
                 this.dataSource.updateComponent(
                   'aw-autocomplete-wrapper', // ID
                   { key: payload.value, response }, // DATA

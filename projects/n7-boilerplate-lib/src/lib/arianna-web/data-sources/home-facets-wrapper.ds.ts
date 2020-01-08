@@ -127,7 +127,7 @@ export class AwHomeFacetsWrapperDS extends DataSource {
     return widgetData;
   }
 
-  public tippyMaker = (res, id) => {
+  public tippyMaker = (id) => {
     /*
       Builds or updates Tippy for the input in use (id)
     */
@@ -145,7 +145,7 @@ export class AwHomeFacetsWrapperDS extends DataSource {
         )[0];
         contentNode.setAttribute('style', 'display: block');
         return contentNode;
-      }
+      };
 
       if (!ac.tippy) {
         const target = document.getElementsByClassName(id)[1]; // target the correct this.autoComplete[id] input class
@@ -163,10 +163,18 @@ export class AwHomeFacetsWrapperDS extends DataSource {
       }
     }
     const ac = this.autoComplete[id];
-    if (res.results.length > 0 && ac.tippy) {
+    if (ac.tippy) {
       ac.tippy.show();
-    } else {
-      ac.tippy.hide();
+    }
+  }
+
+  public tippyClose = (id) => {
+    id = id.replace(/ /g, '-');
+    if (this.autoComplete[id]) {
+      const ac = this.autoComplete[id];
+      if (ac.tippy) {
+        ac.tippy.hide();
+      }
     }
   }
 }

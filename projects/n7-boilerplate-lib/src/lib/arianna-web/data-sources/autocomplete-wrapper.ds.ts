@@ -3,7 +3,12 @@ import { DataSource } from '@n7-frontend/core';
 export class AwAutocompleteWrapperDS extends DataSource {
 
   protected transform(data) {
-    const { key, response } = data
+    const { key, response } = data;
+
+    if (!response) {
+      return { suggestion: [], loading: true };
+    }
+
     const regex = new RegExp('(.*?)' + key + '(.*)', 'i') // 'i' = case insensitive
     const suggestion = []
     const config = this.options.config
