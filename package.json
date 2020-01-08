@@ -29,6 +29,7 @@
     "@n7-frontend/core": "git+ssh://git@github.com/net7/n7-frontend-core.git#develop",
     "@n7-frontend/icon-font": "git+ssh://git@github.com/net7/n7-icon-font.git#master",
     "apexcharts": "^3.8.6",
+    "classlist.js": "^1.1.20150312",
     "core-js": "^2.5.4",
     "d3": "^5.12.0",
     "flatpickr": "^4.6.3",
