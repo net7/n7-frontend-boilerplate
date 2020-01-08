@@ -135,8 +135,10 @@
     </div>
 
     <!-- Adavanced autocomplete popover  -->
-    <div id="aw-home-advanced-autocomplete-popover" style="display: none;">
-        <n7-loader [data]="{}" *ngIf="lb.dataSource.homeAutocompleteIsLoading"></n7-loader>
+    <div class="aw-home__advanced-autocomplete" id="aw-home-advanced-autocomplete-popover" style="display: none;">
+        <div class="aw-home__advanced-autocomplete-loader" *ngIf="lb.dataSource.homeAutocompleteIsLoading">
+            <n7-loader [data]="{}"></n7-loader>
+        </div>
         <n7-advanced-autocomplete *ngIf="!lb.dataSource.homeAutocompleteIsLoading"
             [data]="lb.widgets['aw-home-autocomplete'].ds.out$ | async"
             [emit]="lb.widgets['aw-home-autocomplete'].emit">

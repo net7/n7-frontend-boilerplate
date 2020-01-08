@@ -51,7 +51,7 @@
             min-width: 100%;
         }
 
-        /* Autocomplete */
+        /* Advanced autocomplete */
         .tippy-popper {
             width: 100%;
             max-width: 100%;
@@ -60,6 +60,16 @@
         .tippy-tooltip, .tippy-content {
             padding: 0;
         }
+    }
+}
+
+/* Advanced autocomplete */
+.aw-home {
+    &__advanced-autocomplete-loader {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: $space*5;
     }
 }
 
