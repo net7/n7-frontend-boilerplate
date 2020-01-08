@@ -81,7 +81,6 @@
     /* Bubble facets and chart wrapper */
     &__bubble-wrapper {
         display: grid;
-        // grid-template-columns: 220px 1fr;
         grid-template-columns: 220px minmax(200px, 1fr) 300px;
         grid-column-gap: $grid-gutter-h/2;
         max-width: $page-max-width;
@@ -111,6 +110,26 @@
         justify-content: center;
     }
 
+    /* Bubble chart loader */
+    .aw-home__bubble-chart-wrapper-loading {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .n7-content-placeholder {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .facet-placeholder-item-1
+         {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+        }
+    }
+    
     /* Facets */
     .aw-home__facets-wrapper {
         display: flex;
@@ -262,6 +281,22 @@
             .n7-facet-header__text {
                 opacity: 0.7;
             }
+        }
+    }
+
+    /* Facets loading */
+    .aw-home__facets-wrapper-loading {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+
+        .facet-placeholder-header {
+            height: 44px;
+        }
+
+        .facet-placeholder-input {
+            height: 38px;
+            margin-bottom: $space*4;
         }
     }
 

@@ -12,11 +12,33 @@
             <n7-content-placeholder
             [data]="{
                 blocks: [{
-                    classes: 'content-placeholder-facets'
+                    class: 'facet-placeholder-header'
                 }, {
-                    classes: 'content-placeholder-facets'
+                    class: 'facet-placeholder-input'
+                }] 
+            }"></n7-content-placeholder>
+            <n7-content-placeholder
+            [data]="{
+                blocks: [{
+                    class: 'facet-placeholder-header'
                 }, {
-                    classes: 'content-placeholder-facets'
+                    class: 'facet-placeholder-input'
+                }] 
+            }"></n7-content-placeholder>
+            <n7-content-placeholder
+            [data]="{
+                blocks: [{
+                    class: 'facet-placeholder-header'
+                }, {
+                    class: 'facet-placeholder-input'
+                }] 
+            }"></n7-content-placeholder>
+            <n7-content-placeholder
+            [data]="{
+                blocks: [{
+                    class: 'facet-placeholder-header'
+                }, {
+                    class: 'facet-placeholder-input'
                 }] 
             }"></n7-content-placeholder>
         </div>
@@ -33,9 +55,11 @@
         <div class="aw-home__bubble-chart-wrapper-loading" *ngIf="!(lb.widgets['aw-bubble-chart'].ds.out$ | async)">
             <n7-content-placeholder
             [data]="{
-                blocks: [{
-                    classes: 'content-placeholder-bubble-chart'
-                }]
+                blocks: [
+                    {
+                        class: 'facet-placeholder-item-1'
+                    }
+                ]
             }"></n7-content-placeholder>
         </div>
         <div class="aw-home__bubble-chart-wrapper" *ngIf="!!(lb.widgets['aw-bubble-chart'].ds.out$ | async)"
