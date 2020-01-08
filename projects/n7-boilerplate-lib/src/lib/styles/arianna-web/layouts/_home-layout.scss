@@ -419,6 +419,19 @@
         font-weight: $font-weight-normal;
     }
 
+    /* Results loading */
+    .aw-home__bubble-results-list-loading {
+        padding-top: $space*1.5;
+    }
+
+    .search-result-placeholder-title {
+        height: 38px;
+    }
+
+    .search-result-placeholder-metadata {
+        margin-bottom: $space*3;
+    }
+
     /* Tag colors */
     .tag-persona {
         background-color: $color-people;
