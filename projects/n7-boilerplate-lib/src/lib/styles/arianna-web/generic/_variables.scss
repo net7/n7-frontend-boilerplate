@@ -195,9 +195,11 @@ $header-breakpoint-mobile: 0px;
 // #LOADER
 // ------------------------------------ //
 // $loader-size: 70px;
+$loader-size-small: 30px;
 // $loader-thickness: 5px;
-// $loader-color-front: $color-main;
-// $loader-color-back: rgba($color-main, .3);
+$loader-thickness-small: 4px;
+$loader-color-front: $color-gray-03;
+$loader-color-back: $color-gray-02;
 
 
 // ------------------------------------ //

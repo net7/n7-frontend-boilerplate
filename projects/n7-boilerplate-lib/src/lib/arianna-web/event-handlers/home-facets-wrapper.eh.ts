@@ -38,8 +38,14 @@ export class AwHomeFacetsWrapperEH extends EventHandler {
 
     this.outerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
+        case 'aw-home-layout.facetswrapperrequest': // incoming autocomplete response
+          this.dataSource.tippyMaker(payload.facetId.inputPayload);
+          break;
+        case 'aw-home-layout.facetswrapperclose': // incoming autocomplete response
+          this.dataSource.tippyClose(payload.facetId.inputPayload);
+          break;
         case 'aw-home-layout.facetswrapperresponse': // incoming autocomplete response
-          this.dataSource.tippyMaker(payload.response, payload.facetId.inputPayload);
+          // this.dataSource.tippyMaker(payload.response, payload.facetId.inputPayload);
           break;
         case 'aw-home-layout.lockfilter':
           this.updateFilters(payload)
