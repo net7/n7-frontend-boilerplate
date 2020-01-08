@@ -296,6 +296,23 @@
                 border: 0;
             }
         }
+
+        .aw-home__simple-autocomplete-loader {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: $space*2;
+            
+            .n7-loader {
+                border-width: $loader-thickness-small;
+
+                &, &:after {
+                    border-radius: 50%;
+                    width: $loader-size-small !important;
+                    height: $loader-size-small !important;
+                }
+            }
+        }
     }
 
     /* Results */
