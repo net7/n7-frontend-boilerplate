@@ -199,12 +199,14 @@ export class AwHomeLayoutEH extends EventHandler {
   }
 
   public handleChartSelection = payload => {
-    let selectedEntitiesIds = payload
-    this.dataSource.selectedBubbles = payload
+    const selectedEntitiesIds = payload;
+    this.dataSource.selectedBubbles = payload;
+    this.dataSource.resultsListIsLoading = true;
     this.dataSource.makeRequest$('globalFilter', {
       selectedEntitiesIds,
       entitiesListSize: this.configuration.get('home-layout')['entitiesQuerySize']
     }).subscribe(res => {
+      this.dataSource.resultsListIsLoading = false;
       if (res && res.entitiesData.length > 0) {
         // if some linked objects exist for the selected entities:
         this.dataSource.lastBubbleResponse = res.entitiesData

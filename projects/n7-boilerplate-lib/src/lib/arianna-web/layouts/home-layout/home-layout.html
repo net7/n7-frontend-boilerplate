@@ -89,7 +89,23 @@
                     </ng-container>
                 </div>
                 <div class="aw-home__bubble-results-list-wrapper">
-                    <div class="aw-home__bubble-results-list" [attr.id]="'bubble-results-list'"
+                    <div class="aw-home__bubble-results-list-loading" *ngIf="lb.dataSource.resultsListIsLoading">
+                        <n7-content-placeholder
+                        [data]="{
+                            blocks: [{
+                                classes: 'content-placeholder-item-preview'
+                            }, {
+                                classes: 'content-placeholder-item-preview'
+                            }, {
+                                classes: 'content-placeholder-item-preview'
+                            }, {
+                                classes: 'content-placeholder-item-preview'
+                            }]
+                        }"></n7-content-placeholder>
+                    </div>
+                    <div
+                    *ngIf="!lb.dataSource.resultsListIsLoading" 
+                    class="aw-home__bubble-results-list" [attr.id]="'bubble-results-list'"
                         (scroll)="lb.eventHandler.emitOuter('scroll', $event.target)">
 
                         <div class="aw-home__bubble-results-fallback"
@@ -115,7 +131,8 @@
                                 </n7-loader>
                             </div>
                         </ng-container>
-                    </div>
+                    </div
+                    >
                     <div *ngIf="lb.dataSource.hasScrollBackground"
                         class="aw-home__bubble-results-list-wrapper-with-scroll"></div>
                     <!-- aw-linked-objects__actions -->
