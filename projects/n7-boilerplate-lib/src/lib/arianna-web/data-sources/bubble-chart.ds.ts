@@ -143,7 +143,6 @@ export class AwBubbleChartDS extends DataSource {
         )
       }
     });
-    console.log(this.tippyList.length)
 
     // createSingleton(this.tippyList, {
     //   interactive: true,
