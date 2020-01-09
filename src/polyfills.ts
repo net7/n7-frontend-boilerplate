@@ -48,3 +48,32 @@ import 'classlist.js';  // Run `npm install --save classlist.js`.
 
 /** IE10 and IE11 requires the following for the Reflect API. */
 import 'core-js/es6/reflect';
+
+// node.remove() polyfill for IE 9-11
+// from: https://github.com/jserz/js_piece/blob/master/DOM/ChildNode/remove()/remove().md
+(function (arr) {
+    arr.forEach(function (item) {
+        if (item.hasOwnProperty('remove')) {
+            return;
+        }
+        Object.defineProperty(item, 'remove', {
+            configurable: true,
+            enumerable: true,
+            writable: true,
+            value: function remove() {
+                if (this.parentNode === null) {
+                    return;
+                }
+                this.parentNode.removeChild(this);
+            }
+        });
+    });
+})([Element.prototype, CharacterData.prototype, DocumentType.prototype]);
+
+// SVGElement.contains() polyfill
+// from: https://stackoverflow.com/questions/57606743/ie11-object-doesnt-support-property-or-method-contains
+SVGElement.prototype.contains = function contains(node) {
+    if (!(0 in arguments)) { throw new TypeError('1 argument is required'); }
+    do { if (this === node) return true; } while (node = node && node.parentNode);
+    return false;
+};
