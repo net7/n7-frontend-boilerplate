@@ -112,7 +112,6 @@ export class AwBubbleChartDS extends DataSource {
         let toggleBubbleText = this.selected.includes(bubble.entity.id) ? `Deseleziona` : `Seleziona`
         selectButton.innerHTML = toggleBubbleText
       }
-      // console.log(element)
       return element.innerHTML
     }
     const focusBubble = id => {
@@ -124,8 +123,7 @@ export class AwBubbleChartDS extends DataSource {
     }
     // make new tooltips
     bubbles.forEach(b => {
-      let el = document.getElementById(b.entity.id)
-      let group = el ? el.parentElement : false // selects a <g> element
+      let group: Element = document.getElementById(`g_${b.entity.id}`) // select 
       if (group) {
         this.tippyList.push( // add this tippy to the array of instances
           tippy(group, {
@@ -145,6 +143,7 @@ export class AwBubbleChartDS extends DataSource {
         )
       }
     });
+    console.log(this.tippyList.length)
 
     // createSingleton(this.tippyList, {
     //   interactive: true,
