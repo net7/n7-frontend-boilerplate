@@ -30,6 +30,7 @@ export class AwSearchLayoutDS extends LayoutDataSource {
   public pageSize = 10; // linked objects page size
   public sidebarIsSticky = false;
   public isFirstLoading = true;
+  public resultsLoading = false;
 
   public options: any;
 
@@ -84,7 +85,7 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     SearchService.queryParams = null;
   }
 
-  onSearchResponse(){
+  onSearchResponse() {
     this.resetButtonEnabled = true;
     if (this.isFirstLoading) {
       this.isFirstLoading = false;

@@ -14,7 +14,27 @@
     </div>
     <div class="aw-search__content-wrapper sticky-parent">
         <!-- Left sidebar: facets -->
-        <div class="aw-search__sidebar sticky-target" [ngClass]="{ 'is-sticky': lb.dataSource.sidebarIsSticky }">
+        <div *ngIf="!(lb.widgets['facets-wrapper'].ds.out$ | async)" class="aw-search__sidebar-loading sticky-target">
+            <div class="aw-search__facets">
+                <n7-content-placeholder [data]="{
+                    blocks: [{
+                        classes: 'content-placeholder-facet-header'
+                    }, {
+                        classes: 'content-placeholder-facet-item'
+                    }, {
+                        classes: 'content-placeholder-facet-item'
+                    }, {
+                        classes: 'content-placeholder-facet-item'
+                    }, {
+                        classes: 'content-placeholder-facet-item'
+                    }, {
+                        classes: 'content-placeholder-facet-item'
+                    }]
+                }">
+                </n7-content-placeholder>
+            </div>
+        </div>
+        <div *ngIf="!!(lb.widgets['facets-wrapper'].ds.out$ | async)" class="aw-search__sidebar sticky-target" [ngClass]="{ 'is-sticky': lb.dataSource.sidebarIsSticky }">
             <div class="aw-search__facets">
                 <n7-facets-wrapper [data]="lb.widgets['facets-wrapper'].ds.out$ | async"
                     [emit]="lb.widgets['facets-wrapper'].emit">
@@ -40,7 +60,23 @@
                 </div>
             </div>
             <!-- Search details -->
-            <div class="aw-search__results-wrapper">
+            <div class="aw-search__results-wrapper-loading">
+                <n7-content-placeholder *ngIf="lb.dataSource.resultsLoading" [data]="{
+                    blocks: [
+                        { classes: 'content-placeholder-item-preview' },
+                        { classes: 'content-placeholder-item-preview' },
+                        { classes: 'content-placeholder-item-preview' },
+                        { classes: 'content-placeholder-item-preview' },
+                        { classes: 'content-placeholder-item-preview' },
+                        { classes: 'content-placeholder-item-preview' },
+                        { classes: 'content-placeholder-item-preview' },
+                        { classes: 'content-placeholder-item-preview' },
+                        { classes: 'content-placeholder-item-preview' },
+                        { classes: 'content-placeholder-item-preview' }
+                    ]
+                }"></n7-content-placeholder>
+            </div>
+            <div *ngIf="!lb.dataSource.resultsLoading" class="aw-search__results-wrapper">
                 <ng-container *ngFor="let preview of (lb.widgets['aw-linked-objects'].ds.out$ | async)?.previews">
                     <n7-breadcrumbs [data]="preview.breadcrumbs">
                     </n7-breadcrumbs>
