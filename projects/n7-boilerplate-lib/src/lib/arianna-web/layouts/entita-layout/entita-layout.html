@@ -1,18 +1,48 @@
 <div class="aw-entity n7-side-auto-padding" *ngIf="lb.dataSource">
     <div class="aw-entity__sidebar">
         <!-- Custom header -->
-        <div class="aw-entity__sidebar-title-wrapper color-{{lb.dataSource.navHeader.color}}">
+        <div *ngIf="!(lb.widgets['aw-entita-nav'].ds.out$ | async)" class="aw-entity__sidebar-title-wrapper-loading">
+            <n7-content-placeholder [data]="{
+                blocks: [{
+                    classes: 'content-placeholder-sidebar-title'
+                }]
+            }">
+            </n7-content-placeholder>
+        </div>
+        <div *ngIf="!!(lb.widgets['aw-entita-nav'].ds.out$ | async)" class="aw-entity__sidebar-title-wrapper color-{{lb.dataSource.navHeader.color}}">
             <h1 class="aw-entity__sidebar-title">
                 <span class="aw-entity__sidebar-title-icon {{lb.dataSource.navHeader.icon}}"></span>
                 <span class="aw-entity__sidebar-title-text">{{lb.dataSource.navHeader.text}}</span>
             </h1>
         </div>
         <!-- Navigation -->
+        <div *ngIf="!(lb.widgets['aw-entita-nav'].ds.out$ | async)" class="aw-entity__sidebar-nav-loading">
+            <n7-loader [data]="{}"></n7-loader>
+        </div>
         <n7-nav [data]="lb.widgets['aw-entita-nav'].ds.out$ | async" [emit]="lb.widgets['aw-entita-nav'].emit">
         </n7-nav>
     </div>
     <!-- lb.dataSource.selectedTab -->
-    <div class="aw-entity__content">
+    <div *ngIf="!(lb.widgets['aw-entita-nav'].ds.out$ | async)" class="aw-entity__content-loading">
+        <n7-content-placeholder [data]="{
+            blocks: [{
+                classes: 'content-placeholder-title'
+            }, {
+                classes: 'content-placeholder-item-preview'
+            }, {
+                classes: 'content-placeholder-item-preview'
+            }, {
+                classes: 'content-placeholder-item-preview'
+            }, {
+                classes: 'content-placeholder-item-preview'
+            }, {
+                classes: 'content-placeholder-item-preview'
+            }, {
+                classes: 'content-placeholder-item-preview'
+            }]
+        }"></n7-content-placeholder>
+    </div>
+    <div *ngIf="!!(lb.widgets['aw-entita-nav'].ds.out$ | async)" class="aw-entity__content">
         <section>
             <div *ngIf="lb.dataSource.myResponse.wikiTab || lb.dataSource.myResponse.extraTab"
                 class="aw-entity__content-section" [hidden]="lb.dataSource.selectedTab != 'overview'">
