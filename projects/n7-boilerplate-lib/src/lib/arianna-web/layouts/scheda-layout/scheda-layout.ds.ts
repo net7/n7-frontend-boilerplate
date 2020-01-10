@@ -43,7 +43,12 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     this.metadataSectionTitle = this.configuration.get('scheda-layout')['metadata']['title'];
     this.hasSimilarItems = false;
     this.bubblesEnabled = this.configuration.get('features-enabled') ? this.configuration.get('features-enabled')['bubblechart'] : false;
-    this.one('aw-bubble-chart').updateOptions({ simple: true, config: this.configuration, limit: this.configuration.get('bubble-chart').bubbleLimit })
+    this.one('aw-bubble-chart').updateOptions({ 
+      selectable: false,
+      simple: true,
+      config: this.configuration,
+      limit: this.configuration.get('bubble-chart').bubbleLimit
+    })
 
     this.mainState.update('headTitle', 'Arianna Web > Patrimonio');
     this.mainState.update('pageTitle', 'Arianna Web: patrimonio Layout');
