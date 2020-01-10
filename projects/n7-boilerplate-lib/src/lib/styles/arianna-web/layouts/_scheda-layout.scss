@@ -178,7 +178,8 @@
     .aw-scheda__related-items {
         display: flex;
         flex-wrap: wrap;
-        margin: 0 -$grid-gutter-h -$grid-gutter-h 0;
+        margin-top: 0;
+        margin-right: -$grid-gutter-h;
         // display: grid;
         // grid-template-columns: repeat(2, 1fr);
         // grid-column-gap: $grid-gutter-h;
@@ -186,6 +187,7 @@
 
         > * {
             width: 50%;
+            box-sizing: border-box;
             border: 0 solid transparent; /* Create fake column gap */
             border-width: 0 $grid-gutter-h 0 0;  /* Create fake column gap */
         }
