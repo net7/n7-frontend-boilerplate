@@ -1,7 +1,87 @@
 <div class="aw-gallery" *ngIf="lb.dataSource">
-  Hello, from Gallery layout!
-  <!-- EXAMPLE-COMPONENT
-      <n7-inner-title [data]="lb.widgets['title'].ds.out$ | async" [emit]="lb.widgets['title'].emit">
-      </n7-inner-title> 
-    -->
+
+  <div class="aw-gallery__header">
+    <div class="aw-gallery__header-left">
+      <h1 class="aw-gallery__header-title">{{ lb.dataSource.pageTitle }}</h1>
+    </div>
+  </div>
+
+  <div class="aw-gallery__content-wrapper sticky-parent">
+    <!-- Left sidebar: facets -->
+    <div class="aw-gallery__sidebar sticky-target" [ngClass]="{ 'is-sticky': lb.dataSource.sidebarIsSticky }">
+      <div class="aw-gallery__facets">
+        <div class="aw-gallery__facets-loading" *ngIf="!(lb.widgets['facets-wrapper'].ds.out$ | async)">
+          <n7-content-placeholder *ngFor="let i of [1,2]" [data]="{
+              blocks: [
+                  { classes: 'facet-placeholder-header' },
+                  { classes: 'facet-placeholder-input' },
+                  { classes: 'facet-placeholder-input' },
+                  { classes: 'facet-placeholder-input' },
+                  { classes: 'facet-placeholder-input' },
+                  { classes: 'facet-placeholder-input' }
+              ]
+          }"></n7-content-placeholder>
+        </div>
+        <!-- <n7-facets-wrapper 
+          [data]="lb.widgets['facets-wrapper'].ds.out$ | async"
+          [emit]="lb.widgets['facets-wrapper'].emit">
+        </n7-facets-wrapper> -->
+      </div>
+    </div>
+    <div class="aw-gallery__content">
+      <div class="aw-gallery__results-header">
+        <div class="aw-gallery__results-header-left">
+          <h3 class="aw-gallery__total">
+            <span class="aw-gallery__total-number">{{ lb.dataSource.totalCount }}</span>&nbsp;
+            <span class="aw-gallery__total-title">{{ lb.dataSource.resultsTitle }}</span>
+          </h3>
+        </div>
+        <div class="aw-gallery__results-header-right">
+          <label class="aw-gallery__results-select-orderby-label"
+            for="aw-gallery__results-select-orderby">{{ lb.dataSource.orderByLabel }}</label>
+          <select (change)="lb.eventHandler.emitInner('orderbychange', $event.target.value)"
+            id="aw-gallery__results-select-orderby">
+            <option *ngFor="let option of lb.dataSource.orderByOptions" [value]="option.value">
+              {{ option.label }}</option>
+          </select>
+        </div>
+      </div>
+      <!-- Gallery details -->
+      <div class="aw-gallery__results-wrapper">
+        <ng-container *ngIf="!(lb.widgets['aw-gallery-results'].ds.out$ | async)">
+          <n7-content-placeholder *ngFor="let i of [1,2,3,4,5,6,7,8,9]" [data]="{
+              blocks: [
+                  { classes: 'facet-placeholder-image' },
+                  { classes: 'facet-placeholder-title' },
+                  { classes: 'facet-placeholder-subtitle' }
+              ]
+              }">
+          </n7-content-placeholder>
+        </ng-container>
+
+        <!-- <ng-container *ngFor="let preview of (lb.widgets['aw-linked-objects'].ds.out$ | async)?.previews">
+          <n7-breadcrumbs [data]="preview.breadcrumbs">
+          </n7-breadcrumbs>
+          <n7-item-preview [data]="preview" [emit]="lb.widgets['aw-linked-objects'].emit">
+          </n7-item-preview>
+        </ng-container> -->
+
+        <!-- <ng-container *ngIf="lb.dataSource.totalCount == 0">
+          <div class="aw-gallery__fallback">
+            <p class="aw-gallery__fallback-string">
+              {{ lb.dataSource.fallback }}
+            </p>
+            <button [disabled]="!lb.dataSource.resetButtonEnabled" class="n7-btn aw-gallery__fallback-button"
+              (click)="lb.eventHandler.emitInner('galleryreset', {})">
+              Resetta la ricerca
+            </button>
+          </div>
+        </ng-container>
+        <n7-pagination *ngIf="lb.dataSource.totalCount > 10"
+          [data]="(lb.widgets['aw-linked-objects'].ds.out$ | async)?.pagination"
+          [emit]="lb.widgets['aw-linked-objects'].emit">
+        </n7-pagination> -->
+      </div>
+    </div>
+  </div>
 </div>
