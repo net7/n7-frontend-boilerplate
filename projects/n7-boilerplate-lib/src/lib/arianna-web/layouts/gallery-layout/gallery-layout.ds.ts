@@ -15,6 +15,8 @@ export class AwGalleryLayoutDS extends LayoutDataSource {
       label: 'Ordine alfabetico (Z→A)'
     }
   ];
+  public totalCount: number = 12
+  public resultsTitle: string = 'Risultati'
 
   onInit(payload) {
     this.communication = payload.communication;
