@@ -2,6 +2,20 @@ import { LayoutDataSource } from '@n7-frontend/core';
 
 export class AwGalleryLayoutDS extends LayoutDataSource {
   private communication;
+  private pageTitle: string = 'Galleria'
+  private sidebarIsSticky: boolean = true
+  public orderByLabel = 'Ordina per';
+  public orderByOptions: any = [
+    {
+      value: 'label_ASC',
+      label: 'Ordine alfabetico (A→Z)'
+    },
+    {
+      value: 'label_DESC',
+      label: 'Ordine alfabetico (Z→A)'
+    }
+  ];
+
   onInit(payload) {
     this.communication = payload.communication;
     // EXAMPLE QUERY & COMPONENT UPDATE

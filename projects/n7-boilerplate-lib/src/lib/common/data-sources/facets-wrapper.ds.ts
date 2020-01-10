@@ -4,6 +4,7 @@ import { SearchModel } from '../services/search.service';
 const HEADER_ICON_OPEN = 'n7-icon-angle-down';
 const HEADER_ICON_CLOSE = 'n7-icon-angle-right';
 
+
 export class FacetsWrapperDS extends DataSource {
   public searchModel: SearchModel;
 
