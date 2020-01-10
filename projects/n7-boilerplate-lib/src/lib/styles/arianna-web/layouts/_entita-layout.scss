@@ -185,9 +185,19 @@
             }
 
             &__item {
-                display: grid;
-                grid-template-columns: 200px 1fr;
+                display: flex;
+                // display: grid;
+                // grid-template-columns: 200px 1fr;
                 margin-bottom: $space*2.5;
+
+                &-label {
+                    flex: 0 0 $metadata-label-width;
+                    width: $metadata-label-width;
+                }
+
+                &-value {
+                    flex: 1;
+                }
             }
 
         }
