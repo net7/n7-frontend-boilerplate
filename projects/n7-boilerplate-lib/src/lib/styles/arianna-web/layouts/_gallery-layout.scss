@@ -125,6 +125,23 @@
     &__facets {
         height: 100%;
     }
+
+    /* Facets loading */
+    &__facets-loading {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+
+        .facet-placeholder-header {
+            height: 44px;
+        }
+
+        .facet-placeholder-input {
+            height: 18px;
+            width: 300px;
+        }
+    }
+
 }
 
 
