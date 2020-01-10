@@ -11,12 +11,14 @@ import { AwSearchLayoutComponent } from './layouts/search-layout/search-layout';
 // COMPONENTS
 import { BubbleChartWrapperComponent } from './components/bubble-chart-wrapper/bubble-chart-wrapper';
 import { SmartBreadcrumbsComponent } from './components/smart-breadcrumbs/smart-breadcrumbs';
+import { AwGalleryLayoutComponent } from './layouts';
 
 const COMPONENTS = [
   AwEntitaLayoutComponent,
   AwHomeLayoutComponent,
   AwSchedaLayoutComponent,
   AwSearchLayoutComponent,
+  AwGalleryLayoutComponent,
   BubbleChartWrapperComponent,
   SmartBreadcrumbsComponent
 ];

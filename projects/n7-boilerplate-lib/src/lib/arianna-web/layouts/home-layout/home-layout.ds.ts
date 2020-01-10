@@ -212,7 +212,8 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     }
 
     private _setHasScrollBackground({ scrollTop, scrollHeight, clientHeight }) {
-        this.hasScrollBackground = scrollHeight > (scrollTop + clientHeight);
+        // this.hasScrollBackground = scrollHeight > (scrollTop + clientHeight);
+        this.hasScrollBackground = true
     }
 
     private _listenAutoCompleteChanges() {

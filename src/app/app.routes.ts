@@ -11,6 +11,7 @@ import {
   AwSearchLayoutComponent,
   //DV
   DvExampleLayoutComponent,
+  AwGalleryLayoutComponent,
 } from 'n7-boilerplate-lib';
 
 export const APP_ROUTES: Routes = [
@@ -22,6 +23,7 @@ export const APP_ROUTES: Routes = [
   { path: 'aw/entita/:id/:tab', component: AwEntitaLayoutComponent},
   { path: 'aw/entita/:id', redirectTo: 'aw/entita/:id/overview' },
   { path: 'aw/ricerca', component: AwSearchLayoutComponent },
+  { path: 'aw/galleria', component: AwGalleryLayoutComponent },
   {
     path: '',
     redirectTo: '/aw/home',
