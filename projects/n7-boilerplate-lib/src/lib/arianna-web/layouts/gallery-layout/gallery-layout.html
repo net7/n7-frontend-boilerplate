@@ -48,6 +48,8 @@
       </div>
       <!-- Gallery details -->
       <div class="aw-gallery__results-wrapper">
+
+        <!-- GALLERY RESULTS LOADERS -->
         <ng-container *ngIf="!(lb.widgets['aw-gallery-results'].ds.out$ | async)">
           <n7-content-placeholder *ngFor="let i of [1,2,3,4,5,6,7,8,9]" [data]="{
               blocks: [
@@ -59,12 +61,21 @@
           </n7-content-placeholder>
         </ng-container>
 
-        <!-- <ng-container *ngFor="let preview of (lb.widgets['aw-linked-objects'].ds.out$ | async)?.previews">
-          <n7-breadcrumbs [data]="preview.breadcrumbs">
-          </n7-breadcrumbs>
-          <n7-item-preview [data]="preview" [emit]="lb.widgets['aw-linked-objects'].emit">
-          </n7-item-preview>
-        </ng-container> -->
+        <!-- REAL GALLERY RESULTS -->
+        <div *ngFor="let item of (lb.widgets['aw-gallery-results'].ds.out$ | async)" class="gallery-result">
+          <img src="{{item.image}}" alt="result thumbnail" class="gallery-result__thumb">
+          <div>{{item.title}}</div>
+          <div *ngIf="item.metadata" class="gallery-result__metadata">
+            <div *ngFor="let m of item.metadata">
+              <span *ngIf="m.label" class="gallery-result__metadata-label">
+                {{m.label}}
+              </span>
+              <span *ngIf="m.value" class="gallery-result__metadata-value">
+                {{m.value}}
+              </span>
+            </div>
+          </div>
+        </div>
 
         <!-- <ng-container *ngIf="lb.dataSource.totalCount == 0">
           <div class="aw-gallery__fallback">

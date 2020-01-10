@@ -9,7 +9,7 @@ export const AwGalleryLayoutConfig = {
   layoutId: 'aw-gallery-layout',
   widgets: [
     { id: 'facets-wrapper', dataSource: FacetsWrapperDS, eventHandler: FacetsWrapperEH },
-    { id: 'aw-gallery-results' },
+    { id: 'aw-gallery-results', hasStaticData: true },
     // { id: 'aw-search-layout-tabs', hasStaticData: true },
   ],
   layoutDS: AwGalleryLayoutDS,
