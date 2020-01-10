@@ -110,11 +110,11 @@
         display: flex;
 
         &-item {
-            display: flex;
+            display: inline;
         }
 
         &-group {
-            display: flex;
+            // display: flex;
             margin-bottom: 0;
 
             &.n7-objects__metadata-linked {
