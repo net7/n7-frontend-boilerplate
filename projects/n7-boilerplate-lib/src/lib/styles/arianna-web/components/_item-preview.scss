@@ -109,7 +109,12 @@
     .n7-item-preview__metadata {
         display: flex;
 
+        &-item {
+            display: flex;
+        }
+
         &-group {
+            display: flex;
             margin-bottom: 0;
 
             &.n7-objects__metadata-linked {
