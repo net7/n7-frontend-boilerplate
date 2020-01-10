@@ -40,7 +40,8 @@
 
         <!-- Scheda details -->
         <div class="aw-scheda__scheda-wrapper-loading" *ngIf="lb.dataSource.contentIsLoading">
-            <n7-content-placeholder [data]="{
+            <!--
+                <n7-content-placeholder [data]="{
                 blocks: [{
                     classes: 'content-placeholder-title'
                 }, {
@@ -57,6 +58,7 @@
                     classes: 'content-placeholder-item-preview'
                 }]
             }"></n7-content-placeholder>
+            -->
         </div>
         <div class="aw-scheda__scheda-wrapper" *ngIf="!lb.dataSource.contentIsLoading">
             <n7-breadcrumbs [data]="lb.widgets['aw-scheda-breadcrumbs'].ds.out$ | async"
