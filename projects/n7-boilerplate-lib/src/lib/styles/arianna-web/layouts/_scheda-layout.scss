@@ -68,6 +68,22 @@
             font-weight: $font-weight-bold;
         }
     }
+
+    /* Loading */
+    .aw-scheda__tree-content-loading {
+        .n7-content-placeholder {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 40px;
+            padding: 0 $space*2;
+            background-color: $color-background-base;
+        }
+        .tree-placeholder-item {
+            width: 100%;
+            margin-bottom: 0;
+        }
+    }
 }
 
 

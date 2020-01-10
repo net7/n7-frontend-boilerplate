@@ -6,7 +6,26 @@
             <n7-sidebar-header [data]="lb.widgets['aw-sidebar-header'].ds.out$ | async"
                 [emit]="lb.widgets['aw-sidebar-header'].emit"></n7-sidebar-header>
             <div class="aw-scheda__tree-content-loading" *ngIf="!(lb.widgets['aw-tree'].ds.out$ | async)">
-                <n7-loader [data]="{}"></n7-loader>
+                <n7-content-placeholder [data]="{
+                    blocks: [{
+                        classes: 'tree-placeholder-item'
+                    }]
+                }"></n7-content-placeholder>
+                <n7-content-placeholder [data]="{
+                    blocks: [{
+                        classes: 'tree-placeholder-item'
+                    }]
+                }"></n7-content-placeholder>
+                <n7-content-placeholder [data]="{
+                    blocks: [{
+                        classes: 'tree-placeholder-item'
+                    }]
+                }"></n7-content-placeholder>
+                <n7-content-placeholder [data]="{
+                    blocks: [{
+                        classes: 'tree-placeholder-item'
+                    }]
+                }"></n7-content-placeholder>
             </div>
             <div class="aw-scheda__tree-content" 
                 [ngStyle]="{ 
