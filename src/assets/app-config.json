@@ -282,6 +282,7 @@
       },
       "icon": "n7-icon-biography",
       "label": "Persone",
+      "singular-label": "Persona",
       "input-placeholder": "Cerca una persona",
       "main-metadata": "data_nascita"
     },
@@ -296,6 +297,7 @@
       },
       "icon": "n7-icon-map1",
       "label": "Luoghi",
+      "singular-label": "Luogo",
       "input-placeholder": "Cerca un luogo"
     },
     "concetto": {
@@ -322,6 +324,7 @@
       },
       "icon": "n7-icon-lightbulb",
       "label": "Cose notevoli",
+      "singular-label": "Cosa notevole",
       "input-placeholder": "Cerca un concetto"
     },
     "organizzazione": {
@@ -335,6 +338,7 @@
       },
       "icon": "n7-icon-building",
       "label": "Organizzazioni",
+      "singular-label": "Organizzazione",
       "input-placeholder": "Cerca un'organizzazione"
     },
     "oggetto-culturale": {
@@ -348,6 +352,7 @@
       },
       "icon": "n7-icon-file3",
       "label": "Oggetti Culturali",
+      "singular-label": "Oggetto Culturale",
       "input-placeholder": ""
     },
     "aggregazione": {
@@ -361,6 +366,7 @@
       },
       "icon": "n7-icon-archive",
       "label": "Fondi",
+      "singular-label": "Fondo",
       "input-placeholder": ""
     },
     "famiglia": {
@@ -374,6 +380,7 @@
       },
       "icon": "n7-icon-lightbulb",
       "label": "Famiglia",
+      "singular-label": "Famiglia",
       "input-placeholder": "Cerca una famiglia"
     },
     "evento": {
@@ -387,6 +394,7 @@
       },
       "icon": "n7-icon-calendar-alt",
       "label": "Evento",
+      "singular-label": "Evento",
       "input-placeholder": "Cerca un evento"
     }
   },

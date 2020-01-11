@@ -121,6 +121,53 @@
     }
 }
 
+
+/* ------------------------------------ *\
+   #ENTITIES-COLOURED-TITLE
+\* ------------------------------------ */
+.n7-item-preview.is-persona {
+    .n7-item-preview__title {
+        color: $color-people;
+    }
+}
+
+.n7-item-preview.is-luogo {
+    .n7-item-preview__title {
+        color: $color-places;
+    }
+}
+
+.n7-item-preview.is-concetto {
+    .n7-item-preview__title {
+        color: $color-concepts;
+    }
+}
+
+.n7-item-preview.is-cosa-notevole {
+    .n7-item-preview__title {
+        color: $color-things;
+    }
+}
+
+.n7-item-preview.is-organizzazione {
+    .n7-item-preview__title {
+        color: $color-organizations;
+    }
+}
+
+.n7-item-preview.is-famiglia {
+    .n7-item-preview__title {
+        color: $color-families;
+    }
+}
+
+.n7-item-preview.is-evento {
+    .n7-item-preview__title {
+        color: $color-events;
+    }
+}
+
+
 /* ------------------------------------ *\
    #MEDIA-QUERIES
 \* ------------------------------------ */
