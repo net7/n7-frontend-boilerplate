@@ -5,6 +5,28 @@
         <div class="aw-scheda__tree sticky-target" [ngClass]="{ 'is-sticky': lb.dataSource.sidebarIsSticky }">
             <n7-sidebar-header [data]="lb.widgets['aw-sidebar-header'].ds.out$ | async"
                 [emit]="lb.widgets['aw-sidebar-header'].emit"></n7-sidebar-header>
+            <div class="aw-scheda__tree-content-loading" *ngIf="!(lb.widgets['aw-tree'].ds.out$ | async)">
+                <n7-content-placeholder [data]="{
+                    blocks: [{
+                        classes: 'tree-placeholder-item'
+                    }]
+                }"></n7-content-placeholder>
+                <n7-content-placeholder [data]="{
+                    blocks: [{
+                        classes: 'tree-placeholder-item'
+                    }]
+                }"></n7-content-placeholder>
+                <n7-content-placeholder [data]="{
+                    blocks: [{
+                        classes: 'tree-placeholder-item'
+                    }]
+                }"></n7-content-placeholder>
+                <n7-content-placeholder [data]="{
+                    blocks: [{
+                        classes: 'tree-placeholder-item'
+                    }]
+                }"></n7-content-placeholder>
+            </div>
             <div class="aw-scheda__tree-content" 
                 [ngStyle]="{ 
                     'max-height': lb.dataSource.treeMaxHeight, 
@@ -17,7 +39,28 @@
         </div>
 
         <!-- Scheda details -->
-        <div class="aw-scheda__scheda-wrapper">
+        <div class="aw-scheda__scheda-wrapper-loading" *ngIf="lb.dataSource.contentIsLoading">
+            <!--
+                <n7-content-placeholder [data]="{
+                blocks: [{
+                    classes: 'content-placeholder-title'
+                }, {
+                    classes: 'content-placeholder-item-preview'
+                }, {
+                    classes: 'content-placeholder-item-preview'
+                }, {
+                    classes: 'content-placeholder-item-preview'
+                }, {
+                    classes: 'content-placeholder-item-preview'
+                }, {
+                    classes: 'content-placeholder-item-preview'
+                }, {
+                    classes: 'content-placeholder-item-preview'
+                }]
+            }"></n7-content-placeholder>
+            -->
+        </div>
+        <div class="aw-scheda__scheda-wrapper" *ngIf="!lb.dataSource.contentIsLoading">
             <n7-breadcrumbs [data]="lb.widgets['aw-scheda-breadcrumbs'].ds.out$ | async"
                 [emit]="lb.widgets['aw-scheda-breadcrumbs'].emit">
             </n7-breadcrumbs>
