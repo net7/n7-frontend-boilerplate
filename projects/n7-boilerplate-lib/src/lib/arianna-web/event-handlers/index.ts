@@ -1,8 +1,3 @@
-// Any
-export * from './linked-objects.eh';
-export * from './autocomplete-wrapper.eh';
-export * from './bubble-chart.eh';
-
 // Home Layout
 export * from './hero.eh';
 export * from './home-facets-wrapper.eh';
@@ -21,5 +16,11 @@ export * from './tree.eh';
 // Search layout
 export * from './search-layout-tabs.eh';
 
-// Other layouts
+// Gallery layout
+export * from './gallery-results.eh';
+
+// Any
+export * from './linked-objects.eh';
+export * from './autocomplete-wrapper.eh';
+export * from './bubble-chart.eh';
 export * from './table.eh';
