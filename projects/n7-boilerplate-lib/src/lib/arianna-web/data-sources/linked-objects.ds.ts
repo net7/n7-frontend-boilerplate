@@ -190,8 +190,17 @@ export class AwLinkedObjectsDS extends DataSource {
       const infoData = _get(el, paths.metadata.info.data, el.item.fields),
         infoDataItems = infoData ? infoData.filter(data => enabledKeys.indexOf(data.key) !== -1) : [],
         toeData = _get(el, paths.metadata.toe.data, el.relatedTypesOfEntity),
-        breadcrumbs = _get(el, paths.metadata.breadcrumbs.data, el.breadcrumbs),
-        item = {
+        breadcrumbs = _get(el, paths.metadata.breadcrumbs.data, el.breadcrumbs);
+
+        if( ['entita', 'search'].includes(context) ){
+          if( el.item.typeOfEntity && el.item.typeOfEntity != "" ) {
+            infoDataItems.push({"key": "Tipo di entità", "value": keys[el.item.typeOfEntity]['singular-label']})
+          }
+        }
+        let classes = ['entita', 'search'].includes(context) ? 'is-fullwidth' : '';
+        classes += el.item.typeOfEntity ? " is-" + el.item.typeOfEntity.replace(/ /g, '-') : " is-oggetto-culturale";
+
+        const item = {
           image: _get(el, paths.image, el.image),
           title:
             // if there is a max string length in config, use it
@@ -203,7 +212,7 @@ export class AwLinkedObjectsDS extends DataSource {
               _get(el, paths.text.data, el.item.text).slice(0, +paths.text.maxLength) + '…' :
               _get(el, paths.text.data, el.item.text),
           payload: { id: _get(el, paths.payload, el.item.id), type: el.item.typeOfEntity },
-          classes: ['entita', 'search'].includes(context) ? 'is-fullwidth' : '',
+          classes: classes,
           metadata: infoDataItems.length || toeData ? [] : null,
           breadcrumbs: null
         };

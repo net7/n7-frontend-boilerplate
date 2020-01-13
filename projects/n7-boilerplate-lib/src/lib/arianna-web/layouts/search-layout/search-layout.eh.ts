@@ -88,7 +88,9 @@ export class AwSearchLayoutEH extends EventHandler {
     this.facetsChange$.pipe(
       debounceTime(500)
     ).subscribe(() => {
+      this.dataSource.resultsLoading = true;
       this.dataSource.doSearchRequest$().subscribe(() => {
+        this.dataSource.resultsLoading = false;
         this.dataSource.onSearchResponse();
         this.emitGlobal('searchresponse', this.dataSource.getSearchModelId());
       });

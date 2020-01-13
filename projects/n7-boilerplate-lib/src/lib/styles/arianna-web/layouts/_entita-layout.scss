@@ -76,6 +76,14 @@
         .color-aggregazione & {
             color: $color-aggregazione;
         }
+
+        .color-famiglia & {
+            color: $color-families;
+        }
+
+        .color-evento & {
+            color: $color-events;
+        }
     }
 
     &__sidebar-title-wrapper {

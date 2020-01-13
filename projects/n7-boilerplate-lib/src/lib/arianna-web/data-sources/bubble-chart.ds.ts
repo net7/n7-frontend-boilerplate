@@ -11,7 +11,7 @@ export class AwBubbleChartDS extends DataSource {
   public focusedBubble: string    // id of the focused bubble
 
   protected transform(data) {
-    const { config } = this.options
+    const { config, smallChartSize } = this.options
     const { fontRendering, transition, shuffle } = config.get('bubble-chart')
     const domain = [], range = []
     const colorConfig = config.get('config-keys')
@@ -43,7 +43,7 @@ export class AwBubbleChartDS extends DataSource {
       data: this.smartSlice(data),
       smallView: {
         ...commonParams,
-        data: this.smartSlice(data, this.options.smallChartSize),
+        data: this.smartSlice(data, smallChartSize),
       },
     }
   }

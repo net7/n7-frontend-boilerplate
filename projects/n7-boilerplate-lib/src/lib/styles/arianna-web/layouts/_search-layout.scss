@@ -127,6 +127,26 @@
     }
 }
 
+/* Loading */
+.aw-search__facets-loading {
+    padding: $space*2;
+
+    .search-placeholder-facet-input {
+        height: 38px;
+        margin-bottom: $space*2;
+    }
+
+    .search-placeholder-facet-check {
+        height: 20px;
+        margin-bottom: $space*3;
+    }
+
+    .search-placeholder-facet-item {
+        height: 16px;
+        margin-bottom: $space*2;
+    }
+}
+
 
 /* ------------------------------------ *\
    #CONTENT
@@ -142,6 +162,7 @@
     }
 
     &__total {
+        margin-bottom: 0;
         font-size: $font-size-xl;
     }
 
@@ -188,5 +209,30 @@
 
     &__fallback-string {
         margin-bottom: $space*2;
+    }
+
+    /* Loading */
+    &__results-wrapper-loading {
+        padding: $space;
+        background: #ffffff;
+
+        .n7-content-placeholder {
+            margin-bottom: $space*2;
+            clear: both;
+            overflow: hidden;
+        }
+
+        .search-result-placeholder-title {
+            height: 24px;
+            clear: both;
+            margin-bottom: $space*1.5;
+        }
+
+        .search-result-placeholder-metadata {
+            height: 16px;
+            width: 120px;
+            margin-right: $space*2;
+            float: left;
+        }
     }
 }
