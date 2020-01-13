@@ -22,10 +22,10 @@
               ]
           }"></n7-content-placeholder>
         </div>
-        <!-- <n7-facets-wrapper 
+        <n7-facets-wrapper 
           [data]="lb.widgets['facets-wrapper'].ds.out$ | async"
           [emit]="lb.widgets['facets-wrapper'].emit">
-        </n7-facets-wrapper> -->
+        </n7-facets-wrapper>
       </div>
     </div>
     <div class="aw-gallery__content">
@@ -62,7 +62,8 @@
         </ng-container>
 
         <!-- REAL GALLERY RESULTS -->
-        <div *ngFor="let item of (lb.widgets['aw-gallery-results'].ds.out$ | async)" class="gallery-result">
+        <div *ngFor="let item of (lb.widgets['aw-gallery-results'].ds.out$ | async)?.res" class="gallery-result"
+          (click)="lb.eventHandler.emitInner('openresult')">
           <img src="{{item.image}}" alt="result thumbnail" class="gallery-result__thumb">
           <div>{{item.title}}</div>
           <div *ngIf="item.metadata" class="gallery-result__metadata">
@@ -76,6 +77,9 @@
             </div>
           </div>
         </div>
+        <n7-pagination [data]="(lb.widgets['aw-gallery-results'].ds.out$ | async)?.pagination"
+          [emit]="lb.widgets['aw-gallery-results'].emit">
+        </n7-pagination>
 
         <!-- <ng-container *ngIf="lb.dataSource.totalCount == 0">
           <div class="aw-gallery__fallback">
