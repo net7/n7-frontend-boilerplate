@@ -248,11 +248,7 @@
   },
   "search-layout": {
     "title": "Cerca nel patrimonio",
-    "results": [
-      "Nessun risultato",
-      "Risultato",
-      "Risultati"
-    ],
+    "results": ["Nessun risultato", "Risultato", "Risultati"],
     "enabledEntities": [
       "oggetto-culturale",
       "aggregazione",
@@ -274,38 +270,28 @@
     "persona": {
       "color": {
         "hex": "#3a81f2",
-        "rgb": [
-          58,
-          129,
-          242
-        ]
+        "rgb": [58, 129, 242]
       },
       "icon": "n7-icon-biography",
       "label": "Persone",
+      "singular-label": "Persona",
       "input-placeholder": "Cerca una persona",
       "main-metadata": "data_nascita"
     },
     "luogo": {
       "color": {
         "hex": "#f2cd3a",
-        "rgb": [
-          242,
-          205,
-          58
-        ]
+        "rgb": [242, 205, 58]
       },
       "icon": "n7-icon-map1",
       "label": "Luoghi",
+      "singular-label": "Luogo",
       "input-placeholder": "Cerca un luogo"
     },
     "concetto": {
       "color": {
         "hex": "#5eab7b",
-        "rgb": [
-          94,
-          171,
-          123
-        ]
+        "rgb": [94, 171, 123]
       },
       "icon": "n7-icon-lightbulb",
       "label": "Concetti",
@@ -314,79 +300,61 @@
     "cosa-notevole": {
       "color": {
         "hex": "#5eab7b",
-        "rgb": [
-          94,
-          171,
-          123
-        ]
+        "rgb": [94, 171, 123]
       },
       "icon": "n7-icon-lightbulb",
       "label": "Cose notevoli",
+      "singular-label": "Cosa notevole",
       "input-placeholder": "Cerca un concetto"
     },
     "organizzazione": {
       "color": {
         "hex": "#c48731",
-        "rgb": [
-          196,
-          135,
-          49
-        ]
+        "rgb": [196, 135, 49]
       },
       "icon": "n7-icon-building",
       "label": "Organizzazioni",
+      "singular-label": "Organizzazione",
       "input-placeholder": "Cerca un'organizzazione"
     },
     "oggetto-culturale": {
       "color": {
         "hex": "#a798c2",
-        "rgb": [
-          167,
-          152,
-          194
-        ]
+        "rgb": [167, 152, 194]
       },
       "icon": "n7-icon-file3",
       "label": "Oggetti Culturali",
+      "singular-label": "Oggetto Culturale",
       "input-placeholder": ""
     },
     "aggregazione": {
       "color": {
         "hex": "#cc6f5c",
-        "rgb": [
-          204,
-          111,
-          92
-        ]
+        "rgb": [204, 111, 92]
       },
       "icon": "n7-icon-archive",
       "label": "Fondi",
+      "singular-label": "Fondo",
       "input-placeholder": ""
     },
     "famiglia": {
       "color": {
         "hex": "#CD6F5C",
-        "rgb": [
-          205,
-          111,
-          92
-        ]
+        "rgb": [205, 111, 92]
       },
       "icon": "n7-icon-lightbulb",
       "label": "Famiglia",
+      "singular-label": "Famiglia",
       "input-placeholder": "Cerca una famiglia"
     },
     "evento": {
       "color": {
         "hex": "#FFA100;",
-        "rgb": [
-          94,
-          171,
-          123
-        ]
+        "rgb": [94, 171, 123]
       },
       "icon": "n7-icon-calendar-alt",
       "label": "Evento",
+      "singular-label": "Evento",
       "input-placeholder": "Cerca un evento"
     }
   },
