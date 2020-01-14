@@ -276,6 +276,23 @@ export const ApolloProviderConfig = {
               item {
                 label
                 id
+                fields {
+                  ...
+                  on KeyValueField {
+                    key
+                    value
+                  }
+                  ... on KeyValueFieldGroup {
+                    label
+                    fields {
+                      ...
+                      on KeyValueField {
+                        key
+                        value
+                      }
+                    }
+                  }
+                }
             }
             relatedTypesOfEntity {
               type
