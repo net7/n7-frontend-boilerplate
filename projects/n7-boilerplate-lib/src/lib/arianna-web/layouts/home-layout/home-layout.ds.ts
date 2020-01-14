@@ -27,6 +27,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     public firstBubbleResponse: any         // store the first array of bubbles, to find them in case of zero results (entities data returned as empty array from backend)
     // BUBBLE CHART DATA ↑
     public homeAutocompleteIsLoading = false;
+    public resultsListIsLoading = false;
 
     onInit({ communication, mainState, configuration, tippy }) {
         this.communication = communication;
@@ -46,7 +47,11 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         this._listenAutoCompleteChanges();
         this.outerLinks = this.configuration.get('home-layout')['outer-links']['test'];
         this.outerLinksTitle = this.configuration.get('home-layout')['outer-links']['title'];
-        this.one('aw-bubble-chart').updateOptions({ config: this.configuration, limit: this.configuration.get('bubble-chart').bubbleLimit })
+        this.one('aw-bubble-chart').updateOptions({
+            selectable: true,
+            config: this.configuration,
+            limit: this.configuration.get('bubble-chart').bubbleLimit
+        })
     }
 
     onDestroy(){
@@ -181,10 +186,14 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     }
 
     onHeroChange(value) {
-        this.autocompleteChanged$.next(value);
-        this.homeAutocompleteIsLoading = true;
-        this.homeAutocompleteQuery = value;
-        if (!this.autocompletePopoverOpen) {
+        if (value) {
+            this.autocompleteChanged$.next(value);
+            this.homeAutocompleteIsLoading = true;
+            this.homeAutocompleteQuery = value;
+            if (!this.autocompletePopoverOpen) {
+                this._toggleAutocompletePopover();
+            }
+        } else if (this.autocompletePopoverOpen) {
             this._toggleAutocompletePopover();
         }
     }
@@ -220,20 +229,16 @@ export class AwHomeLayoutDS extends LayoutDataSource {
             debounceTime(500),
             takeUntil(this.destroyed$)
         ).subscribe(value => {
-            if (value) {
-                this.communication.request$('autoComplete', {
-                    onError: (error) => console.error(error),
-                    params: {
-                        input: value,
-                        itemsPagination: { offset: 0, limit: this.configuration.get('home-layout')['results-limit'] }
-                    }
-                }).subscribe((response) => {
-                    this.homeAutocompleteIsLoading = false;
-                    this.one('aw-home-autocomplete').update(response);
-                });
-            } else {
-                this._toggleAutocompletePopover();
-            }
+            this.communication.request$('autoComplete', {
+                onError: (error) => console.error(error),
+                params: {
+                    input: value,
+                    itemsPagination: { offset: 0, limit: this.configuration.get('home-layout')['results-limit'] }
+                }
+            }).subscribe((response) => {
+                this.homeAutocompleteIsLoading = false;
+                this.one('aw-home-autocomplete').update(response);
+            });
         });
     }
 

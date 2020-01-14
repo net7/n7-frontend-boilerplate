@@ -61,7 +61,9 @@ export class AwSchedaLayoutEH extends EventHandler {
     this.route.paramMap.subscribe(params => {
       const paramId = params.get('id');
       if (paramId) {
+        this.dataSource.contentIsLoading = true;
         this.dataSource.loadItem(paramId).subscribe((response) => {
+          this.dataSource.contentIsLoading = false;
           if (response) {
             this.dataSource.loadContent(response);
             if (response.relatedEntities) {
@@ -72,17 +74,16 @@ export class AwSchedaLayoutEH extends EventHandler {
             }
           }
         });
-      } else {
-        this.dataSource.loadItem();
       }
     });
   }
 
   private loadNavigation(selectedItem) {
+    this.dataSource.updateNavigation('Loading...');
     this.dataSource.getNavigation('patrimonio').subscribe((response) => {
       if (response) {
         this.dataSource.setTree(response);
-        this.dataSource.updateNavigation(this.dataSource.getTree());
+        this.dataSource.updateNavigation(this.dataSource.getTree().label);
         this.emitOuter('navigationresponse', {tree: this.dataSource.getTree(), currentItem: selectedItem});
       }
     });

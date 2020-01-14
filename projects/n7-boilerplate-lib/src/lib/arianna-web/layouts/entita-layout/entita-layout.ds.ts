@@ -37,6 +37,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     this.bubblesEnabled = this.configuration.get('features-enabled') ? this.configuration.get('features-enabled')['bubblechart'] : false;
     this.bubblesSize = this.configuration.get('entita-layout') ? this.configuration.get('entita-layout')['entitiesQuerySize'] : this.bubblesSize;
     this.one('aw-bubble-chart').updateOptions({
+      selectable: false,
       simple: true,
       config: this.configuration,
       limit: this.configuration.get('bubble-chart').bubbleLimit,

@@ -7,8 +7,8 @@
 // ------------------------------------ //
 // #LAYOUT
 // ------------------------------------ //
-// $page-max-width: 1350px;
-// $page-min-width: 960px;
+$page-max-width: 1350px;
+$page-min-width: 960px;
 
 
 // ------------------------------------ //
@@ -87,6 +87,8 @@
 // $color-background-light-blue: #F5F7FF;
 // $color-background-medium: $color-gray-01;
 // $color-background-dark: $color-gray-03;
+$color-background-layout: $color-main;
+$gradient-item-preview-list: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, $color-background-layout 100%);
 
 
 // ------------------------------------ //

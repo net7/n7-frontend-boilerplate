@@ -29,6 +29,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   public imageViewerIstance: any;
   public sidebarIsSticky = false;
   public treeMaxHeight = '100%';
+  public contentIsLoading = false;
 
   onInit({ configuration, mainState, router, options, titleService, communication }) {
     this.configuration = configuration;
@@ -43,7 +44,12 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     this.metadataSectionTitle = this.configuration.get('scheda-layout')['metadata']['title'];
     this.hasSimilarItems = false;
     this.bubblesEnabled = this.configuration.get('features-enabled') ? this.configuration.get('features-enabled')['bubblechart'] : false;
-    this.one('aw-bubble-chart').updateOptions({ simple: true, config: this.configuration, limit: this.configuration.get('bubble-chart').bubbleLimit })
+    this.one('aw-bubble-chart').updateOptions({ 
+      selectable: false,
+      simple: true,
+      config: this.configuration,
+      limit: this.configuration.get('bubble-chart').bubbleLimit
+    })
 
     this.mainState.update('headTitle', 'Arianna Web > Patrimonio');
     this.mainState.update('pageTitle', 'Arianna Web: patrimonio Layout');
@@ -72,45 +78,16 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   }
   getTree = () => AwSchedaLayoutDS.tree;
 
-  updateNavigation(data) {
-    let header = {
-      iconLeft: 'n7-icon-tree-icon',
-      text: data['label'],
-      iconRight: 'n7-icon-angle-left',
-      classes: 'is-expanded',
-      payload: 'header'
-    };
-    this.one('aw-sidebar-header').update(header);
+  updateNavigation(label) {
+    this.one('aw-sidebar-header').update({ label });
   }
 
   loadItem(id) {
-    if (id) {
-      const maxSimilarItems = this.configuration.get('scheda-layout')['related-items']['max-related-items'];
-      return this.communication.request$('getNode', {
-        onError: (error) => console.error(error),
-        params: { id: id, maxSimilarItems: maxSimilarItems }
-      })
-    } else {
-      /* TODO: valori statici, da prendere da config */
-      this.pageTitle = 'Collezione d\'Arte';
-      this.contentParts = [
-        {
-          type: 'text',
-          title: 'Collezione d\'Arte',
-          content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi gravida sagittis pulvinar. Etiam iaculis maximus metus, id tincidunt libero auctor et. Proin tempus turpis vel erat ultrices, id vestibulum ante cursus. Vestibulum lobortis, ante at eleifend consequat, massa libero bibendum justo, id fermentum magna odio ac nulla. Cras aliquet scelerisque malesuada. Mauris congue fermentum tristique. Nulla imperdiet accumsan dui, tristique lobortis metus eleifend non. Donec quis odio massa. Cras sit amet sem eu turpis molestie blandit vitae sed nibh. Pellentesque ornare enim nisl, et efficitur ante elementum a. Ut nec ex finibus, congue libero feugiat, aliquam ante. Cras sem neque, pellentesque eget mi at, auctor vulputate tellus. Sed aliquam mi a tortor ultricies interdum. Etiam tincidunt nunc commodo nulla porttitor semper. Etiam porta lacinia libero a mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
-        },
-        {
-          type: 'text',
-          title: 'Centro Archivi',
-          content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi gravida sagittis pulvinar. Etiam iaculis maximus metus, id tincidunt libero auctor et. Proin tempus turpis vel erat ultrices, id vestibulum ante cursus. Vestibulum lobortis, ante at eleifend consequat, massa libero bibendum justo, id fermentum magna odio ac nulla. Cras aliquet scelerisque malesuada. Mauris congue fermentum tristique. Nulla imperdiet accumsan dui, tristique lobortis metus eleifend non. Donec quis odio massa. Cras sit amet sem eu turpis molestie blandit vitae sed nibh. Pellentesque ornare enim nisl, et efficitur ante elementum a. Ut nec ex finibus, congue libero feugiat, aliquam ante. Cras sem neque, pellentesque eget mi at, auctor vulputate tellus. Sed aliquam mi a tortor ultricies interdum. Etiam tincidunt nunc commodo nulla porttitor semper. Etiam porta lacinia libero a mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
-        }
-      ]
-    }
-    /*Breadcrumb section*/
-    let breadcrumbs = {
-      items: []
-    };
-    this.one('aw-scheda-breadcrumbs').update(breadcrumbs);
+    const maxSimilarItems = this.configuration.get('scheda-layout')['related-items']['max-related-items'];
+    return this.communication.request$('getNode', {
+      onError: (error) => console.error(error),
+      params: { id: id, maxSimilarItems: maxSimilarItems }
+    });
   }
 
   loadContent(response) {
