@@ -5,7 +5,6 @@ export class AwGalleryResultsDS extends DataSource {
   private pagination: any
 
   protected transform(data) {
-    console.log('gallery-results__transform')
     data = this.GALLERY_RESULTS_MOCK
     const { pageSize, currentPage } = this.options
     this.GALLERY_RESULTS_MOCK.fill(

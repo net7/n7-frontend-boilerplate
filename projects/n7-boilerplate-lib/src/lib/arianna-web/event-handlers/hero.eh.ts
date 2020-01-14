@@ -20,7 +20,7 @@ export class AwHeroEH extends EventHandler {
           break;
 
         default:
-          console.log('(hero) unhandled event of type', type)
+          console.warn('(hero) unhandled event of type', type)
           break;
       }
     });
