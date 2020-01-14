@@ -38,6 +38,12 @@
         position: relative;
         z-index: 4;
         box-shadow: 0 2px 20px 0 rgba(0,0,0,0.08);
+
+        &-no-item {
+            width: 50%;
+            margin: $space*5 auto;
+            text-align: center;
+        }
     }
 
     .n7-sidebar-header {
