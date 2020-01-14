@@ -99,14 +99,8 @@ export class AwGalleryLayoutDS extends LayoutDataSource {
 
   onPaginationChange(payload): Observable<boolean> {
     const page = payload.replace('page-', '').replace('goto-', '');
-    console.log({ page })
     return this._updateSearchPage(page);
   }
-
-  // onPaginationGoToChange(payload): Observable<boolean> {
-  //   const page = payload.replace('goto-', '');
-  //   return this._updateSearchPage(page);
-  // }
 
   resetPagination() {
     this._updateSearchPage(1);

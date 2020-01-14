@@ -54,12 +54,10 @@ export class AwEntitaLayoutEH extends EventHandler {
           }
           break;
         case 'aw-linked-objects.pagination':
-          console.log(payload)
           this.dataSource.currentPage = +payload.split('-')[1];
           this.dataSource.handlePageNavigation()
           break
         case 'aw-linked-objects.goto':
-          console.log(payload)
           this.dataSource.currentPage = +payload.replace('goto-', '')
           this.dataSource.handlePageNavigation()
           break
