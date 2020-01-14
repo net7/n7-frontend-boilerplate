@@ -10,6 +10,13 @@
     <!-- Left sidebar: facets -->
     <div class="aw-gallery__sidebar sticky-target" [ngClass]="{ 'is-sticky': lb.dataSource.sidebarIsSticky }">
       <div class="aw-gallery__facets">
+        <!-- <n7-facet-header [data]="{
+            iconLeft: 'n7-icon-search1',
+            text: 'Filtri di ricerca',
+            iconRight: 'n7-icon-angle-down',
+            classes: 'is-expanded',
+            payload: 'header'
+        }"></n7-facet-header> -->
         <div class="aw-gallery__facets-loading" *ngIf="!(lb.widgets['facets-wrapper'].ds.out$ | async)">
           <n7-content-placeholder *ngFor="let i of [1,2]" [data]="{
               blocks: [
