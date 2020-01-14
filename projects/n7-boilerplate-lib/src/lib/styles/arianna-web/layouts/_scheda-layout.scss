@@ -13,16 +13,19 @@
     margin-bottom: $space*6;
 
     &__content {
+        display: flex;
         position: relative;
         margin: 0 auto;
         max-width: $page-max-width;
-        display: grid;
-        grid-template-columns: $aw-scheda-tree-width minmax($bubble-chart-column-container-min-width,1fr);
-        grid-column-gap: 0;
+  
+        // display: grid;
+        // grid-template-columns: $aw-scheda-tree-width minmax($bubble-chart-column-container-min-width,1fr);
+        // grid-column-gap: 0;
     }
 
     &__tree {
         align-self: start;
+        flex: 0 0 $aw-scheda-tree-width;
         width: $aw-scheda-tree-width;
 
         &.is-sticky {
@@ -35,6 +38,8 @@
     }
 
     &__scheda-wrapper {
+        flex: 1;
+        min-width: $bubble-chart-column-container-min-width;
         position: relative;
         z-index: 4;
         box-shadow: 0 2px 20px 0 rgba(0,0,0,0.08);
@@ -182,12 +187,26 @@
     }
     
     /* Related items */
+    .aw-scheda__related {
+        overflow: hidden; /* For fake grid gap */
+    }
+
     .aw-scheda__related-items {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        grid-column-gap: $grid-gutter-h;
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 0;
+        margin-right: -$grid-gutter-h;
+        // display: grid;
+        // grid-template-columns: repeat(2, 1fr);
+        // grid-column-gap: $grid-gutter-h;
         padding: 0 $aw-scheda-content-padding $aw-scheda-content-padding $aw-scheda-content-padding;
 
+        > * {
+            width: 50%;
+            box-sizing: border-box;
+            border: 0 solid transparent; /* Create fake column gap */
+            border-width: 0 $grid-gutter-h 0 0;  /* Create fake column gap */
+        }
         /* Targeting elements in the last row */
         >*:nth-child(2n + 1):nth-last-child(-n + 2),
         >*:nth-child(2n + 1):nth-last-child(-n + 2) ~ * {

@@ -8,14 +8,16 @@
     ENTITY
 \* ------------------------------------ */
 .aw-entity {
-    display: grid;
-    grid-template-columns: $aw-scheda-tree-width minmax($bubble-chart-column-container-min-width,1fr);
-
+    // display: grid;
+    // grid-template-columns: $aw-scheda-tree-width minmax($bubble-chart-column-container-min-width,1fr);
+    display: flex;
     margin: $space*3 auto $space*6 auto;
     max-width: $page-max-width;
     position: relative;
 
     &__content {
+        flex: 1;
+        min-width: $bubble-chart-column-container-min-width;
         margin-top: $space*3;
         background-color: $color-background-base;
         box-shadow: 0 2px 20px 0 rgba(0,0,0,0.08);
@@ -98,6 +100,9 @@
     }
 
     &__sidebar {
+        flex: 0 0 $aw-scheda-tree-width;
+        width: $aw-scheda-tree-width;
+
         .n7-nav {
             background-color: $color-background-base;
             box-shadow: 0 2px 20px 0 rgba(0,0,0,0.08);
@@ -188,9 +193,19 @@
             }
 
             &__item {
-                display: grid;
-                grid-template-columns: 200px 1fr;
+                display: flex;
+                // display: grid;
+                // grid-template-columns: 200px 1fr;
                 margin-bottom: $space*2.5;
+
+                &-label {
+                    flex: 0 0 $metadata-label-width;
+                    width: $metadata-label-width;
+                }
+
+                &-value {
+                    flex: 1;
+                }
             }
 
         }

@@ -13,9 +13,10 @@
     box-shadow: $search-box-shadow;
 
     &__content-wrapper {
-        display: grid;
-        grid-template-columns: $aw-scheda-tree-width 1fr;
-        column-gap: $space*2;  
+        display: flex;
+        // display: grid;
+        // grid-template-columns: $aw-scheda-tree-width 1fr;
+        // column-gap: $space*2;  
         position: relative;
     }
     
@@ -94,6 +95,9 @@
 \* ------------------------------------ */
 .aw-search {
     &__sidebar {
+        flex: 0 0 $aw-scheda-tree-width;
+        width: $aw-scheda-tree-width;
+        margin-right: $space*2;
         padding: $space*2 0 $space*4 $space*2;
 
         &.is-sticky {
@@ -153,6 +157,7 @@
 \* ------------------------------------ */
 .aw-search {
     &__content {
+        flex: 1;
         background: $color-background-layout;
         box-shadow: none;
 
