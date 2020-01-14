@@ -51,6 +51,7 @@ export class AwGalleryLayoutEH extends EventHandler {
           break;
 
         case 'aw-gallery-results.pagination':
+        case 'aw-gallery-results.goto':
           this.dataSource.onPaginationChange(payload).subscribe(changed => {
             if (changed) {
               this.facetsChange$.next();
@@ -62,22 +63,15 @@ export class AwGalleryLayoutEH extends EventHandler {
           this.dataSource.onResultsLimitChange(payload);
           this.facetsChange$.next();
           break;
-
-        case 'aw-gallery-results.goto':
-          this.dataSource.onPaginationGoToChange(payload).subscribe(changed => {
-            if (changed) {
-              this.facetsChange$.next();
-            }
-          });
-          break;
-
-        case 'aw-gallery-results.click':
+            
+            case 'aw-gallery-results.click':
           const paths = this.dataSource.configuration.get('paths');
           this.emitGlobal('navigate', {
             handler: 'router',
             path: [payload.type == undefined ? paths.schedaBasePath : paths.entitaBasePath, payload.id]
           });
           break;
+
         default:
           break;
       }
