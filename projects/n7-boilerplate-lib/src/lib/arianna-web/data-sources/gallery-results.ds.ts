@@ -1,11 +1,13 @@
 import { DataSource } from '@n7-frontend/core';
 
 export class AwGalleryResultsDS extends DataSource {
-  private GALLERY_RESULTS_MOCK = new Array(24)
+  private GALLERY_RESULTS_MOCK = new Array(100)
   private pagination: any
 
   protected transform(data) {
+    console.log('gallery-results__transform')
     data = this.GALLERY_RESULTS_MOCK
+    const { pageSize, currentPage } = this.options
     this.GALLERY_RESULTS_MOCK.fill(
       {
         image: 'https://i.imgur.com/2xY0DWR.png',
@@ -17,11 +19,19 @@ export class AwGalleryResultsDS extends DataSource {
       }
     )
     // if the data doesn't fit on one page, render the pagination component
-    if (data.length > 12) { this.addPagination(1, Math.ceil(data.length / 12), 12) }
+    if (data.length > pageSize) { this.addPagination(currentPage, Math.ceil(data.length / pageSize), pageSize) }
     return {
-      res: this.GALLERY_RESULTS_MOCK,
+      res: this.GALLERY_RESULTS_MOCK.slice(0, pageSize),
       pagination: this.pagination
     }
+  }
+
+  public chunks(a, size) {
+    var results = [];
+    while (a.length) {
+      results.push(a.splice(0, size));
+    }
+    return results;
   }
 
   public addPagination = (page, totalPages, size) => {
