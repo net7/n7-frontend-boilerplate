@@ -68,6 +68,11 @@ export class AwGalleryLayoutDS extends LayoutDataSource {
       SearchService.queryParams = null;
     }
 
+    this.one('aw-gallery-results').updateOptions({
+      currentPage: this.currentPage,
+      pageSize: this.pageSize,
+    })
+    this.one('aw-gallery-results').update(null)
     this.mainState.updateCustom('currentNav', 'galleria');
     this.mainState.update('headTitle', 'Arianna Web > Galleria');
   }
@@ -93,14 +98,15 @@ export class AwGalleryLayoutDS extends LayoutDataSource {
   }
 
   onPaginationChange(payload): Observable<boolean> {
-    const page = payload.replace('page-', '');
+    const page = payload.replace('page-', '').replace('goto-', '');
+    console.log({ page })
     return this._updateSearchPage(page);
   }
 
-  onPaginationGoToChange(payload): Observable<boolean> {
-    const page = payload.replace('goto-', '');
-    return this._updateSearchPage(page);
-  }
+  // onPaginationGoToChange(payload): Observable<boolean> {
+  //   const page = payload.replace('goto-', '');
+  //   return this._updateSearchPage(page);
+  // }
 
   resetPagination() {
     this._updateSearchPage(1);
@@ -162,7 +168,12 @@ export class AwGalleryLayoutDS extends LayoutDataSource {
           size: this.pageSize
         });
 
-        this.one('aw-linked-objects').update({ items: this._normalizeItems(results.items) });
+        // this.one('aw-linked-objects').update({ items: this._normalizeItems(results.items) });
+        this.one('aw-gallery-results').updateOptions({
+          currentPage: this.currentPage,
+          pageSize: this.pageSize,
+        });
+        this.one('aw-gallery-results').update(null)
       })
     );
   }
