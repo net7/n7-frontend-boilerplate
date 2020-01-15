@@ -14,7 +14,7 @@ export class AwLinkedObjectsDS extends DataSource {
   public paths: any; // use dynamic object paths from config
 
   protected transform(data) {
-    this.paths = this.options.config.get('item-preview');
+    this.paths = this.options.config.get('item-preview').default;
     this.pageSize = this.options.size;
     this.totalObjects = data.totalCount;
     this.currentPage = this.options.page ? +this.options.page : 1;
@@ -156,7 +156,7 @@ export class AwLinkedObjectsDS extends DataSource {
     */
     const
       config = this.options.config,       // app-config.json
-      paths = config.get('item-preview'), // item preview dynamic paths
+      itemPreviewConfig = config.get('item-preview'),
       totalCount = data.totalCount,       // total amount of items available on backend
       totalPages = this.totalPages,       // calculated number of pages
       page = this.currentPage,            // current page (if using pagination)
@@ -166,6 +166,7 @@ export class AwLinkedObjectsDS extends DataSource {
       { dynamicPagination } = this.options,
       keys = config ? config.get('config-keys') : {};
     let
+      paths = itemPreviewConfig.default, // item preview dynamic paths
       lengthLimit: null,
       resultsLimit: null,
       d = data.items ? data.items : data.relatedItems; // items to iterate over
@@ -185,9 +186,22 @@ export class AwLinkedObjectsDS extends DataSource {
     }
 
     const result = [];
-    const enabledKeys = paths.metadata.info.selection.map(info => info.key);
     d.forEach(el => {
-      const infoData = _get(el, paths.metadata.info.data, el.item.fields),
+      // dynamic item preview config
+      const customConfig = el.item.typeOfEntity
+        ? itemPreviewConfig[el.item.typeOfEntity]
+        : el.item.document_type
+          ? itemPreviewConfig[el.item.document_type] 
+          : null;
+
+      if (customConfig) {
+        paths = {
+          ...paths,
+          ...customConfig
+        };
+      }
+      const enabledKeys = paths.metadata.info.selection.map(info => info.key),
+        infoData = _get(el, paths.metadata.info.data, el.item.fields),
         infoDataItems = infoData ? infoData.filter(data => enabledKeys.indexOf(data.key) !== -1) : [],
         toeData = _get(el, paths.metadata.toe.data, el.relatedTypesOfEntity),
         breadcrumbs = _get(el, paths.metadata.breadcrumbs.data, el.breadcrumbs);
@@ -204,9 +218,9 @@ export class AwLinkedObjectsDS extends DataSource {
           image: _get(el, paths.image, el.image),
           title:
             // if there is a max string length in config, use it
-            +paths.title.maxLength && _get(el, paths.title, el.item.label).length > +paths.title.maxLength ?
-              _get(el, paths.title, el.item.label).slice(0, +paths.title.maxLength) + '…' :
-              _get(el, paths.title, el.item.label),
+            +paths.title.maxLength && _get(el, paths.title.data, el.item.label).length > +paths.title.maxLength ?
+              _get(el, paths.title.data, el.item.label).slice(0, +paths.title.maxLength) + '…' :
+              _get(el, paths.title.data, el.item.label),
           text: !paths.text ? null : // make text block (in config) optional
             +paths.text.maxLength && _get(el, paths.text.data, el.item.text).length > +paths.text.maxLength ?
               _get(el, paths.text.data, el.item.text).slice(0, +paths.text.maxLength) + '…' :

@@ -91,6 +91,7 @@ export const ApolloProviderConfig = {
             item {
               id
               label
+              document_type
               fields
               {
                 ...
@@ -150,6 +151,7 @@ export const ApolloProviderConfig = {
           item {
             label
             id
+            document_type
             fields
             {
               ...
@@ -191,6 +193,7 @@ export const ApolloProviderConfig = {
         subTitle
         image
         text
+        document_type
         fields {
           ...
           on KeyValueField {
@@ -221,6 +224,7 @@ export const ApolloProviderConfig = {
             item {
               label
               id
+              document_type
           }
           relatedTypesOfEntity {
             type
@@ -246,6 +250,7 @@ export const ApolloProviderConfig = {
           subTitle
           image
           text
+          document_type
           fields {
             ...
             on KeyValueField {
@@ -276,6 +281,7 @@ export const ApolloProviderConfig = {
               item {
                 label
                 id
+                document_type
             }
             relatedTypesOfEntity {
               type
@@ -345,6 +351,7 @@ export const ApolloProviderConfig = {
             item {
               id
               label
+              document_type
               fields {
                 ... on KeyValueField {
                   key
@@ -432,6 +439,7 @@ export const ApolloProviderConfig = {
               subTitle
               image
               text
+              document_type
               fields {
                 ...
                 on KeyValueField {
