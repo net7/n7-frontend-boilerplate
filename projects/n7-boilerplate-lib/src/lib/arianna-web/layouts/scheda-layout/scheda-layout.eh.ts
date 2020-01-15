@@ -66,7 +66,7 @@ export class AwSchedaLayoutEH extends EventHandler {
           this.dataSource.contentIsLoading = false;
           if (response) {
             this.dataSource.loadContent(response);
-            if (response.relatedEntities) {
+            if (Array.isArray(response.relatedEntities) && response.relatedEntities.length) {
               this.dataSource.hasBubbles = true;
               if (this.dataSource.bubblesEnabled) {
                 this.emitOuter('filterbubbleresponse', response.relatedEntities);
