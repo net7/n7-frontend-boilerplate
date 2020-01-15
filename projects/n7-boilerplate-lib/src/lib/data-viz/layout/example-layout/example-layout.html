@@ -18,4 +18,8 @@
             </div>
         </div>
     </dv-data-widget-wrapper>
+    <dv-datepicker-wrapper 
+        [data]="lb.widgets['dv-datepicker-wrapper'].ds.out$ | async"
+        [emit]="lb.widgets['dv-datepicker-wrapper'].emit">
+    </dv-datepicker-wrapper>
 </div>
