@@ -8,14 +8,15 @@
     GALLERY
 \* ------------------------------------ */
 .aw-gallery {
-    margin: $space*3 auto $space*6 auto;
     max-width: $page-max-width;
+    margin: $space*3 auto $space*6 auto;
     box-shadow: $gallery-box-shadow;
 
     &__content-wrapper {
-        display: grid;
-        grid-template-columns: $aw-scheda-tree-width 1fr;
-        column-gap: $space*2;  
+        display: flex;
+        // display: grid;
+        // grid-template-columns: $aw-scheda-tree-width 1fr;
+        // column-gap: $space*2;  
         position: relative;
     }
     
@@ -94,6 +95,9 @@
 \* ------------------------------------ */
 .aw-gallery {
     &__sidebar {
+        flex: 0 0 $aw-scheda-tree-width;
+        width: $aw-scheda-tree-width;
+        margin-right: $space*2;
         padding: $space*2 0 $space*4 $space*2;
 
         &.is-sticky {
@@ -126,22 +130,30 @@
         height: 100%;
     }
 
-    /* Facets loading */
-    &__facets-loading {
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-
-        .facet-placeholder-header {
-            height: 44px;
-        }
-
-        .facet-placeholder-input {
-            height: 18px;
-            width: 300px;
-        }
+    /* Loading */
+    &__sidebar-loading  {
+        flex: 0 0 $aw-scheda-tree-width;
+        width: $aw-scheda-tree-width;
+        margin-right: $space*2;
+        padding: $space*2 0 $space*4 $space*2;
     }
 
+    &__facets-loading {
+        .gallery-placeholder-facet-input {
+            height: 38px;
+            margin-bottom: $space*2;
+        }
+
+        .gallery-placeholder-facet-check {
+            height: 20px;
+            margin-bottom: $space*3;
+        }
+
+        .gallery-placeholder-facet-item {
+            height: 16px;
+            margin-bottom: $space*2;
+        }
+    }
 }
 
 
@@ -150,6 +162,7 @@
 \* ------------------------------------ */
 .aw-gallery {
     &__content {
+        flex: 1;
         background: $color-background-layout;
         box-shadow: none;
 
@@ -182,8 +195,8 @@
     }
 
     &__results-wrapper {
-        padding: $space;
-        background: #ffffff;
+        padding: $space*2;
+        background: $color-background-base;
 
         .n7-breadcrumbs {
             background-color: transparent;
@@ -205,5 +218,30 @@
 
     &__fallback-string {
         margin-bottom: $space*2;
+    }
+
+    /* Loading */
+    &__results-wrapper-loading {
+        padding: $space;
+        background: #ffffff;
+
+        .n7-content-placeholder {
+            margin-bottom: $space*2;
+            clear: both;
+            overflow: hidden;
+        }
+
+        .search-result-placeholder-title {
+            height: 24px;
+            clear: both;
+            margin-bottom: $space*1.5;
+        }
+
+        .search-result-placeholder-metadata {
+            height: 16px;
+            width: 120px;
+            margin-right: $space*2;
+            float: left;
+        }
     }
 }

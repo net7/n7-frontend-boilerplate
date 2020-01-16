@@ -7,34 +7,46 @@
   </div>
 
   <div class="aw-gallery__content-wrapper sticky-parent">
+    
     <!-- Left sidebar: facets -->
-    <div class="aw-gallery__sidebar sticky-target" [ngClass]="{ 'is-sticky': lb.dataSource.sidebarIsSticky }">
-      <div class="aw-gallery__facets">
-        <!-- <n7-facet-header [data]="{
-            iconLeft: 'n7-icon-search1',
-            text: 'Filtri di ricerca',
-            iconRight: 'n7-icon-angle-down',
-            classes: 'is-expanded',
-            payload: 'header'
-        }"></n7-facet-header> -->
-        <div class="aw-gallery__facets-loading" *ngIf="!(lb.widgets['facets-wrapper'].ds.out$ | async)">
-          <n7-content-placeholder *ngFor="let i of [1,2]" [data]="{
-              blocks: [
-                  { classes: 'facet-placeholder-header' },
-                  { classes: 'facet-placeholder-input' },
-                  { classes: 'facet-placeholder-input' },
-                  { classes: 'facet-placeholder-input' },
-                  { classes: 'facet-placeholder-input' },
-                  { classes: 'facet-placeholder-input' }
-              ]
-          }"></n7-content-placeholder>
+    <div *ngIf="!(lb.widgets['facets-wrapper'].ds.out$ | async)" class="aw-gallery__sidebar-loading sticky-target">
+        <div class="aw-gallery__facets-loading">
+            <n7-content-placeholder [data]="{
+                blocks: [{
+                    classes: 'gallery-placeholder-facet-input'
+                }, {
+                    classes: 'gallery-placeholder-facet-check'
+                }, {
+                    classes: 'gallery-placeholder-facet-item'
+                }, {
+                    classes: 'gallery-placeholder-facet-item'
+                }, {
+                    classes: 'gallery-placeholder-facet-item'
+                }, {
+                    classes: 'gallery-placeholder-facet-item'
+                }, {
+                    classes: 'gallery-placeholder-facet-item'
+                }]
+            }">
+            </n7-content-placeholder>
         </div>
-        <n7-facets-wrapper 
-          [data]="lb.widgets['facets-wrapper'].ds.out$ | async"
-          [emit]="lb.widgets['facets-wrapper'].emit">
-        </n7-facets-wrapper>
-      </div>
     </div>
+    <div *ngIf="!!(lb.widgets['facets-wrapper'].ds.out$ | async)" class="aw-gallery__sidebar sticky-target" [ngClass]="{ 'is-sticky': lb.dataSource.sidebarIsSticky }">
+        <div class="aw-gallery__facets">
+            <!-- <n7-facet-header [data]="{
+                iconLeft: 'n7-icon-search1',
+                text: 'Filtri di ricerca',
+                iconRight: 'n7-icon-angle-down',
+                classes: 'is-expanded',
+                payload: 'header'
+                }"></n7-facet-header> -->
+            <n7-facets-wrapper 
+                [data]="lb.widgets['facets-wrapper'].ds.out$ | async"
+                [emit]="lb.widgets['facets-wrapper'].emit">
+              </n7-facets-wrapper>
+        </div>
+    </div>
+
     <div class="aw-gallery__content">
       <div class="aw-gallery__results-header">
         <div class="aw-gallery__results-header-left">
