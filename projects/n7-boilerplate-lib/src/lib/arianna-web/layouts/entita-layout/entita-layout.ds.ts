@@ -83,7 +83,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     this.one('aw-linked-objects').update({ items: this.myResponse.relatedItems });
     this.location.go([
       this.configuration.get('paths').entitaBasePath,
-      this.currentId,
+      this.currentId + '/',
       this.currentSlug,
       '/oggetti-collegati/',
       this.currentPage

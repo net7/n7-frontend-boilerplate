@@ -27,17 +27,7 @@ export class AwEntitaLayoutEH extends EventHandler {
 
         case 'aw-entita-layout.showmore':
           if (payload) {
-            this.dataSource.handleNavUpdate(payload)
-            this.emitGlobal('navigate', {
-              path: [
-                this.configuration.get("paths").entitaBasePath
-                + '/' +
-                this.entityId
-                + '/' +
-                payload
-              ],
-              handler: 'router'
-            });
+            this.dataSource.handleNavUpdate(payload);
           }
           break;
 
