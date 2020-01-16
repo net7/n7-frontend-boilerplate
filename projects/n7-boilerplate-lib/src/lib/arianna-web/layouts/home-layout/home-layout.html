@@ -160,21 +160,20 @@
                                 </n7-loader>
                             </div>
                         </ng-container>
-                    </div
-                    >
+                    </div>
                     <div *ngIf="lb.dataSource.hasScrollBackground"
                         class="aw-home__bubble-results-list-wrapper-with-scroll"></div>
-                    <!-- aw-linked-objects__actions -->
-                    <ng-container *ngIf="(lb.widgets['aw-linked-objects'].ds.out$ | async)?.result.length > 0 && !lb.dataSource.resultsListIsLoading">
-                        <div *ngIf="(lb.widgets['aw-linked-objects'].ds.out$ | async)?.actions as action"
-                            class="aw-home__bubble-results-list-actions">
-                            <button (click)="lb.eventHandler.emitInner('bubbleresultsviewallclick')"
-                                class="n7-btn n7-btn-light n7-btn-l aw-home__bubble-results-list-view-all">
-                                {{action[0].label}}
-                            </button>
-                        </div>
-                    </ng-container>
                 </div>
+                <!-- aw-linked-objects__actions -->
+                <ng-container *ngIf="(lb.widgets['aw-linked-objects'].ds.out$ | async)?.result.length > 0 && !lb.dataSource.resultsListIsLoading">
+                    <div *ngIf="(lb.widgets['aw-linked-objects'].ds.out$ | async)?.actions as action"
+                        class="aw-home__bubble-results-list-actions">
+                        <button (click)="lb.eventHandler.emitInner('bubbleresultsviewallclick')"
+                            class="n7-btn n7-btn-light n7-btn-l aw-home__bubble-results-list-view-all">
+                            {{action[0].label}}
+                        </button>
+                    </div>
+                </ng-container>
 
             </div>
         </ng-container>
