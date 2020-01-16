@@ -323,6 +323,8 @@
 
     /* Loading */
     &__content-loading {
+        flex: 1;
+        min-width: $bubble-chart-column-container-min-width;
         margin-top: $space*3;
         background-color: $color-background-base;
         box-shadow: 0 2px 20px 0 rgba(0,0,0,0.08);
