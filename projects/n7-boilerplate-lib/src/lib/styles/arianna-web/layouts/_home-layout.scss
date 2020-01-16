@@ -87,8 +87,7 @@
         max-width: $page-max-width;
         margin: 0 auto;
         padding: $space*4 0;
-        
-        height: $bubble-section-height;
+        min-height: $bubble-section-height; /* Fix ie padding-bottom bug */
         box-sizing: border-box;
 
         &.has-results {
