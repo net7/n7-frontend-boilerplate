@@ -156,7 +156,7 @@ export class AwHomeLayoutEH extends EventHandler {
             }
             this.emitGlobal('navigate', {
               handler: 'router',
-              path: [basePath, payload.id]
+              path: [basePath, payload.id, helpers.slugify(payload.title)]
             });
           } else if (source === "showMore") {
             const query = this.dataSource.homeAutocompleteQuery;
