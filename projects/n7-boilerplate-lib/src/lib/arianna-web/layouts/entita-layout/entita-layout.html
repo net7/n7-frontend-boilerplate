@@ -1,10 +1,11 @@
 <div class="aw-entity n7-side-auto-padding" *ngIf="lb.dataSource">
+    
     <div class="aw-entity__sidebar">
         <!-- Custom header -->
         <div *ngIf="!(lb.widgets['aw-entita-nav'].ds.out$ | async)" class="aw-entity__sidebar-title-wrapper-loading">
             <n7-content-placeholder [data]="{
                 blocks: [{
-                    classes: 'content-placeholder-sidebar-title'
+                    classes: 'entity-placeholder-title'
                 }]
             }">
             </n7-content-placeholder>
@@ -17,31 +18,71 @@
         </div>
         <!-- Navigation -->
         <div *ngIf="!(lb.widgets['aw-entita-nav'].ds.out$ | async)" class="aw-entity__sidebar-nav-loading">
-            <n7-loader [data]="{}"></n7-loader>
+            <n7-content-placeholder [data]="{
+                blocks: [{
+                    classes: 'entity-placeholder-nav'
+                }]
+            }">
+            </n7-content-placeholder>
+            <n7-content-placeholder [data]="{
+                blocks: [{
+                    classes: 'entity-placeholder-nav'
+                }]
+            }">
+            </n7-content-placeholder>
+            <n7-content-placeholder [data]="{
+                blocks: [{
+                    classes: 'entity-placeholder-nav'
+                }]
+            }">
+            </n7-content-placeholder>
         </div>
         <n7-nav [data]="lb.widgets['aw-entita-nav'].ds.out$ | async" [emit]="lb.widgets['aw-entita-nav'].emit">
         </n7-nav>
     </div>
+
     <!-- lb.dataSource.selectedTab -->
     <div *ngIf="!(lb.widgets['aw-entita-nav'].ds.out$ | async)" class="aw-entity__content-loading">
-        <n7-content-placeholder [data]="{
-            blocks: [{
-                classes: 'content-placeholder-title'
-            }, {
-                classes: 'content-placeholder-item-preview'
-            }, {
-                classes: 'content-placeholder-item-preview'
-            }, {
-                classes: 'content-placeholder-item-preview'
-            }, {
-                classes: 'content-placeholder-item-preview'
-            }, {
-                classes: 'content-placeholder-item-preview'
-            }, {
-                classes: 'content-placeholder-item-preview'
-            }]
-        }"></n7-content-placeholder>
+        <div class="aw-entity__content-loading-title">
+            <n7-content-placeholder [data]="{
+                blocks: [{
+                    classes: 'entity-placeholder-title'
+                }]
+            }"></n7-content-placeholder>
+        </div>
+        
+        <div class="aw-entity__content-loading-items">
+            <n7-content-placeholder [data]="{
+                blocks: [
+                {
+                    classes: 'entity-placeholder-item-preview'
+                }
+                ]
+            }"></n7-content-placeholder>
+            <n7-content-placeholder [data]="{
+                blocks: [
+                {
+                    classes: 'entity-placeholder-item-preview'
+                }
+                ]
+            }"></n7-content-placeholder>
+            <n7-content-placeholder [data]="{
+                blocks: [
+                {
+                    classes: 'entity-placeholder-item-preview'
+                }
+                ]
+            }"></n7-content-placeholder>
+            <n7-content-placeholder [data]="{
+                blocks: [
+                {
+                    classes: 'entity-placeholder-item-preview'
+                }
+                ]
+            }"></n7-content-placeholder>
+        </div>
     </div>
+
     <div *ngIf="!!(lb.widgets['aw-entita-nav'].ds.out$ | async)" class="aw-entity__content">
         <section>
             <div *ngIf="lb.dataSource.myResponse.wikiTab || lb.dataSource.myResponse.extraTab"
