@@ -162,6 +162,7 @@ export class AwTreeDS extends DataSource {
       payload: {
         id,
         source: 'menuitem',
+        label
       }
     };
   }

@@ -15,6 +15,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
   public selectedTab: string; // selected nav item
   public navHeader: any = {}; // nav-header (custom) data
   public currentId: string; // selected entity (url param)
+  public currentSlug: string; // selected entity (url param)
   public currentPage: any; // pagination value (url param)
   public pageSize: number = 10; // linked objects page size
   // BUBBLE CHART DATA ↓
@@ -80,7 +81,13 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       size: this.pageSize,
     })
     this.one('aw-linked-objects').update({ items: this.myResponse.relatedItems });
-    this.location.go(`${this.configuration.get('paths').entitaBasePath}${this.currentId}/oggetti-collegati/${this.currentPage}`)
+    this.location.go([
+      this.configuration.get('paths').entitaBasePath,
+      this.currentId,
+      this.currentSlug,
+      '/oggetti-collegati/',
+      this.currentPage
+    ].join(''));
   };
 
   handleNavUpdate = tab => {
@@ -107,7 +114,13 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     if (tab == "overview" || tab == "entita-collegate") {
       setTimeout(() => { this.updateBubbes(this.myResponse.relatedEntities) }, 800);
     }
-    this.location.go(`${this.configuration.get('paths').entitaBasePath}${this.currentId}/${tab}${page}`)
+    this.location.go([
+      this.configuration.get('paths').entitaBasePath,
+      this.currentId + '/',
+      this.currentSlug + '/',
+      tab,
+      page
+    ].join(''));
   }
 
   /*
@@ -136,9 +149,10 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
   /*
     Loads the data for the selected nav item, into the adjacent text block.
   */
-  loadItem(id, tab) {
+  loadItem(id, slug, tab) {
     if (id && tab) {
       this.currentId = id // store selected item from url
+      this.currentSlug = slug // store selected item from url
       this.selectedTab = tab // store selected tab from url
       return this.communication.request$('getEntityDetails', {
         onError: error => console.error(error),

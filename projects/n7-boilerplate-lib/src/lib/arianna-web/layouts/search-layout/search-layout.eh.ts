@@ -1,6 +1,7 @@
 import { EventHandler } from '@n7-frontend/core';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
+import helpers from '../../../common/helpers';
 
 export class AwSearchLayoutEH extends EventHandler {
   private destroyed$: Subject<any> = new Subject();
@@ -75,7 +76,7 @@ export class AwSearchLayoutEH extends EventHandler {
           const paths = this.dataSource.configuration.get('paths');
           this.emitGlobal('navigate', {
             handler: 'router',
-            path: [payload.type == undefined ? paths.schedaBasePath : paths.entitaBasePath, payload.id]
+            path: [payload.type == undefined ? paths.schedaBasePath : paths.entitaBasePath, payload.id, helpers.slugify(payload.title)]
           });
           break;
         default:
