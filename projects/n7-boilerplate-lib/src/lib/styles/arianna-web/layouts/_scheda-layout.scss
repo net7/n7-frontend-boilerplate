@@ -123,6 +123,21 @@
 .aw-scheda__scheda-wrapper {
     background-color: $color-background-base;
 
+    /* Intro text */
+    .aw-scheda__intro-text {
+        padding: $space*2 $space*2.5;
+        text-align: left;
+
+        h2 {
+            font-size: $font-size-xxl;
+        }
+
+        h3 {
+            margin-top: $space*2;
+            font-size: $font-size-l;
+        }
+    }
+
     /* Breadcrumbs */
     .n7-breadcrumbs {
         height: $sidebar-header-height;
