@@ -78,8 +78,8 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   }
   getTree = () => AwSchedaLayoutDS.tree;
 
-  updateNavigation(label) {
-    this.one('aw-sidebar-header').update({ label });
+  updateNavigation(text) {
+    this.one('aw-sidebar-header').update({ text });
   }
 
   loadItem(id) {

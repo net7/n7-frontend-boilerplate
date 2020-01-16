@@ -5,7 +5,7 @@ export class AwSidebarHeaderDS extends DataSource {
   protected transform(data) {
     return {
       iconLeft: 'n7-icon-tree-icon',
-      text: data.label || '',
+      text: data.text || '',
       iconRight: 'n7-icon-angle-left',
       classes: 'is-expanded',
       payload: 'header'
