@@ -89,7 +89,7 @@
                 </n7-metadata-viewer>
             </section>
 
-            <section class="aw-scheda__bubble-chart" *ngIf="lb.dataSource.bubblesEnabled">
+            <section class="aw-scheda__bubble-chart" *ngIf="lb.dataSource.bubblesEnabled && lb.dataSource.hasBubbles">
                 <div *ngIf="lb.dataSource.hasBubbles" class="aw-scheda__inner-title">
                     {{lb.dataSource.bubbleChartSectionTitle}}
                 </div>
