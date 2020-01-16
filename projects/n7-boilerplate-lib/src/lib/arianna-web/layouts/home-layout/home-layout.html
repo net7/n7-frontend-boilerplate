@@ -161,8 +161,8 @@
                             </div>
                         </ng-container>
                     </div>
-                    <div *ngIf="lb.dataSource.hasScrollBackground"
-                        class="aw-home__bubble-results-list-wrapper-with-scroll"></div>
+                    <div [ngClass]="{ 'is-visible' : lb.dataSource.hasScrollBackground }"
+                         class="aw-home__bubble-results-list-wrapper-with-scroll"></div>
                 </div>
                 <!-- aw-linked-objects__actions -->
                 <ng-container *ngIf="(lb.widgets['aw-linked-objects'].ds.out$ | async)?.result.length > 0 && !lb.dataSource.resultsListIsLoading">
