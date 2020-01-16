@@ -6,7 +6,9 @@ export class AwBubbleChartEH extends EventHandler {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
         case 'aw-bubble-chart.click':
-          this.toggleSelection(payload)
+          if (this.dataSource.options.selectable != false) {
+            this.toggleSelection(payload)
+          }
           this.emitOuter('lockfilter', this.dataSource.chartData.find(el => payload == el.entity.id))
           break;
         case 'aw-bubble-chart.d3end': // end of d3.js draw()

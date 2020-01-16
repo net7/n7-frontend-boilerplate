@@ -47,7 +47,11 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         this._listenAutoCompleteChanges();
         this.outerLinks = this.configuration.get('home-layout')['outer-links']['test'];
         this.outerLinksTitle = this.configuration.get('home-layout')['outer-links']['title'];
-        this.one('aw-bubble-chart').updateOptions({ config: this.configuration, limit: this.configuration.get('bubble-chart').bubbleLimit })
+        this.one('aw-bubble-chart').updateOptions({
+            selectable: true,
+            config: this.configuration,
+            limit: this.configuration.get('bubble-chart').bubbleLimit
+        })
     }
 
     onDestroy(){

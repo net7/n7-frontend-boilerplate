@@ -13,6 +13,20 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "fileReplacements": [
+              {
+                "replace": "src/assets/app-config.json",
+                "with": "src/assets/app-config.arianna.json"
+              }, 
+              {
+                "replace": "src/app/app.routes.ts",
+                "with": "src/app/app.routes.arianna.ts"
+              }, 
+              {
+                "replace": "src/styles/styles.scss",
+                "with": "src/styles/styles.arianna.scss"
+              }
+            ],
             "outputPath": "dist/n7-boilerplate",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -23,6 +37,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/flatpickr/dist/flatpickr.min.css",
               "src/styles/styles.scss"
             ],
             "scripts": []
@@ -33,6 +48,56 @@
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            },
+            "arianna": {
+              "fileReplacements": [
+                {
+                  "replace": "src/assets/app-config.json",
+                  "with": "src/assets/app-config.arianna.json"
+                }, 
+                {
+                  "replace": "src/app/app.routes.ts",
+                  "with": "src/app/app.routes.arianna.ts"
+                }, 
+                {
+                  "replace": "src/styles/styles.scss",
+                  "with": "src/styles/styles.arianna.scss"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            },
+            "dataviz": {
+              "fileReplacements": [
+                {
+                  "replace": "src/assets/app-config.json",
+                  "with": "src/assets/app-config.dataviz.json"
+                }, 
+                {
+                  "replace": "src/app/app.routes.ts",
+                  "with": "src/app/app.routes.dataviz.ts"
+                }, 
+                {
+                  "replace": "src/styles/styles.scss",
+                  "with": "src/styles/styles.dataviz.scss"
                 }
               ],
               "optimization": true,
@@ -55,6 +120,12 @@
           "configurations": {
             "production": {
               "browserTarget": "n7-boilerplate:build:production"
+            }, 
+            "arianna": {
+              "browserTarget": "n7-boilerplate:build:arianna"
+            }, 
+            "dataviz": {
+              "browserTarget": "n7-boilerplate:build:dataviz"
             }
           }
         },

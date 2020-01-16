@@ -80,9 +80,10 @@
 .aw-home {
     /* Bubble facets and chart wrapper */
     &__bubble-wrapper {
-        display: grid;
-        grid-template-columns: 220px minmax(200px, 1fr) 300px;
-        grid-column-gap: $grid-gutter-h/2;
+        display: flex;
+        // display: grid;
+        // grid-template-columns: 220px minmax(200px, 1fr) 300px;
+        // grid-column-gap: $grid-gutter-h/2;
         max-width: $page-max-width;
         margin: 0 auto;
         padding: $space*4 0;
@@ -133,6 +134,8 @@
     /* Facets */
     .aw-home__facets-wrapper {
         display: flex;
+        flex: 0 0 $facets-wrapper-width;
+        width: $facets-wrapper-width;
         justify-content: center;
         flex-direction: column;
     }
@@ -350,9 +353,16 @@
         }
     }
 
+    /* Bubble chart */
+    &__bubble-chart-wrapper {
+        flex: 1;
+    }
+
     /* Results */
     &__bubble-results {
         display: flex;
+        flex: 0 0 $results-wrapper-width;
+        width: $results-wrapper-width;
         flex-direction: column;
         height: calc(#{$bubble-section-height} - #{$space*8});
     }

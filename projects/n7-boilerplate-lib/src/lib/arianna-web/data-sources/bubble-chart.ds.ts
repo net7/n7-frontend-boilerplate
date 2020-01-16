@@ -11,7 +11,7 @@ export class AwBubbleChartDS extends DataSource {
   public focusedBubble: string    // id of the focused bubble
 
   protected transform(data) {
-    const { config } = this.options
+    const { config, smallChartSize } = this.options
     const { fontRendering, transition, shuffle } = config.get('bubble-chart')
     const domain = [], range = []
     const colorConfig = config.get('config-keys')
@@ -43,7 +43,7 @@ export class AwBubbleChartDS extends DataSource {
       data: this.smartSlice(data),
       smallView: {
         ...commonParams,
-        data: this.smartSlice(data, this.options.smallChartSize),
+        data: this.smartSlice(data, smallChartSize),
       },
     }
   }
@@ -112,7 +112,6 @@ export class AwBubbleChartDS extends DataSource {
         let toggleBubbleText = this.selected.includes(bubble.entity.id) ? `Deseleziona` : `Seleziona`
         selectButton.innerHTML = toggleBubbleText
       }
-      // console.log(element)
       return element.innerHTML
     }
     const focusBubble = id => {
@@ -124,8 +123,7 @@ export class AwBubbleChartDS extends DataSource {
     }
     // make new tooltips
     bubbles.forEach(b => {
-      let el = document.getElementById(b.entity.id)
-      let group = el ? el.parentElement : false // selects a <g> element
+      let group: Element = document.getElementById(`g_${b.entity.id}`) // select 
       if (group) {
         this.tippyList.push( // add this tippy to the array of instances
           tippy(group, {

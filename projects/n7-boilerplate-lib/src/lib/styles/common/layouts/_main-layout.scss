@@ -17,13 +17,22 @@
 /* ------------------------------------ *\
     STICKY FOOTER
 \* ------------------------------------ */
-/* Implemented with CSS grid */
+/* Implemented with CSS flex */
 .n7-main-layout {
+    display: flex;
+    flex-direction: column;
     min-height: 100%;
-    display: grid;
-    grid-template-rows: 1fr auto;
+    // display: grid;
+    // grid-template-rows: 1fr auto;
 }
 
+.n7-page-content {
+    flex: 1 0 auto; /* for sticky footer - prevent element from shrinking */
+
+    + * {
+        flex: none; /* for sticky footer - prevent element from shrinking */
+    }
+}
 
 /* ------------------------------------ *\
    #MEDIA-QUERIES
