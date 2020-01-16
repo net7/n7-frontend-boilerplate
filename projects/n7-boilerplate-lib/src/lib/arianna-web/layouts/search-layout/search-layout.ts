@@ -8,6 +8,7 @@ import {
   CommunicationService,
 } from '../../../common/services';
 import { AwSearchLayoutConfig as config } from './search-layout.config';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'aw-search-layout',
@@ -15,13 +16,14 @@ import { AwSearchLayoutConfig as config } from './search-layout.config';
 })
 
 export class AwSearchLayoutComponent extends AbstractLayout implements OnInit, OnDestroy {
+
   constructor(
     private configuration: ConfigurationService,
     private layoutsConfiguration: LayoutsConfigurationService,
     private mainState: MainStateService,
     private communication: CommunicationService,
     private search: SearchService,
-
+    private route: ActivatedRoute
   ) {
     super(layoutsConfiguration.get('AwSearchLayoutConfig') || config);
   }
@@ -37,6 +39,7 @@ export class AwSearchLayoutComponent extends AbstractLayout implements OnInit, O
       mainState: this.mainState,
       communication: this.communication,
       search: this.search,
+      route: this.route,
       options: this.config.options || {},
     }
   }

@@ -9,18 +9,11 @@ import { Component, Input } from '@angular/core';
   templateUrl: './bubble-chart-wrapper.html'
 })
 export class BubbleChartWrapperComponent {
-  @Input() hover: any;
   @Input() emit: any;
   @Input() container: string;
   @Input() buttons: any;
 
   onClick(type, payload) {
     this.emit(type, payload);
-  }
-  onMouseOut(type) {
-    this.emit(type);
-  }
-  onDestroy() {
-    console.log("destroyed");
   }
 }

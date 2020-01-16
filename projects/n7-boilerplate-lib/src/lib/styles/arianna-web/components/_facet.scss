@@ -126,6 +126,20 @@
             }
         }
 
+        &.color-famiglia {
+            .n7-facet__input-link-icon,
+            .n7-facet__input-link-text {
+                color: $color-families;
+            }
+        }
+
+        &.color-evento {
+            .n7-facet__input-link-icon,
+            .n7-facet__input-link-text {
+                color: $color-events;
+            }
+        }
+
         &.color-oggetto-culturale {
             .n7-facet__input-link-icon,
             .n7-facet__input-link-text {

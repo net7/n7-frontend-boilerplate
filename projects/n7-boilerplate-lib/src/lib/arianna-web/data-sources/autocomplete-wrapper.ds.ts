@@ -3,13 +3,18 @@ import { DataSource } from '@n7-frontend/core';
 export class AwAutocompleteWrapperDS extends DataSource {
 
   protected transform(data) {
-    const { key, response } = data
+    const { key, response } = data;
+
+    if (!response) {
+      return { suggestion: [], loading: true };
+    }
+
     const regex = new RegExp('(.*?)' + key + '(.*)', 'i') // 'i' = case insensitive
     const suggestion = []
     const config = this.options.config
     const maxLength = config.get('home-layout')['max-item-length'] / 2
-    const fResults = response.results.filter(el => typeof el.entity == 'object') // filter only entities (no cultural objects)
-    
+    const fResults = response.results.filter(el => typeof el.entity == 'object')
+
     fResults.forEach(el => {
       if (el.entity.id == 'fallback') { // build and return fallback data
         suggestion.push({
@@ -21,7 +26,6 @@ export class AwAutocompleteWrapperDS extends DataSource {
         return { suggestion }
       }
       // divide prefix and suffix
-      // let match = el.item.label.match(regex)
       let match = regex.exec(el.entity.label)
       if (match) {
         let prefix = match[1]

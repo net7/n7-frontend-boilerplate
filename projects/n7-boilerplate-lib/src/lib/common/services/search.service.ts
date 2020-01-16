@@ -79,6 +79,12 @@ export class SearchModel {
     this._setInputs();
     this._setInputsData();
     this._setTotalCount();
+
+    // query params control
+    if (SearchService.queryParams) {
+      this.updateFiltersFromQueryParams(SearchService.queryParams);
+      SearchService.queryParams = null;
+    }
   }
 
   public getId = () => this._id;
@@ -108,13 +114,27 @@ export class SearchModel {
     });
   }
 
-  public updateFiltersFromQueryParams(queryParams) {
-    Object.keys(queryParams).forEach(facetId => {
-      const selectedFilters = this.getFiltersByFacetId(facetId),
-        value = queryParams[facetId];
+  public clear() {
+    this.updateFiltersFromQueryParams({}, true);
+    this._clearInputs();
+  }
+
+  public updateFiltersFromQueryParams(queryParams, clearAll: boolean = false) {
+    this._facets.forEach(({ id }) => {
+      const selectedFilters = this.getFiltersByFacetId(id),
+        value = queryParams[id],
+        isInternal = this.getInputByFacetId(id).getContext() === 'internal';
+
+      if (isInternal && !clearAll) {
+        return;
+      }
 
       selectedFilters.forEach(filter => {
-        filter.value = filter.isArray ? value.split(',') : value;
+        if (filter.isArray) {
+          filter.value = value ? value.split(',') : [];
+        } else {
+          filter.value = value ? value : null;
+        }
       });
     });
   }
@@ -214,11 +234,16 @@ export class SearchModel {
 
     // update
     targetInput.setData(facetData);
+
+    if (targetInput.getConfig().emptyState) {
+      const isEmpty = !facetData.filter(data => !data.hidden).length;
+      targetInput.setIsEmpty(isEmpty);
+    }
     targetInput.update();
   }
 
   public setSearchConfigOrderBy(orderBy) {
-    this._config.results.order.type = orderBy;
+    this._config.results.order.key = orderBy;
   }
 
   public setSearchConfigDirection(direction) {
@@ -231,6 +256,12 @@ export class SearchModel {
 
   public setPageConfigLimit(limit) {
     this._config.page.limit = limit;
+  }
+
+  private _clearInputs(){
+    this._inputs.forEach(input => {
+      input.clear();
+    });
   }
 
   private _filterData(searchIns, item) {
@@ -323,7 +354,6 @@ export class SearchModel {
   private _filterDataLike(value, refValue) {
     if (
       value &&
-      refValue &&
       typeof value === 'string' &&
       typeof refValue === 'string'
     ) {
@@ -414,6 +444,12 @@ export class SearchService {
     }
 
     this._models[id] = new SearchModel(id, config);
+  }
+
+  public remove(id: string) {
+    if (this._models[id]) {
+      delete this._models[id];
+    }
   }
 
   public model(id: string): SearchModel {

@@ -13,9 +13,10 @@
     box-shadow: $search-box-shadow;
 
     &__content-wrapper {
-        display: grid;
-        grid-template-columns: $aw-scheda-tree-width 1fr;
-        column-gap: $space*2;  
+        display: flex;
+        // display: grid;
+        // grid-template-columns: $aw-scheda-tree-width 1fr;
+        // column-gap: $space*2;  
         position: relative;
     }
     
@@ -94,6 +95,9 @@
 \* ------------------------------------ */
 .aw-search {
     &__sidebar {
+        flex: 0 0 $aw-scheda-tree-width;
+        width: $aw-scheda-tree-width;
+        margin-right: $space*2;
         padding: $space*2 0 $space*4 $space*2;
 
         &.is-sticky {
@@ -127,12 +131,33 @@
     }
 }
 
+/* Loading */
+.aw-search__facets-loading {
+    padding: $space*2;
+
+    .search-placeholder-facet-input {
+        height: 38px;
+        margin-bottom: $space*2;
+    }
+
+    .search-placeholder-facet-check {
+        height: 20px;
+        margin-bottom: $space*3;
+    }
+
+    .search-placeholder-facet-item {
+        height: 16px;
+        margin-bottom: $space*2;
+    }
+}
+
 
 /* ------------------------------------ *\
    #CONTENT
 \* ------------------------------------ */
 .aw-search {
     &__content {
+        flex: 1;
         background: $color-background-layout;
         box-shadow: none;
 
@@ -142,6 +167,7 @@
     }
 
     &__total {
+        margin-bottom: 0;
         font-size: $font-size-xl;
     }
 
@@ -179,5 +205,39 @@
 
     .n7-pagination {
         padding: $space 0;
+    }
+
+    /* No results */
+    &__fallback {
+        padding: $space*2;
+    }
+
+    &__fallback-string {
+        margin-bottom: $space*2;
+    }
+
+    /* Loading */
+    &__results-wrapper-loading {
+        padding: $space;
+        background: #ffffff;
+
+        .n7-content-placeholder {
+            margin-bottom: $space*2;
+            clear: both;
+            overflow: hidden;
+        }
+
+        .search-result-placeholder-title {
+            height: 24px;
+            clear: both;
+            margin-bottom: $space*1.5;
+        }
+
+        .search-result-placeholder-metadata {
+            height: 16px;
+            width: 120px;
+            margin-right: $space*2;
+            float: left;
+        }
     }
 }

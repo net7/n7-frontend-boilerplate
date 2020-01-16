@@ -6,18 +6,18 @@ import { SearchService } from '../../services';
 export class MainLayoutEH extends EventHandler {
   private destroyed$: Subject<any> = new Subject();
   private route: any;
-  private router: any;
+  private mainState: any;
 
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch(type) {
         case 'main-layout.init':
           this.dataSource.onInit(payload);
-
+          this.mainState = payload.mainState;
           this.route = payload.route;
-          this.router = payload.router;
 
           this._listenRouterChanges();
+          this._listenMainStateChanges();
           break;
 
         case 'main-layout.destroy':
@@ -57,6 +57,13 @@ export class MainLayoutEH extends EventHandler {
       // to use in searchs
       SearchService.queryParams = params;
     });
-  } 
-  
+  }
+
+
+  private _listenMainStateChanges(){
+    this.mainState.addCustom('currentNav', new Subject());
+    this.mainState.getCustom$('currentNav').subscribe(val => {
+      this.emitOuter('currentnavchange', val);
+    });
+  }
 }

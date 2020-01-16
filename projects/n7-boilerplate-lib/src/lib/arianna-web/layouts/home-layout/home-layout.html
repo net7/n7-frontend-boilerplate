@@ -7,10 +7,42 @@
 
     <!-- Bubble chart -->
     <div class="aw-home__bubble-wrapper n7-side-auto-padding"
-        [ngClass]="{ 'has-results' : lb.dataSource.selectedBubbles.length > 0 }"
-        *ngIf="lb.dataSource.bubblesEnabled"
-    >
-        <div class="aw-home__facets-wrapper">
+        [ngClass]="{ 'has-results' : lb.dataSource.selectedBubbles.length > 0 }" *ngIf="lb.dataSource.bubblesEnabled">
+        <div class="aw-home__facets-wrapper-loading" *ngIf="!(lb.widgets['aw-home-facets-wrapper'].ds.out$ | async)">
+            <n7-content-placeholder
+            [data]="{
+                blocks: [{
+                    classes: 'facet-placeholder-header'
+                }, {
+                    classes: 'facet-placeholder-input'
+                }] 
+            }"></n7-content-placeholder>
+            <n7-content-placeholder
+            [data]="{
+                blocks: [{
+                    classes: 'facet-placeholder-header'
+                }, {
+                    classes: 'facet-placeholder-input'
+                }] 
+            }"></n7-content-placeholder>
+            <n7-content-placeholder
+            [data]="{
+                blocks: [{
+                    classes: 'facet-placeholder-header'
+                }, {
+                    classes: 'facet-placeholder-input'
+                }] 
+            }"></n7-content-placeholder>
+            <n7-content-placeholder
+            [data]="{
+                blocks: [{
+                    classes: 'facet-placeholder-header'
+                }, {
+                    classes: 'facet-placeholder-input'
+                }] 
+            }"></n7-content-placeholder>
+        </div>
+        <div class="aw-home__facets-wrapper" *ngIf="!!(lb.widgets['aw-home-facets-wrapper'].ds.out$ | async)">
             <span class="aw-home__facet"
                 *ngFor="let widgetData of lb.widgets['aw-home-facets-wrapper'].ds.out$ | async;">
                 <n7-facet-header [data]="widgetData.header" [emit]="lb.widgets['aw-home-facets-wrapper'].emit">
@@ -19,32 +51,33 @@
                 </n7-facet>
             </span>
         </div>
-        <div
-            class="aw-home__bubble-chart-wrapper"
-            [style.overflow]="lb.dataSource.loadingBubbles ? 'visible' : 'hidden'"
-        >
-            <aw-bubble-chart-wrapper
-                [hover]="lb.widgets['aw-bubble-chart'].ds.currentHoverEntity"
-                [emit]="lb.widgets['aw-bubble-chart'].emit"
-                [container]="'bubble-chart-container'"
-                [buttons]="['select', 'goto']"
-            >
-                    <n7-bubble-chart
-                        [data]="lb.widgets['aw-bubble-chart'].ds.out$ | async"
-                        [emit]="lb.widgets['aw-bubble-chart'].emit">
-                    </n7-bubble-chart>
+
+        <div class="aw-home__bubble-chart-wrapper-loading" *ngIf="!(lb.widgets['aw-bubble-chart'].ds.out$ | async)">
+            <n7-content-placeholder
+            [data]="{
+                blocks: [
+                    {
+                        classes: 'facet-placeholder-item-1'
+                    }
+                ]
+            }"></n7-content-placeholder>
+        </div>
+        <div class="aw-home__bubble-chart-wrapper" *ngIf="!!(lb.widgets['aw-bubble-chart'].ds.out$ | async)"
+            [style.overflow]="lb.dataSource.loadingBubbles ? 'visible' : 'hidden'">
+            <aw-bubble-chart-wrapper [emit]="lb.widgets['aw-bubble-chart'].emit" [container]="'bubble-chart-container'"
+                [buttons]="['select', 'goto']">
+                <n7-bubble-chart [data]="lb.widgets['aw-bubble-chart'].ds.out$ | async"
+                    [emit]="lb.widgets['aw-bubble-chart'].emit">
+                </n7-bubble-chart>
             </aw-bubble-chart-wrapper>
         </div>
 
         <!-- Linked objects -->
-        <ng-container *ngIf="lb.dataSource.selectedBubbles.length > 0" >
-            <div class="aw-home__bubble-results"
-                 id="home-bubble-results"
-                 [ngStyle]="{ 'display': 'flex' , 'flex-direction': 'column', 'transition': 'opacity 1s ease-in-out;' }"
-                 [style.opacity]="lb.dataSource.loadingBubbles ? '0' : '1'">
-                <div *ngIf="lb.dataSource.numOfItemsStr">
+        <ng-container *ngIf="(lb.widgets['aw-bubble-chart'].ds.out$ | async)?.selected.length > 0;">
+            <div class="aw-home__bubble-results" id="home-bubble-results">
+                <div *ngIf="lb.dataSource.numOfItemsStr" class="aw-home__bubble-results-title-wrapper">
                     <h1 class="aw-home__bubble-results-title"><strong class="aw-home__bubble-results-title-counter">
-                        {{ lb.dataSource.numOfItemsStr }}</strong> <span> Oggetti culturali</span>
+                            {{ lb.dataSource.numOfItemsStr }}</strong> <span> Oggetti culturali</span>
                     </h1>
                 </div>
                 <div class="aw-home__bubble-tags-wrapper">
@@ -55,31 +88,92 @@
                         <br>
                     </ng-container>
                 </div>
+                
                 <div class="aw-home__bubble-results-list-wrapper">
-                    <div class="aw-home__bubble-results-list"
-                        [attr.id]="'bubble-results-list'"
+                    <div class="aw-home__bubble-results-list-loading" *ngIf="lb.dataSource.resultsListIsLoading">
+                        <n7-content-placeholder
+                        [data]="{
+                            blocks: [{
+                                classes: 'search-result-placeholder-title'
+                            }, {
+                                classes: 'search-result-placeholder-metadata'
+                            }]
+                        }"></n7-content-placeholder>
+                        <n7-content-placeholder
+                        [data]="{
+                            blocks: [{
+                                classes: 'search-result-placeholder-title'
+                            }, {
+                                classes: 'search-result-placeholder-metadata'
+                            }]
+                        }"></n7-content-placeholder>
+                        <n7-content-placeholder
+                        [data]="{
+                            blocks: [{
+                                classes: 'search-result-placeholder-title'
+                            }, {
+                                classes: 'search-result-placeholder-metadata'
+                            }]
+                        }"></n7-content-placeholder>
+                        <n7-content-placeholder
+                        [data]="{
+                            blocks: [{
+                                classes: 'search-result-placeholder-title'
+                            }, {
+                                classes: 'search-result-placeholder-metadata'
+                            }]
+                        }"></n7-content-placeholder>
+                        <n7-content-placeholder
+                        [data]="{
+                            blocks: [{
+                                classes: 'search-result-placeholder-title'
+                            }, {
+                                classes: 'search-result-placeholder-metadata'
+                            }]
+                        }"></n7-content-placeholder>
+                    </div>
+                    <div
+                    *ngIf="!lb.dataSource.resultsListIsLoading" 
+                    class="aw-home__bubble-results-list" [attr.id]="'bubble-results-list'"
                         (scroll)="lb.eventHandler.emitOuter('scroll', $event.target)">
-                        <ng-container *ngFor="let widgetData of (lb.widgets['aw-linked-objects'].ds.out$ | async)?.result;">
-                            <n7-item-preview
-                                [data]="widgetData"
-                                [emit]="lb.widgets['aw-linked-objects'].emit">
+
+                        <div class="aw-home__bubble-results-fallback"
+                            *ngIf="(lb.widgets['aw-linked-objects'].ds.out$ | async)?.result.length < 1;">
+                            <p class="aw-home__bubble-results-fallback-text">
+                                {{ (lb.widgets['aw-linked-objects'].ds.out$ | async)?.fallback }}
+                            </p>
+                            <button class="n7-btn aw-home__bubble-results-reset"
+                                (click)="lb.eventHandler.emitInner('clearselection')">
+                                Resetta la ricerca
+                            </button>
+                        </div>
+
+                        <ng-container
+                            *ngFor="let widgetData of (lb.widgets['aw-linked-objects'].ds.out$ | async)?.result;">
+                            <n7-item-preview [data]="widgetData" [emit]="lb.widgets['aw-linked-objects'].emit">
                             </n7-item-preview>
                         </ng-container>
+
                         <ng-container *ngIf="(lb.widgets['aw-linked-objects'].ds.out$ | async)?.isLoading">
                             <div class="aw-home__bubble-results-list-loader">
-                                <n7-loader
-                                    [data]="(lb.widgets['aw-linked-objects'].ds.out$ | async)?.loaderData">
+                                <n7-loader [data]="(lb.widgets['aw-linked-objects'].ds.out$ | async)?.loaderData">
                                 </n7-loader>
                             </div>
                         </ng-container>
-                    </div>
-                    <div *ngIf="lb.dataSource.hasScrollBackground" class="aw-home__bubble-results-list-wrapper-with-scroll"></div>
+                    </div
+                    >
+                    <div *ngIf="lb.dataSource.hasScrollBackground"
+                        class="aw-home__bubble-results-list-wrapper-with-scroll"></div>
                     <!-- aw-linked-objects__actions -->
-                    <div *ngIf="(lb.widgets['aw-linked-objects'].ds.out$ | async)?.actions as action" class="aw-home__bubble-results-list-actions">
-                        <button class="n7-btn n7-btn-light n7-btn-l aw-home__bubble-results-list-view-all">
-                            {{action[0].label}}
-                        </button>
-                    </div>
+                    <ng-container *ngIf="(lb.widgets['aw-linked-objects'].ds.out$ | async)?.result.length > 0 && !lb.dataSource.resultsListIsLoading">
+                        <div *ngIf="(lb.widgets['aw-linked-objects'].ds.out$ | async)?.actions as action"
+                            class="aw-home__bubble-results-list-actions">
+                            <button (click)="lb.eventHandler.emitInner('bubbleresultsviewallclick')"
+                                class="n7-btn n7-btn-light n7-btn-l aw-home__bubble-results-list-view-all">
+                                {{action[0].label}}
+                            </button>
+                        </div>
+                    </ng-container>
                 </div>
 
             </div>
@@ -87,23 +181,17 @@
     </div>
 
     <!-- Outer links -->
-    <div
-    *ngIf="lb.dataSource.outerLinks && lb.dataSource.outerLinks.length > 0"
-     class="aw-home__outer-links">
+    <div *ngIf="lb.dataSource.outerLinks && lb.dataSource.outerLinks.length > 0" class="aw-home__outer-links">
         <section class="aw-home__outer-links-wrapper n7-side-auto-padding">
-            <h2 class="aw-home__outer-links-title"
-                *ngIf="lb.dataSource.outerLinksTitle">
+            <h2 class="aw-home__outer-links-title" *ngIf="lb.dataSource.outerLinksTitle">
                 {{ lb.dataSource.outerLinksTitle }}
             </h2>
             <div class="aw-home__outer-links-items">
                 <!-- Item preview -->
-                <n7-item-preview
-                    *ngFor="let outerLink of lb.dataSource.outerLinks"
-                    [data]="outerLink"
-                    [emit]="lb.eventHandler.outerLinkClick.bind(lb.eventHandler)"
-                >
+                <n7-item-preview *ngFor="let outerLink of lb.dataSource.outerLinks" [data]="outerLink"
+                    [emit]="lb.eventHandler.outerLinkClick.bind(lb.eventHandler)">
                 </n7-item-preview>
-            <!-- END // Item preview -->
+                <!-- END // Item preview -->
             </div>
         </section>
     </div>
@@ -117,8 +205,11 @@
     </div>
 
     <!-- Adavanced autocomplete popover  -->
-    <div id="aw-home-advanced-autocomplete-popover" style="display: none;">
-        <n7-advanced-autocomplete
+    <div class="aw-home__advanced-autocomplete" id="aw-home-advanced-autocomplete-popover" style="display: none;">
+        <div class="aw-home__advanced-autocomplete-loader" *ngIf="lb.dataSource.homeAutocompleteIsLoading">
+            <n7-loader [data]="{}"></n7-loader>
+        </div>
+        <n7-advanced-autocomplete *ngIf="!lb.dataSource.homeAutocompleteIsLoading"
             [data]="lb.widgets['aw-home-autocomplete'].ds.out$ | async"
             [emit]="lb.widgets['aw-home-autocomplete'].emit">
         </n7-advanced-autocomplete>
@@ -127,11 +218,16 @@
     <!-- Simple autocomplete popover. DO NOT CHANGE parent div class! -->
     <!-- Creating one template for each facet -->
     <div *ngFor="let widgetData of lb.widgets['aw-home-facets-wrapper'].ds.out$ | async;"
-         class="aw-simple-autocomplete__{{widgetData.header.payload}}"
-         style="display: none;">
-         <n7-simple-autocomplete
-            [data]="lb.widgets['aw-autocomplete-wrapper'].ds.out$ | async"
-            [emit]="lb.widgets['aw-autocomplete-wrapper'].emit">
-        </n7-simple-autocomplete>
+        class="aw-home__simple-autocomplete aw-simple-autocomplete__template" style="display: none;">
+        <div class="aw-home__simple-autocomplete-content aw-simple-autocomplete__tippy-wrapper">
+            <div class="aw-home__simple-autocomplete-loader aw-simple-autocomplete__tippy-wrapper-loader" *ngIf="(lb.widgets['aw-autocomplete-wrapper'].ds.out$ | async)?.loading">
+                <n7-loader [data]="{}"></n7-loader>
+            </div>
+            <n7-simple-autocomplete 
+                *ngIf="!(lb.widgets['aw-autocomplete-wrapper'].ds.out$ | async)?.loading"
+                [data]="lb.widgets['aw-autocomplete-wrapper'].ds.out$ | async"
+                [emit]="lb.widgets['aw-autocomplete-wrapper'].emit">
+            </n7-simple-autocomplete>
+        </div>
     </div>
 </div>

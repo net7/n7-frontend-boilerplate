@@ -20,6 +20,7 @@ export class AwSchedaLayoutEH extends EventHandler {
 
         case 'aw-scheda-layout.destroy':
           this.destroyed$.next();
+          this.dataSource.onDestroy();
           break;
 
         default:
@@ -47,7 +48,7 @@ export class AwSchedaLayoutEH extends EventHandler {
           const paths = this.configuration.get('paths');
           this.emitGlobal('navigate', {
             handler: 'router',
-            path: [paths.schedaBasePath, payload]
+            path: [paths.schedaBasePath, payload.id]
           });
           break;
         default:
@@ -58,36 +59,33 @@ export class AwSchedaLayoutEH extends EventHandler {
 
   private listenRoute() {
     this.route.paramMap.subscribe(params => {
-      if (params.get('id')) {
-        this.dataSource.loadItem(params.get('id')).subscribe((response) => {
-          console.log('getNode() res: ', response)
+      const paramId = params.get('id');
+      if (paramId) {
+        this.dataSource.contentIsLoading = true;
+        this.dataSource.loadItem(paramId).subscribe((response) => {
+          this.dataSource.contentIsLoading = false;
           if (response) {
             this.dataSource.loadContent(response);
             if (response.relatedEntities) {
               this.dataSource.hasBubbles = true;
-              let relatedEntities = { source: response, relatedEntities: response.relatedEntities, reset: true };
               if (this.dataSource.bubblesEnabled) {
-                this.emitOuter('filterbubbleresponse', relatedEntities);
+                this.emitOuter('filterbubbleresponse', response.relatedEntities);
               }
             }
           }
         });
-      } else {
-        this.dataSource.loadItem();
       }
     });
   }
 
   private loadNavigation(selectedItem) {
+    this.dataSource.updateNavigation('Loading...');
     this.dataSource.getNavigation('patrimonio').subscribe((response) => {
       if (response) {
-        console.log("Apollo responded with tree:", response);
-        this.dataSource.updateNavigation(response);
-        this.emitOuter('navigationresponse', {tree: response, currentItem: selectedItem});
+        this.dataSource.setTree(response);
+        this.dataSource.updateNavigation(this.dataSource.getTree().label);
+        this.emitOuter('navigationresponse', {tree: this.dataSource.getTree(), currentItem: selectedItem});
       }
-      /*if (selectedItem) {
-        this.emitOuter('selectItem', selectedItem);
-      }*/
     });
   }
 }

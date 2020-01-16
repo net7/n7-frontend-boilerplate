@@ -1,16 +1,18 @@
+import { cloneDeep } from 'lodash';
 import { LayoutDataSource } from '@n7-frontend/core';
 import {
   SearchService,
   SearchModel
 } from '../../../common/services';
 import facetsConfig from './search-facets.config';
-import { tap } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import { tap, takeUntil } from 'rxjs/operators';
+import { Observable, of, fromEvent, Subject } from 'rxjs';
 import helpers from '../../../common/helpers';
 
 const SEARCH_MODEL_ID = 'aw-search-layout';
 
 export class AwSearchLayoutDS extends LayoutDataSource {
+  private destroyed$: Subject<any> = new Subject();
   private communication: any;
   private configuration: any;
   private mainState: any;
@@ -18,37 +20,30 @@ export class AwSearchLayoutDS extends LayoutDataSource {
   private searchModel: SearchModel;
   private prettifyLabels: any;
   private configKeys: any;
+  private fallback: string;
+  private resetButtonEnabled = true;
 
   public pageTitle: string;
   public resultsTitle: string;
   public totalCount: number;
   public currentPage: any = 1; // pagination value (url param)
   public pageSize = 10; // linked objects page size
+  public sidebarIsSticky = false;
+  public isFirstLoading = true;
+  public resultsLoading = false;
 
   public options: any;
 
   public orderByLabel = 'Ordina per';
   public orderByOptions: any = [
     {
-      value: 'text_DESC',
-      label: 'Ordine alfabetico (DESC)'
+      value: 'label_ASC',
+      label: 'Ordine alfabetico (A→Z)'
     },
     {
-      value: 'text_ASC',
-      label: 'Ordine alfabetico (ASC)'
-    } /* {
-    value: 'score_DESC',
-    label: 'Ordine per rilevanza (DESC)'
-  }, {
-    value: 'score_ASC',
-    label: 'Ordine per rilevanza (ASC)'
-  }, {
-    value: 'date_DESC',
-    label: 'Ordina per data (DESC)'
-  }, {
-    value: 'date_ASC',
-    label: 'Ordina per data (ASC)'
-  } */
+      value: 'label_DESC',
+      label: 'Ordine alfabetico (Z→A)'
+    }
   ];
 
   onInit({ configuration, mainState, options, communication, search }) {
@@ -59,17 +54,44 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     this.options = options;
     this.prettifyLabels = this.configuration.get('labels');
     this.configKeys = this.configuration.get('config-keys');
+    this.fallback = this.configuration.get('search-layout').fallback;
 
     this.pageTitle = this.configuration.get('search-layout').title;
 
-    if (!this.search.model(SEARCH_MODEL_ID)) {
-      this.search.add(SEARCH_MODEL_ID, facetsConfig);
+    // remove first
+    // stateless search
+    if (this.search.model(SEARCH_MODEL_ID)) {
+      this.search.remove(SEARCH_MODEL_ID);
     }
+
+    this.search.add(SEARCH_MODEL_ID, cloneDeep(facetsConfig));
     this.searchModel = this.search.model(SEARCH_MODEL_ID);
 
-    this.doSearchRequest$().subscribe(() => {
+    // query params control
+    if (SearchService.queryParams) {
+      this.searchModel.updateFiltersFromQueryParams(SearchService.queryParams);
+      SearchService.queryParams = null;
+    }
+
+    // sidebar sticky control
+    this._sidebarStickyControl();
+
+    this.mainState.updateCustom('currentNav', 'ricerca');
+    this.mainState.update('headTitle', 'Arianna Web > Ricerca');
+  }
+
+  onDestroy() {
+    this.destroyed$.next();
+    SearchService.queryParams = null;
+  }
+
+  onSearchResponse() {
+    this.resetButtonEnabled = true;
+    if (this.isFirstLoading) {
+      this.isFirstLoading = false;
       this.one('facets-wrapper').update({ searchModel: this.searchModel });
-    });
+      this.searchModel.updateInputsFromFilters();
+    }
   }
 
   onOrderByChange(payload) {
@@ -87,6 +109,10 @@ export class AwSearchLayoutDS extends LayoutDataSource {
   onPaginationGoToChange(payload): Observable<boolean> {
     const page = payload.replace('goto-', '');
     return this._updateSearchPage(page);
+  }
+
+  resetPagination() {
+    this._updateSearchPage(1);
   }
 
   onResultsLimitChange(payload) {
@@ -197,5 +223,17 @@ export class AwSearchLayoutDS extends LayoutDataSource {
 
   private _normalizeItems(items) {
     return items.map(singleItem => ({ item: { ...singleItem } }));
+  }
+
+  private _sidebarStickyControl() {
+    const source$ = fromEvent(window, 'scroll');
+
+    source$.pipe(
+      takeUntil(this.destroyed$)
+    ).subscribe(() => {
+      const windowOffsetTop = window.pageYOffset,
+        wrapperOffsetTop = document.getElementsByClassName('sticky-parent')[0]['offsetTop'];
+      this.sidebarIsSticky = wrapperOffsetTop <= windowOffsetTop;
+    });
   }
 }

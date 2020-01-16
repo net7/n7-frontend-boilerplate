@@ -31,7 +31,9 @@
                 </div>
             </div>
 
-            <ng-container *ngIf="lb.dataSource.myResponse.fields && lb.dataSource.myResponse.fields.length > 0">
+            <ng-container *ngIf="
+            ((lb.dataSource.myResponse.fields || []).length > 0 && lb.dataSource.selectedTab == 'campi') ||
+            (lb.dataSource.showFields && lb.dataSource.selectedTab == 'overview')">
                 <div class="aw-entity__content-section aw-entity__content-section-overview"
                     [hidden]="lb.dataSource.selectedTab != 'overview' && lb.dataSource.selectedTab != 'campi'">
                     <div class="aw-entity__content-section-header">
@@ -70,7 +72,7 @@
                 </n7-pagination>
             </div>
 
-            <div class="aw-entity__content-section aw-entity__content-section-overview"
+            <div class="aw-entity__content-section aw-entity__content-section-overview aw-bubble-chart__{{lb.dataSource.selectedTab}}"
                 *ngIf="lb.dataSource.bubblesEnabled"
                 [hidden]="lb.dataSource.selectedTab != 'overview' && lb.dataSource.selectedTab != 'entita-collegate'">
                 <div class="aw-entity__content-section-header">
@@ -81,10 +83,19 @@
                         TUTTE LE ENTITÀ COLLEGATE <i class="n7-icon-angle-right"></i>
                     </button>
                 </div>
-                <div [style.overflow]="'hidden'">
-                    <aw-bubble-chart-wrapper [hover]="lb.widgets['aw-bubble-chart'].ds.currentHoverEntity"
-                        [emit]="lb.widgets['aw-bubble-chart'].emit" [container]="'bubble-chart-container-overview'"
-                        [buttons]="['goto']">
+                <!-- SMALL BUBBLE CHART -->
+                <div class="aw-home__bubble-chart-wrapper-small" *ngIf="lb.dataSource.selectedTab == 'overview'">
+                    <aw-bubble-chart-wrapper [emit]="lb.widgets['aw-bubble-chart'].emit"
+                        [container]="'bubble-chart-container'" [buttons]="['select', 'goto']">
+                        <n7-bubble-chart [data]="(lb.widgets['aw-bubble-chart'].ds.out$ | async)?.smallView"
+                            [emit]="lb.widgets['aw-bubble-chart'].emit">
+                        </n7-bubble-chart>
+                    </aw-bubble-chart-wrapper>
+                </div>
+                <!-- NORMAL BUBBLE CHART -->
+                <div class="aw-home__bubble-chart-wrapper" *ngIf="lb.dataSource.selectedTab == 'entita-collegate'">
+                    <aw-bubble-chart-wrapper [emit]="lb.widgets['aw-bubble-chart'].emit"
+                        [container]="'bubble-chart-container'" [buttons]="['select', 'goto']">
                         <n7-bubble-chart [data]="lb.widgets['aw-bubble-chart'].ds.out$ | async"
                             [emit]="lb.widgets['aw-bubble-chart'].emit">
                         </n7-bubble-chart>

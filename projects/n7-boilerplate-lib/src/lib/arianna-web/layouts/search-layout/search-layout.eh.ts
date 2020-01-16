@@ -1,16 +1,27 @@
 import { EventHandler } from '@n7-frontend/core';
 import { Subject } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, takeUntil } from 'rxjs/operators';
 
 export class AwSearchLayoutEH extends EventHandler {
+  private destroyed$: Subject<any> = new Subject();
+  private route: any;
   private facetsChange$: Subject<any> = new Subject();
+  private configuration: any;
 
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
         case 'aw-search-layout.init':
+          this.route = payload.route;
+          this.configuration = payload.configuration;
           this.dataSource.onInit(payload);
           this._listenToFacetsChange();
+          this._listenToRouterChanges();
+          break;
+
+        case 'aw-search-layout.destroy':
+          this.dataSource.onDestroy();
+          this.destroyed$.next();
           break;
 
         case 'aw-search-layout.orderbychange':
@@ -18,7 +29,17 @@ export class AwSearchLayoutEH extends EventHandler {
           this.facetsChange$.next();
           break;
 
+        case 'aw-search-layout.searchreset':
+          this.dataSource.resetButtonEnabled = false;
+          this.dataSource.searchModel.clear();
+          this.emitGlobal('navigate', {
+            handler: 'router',
+            path: [this.configuration.get('paths').searchBasePath]
+          });
+          break;
+
         default:
+          console.warn('(search) unhandled inner event of type', type)
           break;
       }
     });
@@ -26,7 +47,7 @@ export class AwSearchLayoutEH extends EventHandler {
     this.outerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
         case 'facets-wrapper.facetschange':
-          this.facetsChange$.next();
+          this.dataSource.resetPagination();
           break;
 
         case 'aw-linked-objects.pagination':
@@ -54,7 +75,7 @@ export class AwSearchLayoutEH extends EventHandler {
           const paths = this.dataSource.configuration.get('paths');
           this.emitGlobal('navigate', {
             handler: 'router',
-            path: [paths.entitaBasePath, payload]
+            path: [payload.type == undefined ? paths.schedaBasePath : paths.entitaBasePath, payload.id]
           });
           break;
         default:
@@ -67,9 +88,22 @@ export class AwSearchLayoutEH extends EventHandler {
     this.facetsChange$.pipe(
       debounceTime(500)
     ).subscribe(() => {
+      this.dataSource.resultsLoading = true;
       this.dataSource.doSearchRequest$().subscribe(() => {
+        this.dataSource.resultsLoading = false;
+        this.dataSource.onSearchResponse();
         this.emitGlobal('searchresponse', this.dataSource.getSearchModelId());
       });
     });
   }
+
+  private _listenToRouterChanges() {
+    this.route.queryParams.pipe(
+      takeUntil(this.destroyed$)
+    ).subscribe(params => {
+      this.emitOuter('queryparamschange', params);
+      this.facetsChange$.next();
+    });
+  }
+
 }
