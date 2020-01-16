@@ -30,6 +30,8 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   public sidebarIsSticky = false;
   public treeMaxHeight = '100%';
   public contentIsLoading = false;
+  public currentId: string | null = null;
+  public emptyLabel: string;
 
   onInit({ configuration, mainState, router, options, titleService, communication }) {
     this.configuration = configuration;
@@ -44,12 +46,13 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     this.metadataSectionTitle = this.configuration.get('scheda-layout')['metadata']['title'];
     this.hasSimilarItems = false;
     this.bubblesEnabled = this.configuration.get('features-enabled') ? this.configuration.get('features-enabled')['bubblechart'] : false;
-    this.one('aw-bubble-chart').updateOptions({ 
+    this.one('aw-bubble-chart').updateOptions({
       selectable: false,
       simple: true,
       config: this.configuration,
       limit: this.configuration.get('bubble-chart').bubbleLimit
-    })
+    });
+    this.emptyLabel = this.configuration.get('scheda-layout')['empty-label'];
 
     this.mainState.update('headTitle', 'Arianna Web > Patrimonio');
     this.mainState.update('pageTitle', 'Arianna Web: patrimonio Layout');

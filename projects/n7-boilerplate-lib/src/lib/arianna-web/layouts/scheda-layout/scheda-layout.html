@@ -61,6 +61,10 @@
             -->
         </div>
         <div class="aw-scheda__scheda-wrapper" *ngIf="!lb.dataSource.contentIsLoading">
+            <div *ngIf="!lb.dataSource.currentId"
+                 class="aw-scheda__intro-text"
+                 [innerHTML]="lb.dataSource.emptyLabel">
+            </div>
             <n7-breadcrumbs [data]="lb.widgets['aw-scheda-breadcrumbs'].ds.out$ | async"
                 [emit]="lb.widgets['aw-scheda-breadcrumbs'].emit">
             </n7-breadcrumbs>
