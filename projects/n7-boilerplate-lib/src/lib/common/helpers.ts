@@ -1,3 +1,5 @@
+import slug from 'slug';
+
 export default {
   prettifySnakeCase(key: string, label?: string) {
     if (label) {
@@ -7,5 +9,11 @@ export default {
   },
   ucFirst(str: string) {
     return str.charAt(0).toUpperCase() + str.slice(1);
+  },
+  slugify(str: string) {
+    if (!str) {
+      return '';
+    }
+    return slug(str, { lower: true });
   }
 };
