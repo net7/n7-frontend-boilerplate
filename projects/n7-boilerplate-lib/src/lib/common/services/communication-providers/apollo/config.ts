@@ -276,6 +276,23 @@ export const ApolloProviderConfig = {
               item {
                 label
                 id
+                fields {
+                  ...
+                  on KeyValueField {
+                    key
+                    value
+                  }
+                  ... on KeyValueFieldGroup {
+                    label
+                    fields {
+                      ...
+                      on KeyValueField {
+                        key
+                        value
+                      }
+                    }
+                  }
+                }
             }
             relatedTypesOfEntity {
               type
@@ -410,17 +427,51 @@ export const ApolloProviderConfig = {
                   key
                   value
                 }
-                ... on
-                KeyValueFieldGroup {
+                ... on KeyValueFieldGroup {
                   label
-                  fields
-                  {
+                  fields {
                     ...
                     on KeyValueField {
                       key
                       value
                     }
                   }
+                }
+              }
+              relatedEntities {
+                  count
+                  entity{
+                    id
+                    label
+                    typeOfEntity
+                  }
+              }
+              relatedItems {
+                  thumbnail
+                  item {
+                    label
+                    id
+                    fields {
+                      ...
+                      on KeyValueField {
+                        key
+                        value
+                      }
+                      ... on KeyValueFieldGroup {
+                        label
+                        fields {
+                          ...
+                          on KeyValueField {
+                            key
+                            value
+                          }
+                        }
+                      }
+                    }
+                }
+                relatedTypesOfEntity {
+                  type
+                  count
                 }
               }
             }
