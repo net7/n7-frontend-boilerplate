@@ -9,11 +9,11 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     private configuration: any;
     private facetInputs: any = {};
     private autocompletePopover: any;
-    private autocompletePopoverOpen: boolean = false;
+    private autocompletePopoverOpen = false;
     private autocompleteChanged$: Subject<string> = new Subject();
     public numOfItemsStr: string = null;
     public currentHoverEntity: any = null;
-    public hasScrollBackground: boolean = false;
+    public hasScrollBackground = false;
     public resultsLimit = -1;
     public selectedEntitiesIds = [];
     public outerLinks: any;
@@ -21,7 +21,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     public homeAutocompleteQuery: string;
     private destroyed$: Subject<any> = new Subject();
     // BUBBLE CHART DATA ↓
-    public bubblesEnabled: boolean = false; // true if this Arianna Web project has the bubble chart module
+    public bubblesEnabled = false; // true if this Arianna Web project has the bubble chart module
     public selectedBubbles: any[] = []      // array of IDs
     public lastBubbleResponse: any          // store last bubble response to refresh the graph with the same data
     public firstBubbleResponse: any         // store the first array of bubbles, to find them in case of zero results (entities data returned as empty array from backend)
@@ -125,6 +125,11 @@ export class AwHomeLayoutDS extends LayoutDataSource {
             config: this.configuration,
         })
         this.one('aw-linked-objects').update(response.itemsPagination);
+
+        // scroll control
+        setTimeout(() => {
+            this._scrollBackgroundControl();
+        });
     }
 
     public updateTags(onlyBubbles?: boolean) {
@@ -216,6 +221,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     }
 
     private _setHasScrollBackground({ scrollTop, scrollHeight, clientHeight }) {
+        console.log('scroll', scrollTop, scrollHeight, clientHeight);
         this.hasScrollBackground = scrollHeight > (scrollTop + clientHeight);
     }
 
