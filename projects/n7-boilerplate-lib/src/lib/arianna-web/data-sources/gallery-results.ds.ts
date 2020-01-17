@@ -11,9 +11,14 @@ export class AwGalleryResultsDS extends DataSource {
       {
         image: 'https://i.imgur.com/2xY0DWR.png',
         title: 'Costa di Sorrento',
+        classes: 'is-vertical',
         metadata: [
-          {label: 'Artista', value: 'John Davies'},
-          {label: 'Fotografia'}
+          {
+            items: [
+              {label: 'Artista', value: 'John Davies'},
+              {value: 'Fotografia'}
+            ]
+          }
         ]
       }
     )

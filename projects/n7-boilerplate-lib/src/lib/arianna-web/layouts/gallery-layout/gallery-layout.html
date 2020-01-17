@@ -81,7 +81,12 @@
         </ng-container>
 
         <!-- REAL GALLERY RESULTS -->
-        <div *ngFor="let item of (lb.widgets['aw-gallery-results'].ds.out$ | async)?.res" class="gallery-result"
+        <n7-item-preview 
+          *ngFor="let item of (lb.widgets['aw-gallery-results'].ds.out$ | async)?.res"
+          class="gallery-result is-vertical"
+          [data]="item">
+        </n7-item-preview>
+        <!-- <div *ngFor="let item of (lb.widgets['aw-gallery-results'].ds.out$ | async)?.res" class="gallery-result"
           (click)="lb.eventHandler.emitInner('openresult')">
           <img src="{{item.image}}" alt="result thumbnail" class="gallery-result__thumb">
           <div>{{item.title}}</div>
@@ -95,7 +100,7 @@
               </span>
             </div>
           </div>
-        </div>
+        </div> -->
         <n7-pagination [data]="(lb.widgets['aw-gallery-results'].ds.out$ | async)?.pagination"
           [emit]="lb.widgets['aw-gallery-results'].emit">
         </n7-pagination>
