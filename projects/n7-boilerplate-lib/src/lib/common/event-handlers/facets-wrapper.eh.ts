@@ -91,6 +91,11 @@ export class FacetsWrapperEH extends EventHandler {
       // signal
       this.emitOuter('facetschange');
 
+      // reset aditional params
+      queryParams.orderby = null;
+      queryParams.orderdirection = null;
+      queryParams.page = null;
+
       // router signal
       this.emitGlobal('navigate', {
         handler: 'router',

@@ -7,6 +7,7 @@ export class AwSearchLayoutEH extends EventHandler {
   private destroyed$: Subject<any> = new Subject();
   private route: any;
   private facetsChange$: Subject<any> = new Subject();
+  private aditionalParamsChange$: Subject<any> = new Subject();
   private configuration: any;
 
   public listen() {
@@ -17,6 +18,7 @@ export class AwSearchLayoutEH extends EventHandler {
           this.configuration = payload.configuration;
           this.dataSource.onInit(payload);
           this._listenToFacetsChange();
+          this._listenToAditionalParamsChange();
           this._listenToRouterChanges();
           break;
 
@@ -27,7 +29,7 @@ export class AwSearchLayoutEH extends EventHandler {
 
         case 'aw-search-layout.orderbychange':
           this.dataSource.onOrderByChange(payload);
-          this.facetsChange$.next();
+          this.aditionalParamsChange$.next();
           break;
 
         case 'aw-search-layout.searchreset':
@@ -54,20 +56,20 @@ export class AwSearchLayoutEH extends EventHandler {
         case 'aw-linked-objects.pagination':
           this.dataSource.onPaginationChange(payload).subscribe(changed => {
             if (changed) {
-              this.facetsChange$.next();
+              this.aditionalParamsChange$.next();
             }
           });
           break;
 
         case 'aw-linked-objects.change':
           this.dataSource.onResultsLimitChange(payload);
-          this.facetsChange$.next();
+          this.aditionalParamsChange$.next();
           break;
 
         case 'aw-linked-objects.goto':
           this.dataSource.onPaginationGoToChange(payload).subscribe(changed => {
             if (changed) {
-              this.facetsChange$.next();
+              this.aditionalParamsChange$.next();
             }
           });
           break;
@@ -76,7 +78,13 @@ export class AwSearchLayoutEH extends EventHandler {
           const paths = this.dataSource.configuration.get('paths');
           this.emitGlobal('navigate', {
             handler: 'router',
-            path: [payload.type == undefined ? paths.schedaBasePath : paths.entitaBasePath, payload.id, helpers.slugify(payload.title)]
+            path: [
+              payload.type == undefined
+                ? paths.schedaBasePath
+                : paths.entitaBasePath,
+              payload.id,
+              helpers.slugify(payload.title)
+            ]
           });
           break;
         default:
@@ -98,11 +106,40 @@ export class AwSearchLayoutEH extends EventHandler {
     });
   }
 
+  private _listenToAditionalParamsChange() {
+    this.aditionalParamsChange$.subscribe(() => {
+      const searchModel = this.dataSource.searchModel,
+        requestParams = searchModel.getRequestParams(),
+        queryParams = searchModel.filtersAsQueryParams(requestParams.filters);
+
+      Object.keys(queryParams).forEach(key => queryParams[key] = queryParams[key] || null);
+
+      // aditional params
+      queryParams.orderby = this.dataSource.orderBy;
+      queryParams.orderdirection = this.dataSource.orderDirection;
+      queryParams.page = this.dataSource.currentPage;
+
+      // router signal
+      this.emitGlobal('navigate', {
+        handler: 'router',
+        path: [],
+        queryParams
+      });
+    });
+  }
+
   private _listenToRouterChanges() {
     this.route.queryParams.pipe(
       takeUntil(this.destroyed$)
     ).subscribe(params => {
       this.emitOuter('queryparamschange', params);
+      // aditional params control
+      if (params.orderby && params.orderdirection) {
+        this.dataSource.onOrderByChange(`${params.orderby}_${params.orderdirection}`);
+      }
+      if (params.page) {
+        this.dataSource.onPaginationChange(`page-${params.page}`);
+      }
       this.facetsChange$.next();
     });
   }
