@@ -110,8 +110,6 @@
     }
 
     &.has-image {
-        grid-template-columns: $item-preview-image-size 1fr;
-
         .n7-item-preview__image {
             width: $item-preview-image-size;
             height: $item-preview-image-size;
@@ -137,6 +135,14 @@
             }
         }
     }
+}
+
+
+/* ------------------------------------ *\
+   #VERTICAL-WITH-IMAGE
+\* ------------------------------------ */
+.n7-item-preview.is-vertical.has-image {
+    border-bottom: 0;
 }
 
 

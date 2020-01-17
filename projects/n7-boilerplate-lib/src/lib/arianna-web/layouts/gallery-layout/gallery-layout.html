@@ -65,61 +65,93 @@
           </select>
         </div>
       </div>
+      
       <!-- Gallery details -->
       <div class="aw-gallery__results-wrapper">
 
-        <!-- GALLERY RESULTS LOADERS -->
-        <ng-container *ngIf="!(lb.widgets['aw-gallery-results'].ds.out$ | async)">
-          <n7-content-placeholder *ngFor="let i of [1,2,3,4,5,6,7,8,9]" [data]="{
-              blocks: [
-                  { classes: 'facet-placeholder-image' },
-                  { classes: 'facet-placeholder-title' },
-                  { classes: 'facet-placeholder-subtitle' }
-              ]
-              }">
-          </n7-content-placeholder>
-        </ng-container>
+        <!-- Gallery results loader -->
+        <div *ngIf="!(lb.widgets['aw-gallery-results'].ds.out$ | async)"
+             class="aw-gallery__results-wrapper-loader n7-grid-3">
+             <n7-content-placeholder *ngFor="let i of [1,2,3,4,5,6,7,8,9]" [data]="{
+                blocks: [
+                    { classes: 'gallery-placeholder-image' },
+                    { classes: 'gallery-placeholder-title' },
+                    { classes: 'gallery-placeholder-subtitle' }
+                ]
+                }">
+            </n7-content-placeholder>
+            <n7-content-placeholder *ngFor="let i of [1,2,3,4,5,6,7,8,9]" [data]="{
+                blocks: [
+                    { classes: 'gallery-placeholder-image' },
+                    { classes: 'gallery-placeholder-title' },
+                    { classes: 'gallery-placeholder-subtitle' }
+                ]
+                }">
+            </n7-content-placeholder>
+            <n7-content-placeholder *ngFor="let i of [1,2,3,4,5,6,7,8,9]" [data]="{
+                blocks: [
+                    { classes: 'gallery-placeholder-image' },
+                    { classes: 'gallery-placeholder-title' },
+                    { classes: 'gallery-placeholder-subtitle' }
+                ]
+                }">
+            </n7-content-placeholder>
+            <n7-content-placeholder *ngFor="let i of [1,2,3,4,5,6,7,8,9]" [data]="{
+                blocks: [
+                    { classes: 'gallery-placeholder-image' },
+                    { classes: 'gallery-placeholder-title' },
+                    { classes: 'gallery-placeholder-subtitle' }
+                ]
+                }">
+            </n7-content-placeholder>
+            <n7-content-placeholder *ngFor="let i of [1,2,3,4,5,6,7,8,9]" [data]="{
+                blocks: [
+                    { classes: 'gallery-placeholder-image' },
+                    { classes: 'gallery-placeholder-title' },
+                    { classes: 'gallery-placeholder-subtitle' }
+                ]
+                }">
+            </n7-content-placeholder>
+            <n7-content-placeholder *ngFor="let i of [1,2,3,4,5,6,7,8,9]" [data]="{
+                blocks: [
+                    { classes: 'gallery-placeholder-image' },
+                    { classes: 'gallery-placeholder-title' },
+                    { classes: 'gallery-placeholder-subtitle' }
+                ]
+                }">
+            </n7-content-placeholder>
+        </div>
 
-        <!-- REAL GALLERY RESULTS -->
-        <n7-item-preview 
-          *ngFor="let item of (lb.widgets['aw-gallery-results'].ds.out$ | async)?.res"
-          class="gallery-result is-vertical"
-          [data]="item">
-        </n7-item-preview>
-        <!-- <div *ngFor="let item of (lb.widgets['aw-gallery-results'].ds.out$ | async)?.res" class="gallery-result"
-          (click)="lb.eventHandler.emitInner('openresult')">
-          <img src="{{item.image}}" alt="result thumbnail" class="gallery-result__thumb">
-          <div>{{item.title}}</div>
-          <div *ngIf="item.metadata" class="gallery-result__metadata">
-            <div *ngFor="let m of item.metadata">
-              <span *ngIf="m.label" class="gallery-result__metadata-label">
-                {{m.label}}
-              </span>
-              <span *ngIf="m.value" class="gallery-result__metadata-value">
-                {{m.value}}
-              </span>
+        <!-- Gallery results and pagination -->
+        <div class="aw-gallery__results">
+            <div class="aw-gallery__results-list n7-grid-3">
+                <n7-item-preview 
+                *ngFor="let item of (lb.widgets['aw-gallery-results'].ds.out$ | async)?.res"
+                class="gallery-result is-vertical"
+                [data]="item">
+                </n7-item-preview>
             </div>
-          </div>
-        </div> -->
-        <n7-pagination [data]="(lb.widgets['aw-gallery-results'].ds.out$ | async)?.pagination"
-          [emit]="lb.widgets['aw-gallery-results'].emit">
-        </n7-pagination>
 
-        <!-- <ng-container *ngIf="lb.dataSource.totalCount == 0">
-          <div class="aw-gallery__fallback">
-            <p class="aw-gallery__fallback-string">
-              {{ lb.dataSource.fallback }}
-            </p>
-            <button [disabled]="!lb.dataSource.resetButtonEnabled" class="n7-btn aw-gallery__fallback-button"
-              (click)="lb.eventHandler.emitInner('galleryreset', {})">
-              Resetta la ricerca
-            </button>
-          </div>
-        </ng-container>
-        <n7-pagination *ngIf="lb.dataSource.totalCount > 10"
-          [data]="(lb.widgets['aw-linked-objects'].ds.out$ | async)?.pagination"
-          [emit]="lb.widgets['aw-linked-objects'].emit">
-        </n7-pagination> -->
+            <n7-pagination [data]="(lb.widgets['aw-gallery-results'].ds.out$ | async)?.pagination"
+            [emit]="lb.widgets['aw-gallery-results'].emit">
+            </n7-pagination>
+
+            <!-- <ng-container *ngIf="lb.dataSource.totalCount == 0">
+            <div class="aw-gallery__fallback">
+                <p class="aw-gallery__fallback-string">
+                {{ lb.dataSource.fallback }}
+                </p>
+                <button [disabled]="!lb.dataSource.resetButtonEnabled" class="n7-btn aw-gallery__fallback-button"
+                (click)="lb.eventHandler.emitInner('galleryreset', {})">
+                Resetta la ricerca
+                </button>
+            </div>
+            </ng-container>
+            <n7-pagination *ngIf="lb.dataSource.totalCount > 10"
+            [data]="(lb.widgets['aw-linked-objects'].ds.out$ | async)?.pagination"
+            [emit]="lb.widgets['aw-linked-objects'].emit">
+            </n7-pagination> -->
+        </div>
       </div>
     </div>
   </div>
