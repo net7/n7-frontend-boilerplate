@@ -9,42 +9,35 @@ export class AwAutocompleteWrapperDS extends DataSource {
       return { suggestion: [], loading: true };
     }
 
-    const regex = new RegExp('(.*?)' + key + '(.*)', 'i') // 'i' = case insensitive
     const suggestion = []
     const config = this.options.config
-    const maxLength = config.get('home-layout')['max-item-length'] / 2
+    const maxLength = (config.get('home-layout')['max-item-length'] || 20)
     const fResults = response.results.filter(el => typeof el.entity == 'object')
 
     fResults.forEach(el => {
       if (el.entity.id == 'fallback') { // build and return fallback data
         suggestion.push({
-          match: '',
+          text: el.entity.label,
           payload: 'fallback-simple-autocomplete',
-          prefix: el.entity.label,
-          suffix: ''
         })
         return { suggestion }
       }
-      // divide prefix and suffix
-      let match = regex.exec(el.entity.label)
-      if (match) {
-        let prefix = match[1]
-        let suffix = match[2]
-        // string manipulation
-        if (maxLength && (prefix.length > maxLength)) {
-          prefix = '...' + prefix.slice(prefix.length - maxLength, prefix.length)
-        }
-        if (maxLength && (suffix.length > maxLength)) {
-          suffix = suffix.slice(0, maxLength) + '...'
-        }
-        suggestion.push({
-          match: match.input.slice(match[1].length, match[1].length + key.length),
-          prefix,
-          suffix,
-          payload: el.entity.id
-        })
-      }
-    });
+      const text = this.stringTrim(el.entity.label, maxLength)
+      suggestion.push({
+        text,
+        payload: el.entity.id
+      })
+    })
     return { suggestion }
+  }
+  
+  private stringTrim = ( string, limit ) => {
+    /*
+      Slices the string and adds trailing ellipsis
+      TODO: Do not cut the string in the middle of an HTML tag!
+    */
+    if (string.length > limit) {
+      return string.slice(0, limit) + '…'
+    } else return string
   }
 }
