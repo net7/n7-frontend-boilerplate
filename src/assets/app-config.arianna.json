@@ -137,7 +137,7 @@
         "maxLength": "80"
       },
       "text": {
-        "data": "item.label",
+        "data": "item.text",
         "maxLength": "50"
       },
       "metadata": {

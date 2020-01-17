@@ -165,9 +165,8 @@ export class AwLinkedObjectsDS extends DataSource {
       labels = config.get('labels'),
       { dynamicPagination } = this.options,
       keys = config ? config.get('config-keys') : {};
-    let
-      paths = itemPreviewConfig.default, // item preview dynamic paths
-      lengthLimit: null,
+
+    let lengthLimit: null,
       resultsLimit: null,
       d = data.items ? data.items : data.relatedItems; // items to iterate over
 
@@ -191,13 +190,17 @@ export class AwLinkedObjectsDS extends DataSource {
       const customConfig = el.item.typeOfEntity
         ? itemPreviewConfig[el.item.typeOfEntity]
         : el.item.document_type
-          ? itemPreviewConfig[el.item.document_type] 
+          ? itemPreviewConfig[el.item.document_type]
           : null;
-
+      let paths;
       if (customConfig) {
         paths = {
-          ...paths,
+          ...itemPreviewConfig.default,
           ...customConfig
+        };
+      } else {
+        paths = {
+          ...itemPreviewConfig.default
         };
       }
       const enabledKeys = paths.metadata.info.selection.map(info => info.key),
@@ -214,22 +217,24 @@ export class AwLinkedObjectsDS extends DataSource {
         let classes = ['entita', 'search', 'oggetti-collegati'].includes(context) ? 'is-fullwidth' : '';
         classes += el.item.typeOfEntity ? " is-" + el.item.typeOfEntity.replace(/ /g, '-') : " is-oggetto-culturale";
 
-        const item = {
-          image: _get(el, paths.image, el.image),
-          title:
-            // if there is a max string length in config, use it
-            +paths.title.maxLength && _get(el, paths.title.data, el.item.label).length > +paths.title.maxLength ?
-              _get(el, paths.title.data, el.item.label).slice(0, +paths.title.maxLength) + '…' :
-              _get(el, paths.title.data, el.item.label),
-          text: !paths.text ? null : // make text block (in config) optional
-            +paths.text.maxLength && _get(el, paths.text.data, el.item.text).length > +paths.text.maxLength ?
-              _get(el, paths.text.data, el.item.text).slice(0, +paths.text.maxLength) + '…' :
-              _get(el, paths.text.data, el.item.text),
-          payload: { id: _get(el, paths.payload, el.item.id), type: el.item.typeOfEntity },
-          classes: classes,
-          metadata: infoDataItems.length || toeData ? [] : null,
-          breadcrumbs: null
-        };
+        const title = paths.title ? _get(el, paths.title.data, '') : '',
+          text = paths.text ? _get(el, paths.text.data, '') : '',
+          item = {
+            image: _get(el, paths.image, el.image),
+            title: !paths.title ? null :
+              // if there is a max string length in config, use it
+              +paths.title.maxLength && title.length > +paths.title.maxLength
+                ? title.slice(0, +paths.title.maxLength) + '…'
+                : title,
+            text: !paths.text ? null : // make text block (in config) optional
+              +paths.text.maxLength && text.length > +paths.text.maxLength 
+                ? text.slice(0, +paths.text.maxLength) + '…'
+                : text,
+            payload: { id: _get(el, paths.payload, el.item.id), type: el.item.typeOfEntity },
+            classes: classes,
+            metadata: infoDataItems.length || toeData ? [] : null,
+            breadcrumbs: null
+          };
       // metadata
       if (infoDataItems.length) {
         item.metadata.push({
