@@ -35,10 +35,7 @@ export class AwSearchLayoutEH extends EventHandler {
         case 'aw-search-layout.searchreset':
           this.dataSource.resetButtonEnabled = false;
           this.dataSource.searchModel.clear();
-          this.emitGlobal('navigate', {
-            handler: 'router',
-            path: [this.configuration.get('paths').searchBasePath]
-          });
+          this.aditionalParamsChange$.next();
           break;
 
         default:
@@ -118,6 +115,7 @@ export class AwSearchLayoutEH extends EventHandler {
       queryParams.orderby = this.dataSource.orderBy;
       queryParams.orderdirection = this.dataSource.orderDirection;
       queryParams.page = this.dataSource.currentPage;
+      queryParams.limit = this.dataSource.pageSize;
 
       // router signal
       this.emitGlobal('navigate', {
@@ -139,6 +137,9 @@ export class AwSearchLayoutEH extends EventHandler {
       }
       if (params.page) {
         this.dataSource.onPaginationChange(`page-${params.page}`);
+      }
+      if (params.limit) {
+        this.dataSource.setLimit(+params.limit);
       }
       this.facetsChange$.next();
     });

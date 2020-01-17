@@ -132,12 +132,17 @@ export class AwSearchLayoutDS extends LayoutDataSource {
   }
 
   onResultsLimitChange(payload) {
-    this.pageSize = payload;
-    this.searchModel.setPageConfigLimit(payload);
+    this.setLimit(payload);
 
     // reset page & offset
     this.currentPage = 1;
     this.searchModel.setPageConfigOffset(0);
+  }
+
+  setLimit(payload) {
+    this.pageSize = payload;
+    this.searchModel.setPageConfigLimit(payload);
+    this.searchModel.setPageConfigOffset((this.currentPage - 1) * this.pageSize);
   }
 
   public getSearchModelId = () => SEARCH_MODEL_ID;
