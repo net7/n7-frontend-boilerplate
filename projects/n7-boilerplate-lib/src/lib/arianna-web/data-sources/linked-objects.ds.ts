@@ -2,6 +2,8 @@ import { DataSource } from '@n7-frontend/core';
 import helpers from '../../common/helpers';
 import { get as _get } from 'lodash'; // used for cherry-picking object keys from app-config.json
 
+const PAGINATION_LIMIT = 5;
+
 export class AwLinkedObjectsDS extends DataSource {
 
   public currentPage: number;
@@ -14,7 +16,6 @@ export class AwLinkedObjectsDS extends DataSource {
   public paths: any; // use dynamic object paths from config
 
   protected transform(data) {
-    this.paths = this.options.config.get('item-preview').default;
     this.pageSize = this.options.size;
     this.totalObjects = data.totalCount;
     this.currentPage = this.options.page ? +this.options.page : 1;
@@ -97,7 +98,7 @@ export class AwLinkedObjectsDS extends DataSource {
       Returns the data for <n7-pagination> component.
     */
     const result = [];
-    let limit = this.paths.paginationLimit - 1;
+    let limit = PAGINATION_LIMIT - 1;
 
     if (totalPages <= limit) {
       limit = totalPages - 1;
@@ -203,22 +204,25 @@ export class AwLinkedObjectsDS extends DataSource {
           ...itemPreviewConfig.default
         };
       }
-      const enabledKeys = paths.metadata.info.selection.map(info => info.key),
-        infoData = _get(el, paths.metadata.info.data, el.item.fields),
-        infoDataItems = infoData ? infoData.filter(data => enabledKeys.indexOf(data.key) !== -1) : [],
-        toeData = _get(el, paths.metadata.toe.data, el.relatedTypesOfEntity),
-        breadcrumbs = _get(el, paths.metadata.breadcrumbs.data, el.breadcrumbs);
+      const enabledKeys = paths.metadata || [],
+        infoData = el.item.fields,
+        infoDataItems = infoData ? infoData.filter((info: any) => enabledKeys.indexOf(info.key) !== -1) : [],
+        toeData = paths.toe ? el.relatedTypesOfEntity : null,
+        breadcrumbs = paths.breadcrumbs ? el.breadcrumbs : null;
 
-        if( ['entita', 'search'].includes(context) ){
-          if( el.item.typeOfEntity && el.item.typeOfEntity != "" ) {
-            infoDataItems.push({"key": "Tipo di entità", "value": keys[el.item.typeOfEntity]['singular-label']})
+        if (['entita', 'search'].includes(context)) {
+          if (el.item.typeOfEntity && el.item.typeOfEntity !== '') {
+            infoDataItems.push({
+              key: 'Tipo di entità', 
+              value: keys[el.item.typeOfEntity]['singular-label']
+            });
           }
         }
         let classes = ['entita', 'search', 'oggetti-collegati'].includes(context) ? 'is-fullwidth' : '';
-        classes += el.item.typeOfEntity ? " is-" + el.item.typeOfEntity.replace(/ /g, '-') : " is-oggetto-culturale";
+        classes += el.item.typeOfEntity ? ' is-' + el.item.typeOfEntity.replace(/ /g, '-') : ' is-oggetto-culturale';
 
-        const title = paths.title ? _get(el, paths.title.data, '') : '',
-          text = paths.text ? _get(el, paths.text.data, '') : '',
+        const title = paths.title ? _get(el, paths.title.data) || '' : '',
+          text = paths.text ? _get(el, paths.text.data) || '' : '',
           item = {
             image: _get(el, paths.image, el.image),
             title: !paths.title ? null :
@@ -230,7 +234,10 @@ export class AwLinkedObjectsDS extends DataSource {
               +paths.text.maxLength && text.length > +paths.text.maxLength 
                 ? text.slice(0, +paths.text.maxLength) + '…'
                 : text,
-            payload: { id: _get(el, paths.payload, el.item.id), type: el.item.typeOfEntity },
+            payload: {
+              id: el.item.id,
+              type: el.item.typeOfEntity
+            },
             classes: classes,
             metadata: infoDataItems.length || toeData ? [] : null,
             breadcrumbs: null
@@ -239,9 +246,9 @@ export class AwLinkedObjectsDS extends DataSource {
       if (infoDataItems.length) {
         item.metadata.push({
           classes: 'n7-objects__metadata-artist',
-          items: infoDataItems.map(data => ({
-            label: helpers.prettifySnakeCase(data.key, labels[data.key]),
-            value: data.value
+          items: infoDataItems.map(dataItem => ({
+            label: helpers.prettifySnakeCase(dataItem.key, labels[dataItem.key]),
+            value: dataItem.value
           }))
         });
       }
@@ -250,13 +257,10 @@ export class AwLinkedObjectsDS extends DataSource {
           classes: 'n7-objects__metadata-linked',
           items: toeData.map(toe => {
             return { // persona: 6, Organizz: 12, Luoghi: 2, Concetti: 32
-              value: _get(toe, paths.metadata.toe.value, toe.count),
+              value: toe.count,
               // icon: 'n7-icon-bell' // TODO: link icon to config key
-              icon: keys[
-                _get(toe, paths.metadata.toe.icon, toe.type).replace(' ', '-')]
-                ? keys[_get(toe, paths.metadata.toe.icon, toe.type).replace(' ', '-')].icon
-                : '',
-              classes: 'color-' + _get(toe, paths.metadata.toe.icon, toe.type).replace(' ', '-')
+              icon: keys[toe.type.replace(' ', '-')] ? keys[toe.type.replace(' ', '-')].icon : '',
+              classes: 'color-' + toe.type.replace(' ', '-')
             };
           })
         });
@@ -264,10 +268,10 @@ export class AwLinkedObjectsDS extends DataSource {
       // breadcrumbs
       if (breadcrumbs) {
         item['breadcrumbs'] = { // n7-breadcrumbs uses this as it's own data
-          items: _get(el, paths.metadata.breadcrumbs.data, el.breadcrumbs).map(crumb => {
+          items: el.breadcrumbs.map(({ label, link }) => {
             return {
-              label: _get(crumb, paths.metadata.breadcrumbs.label, crumb.label),
-              payload: _get(crumb, paths.metadata.breadcrumbs.payload, crumb.link),
+              label,
+              payload: link,
             };
           })
         };

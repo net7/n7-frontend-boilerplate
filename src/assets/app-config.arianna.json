@@ -140,59 +140,14 @@
         "data": "item.text",
         "maxLength": "50"
       },
-      "metadata": {
-        "info": {
-          "selection": [
-            {
-              "key": "fase"
-            },
-            {
-              "key": "intitolazione"
-            }
-          ],
-          "data": "item.fields",
-          "value": "value",
-          "label": "key",
-          "customLabel": ""
-        },
-        "toe": {
-          "data": "relatedTypesOfEntity",
-          "value": "count",
-          "icon": "type"
-        },
-        "breadcrumbs": {
-          "data": "breadcrumbs",
-          "label": "label",
-          "payload": "link"
-        }
-      },
-      "payload": "item.id",
-      "paginationLimit": "5"
+      "metadata": ["fase", "intitolazione"],
+      "toe": true,
+      "breadcrumbs": true
     },
     "people": {
-      "metadata": {
-        "info": {
-          "selection": [
-            {
-              "key": "fase"
-            }
-          ],
-          "data": "item.fields",
-          "value": "value",
-          "label": "key",
-          "customLabel": ""
-        },
-        "toe": {
-          "data": "relatedTypesOfEntity",
-          "value": "count",
-          "icon": "type"
-        },
-        "breadcrumbs": {
-          "data": "breadcrumbs",
-          "label": "label",
-          "payload": "link"
-        }
-      }
+      "metadata": ["fase"],
+      "toe": false,
+      "breadcrumbs": false
     },
     "oggetto-culturale": {
       "title": {
