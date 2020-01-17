@@ -95,10 +95,14 @@
 \* ------------------------------------ */
 .aw-search {
     &__sidebar {
-        flex: 0 0 $aw-scheda-tree-width;
-        width: $aw-scheda-tree-width;
-        margin-right: $space*2;
         padding: $space*2 0 $space*4 $space*2;
+
+        &,
+        &-loading {
+            flex: 0 0 $aw-scheda-tree-width;
+            width: $aw-scheda-tree-width;
+            margin-right: $space*2;
+        }
 
         &.is-sticky {
             overflow-y: auto;
