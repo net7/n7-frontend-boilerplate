@@ -36,6 +36,17 @@ export class AwHomeLayoutEH extends EventHandler {
         case 'aw-home-layout.clearselection':
           this.emitOuter('clearselection')
           break;
+        case 'aw-home-layout.extendsearch':
+          this.emitGlobal('navigate', {
+            handler: 'router',
+            path: [this.configuration.get('paths').searchBasePath],
+            queryParams: {
+              query: this.dataSource.autocompleteValue,
+              "query-all": 1
+            }
+          });
+          break;
+          break;
         default:
           console.warn('(home) unhandled inner event of type: ', type)
           break;

@@ -195,7 +195,7 @@
       "input": {
         "placeholder": "Cerca in MAXXI"
       },
-      "fallback": "Nessun risultato, prova a <br> cambiare la ricerca."
+      "fallback": "La ricerca nel titolo non ha dato nessun risultato,<br>prova a cercare in tutti i campi."
     },
     "bottom-hero": {
       "title": "IL MAXXI",
