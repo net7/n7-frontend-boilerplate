@@ -133,10 +133,14 @@
     /* Facets */
     .aw-home__facets-wrapper {
         display: flex;
-        flex: 0 0 $facets-wrapper-width;
-        width: $facets-wrapper-width;
         justify-content: center;
         flex-direction: column;
+
+        &,
+        &-loading {
+            flex: 0 0 $facets-wrapper-width;
+            width: $facets-wrapper-width;
+        }
     }
 
     .aw-home__facet {
@@ -354,8 +358,11 @@
 
     /* Bubble chart */
     &__bubble-chart-wrapper {
-        flex: 0 0 auto;
-        width: calc(100% - #{$facets-wrapper-width} - #{$results-wrapper-width});
+        &,
+        &-loading {
+            flex: 0 0 auto;
+            width: calc(100% - #{$facets-wrapper-width} - #{$results-wrapper-width});
+        }
     }
 
     /* Results */
