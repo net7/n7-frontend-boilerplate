@@ -4,7 +4,7 @@ import { DvExampleLayoutConfig as config } from './example-layout.config';
 
 @Component({
     selector: 'dv-example-layout',
-    templateUrl: './example-layout.html'
+    templateUrl: './example-layout.html',
 })
 export class DvExampleLayoutComponent extends AbstractLayout implements OnInit, OnDestroy {
     constructor(){

@@ -13,6 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "preserveSymlinks": true,
             "fileReplacements": [
               {
                 "replace": "src/assets/app-config.json",
@@ -37,6 +38,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/flatpickr/dist/flatpickr.min.css",
               "src/styles/styles.scss"
             ],
             "scripts": []

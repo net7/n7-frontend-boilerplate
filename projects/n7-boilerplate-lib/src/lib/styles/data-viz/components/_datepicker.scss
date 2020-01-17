@@ -1,0 +1,38 @@
+/**
+ * DATEPICKER
+ *
+ * Brief description of the component here.
+ */
+ 
+/* ------------------------------------ *\
+   #DATEPICKER
+\* ------------------------------------ */
+
+.n7-datepicker {
+    .dv-datepicker-wrapper & {
+        margin-top: -$space;
+      
+        .flatpickr-input {
+            height: 0;
+            margin-top: -$form-input-height;
+            visibility: hidden;
+        }
+    }
+}
+
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: $breakpoint-laptop) {
+}
+
+@media all and (max-width: $breakpoint-ipad-portrait) {
+}
+
+@media all and (max-width: $breakpoint-smartphone-landscape) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}

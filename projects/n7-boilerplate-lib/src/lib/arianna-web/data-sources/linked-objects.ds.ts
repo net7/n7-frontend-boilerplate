@@ -211,7 +211,7 @@ export class AwLinkedObjectsDS extends DataSource {
             infoDataItems.push({"key": "Tipo di entità", "value": keys[el.item.typeOfEntity]['singular-label']})
           }
         }
-        let classes = ['entita', 'search'].includes(context) ? 'is-fullwidth' : '';
+        let classes = ['entita', 'search', 'oggetti-collegati'].includes(context) ? 'is-fullwidth' : '';
         classes += el.item.typeOfEntity ? " is-" + el.item.typeOfEntity.replace(/ /g, '-') : " is-oggetto-culturale";
 
         const item = {

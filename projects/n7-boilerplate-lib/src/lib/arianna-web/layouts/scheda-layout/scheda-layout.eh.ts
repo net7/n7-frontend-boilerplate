@@ -13,7 +13,10 @@ export class AwSchedaLayoutEH extends EventHandler {
           this.dataSource.onInit(payload);
           this.configuration = payload.configuration;
           this.route = payload.route;
-          let paramId = this.route.snapshot.params.id || "";
+          const paramId = this.route.snapshot.params.id || "";
+          if (paramId) {
+            this.dataSource.currentId = paramId;
+          }
           this.listenRoute();
           this.loadNavigation(paramId);
           break;
@@ -61,12 +64,15 @@ export class AwSchedaLayoutEH extends EventHandler {
     this.route.paramMap.subscribe(params => {
       const paramId = params.get('id');
       if (paramId) {
+        if (paramId) {
+          this.dataSource.currentId = paramId;
+        }
         this.dataSource.contentIsLoading = true;
         this.dataSource.loadItem(paramId).subscribe((response) => {
           this.dataSource.contentIsLoading = false;
           if (response) {
             this.dataSource.loadContent(response);
-            if (response.relatedEntities) {
+            if (Array.isArray(response.relatedEntities) && response.relatedEntities.length) {
               this.dataSource.hasBubbles = true;
               if (this.dataSource.bubblesEnabled) {
                 this.emitOuter('filterbubbleresponse', response.relatedEntities);

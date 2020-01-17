@@ -43,6 +43,12 @@
         position: relative;
         z-index: 4;
         box-shadow: 0 2px 20px 0 rgba(0,0,0,0.08);
+
+        &-no-item {
+            width: 50%;
+            margin: $space*5 auto;
+            text-align: center;
+        }
     }
 
     .n7-sidebar-header {
@@ -121,6 +127,21 @@
 \* ------------------------------------ */
 .aw-scheda__scheda-wrapper {
     background-color: $color-background-base;
+
+    /* Intro text */
+    .aw-scheda__intro-text {
+        padding: $space*2 $space*2.5;
+        text-align: left;
+
+        h2 {
+            font-size: $font-size-xxl;
+        }
+
+        h3 {
+            margin-top: $space*2;
+            font-size: $font-size-l;
+        }
+    }
 
     /* Breadcrumbs */
     .n7-breadcrumbs {
