@@ -354,7 +354,8 @@
 
     /* Bubble chart */
     &__bubble-chart-wrapper {
-        flex: 1;
+        flex: 0 0 auto;
+        width: calc(100% - #{$facets-wrapper-width} - #{$results-wrapper-width});
     }
 
     /* Results */
