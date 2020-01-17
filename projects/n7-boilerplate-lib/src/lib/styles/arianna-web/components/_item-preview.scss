@@ -121,6 +121,13 @@
         &.color-evento {
             color: $color-events;
         }
+        
+        &.has-image {
+            .n7-item-preview__image {
+                width: $item-preview-image-size;
+                height: $item-preview-image-size;
+            }
+        }
     }
 }
 
@@ -144,6 +151,14 @@
         text-align: right;
         margin-top: -$space/2;
     }
+}
+
+
+/* ------------------------------------ *\
+   #VERTICAL-WITH-IMAGE
+\* ------------------------------------ */
+.n7-item-preview.is-vertical.has-image {
+    border-bottom: 0;
 }
 
 
