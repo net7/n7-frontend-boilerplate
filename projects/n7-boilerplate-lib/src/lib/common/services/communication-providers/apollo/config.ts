@@ -483,6 +483,10 @@ export const ApolloProviderConfig = {
               subTitle
               image
               text
+              breadcrumbs {
+                label
+                link
+              }
               fields {
                 ...
                 on KeyValueField {
