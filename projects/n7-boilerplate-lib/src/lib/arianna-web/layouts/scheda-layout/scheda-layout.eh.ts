@@ -1,5 +1,6 @@
 import { EventHandler } from '@n7-frontend/core';
 import { Subject } from 'rxjs';
+import helpers from '../../../common/helpers';
 
 export class AwSchedaLayoutEH extends EventHandler {
   private destroyed$: Subject<any> = new Subject();
@@ -35,23 +36,35 @@ export class AwSchedaLayoutEH extends EventHandler {
       switch (type) {
         case 'aw-tree.click':
           if (payload) {
-            this.emitGlobal('navigate', { path: [this.configuration.get('paths').schedaBasePath + payload], handler: 'router' });
+            this.emitGlobal('navigate', {
+              path: [
+                this.configuration.get('paths').schedaBasePath,
+                payload.id,
+                helpers.slugify(payload.label)
+              ],
+              handler: 'router'
+            });
           }
           break;
         case 'aw-sidebar-header.click': this.dataSource.collapseSidebar();
           break;
         case "aw-bubble-chart.bubble-tooltip-goto-click":
-          if (!payload || !payload.entityId) return;
+          const { id, label } = payload;
           this.emitGlobal('navigate', {
             handler: 'router',
-            path: [`aw/entita/${payload.entityId}/overview`]
+            path: [
+              this.configuration.get('paths').entitaBasePath,
+              id,
+              helpers.slugify(label),
+              'overview'
+            ]
           });
           break;
         case 'aw-linked-objects.click':
           const paths = this.configuration.get('paths');
           this.emitGlobal('navigate', {
             handler: 'router',
-            path: [paths.schedaBasePath, payload.id]
+            path: [paths.schedaBasePath, payload.id, helpers.slugify(payload.title)]
           });
           break;
         default:

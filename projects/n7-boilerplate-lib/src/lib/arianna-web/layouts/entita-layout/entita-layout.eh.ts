@@ -1,5 +1,6 @@
 import { EventHandler } from '@n7-frontend/core';
 import { Subject } from 'rxjs';
+import helpers from '../../../common/helpers';
 
 export class AwEntitaLayoutEH extends EventHandler {
   private destroyed$: Subject<any> = new Subject();
@@ -26,17 +27,7 @@ export class AwEntitaLayoutEH extends EventHandler {
 
         case 'aw-entita-layout.showmore':
           if (payload) {
-            this.dataSource.handleNavUpdate(payload)
-            this.emitGlobal('navigate', {
-              path: [
-                this.configuration.get("paths").entitaBasePath
-                + '/' +
-                this.entityId
-                + '/' +
-                payload
-              ],
-              handler: 'router'
-            });
+            this.dataSource.handleNavUpdate(payload);
           }
           break;
 
@@ -80,10 +71,15 @@ export class AwEntitaLayoutEH extends EventHandler {
           )
           break;
         case "aw-bubble-chart.bubble-tooltip-goto-click":
-          if (!payload || !payload.entityId) return;
+          const { id, label } = payload;
           this.emitGlobal('navigate', {
             handler: 'router',
-            path: [`aw/entita/${payload.entityId}`]
+            path: [
+              this.configuration.get('paths').entitaBasePath,
+              id,
+              helpers.slugify(label),
+              'overview'
+            ]
           });
           break;
         case 'aw-bubble-chart.bubble-filtered':
@@ -95,7 +91,7 @@ export class AwEntitaLayoutEH extends EventHandler {
           const paths = this.configuration.get('paths');
           this.emitGlobal('navigate', {
             handler: 'router',
-            path: [payload.type == undefined ? paths.schedaBasePath : paths.entitaBasePath, payload.id]
+            path: [payload.type == undefined ? paths.schedaBasePath : paths.entitaBasePath, payload.id, helpers.slugify(payload.title)]
           });
           break;
         default:
@@ -115,7 +111,7 @@ export class AwEntitaLayoutEH extends EventHandler {
       if (params.get('id')) {
         if (this.dataSource.currentId == params.get('id') && !forceReload) return;
         // get item from response with id === id and return as promise
-        this.dataSource.loadItem(params.get('id'), params.get('tab')).subscribe(res => {
+        this.dataSource.loadItem(params.get('id'), params.get('slug'), params.get('tab')).subscribe(res => {
           if (res) {
             this.dataSource.loadContent(res);
             // remove the entity of this page

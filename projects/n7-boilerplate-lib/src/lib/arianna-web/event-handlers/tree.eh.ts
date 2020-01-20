@@ -11,7 +11,7 @@ export class AwTreeEH extends EventHandler {
         case 'menuitem':
           this.dataSource.setActive(payload.id);
           this.dataSource.highlightActive();
-          this.emitOuter('click', payload.id);
+          this.emitOuter('click', payload);
           break;
         default:
           break;

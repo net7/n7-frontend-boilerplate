@@ -1,5 +1,6 @@
 import { EventHandler } from '@n7-frontend/core';
 import { Subject, forkJoin } from 'rxjs';
+import helpers from '../../../common/helpers';
 
 export class AwHomeLayoutEH extends EventHandler {
   private destroyed$: Subject<any> = new Subject();
@@ -138,7 +139,7 @@ export class AwHomeLayoutEH extends EventHandler {
         case 'aw-linked-objects.click':
           this.emitGlobal('navigate', {
             handler: 'router',
-            path: [this.configuration.get("paths").schedaBasePath, payload.id]
+            path: [this.configuration.get("paths").schedaBasePath, payload.id, helpers.slugify(payload.title)]
           });
           break;
         case 'aw-autocomplete-wrapper.clickresult':
@@ -155,7 +156,7 @@ export class AwHomeLayoutEH extends EventHandler {
             }
             this.emitGlobal('navigate', {
               handler: 'router',
-              path: [basePath, payload.id]
+              path: [basePath, payload.id, helpers.slugify(payload.title)]
             });
           } else if (source === "showMore") {
             const query = this.dataSource.homeAutocompleteQuery;
@@ -172,6 +173,16 @@ export class AwHomeLayoutEH extends EventHandler {
           break;
         case 'aw-bubble-chart.lockfilter':
           this.emitOuter('lockfilter', payload) // let aw-home-facets-wrapper handle this event
+          break;
+        case 'aw-bubble-chart.bubble-tooltip-goto-click':
+          this.emitGlobal('navigate', {
+            handler: 'router',
+            path: [
+              this.configuration.get('paths').entitaBasePath,
+              payload.id,
+              helpers.slugify(payload.label)
+            ]
+          });
           break;
         default:
           break;

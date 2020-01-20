@@ -41,7 +41,8 @@ export class AwHomeAutocompleteDS extends DataSource {
           payload: {
             source: 'item',
             id: currentItem.id,
-            type: (groups[groupId] || {}).type
+            type: (groups[groupId] || {}).type,
+            title: currentItem.label
           }
         });
       }
