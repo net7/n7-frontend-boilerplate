@@ -208,7 +208,7 @@ export class AwLinkedObjectsDS extends DataSource {
         infoData = el.item.fields,
         infoDataItems = infoData ? infoData.filter((info: any) => enabledKeys.indexOf(info.key) !== -1) : [],
         toeData = paths.toe ? el.relatedTypesOfEntity : null,
-        breadcrumbs = paths.breadcrumbs ? el.breadcrumbs : null;
+        breadcrumbs = paths.breadcrumbs ? el.item.breadcrumbs : null;
 
         if (['entita', 'search'].includes(context)) {
           if (el.item.typeOfEntity && el.item.typeOfEntity !== '') {
@@ -268,7 +268,7 @@ export class AwLinkedObjectsDS extends DataSource {
       // breadcrumbs
       if (breadcrumbs) {
         item['breadcrumbs'] = { // n7-breadcrumbs uses this as it's own data
-          items: el.breadcrumbs.map(({ label, link }) => {
+          items: breadcrumbs.map(({ label, link }) => {
             return {
               label,
               payload: link,
