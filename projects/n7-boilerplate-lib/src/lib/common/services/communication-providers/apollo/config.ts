@@ -91,6 +91,8 @@ export const ApolloProviderConfig = {
             item {
               id
               label
+              title
+              text
               document_type
               fields
               {
