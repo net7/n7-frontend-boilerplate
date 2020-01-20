@@ -144,7 +144,7 @@
       "toe": true,
       "breadcrumbs": true
     },
-    "people": {
+    "persona": {
       "metadata": ["fase"],
       "toe": false,
       "breadcrumbs": false
