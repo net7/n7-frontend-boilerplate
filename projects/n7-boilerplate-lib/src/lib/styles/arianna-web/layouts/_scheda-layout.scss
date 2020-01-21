@@ -213,21 +213,11 @@
     }
 
     .aw-scheda__related-items {
-        display: flex;
-        flex-wrap: wrap;
-        margin-top: 0;
-        margin-right: -$grid-gutter-h;
         // display: grid;
         // grid-template-columns: repeat(2, 1fr);
         // grid-column-gap: $grid-gutter-h;
         padding: 0 $aw-scheda-content-padding $aw-scheda-content-padding $aw-scheda-content-padding;
 
-        > * {
-            width: 50%;
-            box-sizing: border-box;
-            border: 0 solid transparent; /* Create fake column gap */
-            border-width: 0 $grid-gutter-h 0 0;  /* Create fake column gap */
-        }
         /* Targeting elements in the last row */
         >*:nth-child(2n + 1):nth-last-child(-n + 2),
         >*:nth-child(2n + 1):nth-last-child(-n + 2) ~ * {
