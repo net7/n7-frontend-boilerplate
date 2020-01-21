@@ -10,7 +10,7 @@ export class AwHomeAutocompleteDS extends DataSource {
           groups = {};
 
     results.forEach(({ item, entity }) => {
-      const groupId = entity ? entity.typeOfEntity.replace(' ', '-') : 'oggetto-culturale',
+      const groupId = entity ? entity.typeOfEntity.replace(' ', '-') : item.document_type,
         groupConfig = keys[groupId],
         mainMetadata = groupConfig['main-metadata'],
         currentItem = item || entity;

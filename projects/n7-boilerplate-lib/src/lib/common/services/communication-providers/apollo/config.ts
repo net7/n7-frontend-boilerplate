@@ -362,6 +362,7 @@ export const ApolloProviderConfig = {
             item {
               id
               label
+              document_type
               fields {
                 ... on KeyValueField {
                   key
