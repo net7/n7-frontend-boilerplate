@@ -183,11 +183,6 @@
             [data]="lb.widgets['aw-home-autocomplete'].ds.out$ | async"
             [emit]="lb.widgets['aw-home-autocomplete'].emit">
         </n7-advanced-autocomplete>
-        <button *ngIf="(lb.widgets['aw-home-autocomplete'].ds.out$ | async)?.results.length == 0"
-                class="n7-btn"
-                (click)="lb.eventHandler.emitInner('extendsearch', $event.target)">
-            Cerca in tutti i campi
-        </button>
     </div>
 
     <!-- Simple autocomplete popover. DO NOT CHANGE parent div class! -->

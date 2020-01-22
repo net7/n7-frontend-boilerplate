@@ -36,17 +36,6 @@ export class AwHomeLayoutEH extends EventHandler {
         case 'aw-home-layout.clearselection':
           this.emitOuter('clearselection')
           break;
-        case 'aw-home-layout.extendsearch':
-          this.emitGlobal('navigate', {
-            handler: 'router',
-            path: [this.configuration.get('paths').searchBasePath],
-            queryParams: {
-              query: this.dataSource.autocompleteValue,
-              "query-all": 1
-            }
-          });
-          break;
-          break;
         default:
           console.warn('(home) unhandled inner event of type: ', type)
           break;
@@ -175,6 +164,15 @@ export class AwHomeLayoutEH extends EventHandler {
               handler: 'router',
               path: [basePath],
               queryParams: { query }
+            });
+          } else if (source === "extendsearch") { // click on <Cerca in tutti i campi> (call to action)
+            this.emitGlobal('navigate', {
+              handler: 'router',
+              path: [this.configuration.get('paths').searchBasePath],
+              queryParams: {
+                query: this.dataSource.autocompleteValue,
+                "query-all": 1
+              }
             });
           }
           break;

@@ -46,16 +46,18 @@ export class AwHomeAutocompleteDS extends DataSource {
       }
     });
 
+    const grouplist = Object.keys(groups).map(key => ({
+      group: {
+        title: groups[key].title,
+        icon: groups[key].icon,
+        classes: groups[key].classes
+      },
+      items: groups[key].items
+    }))
+
     return {
-      results: Object.keys(groups).map(key => ({
-        group: {
-          title: groups[key].title,
-          icon: groups[key].icon,
-          classes: groups[key].classes
-        },
-        items: groups[key].items
-      })),
-      actions: {
+      results: grouplist,
+      actions: grouplist.length > 0 ? {
         showMore: {
           text: `Visualizza tutti i ${totalCount} risultati`,
           anchor: {
@@ -63,6 +65,13 @@ export class AwHomeAutocompleteDS extends DataSource {
             queryParams: {
               query
             }
+          }
+        }
+      } : {
+        showMore: {
+          text: `Cerca in tutti i campi`,
+          payload: {
+            source: 'extendsearch'
           }
         }
       },
