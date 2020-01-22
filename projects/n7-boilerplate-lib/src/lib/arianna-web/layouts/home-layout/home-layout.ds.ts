@@ -204,12 +204,13 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     }
 
     private _scrollBackgroundControl() {
-        const el = document.getElementById('bubble-results-list'),
-            source$ = fromEvent(document.getElementById('bubble-results-list'), 'scroll');
+        const node = document.getElementById('bubble-results-list')
+        if (!node) return;
+        const source$ = fromEvent(node, 'scroll');
 
         // height control
         setTimeout(() => {
-            this._setHasScrollBackground(el);
+            this._setHasScrollBackground(node);
         }, 500);
 
         // scroll listen
@@ -220,9 +221,10 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         });
     }
 
-    private _setHasScrollBackground({ scrollTop, scrollHeight, clientHeight }) {
-        console.log('scroll', scrollTop, scrollHeight, clientHeight);
-        this.hasScrollBackground = scrollHeight > (scrollTop + clientHeight);
+    private _setHasScrollBackground(target) {
+        this.hasScrollBackground = target ? (
+            target.scrollHeight > (target.scrollTop + target.clientHeight)
+        ) : false
     }
 
     private _listenAutoCompleteChanges() {
