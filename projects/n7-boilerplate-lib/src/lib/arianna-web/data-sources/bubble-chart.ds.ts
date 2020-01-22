@@ -8,7 +8,8 @@ export class AwBubbleChartDS extends DataSource {
   public filters: any[] = []      // list of active filters to show only some TypeOfEntity(s)
   public closedEyes: any[] = []
   public tippyList: any[] = []    // list of tippy instances
-  public focusedBubble: string    // id of the focused bubble
+  public focusedBubble: string;    // id of the focused bubble
+  public focusedBubbleLabel: string; // id of the focused bubble
 
   protected transform(data) {
     const { config, smallChartSize } = this.options
@@ -114,8 +115,9 @@ export class AwBubbleChartDS extends DataSource {
       }
       return element.innerHTML
     }
-    const focusBubble = id => {
-      this.focusedBubble = id
+    const focusBubble = ({ id, label }) => {
+      this.focusedBubble = id;
+      this.focusedBubbleLabel = label;
     }
 
     if (this.filters.length > 0) { // apply filters to the data before adding tooltips
@@ -137,7 +139,7 @@ export class AwBubbleChartDS extends DataSource {
             delay: [150, 30],
             updateDuration: 400,
             onMount() {
-              focusBubble(b.entity.id)
+              focusBubble(b.entity);
             }
           })
         )

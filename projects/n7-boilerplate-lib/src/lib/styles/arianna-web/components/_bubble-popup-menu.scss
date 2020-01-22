@@ -45,11 +45,6 @@
             color: $color-text-link;
         }
 
-        // &:first-of-type {
-            
-            
-        // }
-
         & + .aw-bubble-popup-menu__link {
             margin-left: $space;
             padding-left: $space;
@@ -58,7 +53,6 @@
     }
 }
 
-//TODO DEVE ESSERE VALIDO IN OGNI LAYOUT
 .aw-bubble-chart-wrapper {
     width: 100%;
 }

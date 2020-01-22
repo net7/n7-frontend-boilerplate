@@ -308,14 +308,14 @@
     }
 
     /* Bubble chart in overview */
-    .aw-home__bubble-chart-wrapper-small {
+    .aw-entity__bubble-chart-wrapper-small {
         .n7-bubble-chart {
             height: $bubble-section-entity-overview;
         }    
     }
     
     /* Bubble chart detail */
-    .aw-home__bubble-chart-wrapper {
+    .aw-entity__bubble-chart-wrapper {
         .n7-bubble-chart {
             height: $bubble-section-entity-detail;
         }

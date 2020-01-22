@@ -15,9 +15,9 @@ export class AwBubbleChartEH extends EventHandler {
           this.dataSource.tippyMaker(this.dataSource.chartData) // make tooltips
           break;
         case 'aw-bubble-chart.bubble-tooltip-goto-click':
-          this.emitGlobal('navigate', {
-            handler: 'router',
-            path: [`aw/entita/${this.dataSource.focusedBubble}`]
+          this.emitOuter('bubble-tooltip-goto-click', {
+            id: this.dataSource.focusedBubble,
+            label: this.dataSource.focusedBubbleLabel
           });
           break;
         case 'aw-bubble-chart.bubble-tooltip-select-click':

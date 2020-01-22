@@ -200,22 +200,21 @@ export class AwLinkedObjectsDS extends DataSource {
         let classes = ['entita', 'search', 'oggetti-collegati'].includes(context) ? 'is-fullwidth' : '';
         classes += el.item.typeOfEntity ? " is-" + el.item.typeOfEntity.replace(/ /g, '-') : " is-oggetto-culturale";
 
-        const item = {
-          image: _get(el, paths.image, el.image),
-          title:
-            // if there is a max string length in config, use it
-            +paths.title.maxLength && _get(el, paths.title, el.item.label).length > +paths.title.maxLength ?
-              _get(el, paths.title, el.item.label).slice(0, +paths.title.maxLength) + '…' :
-              _get(el, paths.title, el.item.label),
-          text: !paths.text ? null : // make text block (in config) optional
-            +paths.text.maxLength && _get(el, paths.text.data, el.item.text).length > +paths.text.maxLength ?
-              _get(el, paths.text.data, el.item.text).slice(0, +paths.text.maxLength) + '…' :
-              _get(el, paths.text.data, el.item.text),
-          payload: { id: _get(el, paths.payload, el.item.id), type: el.item.typeOfEntity },
-          classes: classes,
-          metadata: infoDataItems.length || toeData ? [] : null,
-          breadcrumbs: breadcrumbs
-        };
+        const itemTitle = +paths.title.maxLength && _get(el, paths.title, el.item.label).length > +paths.title.maxLength
+          ? _get(el, paths.title, el.item.label).slice(0, +paths.title.maxLength) + '…'
+          : _get(el, paths.title, el.item.label),
+          item = {
+            image: _get(el, paths.image, el.image),
+            title: itemTitle,
+            text: !paths.text ? null : // make text block (in config) optional
+              +paths.text.maxLength && _get(el, paths.text.data, el.item.text).length > +paths.text.maxLength ?
+                _get(el, paths.text.data, el.item.text).slice(0, +paths.text.maxLength) + '…' :
+                _get(el, paths.text.data, el.item.text),
+            payload: { id: _get(el, paths.payload, el.item.id), type: el.item.typeOfEntity, title: itemTitle },
+            classes: classes,
+            metadata: infoDataItems.length || toeData ? [] : null,
+            breadcrumbs: breadcrumbs
+          };
       // metadata
       if (infoDataItems.length) {
         item.metadata.push({
