@@ -362,6 +362,7 @@ export const ApolloProviderConfig = {
             item {
               id
               label
+              document_type
               fields {
                 ... on KeyValueField {
                   key
@@ -483,6 +484,10 @@ export const ApolloProviderConfig = {
               subTitle
               image
               text
+              breadcrumbs {
+                label
+                link
+              }
               fields {
                 ...
                 on KeyValueField {

@@ -190,7 +190,7 @@ export class AwLinkedObjectsDS extends DataSource {
       const infoData = _get(el, paths.metadata.info.data, el.item.fields),
         infoDataItems = infoData ? infoData.filter(data => enabledKeys.indexOf(data.key) !== -1) : [],
         toeData = _get(el, paths.metadata.toe.data, el.relatedTypesOfEntity),
-        breadcrumbs = _get(el, paths.metadata.breadcrumbs.data, el.breadcrumbs);
+        breadcrumbs = _get(el, paths.metadata.breadcrumbs.data, el.item.breadcrumbs);
 
         if( ['entita', 'search'].includes(context) ){
           if( el.item.typeOfEntity && el.item.typeOfEntity != "" ) {
@@ -213,7 +213,7 @@ export class AwLinkedObjectsDS extends DataSource {
             payload: { id: _get(el, paths.payload, el.item.id), type: el.item.typeOfEntity, title: itemTitle },
             classes: classes,
             metadata: infoDataItems.length || toeData ? [] : null,
-            breadcrumbs: null
+            breadcrumbs: breadcrumbs
           };
       // metadata
       if (infoDataItems.length) {
@@ -244,7 +244,7 @@ export class AwLinkedObjectsDS extends DataSource {
       // breadcrumbs
       if (breadcrumbs) {
         item['breadcrumbs'] = { // n7-breadcrumbs uses this as it's own data
-          items: _get(el, paths.metadata.breadcrumbs.data, el.breadcrumbs).map(crumb => {
+          items: _get(el, paths.metadata.breadcrumbs.data, el.item.breadcrumbs).map(crumb => {
             return {
               label: _get(crumb, paths.metadata.breadcrumbs.label, crumb.label),
               payload: _get(crumb, paths.metadata.breadcrumbs.payload, crumb.link),

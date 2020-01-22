@@ -328,7 +328,7 @@
       "singular-label": "Oggetto Culturale",
       "input-placeholder": ""
     },
-    "aggregazione": {
+    "aggregazione-logica": {
       "color": {
         "hex": "#cc6f5c",
         "rgb": [204, 111, 92]

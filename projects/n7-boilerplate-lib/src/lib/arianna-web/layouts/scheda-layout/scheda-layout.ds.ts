@@ -140,7 +140,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
         items: []
       };
 
-      if (response.breadcrumb) {
+      if (response.breadcrumbs) {
         response.breadcrumbs.forEach(element => {
           breadcrumbs.items.push({
             label: element.label,
