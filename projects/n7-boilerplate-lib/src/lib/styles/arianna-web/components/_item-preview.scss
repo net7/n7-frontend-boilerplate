@@ -15,6 +15,18 @@
     &__title {
         margin-bottom: $space/2;
         font-weight: $font-weight-bold;
+
+        em {
+            font-style: normal;
+            background-color: $color-highlight;
+        }
+    }
+
+    &__text {
+        em {
+            font-style: normal;
+            background-color: $color-highlight;
+        }
     }
 
     &__metadata {
@@ -63,6 +75,11 @@
 
             &-value {
                 font-size: $font-size-s;
+
+                em {
+                    font-style: normal;
+                    background-color: $color-highlight;
+                }
             }
         }
 
