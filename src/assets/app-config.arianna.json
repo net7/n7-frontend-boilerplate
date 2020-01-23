@@ -3,7 +3,7 @@
     "defaultProvider": "apollo",
     "providers": {
       "apollo": {
-        "baseUrl": "https://aw-unifi-graphql.netseven.it/"
+        "baseUrl": "http://localhost:4000/"
       },
       "rest": {
         "baseUrl": "https://jsonplaceholder.typicode.com/",
@@ -217,7 +217,6 @@
     },
     "results-limit": 10,
     "max-item-length": 50,
-    "entitiesQuerySize": 500,
     "autocomplete-fallback": "Nessun risultato, prova a\ncambiare la ricerca.",
     "linked-objects-fallback": "Non sono stati trovati oggetti culturali collegati alle entità selezionate. Prova a cambiare le entità selezionate o resetta la ricerca."
   },

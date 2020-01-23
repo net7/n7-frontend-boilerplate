@@ -215,7 +215,7 @@ export class AwHomeLayoutEH extends EventHandler {
     this.dataSource.resultsListIsLoading = true;
     this.dataSource.makeRequest$('globalFilter', {
       selectedEntitiesIds,
-      entitiesListSize: this.configuration.get('home-layout')['entitiesQuerySize']
+      entitiesListSize: this.configuration.get('home-layout')['max-item-length']
     }).subscribe(res => {
       this.dataSource.resultsListIsLoading = false;
       if (res && res.entitiesData.length > 0) {
