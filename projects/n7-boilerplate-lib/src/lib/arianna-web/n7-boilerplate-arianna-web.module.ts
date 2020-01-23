@@ -1,6 +1,7 @@
 // MODULES
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { DvComponentsLibModule } from '@n7-frontend/components';
 import { N7BoilerplateCommonModule } from '../common/n7-boilerplate-common.module';
 // LAYOUTS
@@ -26,6 +27,7 @@ const COMPONENTS = [
   declarations: COMPONENTS,
   imports: [
     CommonModule,
+    RouterModule,
     DvComponentsLibModule,
     N7BoilerplateCommonModule,
   ],

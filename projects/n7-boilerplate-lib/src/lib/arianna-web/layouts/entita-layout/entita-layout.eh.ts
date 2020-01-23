@@ -110,7 +110,9 @@ export class AwEntitaLayoutEH extends EventHandler {
       // look for id
       if (params.get('id')) {
         if (this.dataSource.currentId === params.get('id') && !forceReload) {
-          if (this.dataSource.currentPage !== params.get('page')) {
+          if (this.dataSource.selectedTab !== params.get('tab')) {
+            this.dataSource.handleNavUpdate(params.get('tab'));
+          } else if (this.dataSource.currentPage !== params.get('page')) {
             this.dataSource.currentPage = params.get('page');
             this.dataSource.handlePageNavigation();
           }

@@ -83,7 +83,6 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       size: this.pageSize,
     });
     this.one('aw-linked-objects').update({ items: this.myResponse.relatedItems });
-    this.location.go(paginationParams.href + this.currentPage);
   }
 
   handleNavUpdate = tab => {
@@ -111,21 +110,14 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     if (tab == "overview" || tab == "entita-collegate") {
       setTimeout(() => { this.updateBubbes(this.myResponse.relatedEntities) }, 800);
     }
-    this.location.go([
-      this.configuration.get('paths').entitaBasePath,
-      this.currentId + '/',
-      this.currentSlug + '/',
-      tab,
-      page
-    ].join(''));
   }
 
   /*
     Updates the widgets on this layout, based on route
   */
   updateWidgets(data) {
-    const selected = this.selectedTab
-    this.one('aw-entita-nav').update({ data, selected })
+    const selected = this.selectedTab;
+    this.one('aw-entita-nav').update({ data, selected, basePath: this.getNavBasePath() })
     this.updateComponent(
       'aw-entita-metadata-viewer',
       this.myResponse.fields,
@@ -209,5 +201,13 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
         '/oggetti-collegati/'
       ].join('')
     };
+  }
+
+  public getNavBasePath() {
+    return [
+      this.configuration.get('paths').entitaBasePath,
+      this.currentId + '/',
+      this.currentSlug
+    ].join('');
   }
 }
