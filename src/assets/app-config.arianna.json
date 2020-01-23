@@ -125,7 +125,7 @@
         "weight": "normal"
       }
     },
-    "bubbleLimit": 120,
+    "bubbleLimit": 50,
     "transition": 750,
     "shuffle": true
   },
