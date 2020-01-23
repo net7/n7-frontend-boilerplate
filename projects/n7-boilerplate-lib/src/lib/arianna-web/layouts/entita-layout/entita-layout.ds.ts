@@ -66,42 +66,39 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     return this.communication.request$('getEntityDetails', {
       onError: (error) => console.error(error),
       params: { entityId: id, entitiesListSize: this.bubblesSize }
-    })
+    });
   }
 
   /*
     Updates selected tab on tab change
   */
   handlePageNavigation = () => {
+    const paginationParams = this._getPaginationParams();
     this.one('aw-linked-objects').updateOptions({
+      paginationParams,
       context: this.selectedTab,
       config: this.configuration,
       page: this.currentPage,
       pagination: true,
       size: this.pageSize,
-    })
+    });
     this.one('aw-linked-objects').update({ items: this.myResponse.relatedItems });
-    this.location.go([
-      this.configuration.get('paths').entitaBasePath,
-      this.currentId + '/',
-      this.currentSlug,
-      '/oggetti-collegati/',
-      this.currentPage
-    ].join(''));
-  };
+    this.location.go(paginationParams.href + this.currentPage);
+  }
 
   handleNavUpdate = tab => {
-    this.selectedTab = tab
-    this.updateWidgets(this.myResponse)
-    const page = tab == 'oggetti-collegati' ? "/1" : "";
-    if (tab == 'oggetti-collegati') {
+    this.selectedTab = tab;
+    this.updateWidgets(this.myResponse);
+    const page = tab === 'oggetti-collegati' ? '/1' : '';
+    if (tab === 'oggetti-collegati') {
       this.one('aw-linked-objects').updateOptions({
         context: this.selectedTab,
         config: this.configuration,
         page: this.currentPage,
         pagination: true,
+        paginationParams: this._getPaginationParams(),
         size: this.pageSize,
-      })
+      });
       this.one('aw-linked-objects').update({ items: this.myResponse.relatedItems });
     } else if (tab == "overview") {
       this.one('aw-linked-objects').updateOptions({
@@ -188,6 +185,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
         config: this.configuration,
         page: this.currentPage,
         pagination: true,
+        paginationParams: this._getPaginationParams(),
         size: this.pageSize,
       })
     } else {
@@ -200,5 +198,16 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     this.one('aw-linked-objects').update({ items: res.relatedItems });
     // update head title
     this.mainState.update('headTitle', `Arianna Web > Entità > ${this.myResponse.label}`);
+  }
+
+  private _getPaginationParams() {
+    return {
+      href: [
+        this.configuration.get('paths').entitaBasePath,
+        this.currentId + '/',
+        this.currentSlug,
+        '/oggetti-collegati/'
+      ].join('')
+    };
   }
 }

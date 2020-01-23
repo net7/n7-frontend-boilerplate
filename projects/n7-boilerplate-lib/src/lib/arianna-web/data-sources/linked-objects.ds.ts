@@ -306,7 +306,7 @@ export class AwLinkedObjectsDS extends DataSource {
   private _getPaginationAnchor(page){
     const { href, queryParams } = this.options.paginationParams;
     return {
-      href: queryParams ? href : `${href}/${page}`,
+      href: queryParams ? href : href + page,
       queryParams: queryParams ? {
         ...queryParams,
         page: page

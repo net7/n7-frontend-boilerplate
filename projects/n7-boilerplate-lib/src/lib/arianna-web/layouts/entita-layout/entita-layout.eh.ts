@@ -109,7 +109,13 @@ export class AwEntitaLayoutEH extends EventHandler {
     this.route.paramMap.subscribe(params => {
       // look for id
       if (params.get('id')) {
-        if (this.dataSource.currentId == params.get('id') && !forceReload) return;
+        if (this.dataSource.currentId === params.get('id') && !forceReload) {
+          if (this.dataSource.currentPage !== params.get('page')) {
+            this.dataSource.currentPage = params.get('page');
+            this.dataSource.handlePageNavigation();
+          }
+          return;
+        }
         // get item from response with id === id and return as promise
         this.dataSource.loadItem(params.get('id'), params.get('slug'), params.get('tab')).subscribe(res => {
           if (res) {
