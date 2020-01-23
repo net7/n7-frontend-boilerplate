@@ -71,11 +71,24 @@ export class AwLinkedObjectsDS extends DataSource {
 
   public addPagination = (page, totalPages, size) => {
     const sizeOptions = [10, 25, 50];
+
     this.loadedData.pagination = {
-      first: { payload: `goto-${1}`, classes: page === 1 ? 'is-disabled' : '' },
-      prev: { payload: `goto-${page / 1 - 1}`, classes: page === 1 ? 'is-disabled' : '' },
-      next: { payload: `goto-${page / 1 + 1}`, classes: page === totalPages ? 'is-disabled' : '' },
-      last: { payload: `goto-${totalPages}`, classes: page === totalPages ? 'is-disabled' : '' },
+      first: {
+        classes: page === 1 ? 'is-disabled' : '',
+        anchor: page !== 1 ? this._getPaginationAnchor(1) : null
+      },
+      prev: {
+        classes: page === 1 ? 'is-disabled' : '',
+        anchor: page !== 1 ? this._getPaginationAnchor(page / 1 - 1) : null
+      },
+      next: {
+        classes: page === totalPages ? 'is-disabled' : '',
+        anchor: page !== totalPages ? this._getPaginationAnchor(page / 1 + 1) : null
+      },
+      last: {
+        classes: page === totalPages ? 'is-disabled' : '',
+        anchor: page !== totalPages ? this._getPaginationAnchor(totalPages) : null
+      },
       links: this.makePagination(totalPages, page),
       select: {
         label: 'Numero di risultati',
@@ -96,7 +109,8 @@ export class AwLinkedObjectsDS extends DataSource {
       Called by this.unpackData() when this.options.page is defined.
       Returns the data for <n7-pagination> component.
     */
-    const result = [];
+    const result = [],
+      { href, queryParams } = this.options.paginationParams;
     let limit = this.paths.paginationLimit - 1;
 
     if (totalPages <= limit) {
@@ -129,18 +143,22 @@ export class AwLinkedObjectsDS extends DataSource {
       for (let i = firstPage; i <= lastPage; i++) {
         result.push({
           text: String(i),
-          payload: 'page-' + String(i),
-          classes: currentPage === i ? 'is-active' : ''
+          classes: currentPage === i ? 'is-active' : '',
+          anchor: currentPage !== i ? this._getPaginationAnchor(i) : null
         });
       }
     } else {
       result.push({
         text: '1',
-        payload: 'page-1',
-        classes: currentPage === 1 ? 'is-active' : ''
+        classes: currentPage === 1 ? 'is-active' : '',
+        anchor: currentPage !== 1 ? this._getPaginationAnchor(1) : null
       });
       for (let i = 1; i < totalPages; i++) {
-        result.push({ text: String(i + 1), payload: 'page-' + String(i + 1), classes: currentPage === i + 1 ? 'is-active' : '' });
+        result.push({
+          text: String(i + 1),
+          classes: currentPage === i + 1 ? 'is-active' : '',
+          anchor: currentPage !== i + 1 ? this._getPaginationAnchor(i + 1) : null
+        });
       }
     }
     return result;
@@ -203,6 +221,13 @@ export class AwLinkedObjectsDS extends DataSource {
         const itemTitle = +paths.title.maxLength && _get(el, paths.title, el.item.label).length > +paths.title.maxLength
           ? _get(el, paths.title, el.item.label).slice(0, +paths.title.maxLength) + '…'
           : _get(el, paths.title, el.item.label),
+          itemId = _get(el, paths.payload, el.item.id),
+          itemType = el.item.typeOfEntity,
+          itemHref = [
+            itemType ? config.get('paths').entitaBasePath : config.get('paths').schedaBasePath,
+            itemId,
+            helpers.slugify(itemTitle)
+          ].join('/'),
           item = {
             image: _get(el, paths.image, el.image),
             title: itemTitle,
@@ -210,7 +235,10 @@ export class AwLinkedObjectsDS extends DataSource {
               +paths.text.maxLength && _get(el, paths.text.data, el.item.text).length > +paths.text.maxLength ?
                 _get(el, paths.text.data, el.item.text).slice(0, +paths.text.maxLength) + '…' :
                 _get(el, paths.text.data, el.item.text),
-            payload: { id: _get(el, paths.payload, el.item.id), type: el.item.typeOfEntity, title: itemTitle },
+            anchor: {
+              href: itemHref
+            },
+            // payload: { id: _get(el, paths.payload, el.item.id), type: el.item.typeOfEntity, title: itemTitle },
             classes: classes,
             metadata: infoDataItems.length || toeData ? [] : null,
             breadcrumbs: breadcrumbs
@@ -273,5 +301,16 @@ export class AwLinkedObjectsDS extends DataSource {
       };
     }
     return { previews: result };
+  }
+
+  private _getPaginationAnchor(page){
+    const { href, queryParams } = this.options.paginationParams;
+    return {
+      href: queryParams ? href : `${href}/${page}`,
+      queryParams: queryParams ? {
+        ...queryParams,
+        page: page
+      } : null
+    };
   }
 }
