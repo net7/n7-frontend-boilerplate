@@ -64,8 +64,11 @@
         </div>
         <div class="aw-home__bubble-chart-wrapper" *ngIf="!!(lb.widgets['aw-bubble-chart'].ds.out$ | async)"
             [style.overflow]="lb.dataSource.loadingBubbles ? 'visible' : 'hidden'">
-            <aw-bubble-chart-wrapper [emit]="lb.widgets['aw-bubble-chart'].emit" [container]="'bubble-chart-container'"
-                [buttons]="['select', 'goto']">
+            <aw-bubble-chart-wrapper>
+                <aw-chart-tippy 
+                    [data]="lb.widgets['aw-chart-tippy'].ds.out$ | async"
+                    [emit]="lb.widgets['aw-chart-tippy'].emit">
+                </aw-chart-tippy>
                 <n7-bubble-chart [data]="lb.widgets['aw-bubble-chart'].ds.out$ | async"
                     [emit]="lb.widgets['aw-bubble-chart'].emit">
                 </n7-bubble-chart>

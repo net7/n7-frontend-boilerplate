@@ -1,5 +1,7 @@
 import { DataSource } from '@n7-frontend/core';
 import tippy, { createSingleton } from 'tippy.js';
+import helpers from 'n7-boilerplate-lib/lib/common/helpers';
+import { Subject, config } from 'rxjs';
 
 export class AwBubbleChartDS extends DataSource {
   public chartData: any = []      // data rendered into the graph
@@ -10,6 +12,7 @@ export class AwBubbleChartDS extends DataSource {
   public tippyList: any[] = []    // list of tippy instances
   public focusedBubble: string;    // id of the focused bubble
   public focusedBubbleLabel: string; // id of the focused bubble
+  public tippyMounted$: Subject<any> = new Subject()
 
   protected transform(data) {
     const { config, smallChartSize } = this.options
@@ -35,12 +38,13 @@ export class AwBubbleChartDS extends DataSource {
       shuffle,
     }
     /*
-      Two data streams are ouputted.
-      The default stream is for the normal visualization,
-      "smallView" is used for a compressed view of the same data.
+    Two data streams are ouputted.
+    The default stream is for the normal visualization,
+    "smallView" is used for a compressed view of the same data.
     */
-    return {
-      ...commonParams,
+   return {
+     ...commonParams,
+      anchorData: { href: '/placeholder/' },
       data: this.smartSlice(data),
       smallView: {
         ...commonParams,
@@ -115,9 +119,11 @@ export class AwBubbleChartDS extends DataSource {
       }
       return element.innerHTML
     }
-    const focusBubble = ({ id, label }) => {
-      this.focusedBubble = id;
-      this.focusedBubbleLabel = label;
+
+    const updateStream = entity => {
+      const { id, label } = entity
+      const href = `${this.options.config.get('paths')['entitaBasePath']}${id}/${helpers.slugify(label)}`
+      this.tippyMounted$.next(href)
     }
 
     if (this.filters.length > 0) { // apply filters to the data before adding tooltips
@@ -139,26 +145,11 @@ export class AwBubbleChartDS extends DataSource {
             delay: [150, 30],
             updateDuration: 400,
             onMount() {
-              focusBubble(b.entity);
+              updateStream(b.entity)
             }
           })
         )
       }
     });
-
-    // createSingleton(this.tippyList, {
-    //   interactive: true,
-    //   appendTo: document.body, // suppress interactive warning
-    //   arrow: true,
-    //   flip: false,
-    //   theme: 'light-border no-padding',
-    //   placement: 'top',
-    //   delay: [150, 30],
-    //   updateDuration: 400,
-    // onTrigger(ref) {
-    //   console.log({ref})
-    //   console.log('fired')
-    // }
-    // })
   }
 }

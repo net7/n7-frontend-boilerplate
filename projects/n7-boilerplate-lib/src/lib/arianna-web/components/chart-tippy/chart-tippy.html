@@ -1,0 +1,22 @@
+<div class="bubble-chart__tippy-template" style="display: none;">
+  <div id="bubble-popup-menu" class="aw-bubble-popup-menu">
+    <h2 class="aw-bubble-popup-menu__title">
+      <!-- Set by tippy builder fuction -->
+    </h2>
+    <p class="aw-bubble-popup-menu__text">
+      <!-- Set by tippy builder fuction -->
+    </p>
+    <div class="aw-bubble-popup-menu__actions">
+      <n7-anchor-wrapper 
+        [classes]="'aw-bubble-popup-menu__link'"
+        [data]="(data || {}).anchorData">
+        Vai alla scheda
+      </n7-anchor-wrapper> 
+      <span class="aw-bubble-popup-menu__link"
+        (onclick)="lb.eventHandler.emitInner('bubble-tooltip-select-click')">
+        <!-- onclick="onClick('bubble-tooltip-select-click', {})"> -->
+        <!-- Set by tippy builder function -->
+      </span>
+    </div>
+  </div>
+</div>
