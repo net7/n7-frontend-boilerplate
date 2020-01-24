@@ -44,33 +44,23 @@ export class AwEntitaLayoutEH extends EventHandler {
             this.dataSource.handleNavUpdate(payload)
           }
           break;
-        case 'aw-linked-objects.pagination':
-          console.log(payload)
-          this.dataSource.currentPage = +payload.split('-')[1];
-          this.dataSource.handlePageNavigation()
-          break
-        case 'aw-linked-objects.goto':
-          console.log(payload)
-          this.dataSource.currentPage = +payload.replace('goto-', '')
-          this.dataSource.handlePageNavigation()
-          break
         case 'aw-linked-objects.change': // changed page size value (pagination)
           this.dataSource.pageSize = payload;
-          this.dataSource.currentPage = 1 // reset page
-          let options = {
+          this.dataSource.currentPage = 1; // reset page
+          const options = {
             context: this.dataSource.selectedTab,
             config: this.dataSource.configuration,
             page: this.dataSource.currentPage,
             pagination: true,
             size: this.dataSource.pageSize,
-          }
+          };
           this.dataSource.updateComponent(
             'aw-linked-objects',
             { items: this.dataSource.myResponse.relatedItems },
             options
-          )
+          );
           break;
-        case "aw-bubble-chart.bubble-tooltip-goto-click":
+        case 'aw-bubble-chart.bubble-tooltip-goto-click':
           const { id, label } = payload;
           this.emitGlobal('navigate', {
             handler: 'router',
