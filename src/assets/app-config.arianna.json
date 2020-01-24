@@ -3,7 +3,7 @@
     "defaultProvider": "apollo",
     "providers": {
       "apollo": {
-        "baseUrl": "http://localhost:4000/"
+        "baseUrl": "https://aw-unifi-graphql.netseven.it/"
       },
       "rest": {
         "baseUrl": "https://jsonplaceholder.typicode.com/",
