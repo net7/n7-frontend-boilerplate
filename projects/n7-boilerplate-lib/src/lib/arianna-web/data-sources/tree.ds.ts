@@ -1,7 +1,9 @@
 import { DataSource } from '@n7-frontend/core';
+import helpers from '../../common/helpers';
 
 export class AwTreeDS extends DataSource {
   static dataCache: any = {};
+  private basePath: string;
   private rootId: string;
   private currentId: string;
   private activeId: string;
@@ -14,8 +16,9 @@ export class AwTreeDS extends DataSource {
   }
 
   public load(data) {
-    const { tree } = data;
+    const { tree, basePath } = data;
     this.rootId = tree.id;
+    this.basePath = basePath;
     // save in cache
     if (!AwTreeDS.dataCache[this.rootId]) {
       AwTreeDS.dataCache[this.rootId] = { flatIds: [], flatData: {} };
@@ -159,10 +162,8 @@ export class AwTreeDS extends DataSource {
         }
       } : null,
       meta: id,
-      payload: {
-        id,
-        source: 'menuitem',
-        label
+      anchor: {
+        href: `${this.basePath}/${id}/${helpers.slugify(label)}`
       }
     };
   }

@@ -8,11 +8,6 @@ export class AwTreeEH extends EventHandler {
         case 'toggle':
           this.dataSource.build(payload.id);
           break;
-        case 'menuitem':
-          this.dataSource.setActive(payload.id);
-          this.dataSource.highlightActive();
-          this.emitOuter('click', payload);
-          break;
         default:
           break;
       }
@@ -34,7 +29,16 @@ export class AwTreeEH extends EventHandler {
             this.dataSource.load(payload);
             this.dataSource.build(currentId);
             break;
-          }
+          case 'aw-scheda-layout.routechanged':
+            // has output (not first load)
+            if (this.dataSource.output) {
+              this.dataSource.setActive(payload);
+              this.dataSource.highlightActive();
+            }
+            break;
+          default:
+            break;
+        }
       });
   }
 
