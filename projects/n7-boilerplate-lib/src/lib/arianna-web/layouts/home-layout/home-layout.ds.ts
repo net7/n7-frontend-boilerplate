@@ -78,7 +78,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         return this.communication.request$('globalFilter', {
             onError: (error) => console.error(error),
             params: {
-                entitiesListSize: this.configuration.get('home-layout')['entitiesQuerySize']
+                entitiesListSize: this.configuration.get('bubble-chart')['bubbleLimit']
             },
         })
     }
