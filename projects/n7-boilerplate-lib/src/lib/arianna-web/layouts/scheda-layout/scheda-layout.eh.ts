@@ -34,18 +34,6 @@ export class AwSchedaLayoutEH extends EventHandler {
 
     this.outerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
-        case 'aw-tree.click':
-          if (payload) {
-            this.emitGlobal('navigate', {
-              path: [
-                this.configuration.get('paths').schedaBasePath,
-                payload.id,
-                helpers.slugify(payload.label)
-              ],
-              handler: 'router'
-            });
-          }
-          break;
         case 'aw-sidebar-header.click': this.dataSource.collapseSidebar();
           break;
         case 'aw-bubble-chart.bubble-tooltip-goto-click':
