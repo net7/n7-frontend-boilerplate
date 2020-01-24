@@ -60,13 +60,6 @@ export class AwSchedaLayoutEH extends EventHandler {
             ]
           });
           break;
-        case 'aw-linked-objects.click':
-          const paths = this.configuration.get('paths');
-          this.emitGlobal('navigate', {
-            handler: 'router',
-            path: [paths.schedaBasePath, payload.id, helpers.slugify(payload.title)]
-          });
-          break;
         default:
           break;
       }

@@ -87,13 +87,6 @@ export class AwEntitaLayoutEH extends EventHandler {
             this.emitOuter('filterbubbleresponse', payload.relatedEntities);
           }
           break;
-        case 'aw-linked-objects.click':
-          const paths = this.configuration.get('paths');
-          this.emitGlobal('navigate', {
-            handler: 'router',
-            path: [payload.type == undefined ? paths.schedaBasePath : paths.entitaBasePath, payload.id, helpers.slugify(payload.title)]
-          });
-          break;
         default:
           break;
       }

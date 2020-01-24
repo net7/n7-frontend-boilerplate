@@ -49,40 +49,9 @@ export class AwSearchLayoutEH extends EventHandler {
         case 'facets-wrapper.facetschange':
           this.dataSource.resetPagination();
           break;
-
-        case 'aw-linked-objects.pagination':
-          this.dataSource.onPaginationChange(payload).subscribe(changed => {
-            if (changed) {
-              this.aditionalParamsChange$.next();
-            }
-          });
-          break;
-
         case 'aw-linked-objects.change':
           this.dataSource.onResultsLimitChange(payload);
           this.aditionalParamsChange$.next();
-          break;
-
-        case 'aw-linked-objects.goto':
-          this.dataSource.onPaginationGoToChange(payload).subscribe(changed => {
-            if (changed) {
-              this.aditionalParamsChange$.next();
-            }
-          });
-          break;
-
-        case 'aw-linked-objects.click':
-          const paths = this.dataSource.configuration.get('paths');
-          this.emitGlobal('navigate', {
-            handler: 'router',
-            path: [
-              payload.type == undefined
-                ? paths.schedaBasePath
-                : paths.entitaBasePath,
-              payload.id,
-              helpers.slugify(payload.title)
-            ]
-          });
           break;
         default:
           break;
