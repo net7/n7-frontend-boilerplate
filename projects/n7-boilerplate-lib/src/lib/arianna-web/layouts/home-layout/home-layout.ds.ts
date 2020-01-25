@@ -231,7 +231,8 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         this.one('aw-home-autocomplete').updateOptions({
             keys: this.configuration.get('config-keys'),
             config: this.configuration,
-            labels: this.configuration.get('labels')
+            labels: this.configuration.get('labels'),
+            paths: this.configuration.get('paths')
         });
         this.autocompleteChanged$.pipe(
             debounceTime(500),
@@ -245,7 +246,10 @@ export class AwHomeLayoutDS extends LayoutDataSource {
                 }
             }).subscribe((response) => {
                 this.homeAutocompleteIsLoading = false;
-                this.one('aw-home-autocomplete').update(response);
+                this.one('aw-home-autocomplete').update({
+                    response,
+                    query: value
+                });
             });
         });
     }
