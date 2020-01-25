@@ -199,7 +199,10 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
         this.currentId + '/',
         this.currentSlug,
         '/oggetti-collegati/'
-      ].join('')
+      ].join(''),
+      queryParams: {
+        page: this.currentPage
+      }
     };
   }
 

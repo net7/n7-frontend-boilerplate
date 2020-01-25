@@ -129,7 +129,8 @@
                     <h2 class="aw-entity__content-section-title">Oggetti collegati</h2>
 
                     <a *ngIf="lb.dataSource.selectedTab === 'overview' "
-                    [routerLink]="[lb.dataSource.getNavBasePath() + '/oggetti-collegati/1']" 
+                    [routerLink]="[lb.dataSource.getNavBasePath() + '/oggetti-collegati/']" 
+                    [queryParams]="{ page: 1 }" 
                     class="n7-btn n7-btn-light">
                         TUTTI GLI OGGETTI COLLEGATI <i class="n7-icon-angle-right"></i>
                     </a>

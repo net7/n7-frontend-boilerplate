@@ -1,6 +1,7 @@
 import { EventHandler } from '@n7-frontend/core';
 import { Subject } from 'rxjs';
 import helpers from '../../../common/helpers';
+import { map } from 'rxjs/operators';
 
 export class AwEntitaLayoutEH extends EventHandler {
   private destroyed$: Subject<any> = new Subject();
@@ -87,7 +88,16 @@ export class AwEntitaLayoutEH extends EventHandler {
   /**
    * Listens to routing events of this layout.
    */
-  private listenRoute(selectedItem = "", forceReload = false) {
+  private listenRoute(selectedItem = '', forceReload = false) {
+    // listen for "page" query param changes
+    this.route.queryParams.pipe(
+      map((params: any) => params.page)
+    ).subscribe(page => {
+      if (this.dataSource.currentPage !== page) {
+        this.dataSource.currentPage = page;
+        this.dataSource.handlePageNavigation();
+      }
+    });
     // get URL parameters with angular's paramMap
     this.route.paramMap.subscribe(params => {
       // look for id
@@ -95,9 +105,6 @@ export class AwEntitaLayoutEH extends EventHandler {
         if (this.dataSource.currentId === params.get('id') && !forceReload) {
           if (this.dataSource.selectedTab !== params.get('tab')) {
             this.dataSource.handleNavUpdate(params.get('tab'));
-          } else if (this.dataSource.currentPage !== params.get('page')) {
-            this.dataSource.currentPage = params.get('page');
-            this.dataSource.handlePageNavigation();
           }
           return;
         }
