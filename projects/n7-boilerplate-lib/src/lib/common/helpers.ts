@@ -15,5 +15,8 @@ export default {
       return '';
     }
     return slug(str, { lower: true });
+  },
+  browserIsIE() {
+    return window.navigator.userAgent.match(/(MSIE|Trident)/);
   }
 };
