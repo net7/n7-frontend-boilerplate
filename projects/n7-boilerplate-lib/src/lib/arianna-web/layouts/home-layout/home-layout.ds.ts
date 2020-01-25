@@ -88,15 +88,14 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     }
 
     parseInitialRequest(response) {
-        this.firstBubbleResponse = response.entitiesData
-        const facetData = []
+        this.firstBubbleResponse = response.entitiesData;
+        const facetData = [];
         response.typeOfEntityData.forEach((toe) => {
-            const TOEconfigData = this.configuration.get("config-keys")[toe.type.replace(" ", "-")];
+            const TOEconfigData = this.configuration.get('config-keys')[toe.type];
             facetData.push({
                 ...toe,
                 enabled: true,
                 locked: false,
-                configKey: toe.type.replace(" ", "-"),
                 ...TOEconfigData
             });
         });
@@ -161,30 +160,32 @@ export class AwHomeLayoutDS extends LayoutDataSource {
             first response. If the needed bubble data cannot be found, ask the backend
             for that bubble's data.
         */
-        let queryList = [] // list of pending queries
-        let tagsData = []  // list of tags data built from query
+        const queryList = []; // list of pending queries
+        const tagsData = [];  // list of tags data built from query
         this.selectedBubbles.forEach(b => { // try to get the data of each selected bubble
-            let theBubble = this.firstBubbleResponse.find(el => el.entity.id == b)
+            const theBubble = this.firstBubbleResponse.find(el => el.entity.id === b);
+            const bubbleConfig = this.configuration.get('config-keys')[theBubble.entity.typeOfEntity];
             if (theBubble) { // if a bubble was found
                 tagsData.push({
                     label: theBubble.entity.label,
                     icon: 'n7-icon-close',
                     payload: b,
-                    classes: `tag-${theBubble.entity.typeOfEntity.replace(/ /g, '-')}`
+                    classes: `tag-${bubbleConfig['class-name']}`
                 })
             } else { // if the bubble was not found, make a query
-                let params = { entityId: b, entitiesListSize: 1 }
-                queryList.push(this.makeRequest$('getMissingBubble', params))
+                const params = { entityId: b, entitiesListSize: 1 };
+                queryList.push(this.makeRequest$('getMissingBubble', params));
             }
         });
         if (queryList.length > 0) { // if there are pending bubble queries
             forkJoin(queryList).subscribe(forkres => {
                 forkres.forEach(r => {
+                    const bubbleConfig = this.configuration.get('config-keys')[r.typeOfEntity];
                     tagsData.push({
                         label: r.label,
                         icon: 'n7-icon-close',
                         payload: r.id,
-                        classes: `tag-${r.typeOfEntity.replace(/ /g, '-')}`
+                        classes: `tag-${bubbleConfig['class-name']}`
                     })
                 });
                 this.one('aw-home-item-tags-wrapper').update(tagsData);
