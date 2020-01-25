@@ -1,6 +1,7 @@
 import { LayoutDataSource } from '@n7-frontend/core';
 import { fromEvent, Subject, of, merge } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import helpers from 'n7-boilerplate-lib/lib/common/helpers';
 
 export class AwSchedaLayoutDS extends LayoutDataSource {
   static tree: any = null;
@@ -173,6 +174,10 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   }
 
   private _sidebarStickyControl() {
+    // no sticky for Internet Explorer
+    if (helpers.browserIsIE()) {
+      return;
+    }
     const source$ = fromEvent(window, 'scroll');
 
     merge(source$, this.stickyControlTrigger$).pipe(
