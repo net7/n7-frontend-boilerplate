@@ -12,7 +12,7 @@ export class AwHomeFacetsWrapperDS extends DataSource {
     this.lastData = data
     const headers: any[] = [];
     const inputs: any[] = [];
-    const facetData = data
+    const facetData = data;
     const lockedFacets = this.lockedFacets // locked means that the eye cannot be closed
     const closedEyes = this.closedEyes     // list of closed eyes
 
@@ -80,9 +80,9 @@ export class AwHomeFacetsWrapperDS extends DataSource {
       const headerClasses = [];
       const iconClasses = [facet.icon];
       if (!facet.enabled) { headerClasses.push('is-disabled'); }
-      if (facet.configKey) {
-        headerClasses.push(`color-${facet.configKey}`);
-        iconClasses.push(`color-${facet.configKey}`);
+      if (facet['class-name']) {
+        headerClasses.push(`color-${facet['class-name']}`);
+        iconClasses.push(`color-${facet['class-name']}`);
       }
       // make array of headers data
       headers.push({

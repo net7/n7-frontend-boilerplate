@@ -276,7 +276,8 @@
       "label": "Persone",
       "singular-label": "Persona",
       "input-placeholder": "Cerca una persona",
-      "main-metadata": "data_nascita"
+      "main-metadata": "data_nascita",
+      "class-name": "persona"
     },
     "luogo": {
       "color": {
@@ -286,7 +287,8 @@
       "icon": "n7-icon-map1",
       "label": "Luoghi",
       "singular-label": "Luogo",
-      "input-placeholder": "Cerca un luogo"
+      "input-placeholder": "Cerca un luogo",
+      "class-name": "luogo"
     },
     "concetto": {
       "color": {
@@ -295,9 +297,10 @@
       },
       "icon": "n7-icon-lightbulb",
       "label": "Concetti",
-      "input-placeholder": "Cerca un concetto"
+      "input-placeholder": "Cerca un concetto",
+      "class-name": "concetto"
     },
-    "cosa-notevole": {
+    "cosa notevole": {
       "color": {
         "hex": "#5eab7b",
         "rgb": [94, 171, 123]
@@ -305,7 +308,8 @@
       "icon": "n7-icon-lightbulb",
       "label": "Cose notevoli",
       "singular-label": "Cosa notevole",
-      "input-placeholder": "Cerca un concetto"
+      "input-placeholder": "Cerca un concetto",
+      "class-name": "cosa-notevole"
     },
     "organizzazione": {
       "color": {
@@ -315,7 +319,8 @@
       "icon": "n7-icon-building",
       "label": "Organizzazioni",
       "singular-label": "Organizzazione",
-      "input-placeholder": "Cerca un'organizzazione"
+      "input-placeholder": "Cerca un'organizzazione",
+      "class-name": "organizzazione"
     },
     "oggetto-culturale": {
       "color": {
@@ -325,7 +330,8 @@
       "icon": "n7-icon-file3",
       "label": "Oggetti Culturali",
       "singular-label": "Oggetto Culturale",
-      "input-placeholder": ""
+      "input-placeholder": "",
+      "class-name": "oggetto-culturale"
     },
     "aggregazione-logica": {
       "color": {
@@ -335,7 +341,8 @@
       "icon": "n7-icon-archive",
       "label": "Fondi",
       "singular-label": "Fondo",
-      "input-placeholder": ""
+      "input-placeholder": "",
+      "class-name": "aggregazione-logica"
     },
     "famiglia": {
       "color": {
@@ -345,7 +352,8 @@
       "icon": "n7-icon-lightbulb",
       "label": "Famiglia",
       "singular-label": "Famiglia",
-      "input-placeholder": "Cerca una famiglia"
+      "input-placeholder": "Cerca una famiglia",
+      "class-name": "familia"
     },
     "evento": {
       "color": {
@@ -355,7 +363,8 @@
       "icon": "n7-icon-calendar-alt",
       "label": "Evento",
       "singular-label": "Evento",
-      "input-placeholder": "Cerca un evento"
+      "input-placeholder": "Cerca un evento",
+      "class-name": "evento"
     }
   },
   "paths": {

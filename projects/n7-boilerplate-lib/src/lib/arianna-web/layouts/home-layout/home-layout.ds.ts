@@ -84,15 +84,14 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     }
 
     parseInitialRequest(response) {
-        this.firstBubbleResponse = response.entitiesData
-        const facetData = []
+        this.firstBubbleResponse = response.entitiesData;
+        const facetData = [];
         response.typeOfEntityData.forEach((toe) => {
-            const TOEconfigData = this.configuration.get("config-keys")[toe.type.replace(" ", "-")];
+            const TOEconfigData = this.configuration.get('config-keys')[toe.type];
             facetData.push({
                 ...toe,
                 enabled: true,
                 locked: false,
-                configKey: toe.type.replace(" ", "-"),
                 ...TOEconfigData
             });
         });
