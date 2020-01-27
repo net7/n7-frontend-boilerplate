@@ -35,14 +35,16 @@
 
         input[type="text"] {
             border: none;
+            cursor: pointer;
         }
     }
 
     &__dropdown {
-        margin-top: -$form-border-size;
+        margin-top: -$form-border-size*2;
         position: absolute;
         right: 0;
         left: 0;
+        background: #ffffff;
         border-bottom-right-radius: $border-radius;
         border-bottom-left-radius: $border-radius;
         border-right: $form-border-size solid $color-border-normal;
@@ -53,6 +55,7 @@
             margin-top: 0;
             margin-bottom: 0;
             padding: $space*1.5 $space;
+            border-top: 1px solid $color-border-normal;
             list-style: none;
             font-size: $font-size-s;
         }
