@@ -198,7 +198,7 @@ export class AwLinkedObjectsDS extends DataSource {
           }
         }
         let classes = ['entita', 'search', 'oggetti-collegati'].includes(context) ? 'is-fullwidth' : '';
-        classes += el.item.typeOfEntity ? " is-" + el.item.typeOfEntity.replace(/ /g, '-') : " is-oggetto-culturale";
+        classes += el.item.typeOfEntity ? ' is-' + config.get('config-keys')[el.item.typeOfEntity]['class-name'] : ' is-oggetto-culturale';
 
         const itemTitle = +paths.title.maxLength && _get(el, paths.title, el.item.label).length > +paths.title.maxLength
           ? _get(el, paths.title, el.item.label).slice(0, +paths.title.maxLength) + '…'
@@ -232,11 +232,10 @@ export class AwLinkedObjectsDS extends DataSource {
             return { // persona: 6, Organizz: 12, Luoghi: 2, Concetti: 32
               value: _get(toe, paths.metadata.toe.value, toe.count),
               // icon: 'n7-icon-bell' // TODO: link icon to config key
-              icon: keys[
-                _get(toe, paths.metadata.toe.icon, toe.type).replace(' ', '-')]
-                ? keys[_get(toe, paths.metadata.toe.icon, toe.type).replace(' ', '-')].icon
+              icon: keys[_get(toe, paths.metadata.toe.icon, toe.type)]
+                ? keys[_get(toe, paths.metadata.toe.icon, toe.type)].icon
                 : '',
-              classes: 'color-' + _get(toe, paths.metadata.toe.icon, toe.type).replace(' ', '-')
+              classes: 'color-' + keys[_get(toe, paths.metadata.toe.icon, toe.type)]['class-name']
             };
           })
         });
