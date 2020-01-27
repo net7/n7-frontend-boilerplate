@@ -10,7 +10,7 @@ export class AwHomeAutocompleteDS extends DataSource {
           groups = {};
 
     results.forEach(({ item, entity }) => {
-      const groupId = entity ? entity.typeOfEntity.replace(' ', '-') : item.document_type,
+      const groupId = entity ? entity.typeOfEntity : item.document_type,
         groupConfig = keys[groupId],
         mainMetadata = groupConfig['main-metadata'],
         currentItem = item || entity;
@@ -20,7 +20,7 @@ export class AwHomeAutocompleteDS extends DataSource {
         groups[groupId] = {
           title: label,
           icon,
-          classes: `color-${groupId}`,
+          classes: `color-${groupConfig['class-name']}`,
           items: [],
           type: groupId
         };
