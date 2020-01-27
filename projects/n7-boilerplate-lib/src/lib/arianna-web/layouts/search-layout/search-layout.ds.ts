@@ -230,12 +230,11 @@ export class AwSearchLayoutDS extends LayoutDataSource {
       .filter(f => f.id === 'query-links')
       .forEach(f => {
         f.data.forEach(dataItem => {
-          const key = dataItem.value.replace(' ', '-'),
-            config = this.configKeys[key];
+          const config = this.configKeys[dataItem.value];
           if (config) {
             dataItem.options = {
               icon: config.icon,
-              classes: `color-${key}`
+              classes: `color-${config['class-name']}`
             };
           }
         });
