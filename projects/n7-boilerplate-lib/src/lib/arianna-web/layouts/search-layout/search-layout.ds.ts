@@ -248,6 +248,10 @@ export class AwSearchLayoutDS extends LayoutDataSource {
   }
 
   private _sidebarStickyControl() {
+    // no sticky for Internet Explorer
+    if (helpers.browserIsIE()) {
+      return;
+    }
     const source$ = fromEvent(window, 'scroll');
 
     source$.pipe(

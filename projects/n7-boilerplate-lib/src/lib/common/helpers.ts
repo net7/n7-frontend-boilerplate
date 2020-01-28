@@ -19,5 +19,8 @@ export default {
     const parsedDoc = domParser.parseFromString(str, 'text/html');
     const parsedString = parsedDoc.body.textContent || '';
     return slug(parsedString, { lower: true });
+  },
+  browserIsIE() {
+    return window.navigator.userAgent.match(/(MSIE|Trident)/);
   }
 };
