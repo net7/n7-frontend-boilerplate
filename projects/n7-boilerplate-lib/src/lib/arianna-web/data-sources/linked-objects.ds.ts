@@ -273,9 +273,16 @@ export class AwLinkedObjectsDS extends DataSource {
       if (breadcrumbs) {
         item['breadcrumbs'] = { // n7-breadcrumbs uses this as it's own data
           items: _get(el, paths.metadata.breadcrumbs.data, el.item.breadcrumbs).map(crumb => {
+            const label = _get(crumb, paths.metadata.breadcrumbs.label, crumb.label);
             return {
-              label: _get(crumb, paths.metadata.breadcrumbs.label, crumb.label),
-              payload: _get(crumb, paths.metadata.breadcrumbs.payload, crumb.link),
+              label,
+              anchor: {
+                href: [
+                  config.get('paths').schedaBasePath,
+                  crumb.link + '/',
+                  helpers.slugify(label)
+                ].join(''),
+              }
             };
           })
         };
