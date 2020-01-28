@@ -1,15 +1,15 @@
 import { DataSource } from '@n7-frontend/core';
 import tippy, { createSingleton } from 'tippy.js';
+import helpers from 'n7-boilerplate-lib/lib/common/helpers';
+import { Subject, config } from 'rxjs';
 
 export class AwBubbleChartDS extends DataSource {
-  public chartData: any = []      // data rendered into the graph
-  public draw: any = null;        // exposed component draw function to update the view
-  public selected: string[] = []  // list of selected bubbles
-  public filters: any[] = []      // list of active filters to show only some TypeOfEntity(s)
-  public closedEyes: any[] = []
-  public tippyList: any[] = []    // list of tippy instances
-  public focusedBubble: string;    // id of the focused bubble
-  public focusedBubbleLabel: string; // id of the focused bubble
+  public chartData: any = []         // data rendered into the graph
+  public draw: any = null;           // exposed component draw function to update the view
+  public selected: string[] = []     // list of selected bubbles
+  public filters: any[] = []         // list of active filters to show only some TypeOfEntity(s)
+  public closedEyes: any[] = []      // array of the activated eye filters 
+  public tippyList: any[] = []       // list of tippy instances
 
   protected transform(data) {
     const { config, smallChartSize } = this.options
@@ -35,12 +35,13 @@ export class AwBubbleChartDS extends DataSource {
       shuffle,
     }
     /*
-      Two data streams are ouputted.
-      The default stream is for the normal visualization,
-      "smallView" is used for a compressed view of the same data.
+    Two data streams are ouputted.
+    The default stream is for the normal visualization,
+    "smallView" is used for a compressed view of the same data.
     */
-    return {
-      ...commonParams,
+   return {
+     ...commonParams,
+      anchorData: { href: '/placeholder/' },
       data: this.smartSlice(data),
       smallView: {
         ...commonParams,
@@ -92,73 +93,5 @@ export class AwBubbleChartDS extends DataSource {
     } else {
       this.selected.push(id) // add selection
     }
-  }
-
-  tippyMaker = bubbles => {
-    // flush existing tooltips
-    this.tippyList.forEach(t => { if (t) { t.destroy() } })
-    this.tippyList = []
-
-    const buildTooltip = bubble => {
-      let element = <Element>document.getElementsByClassName('bubble-chart__tippy-template')[0].cloneNode(true)
-      let gotoButton = element.getElementsByClassName('aw-bubble-popup-menu__text')[0]
-      gotoButton.innerHTML =
-        `È collegato a ${bubble.count} entità`
-      element.getElementsByClassName('aw-bubble-popup-menu__title')[0].innerHTML =
-        `${bubble.entity.label}`
-      let selectButton = element.getElementsByClassName('aw-bubble-popup-menu__link')[1]
-      if (this.options.simple) {
-        if (selectButton) selectButton.remove()
-      } else {
-        let toggleBubbleText = this.selected.includes(bubble.entity.id) ? `Deseleziona` : `Seleziona`
-        selectButton.innerHTML = toggleBubbleText
-      }
-      return element.innerHTML
-    }
-    const focusBubble = ({ id, label }) => {
-      this.focusedBubble = id;
-      this.focusedBubbleLabel = label;
-    }
-
-    if (this.filters.length > 0) { // apply filters to the data before adding tooltips
-      bubbles = bubbles.filter(el => !this.filters.includes(el.entity.typeOfEntity.replace(/ /g, '-')))
-    }
-    // make new tooltips
-    bubbles.forEach(b => {
-      let group: Element = document.getElementById(`g_${b.entity.id}`) // select 
-      if (group) {
-        this.tippyList.push( // add this tippy to the array of instances
-          tippy(group, {
-            content: buildTooltip(b),
-            interactive: true,
-            appendTo: document.body, // suppress interactive warning
-            arrow: true,
-            flip: false,
-            theme: 'light-border no-padding',
-            placement: 'top',
-            delay: [150, 30],
-            updateDuration: 400,
-            onMount() {
-              focusBubble(b.entity);
-            }
-          })
-        )
-      }
-    });
-
-    // createSingleton(this.tippyList, {
-    //   interactive: true,
-    //   appendTo: document.body, // suppress interactive warning
-    //   arrow: true,
-    //   flip: false,
-    //   theme: 'light-border no-padding',
-    //   placement: 'top',
-    //   delay: [150, 30],
-    //   updateDuration: 400,
-    // onTrigger(ref) {
-    //   console.log({ref})
-    //   console.log('fired')
-    // }
-    // })
   }
 }

@@ -54,6 +54,9 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       config: this.configuration,
       limit: this.configuration.get('bubble-chart').bubbleLimit
     });
+    this.one('aw-chart-tippy').updateOptions({
+      basePath: this.configuration.get('paths')['entitaBasePath']
+    })
     this.emptyLabel = this.configuration.get('scheda-layout')['empty-label'];
 
     this.mainState.update('headTitle', 'Arianna Web > Patrimonio');
@@ -151,8 +154,14 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
         response.breadcrumbs.forEach(element => {
           breadcrumbs.items.push({
             label: element.label,
-            payload: element.link
-          });
+            anchor: {
+              href: [
+                this.configuration.get('paths').schedaBasePath,
+                element.link + '/',
+                helpers.slugify(element.label)
+              ].join('')
+            }
+          })
         });
         this.one('aw-scheda-breadcrumbs').update(breadcrumbs);
       }

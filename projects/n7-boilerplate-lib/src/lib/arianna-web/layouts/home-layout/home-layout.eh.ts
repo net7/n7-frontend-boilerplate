@@ -44,17 +44,22 @@ export class AwHomeLayoutEH extends EventHandler {
 
     this.outerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
+        case 'aw-bubble-chart.d3end': // bounce the event, from bubble-chart to chart-tippy
+          this.emitOuter('d3end', payload)
+          break;
+        case 'aw-chart-tippy.select':
+          this.emitOuter('select', payload)
+          break;
         case 'aw-hero.enter':
-        case 'aw-hero.click':
           const query = payload.value;
           this.emitGlobal('navigate', {
             handler: 'router',
-            path: [this.configuration.get("paths").searchBasePath],
+            path: [this.configuration.get('paths').searchBasePath],
             queryParams: { query }
           });
           break;
         case 'aw-hero.change':
-          this.dataSource.autocompleteValue = payload.value
+          this.dataSource.autocompleteValue = payload.value;
           this.dataSource.onHeroChange(payload.value);
           break;
         case 'aw-home-facets-wrapper.click':
@@ -136,12 +141,6 @@ export class AwHomeLayoutEH extends EventHandler {
             }
           })
           break;
-        case 'aw-linked-objects.click':
-          this.emitGlobal('navigate', {
-            handler: 'router',
-            path: [this.configuration.get("paths").schedaBasePath, payload.id, helpers.slugify(payload.title)]
-          });
-          break;
         case 'aw-autocomplete-wrapper.clickresult':
           this.handleSimpleAutocompleteClick(payload)
           break;
@@ -174,17 +173,18 @@ export class AwHomeLayoutEH extends EventHandler {
         case 'aw-bubble-chart.lockfilter':
           this.emitOuter('lockfilter', payload) // let aw-home-facets-wrapper handle this event
           break;
-        case 'aw-bubble-chart.bubble-tooltip-goto-click':
-          this.emitGlobal('navigate', {
-            handler: 'router',
-            path: [
-              this.configuration.get('paths').entitaBasePath,
-              payload.id,
-              helpers.slugify(payload.label)
-            ]
-          });
-          break;
+        // case 'aw-bubble-chart.bubble-tooltip-goto-click':
+        //   this.emitGlobal('navigate', {
+        //     handler: 'router',
+        //     path: [
+        //       this.configuration.get('paths').entitaBasePath,
+        //       payload.id,
+        //       helpers.slugify(payload.label)
+        //     ]
+        //   });
+        //   break;
         default:
+          // console.warn('(home) unhandled outer event of type', type)
           break;
       }
     });

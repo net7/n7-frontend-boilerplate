@@ -1,7 +1,7 @@
 import { DataSource } from '@n7-frontend/core';
 
 export class AwHeroDS extends DataSource {
-  public currentInputValue: string = ''
+  public currentInputValue = '';
 
   protected transform(data){
     const { title, text, button, backgroundImage, input } = data;
@@ -11,11 +11,13 @@ export class AwHeroDS extends DataSource {
       backgroundImage,
       button: {
         text: button.text,
-        payload: 'cerca'
+        anchor: {
+          payload: 'cerca'
+        }
       },
       input: {
         placeholder: input.placeholder,
-        payload: "cerca-in-maxxi"
+        payload: 'cerca-in-maxxi'
       }
     };
   }

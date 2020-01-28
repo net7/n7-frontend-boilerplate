@@ -14,7 +14,7 @@ export class AwSchedaLayoutEH extends EventHandler {
           this.dataSource.onInit(payload);
           this.configuration = payload.configuration;
           this.route = payload.route;
-          const paramId = this.route.snapshot.params.id || "";
+          const paramId = this.route.snapshot.params.id || '';
           if (paramId) {
             this.dataSource.currentId = paramId;
           }
@@ -34,21 +34,12 @@ export class AwSchedaLayoutEH extends EventHandler {
 
     this.outerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
-        case 'aw-tree.click':
-          if (payload) {
-            this.emitGlobal('navigate', {
-              path: [
-                this.configuration.get('paths').schedaBasePath,
-                payload.id,
-                helpers.slugify(payload.label)
-              ],
-              handler: 'router'
-            });
-          }
+        case 'aw-bubble-chart.d3end': // bounce the event, from bubble-chart to chart-tippy
+          this.emitOuter('d3end', payload)
           break;
         case 'aw-sidebar-header.click': this.dataSource.collapseSidebar();
           break;
-        case "aw-bubble-chart.bubble-tooltip-goto-click":
+        case 'aw-bubble-chart.bubble-tooltip-goto-click':
           const { id, label } = payload;
           this.emitGlobal('navigate', {
             handler: 'router',
@@ -58,13 +49,6 @@ export class AwSchedaLayoutEH extends EventHandler {
               helpers.slugify(label),
               'overview'
             ]
-          });
-          break;
-        case 'aw-linked-objects.click':
-          const paths = this.configuration.get('paths');
-          this.emitGlobal('navigate', {
-            handler: 'router',
-            path: [paths.schedaBasePath, payload.id, helpers.slugify(payload.title)]
           });
           break;
         default:
@@ -79,6 +63,7 @@ export class AwSchedaLayoutEH extends EventHandler {
       if (paramId) {
         if (paramId) {
           this.dataSource.currentId = paramId;
+          this.emitOuter('routechanged', paramId);
         }
         this.dataSource.contentIsLoading = true;
         this.dataSource.loadItem(paramId).subscribe((response) => {
@@ -102,7 +87,11 @@ export class AwSchedaLayoutEH extends EventHandler {
       if (response) {
         this.dataSource.setTree(response);
         this.dataSource.updateNavigation(this.dataSource.getTree().label);
-        this.emitOuter('navigationresponse', {tree: this.dataSource.getTree(), currentItem: selectedItem});
+        this.emitOuter('navigationresponse', {
+          tree: this.dataSource.getTree(),
+          currentItem: selectedItem,
+          basePath: this.configuration.get('paths').schedaBasePath
+        });
       }
     });
   }

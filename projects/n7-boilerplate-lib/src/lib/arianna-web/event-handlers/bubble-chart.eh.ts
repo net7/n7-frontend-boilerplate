@@ -1,6 +1,7 @@
 import { EventHandler } from '@n7-frontend/core';
 
 export class AwBubbleChartEH extends EventHandler {
+  public initialLoad: boolean = false;
 
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
@@ -12,18 +13,27 @@ export class AwBubbleChartEH extends EventHandler {
           this.emitOuter('lockfilter', this.dataSource.chartData.find(el => payload == el.entity.id))
           break;
         case 'aw-bubble-chart.d3end': // end of d3.js draw()
-          this.dataSource.tippyMaker(this.dataSource.chartData) // make tooltips
+          let filteredChartData
+          if (this.dataSource.filters.length > 0) { // apply filters to the data before adding tooltips
+            filteredChartData = this.dataSource.chartData.filter(el => !this.dataSource.filters.includes(el.entity.typeOfEntity.replace(/ /g, '-')))
+          } else {
+            filteredChartData = this.dataSource.chartData
+          }
+          this.emitOuter('d3end', {
+            bubbles: this.dataSource.smartSlice(filteredChartData),
+            selected: this.dataSource.selected
+          })
           break;
-        case 'aw-bubble-chart.bubble-tooltip-goto-click':
-          this.emitOuter('bubble-tooltip-goto-click', {
-            id: this.dataSource.focusedBubble,
-            label: this.dataSource.focusedBubbleLabel
-          });
-          break;
-        case 'aw-bubble-chart.bubble-tooltip-select-click':
-          this.toggleSelection(this.dataSource.focusedBubble)
-          this.emitOuter('lockfilter', this.dataSource.chartData.find(el => this.dataSource.focusedBubble == el.entity.id))
-          break;
+        // case 'aw-bubble-chart.bubble-tooltip-goto-click':
+        //   this.emitOuter('bubble-tooltip-goto-click', {
+        //     id: this.dataSource.focusedBubble,
+        //     label: this.dataSource.focusedBubbleLabel
+        //   });
+        //   break;
+        // case 'aw-bubble-chart.bubble-tooltip-select-click':
+        //   this.toggleSelection(this.dataSource.focusedBubble)
+        //   this.emitOuter('lockfilter', this.dataSource.chartData.find(el => this.dataSource.focusedBubble == el.entity.id))
+        //   break;
         default:
           console.warn('unhandled inner event of type', type, 'with payload', payload)
           break;
@@ -32,6 +42,16 @@ export class AwBubbleChartEH extends EventHandler {
 
     this.outerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
+        case 'aw-home-layout.select':
+          const { id } = payload
+          this.toggleSelection(id)
+          const foundBubble = this.dataSource.chartData.find(el => id == el.entity.id)
+          if (foundBubble) {
+            this.emitOuter('lockfilter', foundBubble)
+          } else {
+            console.warn('Unable to determine which bubble was selected.')
+          }
+          break;
         case 'aw-home-layout.tagclick':
           this.toggleSelection(payload)
           break;
@@ -69,7 +89,7 @@ export class AwBubbleChartEH extends EventHandler {
 
   toggleFilter = f => {
     /*
-      Toggle the clicked filter in the filteres array and
+      Toggle the clicked eye-filter in the filteres array and
       redraw the graph.
     */
     if (this.dataSource.filters.includes(f)) {
@@ -77,7 +97,7 @@ export class AwBubbleChartEH extends EventHandler {
     } else {
       this.dataSource.filters.push(f)
     }
-    this.dataSource.updateChart(null) // null means "keep using the same response"
+    this.dataSource.updateChart(null) // null means "reuse the last response"
   }
 
 }

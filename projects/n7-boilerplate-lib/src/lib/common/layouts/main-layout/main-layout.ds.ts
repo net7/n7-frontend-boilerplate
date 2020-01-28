@@ -53,6 +53,7 @@ export class MainLayoutDS extends LayoutDataSource {
     }, 5000); */
   }
 
+  // navigate emitter (click) handler
   onNavigate(payload) {
     // router navigation
     if (payload.handler === 'router') {
@@ -74,6 +75,11 @@ export class MainLayoutDS extends LayoutDataSource {
       // on change
       this._onRouterNavigate();
     }
+  }
+
+  // links routerLink change handler
+  onRouterChanged() {
+    hideAll();
   }
 
   private _onRouterNavigate() {

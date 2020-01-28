@@ -21,6 +21,8 @@ export const AwHomeLayoutConfig = {
     id: 'aw-linked-objects',
   }, {
     id: 'aw-autocomplete-wrapper',
+  }, {
+    id: 'aw-chart-tippy',
   }],
   layoutDS: AwHomeLayoutDS,
   layoutEH: AwHomeLayoutEH,

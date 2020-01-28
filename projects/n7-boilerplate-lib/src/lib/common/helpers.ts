@@ -1,5 +1,7 @@
 import slug from 'slug';
 
+const domParser = new DOMParser();
+
 export default {
   prettifySnakeCase(key: string, label?: string) {
     if (label) {
@@ -14,7 +16,9 @@ export default {
     if (!str) {
       return '';
     }
-    return slug(str, { lower: true });
+    const parsedDoc = domParser.parseFromString(str, 'text/html');
+    const parsedString = parsedDoc.body.textContent || '';
+    return slug(parsedString, { lower: true });
   },
   browserIsIE() {
     return window.navigator.userAgent.match(/(MSIE|Trident)/);

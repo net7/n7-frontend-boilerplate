@@ -10,6 +10,7 @@ export const AwEntitaLayoutConfig = {
     { id: 'aw-entita-metadata-viewer' },
     { id: 'aw-linked-objects'},
     { id: 'aw-bubble-chart'},
+    { id: 'aw-chart-tippy'},
   ],
   layoutDS: AwEntitaLayoutDS,
   layoutEH: AwEntitaLayoutEH,

@@ -20,14 +20,14 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     public outerLinksTitle: string;
     public homeAutocompleteQuery: string;
     private destroyed$: Subject<any> = new Subject();
-    // BUBBLE CHART DATA ↓
-    public bubblesEnabled = false; // true if this Arianna Web project has the bubble chart module
-    public selectedBubbles: any[] = []      // array of IDs
-    public lastBubbleResponse: any          // store last bubble response to refresh the graph with the same data
-    public firstBubbleResponse: any         // store the first array of bubbles, to find them in case of zero results (entities data returned as empty array from backend)
-    // BUBBLE CHART DATA ↑
     public homeAutocompleteIsLoading = false;
     public resultsListIsLoading = false;
+    // ===== BUBBLE CHART =====
+    public bubblesEnabled = false;     // true if this Arianna Web project has the bubble chart module
+    public selectedBubbles: any[] = [] // array of IDs
+    public lastBubbleResponse: any     // store last bubble response to refresh the graph with the same data
+    public firstBubbleResponse: any    // store the first array of bubbles, to find them in case of zero results (entities data returned as empty array from backend)
+    // ========================
 
     onInit({ communication, mainState, configuration, tippy }) {
         this.communication = communication;
@@ -51,6 +51,10 @@ export class AwHomeLayoutDS extends LayoutDataSource {
             selectable: true,
             config: this.configuration,
             limit: this.configuration.get('bubble-chart').bubbleLimit
+        })
+        this.one('aw-chart-tippy').updateOptions({
+            basePath: this.configuration.get('paths')['entitaBasePath'],
+            selectable: true
         })
     }
 
@@ -231,7 +235,8 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         this.one('aw-home-autocomplete').updateOptions({
             keys: this.configuration.get('config-keys'),
             config: this.configuration,
-            labels: this.configuration.get('labels')
+            labels: this.configuration.get('labels'),
+            paths: this.configuration.get('paths')
         });
         this.autocompleteChanged$.pipe(
             debounceTime(500),
@@ -245,7 +250,10 @@ export class AwHomeLayoutDS extends LayoutDataSource {
                 }
             }).subscribe((response) => {
                 this.homeAutocompleteIsLoading = false;
-                this.one('aw-home-autocomplete').update(response);
+                this.one('aw-home-autocomplete').update({
+                    response,
+                    query: value
+                });
             });
         });
     }
