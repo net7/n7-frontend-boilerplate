@@ -2,10 +2,12 @@ import { EventHandler } from '@n7-frontend/core';
 import { Subject } from 'rxjs';
 import { takeUntil, first, filter } from 'rxjs/operators';
 import { SearchService } from '../../services';
+import { NavigationStart } from '@angular/router';
 
 export class MainLayoutEH extends EventHandler {
   private destroyed$: Subject<any> = new Subject();
   private route: any;
+  private router: any;
   private mainState: any;
 
   public listen() {
@@ -15,6 +17,7 @@ export class MainLayoutEH extends EventHandler {
           this.dataSource.onInit(payload);
           this.mainState = payload.mainState;
           this.route = payload.route;
+          this.router = payload.router;
 
           this._listenRouterChanges();
           this._listenMainStateChanges();
@@ -57,6 +60,14 @@ export class MainLayoutEH extends EventHandler {
       // to use in searchs
       SearchService.queryParams = params;
     });
+
+    // router changed
+    this.router.events.pipe(
+        filter(event => event instanceof NavigationStart)
+      )
+      .subscribe((event: NavigationStart) => {
+        this.dataSource.onRouterChanged();
+      });
   }
 
 
