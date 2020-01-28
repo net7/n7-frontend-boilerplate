@@ -1,7 +1,7 @@
 import { EventHandler } from '@n7-frontend/core';
 
 export class AwBubbleChartEH extends EventHandler {
-  public initialLoad:boolean = false;
+  public initialLoad: boolean = false;
 
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
@@ -13,13 +13,16 @@ export class AwBubbleChartEH extends EventHandler {
           this.emitOuter('lockfilter', this.dataSource.chartData.find(el => payload == el.entity.id))
           break;
         case 'aw-bubble-chart.d3end': // end of d3.js draw()
-          this.dataSource.tippyMaker(this.dataSource.chartData) // make tooltips
-          // if (!this.initialLoad) {
-          //   this.dataSource.tippyMounted$.subscribe(({id, label}) => {
-          //     this.emitOuter('tippymounted', { id, label })
-          //   })
-          //   this.initialLoad = true;
-          // }
+          let filteredChartData
+          if (this.dataSource.filters.length > 0) { // apply filters to the data before adding tooltips
+            filteredChartData = this.dataSource.chartData.filter(el => !this.dataSource.filters.includes(el.entity.typeOfEntity.replace(/ /g, '-')))
+          } else {
+            filteredChartData = this.dataSource.chartData
+          }
+          this.emitOuter('d3end', {
+            bubbles: this.dataSource.smartSlice(filteredChartData),
+            selected: this.dataSource.selected
+          })
           break;
         // case 'aw-bubble-chart.bubble-tooltip-goto-click':
         //   this.emitOuter('bubble-tooltip-goto-click', {
@@ -39,9 +42,15 @@ export class AwBubbleChartEH extends EventHandler {
 
     this.outerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
-        case 'aw-chart-tippy.bubble-tooltip-select-click':
-          this.toggleSelection(this.dataSource.focusedBubble)
-          this.emitOuter('lockfilter', this.dataSource.chartData.find(el => this.dataSource.focusedBubble == el.entity.id))
+        case 'aw-home-layout.select':
+          const { id } = payload
+          this.toggleSelection(id)
+          const foundBubble = this.dataSource.chartData.find(el => id == el.entity.id)
+          if (foundBubble) {
+            this.emitOuter('lockfilter', foundBubble)
+          } else {
+            console.warn('Unable to determine which bubble was selected.')
+          }
           break;
         case 'aw-home-layout.tagclick':
           this.toggleSelection(payload)

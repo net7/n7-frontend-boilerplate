@@ -44,6 +44,12 @@ export class AwHomeLayoutEH extends EventHandler {
 
     this.outerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
+        case 'aw-bubble-chart.d3end': // bounce the event, from bubble-chart to chart-tippy
+          this.emitOuter('d3end', payload)
+          break;
+        case 'aw-chart-tippy.select':
+          this.emitOuter('select', payload)
+          break;
         case 'aw-hero.enter':
           const query = payload.value;
           this.emitGlobal('navigate', {
@@ -167,17 +173,18 @@ export class AwHomeLayoutEH extends EventHandler {
         case 'aw-bubble-chart.lockfilter':
           this.emitOuter('lockfilter', payload) // let aw-home-facets-wrapper handle this event
           break;
-        case 'aw-bubble-chart.bubble-tooltip-goto-click':
-          this.emitGlobal('navigate', {
-            handler: 'router',
-            path: [
-              this.configuration.get('paths').entitaBasePath,
-              payload.id,
-              helpers.slugify(payload.label)
-            ]
-          });
-          break;
+        // case 'aw-bubble-chart.bubble-tooltip-goto-click':
+        //   this.emitGlobal('navigate', {
+        //     handler: 'router',
+        //     path: [
+        //       this.configuration.get('paths').entitaBasePath,
+        //       payload.id,
+        //       helpers.slugify(payload.label)
+        //     ]
+        //   });
+        //   break;
         default:
+          // console.warn('(home) unhandled outer event of type', type)
           break;
       }
     });

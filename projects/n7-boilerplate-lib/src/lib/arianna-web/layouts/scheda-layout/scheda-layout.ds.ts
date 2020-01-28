@@ -53,6 +53,9 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       config: this.configuration,
       limit: this.configuration.get('bubble-chart').bubbleLimit
     });
+    this.one('aw-chart-tippy').updateOptions({
+      basePath: this.configuration.get('paths')['entitaBasePath']
+    })
     this.emptyLabel = this.configuration.get('scheda-layout')['empty-label'];
 
     this.mainState.update('headTitle', 'Arianna Web > Patrimonio');

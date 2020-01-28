@@ -39,6 +39,9 @@ export class AwEntitaLayoutEH extends EventHandler {
 
     this.outerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
+        case 'aw-bubble-chart.d3end': // bounce the event, from bubble-chart to chart-tippy
+          this.emitOuter('d3end', payload)
+          break;
         case 'aw-entita-nav.click':
           if (payload) {
             this.dataSource.selectedTab = payload;

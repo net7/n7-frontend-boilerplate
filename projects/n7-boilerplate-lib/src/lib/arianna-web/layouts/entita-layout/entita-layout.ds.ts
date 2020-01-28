@@ -44,6 +44,9 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       limit: this.configuration.get('bubble-chart').bubbleLimit,
       smallChartSize: this.configuration.get('entita-layout').overview.smallChartSize
     });
+    this.one('aw-chart-tippy').updateOptions({
+      basePath: this.configuration.get('paths')['entitaBasePath']
+    })
 
     // navigation update
     this.mainState.updateCustom('currentNav', 'entita');

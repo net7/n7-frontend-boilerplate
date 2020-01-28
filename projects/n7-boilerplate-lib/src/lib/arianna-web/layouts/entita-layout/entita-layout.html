@@ -1,5 +1,5 @@
 <div class="aw-entity n7-side-auto-padding" *ngIf="lb.dataSource">
-    
+
     <div class="aw-entity__sidebar">
         <!-- Custom header -->
         <div *ngIf="!(lb.widgets['aw-entita-nav'].ds.out$ | async)" class="aw-entity__sidebar-title-wrapper-loading">
@@ -10,7 +10,8 @@
             }">
             </n7-content-placeholder>
         </div>
-        <div *ngIf="!!(lb.widgets['aw-entita-nav'].ds.out$ | async)" class="aw-entity__sidebar-title-wrapper color-{{lb.dataSource.navHeader.color}}">
+        <div *ngIf="!!(lb.widgets['aw-entita-nav'].ds.out$ | async)"
+            class="aw-entity__sidebar-title-wrapper color-{{lb.dataSource.navHeader.color}}">
             <h1 class="aw-entity__sidebar-title">
                 <span class="aw-entity__sidebar-title-icon {{lb.dataSource.navHeader.icon}}"></span>
                 <span class="aw-entity__sidebar-title-text">{{lb.dataSource.navHeader.text}}</span>
@@ -50,7 +51,7 @@
                 }]
             }"></n7-content-placeholder>
         </div>
-        
+
         <div class="aw-entity__content-loading-items">
             <n7-content-placeholder [data]="{
                 blocks: [
@@ -91,14 +92,12 @@
                     {{lb.dataSource.myResponse.extraTab}}
                 </div>
                 <div class="aw-entity-layout__button-wrapper">
-                    <a *ngIf="lb.dataSource.myResponse.wikiTab" 
-                    class="n7-btn n7-btn-light"
-                    [routerLink]="[lb.dataSource.getNavBasePath() + '/wiki']">
+                    <a *ngIf="lb.dataSource.myResponse.wikiTab" class="n7-btn n7-btn-light"
+                        [routerLink]="[lb.dataSource.getNavBasePath() + '/wiki']">
                         DESCRIZIONE WIKIPEDIA <i class="n7-icon-angle-right"></i>
                     </a>
-                    <a *ngIf="lb.dataSource.myResponse.extraTab" 
-                    class="n7-btn n7-btn-light"
-                    [routerLink]="[lb.dataSource.getNavBasePath() + '/maxxi']">
+                    <a *ngIf="lb.dataSource.myResponse.extraTab" class="n7-btn n7-btn-light"
+                        [routerLink]="[lb.dataSource.getNavBasePath() + '/maxxi']">
                         DESCRIZIONE MAXXI <i class="n7-icon-angle-right"></i>
                     </a>
                 </div>
@@ -111,8 +110,7 @@
                     [hidden]="lb.dataSource.selectedTab != 'overview' && lb.dataSource.selectedTab != 'campi'">
                     <div class="aw-entity__content-section-header">
                         <h2 class="aw-entity__content-section-title">Campi</h2>
-                        <a class="n7-btn n7-btn-light" 
-                        [routerLink]="[lb.dataSource.getNavBasePath() + 'campi']">
+                        <a class="n7-btn n7-btn-light" [routerLink]="[lb.dataSource.getNavBasePath() + 'campi']">
                             TUTTI I CAMPI <i class="n7-icon-angle-right"></i>
                         </a>
                     </div>
@@ -129,9 +127,8 @@
                     <h2 class="aw-entity__content-section-title">Oggetti collegati</h2>
 
                     <a *ngIf="lb.dataSource.selectedTab === 'overview' "
-                    [routerLink]="[lb.dataSource.getNavBasePath() + '/oggetti-collegati/']" 
-                    [queryParams]="{ page: 1 }" 
-                    class="n7-btn n7-btn-light">
+                        [routerLink]="[lb.dataSource.getNavBasePath() + '/oggetti-collegati/']"
+                        [queryParams]="{ page: 1 }" class="n7-btn n7-btn-light">
                         TUTTI GLI OGGETTI COLLEGATI <i class="n7-icon-angle-right"></i>
                     </a>
                 </div>
@@ -153,16 +150,15 @@
                 [hidden]="lb.dataSource.selectedTab != 'overview' && lb.dataSource.selectedTab != 'entita-collegate'">
                 <div class="aw-entity__content-section-header">
                     <h2 class="aw-entity__content-section-title">Entità collegate</h2>
-                    <a *ngIf="lb.dataSource.selectedTab == 'overview'"
-                    class="n7-btn n7-btn-light"
-                    [routerLink]="[lb.dataSource.getNavBasePath() + '/entita-collegate']">
+                    <a *ngIf="lb.dataSource.selectedTab == 'overview'" class="n7-btn n7-btn-light"
+                        [routerLink]="[lb.dataSource.getNavBasePath() + '/entita-collegate']">
                         TUTTE LE ENTITÀ COLLEGATE <i class="n7-icon-angle-right"></i>
                     </a>
                 </div>
                 <!-- Small Bubble Chart -->
                 <div class="aw-entity__bubble-chart-wrapper-small" *ngIf="lb.dataSource.selectedTab == 'overview'">
-                    <aw-bubble-chart-wrapper [emit]="lb.widgets['aw-bubble-chart'].emit"
-                        [container]="'bubble-chart-container'" [buttons]="['select', 'goto']">
+                    <aw-bubble-chart-wrapper>
+                        <!-- Tippy template moved to end of HTML -->
                         <n7-bubble-chart [data]="(lb.widgets['aw-bubble-chart'].ds.out$ | async)?.smallView"
                             [emit]="lb.widgets['aw-bubble-chart'].emit">
                         </n7-bubble-chart>
@@ -170,8 +166,8 @@
                 </div>
                 <!-- Big Bubble Chart -->
                 <div class="aw-entity__bubble-chart-wrapper" *ngIf="lb.dataSource.selectedTab == 'entita-collegate'">
-                    <aw-bubble-chart-wrapper [emit]="lb.widgets['aw-bubble-chart'].emit"
-                        [container]="'bubble-chart-container'" [buttons]="['select', 'goto']">
+                    <aw-bubble-chart-wrapper>
+                        <!-- Tippy template moved to end of HTML -->
                         <n7-bubble-chart [data]="lb.widgets['aw-bubble-chart'].ds.out$ | async"
                             [emit]="lb.widgets['aw-bubble-chart'].emit">
                         </n7-bubble-chart>
@@ -201,4 +197,7 @@
             </div>
         </section>
     </div>
+    <!-- Template for bubble chart tooltips -->
+    <aw-chart-tippy [data]="lb.widgets['aw-chart-tippy'].ds.out$ | async" [emit]="lb.widgets['aw-chart-tippy'].emit">
+    </aw-chart-tippy>
 </div>

@@ -2,6 +2,7 @@
 export * from './linked-objects.eh';
 export * from './autocomplete-wrapper.eh';
 export * from './bubble-chart.eh';
+export * from './chart-tippy.eh';
 
 // Home Layout
 export * from './hero.eh';
