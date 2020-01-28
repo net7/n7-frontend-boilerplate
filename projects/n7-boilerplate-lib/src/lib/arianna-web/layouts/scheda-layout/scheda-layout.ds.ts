@@ -1,6 +1,7 @@
 import { LayoutDataSource } from '@n7-frontend/core';
 import { fromEvent, Subject, of, merge } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import helpers from 'n7-boilerplate-lib/lib/common/helpers';
 
 export class AwSchedaLayoutDS extends LayoutDataSource {
   static tree: any = null;
@@ -144,7 +145,13 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
         response.breadcrumbs.forEach(element => {
           breadcrumbs.items.push({
             label: element.label,
-            payload: element.link
+            anchor: {
+              href: [
+                this.configuration.get('paths').schedaBasePath,
+                element.link + '/',
+                helpers.slugify(element.label)
+              ].join('')
+            }
           })
         });
         this.one('aw-scheda-breadcrumbs').update(breadcrumbs);
