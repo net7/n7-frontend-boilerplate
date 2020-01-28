@@ -11,7 +11,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
   public options: any;
   public pageTitle: string;
   public showFields: boolean = false;
-  public myResponse: any = {}; // backend response object
+  public myResponse: any; // backend response object
   public selectedTab: string; // selected nav item
   public navHeader: any = {}; // nav-header (custom) data
   public currentId: string; // selected entity (url param)
@@ -73,6 +73,9 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     Updates selected tab on tab change
   */
   handlePageNavigation = () => {
+    if (!this.myResponse) {
+      return;
+    }
     const paginationParams = this._getPaginationParams();
     this.one('aw-linked-objects').updateOptions({
       paginationParams,
