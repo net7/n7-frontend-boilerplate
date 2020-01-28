@@ -2,7 +2,11 @@
     <nav class="n7-breadcrumbs__nav">
         <ol class="n7-breadcrumbs__list" #bcol>
             <li *ngFor="let item of data.items" class="n7-breadcrumbs__item {{ item.classes || '' }}">
-                <a class="n7-breadcrumbs__label" (click)="onClick(item.payload)">{{ item.label }}</a>
+                <n7-anchor-wrapper [classes]="'n7-breadcrumbs__label'"
+                [data]="item.anchor"
+                (clicked)="onClick($event)">
+                    {{ item.label }}
+                </n7-anchor-wrapper>
             </li>
         </ol>
     </nav>
