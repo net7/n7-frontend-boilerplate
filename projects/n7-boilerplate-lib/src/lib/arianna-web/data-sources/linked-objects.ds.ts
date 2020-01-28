@@ -277,11 +277,7 @@ export class AwLinkedObjectsDS extends DataSource {
             return {
               label,
               anchor: {
-                href: [
-                  config.get('paths').schedaBasePath,
-                  crumb.link + '/',
-                  helpers.slugify(label)
-                ].join(''),
+                href: itemHref
               }
             };
           })
