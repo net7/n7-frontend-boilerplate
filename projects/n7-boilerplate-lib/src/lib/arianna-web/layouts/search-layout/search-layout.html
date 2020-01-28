@@ -115,8 +115,8 @@
             </div>
             <div *ngIf="!lb.dataSource.resultsLoading" class="aw-search__results-wrapper">
                 <ng-container *ngFor="let preview of (lb.widgets['aw-linked-objects'].ds.out$ | async)?.previews">
-                    <n7-breadcrumbs [data]="preview.breadcrumbs">
-                    </n7-breadcrumbs>
+                    <n7-smart-breadcrumbs [data]="preview.breadcrumbs">
+                    </n7-smart-breadcrumbs>
                     <n7-item-preview [data]="preview" [emit]="lb.widgets['aw-linked-objects'].emit">
                     </n7-item-preview>
                 </ng-container>

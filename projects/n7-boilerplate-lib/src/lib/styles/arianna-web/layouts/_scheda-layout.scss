@@ -150,6 +150,16 @@
         padding-left: $space*2;
         box-sizing: border-box;
         background-color: $color-background-medium;
+
+        .n7-breadcrumbs__label {
+            &:hover {
+                color: $color-text-link;
+            }
+        }
+
+        .n7-breadcrumbs__item:last-child a {
+            cursor: pointer;
+        }
     }
 
     /* Inner title */
