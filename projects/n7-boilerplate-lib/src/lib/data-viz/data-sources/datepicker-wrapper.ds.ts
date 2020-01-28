@@ -41,7 +41,7 @@ export class DvDatepickerWrapperDS extends DataSource {
     }
 
     setLabel(payload) {
-        this.output.select.label = payload.dateStr;
+        this.output.select.label = payload;
         this.output.datepicker.hidden = true;
     }
 

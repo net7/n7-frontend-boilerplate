@@ -11,11 +11,67 @@
 .n7-datepicker {
     .dv-datepicker-wrapper & {
         margin-top: -$space;
-      
+        
         .flatpickr-input {
             height: 0;
             margin-top: -$form-input-height;
             visibility: hidden;
+        }
+    }
+}
+
+/* Datepicker wrapper */
+.dv-datepicker-wrapper {
+    display: inline-block;
+    position: relative;
+ 
+    &__label {
+        height: $form-input-height + $form-border-size*2;
+        line-height: $form-input-height + $form-border-size*2;
+        background: #ffffff;  
+        border-radius: $border-radius;
+        border: $form-border-size solid $color-border-normal;
+        cursor: pointer;
+
+        input[type="text"] {
+            border: none;
+            cursor: pointer;
+        }
+    }
+
+    &__dropdown {
+        margin-top: -$form-border-size*2;
+        position: absolute;
+        right: 0;
+        left: 0;
+        background: #ffffff;
+        border-bottom-right-radius: $border-radius;
+        border-bottom-left-radius: $border-radius;
+        border-right: $form-border-size solid $color-border-normal;
+        border-bottom: $form-border-size solid $color-border-normal;
+        border-left: $form-border-size solid $color-border-normal;
+
+        &-list {
+            margin-top: 0;
+            margin-bottom: 0;
+            padding: $space*1.5 $space;
+            border-top: 1px solid $color-border-normal;
+            list-style: none;
+            font-size: $font-size-s;
+        }
+
+        &-list-option {
+            margin-bottom: $space;
+            cursor: pointer;
+
+            &:last-of-type {
+                margin-bottom: 0;
+            }
+
+            &:hover,
+            &:focus {
+                color: $color-text-link-hover;
+            }
         }
     }
 }
