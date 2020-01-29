@@ -484,6 +484,10 @@ export const ApolloProviderConfig = {
               subTitle
               image
               text
+              relatedTypesOfEntity {
+                type
+                count
+              }
               breadcrumbs {
                 label
                 link
