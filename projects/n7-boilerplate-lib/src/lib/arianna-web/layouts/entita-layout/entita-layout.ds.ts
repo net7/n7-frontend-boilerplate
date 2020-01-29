@@ -11,7 +11,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
   public options: any;
   public pageTitle: string;
   public showFields: boolean = false;
-  public myResponse: any = {}; // backend response object
+  public myResponse: any; // backend response object
   public selectedTab: string; // selected nav item
   public navHeader: any = {}; // nav-header (custom) data
   public currentId: string; // selected entity (url param)
@@ -44,6 +44,9 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       limit: this.configuration.get('bubble-chart').bubbleLimit,
       smallChartSize: this.configuration.get('entita-layout').overview.smallChartSize
     });
+    this.one('aw-chart-tippy').updateOptions({
+      basePath: this.configuration.get('paths')['entitaBasePath']
+    })
 
     // navigation update
     this.mainState.updateCustom('currentNav', 'entita');
@@ -66,42 +69,41 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     return this.communication.request$('getEntityDetails', {
       onError: (error) => console.error(error),
       params: { entityId: id, entitiesListSize: this.bubblesSize }
-    })
+    });
   }
 
   /*
     Updates selected tab on tab change
   */
   handlePageNavigation = () => {
+    if (!this.myResponse) {
+      return;
+    }
+    const paginationParams = this._getPaginationParams();
     this.one('aw-linked-objects').updateOptions({
+      paginationParams,
       context: this.selectedTab,
       config: this.configuration,
       page: this.currentPage,
       pagination: true,
       size: this.pageSize,
-    })
+    });
     this.one('aw-linked-objects').update({ items: this.myResponse.relatedItems });
-    this.location.go([
-      this.configuration.get('paths').entitaBasePath,
-      this.currentId + '/',
-      this.currentSlug,
-      '/oggetti-collegati/',
-      this.currentPage
-    ].join(''));
-  };
+  }
 
   handleNavUpdate = tab => {
-    this.selectedTab = tab
-    this.updateWidgets(this.myResponse)
-    const page = tab == 'oggetti-collegati' ? "/1" : "";
-    if (tab == 'oggetti-collegati') {
+    this.selectedTab = tab;
+    this.updateWidgets(this.myResponse);
+    const page = tab === 'oggetti-collegati' ? '/1' : '';
+    if (tab === 'oggetti-collegati') {
       this.one('aw-linked-objects').updateOptions({
         context: this.selectedTab,
         config: this.configuration,
         page: this.currentPage,
         pagination: true,
+        paginationParams: this._getPaginationParams(),
         size: this.pageSize,
-      })
+      });
       this.one('aw-linked-objects').update({ items: this.myResponse.relatedItems });
     } else if (tab == "overview") {
       this.one('aw-linked-objects').updateOptions({
@@ -114,21 +116,22 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     if (tab == "overview" || tab == "entita-collegate") {
       setTimeout(() => { this.updateBubbes(this.myResponse.relatedEntities) }, 800);
     }
-    this.location.go([
-      this.configuration.get('paths').entitaBasePath,
-      this.currentId + '/',
-      this.currentSlug + '/',
-      tab,
-      page
-    ].join(''));
   }
 
   /*
     Updates the widgets on this layout, based on route
   */
   updateWidgets(data) {
-    const selected = this.selectedTab
-    this.one('aw-entita-nav').update({ data, selected })
+    const selected = this.selectedTab;
+    Object.keys(data).forEach(k => {
+      if (Array.isArray(data[k]) && data[k].length == 0) { data[k] = null }
+    })
+    console.log({data})
+    this.one('aw-entita-nav').update({
+      data,
+      selected,
+      basePath: this.getNavBasePath()
+    });
     this.updateComponent(
       'aw-entita-metadata-viewer',
       this.myResponse.fields,
@@ -188,6 +191,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
         config: this.configuration,
         page: this.currentPage,
         pagination: true,
+        paginationParams: this._getPaginationParams(),
         size: this.pageSize,
       })
     } else {
@@ -200,5 +204,27 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     this.one('aw-linked-objects').update({ items: res.relatedItems });
     // update head title
     this.mainState.update('headTitle', `Arianna Web > Entità > ${this.myResponse.label}`);
+  }
+
+  private _getPaginationParams() {
+    return {
+      href: [
+        this.configuration.get('paths').entitaBasePath,
+        this.currentId + '/',
+        this.currentSlug,
+        '/oggetti-collegati/'
+      ].join(''),
+      queryParams: {
+        page: this.currentPage
+      }
+    };
+  }
+
+  public getNavBasePath() {
+    return [
+      this.configuration.get('paths').entitaBasePath,
+      this.currentId + '/',
+      this.currentSlug
+    ].join('');
   }
 }

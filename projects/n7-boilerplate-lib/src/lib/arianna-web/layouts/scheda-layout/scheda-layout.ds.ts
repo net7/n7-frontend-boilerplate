@@ -1,6 +1,7 @@
 import { LayoutDataSource } from '@n7-frontend/core';
 import { fromEvent, Subject, of, merge } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import helpers from 'n7-boilerplate-lib/lib/common/helpers';
 
 export class AwSchedaLayoutDS extends LayoutDataSource {
   static tree: any = null;
@@ -26,6 +27,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   public hasBubbles: boolean;
   public bubblesEnabled: boolean;
   public hasSimilarItems: boolean;
+  public hasImage: boolean;
   public imageViewerIstance: any;
   public sidebarIsSticky = false;
   public treeMaxHeight = '100%';
@@ -52,6 +54,9 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       config: this.configuration,
       limit: this.configuration.get('bubble-chart').bubbleLimit
     });
+    this.one('aw-chart-tippy').updateOptions({
+      basePath: this.configuration.get('paths')['entitaBasePath']
+    })
     this.emptyLabel = this.configuration.get('scheda-layout')['empty-label'];
 
     this.mainState.update('headTitle', 'Arianna Web > Patrimonio');
@@ -95,6 +100,12 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
   loadContent(response) {
     if (response) {
+      this.hasMetadata = Array.isArray(response.fields) && response.fields.length;
+      this.hasSimilarItems = Array.isArray(response.relatedItems) && response.relatedItems.length;
+      this.hasBreadcrumb = Array.isArray(response.breadcrumbs) && response.breadcrumbs.length;
+      this.hasBubbles = Array.isArray(response.relatedEntities) && response.relatedEntities.length;
+      this.hasImage = !!response.image;
+
       this.contentParts = [];
       const content = {};
 
@@ -131,8 +142,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
       this.one('aw-scheda-inner-title').update(titleObj);
 
-      this.hasMetadata = response.fields != null;
-      this.one('aw-scheda-metadata').updateOptions({ labels: this.configuration.get("labels") });
+      this.one('aw-scheda-metadata').updateOptions({ labels: this.configuration.get('labels') });
       this.one('aw-scheda-metadata').update(response);
 
       // Breadcrumb section
@@ -144,7 +154,13 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
         response.breadcrumbs.forEach(element => {
           breadcrumbs.items.push({
             label: element.label,
-            payload: element.link
+            anchor: {
+              href: [
+                this.configuration.get('paths').schedaBasePath,
+                element.link + '/',
+                helpers.slugify(element.label)
+              ].join('')
+            }
           })
         });
         this.one('aw-scheda-breadcrumbs').update(breadcrumbs);
@@ -155,11 +171,8 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     }
 
     if (response.relatedItems) {
-      this.hasSimilarItems = true;
       this.one('aw-linked-objects').updateOptions({ context: 'scheda', config: this.configuration })
       this.one('aw-linked-objects').update(response);
-    } else {
-      this.hasSimilarItems = false;
     }
 
     // control sticky
@@ -173,6 +186,10 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   }
 
   private _sidebarStickyControl() {
+    // no sticky for Internet Explorer
+    if (helpers.browserIsIE()) {
+      return;
+    }
     const source$ = fromEvent(window, 'scroll');
 
     merge(source$, this.stickyControlTrigger$).pipe(

@@ -1,5 +1,5 @@
 <div class="aw-entity n7-side-auto-padding" *ngIf="lb.dataSource">
-    
+
     <div class="aw-entity__sidebar">
         <!-- Custom header -->
         <div *ngIf="!(lb.widgets['aw-entita-nav'].ds.out$ | async)" class="aw-entity__sidebar-title-wrapper-loading">
@@ -10,7 +10,8 @@
             }">
             </n7-content-placeholder>
         </div>
-        <div *ngIf="!!(lb.widgets['aw-entita-nav'].ds.out$ | async)" class="aw-entity__sidebar-title-wrapper color-{{lb.dataSource.navHeader.color}}">
+        <div *ngIf="!!(lb.widgets['aw-entita-nav'].ds.out$ | async)"
+            class="aw-entity__sidebar-title-wrapper color-{{lb.dataSource.navHeader.color}}">
             <h1 class="aw-entity__sidebar-title">
                 <span class="aw-entity__sidebar-title-icon {{lb.dataSource.navHeader.icon}}"></span>
                 <span class="aw-entity__sidebar-title-text">{{lb.dataSource.navHeader.text}}</span>
@@ -18,19 +19,8 @@
         </div>
         <!-- Navigation -->
         <div *ngIf="!(lb.widgets['aw-entita-nav'].ds.out$ | async)" class="aw-entity__sidebar-nav-loading">
-            <n7-content-placeholder [data]="{
-                blocks: [{
-                    classes: 'entity-placeholder-nav'
-                }]
-            }">
-            </n7-content-placeholder>
-            <n7-content-placeholder [data]="{
-                blocks: [{
-                    classes: 'entity-placeholder-nav'
-                }]
-            }">
-            </n7-content-placeholder>
-            <n7-content-placeholder [data]="{
+            <n7-content-placeholder *ngFor="let n of [0,1,2]"
+            [data]="{
                 blocks: [{
                     classes: 'entity-placeholder-nav'
                 }]
@@ -50,30 +40,10 @@
                 }]
             }"></n7-content-placeholder>
         </div>
-        
+
         <div class="aw-entity__content-loading-items">
-            <n7-content-placeholder [data]="{
-                blocks: [
-                {
-                    classes: 'entity-placeholder-item-preview'
-                }
-                ]
-            }"></n7-content-placeholder>
-            <n7-content-placeholder [data]="{
-                blocks: [
-                {
-                    classes: 'entity-placeholder-item-preview'
-                }
-                ]
-            }"></n7-content-placeholder>
-            <n7-content-placeholder [data]="{
-                blocks: [
-                {
-                    classes: 'entity-placeholder-item-preview'
-                }
-                ]
-            }"></n7-content-placeholder>
-            <n7-content-placeholder [data]="{
+            <n7-content-placeholder *ngFor="let n of [0,1,2,3]"
+            [data]="{
                 blocks: [
                 {
                     classes: 'entity-placeholder-item-preview'
@@ -91,14 +61,14 @@
                     {{lb.dataSource.myResponse.extraTab}}
                 </div>
                 <div class="aw-entity-layout__button-wrapper">
-                    <button *ngIf="lb.dataSource.myResponse.wikiTab" class="n7-btn n7-btn-light"
-                        (click)="lb.eventHandler.emitInner('showmore', 'wiki')">
+                    <a *ngIf="lb.dataSource.myResponse.wikiTab" class="n7-btn n7-btn-light"
+                        [routerLink]="[lb.dataSource.getNavBasePath() + '/wiki']">
                         DESCRIZIONE WIKIPEDIA <i class="n7-icon-angle-right"></i>
-                    </button>
-                    <button *ngIf="lb.dataSource.myResponse.extraTab" class="n7-btn n7-btn-light"
-                        (click)="lb.eventHandler.emitInner('showmore', 'maxxi')">
+                    </a>
+                    <a *ngIf="lb.dataSource.myResponse.extraTab" class="n7-btn n7-btn-light"
+                        [routerLink]="[lb.dataSource.getNavBasePath() + '/maxxi']">
                         DESCRIZIONE MAXXI <i class="n7-icon-angle-right"></i>
-                    </button>
+                    </a>
                 </div>
             </div>
 
@@ -109,9 +79,9 @@
                     [hidden]="lb.dataSource.selectedTab != 'overview' && lb.dataSource.selectedTab != 'campi'">
                     <div class="aw-entity__content-section-header">
                         <h2 class="aw-entity__content-section-title">Campi</h2>
-                        <button class="n7-btn n7-btn-light" (click)="lb.eventHandler.emitInner('showmore', 'campi')">
+                        <a class="n7-btn n7-btn-light" [routerLink]="[lb.dataSource.getNavBasePath() + 'campi']">
                             TUTTI I CAMPI <i class="n7-icon-angle-right"></i>
-                        </button>
+                        </a>
                     </div>
                     <n7-metadata-viewer class="aw-entity-layout__metadata-viewer"
                         [data]="lb.widgets['aw-entita-metadata-viewer'].ds.out$ | async ">
@@ -125,10 +95,11 @@
                 <div class="aw-entity__content-section-header">
                     <h2 class="aw-entity__content-section-title">Oggetti collegati</h2>
 
-                    <button class="n7-btn n7-btn-light" *ngIf="lb.dataSource.selectedTab == 'overview'"
-                        (click)="lb.eventHandler.emitInner('showmore', 'oggetti-collegati')">
+                    <a *ngIf="lb.dataSource.selectedTab === 'overview' "
+                        [routerLink]="[lb.dataSource.getNavBasePath() + '/oggetti-collegati/']"
+                        [queryParams]="{ page: 1 }" class="n7-btn n7-btn-light">
                         TUTTI GLI OGGETTI COLLEGATI <i class="n7-icon-angle-right"></i>
-                    </button>
+                    </a>
                 </div>
                 <div class="aw-entity__content-item-previews">
                     <ng-container *ngFor="let preview of (lb.widgets['aw-linked-objects'].ds.out$ | async)?.previews">
@@ -144,20 +115,19 @@
             </div>
 
             <div class="aw-entity__content-section aw-entity__content-section-overview aw-bubble-chart__{{lb.dataSource.selectedTab}}"
-                *ngIf="lb.dataSource.bubblesEnabled"
+                *ngIf="lb.dataSource.bubblesEnabled && lb.dataSource.myResponse.relatedEntities"
                 [hidden]="lb.dataSource.selectedTab != 'overview' && lb.dataSource.selectedTab != 'entita-collegate'">
                 <div class="aw-entity__content-section-header">
                     <h2 class="aw-entity__content-section-title">Entità collegate</h2>
-                    <button class="n7-btn n7-btn-light"
-                        (click)="lb.eventHandler.emitInner('showmore', 'entita-collegate')"
-                        *ngIf="lb.dataSource.selectedTab == 'overview'">
+                    <a *ngIf="lb.dataSource.selectedTab == 'overview'" class="n7-btn n7-btn-light"
+                        [routerLink]="[lb.dataSource.getNavBasePath() + '/entita-collegate']">
                         TUTTE LE ENTITÀ COLLEGATE <i class="n7-icon-angle-right"></i>
-                    </button>
+                    </a>
                 </div>
                 <!-- Small Bubble Chart -->
                 <div class="aw-entity__bubble-chart-wrapper-small" *ngIf="lb.dataSource.selectedTab == 'overview'">
-                    <aw-bubble-chart-wrapper [emit]="lb.widgets['aw-bubble-chart'].emit"
-                        [container]="'bubble-chart-container'" [buttons]="['select', 'goto']">
+                    <aw-bubble-chart-wrapper>
+                        <!-- Tippy template moved to end of HTML -->
                         <n7-bubble-chart [data]="(lb.widgets['aw-bubble-chart'].ds.out$ | async)?.smallView"
                             [emit]="lb.widgets['aw-bubble-chart'].emit">
                         </n7-bubble-chart>
@@ -165,8 +135,8 @@
                 </div>
                 <!-- Big Bubble Chart -->
                 <div class="aw-entity__bubble-chart-wrapper" *ngIf="lb.dataSource.selectedTab == 'entita-collegate'">
-                    <aw-bubble-chart-wrapper [emit]="lb.widgets['aw-bubble-chart'].emit"
-                        [container]="'bubble-chart-container'" [buttons]="['select', 'goto']">
+                    <aw-bubble-chart-wrapper>
+                        <!-- Tippy template moved to end of HTML -->
                         <n7-bubble-chart [data]="lb.widgets['aw-bubble-chart'].ds.out$ | async"
                             [emit]="lb.widgets['aw-bubble-chart'].emit">
                         </n7-bubble-chart>
@@ -191,9 +161,12 @@
                     {{lb.dataSource.myResponse.wikiTab.text}}
                 </div>
                 <a href="{{lb.dataSource.myResponse.wikiTabUrl}}">
-                    {{lb.dataSource.myResponse.wikiTab.url}}
+                    {{ lb.dataSource.myResponse.wikiTab.url }}
                 </a>
             </div>
         </section>
     </div>
+    <!-- Template for bubble chart tooltips -->
+    <aw-chart-tippy [data]="lb.widgets['aw-chart-tippy'].ds.out$ | async" [emit]="lb.widgets['aw-chart-tippy'].emit">
+    </aw-chart-tippy>
 </div>

@@ -3,8 +3,9 @@ import helpers from '../../common/helpers';
 
 export class AwHomeAutocompleteDS extends DataSource {
   protected transform(data) {
-    const { results, totalCount } = data,
-          { keys, config } = this.options,
+    const { response, query } = data,
+          { results, totalCount } = response,
+          { keys, config, paths } = this.options,
           labels = this.options.labels || {},
           itemIds = [],
           groups = {};
@@ -38,11 +39,8 @@ export class AwHomeAutocompleteDS extends DataSource {
         groups[groupId].items.push({
           title: currentItem.label,
           metadata,
-          payload: {
-            source: 'item',
-            id: currentItem.id,
-            type: (groups[groupId] || {}).type,
-            title: currentItem.label
+          anchor: {
+            href: `${paths[entity ? 'entitaBasePath' : 'schedaBasePath']}/${currentItem.id}/${helpers.slugify(currentItem.label)}`
           }
         });
       }
@@ -60,12 +58,15 @@ export class AwHomeAutocompleteDS extends DataSource {
       actions: {
         showMore: {
           text: `Visualizza tutti i ${totalCount} risultati`,
-          payload: {
-            source: 'showMore'
+          anchor: {
+            href: paths.searchBasePath,
+            queryParams: {
+              query
+            }
           }
         }
       },
-      fallback: ((config.get('home-layout') || {})["top-hero"] || {}).fallback
+      fallback: ((config.get('home-layout') || {})['top-hero'] || {}).fallback
     };
   }
 }

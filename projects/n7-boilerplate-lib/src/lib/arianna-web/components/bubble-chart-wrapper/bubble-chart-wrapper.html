@@ -1,33 +1,3 @@
 <div class="aw-bubble-chart-wrapper">
-    <div class="bubble-chart__tippy-template" style="display: none;">
-        <!-- <button id="bubble-popup-menu_closebutton" style="display: none;"
-            (click)="onClick('bubble-tooltip-close-click')"></button> -->
-        <button id="bubble-popup-menu_gotobutton" class="bubble-popup-menu_gotobutton" style="display: none;"
-            (click)="onClick('bubble-tooltip-goto-click', {})"></button>
-        <button id="bubble-popup-menu_selectbutton" style="display: none;"
-            (click)="onClick('bubble-tooltip-select-click', {})"></button>
-        <div id="bubble-popup-menu" class="aw-bubble-popup-menu">
-            <h2 class="aw-bubble-popup-menu__title">
-                <!-- Set by tippy builder fuction -->
-            </h2>
-            <!-- <span class="n7-icon-close aw-bubble-popup-menu__close"
-                onclick="document.getElementById('bubble-popup-menu_closebutton').click();">
-            </span> -->
-            <p class="aw-bubble-popup-menu__text">
-                <!-- Set by tippy builder fuction -->
-            </p>
-            <div class="aw-bubble-popup-menu__actions">
-                <span class="aw-bubble-popup-menu__link" *ngIf="buttons.indexOf('goto') >= 0"
-                    onclick="document.getElementById('bubble-popup-menu_gotobutton').click();">Vai alla scheda</span>
-                <ng-container>
-                    <span class="aw-bubble-popup-menu__link" *ngIf="buttons.indexOf('select') >= 0"
-                        onclick="document.getElementById('bubble-popup-menu_selectbutton').click();">
-                        <!-- Set by tippy builder function -->
-                    </span>
-                </ng-container>
-            </div>
-        </div>
-    </div>
-
     <ng-content></ng-content>
 </div>

@@ -2,6 +2,7 @@
 export * from './linked-objects.ds';
 export * from './autocomplete-wrapper.ds';
 export * from './bubble-chart.ds';
+export * from './chart-tippy.ds';
 
 // Home Layout
 export * from './hero.ds';

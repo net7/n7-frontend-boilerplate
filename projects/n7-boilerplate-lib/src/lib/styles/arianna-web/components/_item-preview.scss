@@ -8,7 +8,8 @@
    #ITEM-PREVIEW
 \* ------------------------------------ */
 .n7-item-preview {
-    margin: $space*1.5 0 $space 0;
+    margin: 0 0 $space 0;
+    padding-top: $space*1.5;
     padding-bottom: $space*2;
     border-bottom: 1px solid $color-border-light;
 
@@ -118,11 +119,11 @@
     }
 }
 
+
 /* ------------------------------------ *\
    #IS-FULLWIDTH
 \* ------------------------------------ */
 .n7-item-preview.is-fullwidth {
-
     .n7-item-preview__metadata {
         display: flex;
 
@@ -184,6 +185,19 @@
     }
 }
 
+
+/* ------------------------------------ *\
+   #BREADCRUMBS-INTEGRATION
+\* ------------------------------------ */
+n7-smart-breadcrumbs {
+    &:hover {
+        + n7-item-preview {
+            .n7-item-preview__title {
+                color: $color-text-link;
+            }
+        }
+    }
+}
 
 /* ------------------------------------ *\
    #MEDIA-QUERIES

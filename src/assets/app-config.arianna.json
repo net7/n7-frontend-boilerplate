@@ -14,21 +14,23 @@
   "header": {
     "logo": {
       "image": "https://i.imgur.com/kTND3Do.png",
-      "payload": "aw/home"
+      "anchor": {
+        "href": "aw/home"
+      }
     },
     "nav": {
       "items": [
         {
           "text": "Home",
-          "payload": "aw/home",
           "icon": "n7-icon-home",
+          "anchor": { "href": "aw/home" },
           "_meta": {
             "id": "home"
           }
         },
         {
           "text": "Patrimonio",
-          "payload": "aw/patrimonio",
+          "anchor" : { "href": "aw/patrimonio" },
           "icon": "n7-icon-tree-icon",
           "_meta": {
             "id": "patrimonio"
@@ -36,7 +38,7 @@
         },
         {
           "text": "Galleria",
-          "payload": "aw/galleria",
+          "anchor" : { "href": "aw/galleria" },
           "icon": "n7-icon-th",
           "_meta": {
             "id": "galleria"
@@ -44,7 +46,7 @@
         },
         {
           "text": "Ricerca",
-          "payload": "aw/ricerca",
+          "anchor" : { "href": "aw/ricerca" },
           "icon": "n7-icon-search",
           "_meta": {
             "id": "ricerca"
@@ -52,7 +54,7 @@
         },
         {
           "text": "Utenti",
-          "payload": "aw/utenti",
+          "anchor" : { "href": "aw/utenti" },
           "icon": "n7-icon-facebook",
           "_meta": {
             "id": "utenti"
@@ -78,11 +80,17 @@
         "images": [
           {
             "url": "https://via.placeholder.com/80",
-            "alttext": "Logo 1"
+            "alttext": "Logo 1",
+            "anchor": {
+              "href": "https://www.google.it"
+            }
           },
           {
             "url": "https://via.placeholder.com/80",
-            "alttext": "Logo 2"
+            "alttext": "Logo 2",
+            "anchor": {
+              "href": "https://www.google.it"
+            }
           }
         ]
       },
@@ -91,21 +99,29 @@
         "links": [
           {
             "text": "Info su Arianna Web",
-            "payload": "https://www.google.it",
-            "classes": "link-class"
+            "classes": "link-class",
+            "anchor": {
+              "href": "https://www.google.it"
+            }
           },
           {
             "text": "Privacy policy",
-            "payload": "https://www.google.it",
-            "classes": "link-class"
+            "classes": "link-class",
+            "anchor": {
+              "href": "https://www.google.it"
+            }
           },
           {
             "text": "Cooklie policy",
-            "payload": "https://www.google.it"
+            "anchor": {
+              "href": "https://www.google.it"
+            }
           },
           {
             "text": "Termini e condizioni",
-            "payload": "https://www.google.it"
+            "anchor": {
+              "href": "https://www.google.it"
+            }
           }
         ]
       },
@@ -125,7 +141,7 @@
         "weight": "normal"
       }
     },
-    "bubbleLimit": 120,
+    "bubbleLimit": 50,
     "transition": 750,
     "shuffle": true
   },
@@ -186,7 +202,10 @@
       "image": "https://i.imgur.com/8BgHOBi.png",
       "text": "La storia del MAXXI inizia nell'autunno del 1997 quando l'allora Ministero per i beni culturali ottiene dal Ministero della Difesa la cessione di un'ampia area nel quartiene Flaminio di Roma, occupata da officine e padiglioni della ex Caserma Montello, in disuso da tempo, con il fine di creare un nuovo polo mseale nazionale dedicato alle arti contemporanee per la cui progettazione, nel 1998, viene bandito un concorso internazionale di idee in due fasi. Il bando di concorso prevedeva un piano funzionale complesso, con la presenza di vari poli museali: un museo per l'architettura e uno per le arti del XXI secolo, uno spazio per le produzioni sperimentali, la biblioteca, l'auditorium, spazi per eventi dal vivo e infine spazi didattici.",
       "button": {
-        "text": "NAVIGA IL PATRIMONIO"
+        "text": "NAVIGA IL PATRIMONIO",
+        "anchor": {
+          "href": "/aw/patrimonio"
+        }
       }
     },
     "outer-links": {
@@ -196,28 +215,33 @@
           "image": "https://picsum.photos/200",
           "title": "Accedi all'archivio della Direzione dei lavori pubblici",
           "text": "Il complesso di fondi è costituito dalla documentazione prodotta dalle strutture burocratiche afferenti alla Direzione generale dei lavori pubblici",
-          "payload": "http://www.google.it",
-          "classes": "is-vertical"
+          "classes": "is-vertical",
+          "anchor": {
+            "href": "http://www.google.it"
+          }
         },
         {
           "title": "Direzione generale delle politiche sociali",
           "image": "https://picsum.photos/200",
           "text": "Strutture burocratiche afferenti alla Direzione generale dei lavori pubblici",
-          "payload": "http://www.google.it",
-          "classes": "is-vertical"
+          "classes": "is-vertical",
+          "anchor": {
+            "href": "http://www.google.it"
+          }
         },
         {
           "title": "Direzione generale dell'organizzazione e del personale",
           "image": "https://picsum.photos/200",
           "text": "Il complesso di fondi è costituito dalla documentazione prodotta dalle strutture burocratiche afferenti alla Direzione generale",
-          "payload": "http://www.google.it",
-          "classes": "is-vertical"
+          "classes": "is-vertical",
+          "anchor": {
+            "href": "http://www.google.it"
+          }
         }
       ]
     },
     "results-limit": 10,
     "max-item-length": 50,
-    "entitiesQuerySize": 500,
     "autocomplete-fallback": "Nessun risultato, prova a\ncambiare la ricerca.",
     "linked-objects-fallback": "Non sono stati trovati oggetti culturali collegati alle entità selezionate. Prova a cambiare le entità selezionate o resetta la ricerca."
   },

@@ -186,6 +186,7 @@ export class AwSearchLayoutDS extends LayoutDataSource {
           config: this.configuration,
           page: this.currentPage,
           pagination: true,
+          paginationParams: this._getPaginationParams(),
           dynamicPagination: {
             total: totalCount
           },
@@ -247,6 +248,10 @@ export class AwSearchLayoutDS extends LayoutDataSource {
   }
 
   private _sidebarStickyControl() {
+    // no sticky for Internet Explorer
+    if (helpers.browserIsIE()) {
+      return;
+    }
     const source$ = fromEvent(window, 'scroll');
 
     source$.pipe(
@@ -256,5 +261,23 @@ export class AwSearchLayoutDS extends LayoutDataSource {
         wrapperOffsetTop = document.getElementsByClassName('sticky-parent')[0]['offsetTop'];
       this.sidebarIsSticky = wrapperOffsetTop <= windowOffsetTop;
     });
+  }
+
+  private _getPaginationParams() {
+    const requestParams = this.searchModel.getRequestParams(),
+      queryParams = this.searchModel.filtersAsQueryParams(requestParams.filters);
+
+    Object.keys(queryParams).forEach(key => queryParams[key] = queryParams[key] || null);
+
+    // aditional params
+    queryParams.orderby = this.orderBy;
+    queryParams.orderdirection = this.orderDirection;
+    queryParams.page = this.currentPage;
+    queryParams.limit = this.pageSize;
+
+    return {
+      queryParams,
+      href: this.configuration.get('paths').searchBasePath
+    };
   }
 }

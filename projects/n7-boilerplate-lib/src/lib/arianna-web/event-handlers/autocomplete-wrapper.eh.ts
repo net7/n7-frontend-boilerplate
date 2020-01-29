@@ -6,12 +6,12 @@ export class AwAutocompleteWrapperEH extends EventHandler {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
         case 'aw-autocomplete-wrapper.click':
-          if (payload != 'fallback-simple-autocomplete') { // if this is the fallback item, kill the event.
-            this.emitOuter('clickresult', payload)
+          if (payload !== 'fallback-simple-autocomplete') { // if this is the fallback item, kill the event.
+            this.emitOuter('clickresult', payload);
           }
           break;
         default:
-          console.warn('unhandled event of type:', type)
+          console.warn('unhandled event of type:', type);
           break;
       }
     });
