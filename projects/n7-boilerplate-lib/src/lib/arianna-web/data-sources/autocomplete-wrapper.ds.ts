@@ -25,7 +25,9 @@ export class AwAutocompleteWrapperDS extends DataSource {
       const text = this.stringTrim(el.entity.label, maxLength)
       suggestion.push({
         text,
-        payload: el.entity.id
+        anchor: {
+          payload: el.entity.id
+        }
       })
     })
     return { suggestion }
