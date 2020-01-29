@@ -19,19 +19,8 @@
         </div>
         <!-- Navigation -->
         <div *ngIf="!(lb.widgets['aw-entita-nav'].ds.out$ | async)" class="aw-entity__sidebar-nav-loading">
-            <n7-content-placeholder [data]="{
-                blocks: [{
-                    classes: 'entity-placeholder-nav'
-                }]
-            }">
-            </n7-content-placeholder>
-            <n7-content-placeholder [data]="{
-                blocks: [{
-                    classes: 'entity-placeholder-nav'
-                }]
-            }">
-            </n7-content-placeholder>
-            <n7-content-placeholder [data]="{
+            <n7-content-placeholder *ngFor="let n of [0,1,2]"
+            [data]="{
                 blocks: [{
                     classes: 'entity-placeholder-nav'
                 }]
@@ -53,28 +42,8 @@
         </div>
 
         <div class="aw-entity__content-loading-items">
-            <n7-content-placeholder [data]="{
-                blocks: [
-                {
-                    classes: 'entity-placeholder-item-preview'
-                }
-                ]
-            }"></n7-content-placeholder>
-            <n7-content-placeholder [data]="{
-                blocks: [
-                {
-                    classes: 'entity-placeholder-item-preview'
-                }
-                ]
-            }"></n7-content-placeholder>
-            <n7-content-placeholder [data]="{
-                blocks: [
-                {
-                    classes: 'entity-placeholder-item-preview'
-                }
-                ]
-            }"></n7-content-placeholder>
-            <n7-content-placeholder [data]="{
+            <n7-content-placeholder *ngFor="let n of [0,1,2,3]"
+            [data]="{
                 blocks: [
                 {
                     classes: 'entity-placeholder-item-preview'
@@ -146,7 +115,7 @@
             </div>
 
             <div class="aw-entity__content-section aw-entity__content-section-overview aw-bubble-chart__{{lb.dataSource.selectedTab}}"
-                *ngIf="lb.dataSource.bubblesEnabled"
+                *ngIf="lb.dataSource.bubblesEnabled && lb.dataSource.myResponse.relatedEntities"
                 [hidden]="lb.dataSource.selectedTab != 'overview' && lb.dataSource.selectedTab != 'entita-collegate'">
                 <div class="aw-entity__content-section-header">
                     <h2 class="aw-entity__content-section-title">Entità collegate</h2>
