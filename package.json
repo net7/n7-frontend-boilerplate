@@ -10,6 +10,8 @@
     "stylelint": "stylelint \"projects/n7-boilerplate-lib/src/lib/styles/**/**/*.scss\"; exit 0",
     "stylelint:watch": "onchange \"projects/n7-boilerplate-lib/src/lib/styles/**/**/*.scss\" -- npm run stylelint ",
     "e2e": "ng e2e",
+    "repackage": "ng build n7-boilerplate-lib",
+    "postrepackage": "node scripts/repackage",
     "package:serve": "ng build n7-boilerplate-lib --watch",
     "package:copy": "node scripts/build-after",
     "package:build": "ng build n7-boilerplate-lib && npm run package:copy",

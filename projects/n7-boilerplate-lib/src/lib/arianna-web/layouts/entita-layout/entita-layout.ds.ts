@@ -18,10 +18,10 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
   public currentSlug: string; // selected entity (url param)
   public currentPage: any; // pagination value (url param)
   public pageSize: number = 10; // linked objects page size
-  // BUBBLE CHART DATA ↓
+  // ===== BUBBLE CHART =====
   public bubblesSize: number = 10; // related entities (bubbles) page size
   public bubblesEnabled: boolean;
-
+  // ========================
   private communication: any;
 
   onInit({ configuration, mainState, router, route, location, options, titleService, communication }) {
@@ -34,7 +34,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     this.location = location;
     this.titleService = titleService;
     this.currentId = "";
-    this.currentPage = +this.route.snapshot.params.page;
+    this.currentPage = +this.route.snapshot.queryParams.page;
     this.bubblesEnabled = this.configuration.get('features-enabled') ? this.configuration.get('features-enabled')['bubblechart'] : false;
     this.bubblesSize = this.configuration.get('entita-layout') ? this.configuration.get('entita-layout')['entitiesQuerySize'] : this.bubblesSize;
     this.one('aw-bubble-chart').updateOptions({
@@ -72,16 +72,35 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     });
   }
 
-  /*
-    Updates selected tab on tab change
-  */
+  drawPagination = () =>  {
+    const { href, queryParams } = this._getPaginationParams();
+    this.one('n7-smart-pagination').updateOptions({
+      mode: 'href',
+      href,
+      queryParams,
+    })
+    this.one('n7-smart-pagination').update({
+      totalPages: Math.ceil(this.myResponse.relatedItems.length / this.pageSize),
+      currentPage: this.currentPage,
+      pageLimit: 5,
+      sizes: {
+        list: [10, 25, 50],
+        active: this.pageSize
+      }
+    })
+  }
+
   handlePageNavigation = () => {
+    /*
+      Updates selected tab on tab change
+    */
     if (!this.myResponse) {
       return;
     }
-    const paginationParams = this._getPaginationParams();
+    const { href, queryParams } = this._getPaginationParams();
+    this.drawPagination()
     this.one('aw-linked-objects').updateOptions({
-      paginationParams,
+      paginationParams: { href, queryParams },
       context: this.selectedTab,
       config: this.configuration,
       page: this.currentPage,
@@ -118,15 +137,14 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     }
   }
 
-  /*
-    Updates the widgets on this layout, based on route
-  */
   updateWidgets(data) {
+    /*
+      Updates the widgets on this layout, based on route
+    */
     const selected = this.selectedTab;
     Object.keys(data).forEach(k => {
       if (Array.isArray(data[k]) && data[k].length == 0) { data[k] = null }
     })
-    console.log({data})
     this.one('aw-entita-nav').update({
       data,
       selected,
@@ -141,18 +159,20 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
         labels: this.configuration.get("labels")
       }
     )
+    this.drawPagination()
   }
-  /*
-    Helper function to update the graph
-  */
+
   updateBubbes(data) {
+    /*
+      Helper function to update the graph
+    */
     this.one('aw-bubble-chart').update(data);
   }
 
-  /*
-    Loads the data for the selected nav item, into the adjacent text block.
-  */
   loadItem(id, slug, tab) {
+    /*
+      Loads the data for the selected nav item, into the adjacent text block.
+    */
     if (id && tab) {
       this.currentId = id // store selected item from url
       this.currentSlug = slug // store selected item from url
@@ -202,6 +222,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       })
     }
     this.one('aw-linked-objects').update({ items: res.relatedItems });
+    this.drawPagination()
     // update head title
     this.mainState.update('headTitle', `Arianna Web > Entità > ${this.myResponse.label}`);
   }

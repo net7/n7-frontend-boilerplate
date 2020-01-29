@@ -36,7 +36,8 @@
                 </n7-content-placeholder>
             </div>
         </div>
-        <div *ngIf="!!(lb.widgets['facets-wrapper'].ds.out$ | async)" class="aw-search__sidebar sticky-target" [ngClass]="{ 'is-sticky': lb.dataSource.sidebarIsSticky }">
+        <div *ngIf="!!(lb.widgets['facets-wrapper'].ds.out$ | async)" class="aw-search__sidebar sticky-target"
+            [ngClass]="{ 'is-sticky': lb.dataSource.sidebarIsSticky }">
             <div class="aw-search__facets">
                 <n7-facets-wrapper [data]="lb.widgets['facets-wrapper'].ds.out$ | async"
                     [emit]="lb.widgets['facets-wrapper'].emit">
@@ -56,55 +57,15 @@
                         for="aw-search__results-select-orderby">{{ lb.dataSource.orderByLabel }}</label>
                     <select (change)="lb.eventHandler.emitInner('orderbychange', $event.target.value)"
                         id="aw-search__results-select-orderby">
-                        <option *ngFor="let option of lb.dataSource.orderByOptions" [value]="option.value" [selected]="option.selected">
+                        <option *ngFor="let option of lb.dataSource.orderByOptions" [value]="option.value"
+                            [selected]="option.selected">
                             {{ option.label }}</option>
                     </select>
                 </div>
             </div>
             <!-- Search details -->
-            <div *ngIf="lb.dataSource.resultsLoading"
-                 class="aw-search__results-wrapper-loading">
-                <n7-content-placeholder *ngIf="lb.dataSource.resultsLoading" [data]="{
-                    blocks: [
-                        { classes: 'search-result-placeholder-title' },
-                        { classes: 'search-result-placeholder-metadata' },
-                        { classes: 'search-result-placeholder-metadata' },
-                        { classes: 'search-result-placeholder-metadata' }
-                    ]
-                }"></n7-content-placeholder>
-                <n7-content-placeholder *ngIf="lb.dataSource.resultsLoading" [data]="{
-                    blocks: [
-                        { classes: 'search-result-placeholder-title' },
-                        { classes: 'search-result-placeholder-metadata' },
-                        { classes: 'search-result-placeholder-metadata' },
-                        { classes: 'search-result-placeholder-metadata' }
-                    ]
-                }"></n7-content-placeholder>
-                <n7-content-placeholder *ngIf="lb.dataSource.resultsLoading" [data]="{
-                    blocks: [
-                        { classes: 'search-result-placeholder-title' },
-                        { classes: 'search-result-placeholder-metadata' },
-                        { classes: 'search-result-placeholder-metadata' },
-                        { classes: 'search-result-placeholder-metadata' }
-                    ]
-                }"></n7-content-placeholder>
-                <n7-content-placeholder *ngIf="lb.dataSource.resultsLoading" [data]="{
-                    blocks: [
-                        { classes: 'search-result-placeholder-title' },
-                        { classes: 'search-result-placeholder-metadata' },
-                        { classes: 'search-result-placeholder-metadata' },
-                        { classes: 'search-result-placeholder-metadata' }
-                    ]
-                }"></n7-content-placeholder>
-                <n7-content-placeholder *ngIf="lb.dataSource.resultsLoading" [data]="{
-                    blocks: [
-                        { classes: 'search-result-placeholder-title' },
-                        { classes: 'search-result-placeholder-metadata' },
-                        { classes: 'search-result-placeholder-metadata' },
-                        { classes: 'search-result-placeholder-metadata' }
-                    ]
-                }"></n7-content-placeholder>
-                <n7-content-placeholder *ngIf="lb.dataSource.resultsLoading" [data]="{
+            <div *ngIf="lb.dataSource.resultsLoading" class="aw-search__results-wrapper-loading">
+                <n7-content-placeholder *ngFor="let n of [0,1,2,3,4,5,6,7,8,9]" [data]="{
                     blocks: [
                         { classes: 'search-result-placeholder-title' },
                         { classes: 'search-result-placeholder-metadata' },
@@ -125,15 +86,16 @@
                         <p class="aw-search__fallback-string">
                             {{ lb.dataSource.fallback }}
                         </p>
-                        <button [disabled]="!lb.dataSource.resetButtonEnabled" class="n7-btn aw-search__fallback-button" (click)="lb.eventHandler.emitInner('searchreset', {})">
+                        <button [disabled]="!lb.dataSource.resetButtonEnabled" class="n7-btn aw-search__fallback-button"
+                            (click)="lb.eventHandler.emitInner('searchreset', {})">
                             Resetta la ricerca
                         </button>
                     </div>
                 </ng-container>
-                <n7-pagination *ngIf="lb.dataSource.totalCount > 10"
-                    [data]="(lb.widgets['aw-linked-objects'].ds.out$ | async)?.pagination"
-                    [emit]="lb.widgets['aw-linked-objects'].emit">
-                </n7-pagination>
+                <n7-smart-pagination *ngIf="lb.dataSource.totalCount > 10"
+                    [data]="lb.widgets['n7-smart-pagination'].ds.out$ | async"
+                    [emit]="lb.widgets['n7-smart-pagination'].emit">
+                </n7-smart-pagination>
             </div>
         </div>
     </div>

@@ -27,9 +27,6 @@ export class AwLinkedObjectsDS extends DataSource {
     }
     this.context = this.options.context;
     this.loadedData = this.unpackData(data);
-    if (this.options.pagination) {
-      this.addPagination(this.currentPage, this.totalPages, this.pageSize);
-    }
     this.checkForMore(); // checks if <Show More> button should be enabled
     this.loadedData.loaderData = {};
     return this.loadedData;
@@ -67,101 +64,6 @@ export class AwLinkedObjectsDS extends DataSource {
     this.loadedData.result = this.loadedData.result.concat(newData.result);
     this.checkForMore();
     this.loadedData.isLoading = false;
-  }
-
-  public addPagination = (page, totalPages, size) => {
-    const sizeOptions = [10, 25, 50];
-
-    this.loadedData.pagination = {
-      first: {
-        classes: page === 1 ? 'is-disabled' : '',
-        anchor: page !== 1 ? this._getPaginationAnchor(1) : null
-      },
-      prev: {
-        classes: page === 1 ? 'is-disabled' : '',
-        anchor: page !== 1 ? this._getPaginationAnchor(page / 1 - 1) : null
-      },
-      next: {
-        classes: page === totalPages ? 'is-disabled' : '',
-        anchor: page !== totalPages ? this._getPaginationAnchor(page / 1 + 1) : null
-      },
-      last: {
-        classes: page === totalPages ? 'is-disabled' : '',
-        anchor: page !== totalPages ? this._getPaginationAnchor(totalPages) : null
-      },
-      links: this.makePagination(totalPages, page),
-      select: {
-        label: 'Numero di risultati',
-        options: sizeOptions.map(o => {
-          return {
-            text: o,
-            selected: o === size,
-          };
-        }),
-        payload: 'select-size'
-      },
-      // previews: result
-    };
-  }
-
-  public makePagination = (totalPages, currentPage) => {
-    /*
-      Called by this.unpackData() when this.options.page is defined.
-      Returns the data for <n7-pagination> component.
-    */
-    const result = [],
-      { href, queryParams } = this.options.paginationParams;
-    let limit = this.paths.paginationLimit - 1;
-
-    if (totalPages <= limit) {
-      limit = totalPages - 1;
-    }
-
-    // always push the first page
-    if (limit) {
-      let lastPage: number, firstPage: number;
-      if (currentPage > Math.floor(limit / 2)) {
-        if (totalPages === 2) {
-          lastPage = totalPages;
-          firstPage = 1;
-          // when currentPage is after half-point
-          // (example: [ 14 ][ 15 ][!16!][ 17 ][ 18 ])
-        } else if (currentPage < (totalPages - Math.floor(limit / 2))) {
-          lastPage = currentPage / 1 + Math.floor(limit / 2);
-          firstPage = currentPage / 1 - Math.floor(limit / 2);
-        } else {
-          lastPage = totalPages;
-          firstPage = currentPage - limit + (totalPages - currentPage);
-        }
-      } else {
-        // when currentPage is before half-point
-        // (example: [ 1 ][!2!][ 3 ][ 4 ][ 5 ])
-        lastPage = limit + 1;
-        firstPage = 1;
-      }
-
-      for (let i = firstPage; i <= lastPage; i++) {
-        result.push({
-          text: String(i),
-          classes: currentPage === i ? 'is-active' : '',
-          anchor: currentPage !== i ? this._getPaginationAnchor(i) : null
-        });
-      }
-    } else {
-      result.push({
-        text: '1',
-        classes: currentPage === 1 ? 'is-active' : '',
-        anchor: currentPage !== 1 ? this._getPaginationAnchor(1) : null
-      });
-      for (let i = 1; i < totalPages; i++) {
-        result.push({
-          text: String(i + 1),
-          classes: currentPage === i + 1 ? 'is-active' : '',
-          anchor: currentPage !== i + 1 ? this._getPaginationAnchor(i + 1) : null
-        });
-      }
-    }
-    return result;
   }
 
   private unpackData = data => {
