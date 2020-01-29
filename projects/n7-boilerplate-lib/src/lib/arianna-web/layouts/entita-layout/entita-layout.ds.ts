@@ -123,7 +123,15 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
   */
   updateWidgets(data) {
     const selected = this.selectedTab;
-    this.one('aw-entita-nav').update({ data, selected, basePath: this.getNavBasePath() });
+    Object.keys(data).forEach(k => {
+      if (Array.isArray(data[k]) && data[k].length == 0) { data[k] = null }
+    })
+    console.log({data})
+    this.one('aw-entita-nav').update({
+      data,
+      selected,
+      basePath: this.getNavBasePath()
+    });
     this.updateComponent(
       'aw-entita-metadata-viewer',
       this.myResponse.fields,
