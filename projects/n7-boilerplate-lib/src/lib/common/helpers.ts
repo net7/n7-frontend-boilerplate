@@ -22,5 +22,15 @@ export default {
   },
   browserIsIE() {
     return window.navigator.userAgent.match(/(MSIE|Trident)/);
+  },
+  escapeDoubleQuotes(str) {
+    return str.replace(/\\([\s\S])|(")/g,"\\$1$2"); // thanks @slevithan!
+  },
+  unescapeDoubleQuotes(str) {
+    if (str && str != "")
+      str = str.replace(/\\(")/g,"$1"); // thanks @slevithan!
+
+    return str;
   }
+
 };

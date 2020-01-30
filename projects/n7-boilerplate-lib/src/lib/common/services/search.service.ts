@@ -8,6 +8,7 @@ import {
   FacetInputLink,
   FacetInputSelect
 } from '../models';
+import helpers from '../helpers';
 
 export type FilterOperators = '=' | '>' | '<' | '>=' | '<=' | '<>' | 'LIKE';
 export type FacetTypes = 'value' | 'range';
@@ -109,7 +110,7 @@ export class SearchModel {
       ) {
         filter.value.push(value);
       } else {
-        filter.value = !remove ? value : null;
+        filter.value = !remove ? helpers.escapeDoubleQuotes(value) : null;
       }
     });
   }
