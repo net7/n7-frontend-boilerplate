@@ -219,7 +219,7 @@ export class AwLinkedObjectsDS extends DataSource {
           }
         }
         let classes = ['entita', 'search', 'oggetti-collegati'].includes(context) ? 'is-fullwidth' : '';
-        classes += el.item.typeOfEntity ? ' is-' + config.get('config-keys')[itemData.typeOfEntity]['class-name'] : ' is-oggetto-culturale';
+        classes += itemData.typeOfEntity ? ' is-' + config.get('config-keys')[itemData.typeOfEntity]['class-name'] : ' is-oggetto-culturale';
 
         const itemTitle = +paths.title.maxLength && _get(el, paths.title, itemData.label).length > +paths.title.maxLength
           ? _get(el, paths.title, itemData.label).slice(0, +paths.title.maxLength) + '…'
