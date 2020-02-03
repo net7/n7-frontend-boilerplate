@@ -15,12 +15,12 @@ export class FacetsWrapperDS extends DataSource {
 
     const id = this.searchModel.getId(),
       fields = this.searchModel.getFields();
-    
+
     let groups = [];
 
     fields.forEach((fieldConfig, fieldIndex) => {
       const groupId = `group-${id}-${fieldIndex}`;
-      
+
       // header config
       const header = this._headerConfig(fieldConfig.header, groupId);
 
@@ -37,7 +37,7 @@ export class FacetsWrapperDS extends DataSource {
           }
         })
         .forEach(({ type, output, facetId }) => {
-          sections.push({ 
+          sections.push({
             classes: this._getSectionClasses(type),
             inputs: Array.isArray(output) ? output : [output],
             _meta: {
@@ -46,20 +46,20 @@ export class FacetsWrapperDS extends DataSource {
           });
         });
 
-      groups.push({ 
+      groups.push({
         header,
         facet: { sections },
         classes: `n7-facets-wrapper__${groupId}`,
-        isOpen: true, 
+        isOpen: true,
         _meta: {
           groupId
         }
       })
     });
 
-    return { 
-      groups, 
-      classes: `n7-facets-wrapper__${this.searchModel.getId()}` 
+    return {
+      groups,
+      classes: `n7-facets-wrapper__${this.searchModel.getId()}`
     };
   }
 
@@ -71,7 +71,7 @@ export class FacetsWrapperDS extends DataSource {
       }
     });
   }
-  
+
   public onFacetChange({ eventPayload }){
     const { facetId, source, trigger } = eventPayload.inputPayload,
       filter = this.searchModel.getFiltersByFacetId(facetId)[0] || {},
@@ -82,7 +82,7 @@ export class FacetsWrapperDS extends DataSource {
 
     // normalize
     value = '' + value;
-      
+
     // remove control
     if(Array.isArray(filterValue)){
       remove = filterValue.indexOf(value) !== -1;
@@ -166,5 +166,4 @@ export class FacetsWrapperDS extends DataSource {
       }
     }: null;
   }
-
 }

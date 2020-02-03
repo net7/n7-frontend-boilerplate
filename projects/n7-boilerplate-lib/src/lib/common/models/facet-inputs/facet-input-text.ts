@@ -1,5 +1,5 @@
 import { FacetInput } from './facet-input';
-
+import helpers from '../../helpers';
 export class FacetInputText extends FacetInput {
 
   protected transform() {
@@ -33,6 +33,6 @@ export class FacetInputText extends FacetInput {
   }
 
   public setActive(facetValue) {
-    this.output.value = facetValue || null;
+    this.output.value = helpers.unescapeDoubleQuotes(facetValue) || null;
   }
 }
