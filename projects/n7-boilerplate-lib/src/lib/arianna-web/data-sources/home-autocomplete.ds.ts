@@ -61,7 +61,7 @@ export class AwHomeAutocompleteDS extends DataSource {
           anchor: {
             href: paths.searchBasePath,
             queryParams: {
-              query
+              query: helpers.escapeDoubleQuotes(query)
             }
           }
         }

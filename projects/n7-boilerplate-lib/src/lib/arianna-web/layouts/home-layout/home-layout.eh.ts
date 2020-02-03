@@ -55,12 +55,11 @@ export class AwHomeLayoutEH extends EventHandler {
           this.emitGlobal('navigate', {
             handler: 'router',
             path: [this.configuration.get('paths').searchBasePath],
-            queryParams: { query }
+            queryParams: { query: helpers.escapeDoubleQuotes(query) }
           });
           break;
         case 'aw-hero.change':
-          this.dataSource.autocompleteValue = payload.value;
-          this.dataSource.onHeroChange(payload.value);
+          this.dataSource.onHeroChange(helpers.escapeDoubleQuotes(payload.value));
           break;
         case 'aw-home-facets-wrapper.click':
           this.emitOuter('togglefilter', payload)
