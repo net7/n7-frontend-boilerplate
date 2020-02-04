@@ -20,7 +20,7 @@ copy$.push(fs.copy(stylesSource, stylesDest));
 
 Promise.all(copy$)
   .then(() => {
-    console.log(`${colors.BFGBLUE}%s\x1b[0m`, `Building linkable '@n7-frontend/components'`);
+    console.log(`${colors.BFGBLUE}%s\x1b[0m`, `Building linkable '@n7-frontend/boilerplate'`);
     console.log(`${colors.BFGBLUE}%s\x1b[0m`, `Copying /styles/ folder to n7-boilerplate-lib`);
     return fs.copy(distSource, repkg)
   })
@@ -28,5 +28,5 @@ Promise.all(copy$)
     console.log(`${colors.FGGREEN}%s\x1b[0m`, `Dist repackaged successfully!`);
     console.log(`${colors.FGGREEN}%s\x1b[0m`, `- from:\t${distSource}`);
     console.log(`${colors.FGGREEN}%s\x1b[0m`, `- to:\t${repkg}\n`);
-    console.log(`${colors.FGGREEN}%s\x1b[0m`, `You can now use @n7-frontend/components via 'npm link'`);
+    console.log(`${colors.FGGREEN}%s\x1b[0m`, `You can now use @n7-frontend/boilerplate via 'npm link'`);
   }).catch(err => console.log(err));

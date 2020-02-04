@@ -7,7 +7,11 @@ export class SmartPaginationEH extends EventHandler {
         case 'n7-smart-pagination.change':
           this.emitOuter('change', payload)
           break;
-          
+
+        case 'n7-smart-pagination.click':
+          this.emitOuter('click', payload)
+          break;
+
         default:
           console.warn('unhandled inner event of type', type)
           break;
