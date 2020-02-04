@@ -10,6 +10,4 @@ export interface IDataWidgetWrapperData {
 })
 export class DataWidgetWrapperComponent{
     @Input() data: IDataWidgetWrapperData;
-    @Input() emit: any;
 }
-  

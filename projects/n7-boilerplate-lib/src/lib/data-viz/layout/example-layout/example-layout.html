@@ -1,5 +1,5 @@
 <div class="dv-example-layout" id="example-layout">
-    <dv-data-widget-wrapper>
+    <dv-data-widget-wrapper [data]="{ classes: 'example-class' }">
         <div class="dv-data-widget-wrapper__title">
             <n7-inner-title
                 [data]="lb.widgets['dv-inner-title'].ds.out$ | async">
