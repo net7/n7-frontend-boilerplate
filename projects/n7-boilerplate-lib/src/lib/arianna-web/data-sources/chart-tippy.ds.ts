@@ -1,5 +1,5 @@
 import { DataSource } from '@n7-frontend/core';
-import helpers from 'n7-boilerplate-lib/lib/common/helpers';
+import helpers from '../../common/helpers';
 
 export class AwChartTippyDS extends DataSource {
   protected transform(data) {
