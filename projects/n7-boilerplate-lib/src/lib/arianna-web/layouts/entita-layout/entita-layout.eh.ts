@@ -1,6 +1,6 @@
 import { EventHandler } from '@n7-frontend/core';
-import { Subject } from 'rxjs';
 import helpers from '../../../common/helpers';
+import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 export class AwEntitaLayoutEH extends EventHandler {
@@ -81,11 +81,19 @@ export class AwEntitaLayoutEH extends EventHandler {
             this.emitOuter('filterbubbleresponse', payload.relatedEntities);
           }
           break;
+        case 'n7-smart-pagination.change':
+          this.handlePageSizeChange(payload.value)
+          break;
         default:
           break;
       }
     })
 
+  }
+
+  private handlePageSizeChange = v => {
+    this.dataSource.pageSize = v;
+    this.dataSource.handleNavUpdate('oggetti-collegati')
   }
 
   /**

@@ -117,6 +117,12 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     this.searchModel.setSearchConfigDirection(direction);
   }
 
+  onPageSizeChange(size): Observable<boolean> {
+    console.log('on page size change')
+    this.pageSize = size
+    return this._updateSearchPage(this.currentPage)
+  }
+
   onPaginationChange(payload): Observable<boolean> {
     const page = payload.replace('page-', '');
     return this._updateSearchPage(page);
@@ -125,6 +131,24 @@ export class AwSearchLayoutDS extends LayoutDataSource {
   onPaginationGoToChange(payload): Observable<boolean> {
     const page = payload.replace('goto-', '');
     return this._updateSearchPage(page);
+  }
+
+  drawPagination = () => {
+    const { href, queryParams } = this._getPaginationParams();
+    this.one('n7-smart-pagination').updateOptions({
+      mode: 'href',
+      href,
+      queryParams,
+    })
+    this.one('n7-smart-pagination').update({
+      totalPages: Math.ceil(this.totalCount / this.pageSize),
+      currentPage: this.currentPage,
+      pageLimit: 5,
+      sizes: {
+        list: [10, 25, 50],
+        active: this.pageSize
+      }
+    })
   }
 
   resetPagination() {
@@ -192,7 +216,7 @@ export class AwSearchLayoutDS extends LayoutDataSource {
           },
           size: this.pageSize
         });
-
+        this.drawPagination()
         this.one('aw-linked-objects').update({ items: this._normalizeItems(results.items) });
       })
     );

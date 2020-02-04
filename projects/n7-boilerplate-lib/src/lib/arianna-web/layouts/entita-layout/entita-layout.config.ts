@@ -1,5 +1,7 @@
 import { AwEntitaLayoutDS } from './entita-layout.ds';
 import { AwEntitaLayoutEH } from './entita-layout.eh';
+import { SmartPaginationDS } from '../../../common/data-sources';
+import { SmartPaginationEH } from '../../../common/event-handlers';
 import * as DS from '../../data-sources';
 import * as EH from '../../event-handlers';
 
@@ -11,6 +13,11 @@ export const AwEntitaLayoutConfig = {
     { id: 'aw-linked-objects'},
     { id: 'aw-bubble-chart'},
     { id: 'aw-chart-tippy'},
+    { 
+      id: 'n7-smart-pagination', 
+      dataSource: SmartPaginationDS, 
+      eventHandler: SmartPaginationEH
+    },
   ],
   layoutDS: AwEntitaLayoutDS,
   layoutEH: AwEntitaLayoutEH,

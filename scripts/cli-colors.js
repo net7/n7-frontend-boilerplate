@@ -6,7 +6,16 @@ module.exports = {
   BLINK: "\x1b[5m",
   REVERSE: "\x1b[7m",
   HIDDEN: "\x1b[8m",
-  
+
+  BFGBLACK: "\x1b[90m",
+  BFGRED: "\x1b[91m",
+  BFGGREEN: "\x1b[92m",
+  BFGYELLOW: "\x1b[93m",
+  BFGBLUE: "\x1b[94m",
+  BFGMAGENTA: "\x1b[95m",
+  BFGCYAN: "\x1b[96m",
+  BFGWHITE: "\x1b[97m",
+
   FGBLACK: "\x1b[30m",
   FGRED: "\x1b[31m",
   FGGREEN: "\x1b[32m",
@@ -15,7 +24,7 @@ module.exports = {
   FGMAGENTA: "\x1b[35m",
   FGCYAN: "\x1b[36m",
   FGWHITE: "\x1b[37m",
-  
+
   BGBLACK: "\x1b[40m",
   BGRED: "\x1b[41m",
   BGGREEN: "\x1b[42m",

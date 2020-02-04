@@ -1,7 +1,4 @@
 import { DataSource } from '@n7-frontend/core';
-import tippy, { createSingleton } from 'tippy.js';
-import helpers from '../../common/helpers';
-import { Subject, config } from 'rxjs';
 
 export class AwBubbleChartDS extends DataSource {
   public chartData: any = []         // data rendered into the graph

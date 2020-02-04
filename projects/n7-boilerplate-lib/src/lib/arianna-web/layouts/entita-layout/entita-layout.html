@@ -109,9 +109,11 @@
                         </n7-item-preview>
                     </ng-container>
                 </div>
-                <n7-pagination [data]="(lb.widgets['aw-linked-objects'].ds.out$ | async)?.pagination"
-                    [emit]="lb.widgets['aw-linked-objects'].emit">
-                </n7-pagination>
+                <n7-smart-pagination 
+                    *ngIf="lb.dataSource.selectedTab === 'oggetti-collegati'"
+                    [data]="lb.widgets['n7-smart-pagination'].ds.out$ | async"
+                    [emit]="lb.widgets['n7-smart-pagination'].emit">
+                </n7-smart-pagination>
             </div>
 
             <div class="aw-entity__content-section aw-entity__content-section-overview aw-bubble-chart__{{lb.dataSource.selectedTab}}"

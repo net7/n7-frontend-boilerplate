@@ -49,10 +49,12 @@ export class AwSearchLayoutEH extends EventHandler {
         case 'facets-wrapper.facetschange':
           this.dataSource.resetPagination();
           break;
-        case 'aw-linked-objects.change':
-          this.dataSource.onResultsLimitChange(payload);
+
+        case 'n7-smart-pagination.change':
+          this.dataSource.onResultsLimitChange(payload.value);
           this.aditionalParamsChange$.next();
           break;
+
         default:
           break;
       }
