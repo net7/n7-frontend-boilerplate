@@ -1,4 +1,6 @@
 <div class="dv-example-layout" id="example-layout">
+
+    <!-- Data widget wrapper with not-fixed height, two rows -->
     <dv-data-widget-wrapper>
         <div class="dv-data-widget-wrapper__title">
             <n7-inner-title
@@ -18,6 +20,42 @@
             </div>
         </div>
     </dv-data-widget-wrapper>
+
+    <!-- Data widget wrapper with fixed height, two rows -->
+    <dv-data-widget-wrapper [data]="{ classes: 'dv-data-widget-wrapper-fixed-height' }">
+        <div class="dv-data-widget-wrapper__title">
+            <n7-inner-title
+                [data]="lb.widgets['dv-inner-title'].ds.out$ | async">
+            </n7-inner-title>
+        </div>
+        <div class="dv-data-widget-wrapper__content">
+            <div class="dv-data-widget-wrapper__content-row">
+                <n7-data-widget
+                    [data]="lb.widgets['dv-widget'].ds.out$ | async">
+                </n7-data-widget>
+            </div>
+            <div class="dv-data-widget-wrapper__content-row">
+                Row content
+            </div>
+        </div>
+    </dv-data-widget-wrapper>
+
+    <!-- Data widget wrapper with fixed height, one row -->
+    <dv-data-widget-wrapper [data]="{ classes: 'dv-data-widget-wrapper-fixed-height' }">
+        <div class="dv-data-widget-wrapper__title">
+            <n7-inner-title
+                [data]="lb.widgets['dv-inner-title'].ds.out$ | async">
+            </n7-inner-title>
+        </div>
+        <div class="dv-data-widget-wrapper__content">
+            <div class="dv-data-widget-wrapper__content-row">
+                <n7-data-widget
+                    [data]="lb.widgets['dv-widget'].ds.out$ | async">
+                </n7-data-widget>
+            </div>
+        </div>
+    </dv-data-widget-wrapper>
+    
     <dv-datepicker-wrapper 
         [data]="lb.widgets['dv-datepicker-wrapper'].ds.out$ | async"
         [emit]="lb.widgets['dv-datepicker-wrapper'].emit">

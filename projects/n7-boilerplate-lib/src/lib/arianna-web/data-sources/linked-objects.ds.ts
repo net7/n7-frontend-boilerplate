@@ -107,36 +107,40 @@ export class AwLinkedObjectsDS extends DataSource {
     const result = [];
     const enabledKeys = paths.metadata.info.selection.map(info => info.key);
     d.forEach(el => {
-      const infoData = _get(el, paths.metadata.info.data, el.item.fields),
+
+      const itemData = el.item ? el.item : el;
+
+      const infoData = _get(el, paths.metadata.info.data, itemData.fields),
         infoDataItems = infoData ? infoData.filter(data => enabledKeys.indexOf(data.key) !== -1) : [],
-        toeData = _get(el, paths.metadata.toe.data, el.relatedTypesOfEntity),
-        breadcrumbs = _get(el, paths.metadata.breadcrumbs.data, el.item.breadcrumbs);
+        toeData = _get(el, paths.metadata.toe.data, itemData.relatedTypesOfEntity),
+        breadcrumbs = _get(el, paths.metadata.breadcrumbs.data, itemData.breadcrumbs);
 
         if( ['entita', 'search'].includes(context) ){
-          if( el.item.typeOfEntity && el.item.typeOfEntity != "" ) {
-            infoDataItems.push({"key": "Tipo di entità", "value": keys[el.item.typeOfEntity]['singular-label']})
+          if( itemData.typeOfEntity && itemData.typeOfEntity != "" ) {
+            infoDataItems.push({"key": "Tipo di entità", "value": keys[itemData.typeOfEntity]['singular-label']})
           }
         }
         let classes = ['entita', 'search', 'oggetti-collegati'].includes(context) ? 'is-fullwidth' : '';
-        classes += el.item.typeOfEntity ? " is-" + el.item.typeOfEntity.replace(/ /g, '-') : " is-oggetto-culturale";
+        classes += itemData.typeOfEntity ? " is-" + itemData.typeOfEntity.replace(/ /g, '-') : " is-oggetto-culturale";
 
-        const itemTitle = +paths.title.maxLength && _get(el, paths.title, el.item.label).length > +paths.title.maxLength
-          ? _get(el, paths.title, el.item.label).slice(0, +paths.title.maxLength) + '…'
-          : _get(el, paths.title, el.item.label),
-          itemId = _get(el, paths.payload, el.item.id),
-          itemType = el.item.typeOfEntity,
+        const itemTitle = +paths.title.maxLength && _get(el, paths.title, itemData.label).length > +paths.title.maxLength
+          ? _get(el, paths.title, itemData.label).slice(0, +paths.title.maxLength) + '…'
+          : _get(el, paths.title, itemData.label),
+          itemId = _get(el, paths.payload, itemData.id),
+          itemType = itemData.typeOfEntity,
           itemHref = [
             itemType ? config.get('paths').entitaBasePath : config.get('paths').schedaBasePath,
             itemId,
             helpers.slugify(itemTitle)
           ].join('/'),
           item = {
-            image: _get(el, paths.image, el.image),
+            image: _get(el, paths.image, itemData.image),
             title: itemTitle,
             text: !paths.text ? null : // make text block (in config) optional
-              +paths.text.maxLength && _get(el, paths.text.data, el.item.text).length > +paths.text.maxLength ?
-                _get(el, paths.text.data, el.item.text).slice(0, +paths.text.maxLength) + '…' :
-                _get(el, paths.text.data, el.item.text),
+
+              +paths.text.maxLength && _get(el, paths.text.data, itemData.text).length > +paths.text.maxLength ?
+                _get(el, paths.text.data, itemData.text).slice(0, +paths.text.maxLength) + '…' :
+                _get(el, paths.text.data, itemData.text),
             anchor: {
               href: itemHref
             },

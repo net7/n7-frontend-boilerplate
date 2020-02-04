@@ -87,7 +87,7 @@ $page-min-width: 960px;
 // $color-background-light-blue: #F5F7FF;
 // $color-background-medium: $color-gray-01;
 // $color-background-dark: $color-gray-03;
-$color-background-layout: $color-main;
+$color-background-layout: $color-background-base;
 $gradient-item-preview-list: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, $color-background-layout 100%);
 
 
@@ -268,4 +268,5 @@ $gradient-item-preview-list: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, 
 // #DATA-WIDGET-WRAPPER
 // ------------------------------------ //
 $data-widget-wrapper-height: 265px;
+$data-widget-wrapper-header-height: 44px;
 $data-widget-wrapper-width: auto;
