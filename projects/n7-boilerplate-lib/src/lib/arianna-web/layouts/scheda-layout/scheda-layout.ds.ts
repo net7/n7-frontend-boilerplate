@@ -1,7 +1,7 @@
 import { LayoutDataSource } from '@n7-frontend/core';
 import { fromEvent, Subject, of, merge } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import helpers from 'n7-boilerplate-lib/lib/common/helpers';
+import helpers from '../../../common/helpers';
 
 export class AwSchedaLayoutDS extends LayoutDataSource {
   static tree: any = null;
