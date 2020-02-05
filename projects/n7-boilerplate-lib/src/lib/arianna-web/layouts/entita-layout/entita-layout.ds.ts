@@ -188,6 +188,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
   }
 
   loadContent(res) {
+    const config = this.configuration.get("config-keys")[res.typeOfEntity];
     // console.log('(entita) Apollo responded with: ', { res })
     this.myResponse = res
     if ((res.fields || []).filter(field => ((this.configuration.get('entita-layout') || {}).overview || {}).campi.includes(field.key)).length > 0) {
@@ -198,9 +199,9 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       this.showFields = false
     }
     this.navHeader = { // always render nav header
-      icon: this.configuration.get("config-keys")[this.myResponse.typeOfEntity] ? this.configuration.get("config-keys")[this.myResponse.typeOfEntity].icon : "",
+      icon: config ? config.icon : '',
       text: this.myResponse.label,
-      color: this.myResponse.typeOfEntity.replace(/ /g, '-')
+      color: config['class-name']
     }
     this.one('aw-entita-nav').updateOptions({ bubblesEnabled: this.bubblesEnabled });
     this.one('aw-entita-metadata-viewer').updateOptions({ context: this.selectedTab, labels: this.configuration.get("labels"), config: this.configuration });

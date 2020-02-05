@@ -21,26 +21,27 @@ export class JsonConfigService {
   }
 
   private _handleResponse(response){
-    if(response){
+    if (response) {
       Object.keys(response).forEach(key => this.config.set(key, response[key]));
 
       // config keys colors
-      if(response['config-keys']){
+      if (response['config-keys']) {
         const headTag = document.querySelector('head'),
           styleElement = document.createElement('style');
 
-        let styles = [];
+        const styles = [];
 
         Object.keys(response['config-keys']).forEach(key => {
           const configKey = response['config-keys'][key] || {};
-          
-          if(configKey.color && configKey.color.hex){
+          const className = configKey['class-name'];
+
+          if (configKey.color && configKey.color.hex) {
             // add css class
-            styles.push(`--color-${key}: ${configKey.color.hex};`);
+            styles.push(`--color-${className}: ${configKey.color.hex};`);
           }
         });
 
-        if(styles.length){
+        if (styles.length) {
           styles.unshift(':root {');
           styles.push('}');
           styleElement.appendChild(document.createTextNode(styles.join('\n')));
