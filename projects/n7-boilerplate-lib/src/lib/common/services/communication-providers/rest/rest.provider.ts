@@ -19,7 +19,7 @@ export class RestProvider implements ICommunicationProvider {
       provider = this.config.get('communication').providers[providerId],
       method = options.method || provider.defaultMethod || 'GET';
 
-    let point = RestProviderConfig[providerId][requestId];
+    let point = RestProviderConfig[providerId] ? RestProviderConfig[providerId][requestId] : null;
 
     if (provider.config && provider.config[requestId]) {
       point = provider.config[requestId];

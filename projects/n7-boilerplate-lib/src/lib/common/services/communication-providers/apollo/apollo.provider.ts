@@ -19,7 +19,7 @@ export class ApolloProvider implements ICommunicationProvider {
     const { params, method, httpOptions } = options,
       provider = this.config.get('communication').providers[providerId];
 
-    let query = ApolloProviderConfig[providerId][requestId];
+    let query = ApolloProviderConfig[providerId] ? ApolloProviderConfig[providerId][requestId] : {};
 
     if (provider.config && provider.config[requestId]) {
       query = provider.config[requestId];
