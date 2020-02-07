@@ -8,13 +8,17 @@ export class FacetsWrapperComponent {
   @Input() data: any;
   @Input() emit: any;
 
-  headerEmit(type, payload){
-    if(!this.emit) return;
-    this.emit('facetheader', { type, payload });
+  headerEmit(eventType, eventPayload) {
+    if (!this.emit) {
+      return;
+    }
+    this.emit('facetheader', { eventType, eventPayload });
   }
 
-  facetEmit(type, payload){
-    if(!this.emit) return;
-    this.emit('facet', { type, payload });
+  facetEmit(eventType, eventPayload) {
+    if (!this.emit) {
+      return;
+    }
+    this.emit('facet', { eventType, eventPayload });
   }
 }
