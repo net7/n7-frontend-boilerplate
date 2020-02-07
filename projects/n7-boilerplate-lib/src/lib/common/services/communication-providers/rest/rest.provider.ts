@@ -17,7 +17,7 @@ export class RestProvider implements ICommunicationProvider {
   request$(providerId, requestId, options: any = {}) {
     const { params, httpOptions, urlParams = '' } = options,
       provider = this.config.get('communication').providers[providerId],
-      method = options.method || provider.config.defaultMethod || 'GET';
+      method = options.method || provider.defaultMethod || 'GET';
 
     let point = RestProviderConfig[providerId][requestId];
 
