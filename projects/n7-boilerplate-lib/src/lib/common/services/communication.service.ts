@@ -20,24 +20,33 @@ export class CommunicationService {
     try {
       this.communicationConfig = this.config.get('communication');
       this.defaultProvider = this.communicationConfig.defaultProvider;
-    } catch(err) {
+    } catch (err) {
       throw Error('No communications.defaultProvider setted in config');
     }
   }
 
-  request$(requestId, options: any = {}, provider?){
-    provider = provider || this.defaultProvider;
-    if(!this[provider]) throw Error(`There is no ${provider} provider`);
+  request$(requestId, options: any = {}, providerId?) {
+    providerId = providerId || this.defaultProvider;
+    const { providers } = this.communicationConfig,
+      config = providers[providerId] || null;
+
+    if (!config) {
+      throw Error(`There is no ${providerId} provider`);
+    }
+
+    if (!this[config.type]) {
+      throw Error(`There is no ${config.type} provider type`);
+    }
 
     const { onError } = options;
-    return this[provider].request$(requestId, options)
+    return this[config.type].request$(providerId, requestId, options)
       .pipe(
         catchError((error) => this.handleError(error, onError))
       );
   }
 
   handleError(error, onError): Observable<any> {
-    if(onError){
+    if (onError) {
       onError(error);
     } else {
       console.warn('No error handler for communication request', error);

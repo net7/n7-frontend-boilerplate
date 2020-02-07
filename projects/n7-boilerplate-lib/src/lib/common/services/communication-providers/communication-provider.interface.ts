@@ -1,3 +1,3 @@
 export interface ICommunicationProvider {
-  request$(requestId: string, options: any);
+  request$(providerId: string, requestId: string, options: any);
 }

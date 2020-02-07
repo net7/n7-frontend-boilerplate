@@ -9,28 +9,20 @@ import { ICommunicationProvider } from '../communication-provider.interface';
   providedIn: 'root'
 })
 export class RestProvider implements ICommunicationProvider {
-  private providerConfig: any;
-
   constructor(
     private config: ConfigurationService,
-    private http: HttpClient,
-  ) {
-    try {
-      this.providerConfig = this.config.get('communication').providers.rest;
-    } catch (err) {
-      throw Error('No config found for rest provider!');
-    }
-  }
+    private http: HttpClient
+  ) {}
 
-  request$(requestId, options: any = {}) {
-    let { params, method, httpOptions, urlParams = '' } = options;
-    let point = RestProviderConfig[requestId];
+  request$(providerId, requestId, options: any = {}) {
+    const { params, httpOptions, urlParams = '' } = options,
+      provider = this.config.get('communication').providers[providerId],
+      method = options.method || provider.config.defaultMethod || 'GET';
 
-    // default method
-    if (!method) { method = this.providerConfig.defaultMethod || 'GET'; }
+    let point = RestProviderConfig[providerId][requestId];
 
-    if (this.providerConfig.config && this.providerConfig.config[requestId]) {
-      point = this.providerConfig.config[requestId];
+    if (provider.config && provider.config[requestId]) {
+      point = provider.config[requestId];
     }
 
     // config point control
@@ -38,9 +30,9 @@ export class RestProvider implements ICommunicationProvider {
         throw Error(`No config found for requestId "${requestId}"`);
     }
     if (method === 'POST' || method === 'PUT') {
-      return this.http[method.toLowerCase()](this.providerConfig.baseUrl + point, params, httpOptions);
+      return this.http[method.toLowerCase()](provider.baseUrl + point, params, httpOptions);
     } else if (method === 'GET' || method === 'DELETE') {
-      return this.http[method.toLowerCase()](this.providerConfig.baseUrl + point + urlParams, httpOptions);
+      return this.http[method.toLowerCase()](provider.baseUrl + point + urlParams, httpOptions);
     } else {
         throw Error(`Rest method ${method} not supported`);
     }

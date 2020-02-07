@@ -10,22 +10,19 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ApolloProvider implements ICommunicationProvider {
-  private providerConfig: any;
 
-  constructor(private config: ConfigurationService, private http: HttpClient) {
-    try {
-      this.providerConfig = this.config.get('communication').providers.apollo;
-    } catch (err) {
-      throw Error('No config found for apollo provider!');
-    }
-  }
+  constructor(
+    private config: ConfigurationService,
+    private http: HttpClient) {}
 
-  request$(requestId, options) {
-    const { params, method, httpOptions } = options;
-    let query = ApolloProviderConfig[requestId];
+  request$(providerId, requestId, options) {
+    const { params, method, httpOptions } = options,
+      provider = this.config.get('communication').providers[providerId];
 
-    if (this.providerConfig.config && this.providerConfig.config[requestId]) {
-      query = this.providerConfig.config[requestId];
+    let query = ApolloProviderConfig[providerId][requestId];
+
+    if (provider.config && provider.config[requestId]) {
+      query = provider.config[requestId];
     }
 
     query = query || {};
@@ -47,10 +44,10 @@ export class ApolloProvider implements ICommunicationProvider {
     let source$: Observable<any>;
 
     if (method && method === 'GET') {
-      source$ = this.http.get(this.providerConfig.baseUrl);
+      source$ = this.http.get(provider.baseUrl);
     } else {
       source$ = this.http.post(
-        this.providerConfig.baseUrl,
+        provider.baseUrl,
         { query: queryBody },
         httpOptions
       );

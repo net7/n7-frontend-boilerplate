@@ -1,11 +1,13 @@
 {
   "communication": {
-    "defaultProvider": "apollo",
+    "defaultProvider": "arianna-apollo",
     "providers": {
-      "apollo": {
+      "arianna-apollo": {
+        "type": "apollo",
         "baseUrl": "https://aw-unifi-graphql.netseven.it/"
       },
-      "rest": {
+      "arianna-rest": {
+        "type": "rest",
         "baseUrl": "https://jsonplaceholder.typicode.com/",
         "defaultMethod": "GET"
       }
