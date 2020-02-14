@@ -8,12 +8,14 @@
    #DATEPICKER
 \* ------------------------------------ */
 .dv-datepicker-wrapper {
-    display: inline-block;
     position: relative;
+    display: inline-block;
  
     &__label {
-        height: $form-input-height + $form-border-size*2;
-        line-height: $form-input-height + $form-border-size*2;
+        position: relative;
+        z-index: 10;
+        display: flex;
+        align-items: center;
         background: $color-background-base;
         border-radius: $border-radius;
         border: $form-border-size solid $color-border-normal;
@@ -22,6 +24,10 @@
         input[type="text"] {
             border: none;
             cursor: pointer;
+        }
+
+        [class^="n7-icon"] {
+            margin-right: $space/2;
         }
     }
 
@@ -45,7 +51,7 @@
     }
 
     &__dropdown-list-option {
-        padding: $space/2 0;
+        padding: $space 0;
         cursor: pointer;
 
         &:hover,
@@ -56,12 +62,13 @@
 
     /* N7 Datepicker component */
     .n7-datepicker {
-        margin-top: -$space;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 30px;
     }
 
     .flatpickr-input {
-        height: 0;
-        margin-top: -$form-input-height;
         visibility: hidden;
     }
 }
