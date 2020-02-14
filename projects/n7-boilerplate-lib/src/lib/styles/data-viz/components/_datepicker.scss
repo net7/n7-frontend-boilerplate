@@ -7,20 +7,6 @@
 /* ------------------------------------ *\
    #DATEPICKER
 \* ------------------------------------ */
-
-.n7-datepicker {
-    .dv-datepicker-wrapper & {
-        margin-top: -$space;
-        
-        .flatpickr-input {
-            height: 0;
-            margin-top: -$form-input-height;
-            visibility: hidden;
-        }
-    }
-}
-
-/* Datepicker wrapper */
 .dv-datepicker-wrapper {
     display: inline-block;
     position: relative;
@@ -28,7 +14,7 @@
     &__label {
         height: $form-input-height + $form-border-size*2;
         line-height: $form-input-height + $form-border-size*2;
-        background: #ffffff;  
+        background: $color-background-base;
         border-radius: $border-radius;
         border: $form-border-size solid $color-border-normal;
         cursor: pointer;
@@ -40,39 +26,43 @@
     }
 
     &__dropdown {
-        margin-top: -$form-border-size*2;
         position: absolute;
         right: 0;
         left: 0;
-        background: #ffffff;
+        margin-top: -$form-border-size;
+        background: $color-background-base;
         border-bottom-right-radius: $border-radius;
         border-bottom-left-radius: $border-radius;
-        border-right: $form-border-size solid $color-border-normal;
-        border-bottom: $form-border-size solid $color-border-normal;
-        border-left: $form-border-size solid $color-border-normal;
+        border: $form-border-size solid $color-border-normal;
+    }
 
-        &-list {
-            margin-top: 0;
-            margin-bottom: 0;
-            padding: $space*1.5 $space;
-            border-top: 1px solid $color-border-normal;
-            list-style: none;
-            font-size: $font-size-s;
+    &__dropdown-list {
+        margin-top: 0;
+        margin-bottom: 0;
+        padding: $space $space;
+        list-style: none;
+        font-size: $font-size-s;
+    }
+
+    &__dropdown-list-option {
+        padding: $space/2 0;
+        cursor: pointer;
+
+        &:hover,
+        &:focus {
+            color: $color-text-link-hover;
         }
+    }
 
-        &-list-option {
-            margin-bottom: $space;
-            cursor: pointer;
+    /* N7 Datepicker component */
+    .n7-datepicker {
+        margin-top: -$space;
+    }
 
-            &:last-of-type {
-                margin-bottom: 0;
-            }
-
-            &:hover,
-            &:focus {
-                color: $color-text-link-hover;
-            }
-        }
+    .flatpickr-input {
+        height: 0;
+        margin-top: -$form-input-height;
+        visibility: hidden;
     }
 }
 
