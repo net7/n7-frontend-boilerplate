@@ -5,7 +5,7 @@ import { ConfigurationService } from '../../../common/services/configuration.ser
 import { LayoutsConfigurationService } from '../../../common/services/layouts-configuration.service';
 import { MainStateService } from '../../../common/services/main-state.service';
 import { AwHomeLayoutConfig as config } from './home-layout.config';
-import { CommunicationService } from '../../../common/services';
+import { CommunicationService } from '../../../common/services/communication.service';
 import tippy from 'tippy.js';
 
 @Component({

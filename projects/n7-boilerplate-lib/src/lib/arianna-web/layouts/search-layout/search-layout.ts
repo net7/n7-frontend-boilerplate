@@ -1,12 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AbstractLayout } from '../../../common/models/abstract-layout'
-import { 
-  ConfigurationService,
-  LayoutsConfigurationService,
-  MainStateService,
-  SearchService,
-  CommunicationService,
-} from '../../../common/services';
+import { AbstractLayout } from '../../../common/models/abstract-layout';
+import { ConfigurationService } from '../../../common/services/configuration.service';
+import { LayoutsConfigurationService } from '../../../common/services/layouts-configuration.service';
+import { MainStateService } from '../../../common/services/main-state.service';
+import { SearchService } from '../../../common/services/search.service';
+import { CommunicationService } from '../../../common/services/communication.service';
 import { AwSearchLayoutConfig as config } from './search-layout.config';
 import { ActivatedRoute } from '@angular/router';
 
