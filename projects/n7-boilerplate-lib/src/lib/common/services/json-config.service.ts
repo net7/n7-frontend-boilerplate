@@ -13,14 +13,20 @@ export class JsonConfigService {
     private config: ConfigurationService,
   ){}
 
-  load(path): Promise<any> {
+  load(path, staticConfig?): Promise<any> {
     return this.http.get(path).pipe(
       catchError((error) => of({})),
-      tap(response => this._handleResponse(response))
+      tap(response => this._handleResponse(response, staticConfig))
     ).toPromise();
   }
 
-  private _handleResponse(response){
+  private _handleResponse(response, staticConfig){
+    // set config defaults
+    if (staticConfig) {
+      Object.keys(staticConfig).forEach(key => this.config.set(key, staticConfig[key]));
+    }
+
+    // set loaded json config
     if (response) {
       Object.keys(response).forEach(key => this.config.set(key, response[key]));
 

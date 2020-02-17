@@ -6,14 +6,6 @@ import { Injectable, Inject } from '@angular/core';
 export class ConfigurationService {
   private defaults: any = {};
 
-  constructor(@Inject('config') private config: any){
-    if(this.config.global){
-      Object.keys(this.config.global).forEach(key => {
-        this.set(key, this.config.global[key]);
-      });
-    }
-  }
-
   public get = (key) => this.defaults[key];
   public set = (key, value) => this.defaults[key] = value;
 }
