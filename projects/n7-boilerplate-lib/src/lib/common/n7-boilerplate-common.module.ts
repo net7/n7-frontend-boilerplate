@@ -41,11 +41,10 @@ export class N7BoilerplateCommonModule {
     return {
       ngModule: N7BoilerplateCommonModule,
       providers: [
-        MainStateService, 
-        ConfigurationService, 
-        LayoutsConfigurationService, 
-        CommunicationService, 
-        ApolloProvider, 
+        MainStateService,
+        ConfigurationService,
+        LayoutsConfigurationService,
+        CommunicationService,
         { provide: 'config', useValue: config }
       ]
     }
