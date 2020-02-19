@@ -263,17 +263,17 @@
             }
         }
 
-        &.color-oggetto-culturale {
+        &.color-famiglia {
             .n7-facet-header__icon-left,
             .n7-facet-header__text {
-                color: $color-oggetto-culturale;
+                color: $color-families;
             }
         }
 
-        &.color-aggregazione {
+        &.color-evento {
             .n7-facet-header__icon-left,
             .n7-facet-header__text {
-                color: $color-aggregazione;
+                color: $color-events;
             }
         }
 
@@ -469,28 +469,28 @@
         background-color: $color-people;
     }
 
-    .tag-organizzazione {
-        background-color: $color-organizations;
+    .tag-luogo {
+        background-color: $color-places;
     }
 
     .tag-concetto {
         background-color: $color-concepts;
     }
 
-    .tag-luogo {
-        background-color: $color-places;
-    }
-
     .tag-cosa-notevole {
         background-color: $color-things;
     }
-
-    .tag-oggetto-culturale {
-        background-color: $color-oggetto-culturale;
+    
+    .tag-organizzazione {
+        background-color: $color-organizations;
     }
 
-    .tag-aggregazione {
-        background-color: $color-aggregazione;
+    .tag-famiglia {
+        background-color: $color-families;
+    }
+
+    .tag-evento {
+        background-color: $color-events;
     }
 
     &__bubble-results-list-wrapper {

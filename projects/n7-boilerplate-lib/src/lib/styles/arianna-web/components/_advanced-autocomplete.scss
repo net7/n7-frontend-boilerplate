@@ -8,125 +8,80 @@
    #ADVANCED-AUTOCOMPLETE
 \* ------------------------------------ */
 .n7-advanced-autocomplete {
-    &__results {
-        // max-height: $advanced-autocomplete-results-max-height;
-        // overflow-y: auto;
-        // padding: $space*2 $space*2;
-    }
-
-    &__group {
-        // display: grid;
-        // grid-template-columns: 180px 2fr;
-        // grid-template-rows: 1fr;
-        // grid-column-gap: $space*2;
-        // margin-bottom: $space*2;
-        // padding-bottom: $space*2;
-        // border-bottom: 1px solid $color-border-normal;
-    }
-
     .n7-advanced-autocomplete__group-title-wrapper {
         // color: $color-text-light;
         &.color-persona {
-            color: $color-people;
+            .n7-advanced-autocomplete__group-icon,
+            .n7-advanced-autocomplete__group-title {
+                color: $color-people;
+            }
         }
 
         &.color-luogo {
-            color: $color-places;
+            .n7-advanced-autocomplete__group-icon,
+            .n7-advanced-autocomplete__group-title {
+                color: $color-places;
+            }
         }
 
         &.color-concetto {
-            color: $color-concepts;
+            .n7-advanced-autocomplete__group-icon,
+            .n7-advanced-autocomplete__group-title {
+                color: $color-concepts;
+            }
         }
 
         &.color-cosa-notevole {
-            color: $color-things;
+            .n7-advanced-autocomplete__group-icon,
+            .n7-advanced-autocomplete__group-title {
+                color: $color-things;
+            }
         }
 
         &.color-organizzazione {
-            color: $color-organizations;
+            .n7-advanced-autocomplete__group-icon,
+            .n7-advanced-autocomplete__group-title {
+                color: $color-organizations;    
+            }
         }
 
         &.color-oggetto-culturale {
-            color: $color-oggetto-culturale;
+            .n7-advanced-autocomplete__group-icon,
+            .n7-advanced-autocomplete__group-title {
+                color: $color-oggetto-culturale;
+            }
         }
 
-        &.color-aggregazione {
-            color: $color-aggregazione;
+        &.color-aggregazione-logica {
+            .n7-advanced-autocomplete__group-icon,
+            .n7-advanced-autocomplete__group-title {
+                color: $color-aggregazione-logica;
+            }
+        }
+
+        &.color-famiglia {
+            .n7-advanced-autocomplete__group-icon,
+            .n7-advanced-autocomplete__group-title {
+                color: $color-families;
+            }
+        }
+
+        &.color-evento {
+            .n7-advanced-autocomplete__group-icon,
+            .n7-advanced-autocomplete__group-title {
+                color: $color-events;
+            }
         }
     }
 
     &__group-title {
-        // font-size: $font-size-l;
-        // font-family: $font-family-headings;
         font-weight: $font-weight-bold;
-        // line-height: 1.4;
-        // vertical-align: middle;
-    }
-
-    &__group-icon {
-        // margin-right: $space/2;
-        // font-size: $font-size-l;
-        // vertical-align: middle;
-    }
-
-    &__item {
-        // margin-bottom: $space*2;
-        // font-size: $font-size-m;
-        // cursor: pointer;
-
-        &:last-child {
-            // margin-bottom: 0;
-        }
-
-        &:hover {
-            // color: $color-text-link;
-        }
-    }
-
-    &__item-label {
-        // font-weight: $font-weight-bold;
     }
 
     &__action-bar {
-        // display: flex;
-        // justify-content: center;
         padding: $space*2;
         border-top: 1px solid $color-border-normal;
         background-color: $color-background-medium;
-
-        .n7-btn {
-            // margin-right: $space;
-
-            &:last-child {
-                // margin-right: 0;
-            }
-        }
-    }
-}
-
-/* ------------------------------------ *\
-   #EMPTY
-\* ------------------------------------ */
-.n7-advanced-autocomplete.is-empty {
-    .n7-advanced-autocomplete__empty {
-        // display: flex;
-        // align-items: center;
-        // justify-content: center;
-        // height: $advanced-autocomplete-empty-height;
-        // text-align: center;
-    }
-}
-
-
-/* ------------------------------------ *\
-   #LOADING
-\* ------------------------------------ */
-.n7-advanced-autocomplete.is-loading {
-    .n7-advanced-autocomplete__loader {
-        // display: flex;
-        // align-items: center;
-        // justify-content: center;
-        // height: $advanced-autocomplete-empty-height;
     }
 }
 
@@ -138,42 +93,6 @@
 }
 
 @media all and (max-width: $breakpoint-ipad-portrait - 1) {
-
-    .n7-advanced-autocomplete {
-        &__results {
-            // padding: $space*1.5 $space*1.5;
-        }
-
-        &__group {
-            // display: block;
-            // margin-bottom: $space*1.5;
-            // padding-bottom: $space*1.5;
-        }
-
-        &__group-title {
-            // margin-bottom: $space;
-            // font-size: $font-size-m;
-        }
-
-        &__item {
-            // margin-bottom: $space*1.5;
-        }
-
-
-        &__action-bar {
-            // flex-flow: column nowrap;
-
-            .n7-btn {
-                // margin-right: 0;
-                // margin-bottom: $space;
-
-                &:last-child {
-                    // margin-bottom: 0;
-                }
-            }
-        }
-    }
-
 }
 
 @media all and (max-width: $breakpoint-smartphone-landscape) {

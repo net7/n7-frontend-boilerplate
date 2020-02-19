@@ -22,14 +22,6 @@
    #INPUT CHECKBOX
 \* ------------------------------------ */
 .n7-facet {
-    &__section-input-checkbox {
-
-    }
-
-    &__input-checkbox-input {
-
-    }
-
     &__input-checkbox-label {
         font-size: $font-size-s;
         color: $facet-text-color;
@@ -41,9 +33,6 @@
    #INPUT TEXT
 \* ------------------------------------ */
 .n7-facet {
-    &__section-input-text {
-    }
-
     &__input-text-label {
         display: block;
         font-size: $font-size-s;
@@ -90,72 +79,6 @@
                 font-weight: $font-weight-bold;
             }
         }
-
-        &.color-persona {
-            .n7-facet__input-link-icon,
-            .n7-facet__input-link-text {
-                color: $color-people;
-            }
-        }
-
-        &.color-luogo {
-            .n7-facet__input-link-icon,
-            .n7-facet__input-link-text {
-                color: $color-places;
-            }
-        }
-
-        &.color-concetto {
-            .n7-facet__input-link-icon,
-            .n7-facet__input-link-text {
-                color: $color-concepts;
-            }
-        }
-
-        &.color-cosa-notevole {
-            .n7-facet__input-link-icon,
-            .n7-facet__input-link-text {
-                color: $color-things;
-            }
-        }
-
-        &.color-organizzazione {
-            .n7-facet__input-link-icon,
-            .n7-facet__input-link-text {
-                color: $color-organizations;
-            }
-        }
-
-        &.color-famiglia {
-            .n7-facet__input-link-icon,
-            .n7-facet__input-link-text {
-                color: $color-families;
-            }
-        }
-
-        &.color-evento {
-            .n7-facet__input-link-icon,
-            .n7-facet__input-link-text {
-                color: $color-events;
-            }
-        }
-
-        &.color-oggetto-culturale {
-            .n7-facet__input-link-icon,
-            .n7-facet__input-link-text {
-                color: $color-oggetto-culturale;
-            }
-        }
-
-        &.color-aggregazione {
-            .n7-facet__input-link-icon,
-            .n7-facet__input-link-text {
-                color: $color-aggregazione;
-            }
-        }
-    }
-
-    &__input-link-icon {
     }
 
     &__input-link-text {
@@ -177,7 +100,7 @@
     /* Active */
     .n7-facet__input-link.is-active {
         &:before {
-            content: "\e938";
+            content: "\e93d";
             font-family: 'n7-icon';
             margin-right: $space;
             color: $color-success;
@@ -200,6 +123,140 @@
         .n7-facet__section-input,
         .n7-facet__input-select {
             width: 100%;
+        }
+    }
+}
+
+
+/* ------------------------------------ *\
+   #COLORS
+\* ------------------------------------ */
+.n7-facet {
+    &__input-link {
+        &.color-persona {
+            .n7-facet__input-link-icon,
+            .n7-facet__input-link-text {
+                color: $color-people;
+            }
+
+            &:hover {
+                .n7-facet__input-link-icon,
+                .n7-facet__input-link-text {
+                    color: $color-people;
+                }
+            }
+        }
+
+        &.color-luogo {
+            .n7-facet__input-link-icon,
+            .n7-facet__input-link-text {
+                color: $color-places;
+            }
+
+            &:hover {
+                .n7-facet__input-link-icon,
+                .n7-facet__input-link-text {
+                    color: $color-places;
+                }
+            }
+        }
+
+        &.color-concetto {
+            .n7-facet__input-link-icon,
+            .n7-facet__input-link-text {
+                color: $color-concepts;
+            }
+
+            &:hover {
+                .n7-facet__input-link-icon,
+                .n7-facet__input-link-text {
+                    color: $color-concepts;
+                }
+            }
+        }
+
+        &.color-cosa-notevole {
+            .n7-facet__input-link-icon,
+            .n7-facet__input-link-text {
+                color: $color-things;
+            }
+
+            &:hover {
+                .n7-facet__input-link-icon,
+                .n7-facet__input-link-text {
+                    color: $color-things;
+                }
+            }
+        }
+
+        &.color-organizzazione {
+            .n7-facet__input-link-icon,
+            .n7-facet__input-link-text {
+                color: $color-organizations;
+            }
+            
+            &:hover {
+                .n7-facet__input-link-icon,
+                .n7-facet__input-link-text {
+                    color: $color-organizations;
+                }
+            }
+        }
+
+        &.color-famiglia {
+            .n7-facet__input-link-icon,
+            .n7-facet__input-link-text {
+                color: $color-families;
+            }
+
+            &:hover {
+                .n7-facet__input-link-icon,
+                .n7-facet__input-link-text {
+                    color: $color-families;
+                }
+            }
+        }
+
+        &.color-evento {
+            .n7-facet__input-link-icon,
+            .n7-facet__input-link-text {
+                color: $color-events;
+            }
+
+            &:hover {
+                .n7-facet__input-link-icon,
+                .n7-facet__input-link-text {
+                    ccolor: $color-events;
+                }
+            }
+        }
+
+        &.color-oggetto-culturale {
+            .n7-facet__input-link-icon,
+            .n7-facet__input-link-text {
+                color: $color-oggetto-culturale;
+            }
+
+            &:hover {
+                .n7-facet__input-link-icon,
+                .n7-facet__input-link-text {
+                    color: $color-oggetto-culturale;
+                }
+            }
+        }
+
+        &.color-aggregazione-logica {
+            .n7-facet__input-link-icon,
+            .n7-facet__input-link-text {
+                color: $color-aggregazione-logica;
+            }
+
+            &:hover {
+                .n7-facet__input-link-icon,
+                .n7-facet__input-link-text {
+                    color: $color-aggregazione-logica;
+                }
+            }
         }
     }
 }
