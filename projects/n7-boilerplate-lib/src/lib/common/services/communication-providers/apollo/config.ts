@@ -103,10 +103,10 @@ export const ApolloProviderConfig = {
                 label
                 link
               }
-            }
-            relatedTypesOfEntity {
-              type
-              count
+              relatedTypesOfEntity {
+                type
+                count
+              }
             }
           }
         }
@@ -207,24 +207,24 @@ export const ApolloProviderConfig = {
               }
             }
           }
+        }
+        relatedEntities {
+          count
+          entity{
+            id
+            label
+            typeOfEntity
           }
-          relatedEntities {
-            count
-            entity{
-              id
-              label
-              typeOfEntity
+        }
+        relatedItems {
+          thumbnail
+          item {
+            label
+            id
+            relatedTypesOfEntity {
+              type
+              count
             }
-          }
-          relatedItems {
-            thumbnail
-            item {
-              label
-              id
-          }
-          relatedTypesOfEntity {
-            type
-            count
           }
         }
         breadcrumbs {
@@ -293,12 +293,12 @@ export const ApolloProviderConfig = {
                     }
                   }
                 }
+                relatedTypesOfEntity {
+                  type
+                  count
+                }
+              }
             }
-            relatedTypesOfEntity {
-              type
-              count
-            }
-          }
           breadcrumbs {
             label
             link
