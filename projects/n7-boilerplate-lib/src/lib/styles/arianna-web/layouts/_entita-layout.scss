@@ -8,8 +8,6 @@
     ENTITY
 \* ------------------------------------ */
 .aw-entity {
-    // display: grid;
-    // grid-template-columns: $aw-scheda-tree-width minmax($bubble-chart-column-container-min-width,1fr);
     display: flex;
     margin: $space*3 auto $space*6 auto;
     max-width: $page-max-width;
@@ -46,11 +44,6 @@
             margin-right: $space*1.5;
         }
 
-        &-text {
-            font-weight: $font-weight-black;
-            line-height: 1.15;
-        }
-
         .color-persona & {
             color: $color-people;
         }
@@ -78,6 +71,11 @@
         .color-evento & {
             color: $color-events;
         }
+    }
+
+    &__sidebar-title-text {
+        font-weight: $font-weight-black;
+        line-height: 1.15;
     }
 
     &__sidebar-title-wrapper {
@@ -192,41 +190,16 @@
         .n7-btn {
             margin-left: auto;
         }
-
-        &-decorated {
-            padding-bottom: calc(#{$space}*3 - 0.3em);
-            border-bottom: 1px solid $color-border-light;
-        }
+    }
+    
+    &__content-section-header-decorated {
+        padding-bottom: calc(#{$space}*3 - 0.3em);
+        border-bottom: 1px solid $color-border-light;
     }
 
     &__content-section-title {
         font-weight: $font-weight-normal;
         font-size: $font-size-xxl;
-    }
-
-    &__content-section-overview {
-        .n7-metadata-viewer {
-            &__group {
-                margin-bottom: $space*2.5;
-            }
-
-            &__item {
-                display: flex;
-                // display: grid;
-                // grid-template-columns: 200px 1fr;
-                margin-bottom: $space*2.5;
-
-                &-label {
-                    flex: 0 0 $metadata-label-width;
-                    width: $metadata-label-width;
-                }
-
-                &-value {
-                    flex: 1;
-                }
-            }
-
-        }
     }
 
     &__overview-description {
@@ -244,28 +217,6 @@
     .n7-breadcrumbs {
         padding: 0;
         background-color: transparent;
-    }
-
-    .n7-metadata-viewer {
-        // column-count: 2;
-        &__group {
-            &-title {
-                font-size: $font-size-l;
-            }
-        }
-    }
-
-    &__content-section-fields {
-        .n7-metadata-viewer {
-            &__group {
-                margin-bottom: $space*3;
-                margin-left: $space*3;
-
-                &-content {
-                    margin-left: $space*3;
-                }
-            }
-        }
     }
 
     /* List of objects in overview and elated objects */

@@ -200,15 +200,6 @@
     .aw-scheda__metadata {
         .n7-metadata-viewer {
             padding: 0 $aw-scheda-content-padding $aw-scheda-content-padding $aw-scheda-content-padding;
-            columns: 2;
-        }
-
-        .n7-metadata-viewer__group-wrapper {
-            break-inside: avoid;
-        }
-
-        .n7-metadata-viewer__group-title {
-            font-size: $font-size-l;
         }
     }
 
@@ -279,14 +270,8 @@
         .aw-scheda__description {
             columns: 1;
         }
-
-        /* Metadata */
-        .aw-scheda__metadata {
-            .n7-metadata-viewer {
-                columns: 1;
-            }
-        }
     }
+    
 }
 
 @media all and (max-width: $breakpoint-ipad-portrait) {
