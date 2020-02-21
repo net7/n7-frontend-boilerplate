@@ -70,8 +70,12 @@ export class AwHomeAutocompleteDS extends DataSource {
       } : {
         showMore: {
           text: `Cerca in tutti i campi`,
-          payload: {
-            source: 'extendsearch'
+          anchor: {
+            href: paths.searchBasePath,
+            queryParams: {
+              query, // Query string
+              'query-all': 1 // "Cerca in tutti i campi delle schede"
+            }
           }
         }
       },
