@@ -193,7 +193,7 @@
       },
       "backgroundImage": "https://i.imgur.com/FgsxSYR.png",
       "input": {
-        "placeholder": "Cerca in MAXXI"
+        "placeholder": "Cerca nei titoli delle schede"
       },
       "fallback": "Nessun risultato, prova a <br> cambiare la ricerca."
     },
