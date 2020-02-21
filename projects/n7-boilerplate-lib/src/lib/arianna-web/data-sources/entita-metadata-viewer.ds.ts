@@ -12,7 +12,7 @@ export class AwEntitaMetadataViewerDS extends DataSource {
     labels = labels || {};
 
     let unpackedData = []
-    if (context == 'overview') {
+    if (context == 'overview' && data) {
       let configuredKeys = ((config.get('entita-layout') || {}).overview || {}).campi
       let filteredData = data.filter(d => configuredKeys.includes(d.key))
       unpackedData = AwEntitaMetadataViewerDS.unpackFields(filteredData)
