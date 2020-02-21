@@ -165,6 +165,15 @@ export class AwHomeLayoutEH extends EventHandler {
               path: [basePath],
               queryParams: { query }
             });
+          } else if (source === "extendsearch") { // click on <Cerca in tutti i campi> (call to action)
+            this.emitGlobal('navigate', {
+              handler: 'router',
+              path: [this.configuration.get('paths').searchBasePath],
+              queryParams: {
+                query: this.dataSource.autocompleteValue,
+                "query-all": 1
+              }
+            });
           }
           break;
         case 'aw-bubble-chart.selection':
