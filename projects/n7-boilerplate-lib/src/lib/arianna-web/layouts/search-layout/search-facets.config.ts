@@ -51,7 +51,7 @@ export default {
         {
           type: 'text',
           facetId: 'query',
-          placeholder: 'Cerca...',
+          placeholder: 'Cerca nei titoli delle schede',
           // icon: 'n7-icon-search',
           filterConfig: {
             delay: 500,
