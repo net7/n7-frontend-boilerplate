@@ -4,7 +4,6 @@ export class AwHeroEH extends EventHandler {
 
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
-      console.log(type, payload);
       switch (type) {
         case 'aw-hero.click':
           if (payload === 'cerca' && this.dataSource.currentInputValue) {
