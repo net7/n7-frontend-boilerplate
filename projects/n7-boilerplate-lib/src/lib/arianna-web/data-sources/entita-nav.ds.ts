@@ -24,7 +24,7 @@ export class AwEntitaNavDS extends DataSource {
     }
     if (data.relatedItems) {
       navigation.items.push({
-        text: 'OGGETTI-COLLEGATI',
+        text: 'OGGETTI COLLEGATI',
         anchor: {
           href: param.basePath + '/oggetti-collegati',
           queryParams: {
