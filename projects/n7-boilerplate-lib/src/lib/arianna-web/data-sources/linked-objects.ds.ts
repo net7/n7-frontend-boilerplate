@@ -115,40 +115,40 @@ export class AwLinkedObjectsDS extends DataSource {
         toeData = _get(el, paths.metadata.toe.data, itemData.relatedTypesOfEntity),
         breadcrumbs = _get(el, paths.metadata.breadcrumbs.data, itemData.breadcrumbs);
 
-        if( ['entita', 'search'].includes(context) ){
-          if( itemData.typeOfEntity && itemData.typeOfEntity != "" ) {
-            infoDataItems.push({"key": "Tipo di entità", "value": keys[itemData.typeOfEntity]['singular-label']})
-          }
+      if (['entita', 'search'].includes(context)) {
+        if (itemData.typeOfEntity && itemData.typeOfEntity != "") {
+          infoDataItems.push({ "key": "Tipo di entità", "value": keys[itemData.typeOfEntity]['singular-label'] })
         }
-        let classes = ['entita', 'search', 'oggetti-collegati'].includes(context) ? 'is-fullwidth' : '';
-        classes += itemData.typeOfEntity ? ' is-' + config.get('config-keys')[itemData.typeOfEntity]['class-name'] : ' is-oggetto-culturale';
+      }
+      let classes = ['entita', 'search', 'oggetti-collegati'].includes(context) ? 'is-fullwidth' : '';
+      classes += itemData.typeOfEntity ? ' is-' + config.get('config-keys')[itemData.typeOfEntity]['class-name'] : ' is-oggetto-culturale';
 
-        const itemTitle = +paths.title.maxLength && _get(el, paths.title, itemData.label).length > +paths.title.maxLength
-          ? _get(el, paths.title, itemData.label).slice(0, +paths.title.maxLength) + '…'
-          : _get(el, paths.title, itemData.label),
-          itemId = _get(el, paths.payload, itemData.id),
-          itemType = itemData.typeOfEntity,
-          itemHref = [
-            itemType ? config.get('paths').entitaBasePath : config.get('paths').schedaBasePath,
-            itemId,
-            helpers.slugify(itemTitle)
-          ].join('/'),
-          item = {
-            image: _get(el, paths.image, itemData.image),
-            title: itemTitle,
-            text: !paths.text ? null : // make text block (in config) optional
+      const itemTitle = +paths.title.maxLength && _get(el, paths.title, itemData.label).length > +paths.title.maxLength
+        ? _get(el, paths.title, itemData.label).slice(0, +paths.title.maxLength) + '…'
+        : _get(el, paths.title, itemData.label),
+        itemId = _get(el, paths.payload, itemData.id),
+        itemType = itemData.typeOfEntity,
+        itemHref = [
+          itemType ? config.get('paths').entitaBasePath : config.get('paths').schedaBasePath,
+          itemId,
+          helpers.slugify(itemTitle)
+        ].join('/'),
+        item = {
+          image: _get(el, paths.image, itemData.image),
+          title: itemTitle,
+          text: !paths.text ? null : // make text block (in config) optional
 
-              +paths.text.maxLength && _get(el, paths.text.data, itemData.text).length > +paths.text.maxLength ?
-                _get(el, paths.text.data, itemData.text).slice(0, +paths.text.maxLength) + '…' :
-                _get(el, paths.text.data, itemData.text),
-            anchor: {
-              href: itemHref
-            },
-            // payload: { id: _get(el, paths.payload, el.item.id), type: el.item.typeOfEntity, title: itemTitle },
-            classes: classes,
-            metadata: infoDataItems.length || toeData ? [] : null,
-            breadcrumbs: breadcrumbs
-          };
+            +paths.text.maxLength && _get(el, paths.text.data, itemData.text).length > +paths.text.maxLength ?
+              _get(el, paths.text.data, itemData.text).slice(0, +paths.text.maxLength) + '…' :
+              _get(el, paths.text.data, itemData.text),
+          anchor: {
+            href: itemHref
+          },
+          // payload: { id: _get(el, paths.payload, el.item.id), type: el.item.typeOfEntity, title: itemTitle },
+          classes: classes,
+          metadata: infoDataItems.length || toeData ? [] : null,
+          breadcrumbs: breadcrumbs
+        };
       // metadata
       if (infoDataItems.length) {
         item.metadata.push({
@@ -211,7 +211,7 @@ export class AwLinkedObjectsDS extends DataSource {
     return { previews: result };
   }
 
-  private _getPaginationAnchor(page){
+  private _getPaginationAnchor(page) {
     const { href, queryParams } = this.options.paginationParams;
     return {
       href: queryParams ? href : href + page,
