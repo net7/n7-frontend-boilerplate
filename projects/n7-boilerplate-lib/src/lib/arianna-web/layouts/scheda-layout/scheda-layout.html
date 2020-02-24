@@ -44,16 +44,17 @@
             -->
         </div>
         <div class="aw-scheda__scheda-wrapper" *ngIf="!lb.dataSource.contentIsLoading">
-            <n7-smart-breadcrumbs *ngIf="lb.dataSource.hasBreadcrumb" [data]="lb.widgets['aw-scheda-breadcrumbs'].ds.out$ | async"
+            <n7-smart-breadcrumbs *ngIf="lb.dataSource.hasBreadcrumb"
+                [data]="lb.widgets['aw-scheda-breadcrumbs'].ds.out$ | async"
                 [emit]="lb.widgets['aw-scheda-breadcrumbs'].emit">
             </n7-smart-breadcrumbs>
 
             <div *ngIf="!lb.dataSource.hasBreadcrumb" class="aw-scheda__fake-breadcrumbs">
             </div>
-            
+
             <div *ngIf="!lb.dataSource.currentId" class="aw-scheda__intro-text" [innerHTML]="lb.dataSource.emptyLabel">
             </div>
-            
+
             <n7-inner-title [data]="lb.widgets['aw-scheda-inner-title'].ds.out$ | async">
             </n7-inner-title>
 
@@ -88,7 +89,7 @@
                 </aw-bubble-chart-wrapper>
             </section>
 
-            <section *ngIf="lb.dataSource.hasSimilarItems" id="related-item-container" class="aw-scheda__related">
+            <section *ngIf="lb.dataSource.hasSimilarItems && lb.dataSource.hasBubbles" id="related-item-container" class="aw-scheda__related">
                 <div class="aw-scheda__inner-title">{{lb.dataSource.similarItemsSectionTitle}}</div>
                 <div class="aw-scheda__related-items n7-grid-2">
                     <!--<ng-container *ngFor="let widgetData of lb.widgets['aw-linked-objects'].ds.out$ | async;">-->
