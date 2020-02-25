@@ -1,6 +1,7 @@
 import { LayoutDataSource } from '@n7-frontend/core';
 import { Subject, forkJoin, fromEvent } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
+import helpers from 'n7-boilerplate-lib/lib/common/helpers';
 
 export class AwHomeLayoutDS extends LayoutDataSource {
     private communication: any;
@@ -197,6 +198,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
 
     onHeroChange(value) {
         if (value) {
+            value = helpers.escapeDoubleQuotes(value);
             this.autocompleteChanged$.next(value);
             this.homeAutocompleteIsLoading = true;
             this.homeAutocompleteQuery = value;
