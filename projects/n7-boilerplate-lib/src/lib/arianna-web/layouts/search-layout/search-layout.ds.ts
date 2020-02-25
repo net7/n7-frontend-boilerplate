@@ -31,7 +31,7 @@ export class AwSearchLayoutDS extends LayoutDataSource {
   public sidebarIsSticky = false;
   public isFirstLoading = true;
   public resultsLoading = false;
-  public orderBy = 'label';
+  public orderBy = 'label_sort';
   public orderDirection = 'ASC';
 
   public options: any;
@@ -39,12 +39,12 @@ export class AwSearchLayoutDS extends LayoutDataSource {
   public orderByLabel = 'Ordina per';
   public orderByOptions: any = [
     {
-      value: 'label_ASC',
+      value: 'label_sort_ASC',
       label: 'Ordine alfabetico (A→Z)',
       selected: true
     },
     {
-      value: 'label_DESC',
+      value: 'label_sort_DESC',
       label: 'Ordine alfabetico (Z→A)',
       selected: false
     }
@@ -99,7 +99,8 @@ export class AwSearchLayoutDS extends LayoutDataSource {
   }
 
   onOrderByChange(payload) {
-    const [orderBy, direction] = payload.split('_');
+    const orderBy = payload.substring( 0, payload.lastIndexOf("_") ),
+    direction = payload.substring( payload.lastIndexOf("_") + 1 );
 
     // set selected
     this.orderByOptions.forEach(option => {
