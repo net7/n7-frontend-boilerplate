@@ -4,7 +4,7 @@ const domParser = new DOMParser();
 
 export default {
   prettifySnakeCase(key: string, label?: string) {
-    if (label) {
+    if (typeof label === 'string') {
       return label;
     }
     return (key || '').split('_').map((word, index) => index === 0 ? this.ucFirst(word) : word).join(' ');

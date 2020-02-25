@@ -165,8 +165,8 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         const tagsData = [];  // list of tags data built from query
         this.selectedBubbles.forEach(b => { // try to get the data of each selected bubble
             const theBubble = this.firstBubbleResponse.find(el => el.entity.id === b);
-            const bubbleConfig = this.configuration.get('config-keys')[theBubble.entity.typeOfEntity];
             if (theBubble) { // if a bubble was found
+                const bubbleConfig = this.configuration.get('config-keys')[theBubble.entity.typeOfEntity];
                 tagsData.push({
                     label: theBubble.entity.label,
                     icon: 'n7-icon-close',
