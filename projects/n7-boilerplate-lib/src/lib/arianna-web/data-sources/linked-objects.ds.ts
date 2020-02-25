@@ -123,8 +123,11 @@ export class AwLinkedObjectsDS extends DataSource {
         let classes = ['entita', 'search', 'oggetti-collegati'].includes(context) ? 'is-fullwidth' : '';
         classes += itemData.typeOfEntity ? ' is-' + config.get('config-keys')[itemData.typeOfEntity]['class-name'] : ' is-oggetto-culturale';
 
-        const itemTitle = +paths.title.maxLength && _get(el, paths.title, itemData.label).length > +paths.title.maxLength
-          ? _get(el, paths.title, itemData.label).slice(0, +paths.title.maxLength) + '…'
+        //consider the lenght of <em> tags to exclude from count
+        const highlights =  _get(el, paths.title, itemData.label).match(/<em>/g) ? _get(el, paths.title, itemData.label).match(/<em>/g).length * 9 : 0;
+
+        const itemTitle = +paths.title.maxLength && _get(el, paths.title, itemData.label).length > +paths.title.maxLength + highlights
+          ? _get(el, paths.title, itemData.label).slice(0, +paths.title.maxLength + highlights) + '…'
           : _get(el, paths.title, itemData.label),
           itemId = _get(el, paths.payload, itemData.id),
           itemType = itemData.typeOfEntity,
