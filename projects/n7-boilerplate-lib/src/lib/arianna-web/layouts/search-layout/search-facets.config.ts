@@ -58,7 +58,7 @@ export default {
             minChars: 3,
             searchIn: [
               {
-                key: 'label',
+                key: 'label.ngrams',
                 operator: 'LIKE'
               }
             ]
@@ -70,7 +70,7 @@ export default {
           filterConfig: {
             searchIn: [
               {
-                key: 'query-all',
+                key: 'label.ngrams^5, text^4, fields.*^3',
                 operator: '='
               }
             ]

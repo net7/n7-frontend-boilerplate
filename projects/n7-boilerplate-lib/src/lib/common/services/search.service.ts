@@ -251,6 +251,10 @@ export class SearchModel {
     this._config.results.order.direction = direction;
   }
 
+  public setSearchConfigType(type) {
+    this._config.results.order.type = type;
+  }
+
   public setPageConfigOffset(offset) {
     this._config.page.offset = offset;
   }
