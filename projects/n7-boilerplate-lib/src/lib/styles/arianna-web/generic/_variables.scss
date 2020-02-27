@@ -67,7 +67,7 @@ $font-family-headings: $font-family-main;
 // $font-size-xxl: 30px;
 // $font-size-xl: 26px;
 // $font-size-l: 18px;
-// $font-size-m: 16px;
+$font-size-m: 17px;
 // $font-size-s: 14px;
 // $font-size-xs: 12px;
 
@@ -259,13 +259,6 @@ $bottom-hero-title-font-weight: $font-weight-bold;
 
 
 // ------------------------------------ //
-// #FACET
-// ------------------------------------ //
-$n7-facet-search-input-height: 32px;
-$n7-facet-search-input-border-radius: $border-radius;
-
-
-// ------------------------------------ //
 // #TAG
 // ------------------------------------ //
 $n7-tag-icon-size: 16px;
@@ -321,6 +314,8 @@ $search-nav-decoration-height: 5px;
 // ------------------------------------ //
 // #FACET
 // ------------------------------------ //
+$n7-facet-search-input-height: 32px;
+$n7-facet-search-input-border-radius: $border-radius;
 $facet-counter-background: $color-gray-04;
 $facet-text-color: $color-gray-05;
 

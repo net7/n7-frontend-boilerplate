@@ -155,7 +155,7 @@ export class AwLinkedObjectsDS extends DataSource {
       // metadata
       if (infoDataItems.length) {
         item.metadata.push({
-          classes: 'n7-objects__metadata-artist',
+          classes: 'aw-item-preview_metadata',
           items: infoDataItems.map(data => ({
             label: helpers.prettifySnakeCase(data.key, labels[data.key]),
             value: data.value
@@ -164,7 +164,7 @@ export class AwLinkedObjectsDS extends DataSource {
       }
       if (toeData) {
         item.metadata.push({
-          classes: 'n7-objects__metadata-linked',
+          classes: 'aw-item-preview-entities',
           items: toeData.map(toe => {
             return { // persona: 6, Organizz: 12, Luoghi: 2, Concetti: 32
               value: _get(toe, paths.metadata.toe.value, toe.count),
