@@ -70,7 +70,7 @@ export default {
           filterConfig: {
             searchIn: [
               {
-                key: 'label.ngrams^5, text^4, fields.*^3',
+                key: 'label.ngrams^5,text^4,fields.*^3',
                 operator: '='
               }
             ]
