@@ -13,9 +13,11 @@
     padding-bottom: $space*2;
     border-bottom: 1px solid $color-border-light;
 
+    /* Main fields */
     &__title {
-        margin-bottom: $space/2;
+        margin-bottom: $space*1.5; //  $space/2;
         font-weight: $font-weight-bold;
+        font-size: $font-size-m;
 
         em {
             font-style: normal;
@@ -24,97 +26,100 @@
     }
 
     &__text {
+        margin-bottom: $space; //  $space/2;
+        color: $color-gray-04;
+
         em {
             font-style: normal;
             background-color: $color-highlight;
         }
     }
 
+    /* Metadata wrapper  */
     &__metadata {
-        &-item {
-            display: inline;
-            align-items: baseline;
-            padding-right: $space;
-            border-right: 1px solid $color-border-normal;
+        margin-top: -$space/2;
+    }
+}
 
-            &:last-of-type {
-                border-right: none;
-            }
 
-            &.color-persona {
-                color: $color-people;
-            }
+/* ------------------------------------ *\
+   #MAIN-METADATA
+\* ------------------------------------ */
+.aw-item-preview_metadata {
+    .n7-item-preview__metadata-item {
+        display: inline;
+        align-items: baseline;
+        padding-right: $space;
+        border-right: 1px solid $color-border-normal;
+        line-height: 1.38;
 
-            &.color-luogo {
-                color: $color-places;
-            }
-
-            &.color-concetto {
-                color: $color-concepts;
-            }
-            
-            &.color-cosa-notevole {
-                color: $color-things;
-            }
-            
-            &.color-organizzazione {
-                color: $color-organizations;
-            }
-
-            &.color-famiglia {
-                color: $color-families;
-            }
-
-            &.color-evento {
-                color: $color-events;
-            }
-            
-            &-icon {
-                font-size: $font-size-m;
-                font-weight: $font-weight-bold;
-            }
-
-            &-value {
-                font-size: $font-size-s;
-
-                em {
-                    font-style: normal;
-                    background-color: $color-highlight;
-                }
-            }
-        }
-
-        &-group {
-            &:last-of-type {
-                margin-bottom: 0;
-            }
-
-            &.n7-objects__metadata-artist {
-                .n7-item-preview__metadata-item-value {
-                    font-weight: $font-weight-normal;
-                }
-
-                .n7-item-preview__metadata-item-label {
-                    & + .n7-item-preview__metadata-item-value {
-                        margin-left: $space/4;
-                        font-weight: $font-weight-bold;
-                    }
-                }
-
-                .n7-item-preview__metadata-item-icon {
-                    margin-right: 0;
-                }
-            }
-
+        &:last-of-type {
+            border-right: none;
         }
     }
 
-    &.has-image {
-        grid-template-columns: $item-preview-image-size 1fr;
+    .n7-item-preview__metadata-item-label {
+        font-size: $font-size-s;
+        font-weight: $font-weight-bold;
+    }
 
-        .n7-item-preview__image {
-            width: $item-preview-image-size;
-            height: $item-preview-image-size;
+    .n7-item-preview__metadata-item-value {
+        font-size: $font-size-s;
+        font-weight: $font-weight-normal;
+
+        em {
+            font-style: normal;
+            background-color: $color-highlight;
+        }
+    }
+}
+
+
+/* ------------------------------------ *\
+   #ENTITIES-METADATA
+\* ------------------------------------ */
+.aw-item-preview-entities {
+    display: inline-block;
+    flex-grow: 0;
+    margin-bottom: 0;
+    background-color: $color-background-light;
+    padding: $space/2 $space;
+    border-radius: $border-radius;
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.05);
+    
+    .n7-item-preview__metadata-item-icon {
+        font-size: $font-size-m;
+        font-weight: $font-weight-bold;
+    }
+
+    /* Main metadata */
+    .n7-item-preview__metadata-item {
+        &.color-persona {
+            color: $color-people;
+        }
+
+        &.color-luogo {
+            color: $color-places;
+        }
+
+        &.color-concetto {
+            color: $color-concepts;
+        }
+        
+        &.color-cosa-notevole {
+            color: $color-things;
+        }
+        
+        &.color-organizzazione {
+            color: $color-organizations;
+        }
+
+        &.color-famiglia {
+            color: $color-families;
+        }
+
+        &.color-evento {
+            color: $color-events;
         }
     }
 }
@@ -126,16 +131,18 @@
 .n7-item-preview.is-fullwidth {
     .n7-item-preview__metadata {
         display: flex;
+        align-items: flex-start;
+    }
 
-        &-group {
-            margin-bottom: 0;
+    .aw-item-preview_metadata {
+        margin-bottom: 0;
+    }    
 
-            &.n7-objects__metadata-linked {
-                margin-left: auto;
-                flex: 1 0 auto;
-                text-align: right;
-            }
-        }
+    .aw-item-preview-entities {
+        margin-left: auto;
+        flex: 0 0 auto;
+        text-align: right;
+        margin-top: -$space/2;
     }
 }
 
@@ -189,15 +196,12 @@
 /* ------------------------------------ *\
    #BREADCRUMBS-INTEGRATION
 \* ------------------------------------ */
-n7-smart-breadcrumbs {
-    &:hover {
-        + n7-item-preview {
-            .n7-item-preview__title {
-                color: $color-text-link;
-            }
-        }
+.aw-search__results-wrapper {
+    .n7-breadcrumbs {
+        margin-bottom: -$space/2;
     }
 }
+
 
 /* ------------------------------------ *\
    #MEDIA-QUERIES

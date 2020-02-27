@@ -8,7 +8,6 @@
     BREADCRUMBS
 \* ------------------------------------ */
 .n7-breadcrumbs {
-
     &__list {
         font-size: $font-size-s;
 
@@ -30,15 +29,6 @@
         padding-right: $space/2;
         padding-left: $space/2;
        }
-
-       &[aria-expanded="false"] {
-           color: green;
-           cursor: pointer;
-
-           &:hover {
-               color: gold !important;
-           }
-       }
     }
 
     &__label {
@@ -49,16 +39,41 @@
 
 
 /* ------------------------------------ *\
+   #SMART-BREADCRUMBS-ELLIPSIS
+\* ------------------------------------ */
+.n7-breadcrumbs {
+    /* Ellipsis element */
+    &__item-ellipsis {
+        margin: $space/2 0;
+        list-style: none;
+        cursor: pointer;
+
+        &:after {
+            content: $breadcrumbs-arrow;
+            padding-right: $space/2;
+            padding-left: $space/2;
+            color: $breadcrumbs-arrow-color;
+            font-family: 'n7-icon' !important;
+            vertical-align: bottom;
+        }
+
+        &:hover {
+            color: $color-text-link;
+        }
+    }
+}
+
+
+/* ------------------------------------ *\
    #SMART-BREADCRUMBS-TIPPY
 \* ------------------------------------ */
 .n7-smart-breadcrumbs__tippy-content {
-    padding: 0 0 0 $space*1.5;
+    padding: 0;
     margin: 0;
 
     .n7-breadcrumbs__item {
         padding: 0;
         margin: 0;
-        list-style-type: disc;
     }
 
     /* Last child also */
@@ -88,12 +103,6 @@
 }
 
 @media all and (max-width: $breakpoint-ipad-portrait) {
-    
-    .n7-breadcrumbs {
-        &__item {
-        }
-    }
-    
 }
 
 @media all and (max-width: $breakpoint-smartphone-landscape) {

@@ -5,6 +5,24 @@
 //
 
 // ------------------------------------ //
+// #COLOR-SCHEME
+// ------------------------------------ //
+// Grayscale (background, borders, text)
+$color-gray-00: #ffffff;
+$color-gray-01: #F9FAFA; // f7f7f7;
+$color-gray-02: #EFF0F1; // f0f0f0;
+$color-gray-03: #E2E3E4; // dddddd;
+$color-gray-04: #91959C; // B6B7B9; // ababab;
+$color-gray-05: #4F5259; // 494a4d;
+
+// Brand colors
+$color-main: #2e5bff;
+$color-second: #8c54ff;
+$color-third: #f5a623;
+$color-text-hover: rgb(26, 64, 204); /* Used for text link in hover state */
+
+
+// ------------------------------------ //
 // #HIGHLIGHT-COLOR
 // ------------------------------------ //
 $color-highlight: rgba(255, 251, 0, 0.18);
