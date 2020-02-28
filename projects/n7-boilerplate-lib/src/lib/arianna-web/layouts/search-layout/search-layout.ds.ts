@@ -41,11 +41,19 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     {
       value: 'label_sort_ASC',
       label: 'Ordine alfabetico (A→Z)',
+      type: 'text',
       selected: true
     },
     {
       value: 'label_sort_DESC',
       label: 'Ordine alfabetico (Z→A)',
+      type: 'text',
+      selected: false
+    },
+    {
+      value: '_score_DESC',
+      label: 'Ordine per pertinenza',
+      type: 'score',
       selected: false
     }
   ];
@@ -101,11 +109,12 @@ export class AwSearchLayoutDS extends LayoutDataSource {
   onOrderByChange(payload) {
     const orderBy = payload.substring( 0, payload.lastIndexOf("_") ),
     direction = payload.substring( payload.lastIndexOf("_") + 1 );
-
+    let type = "";
     // set selected
     this.orderByOptions.forEach(option => {
       if (option.value === payload) {
         option.selected = true;
+        type = option.type;
       } else {
         option.selected = false;
       }
@@ -116,6 +125,7 @@ export class AwSearchLayoutDS extends LayoutDataSource {
 
     this.searchModel.setSearchConfigOrderBy(orderBy);
     this.searchModel.setSearchConfigDirection(direction);
+    this.searchModel.setSearchConfigType(type);
   }
 
   onPageSizeChange(size): Observable<boolean> {
