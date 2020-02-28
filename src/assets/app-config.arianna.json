@@ -152,7 +152,7 @@
       "maxLength": "80"
     },
     "text": {
-      "data": "item.text",
+      "data": "item.label",
       "maxLength": "50"
     },
     "metadata": {
