@@ -1,4 +1,4 @@
-import { DataSource } from '@n7-frontend/core';
+import { DataSource } from '@n7-frontend/core/dist/data-source';
 import helpers from '../../common/helpers';
 
 export class AwTreeDS extends DataSource {
@@ -12,12 +12,7 @@ export class AwTreeDS extends DataSource {
 
   private activeId: string;
 
-  protected transform(tree): any {
-    if (!tree) {
-      return null;
-    }
-    return tree;
-  }
+  protected transform = (data) => data;
 
   public load(data) {
     const { tree, basePath } = data;

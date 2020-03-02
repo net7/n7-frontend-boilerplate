@@ -1,9 +1,7 @@
 import { DataSource } from '@n7-frontend/core';
 
 export class AwSchedaBreadcrumbsDS extends DataSource {
-  protected transform(data) {
-    return data;
-  }
+  protected transform = (data) => data;
 
   toggleSidebar() {
     const sidebarData = this.output;

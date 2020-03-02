@@ -1,4 +1,4 @@
-import { LayoutDataSource } from '@n7-frontend/core';
+import { LayoutDataSource } from '@n7-frontend/core/dist/layout-data-source';
 
 export class DvExampleLayoutDS extends LayoutDataSource {
     private Items = [

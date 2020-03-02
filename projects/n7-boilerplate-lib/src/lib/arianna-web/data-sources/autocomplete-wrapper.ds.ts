@@ -1,4 +1,4 @@
-import { DataSource } from '@n7-frontend/core';
+import { DataSource } from '@n7-frontend/core/dist/data-source';
 
 export class AwAutocompleteWrapperDS extends DataSource {
   protected transform(data) {

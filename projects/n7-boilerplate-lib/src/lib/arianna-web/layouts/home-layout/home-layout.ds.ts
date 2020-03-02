@@ -1,4 +1,4 @@
-import { LayoutDataSource } from '@n7-frontend/core';
+import { LayoutDataSource } from '@n7-frontend/core/dist/layout-data-source';
 import { Subject, forkJoin, fromEvent } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import helpers from '../../../common/helpers';

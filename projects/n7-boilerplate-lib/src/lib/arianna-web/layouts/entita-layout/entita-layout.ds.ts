@@ -1,4 +1,4 @@
-import { LayoutDataSource } from '@n7-frontend/core';
+import { LayoutDataSource } from '@n7-frontend/core/dist/layout-data-source';
 import { Observable, of } from 'rxjs';
 
 export class AwEntitaLayoutDS extends LayoutDataSource {

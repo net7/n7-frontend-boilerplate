@@ -8,9 +8,5 @@ export class AwSchedaSidebarEH extends EventHandler {
         this.emitOuter(type, payload);
       }
     });
-
-    /* this.outerEvents$.subscribe(event => {
-
-    }); */
   }
 }
