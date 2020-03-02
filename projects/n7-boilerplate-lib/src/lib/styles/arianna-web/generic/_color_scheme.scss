@@ -9,11 +9,11 @@
 // ------------------------------------ //
 // Grayscale (background, borders, text)
 $color-gray-00: #ffffff;
-$color-gray-01: #F9FAFA; // f7f7f7;
-$color-gray-02: #EFF0F1; // f0f0f0;
-$color-gray-03: #E2E3E4; // dddddd;
-$color-gray-04: #91959C; // B6B7B9; // ababab;
-$color-gray-05: #4F5259; // 494a4d;
+$color-gray-01: #f9fafa; // f7f7f7;
+$color-gray-02: #eff0f1; // f0f0f0;
+$color-gray-03: #e2e3e4; // dddddd;
+$color-gray-04: #91959c; // B6B7B9; // ababab;
+$color-gray-05: #4f5259; // 494a4d;
 
 // Brand colors
 $color-main: #2e5bff;
@@ -31,30 +31,30 @@ $color-highlight: rgba(255, 251, 0, 0.18);
 // ------------------------------------ //
 // #ENTITIES-COLORS
 // ------------------------------------ //
-$color-people: #4D8FF2; // Fallback
+$color-people: #4d8ff2; // Fallback
 $color-people: var(--color-persona);
 
-$color-places: #EBC738; // Fallback
+$color-places: #ebc738; // Fallback
 $color-places: var(--color-luogo);
 
-$color-concepts: #33BDCC; // Fallback
+$color-concepts: #33bdcc; // Fallback
 $color-concepts: var(--color-concetto);
 
-$color-things: #5BA878; // Fallback
+$color-things: #5ba878; // Fallback
 $color-things: var(--color-cosa-notevole);
 
-$color-organizations: #BD883E; // Fallback
+$color-organizations: #bd883e; // Fallback
 $color-organizations: var(--color-organizzazione);
 
-$color-oggetto-culturale: #9A84C2; // Fallback
+$color-oggetto-culturale: #9a84c2; // Fallback
 $color-oggetto-culturale: var(--color-oggetto-culturale);
 
-$color-aggregazione-logica: #A6A5A8; // Fallback
+$color-aggregazione-logica: #a6a5a8; // Fallback
 $color-aggregazione-logica: var(--color-aggregazione-logica);
 
-$color-families: #CC6F5C; // Fallback
+$color-families: #cc6f5c; // Fallback
 $color-families: var(--color-famiglia);
 
-$color-events: #E89827; // Fallback
+$color-events: #e89827; // Fallback
 $color-events: var(--color-evento);
 
