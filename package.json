@@ -88,7 +88,7 @@
     "*.ts": [
       "eslint --fix"
     ],
-    "src/**/*.scss": [
+    "*.scss": [
       "stylelint --syntax scss --fix"
     ]
   }
