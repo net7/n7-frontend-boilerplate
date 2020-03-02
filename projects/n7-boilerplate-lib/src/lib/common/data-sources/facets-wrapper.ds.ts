@@ -134,9 +134,7 @@ export class FacetsWrapperDS extends DataSource {
 
   public getRequestParams = () => this.searchModel.getRequestParams();
 
-  public filtersAsQueryParams = (filters) => {
-    this.searchModel.filtersAsQueryParams(filters);
-  }
+  public filtersAsQueryParams = (filters) => this.searchModel.filtersAsQueryParams(filters);
 
   public updateFiltersFromQueryParams = (queryParams) => {
     this.searchModel.updateFiltersFromQueryParams(queryParams);
