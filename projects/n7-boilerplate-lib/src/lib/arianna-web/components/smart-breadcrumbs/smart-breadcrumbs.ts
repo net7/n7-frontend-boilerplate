@@ -69,9 +69,7 @@ export class SmartBreadcrumbsComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     if (this.bcdiv && this.bcol) {
-      let parentWidth = this.bcdiv.nativeElement.clientWidth
-        - this.getSidePadding(this.bcdiv.nativeElement);
-      let childWidth = this.bcol.nativeElement.clientWidth;
+      let { parentWidth, childWidth } = this.getWidths(this.bcdiv, this.bcol);
       const liArray = this.bcol.nativeElement.children;
       if (parentWidth === childWidth) { // collapse condition
         let i = 1; // Skip element in position 0
@@ -84,9 +82,7 @@ export class SmartBreadcrumbsComponent implements AfterViewInit {
           this.tippyBuilder(liArray[i], tippyData); // append tooltip to ellipsis
           i += 1;
           // update widths
-          parentWidth = this.bcdiv.nativeElement.clientWidth
-            - this.getSidePadding(this.bcdiv.nativeElement);
-          childWidth = this.bcol.nativeElement.clientWidth;
+          ({ parentWidth, childWidth } = this.getWidths(this.bcdiv, this.bcol));
         }
       }
     }
@@ -97,17 +93,23 @@ export class SmartBreadcrumbsComponent implements AfterViewInit {
     this.emit('click', payload);
   }
 
-  tippyBuilder = (node, content) => {
-    /*
-        Builds tippy data for a node.
-    */
-    tippy(node, {
-      content,
-      interactive: true,
-      arrow: true,
-      theme: 'light-border no-padding',
-      appendTo: document.body, // silence tippy interactive warning
-    });
+  /**
+   * Builds tippy data for a node.
+   */
+  tippyBuilder = (node, content) => tippy(node, {
+    content,
+    interactive: true,
+    arrow: true,
+    theme: 'light-border no-padding',
+    appendTo: document.body, // silence tippy interactive warning
+  });
+
+
+  getWidths = (parent: ElementRef, child: ElementRef) => {
+    const pw = parent.nativeElement.clientWidth;
+    const cw = child.nativeElement.clientWidth;
+    const pp = this.getSidePadding(parent.nativeElement);
+    return { parentWidth: pw - pp, childWidth: cw };
   }
 
   getSidePadding = (node) => (
