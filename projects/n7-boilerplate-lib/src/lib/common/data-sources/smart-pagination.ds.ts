@@ -14,7 +14,7 @@ export class SmartPaginationDS extends DataSource {
     const {
       links, first, prev, next, last,
     } = this.paginationBuilder(
-      totalPages, currentPage, pageLimit,
+      totalPages, +currentPage, pageLimit,
       mode, href, queryParams,
     );
     return {
@@ -34,7 +34,7 @@ export class SmartPaginationDS extends DataSource {
     };
   }
 
-  private paginationBuilder = (tp, cp, pl, m, href, qp) => {
+  private paginationBuilder = (tp, cp: number, pl, m, href, qp) => {
     const result = [];
     /*
       tp - total pages

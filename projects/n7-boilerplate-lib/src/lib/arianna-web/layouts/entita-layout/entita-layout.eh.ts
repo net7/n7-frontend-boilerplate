@@ -11,7 +11,6 @@ export class AwEntitaLayoutEH extends EventHandler {
   private route: any;
 
   private entityId: string;
-  // private selectedTab: string;
 
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
