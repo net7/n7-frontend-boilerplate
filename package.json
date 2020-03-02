@@ -85,6 +85,11 @@
     }
   },
   "lint-staged": {
-    "*.css": "stylelint --fix"
+    "*.ts": [
+      "eslint --fix"
+    ],
+    "src/**/*.scss": [
+      "stylelint --syntax scss --fix"
+    ]
   }
 }

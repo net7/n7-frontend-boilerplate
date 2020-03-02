@@ -71,7 +71,7 @@ export class SmartPaginationDS extends DataSource {
         lp = limit + 1;
         fp = 1;
       }
-      for (let i = fp; i <= lp; i + 1) {
+      for (let i = fp; i <= lp; i += 1) {
         result.push({
           text: String(i),
           classes: cp === i ? 'is-active' : '',
@@ -84,7 +84,7 @@ export class SmartPaginationDS extends DataSource {
         classes: cp === 1 ? 'is-active' : '',
         anchor: cp !== 1 ? this._getPaginationAnchor(1, m, href, qp) : null,
       });
-      for (let i = 1; i < tp; i + 1) {
+      for (let i = 1; i < tp; i += 1) {
         result.push({
           text: String(i + 1),
           classes: cp === i + 1 ? 'is-active' : '',

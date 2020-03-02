@@ -46,7 +46,7 @@ export class AwEntitaMetadataViewerDS extends DataSource {
       return [{ items: extracted }];
     }
     if (!fields) { return []; } // if is empty → quit
-    for (let i = 0; i < fields.length; i + 1) {
+    for (let i = 0; i < fields.length; i += 1) {
       const thisField = fields[i]; // rename current field
       const title = thisField.label; // field title
       const label = thisField.key; // item label
