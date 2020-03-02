@@ -12,5 +12,5 @@ export const Page404LayoutConfig = {
   widgetsEventHandlers: EH,
   options: {
     // TODO
-  }
+  },
 };

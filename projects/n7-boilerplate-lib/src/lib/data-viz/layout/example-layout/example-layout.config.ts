@@ -21,5 +21,5 @@ export const DvExampleLayoutConfig = {
   widgetsEventHandlers: EH,
   options: {
     // TODO
-  }
+  },
 };

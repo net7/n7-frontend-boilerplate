@@ -14,7 +14,7 @@ export * from './home-autocomplete.eh';
 // Entita Layout
 export * from './entita-nav.eh';
 
-//Scheda Layout
+// Scheda Layout
 export * from './scheda-breadcrumbs.eh';
 export * from './sidebar-header.eh';
 export * from './tree.eh';

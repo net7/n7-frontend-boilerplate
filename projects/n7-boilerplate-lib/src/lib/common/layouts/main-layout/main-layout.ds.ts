@@ -1,17 +1,24 @@
 import { LayoutDataSource } from '@n7-frontend/core';
-import tippy, { hideAll } from 'tippy.js';
+import { hideAll } from 'tippy.js';
 
 export class MainLayoutDS extends LayoutDataSource {
   protected configuration: any;
+
   protected mainState: any;
+
   protected router: any;
+
   protected route: any;
+
   protected titleService: any;
 
   public options: any;
+
   public pageTitle: string;
 
-  onInit({ configuration, mainState, router, options, titleService, route }) {
+  onInit({
+    configuration, mainState, router, options, titleService, route,
+  }) {
     this.configuration = configuration;
     this.mainState = mainState;
     this.router = router;
@@ -21,18 +28,18 @@ export class MainLayoutDS extends LayoutDataSource {
 
     // update header
     if (this.configuration.get('header')) {
-      this.one('header').update({ 'items': this.configuration.get('header') });
+      this.one('header').update({ items: this.configuration.get('header') });
     }
 
     if (this.configuration.get('footer')) {
-      this.one('footer').update({ 'items': this.configuration.get('footer') });
+      this.one('footer').update({ items: this.configuration.get('footer') });
     }
 
     // main state updates
-    this.mainState.get$('headTitle').subscribe(val => this.titleService.setTitle(val));
-    this.mainState.get$('pageTitle').subscribe(val => this.pageTitle = val);
-    this.mainState.get$('subnav').subscribe(val => this.one('subnav').update(val));
-    this.mainState.get$('breadcrumbs').subscribe(val => this.one('breadcrumbs').update(val));
+    this.mainState.get$('headTitle').subscribe((val) => this.titleService.setTitle(val));
+    this.mainState.get$('pageTitle').subscribe((val) => { this.pageTitle = val; });
+    this.mainState.get$('subnav').subscribe((val) => this.one('subnav').update(val));
+    this.mainState.get$('breadcrumbs').subscribe((val) => this.one('breadcrumbs').update(val));
 
     // mainState test
     /* this.mainState.addCustom('customNav', new Subject());
@@ -65,8 +72,8 @@ export class MainLayoutDS extends LayoutDataSource {
       if (queryParams) {
         this.router.navigate(path, {
           relativeTo: this.route,
-          queryParams: queryParams,
-          queryParamsHandling: 'merge'
+          queryParams,
+          queryParamsHandling: 'merge',
         });
       } else {
         this.router.navigate(path);

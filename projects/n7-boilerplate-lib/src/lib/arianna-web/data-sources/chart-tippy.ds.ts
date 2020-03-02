@@ -4,12 +4,12 @@ import helpers from '../../common/helpers';
 export class AwChartTippyDS extends DataSource {
   protected transform(data) {
     // ====== DATA ======
-    const { bubbles, selected } = data
-    const { basePath, selectable } = this.options
+    const { bubbles, selected } = data;
+    const { basePath, selectable } = this.options;
     // ==================
-    const templates:any[] = bubbles.map(b => {
-      const { count, entity } = b
-      const { id, label, typeOfEntity } = entity
+    const templates: any[] = bubbles.map((b) => {
+      const { count, entity } = b;
+      const { id, label } = entity;
       return {
         id,
         selectable,
@@ -17,10 +17,10 @@ export class AwChartTippyDS extends DataSource {
         text: `È collegato a ${count} oggetti culturali`,
         isSelected: selected.includes(id),
         anchorData: {
-          href: `${basePath}${id}/${helpers.slugify(label)}`
-        }
-      }
+          href: `${basePath}${id}/${helpers.slugify(label)}`,
+        },
+      };
     });
-    return templates
+    return templates;
   }
 }

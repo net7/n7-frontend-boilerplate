@@ -4,21 +4,23 @@ import { debounceTime } from 'rxjs/operators';
 
 export class FacetsWrapperEH extends EventHandler {
   private _facetsChanged = false;
+
   private internalFacetsChange$: Subject<any> = new Subject();
+
   private externalFacetsChange$: Subject<any> = new Subject();
 
   public listen() {
     // listen to inner (widget) events
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
-        case 'facets-wrapper.facet':
+        case 'facets-wrapper.facet': {
           // empty payload control
           if (!payload.eventPayload.inputPayload) {
             return;
           }
-          const { facetId } = payload.eventPayload.inputPayload,
-            input = this.dataSource.getInputByFacetId(facetId),
-            context = input.getContext();
+          const { facetId } = payload.eventPayload.inputPayload;
+          const input = this.dataSource.getInputByFacetId(facetId);
+          const context = input.getContext();
           this._facetsChanged = true;
 
           // update
@@ -27,11 +29,11 @@ export class FacetsWrapperEH extends EventHandler {
           // internal
           if (context === 'internal') {
             this.internalFacetsChange$.next(input.getTarget());
-          // external
+            // external
           } else {
             this.externalFacetsChange$.next();
           }
-
+        }
           break;
 
         case 'facets-wrapper.facetheader':
@@ -58,7 +60,7 @@ export class FacetsWrapperEH extends EventHandler {
             this.dataSource.updateInputLinks();
             const internalFilters = this.dataSource.searchModel.getInternalFilters();
 
-            internalFilters.forEach(filter => {
+            internalFilters.forEach((filter) => {
               const input = this.dataSource.searchModel.getInputByFacetId(filter.facetId);
               const target = input.getTarget();
               this.dataSource.filterTarget(target);
@@ -74,20 +76,20 @@ export class FacetsWrapperEH extends EventHandler {
 
     // internal facets change
     this.internalFacetsChange$.pipe(
-      debounceTime(500)
-    ).subscribe(target => {
+      debounceTime(500),
+    ).subscribe((target) => {
       this.dataSource.filterTarget(target);
       this.dataSource.updateFilteredTarget(target);
     });
 
     // internal facets change
     this.externalFacetsChange$.pipe(
-      debounceTime(500)
+      debounceTime(500),
     ).subscribe(() => {
-      const requestParams = this.dataSource.getRequestParams(),
-      queryParams = this.dataSource.filtersAsQueryParams(requestParams.filters);
+      const requestParams = this.dataSource.getRequestParams();
+      const queryParams = this.dataSource.filtersAsQueryParams(requestParams.filters);
 
-      Object.keys(queryParams).forEach(key => queryParams[key] = queryParams[key] || null);
+      Object.keys(queryParams).forEach((key) => { queryParams[key] = queryParams[key] || null; });
       // signal
       this.emitOuter('facetschange');
 
@@ -98,9 +100,8 @@ export class FacetsWrapperEH extends EventHandler {
       this.emitGlobal('navigate', {
         handler: 'router',
         path: [],
-        queryParams
+        queryParams,
       });
     });
   }
-
 }

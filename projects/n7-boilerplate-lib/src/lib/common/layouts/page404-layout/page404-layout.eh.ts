@@ -6,17 +6,17 @@ export class Page404LayoutEH extends EventHandler {
 
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
-      switch(type) {
+      switch (type) {
         case 'n7-page404-layout.init':
           this.dataSource.onInit(payload);
           break;
 
         case 'n7-page404-layout.destroy':
-            this.destroyed$.next();
-            break;
+          this.destroyed$.next();
+          break;
 
         default:
-            break;
+          break;
       }
     });
 
@@ -28,11 +28,10 @@ export class Page404LayoutEH extends EventHandler {
         case 'global.navigate':
           this.dataSource.onNavigate(payload);
           break;
-          
-        default: 
+
+        default:
           break;
       }
     }); */
   }
-  
 }

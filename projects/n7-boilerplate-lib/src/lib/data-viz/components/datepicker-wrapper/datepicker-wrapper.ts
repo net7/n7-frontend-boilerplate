@@ -1,43 +1,42 @@
 import { Component, Input } from '@angular/core';
 
-export interface IDatepickerWrapperData {
-    select: ISelect,
+export interface DatepickerWrapperData {
+    select: Select;
     datepicker: any;
     payload?: any;
 }
 
-interface ISelect {
-    id: string,
-    hidden: boolean,
-    icon?: string,
-    label: string,
-    items: IDropdownItems[],
-    classes?: string,
+interface Select {
+    id: string;
+    hidden: boolean;
+    icon?: string;
+    label: string;
+    items: DropdownItems[];
+    classes?: string;
 }
 
-interface IDropdownItems {
-    text: string,
-    payload: any,
-    classes?: string,
+interface DropdownItems {
+    text: string;
+    payload: any;
+    classes?: string;
 }
 
 @Component({
-    selector: 'dv-datepicker-wrapper',
-    templateUrl: './datepicker-wrapper.html',
+  selector: 'dv-datepicker-wrapper',
+  templateUrl: './datepicker-wrapper.html',
 })
-export class DatepickerWrapperComponent{
-    @Input() data: IDatepickerWrapperData;
+export class DatepickerWrapperComponent {
+    @Input() data: DatepickerWrapperData;
+
     @Input() emit: any;
 
     onClick(payload) {
-        if(!this.emit) return;
-        this.emit('click', payload);
+      if (!this.emit) return;
+      this.emit('click', payload);
     }
 
     toggleDropDown(payload) {
-        if(!this.emit) return;
-        this.emit('toggle', payload);
+      if (!this.emit) return;
+      this.emit('toggle', payload);
     }
-
 }
-  

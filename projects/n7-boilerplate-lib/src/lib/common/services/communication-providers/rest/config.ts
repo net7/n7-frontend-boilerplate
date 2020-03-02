@@ -1,3 +1,3 @@
 export const RestProviderConfig = {
-  'getLastPosts': 'posts', 
+  getLastPosts: 'posts',
 };

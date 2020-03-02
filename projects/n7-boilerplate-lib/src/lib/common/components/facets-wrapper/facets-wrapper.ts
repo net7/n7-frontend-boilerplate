@@ -6,6 +6,7 @@ import { Component, Input } from '@angular/core';
 })
 export class FacetsWrapperComponent {
   @Input() data: any;
+
   @Input() emit: any;
 
   headerEmit(eventType, eventPayload) {

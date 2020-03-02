@@ -6,13 +6,13 @@ import * as EH from '../../event-handlers';
 export const MainLayoutConfig = {
   layoutId: 'main-layout',
   widgets: [{
-    id: 'header'
+    id: 'header',
   }, {
-    id: 'subnav'
+    id: 'subnav',
   }, {
-    id: 'breadcrumbs'
+    id: 'breadcrumbs',
   }, {
-    id: 'footer'
+    id: 'footer',
   }],
   layoutDS: MainLayoutDS,
   layoutEH: MainLayoutEH,
@@ -20,5 +20,5 @@ export const MainLayoutConfig = {
   widgetsEventHandlers: EH,
   options: {
     // TODO
-  }
+  },
 };

@@ -3,14 +3,18 @@ import helpers from '../../common/helpers';
 
 export class AwTreeDS extends DataSource {
   static dataCache: any = {};
+
   private basePath: string;
+
   private rootId: string;
+
   private currentId: string;
+
   private activeId: string;
 
-  protected transform(tree) {
+  protected transform(tree): any {
     if (!tree) {
-      return;
+      return null;
     }
     return tree;
   }
@@ -27,9 +31,9 @@ export class AwTreeDS extends DataSource {
   }
 
   public build(id) {
-    const path = this._getTreePath(id),
-      oldPath = this._getTreePath(this.currentId),
-      oldPathIndex = oldPath.indexOf(id);
+    const path = this._getTreePath(id);
+    const oldPath = this._getTreePath(this.currentId);
+    const oldPathIndex = oldPath.indexOf(id);
 
     if (oldPathIndex > 0) {
       path.splice(oldPathIndex);
@@ -52,9 +56,9 @@ export class AwTreeDS extends DataSource {
 
   public highlightActive() {
     const control = (items) => {
-      items.forEach(item => {
-        const founded = item.meta === this.activeId,
-          hasActive = item.classes.indexOf('is-active') !== -1;
+      items.forEach((item) => {
+        const founded = item.meta === this.activeId;
+        const hasActive = item.classes.indexOf('is-active') !== -1;
 
         // clear is-active
         if (hasActive && !founded) {
@@ -79,26 +83,26 @@ export class AwTreeDS extends DataSource {
     control(this.output.items);
   }
 
-  private _getCachedData = () => {
-    return AwTreeDS.dataCache[this.rootId];
-  }
+  private _getCachedData = () => AwTreeDS.dataCache[this.rootId]
 
-  private _normalize = ({ id, label, icon, img, branches }) => {
+  private _normalize = ({
+    id, label, icon, img, branches,
+  }) => {
     const hasBranches = !!(Array.isArray(branches) && branches.length);
-    this._getCachedData().flatData[id] = { id, label, icon, img, hasBranches };
+    this._getCachedData().flatData[id] = {
+      id, label, icon, img, hasBranches,
+    };
     if (hasBranches) {
-      branches.forEach(data => {
+      branches.forEach((data) => {
         this._getCachedData().flatIds.push([id, data.id]);
         this._normalize(data);
       });
     }
   }
 
-  private _getParent = (id) => {
-    return this._getCachedData().flatIds
-      .filter(([, childId]) => childId === id)
-      .map(([parentId]) => parentId)[0] || null;
-  }
+  private _getParent = (id) => this._getCachedData().flatIds
+    .filter(([, childId]) => childId === id)
+    .map(([parentId]) => parentId)[0] || null
 
   private _getTreePath = (id) => {
     const ids = [id];
@@ -140,7 +144,9 @@ export class AwTreeDS extends DataSource {
   }
 
   private _getTreeItem = (id, inPath) => {
-    const { label, icon, img, hasBranches } = this._getCachedData().flatData[id];
+    const {
+      label, icon, img, hasBranches,
+    } = this._getCachedData().flatData[id];
     const defaultIcon = inPath ? 'n7-icon-angle-down' : 'n7-icon-angle-right';
     const classes = [];
     if (inPath) {
@@ -158,13 +164,13 @@ export class AwTreeDS extends DataSource {
         icon: icon || defaultIcon,
         payload: {
           source: 'toggle',
-          id: id,
-        }
+          id,
+        },
       } : null,
       meta: id,
       anchor: {
-        href: `${this.basePath}/${id}/${helpers.slugify(label)}`
-      }
+        href: `${this.basePath}/${id}/${helpers.slugify(label)}`,
+      },
     };
   }
 }

@@ -1,45 +1,45 @@
 import { DataSource } from '@n7-frontend/core';
 
 export class AwAutocompleteWrapperDS extends DataSource {
-
   protected transform(data) {
-    const { key, response } = data;
+    const { response } = data;
 
     if (!response) {
       return { suggestion: [], loading: true };
     }
 
-    const suggestion = []
-    const config = this.options.config
-    const maxLength = (config.get('home-layout')['max-item-length'] || 20)
-    const fResults = response.results.filter(el => typeof el.entity == 'object')
+    const suggestion = [];
+    const { config } = this.options;
+    const maxLength = (config.get('home-layout')['max-item-length'] || 20);
+    const fResults = response.results.filter((el) => typeof el.entity === 'object');
 
-    fResults.forEach(el => {
-      if (el.entity.id == 'fallback') { // build and return fallback data
+    // eslint-disable-next-line consistent-return
+    fResults.forEach((el) => {
+      if (el.entity.id === 'fallback') { // build and return fallback data
         suggestion.push({
           text: el.entity.label,
           payload: 'fallback-simple-autocomplete',
-        })
-        return { suggestion }
+        });
+        return { suggestion };
       }
-      const text = this.stringTrim(el.entity.label, maxLength)
+      const text = this.stringTrim(el.entity.label, maxLength);
       suggestion.push({
         text,
         anchor: {
-          payload: el.entity.id
-        }
-      })
-    })
-    return { suggestion }
+          payload: el.entity.id,
+        },
+      });
+    });
+    return { suggestion };
   }
-  
-  private stringTrim = ( string, limit ) => {
+
+  private stringTrim = (string, limit) => {
     /*
       Slices the string and adds trailing ellipsis
       TODO: Do not cut the string in the middle of an HTML tag!
     */
     if (string.length > limit) {
-      return string.slice(0, limit) + '…'
-    } else return string
+      return `${string.slice(0, limit)}…`;
+    } return string;
   }
 }

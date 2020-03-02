@@ -9,13 +9,12 @@ import { ConfigurationService } from './services/configuration.service';
 import { LayoutsConfigurationService } from './services/layouts-configuration.service';
 import { MainStateService } from './services/main-state.service';
 import { CommunicationService } from './services/communication.service';
-import { ApolloProvider } from './services/communication-providers/apollo/apollo.provider';
 
 // layouts
 import { MainLayoutComponent } from './layouts/main-layout/main-layout';
 import { Page404LayoutComponent } from './layouts/page404-layout/page404-layout';
 
-//components
+// components
 import { FacetsWrapperComponent } from './components/facets-wrapper/facets-wrapper';
 import { SmartPaginationComponent } from './components/smart-pagination/smart-pagination';
 
@@ -31,10 +30,10 @@ const COMPONENTS = [
   imports: [
     CommonModule,
     HttpClientModule,
-    DvComponentsLibModule
+    DvComponentsLibModule,
   ],
   providers: [],
-  exports: COMPONENTS
+  exports: COMPONENTS,
 })
 export class N7BoilerplateCommonModule {
   static forRoot(config: any): ModuleWithProviders {
@@ -45,8 +44,8 @@ export class N7BoilerplateCommonModule {
         ConfigurationService,
         LayoutsConfigurationService,
         CommunicationService,
-        { provide: 'config', useValue: config }
-      ]
-    }
+        { provide: 'config', useValue: config },
+      ],
+    };
   }
 }

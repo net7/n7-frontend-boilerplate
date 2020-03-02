@@ -10,15 +10,15 @@ export const AwPatrimonioLayoutConfig = {
    * in this leyout
    */
   widgets: [
-     { id: 'aw-sidebar-header'},
-     { id: 'aw-tree' },
-     { id: 'aw-scheda-breadcrumbs' },
-     { id: 'aw-scheda-metadata' },
-     { id: 'aw-scheda-image' },
-     { id: 'aw-scheda-inner-title' },
-     { id: 'aw-bubble-chart' },
-     { id: 'aw-chart-tippy' },
-     { id: 'aw-linked-objects' }
+    { id: 'aw-sidebar-header' },
+    { id: 'aw-tree' },
+    { id: 'aw-scheda-breadcrumbs' },
+    { id: 'aw-scheda-metadata' },
+    { id: 'aw-scheda-image' },
+    { id: 'aw-scheda-inner-title' },
+    { id: 'aw-bubble-chart' },
+    { id: 'aw-chart-tippy' },
+    { id: 'aw-linked-objects' },
   ],
   layoutDS: AwSchedaLayoutDS,
   layoutEH: AwSchedaLayoutEH,
@@ -26,5 +26,5 @@ export const AwPatrimonioLayoutConfig = {
   widgetsEventHandlers: EH,
   options: {
     // TODO
-  }
+  },
 };

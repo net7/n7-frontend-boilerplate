@@ -2,7 +2,9 @@
 // BREADCRUMBS.ts
 //---------------------------
 
-import { Component, Input, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import {
+  Component, Input, ViewChild, ElementRef, AfterViewInit,
+} from '@angular/core';
 import tippy from 'tippy.js';
 
 /**
@@ -14,7 +16,7 @@ import tippy from 'tippy.js';
  * @property _meta (optional)
  *
  */
-export interface ISmartBreadcrumbsItem {
+export interface SmartBreadcrumbsItem {
   /**
    * item's label
    */
@@ -40,11 +42,11 @@ export interface ISmartBreadcrumbsItem {
  * @property classes (optional)
  *
  */
-export interface ISmartBreadcrumbsData {
+export interface SmartBreadcrumbsData {
   /**
    * each item renders a breadcrumb level
    */
-  items: ISmartBreadcrumbsItem[];
+  items: SmartBreadcrumbsItem[];
   /**
    * additional html classes
    */
@@ -53,35 +55,38 @@ export interface ISmartBreadcrumbsData {
 
 @Component({
   selector: 'n7-smart-breadcrumbs',
-  templateUrl: './smart-breadcrumbs.html'
+  templateUrl: './smart-breadcrumbs.html',
 })
 
 export class SmartBreadcrumbsComponent implements AfterViewInit {
-  @Input() data: ISmartBreadcrumbsData;
+  @Input() data: SmartBreadcrumbsData;
+
   @Input() emit: any;
+
   @ViewChild('bcol', { read: ElementRef, static: false }) bcol: ElementRef
+
   @ViewChild('bcdiv', { read: ElementRef, static: false }) bcdiv: ElementRef
 
   ngAfterViewInit() {
     if (this.bcdiv && this.bcol) {
-      var parentWidth = this.bcdiv.nativeElement.clientWidth - this.getSidePadding(this.bcdiv.nativeElement)
-      var childWidth = this.bcol.nativeElement.clientWidth
-      var liArray = this.bcol.nativeElement.children
-      console.log({ parentWidth, childWidth })
-      if (parentWidth === childWidth) {                                       // collapse condition
-        let i = 1                                                           // Skip element in position 0
-        while (parentWidth === childWidth && i < liArray.length - 1) {      // Skip last element
-          let tippyData = document.createElement('ol')                    // initialize tippy data
-          tippyData.className = 'n7-smart-breadcrumbs__tippy-content'
-          tippyData.appendChild(liArray[i].cloneNode(true))               // add <li> to tippy data (<ol>)
-          liArray[i].children[0].innerText = '…'                          // convert to ellipsis
-          liArray[i].className = 'n7-breadcrumbs__item-ellipsis'          // set class to list item
-          this.tippyBuilder(liArray[i], tippyData)                        // append tooltip to ellipsis
-          // this.data.items[i].classes = 'n7-breadcrumbs__label-ellipsis'   // set class to ellipsis anchor
-          i++
+      let parentWidth = this.bcdiv.nativeElement.clientWidth
+        - this.getSidePadding(this.bcdiv.nativeElement);
+      let childWidth = this.bcol.nativeElement.clientWidth;
+      const liArray = this.bcol.nativeElement.children;
+      if (parentWidth === childWidth) { // collapse condition
+        let i = 1; // Skip element in position 0
+        while (parentWidth === childWidth && i < liArray.length - 1) { // Skip last element
+          const tippyData = document.createElement('ol'); // initialize tippy data
+          tippyData.className = 'n7-smart-breadcrumbs__tippy-content';
+          tippyData.appendChild(liArray[i].cloneNode(true)); // add <li> to tippy data (<ol>)
+          liArray[i].children[0].innerText = '…'; // convert to ellipsis
+          liArray[i].className = 'n7-breadcrumbs__item-ellipsis'; // set class to list item
+          this.tippyBuilder(liArray[i], tippyData); // append tooltip to ellipsis
+          i += 1;
           // update widths
-          parentWidth = this.bcdiv.nativeElement.clientWidth - this.getSidePadding(this.bcdiv.nativeElement)
-          childWidth = this.bcol.nativeElement.clientWidth
+          parentWidth = this.bcdiv.nativeElement.clientWidth
+            - this.getSidePadding(this.bcdiv.nativeElement);
+          childWidth = this.bcol.nativeElement.clientWidth;
         }
       }
     }
@@ -101,15 +106,13 @@ export class SmartBreadcrumbsComponent implements AfterViewInit {
       interactive: true,
       arrow: true,
       theme: 'light-border no-padding',
-      appendTo: document.body // silence tippy interactive warning
-    })
+      appendTo: document.body, // silence tippy interactive warning
+    });
   }
 
-  getSidePadding = node => { // returns an integer representing the sum of left and right paddings
-    return (
-      (+window.getComputedStyle(node, null).getPropertyValue('padding-left').match(/\d+/)[0])
-      + (+window.getComputedStyle(node, null).getPropertyValue('padding-right').match(/\d+/)[0])
-    )
-  }
-
+  getSidePadding = (node) => (
+    // returns an integer representing the sum of left and right paddings
+    (+window.getComputedStyle(node, null).getPropertyValue('padding-left').match(/\d+/)[0])
+    + (+window.getComputedStyle(node, null).getPropertyValue('padding-right').match(/\d+/)[0])
+  )
 }

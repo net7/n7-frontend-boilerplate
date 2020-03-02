@@ -1,7 +1,6 @@
 import { EventHandler } from '@n7-frontend/core';
 
 export class AwHeroEH extends EventHandler {
-
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
@@ -19,10 +18,9 @@ export class AwHeroEH extends EventHandler {
           break;
 
         default:
-          console.log('(hero) unhandled event of type', type)
+          console.warn('(hero) unhandled event of type', type);
           break;
       }
     });
   }
-
 }
