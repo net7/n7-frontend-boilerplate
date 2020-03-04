@@ -3,18 +3,18 @@ import helpers from '../../common/helpers';
 
 export class AwHomeAutocompleteDS extends DataSource {
   protected transform(data) {
-    const { response, query } = data,
-          { results, totalCount } = response,
-          { keys, config, paths } = this.options,
-          labels = this.options.labels || {},
-          itemIds = [],
-          groups = {};
+    const { response, query } = data;
+    const { results, totalCount } = response;
+    const { keys, config, paths } = this.options;
+    const labels = this.options.labels || {};
+    const itemIds = [];
+    const groups = {};
 
     results.forEach(({ item, entity }) => {
-      const groupId = entity ? entity.typeOfEntity : item.document_type,
-        groupConfig = keys[groupId],
-        mainMetadata = groupConfig['main-metadata'],
-        currentItem = item || entity;
+      const groupId = entity ? entity.typeOfEntity : item.document_type;
+      const groupConfig = keys[groupId];
+      const mainMetadata = groupConfig['main-metadata'];
+      const currentItem = item || entity;
 
       if (!groups[groupId]) {
         const { label, icon } = groupConfig;
@@ -23,7 +23,7 @@ export class AwHomeAutocompleteDS extends DataSource {
           icon,
           classes: `color-${groupConfig['class-name']}`,
           items: [],
-          type: groupId
+          type: groupId,
         };
       }
 
@@ -40,20 +40,20 @@ export class AwHomeAutocompleteDS extends DataSource {
           title: currentItem.label,
           metadata,
           anchor: {
-            href: `${paths[entity ? 'entitaBasePath' : 'schedaBasePath']}/${currentItem.id}/${helpers.slugify(currentItem.label)}`
-          }
+            href: `${paths[entity ? 'entitaBasePath' : 'schedaBasePath']}/${currentItem.id}/${helpers.slugify(currentItem.label)}`,
+          },
         });
       }
     });
 
-    const grouplist = Object.keys(groups).map(key => ({
+    const grouplist = Object.keys(groups).map((key) => ({
       group: {
         title: groups[key].title,
         icon: groups[key].icon,
-        classes: groups[key].classes
+        classes: groups[key].classes,
       },
-      items: groups[key].items
-    }))
+      items: groups[key].items,
+    }));
 
     return {
       results: grouplist,
@@ -63,23 +63,23 @@ export class AwHomeAutocompleteDS extends DataSource {
           anchor: {
             href: paths.searchBasePath,
             queryParams: {
-              query
-            }
-          }
-        }
+              query,
+            },
+          },
+        },
       } : {
         showMore: {
-          text: `Cerca in tutti i campi`,
+          text: 'Cerca in tutti i campi',
           anchor: {
             href: paths.searchBasePath,
             queryParams: {
               query, // Query string
-              'query-all': 1 // "Cerca in tutti i campi delle schede"
-            }
-          }
-        }
+              'query-all': 1, // "Cerca in tutti i campi delle schede"
+            },
+          },
+        },
       },
-      fallback: ((config.get('home-layout') || {})['top-hero'] || {}).fallback
+      fallback: ((config.get('home-layout') || {})['top-hero'] || {}).fallback,
     };
   }
 }

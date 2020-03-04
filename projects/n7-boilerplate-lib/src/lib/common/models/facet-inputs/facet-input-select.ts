@@ -1,7 +1,6 @@
 import { FacetInput } from './facet-input';
 
 export class FacetInputSelect extends FacetInput {
-
   protected transform() {
     const facetId = this.getFacetId();
 
@@ -12,20 +11,20 @@ export class FacetInputSelect extends FacetInput {
       disabled: this.config.disabled,
       options: this.data ? this.data.map(({ value, label }) => ({
         // normalize value
-        value: '' + value,
-        label
+        value: `${value}`,
+        label,
       })) : [],
       payload: {
         facetId,
         source: 'input-select',
       },
-      _meta: { facetId }
+      _meta: { facetId },
     };
   }
 
-  public setActive(facetValue){
+  public setActive(facetValue) {
     this.output.options
-      .filter(option => option.value === facetValue)
-      .forEach(option => option.selected = true);
+      .filter((option) => option.value === facetValue)
+      .forEach((option) => { option.selected = true; });
   }
 }

@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http'
+import { HttpClient } from '@angular/common/http';
 import { RestProviderConfig } from './config';
 import { ConfigurationService } from '../../configuration.service';
-import { ICommunicationProvider } from '../communication-provider.interface';
+import { CommunicationProvider } from '../communication-provider.interface';
 
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class RestProvider implements ICommunicationProvider {
+export class RestProvider implements CommunicationProvider {
   private providerConfig: any;
 
   constructor(
@@ -23,7 +23,10 @@ export class RestProvider implements ICommunicationProvider {
   }
 
   request$(requestId, options: any = {}) {
-    let { params, method, httpOptions, urlParams = '' } = options;
+    const {
+      params, httpOptions, urlParams = '',
+    } = options;
+    let { method } = options;
     let point = RestProviderConfig[requestId];
 
     // default method
@@ -35,15 +38,17 @@ export class RestProvider implements ICommunicationProvider {
 
     // config point control
     if (!point) {
-        throw Error(`No config found for requestId "${requestId}"`);
+      throw Error(`No config found for requestId "${requestId}"`);
     }
     if (method === 'POST' || method === 'PUT') {
-      return this.http[method.toLowerCase()](this.providerConfig.baseUrl + point, params, httpOptions);
-    } else if (method === 'GET' || method === 'DELETE') {
-      return this.http[method.toLowerCase()](this.providerConfig.baseUrl + point + urlParams, httpOptions);
-    } else {
-        throw Error(`Rest method ${method} not supported`);
+      return this.http[method.toLowerCase()](
+        this.providerConfig.baseUrl + point, params, httpOptions,
+      );
+    } if (method === 'GET' || method === 'DELETE') {
+      return this.http[method.toLowerCase()](
+        this.providerConfig.baseUrl + point + urlParams, httpOptions,
+      );
     }
-
+    throw Error(`Rest method ${method} not supported`);
   }
 }

@@ -1,5 +1,5 @@
 export const ApolloProviderConfig = {
-  'getLastPosts': {
+  getLastPosts: {
     queryName: 'getLastPosts',
     queryBody: `
       {
@@ -8,9 +8,9 @@ export const ApolloProviderConfig = {
           title
         }
       }
-    `
+    `,
   },
-  'getTree': {
+  getTree: {
     queryName: 'getTreeOfItems',
     queryBody: `
     {
@@ -67,9 +67,9 @@ export const ApolloProviderConfig = {
         }
       }
     }
-    `
+    `,
   },
-  'globalFilter': {
+  globalFilter: {
     queryName: 'globalFilter',
     queryBody: `{
       globalFilter(__PARAMS__){
@@ -111,9 +111,9 @@ export const ApolloProviderConfig = {
           }
         }
       }
-      }`
+      }`,
   },
-  'getEntityDetails': {
+  getEntityDetails: {
     queryName: 'getEntity',
     queryBody: `{
       getEntity(__PARAMS__){
@@ -178,9 +178,9 @@ export const ApolloProviderConfig = {
         }
       }
     }
-    `
+    `,
   },
-  'getItem': {
+  getItem: {
     queryName: 'getItem',
     queryBody: `{
       getItem(__PARAMS__) {
@@ -232,9 +232,9 @@ export const ApolloProviderConfig = {
           link
         }
       }
-    }`
+    }`,
   },
-  'getNode': {
+  getNode: {
     queryName: 'getNode',
     queryBody: `{
       getNode(__PARAMS__) {
@@ -327,9 +327,9 @@ export const ApolloProviderConfig = {
           }
         }
       }
-    }`
+    }`,
   },
-  'autoComplete': {
+  autoComplete: {
     queryName: 'autoComplete',
     queryBody: `{
       autoComplete(__PARAMS__){
@@ -382,9 +382,9 @@ export const ApolloProviderConfig = {
           }
         }
       }
-    }`
+    }`,
   },
-  'search': {
+  search: {
     queryName: 'search',
     queryBody: `{
       search(__PARAMS__){
@@ -513,9 +513,9 @@ export const ApolloProviderConfig = {
           }
         }
       }
-    }`
+    }`,
   },
-  'getMissingBubble': {
+  getMissingBubble: {
     queryName: 'getEntity',
     queryBody: `{
       getEntity(__PARAMS__){
@@ -523,6 +523,6 @@ export const ApolloProviderConfig = {
         id
         typeOfEntity
       }
-    }`
-  }
+    }`,
+  },
 };

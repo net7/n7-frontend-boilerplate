@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ApolloProviderConfig } from './config';
-import { ConfigurationService } from '../../configuration.service';
-import { ICommunicationProvider } from '../communication-provider.interface';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { ApolloProviderConfig } from './config';
+import { ConfigurationService } from '../../configuration.service';
+import { CommunicationProvider } from '../communication-provider.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class ApolloProvider implements ICommunicationProvider {
+export class ApolloProvider implements CommunicationProvider {
   private providerConfig: any;
 
   constructor(private config: ConfigurationService, private http: HttpClient) {
@@ -52,7 +52,7 @@ export class ApolloProvider implements ICommunicationProvider {
       source$ = this.http.post(
         this.providerConfig.baseUrl,
         { query: queryBody },
-        httpOptions
+        httpOptions,
       );
     }
 
@@ -61,19 +61,17 @@ export class ApolloProvider implements ICommunicationProvider {
 
   private makeParamsStr(params) {
     const paramsStr = [];
-    Object.keys(params).forEach(key => {
+    Object.keys(params).forEach((key) => {
       if (Array.isArray(params[key])) {
         const arrStr = [];
-        params[key].forEach(val => {
+        params[key].forEach((val) => {
           if (typeof val === 'object') {
             const subParamsStr = this.makeParamsStr(val);
             arrStr.push(`{ ${subParamsStr} }`);
+          } else if (typeof val === 'number' || typeof val === 'boolean' || val === null) {
+            arrStr.push(`${val}`);
           } else {
-            if (typeof val === 'number' || typeof val === 'boolean' || val === null) {
-              arrStr.push(`${val}`);
-            } else {
-              arrStr.push(`"${val}"`);
-            }
+            arrStr.push(`"${val}"`);
           }
         });
         paramsStr.push(`${key}: [${arrStr.join(',')}]`);
@@ -82,12 +80,10 @@ export class ApolloProvider implements ICommunicationProvider {
         paramsStr.push(`${key}: { ${subParamsStr} }`);
       } else if (typeof params[key] === 'string' && key.indexOf('$') === 0) {
         paramsStr.push(`${key.replace('$', '')}: ${params[key]}`);
+      } else if (typeof params[key] === 'number' || typeof params[key] === 'boolean' || params[key] === null) {
+        paramsStr.push(`${key}: ${params[key]}`);
       } else {
-        if (typeof params[key] === 'number' || typeof params[key] === 'boolean' || params[key] === null) {
-          paramsStr.push(`${key}: ${params[key]}`);
-        } else {
-          paramsStr.push(`${key}: "${params[key]}"`);
-        }
+        paramsStr.push(`${key}: "${params[key]}"`);
       }
     });
     return paramsStr.join(' ');

@@ -1,64 +1,87 @@
 import { cloneDeep } from 'lodash';
-import { LayoutDataSource } from '@n7-frontend/core';
+import { LayoutDataSource } from '@n7-frontend/core/dist/layout-data-source';
+import { tap, takeUntil } from 'rxjs/operators';
+import {
+  Observable, of, fromEvent, Subject,
+} from 'rxjs';
 import {
   SearchService,
-  SearchModel
+  SearchModel,
 } from '../../../common/services';
 import facetsConfig from './search-facets.config';
-import { tap, takeUntil } from 'rxjs/operators';
-import { Observable, of, fromEvent, Subject } from 'rxjs';
 import helpers from '../../../common/helpers';
 
 const SEARCH_MODEL_ID = 'aw-search-layout';
 
 export class AwSearchLayoutDS extends LayoutDataSource {
   private destroyed$: Subject<any> = new Subject();
+
   private communication: any;
+
   private configuration: any;
+
   private mainState: any;
+
   private search: SearchService;
+
   private searchModel: SearchModel;
+
   private prettifyLabels: any;
+
   private configKeys: any;
+
   private fallback: string;
+
   private resetButtonEnabled = true;
 
   public pageTitle: string;
+
   public resultsTitle: string;
+
   public totalCount: number;
+
   public currentPage: any = 1; // pagination value (url param)
+
   public pageSize = 10; // linked objects page size
+
   public sidebarIsSticky = false;
+
   public isFirstLoading = true;
+
   public resultsLoading = false;
+
   public orderBy = 'label_sort';
+
   public orderDirection = 'ASC';
 
   public options: any;
 
   public orderByLabel = 'Ordina per';
+
   public orderByOptions: any = [
     {
       value: 'label_sort_ASC',
       label: 'Ordine alfabetico (A→Z)',
       type: 'text',
-      selected: true
+      selected: true,
     },
     {
       value: 'label_sort_DESC',
       label: 'Ordine alfabetico (Z→A)',
       type: 'text',
-      selected: false
+      selected: false,
     },
     {
       value: '_score_DESC',
       label: 'Ordine per pertinenza',
       type: 'score',
-      selected: false
-    }
+      selected: false,
+    },
   ];
 
-  onInit({ configuration, mainState, options, communication, search }) {
+  onInit({
+    configuration, mainState, options, communication, search,
+  }) {
     this.configuration = configuration;
     this.mainState = mainState;
     this.communication = communication;
@@ -107,18 +130,18 @@ export class AwSearchLayoutDS extends LayoutDataSource {
   }
 
   onOrderByChange(payload) {
-    const orderBy = payload.substring( 0, payload.lastIndexOf("_") ),
-    direction = payload.substring( payload.lastIndexOf("_") + 1 );
-    let type = "";
+    const orderBy = payload.substring(0, payload.lastIndexOf('_'));
+    const direction = payload.substring(payload.lastIndexOf('_') + 1);
+    let type = '';
     // set selected
-    this.orderByOptions.forEach(option => {
+    this.orderByOptions.forEach((option) => {
       if (option.value === payload) {
         option.selected = true;
         type = option.type;
       } else {
         option.selected = false;
       }
-    })
+    });
 
     this.orderBy = orderBy;
     this.orderDirection = direction;
@@ -129,9 +152,8 @@ export class AwSearchLayoutDS extends LayoutDataSource {
   }
 
   onPageSizeChange(size): Observable<boolean> {
-    console.log('on page size change')
-    this.pageSize = size
-    return this._updateSearchPage(this.currentPage)
+    this.pageSize = size;
+    return this._updateSearchPage(this.currentPage);
   }
 
   onPaginationChange(payload): Observable<boolean> {
@@ -150,16 +172,16 @@ export class AwSearchLayoutDS extends LayoutDataSource {
       mode: 'href',
       href,
       queryParams,
-    })
+    });
     this.one('n7-smart-pagination').update({
       totalPages: Math.ceil(this.totalCount / this.pageSize),
       currentPage: this.currentPage,
       pageLimit: 5,
       sizes: {
         list: [10, 25, 50],
-        active: this.pageSize
-      }
-    })
+        active: this.pageSize,
+      },
+    });
   }
 
   resetPagination() {
@@ -188,12 +210,12 @@ export class AwSearchLayoutDS extends LayoutDataSource {
       searchParameters: {
         // FIXME: togliere totalCount
         totalCount: 100,
-        ...requestParams
-      }
+        ...requestParams,
+      },
     };
     return this.communication.request$('search', {
-      onError: error => console.error(error),
-      params: requestPayload
+      onError: (error) => console.error(error),
+      params: requestPayload,
     }).pipe(
       tap(({ totalCount, results, facets }) => {
         this.totalCount = totalCount;
@@ -223,13 +245,13 @@ export class AwSearchLayoutDS extends LayoutDataSource {
           pagination: true,
           paginationParams: this._getPaginationParams(),
           dynamicPagination: {
-            total: totalCount
+            total: totalCount,
           },
-          size: this.pageSize
+          size: this.pageSize,
         });
-        this.drawPagination()
+        this.drawPagination();
         this.one('aw-linked-objects').update({ items: this._normalizeItems(results.items) });
-      })
+      }),
     );
   }
 
@@ -240,10 +262,10 @@ export class AwSearchLayoutDS extends LayoutDataSource {
 
     this.currentPage = +page;
 
-    const searchConfig = this.searchModel.getConfig(),
-      pageConfig = searchConfig.page,
-      { limit } = pageConfig,
-      newOffset = (this.currentPage - 1) * limit;
+    const searchConfig = this.searchModel.getConfig();
+    const pageConfig = searchConfig.page;
+    const { limit } = pageConfig;
+    const newOffset = (this.currentPage - 1) * limit;
 
     this.searchModel.setPageConfigOffset(newOffset);
 
@@ -252,9 +274,9 @@ export class AwSearchLayoutDS extends LayoutDataSource {
 
   private _addFacetsLabels(facets) {
     facets
-      .filter(f => Array.isArray(f.data))
-      .forEach(f => {
-        f.data.forEach(dataItem => {
+      .filter((f) => Array.isArray(f.data))
+      .forEach((f) => {
+        f.data.forEach((dataItem) => {
           const key = dataItem.label;
           dataItem.label = helpers.prettifySnakeCase(key, this.prettifyLabels[key]);
         });
@@ -263,14 +285,14 @@ export class AwSearchLayoutDS extends LayoutDataSource {
 
   private _addFacetsOptions(facets) {
     facets
-      .filter(f => f.id === 'query-links')
-      .forEach(f => {
-        f.data.forEach(dataItem => {
+      .filter((f) => f.id === 'query-links')
+      .forEach((f) => {
+        f.data.forEach((dataItem) => {
           const config = this.configKeys[dataItem.value];
           if (config) {
             dataItem.options = {
               icon: config.icon,
-              classes: `color-${config['class-name']}`
+              classes: `color-${config['class-name']}`,
             };
           }
         });
@@ -278,7 +300,7 @@ export class AwSearchLayoutDS extends LayoutDataSource {
   }
 
   private _normalizeItems(items) {
-    return items.map(singleItem => ({ item: { ...singleItem } }));
+    return items.map((singleItem) => ({ item: { ...singleItem } }));
   }
 
   private _sidebarStickyControl() {
@@ -289,19 +311,20 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     const source$ = fromEvent(window, 'scroll');
 
     source$.pipe(
-      takeUntil(this.destroyed$)
+      takeUntil(this.destroyed$),
     ).subscribe(() => {
-      const windowOffsetTop = window.pageYOffset,
-        wrapperOffsetTop = document.getElementsByClassName('sticky-parent')[0]['offsetTop'];
+      const windowOffsetTop = window.pageYOffset;
+      const stickyParent = document.getElementsByClassName('sticky-parent')[0] as HTMLElement;
+      const wrapperOffsetTop = stickyParent ? stickyParent.offsetTop : 0;
       this.sidebarIsSticky = wrapperOffsetTop <= windowOffsetTop;
     });
   }
 
   private _getPaginationParams() {
-    const requestParams = this.searchModel.getRequestParams(),
-      queryParams = this.searchModel.filtersAsQueryParams(requestParams.filters);
+    const requestParams = this.searchModel.getRequestParams();
+    const queryParams = this.searchModel.filtersAsQueryParams(requestParams.filters);
 
-    Object.keys(queryParams).forEach(key => queryParams[key] = queryParams[key] || null);
+    Object.keys(queryParams).forEach((key) => { queryParams[key] = queryParams[key] || null; });
 
     // aditional params
     queryParams.orderby = this.orderBy;
@@ -311,7 +334,7 @@ export class AwSearchLayoutDS extends LayoutDataSource {
 
     return {
       queryParams,
-      href: this.configuration.get('paths').searchBasePath
+      href: this.configuration.get('paths').searchBasePath,
     };
   }
 }

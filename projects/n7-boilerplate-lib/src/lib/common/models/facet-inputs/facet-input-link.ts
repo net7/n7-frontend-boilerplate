@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { FacetInput } from './facet-input';
 
 const RESULTS_LIMIT = 1000;
@@ -23,7 +24,7 @@ export class FacetInputLink extends FacetInput {
       }
 
       // normalize value
-      value = '' + value;
+      value = `${value}`;
       options = options || {};
 
       const classes = [];
@@ -38,11 +39,11 @@ export class FacetInputLink extends FacetInput {
         payload: {
           facetId,
           source: 'input-link',
-          value
+          value,
         },
         icon: options.icon || null,
         classes: classes.join(' '),
-        _meta: { facetId, value }
+        _meta: { facetId, value },
       });
     }
 
@@ -78,19 +79,19 @@ export class FacetInputLink extends FacetInput {
      */
 
     // empty state control
-    const itemEmpty = results.filter(item => item.id === 'empty')[0];
+    const itemEmpty = results.filter((item) => item.id === 'empty')[0];
     if (this.isEmpty) {
       if (itemEmpty) {
         itemEmpty.classes = 'empty-text-link';
       } else {
-        const { label } = this.getConfig().emptyState,
-          emptyId = 'empty-link';
+        const { label } = this.getConfig().emptyState;
+        const emptyId = 'empty-link';
         results.push({
           type: 'link',
           id: emptyId,
           text: label,
           classes: 'empty-text-link',
-          _meta: { facetId: emptyId, value: null }
+          _meta: { facetId: emptyId, value: null },
         });
       }
     } else if (itemEmpty) {
@@ -101,11 +102,11 @@ export class FacetInputLink extends FacetInput {
   }
 
   public setActive(facetValue) {
-    this.output.forEach(config => {
+    this.output.forEach((config) => {
       const isActive = this._isActive(facetValue, config._meta.value);
       let classes = config.classes ? config.classes.split(' ') : [];
       if (!isActive) {
-        classes = classes.filter(className => className !== 'is-active');
+        classes = classes.filter((className) => className !== 'is-active');
       } else if (classes.indexOf('is-active') === -1) {
         classes.push('is-active');
       }
@@ -117,12 +118,12 @@ export class FacetInputLink extends FacetInput {
     this.facetValue = facetValue;
 
     return (
-      (Array.isArray(facetValue) && facetValue.indexOf(value) !== -1) ||
-      (facetValue === value)
+      (Array.isArray(facetValue) && facetValue.indexOf(value) !== -1)
+      || (facetValue === value)
     );
   }
 
-  public clear(){
+  public clear() {
     this.facetValue = [];
   }
 }

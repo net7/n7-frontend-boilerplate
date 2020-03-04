@@ -8,29 +8,30 @@ export class AwEntitaMetadataViewerDS extends DataSource {
       changes based on context.
     */
 
-    let { context, labels, config } = this.options;
-    labels = labels || {};
+    const { context, config } = this.options;
+    const labels = this.options.labels || {};
 
-    let unpackedData = []
-    if (context == 'overview' && data) {
-      let configuredKeys = ((config.get('entita-layout') || {}).overview || {}).campi
-      let filteredData = data.filter(d => configuredKeys.includes(d.key))
-      unpackedData = AwEntitaMetadataViewerDS.unpackFields(filteredData)
+    let unpackedData = [];
+    if (context === 'overview' && data) {
+      const configuredKeys = ((config.get('entita-layout') || {}).overview || {}).campi;
+      const filteredData = data.filter((d) => configuredKeys.includes(d.key));
+      unpackedData = AwEntitaMetadataViewerDS.unpackFields(filteredData);
     } else {
       unpackedData = AwEntitaMetadataViewerDS.unpackFields(data);
     }
     // prettify labels
-    unpackedData.forEach(section => {
+    unpackedData.forEach((section) => {
       section.items
-        .filter(item => item.label)
-        .forEach(item => item.label = helpers.prettifySnakeCase(item.label, labels[item.label]));
+        .filter((item) => item.label)
+        .forEach((item) => {
+          item.label = helpers.prettifySnakeCase(item.label, labels[item.label]);
+        });
     });
     return {
-      group: unpackedData
+      group: unpackedData,
     };
   }
 
-  // tslint:disable-next-line: member-ordering
   static unpackFields(fields) {
     /*
       Recursive unpacking for rendering res.fields
@@ -41,17 +42,15 @@ export class AwEntitaMetadataViewerDS extends DataSource {
     let extracted = []; // holds transformed object
     // if the server returns an array of key-value tuples
     if (fields instanceof Array) {
-      extracted = fields.map(el => {
-        return { label: el.key, value: el.value };
-      });
+      extracted = fields.map((el) => ({ label: el.key, value: el.value }));
       return [{ items: extracted }];
     }
     if (!fields) { return []; } // if is empty → quit
-    for (let i = 0; i < fields.length; i++) {
+    for (let i = 0; i < fields.length; i += 1) {
       const thisField = fields[i]; // rename current field
       const title = thisField.label; // field title
       const label = thisField.key; // item label
-      const value = thisField.value; // item value
+      const { value } = thisField; // item value
       const group = thisField.fields; // child group
       const temp: any = {}; // temporary object
 

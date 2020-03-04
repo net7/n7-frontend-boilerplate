@@ -18,7 +18,7 @@ export const AwSearchLayoutConfig = {
     {
       id: 'n7-smart-pagination',
       dataSource: SmartPaginationDS,
-      eventHandler: SmartPaginationEH
+      eventHandler: SmartPaginationEH,
     },
   ],
   layoutDS: AwSearchLayoutDS,
@@ -27,5 +27,5 @@ export const AwSearchLayoutConfig = {
   widgetsEventHandlers: EH,
   options: {
     // TODO
-  }
+  },
 };

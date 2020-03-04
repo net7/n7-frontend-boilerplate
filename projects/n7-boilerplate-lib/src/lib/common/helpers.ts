@@ -7,7 +7,7 @@ export default {
     if (typeof label === 'string') {
       return label;
     }
-    return (key || '').split('_').map((word, index) => index === 0 ? this.ucFirst(word) : word).join(' ');
+    return (key || '').split('_').map((word, index) => (index === 0 ? this.ucFirst(word) : word)).join(' ');
   },
   ucFirst(str: string) {
     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -24,19 +24,14 @@ export default {
     return window.navigator.userAgent.match(/(MSIE|Trident)/);
   },
   escapeDoubleQuotes(str) {
-    if ( str.search(/\\?(")([\w\s]+)\\?(")/g) >= 0 ){
-      //match piece of string between double quotes
-      return str.replace(/\\?(")([\w\s]+)\\?(")/g,"\\$1$2\\$3"); // thanks @slevithan!
-    } else {
-      return str.replace(/\\([\s\S])|(")/g,"\\\\\\$1$2"); // thanks @slevithan!
+    if (str.search(/\\?(")([\w\s]+)\\?(")/g) >= 0) {
+      // match piece of string between double quotes
+      return str.replace(/\\?(")([\w\s]+)\\?(")/g, '\\$1$2\\$3'); // thanks @slevithan!
     }
-
+    return str.replace(/\\([\s\S])|(")/g, '\\\\\\$1$2'); // thanks @slevithan!
   },
   unescapeDoubleQuotes(str) {
-    if (str && str != "")
-      str = str.replace(/\\*(")/g,"$1"); // thanks @slevithan!
-
-    return str;
-  }
+    return (str && str !== '') ? str.replace(/\\*(")/g, '$1') : str; // thanks @slevithan!
+  },
 
 };

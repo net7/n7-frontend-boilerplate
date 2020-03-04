@@ -11,7 +11,7 @@ import { CommunicationService } from '../../../common/services/communication.ser
 
 @Component({
   selector: 'aw-entita-layout',
-  templateUrl: './entita-layout.html'
+  templateUrl: './entita-layout.html',
 })
 export class AwEntitaLayoutComponent extends AbstractLayout implements OnInit, OnDestroy {
   constructor(
@@ -22,7 +22,7 @@ export class AwEntitaLayoutComponent extends AbstractLayout implements OnInit, O
     private layoutsConfiguration: LayoutsConfigurationService,
     private communication: CommunicationService,
     private mainState: MainStateService,
-    private titleService: Title
+    private titleService: Title,
   ) {
     super(layoutsConfiguration.get('AwEntitaLayoutConfig') || config);
   }
@@ -42,7 +42,7 @@ export class AwEntitaLayoutComponent extends AbstractLayout implements OnInit, O
       titleService: this.titleService,
       communication: this.communication,
       options: this.config.options || {},
-    }
+    };
   }
 
   ngOnInit() {

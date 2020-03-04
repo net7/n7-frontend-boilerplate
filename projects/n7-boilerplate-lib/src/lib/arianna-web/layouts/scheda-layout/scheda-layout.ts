@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { AbstractLayout } from '../../../common/models/abstract-layout'
+import { AbstractLayout } from '../../../common/models/abstract-layout';
 import { ConfigurationService } from '../../../common/services/configuration.service';
 import { LayoutsConfigurationService } from '../../../common/services/layouts-configuration.service';
 import { MainStateService } from '../../../common/services/main-state.service';
@@ -10,7 +10,7 @@ import { CommunicationService } from '../../../common/services/communication.ser
 
 @Component({
   selector: 'aw-scheda-layout',
-  templateUrl: './scheda-layout.html'
+  templateUrl: './scheda-layout.html',
 })
 
 export class AwSchedaLayoutComponent extends AbstractLayout implements OnInit, OnDestroy {
@@ -41,7 +41,7 @@ export class AwSchedaLayoutComponent extends AbstractLayout implements OnInit, O
       titleService: this.titleService,
       communication: this.communication,
       options: this.config.options || {},
-    }
+    };
   }
 
   ngOnInit() {

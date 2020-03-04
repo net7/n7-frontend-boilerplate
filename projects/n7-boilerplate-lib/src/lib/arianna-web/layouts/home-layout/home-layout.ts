@@ -1,16 +1,16 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { AbstractLayout } from '../../../common/models/abstract-layout'
+import tippy from 'tippy.js';
+import { AbstractLayout } from '../../../common/models/abstract-layout';
 import { ConfigurationService } from '../../../common/services/configuration.service';
 import { LayoutsConfigurationService } from '../../../common/services/layouts-configuration.service';
 import { MainStateService } from '../../../common/services/main-state.service';
 import { AwHomeLayoutConfig as config } from './home-layout.config';
 import { CommunicationService } from '../../../common/services/communication.service';
-import tippy from 'tippy.js';
 
 @Component({
-    selector: 'aw-home-layout',
-    templateUrl: './home-layout.html'
+  selector: 'aw-home-layout',
+  templateUrl: './home-layout.html',
 })
 export class AwHomeLayoutComponent extends AbstractLayout implements OnInit, OnDestroy {
   constructor(
@@ -19,26 +19,26 @@ export class AwHomeLayoutComponent extends AbstractLayout implements OnInit, OnD
     private configuration: ConfigurationService,
     private communication: CommunicationService,
     private mainState: MainStateService,
-  ){
+  ) {
     super(layoutsConfiguration.get('AwHomeLayoutConfig') || config);
   }
 
-  protected initPayload(){
+  protected initPayload() {
     return {
       configuration: this.configuration,
       mainState: this.mainState,
       router: this.router,
       communication: this.communication,
       options: this.config.options || {},
-      tippy: tippy,
-    }
+      tippy,
+    };
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.onInit();
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.onDestroy();
   }
 }

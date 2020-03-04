@@ -1,7 +1,6 @@
 import { EventHandler } from '@n7-frontend/core';
 
 export class AwAutocompleteWrapperEH extends EventHandler {
-
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
@@ -16,5 +15,4 @@ export class AwAutocompleteWrapperEH extends EventHandler {
       }
     });
   }
-
 }

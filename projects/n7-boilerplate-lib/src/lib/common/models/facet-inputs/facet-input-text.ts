@@ -1,12 +1,12 @@
 import { FacetInput } from './facet-input';
 import helpers from '../../helpers';
-export class FacetInputText extends FacetInput {
 
+export class FacetInputText extends FacetInput {
   protected transform() {
     const facetId = this.getFacetId();
     const payload = {
       facetId,
-      source: 'input-text'
+      source: 'input-text',
     };
 
     return {
@@ -18,17 +18,17 @@ export class FacetInputText extends FacetInput {
       icon: this.config.icon,
       inputPayload: {
         ...payload,
-        trigger: 'input'
+        trigger: 'input',
       },
       enterPayload: {
         ...payload,
-        trigger: 'enter'
+        trigger: 'enter',
       },
       iconPayload: {
         ...payload,
-        trigger: 'icon'
+        trigger: 'icon',
       },
-      _meta: { facetId }
+      _meta: { facetId },
     };
   }
 

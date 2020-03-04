@@ -21,7 +21,7 @@ const COMPONENTS = [
   AwSearchLayoutComponent,
   BubbleChartWrapperComponent,
   ChartTippyComponent,
-  SmartBreadcrumbsComponent
+  SmartBreadcrumbsComponent,
 ];
 
 
@@ -34,6 +34,6 @@ const COMPONENTS = [
     N7BoilerplateCommonModule,
   ],
   providers: [],
-  exports: COMPONENTS
+  exports: COMPONENTS,
 })
 export class N7BoilerplateAriannaWebModule { }

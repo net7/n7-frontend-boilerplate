@@ -3,13 +3,12 @@ import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
 export class AwHomeFacetsWrapperEH extends EventHandler {
-
   private changedInput$: Subject<any> = new Subject()
 
   public listen() {
-    this.changedInput$.pipe(debounceTime(500)).subscribe(payload => {
+    this.changedInput$.pipe(debounceTime(500)).subscribe((payload) => {
       this.emitOuter('change', payload);
-    })
+    });
 
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
@@ -19,12 +18,12 @@ export class AwHomeFacetsWrapperEH extends EventHandler {
             break;
           }
           this.emitOuter('click', payload);
-          this.handleEyeClick(payload)
+          this.handleEyeClick(payload);
           break;
         // change search input text
         case 'aw-home-facets-wrapper.change':
-          this.dataSource.openTippy = payload.inputPayload.replace('-search', '')
-          this.changedInput$.next(payload)
+          this.dataSource.openTippy = payload.inputPayload.replace('-search', '');
+          this.changedInput$.next(payload);
           break;
         // pressed return while typing in search
         case 'aw-home-facets-wrapper.enter':
@@ -48,56 +47,58 @@ export class AwHomeFacetsWrapperEH extends EventHandler {
           // this.dataSource.tippyMaker(payload.response, payload.facetId.inputPayload);
           break;
         case 'aw-home-layout.lockfilter':
-          this.updateFilters(payload)
+          this.updateFilters(payload);
           break;
         case 'aw-home-layout.tagclick':
-          Object.keys(this.dataSource.lockedFacets).forEach(key => {
+          Object.keys(this.dataSource.lockedFacets).forEach((key) => {
             if (this.dataSource.lockedFacets[key].includes(payload)) {
-              this.dataSource.lockedFacets[key].splice(this.dataSource.lockedFacets[key].indexOf(payload), 1)
+              this.dataSource.lockedFacets[key].splice(
+                this.dataSource.lockedFacets[key].indexOf(payload), 1
+              );
             }
           });
-          this.dataSource.update(this.dataSource.lastData)
+          this.dataSource.update(this.dataSource.lastData);
           break;
         case 'aw-home-layout.clearselection':
-          this.dataSource.lockedFacets = {}
-          this.dataSource.closedEyes = []
-          this.dataSource.update(this.dataSource.lastData)
+          this.dataSource.lockedFacets = {};
+          this.dataSource.closedEyes = [];
+          this.dataSource.update(this.dataSource.lastData);
           break;
-        case 'aw-home-layout.facetclick':
-          let { openTippy } = this.dataSource
+        case 'aw-home-layout.facetclick': {
+          const { openTippy } = this.dataSource;
           if (this.dataSource.lockedFacets[openTippy]) {
-            if (this.dataSource.lockedFacets[openTippy].indexOf(payload) == -1) {
-              this.dataSource.lockedFacets[openTippy].push(payload)
+            if (this.dataSource.lockedFacets[openTippy].indexOf(payload) === -1) {
+              this.dataSource.lockedFacets[openTippy].push(payload);
             }
           } else {
-            this.dataSource.lockedFacets[openTippy] = [payload]
+            this.dataSource.lockedFacets[openTippy] = [payload];
           }
-          this.dataSource.update(this.dataSource.lastData)
-          break;
+          this.dataSource.update(this.dataSource.lastData);
+        } break;
         default:
           break;
       }
     });
   }
 
-  handleEyeClick = type => {
+  handleEyeClick = (type) => {
     /*
       Toggles the status of the selected eye, then reloads the component.
     */
     if (this.dataSource.closedEyes) {
-      let i = this.dataSource.closedEyes.indexOf(type)
+      const i = this.dataSource.closedEyes.indexOf(type);
       if (i >= 0) { // if the eye was closed
-        this.dataSource.closedEyes.splice(i, 1) // open the eye
+        this.dataSource.closedEyes.splice(i, 1); // open the eye
       } else { // if the eye was open
-        this.dataSource.closedEyes.push(type) // close the eye
+        this.dataSource.closedEyes.push(type); // close the eye
       }
     } else {
-      this.dataSource.closedEyes = [type]
+      this.dataSource.closedEyes = [type];
     }
-    this.dataSource.update(this.dataSource.lastData) // reload the component with the same data
+    this.dataSource.update(this.dataSource.lastData); // reload the component with the same data
   }
 
-  updateFilters = selectedBubble => {
+  updateFilters = (selectedBubble) => {
     /*
       Adds (or removes) the ID of the selected bubble from the array of that type of entity.
       Example:
@@ -106,17 +107,17 @@ export class AwHomeFacetsWrapperEH extends EventHandler {
       Result:
         • lockedFacets = { "org":[ "0263a407-d0dd" ] }
     */
-    selectedBubble.entity.id.replace(/ /g, '-') // fix for space in ID
-    const { id, typeOfEntity } = selectedBubble.entity // payload is the selected bubble
+    selectedBubble.entity.id.replace(/ /g, '-'); // fix for space in ID
+    const { id, typeOfEntity } = selectedBubble.entity; // payload is the selected bubble
     if (!this.dataSource.lockedFacets[typeOfEntity]) {
-      this.dataSource.lockedFacets[typeOfEntity] = []
+      this.dataSource.lockedFacets[typeOfEntity] = [];
     }
     if (this.dataSource.lockedFacets[typeOfEntity].includes(id)) {
-      let i = this.dataSource.lockedFacets[typeOfEntity].indexOf(id)
-      this.dataSource.lockedFacets[typeOfEntity].splice(i, 1)
+      const i = this.dataSource.lockedFacets[typeOfEntity].indexOf(id);
+      this.dataSource.lockedFacets[typeOfEntity].splice(i, 1);
     } else {
-      this.dataSource.lockedFacets[typeOfEntity].push(id)
+      this.dataSource.lockedFacets[typeOfEntity].push(id);
     }
-    this.dataSource.update(this.dataSource.lastData) // reload the component with the same data
+    this.dataSource.update(this.dataSource.lastData); // reload the component with the same data
   }
 }

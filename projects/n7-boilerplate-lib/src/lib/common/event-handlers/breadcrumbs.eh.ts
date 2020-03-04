@@ -3,10 +3,10 @@ import { EventHandler } from '@n7-frontend/core';
 export class BreadcrumbsEH extends EventHandler {
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
-      switch(type){
+      switch (type) {
         case 'breadcrumbs.click':
           // navigate control
-          if(payload.source === 'navigate'){
+          if (payload.source === 'navigate') {
             this.emitGlobal('navigate', payload);
           }
 

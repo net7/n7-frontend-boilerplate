@@ -4,13 +4,15 @@ import helpers from '../../../common/helpers';
 
 export class AwSchedaLayoutEH extends EventHandler {
   private destroyed$: Subject<any> = new Subject();
+
   private configuration: any;
+
   private route: any;
 
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
-        case 'aw-scheda-layout.init':
+        case 'aw-scheda-layout.init': {
           this.dataSource.onInit(payload);
           this.configuration = payload.configuration;
           this.route = payload.route;
@@ -20,7 +22,7 @@ export class AwSchedaLayoutEH extends EventHandler {
           }
           this.listenRoute();
           this.loadNavigation(paramId);
-          break;
+        } break;
 
         case 'aw-scheda-layout.destroy':
           this.destroyed$.next();
@@ -35,11 +37,11 @@ export class AwSchedaLayoutEH extends EventHandler {
     this.outerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
         case 'aw-bubble-chart.d3end': // bounce the event, from bubble-chart to chart-tippy
-          this.emitOuter('d3end', payload)
+          this.emitOuter('d3end', payload);
           break;
         case 'aw-sidebar-header.click': this.dataSource.collapseSidebar();
           break;
-        case 'aw-bubble-chart.bubble-tooltip-goto-click':
+        case 'aw-bubble-chart.bubble-tooltip-goto-click': {
           const { id, label } = payload;
           this.emitGlobal('navigate', {
             handler: 'router',
@@ -47,10 +49,10 @@ export class AwSchedaLayoutEH extends EventHandler {
               this.configuration.get('paths').entitaBasePath,
               id,
               helpers.slugify(label),
-              'overview'
-            ]
+              'overview',
+            ],
           });
-          break;
+        } break;
         default:
           break;
       }
@@ -58,7 +60,7 @@ export class AwSchedaLayoutEH extends EventHandler {
   }
 
   private listenRoute() {
-    this.route.paramMap.subscribe(params => {
+    this.route.paramMap.subscribe((params) => {
       const paramId = params.get('id');
       if (paramId) {
         if (paramId) {
@@ -90,7 +92,7 @@ export class AwSchedaLayoutEH extends EventHandler {
         this.emitOuter('navigationresponse', {
           tree: this.dataSource.getTree(),
           currentItem: selectedItem,
-          basePath: this.configuration.get('paths').schedaBasePath
+          basePath: this.configuration.get('paths').schedaBasePath,
         });
       }
     });

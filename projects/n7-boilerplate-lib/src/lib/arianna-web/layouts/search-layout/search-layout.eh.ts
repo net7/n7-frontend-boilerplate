@@ -1,13 +1,16 @@
 import { EventHandler } from '@n7-frontend/core';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
-import helpers from '../../../common/helpers';
 
 export class AwSearchLayoutEH extends EventHandler {
   private destroyed$: Subject<any> = new Subject();
+
   private route: any;
+
   private facetsChange$: Subject<any> = new Subject();
+
   private aditionalParamsChange$: Subject<any> = new Subject();
+
   private configuration: any;
 
   public listen() {
@@ -39,7 +42,7 @@ export class AwSearchLayoutEH extends EventHandler {
           break;
 
         default:
-          console.warn('(search) unhandled inner event of type', type)
+          console.warn('(search) unhandled inner event of type', type);
           break;
       }
     });
@@ -63,7 +66,7 @@ export class AwSearchLayoutEH extends EventHandler {
 
   private _listenToFacetsChange() {
     this.facetsChange$.pipe(
-      debounceTime(500)
+      debounceTime(500),
     ).subscribe(() => {
       this.dataSource.resultsLoading = true;
       this.dataSource.doSearchRequest$().subscribe(() => {
@@ -76,11 +79,11 @@ export class AwSearchLayoutEH extends EventHandler {
 
   private _listenToAditionalParamsChange() {
     this.aditionalParamsChange$.subscribe(() => {
-      const searchModel = this.dataSource.searchModel,
-        requestParams = searchModel.getRequestParams(),
-        queryParams = searchModel.filtersAsQueryParams(requestParams.filters);
+      const { searchModel } = this.dataSource;
+      const requestParams = searchModel.getRequestParams();
+      const queryParams = searchModel.filtersAsQueryParams(requestParams.filters);
 
-      Object.keys(queryParams).forEach(key => queryParams[key] = queryParams[key] || null);
+      Object.keys(queryParams).forEach((key) => { queryParams[key] = queryParams[key] || null; });
 
       // aditional params
       queryParams.orderby = this.dataSource.orderBy;
@@ -92,15 +95,15 @@ export class AwSearchLayoutEH extends EventHandler {
       this.emitGlobal('navigate', {
         handler: 'router',
         path: [],
-        queryParams
+        queryParams,
       });
     });
   }
 
   private _listenToRouterChanges() {
     this.route.queryParams.pipe(
-      takeUntil(this.destroyed$)
-    ).subscribe(params => {
+      takeUntil(this.destroyed$),
+    ).subscribe((params) => {
       this.emitOuter('queryparamschange', params);
       // aditional params control
       if (params.orderby && params.orderdirection) {
@@ -115,5 +118,4 @@ export class AwSearchLayoutEH extends EventHandler {
       this.facetsChange$.next();
     });
   }
-
 }
