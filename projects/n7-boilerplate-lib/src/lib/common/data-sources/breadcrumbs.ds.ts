@@ -1,8 +1,8 @@
 import { DataSource } from '@n7-frontend/core';
-import { IBreadcrumbsData } from '@n7-frontend/components';
+import { BreadcrumbsData } from '@n7-frontend/components';
 
 export class BreadcrumbsDS extends DataSource {
-  protected transform(data): IBreadcrumbsData | null {
+  protected transform(data): BreadcrumbsData | null {
     return data;
   }
 }
