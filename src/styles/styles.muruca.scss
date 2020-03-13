@@ -1,0 +1,64 @@
+//
+// N7 Boilerplate
+//
+// All SASS and CSS Import for the N7 Boilerplate example project
+//
+
+// ------------------------------------ //
+// #TIPPY
+// ------------------------------------ //
+@import '../../node_modules/tippy.js/dist/tippy.css';
+@import '../../node_modules/tippy.js/themes/light-border.css';
+
+
+// ------------------------------------ //
+// #N7-ICON-FONT
+// ------------------------------------ //
+@import "../../node_modules/@n7-frontend/icon-font/Font/n7-icon/style.css";
+
+
+// ------------------------------------ //
+// #N7 COLOR SCHEME
+// ------------------------------------ //
+@import "../../node_modules/@n7-frontend/components/styles/generic/color_scheme";
+
+
+// ------------------------------------ //
+// #DV COLOR SCHEME
+// ------------------------------------ //
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/data-viz/generic/color_scheme";
+
+
+// ------------------------------------ //
+// #N7 COMPONENTS VARIABLES
+// ------------------------------------ //
+@import "../../node_modules/@n7-frontend/components/styles/generic/variables";
+
+// ------------------------------------ //
+// #MR VARIABLES
+// ------------------------------------ //
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/muruca/generic/variables";
+
+
+// ------------------------------------ //
+// #N7 COMPONENTS STYLES
+// ------------------------------------ //
+@import '../../node_modules/@n7-frontend/components/styles/imports';
+
+
+// ------------------------------------ //
+// #COMMON COMPONENTS
+// ------------------------------------ //
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/common/components/facets-wrapper";
+
+
+// ------------------------------------ //
+// #COMMON LAYOUTS
+// ------------------------------------ //
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/common/layouts/main-layout";
+
+
+// ------------------------------------ //
+// #COMMON UTILITIES
+// ------------------------------------ //
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/common/utilities/_utilities";

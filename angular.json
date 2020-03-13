@@ -75,16 +75,7 @@
                   "replace": "src/styles/styles.scss",
                   "with": "src/styles/styles.arianna.scss"
                 }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true
+              ]
             },
             "dataviz": {
               "fileReplacements": [
@@ -100,16 +91,23 @@
                   "replace": "src/styles/styles.scss",
                   "with": "src/styles/styles.dataviz.scss"
                 }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true
+              ]
+            },
+            "muruca": {
+              "fileReplacements": [
+                {
+                  "replace": "src/assets/app-config.json",
+                  "with": "src/assets/app-config.muruca.json"
+                }, 
+                {
+                  "replace": "src/app/app.routes.ts",
+                  "with": "src/app/app.routes.muruca.ts"
+                }, 
+                {
+                  "replace": "src/styles/styles.scss",
+                  "with": "src/styles/styles.muruca.scss"
+                }
+              ]
             }
           }
         },
@@ -127,6 +125,9 @@
             }, 
             "dataviz": {
               "browserTarget": "n7-boilerplate:build:dataviz"
+            }, 
+            "muruca": {
+              "browserTarget": "n7-boilerplate:build:muruca"
             }
           }
         },
