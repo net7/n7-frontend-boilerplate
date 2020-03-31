@@ -8,7 +8,7 @@ export class MrItemPreviewsDS extends DataSource {
 
   // ===== MOCK DATA =====
   private mock = {
-    maps: [
+    resources: [
       {
         image: 'https://i.imgur.com/8bNcgR6.png',
         title: 'Unattributed version',
@@ -43,7 +43,7 @@ export class MrItemPreviewsDS extends DataSource {
         text: 'A japanese colored version',
       }
     ],
-    paths: [
+    collections: [
       {
         image: 'https://i.imgur.com/8bNcgR6.png',
         title: 'Unattributed version',

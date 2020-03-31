@@ -6,9 +6,9 @@ import * as EH from '../../event-handlers';
 export const MrHomeLayoutConfig = {
   layoutId: 'mr-home-layout',
   widgets: [{
-    id: 'mr-maps', dataSource: DS.MrItemPreviewsDS,
+    id: 'mr-resources', dataSource: DS.MrItemPreviewsDS,
   }, {
-    id: 'mr-paths', dataSource: DS.MrItemPreviewsDS,
+    id: 'mr-collections', dataSource: DS.MrItemPreviewsDS,
   }],
   layoutDS: MrHomeLayoutDS,
   layoutEH: MrHomeLayoutEH,

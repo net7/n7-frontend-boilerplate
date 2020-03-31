@@ -29,7 +29,7 @@
         }
     }"></n7-inner-title>
     <n7-item-preview 
-        *ngFor="let map of (lb.widgets['mr-maps'].ds.out$ | async)"
+        *ngFor="let map of (lb.widgets['mr-resources'].ds.out$ | async)"
         [data]="map">
     </n7-item-preview>
     <n7-hero [data]="{
@@ -68,7 +68,7 @@
         }">
     </n7-inner-title>
     <n7-item-preview
-        *ngFor="let path of (lb.widgets['mr-paths'].ds.out$ | async)" 
+        *ngFor="let path of (lb.widgets['mr-collections'].ds.out$ | async)" 
         [data]="path">
     </n7-item-preview>
 </div>
