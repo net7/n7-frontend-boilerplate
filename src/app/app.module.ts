@@ -5,6 +5,7 @@ import {
   N7BoilerplateCommonModule,
   N7BoilerplateAriannaWebModule,
   N7BoilerplateDataVizModule,
+  N7BoilerplateMurucaModule,
   JsonConfigService,
 } from 'n7-boilerplate-lib';
 import globalConfig from './config/global';
@@ -30,6 +31,7 @@ const JSON_PATH = './assets/app-config.json';
     }),
     N7BoilerplateAriannaWebModule,
     N7BoilerplateDataVizModule,
+    N7BoilerplateMurucaModule
   ],
   providers: [{
     provide: APP_INITIALIZER,
