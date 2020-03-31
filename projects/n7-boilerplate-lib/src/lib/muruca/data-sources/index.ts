@@ -1,1 +1,1 @@
-export * from './dummy.ds';
+export * from './item-previews.ds';
