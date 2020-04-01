@@ -1,5 +1,5 @@
 <div class="mr-home" *ngIf="lb.dataSource">
-    <!-- TODO: Replace with carousel component -->
+    <!-- TODO: Replace with <n7-carousel-component> -->
     <div style="
         height: 300px;
         border: 1px solid #dddddd;
@@ -7,68 +7,18 @@
         text-align: center;">
         <em>n7-carousel-component</em>
     </div>
-    <n7-inner-title [data]="{
-	    title: {
-            main: {
-                text: 'Le mappe',
-                classes: 'bold'
-            },
-            secondary: {
-                text: 'Una selezione di alcune mappe di Totus Mundus.',
-                classes: 'italic'
-            }
-        },
-        actions: {
-            buttons: [
-                {
-                    text: 'Visita il catalogo',
-                    payload: 'btn2',
-                    classes: 'n7-btn-cta'
-                }
-            ]
-        }
-    }"></n7-inner-title>
-    <n7-item-preview 
-        *ngFor="let map of (lb.widgets['mr-resources'].ds.out$ | async)"
-        [data]="map">
+    <!-- ========================================== -->
+    <n7-inner-title [data]="lb.widgets['mr-res-header'].ds.out$ | async"></n7-inner-title>
+    <n7-item-preview
+        *ngFor="let resource of (lb.widgets['mr-resources'].ds.out$ | async)"
+        [data]="resource">
     </n7-item-preview>
-    <n7-hero [data]="{
-        text: 'The Totus Mundus project presents a series of information and data about the jesuit Matteo Ricci, its life, the maps he created and the people he collaborated with',
-        button: {
-            title: '',
-            text: 'Cerca',
-            anchor: {
-                href: '/button-url',
-                target: '_blank'
-            }
-        },
-        image: 'https://i.imgur.com/VHTbVbm.png'
-        }">
+    <n7-hero [data]="lb.widgets['mr-hero'].ds.out$ | async">
     </n7-hero>
-    <n7-inner-title [data]="{
-    	    title: {
-                main: {
-                    text: 'I percorsi',
-                    classes: 'bold'
-                },
-                secondary: {
-                    text: 'Visita il mondo di Totus Mundus con una serie di percorsi per te.',
-                    classes: 'italic'
-                }
-            },
-            actions: {
-                buttons: [
-                    {
-                        text: 'Visita il catalogo',
-                        payload: 'btn2',
-                        classes: 'n7-btn-cta'
-                    }
-                ]
-            }
-        }">
+    <n7-inner-title [data]="lb.widgets['mr-coll-header'].ds.out$ | async">
     </n7-inner-title>
     <n7-item-preview
-        *ngFor="let path of (lb.widgets['mr-collections'].ds.out$ | async)" 
-        [data]="path">
+        *ngFor="let collection of (lb.widgets['mr-collections'].ds.out$ | async)" 
+        [data]="collection">
     </n7-item-preview>
 </div>
