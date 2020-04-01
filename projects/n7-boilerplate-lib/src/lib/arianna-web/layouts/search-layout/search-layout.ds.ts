@@ -49,10 +49,8 @@ export class AwSearchLayoutDS extends LayoutDataSource {
   public isFirstLoading = true;
 
   public resultsLoading = false;
-
-  public orderBy = 'label_sort';
-
-  public orderDirection = 'ASC';
+  public orderBy = '_score';
+  public orderDirection = 'DESC';
 
   public options: any;
 
@@ -60,23 +58,24 @@ export class AwSearchLayoutDS extends LayoutDataSource {
 
   public orderByOptions: any = [
     {
+      value: '_score_DESC',
+      label: 'Ordine per pertinenza',
+      type: 'score',
+      selected: true
+    },
+    {
       value: 'label_sort_ASC',
       label: 'Ordine alfabetico (A→Z)',
       type: 'text',
-      selected: true,
+      selected: false
+
     },
     {
       value: 'label_sort_DESC',
       label: 'Ordine alfabetico (Z→A)',
       type: 'text',
-      selected: false,
-    },
-    {
-      value: '_score_DESC',
-      label: 'Ordine per pertinenza',
-      type: 'score',
-      selected: false,
-    },
+      selected: false
+    }
   ];
 
   onInit({

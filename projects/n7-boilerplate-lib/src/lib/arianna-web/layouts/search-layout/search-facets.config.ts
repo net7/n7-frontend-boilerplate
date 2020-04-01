@@ -186,9 +186,9 @@ export default {
   ],
   results: {
     order: {
-      type: 'text', // score | text | date
-      key: 'label_sort', // docPath, elastic key, ecc
-      direction: 'ASC', // ASC | DESC
+      type: 'score', // score | text | date
+      key: '_score', // docPath, elastic key, ecc
+      direction: 'DESC' // ASC | DESC
     },
     fields: [
       {
