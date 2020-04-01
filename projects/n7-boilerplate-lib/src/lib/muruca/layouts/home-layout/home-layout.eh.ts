@@ -1,10 +1,12 @@
 import { EventHandler } from '@n7-frontend/core';
 
-export class FacetsEH extends EventHandler {
+export class MrHomeLayoutEH extends EventHandler {
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
-      switch(type){
-        // TODO
+      switch (type) {
+        case 'mr-home-layout.init':
+          this.dataSource.onInit(payload);
+          break;
         default:
           break;
       }

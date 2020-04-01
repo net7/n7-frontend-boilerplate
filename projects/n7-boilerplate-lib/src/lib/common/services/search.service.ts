@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 import { get as _get } from 'lodash';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
@@ -6,7 +7,7 @@ import {
   FacetInputCheckbox,
   FacetInputText,
   FacetInputLink,
-  FacetInputSelect
+  FacetInputSelect,
 } from '../models';
 import helpers from '../helpers';
 
@@ -18,20 +19,20 @@ const INPUTS_MAP = {
   checkbox: FacetInputCheckbox,
   text: FacetInputText,
   link: FacetInputLink,
-  select: FacetInputSelect
+  select: FacetInputSelect,
 };
 
 const FILTERS_MAP = {
-  '=' : '_filterDataEquals',
-  '>' : '_filterDataGreaterThan',
-  '<' : '_filterDataLessThan',
-  '>=' : '_filterDataGreaterOrEquals',
-  '<=' : '_filterDataLessOrEquals',
-  '<>' : '_filterDataNotEqual',
-  'LIKE': '_filterDataLike'
+  '=': '_filterDataEquals',
+  '>': '_filterDataGreaterThan',
+  '<': '_filterDataLessThan',
+  '>=': '_filterDataGreaterOrEquals',
+  '<=': '_filterDataLessOrEquals',
+  '<>': '_filterDataNotEqual',
+  LIKE: '_filterDataLike',
 };
 
-export interface ISearchConfig {
+export interface SearchConfig {
   totalCount: number;
   facets: any;
   page: any;
@@ -39,7 +40,7 @@ export interface ISearchConfig {
   fields: any;
 }
 
-export interface IFacet {
+export interface Facet {
   id: string;
   type: FacetTypes;
   operator: FacetOperators;
@@ -48,7 +49,7 @@ export interface IFacet {
   data?: any;
 }
 
-export interface IFilter {
+export interface Filter {
   facetId: string;
   value: number | string | (number | string)[] | null;
   searchIn: Array<{
@@ -62,15 +63,22 @@ export interface IFilter {
 
 export class SearchModel {
   private _id: string;
-  private _filters: IFilter[] = [];
-  private _facets: IFacet[] = [];
+
+  private _filters: Filter[] = [];
+
+  private _facets: Facet[] = [];
+
   private _inputs: FacetInput[] = [];
+
   private _page: any;
+
   private _totalCount: number | null;
-  private _config: ISearchConfig;
+
+  private _config: SearchConfig;
+
   private _results$: Subject<any[]> = new Subject();
 
-  constructor(id: string, config: ISearchConfig) {
+  constructor(id: string, config: SearchConfig) {
     this._id = id;
     this._config = config;
 
@@ -82,6 +90,7 @@ export class SearchModel {
     this._setTotalCount();
 
     // query params control
+    /* eslint-disable @typescript-eslint/no-use-before-define */
     if (SearchService.queryParams) {
       this.updateFiltersFromQueryParams(SearchService.queryParams);
       SearchService.queryParams = null;
@@ -89,24 +98,31 @@ export class SearchModel {
   }
 
   public getId = () => this._id;
+
   public getFilters = () => this._filters;
+
   public getFacets = () => this._facets;
+
   public getInputs = () => this._inputs;
+
   public getConfig = () => this._config;
+
   public getTotalCount = () => this._totalCount;
+
   public getFields = () => this._config.fields;
+
   public getResults$ = () => this._results$;
 
-  public setResults = results => this._results$.next(results);
+  public setResults = (results) => this._results$.next(results);
 
   public updateFilter(facetId, value, remove?: boolean) {
     const selectedFilters = this.getFiltersByFacetId(facetId);
-    selectedFilters.forEach(filter => {
+    selectedFilters.forEach((filter) => {
       if (Array.isArray(filter.value) && remove) {
-        filter.value = filter.value.filter(item => item !== value);
+        filter.value = filter.value.filter((item) => item !== value);
       } else if (
-        Array.isArray(filter.value) &&
-        filter.value.indexOf(value) === -1
+        Array.isArray(filter.value)
+        && filter.value.indexOf(value) === -1
       ) {
         filter.value.push(value);
       } else {
@@ -120,21 +136,21 @@ export class SearchModel {
     this._clearInputs();
   }
 
-  public updateFiltersFromQueryParams(queryParams, clearAll: boolean = false) {
+  public updateFiltersFromQueryParams(queryParams, clearAll = false) {
     this._facets.forEach(({ id }) => {
-      const selectedFilters = this.getFiltersByFacetId(id),
-        value = queryParams[id],
-        isInternal = this.getInputByFacetId(id).getContext() === 'internal';
+      const selectedFilters = this.getFiltersByFacetId(id);
+      const value = queryParams[id];
+      const isInternal = this.getInputByFacetId(id).getContext() === 'internal';
 
       if (isInternal && !clearAll) {
         return;
       }
 
-      selectedFilters.forEach(filter => {
+      selectedFilters.forEach((filter) => {
         if (filter.isArray) {
           filter.value = value ? value.split(',') : [];
         } else {
-          filter.value = value ? value : null;
+          filter.value = value || null;
         }
       });
     });
@@ -156,16 +172,16 @@ export class SearchModel {
   }
 
   public updateFacet(facetId, data) {
-    const selectedFacets = this._facets.filter(facet => facet.id === facetId);
+    const selectedFacets = this._facets.filter((facet) => facet.id === facetId);
     if (!selectedFacets.length) {
       throw Error(`Facet with id '${facetId}' does not exists`);
     }
 
-    selectedFacets.forEach(facet => (facet.data = data));
+    selectedFacets.forEach((facet) => { facet.data = data; });
   }
 
   public reset() {
-    this._filters.forEach(filter => (filter.value = null));
+    this._filters.forEach((filter) => { filter.value = null; });
   }
 
   public getRequestParams() {
@@ -174,41 +190,40 @@ export class SearchModel {
       page: this._page,
       results: this._config.results,
       filters: this._filters
-        .filter(filter => filter.context !== 'internal')
-        .map(({ facetId, value, searchIn }) => ({ facetId, value, searchIn }))
+        .filter((filter) => filter.context !== 'internal')
+        .map(({ facetId, value, searchIn }) => ({ facetId, value, searchIn })),
     };
   }
 
   public getInternalFilters() {
     return this._filters
-      .filter(filter => {
-        return (
-          filter.context === 'internal' &&
-          ((Array.isArray(filter.value) && filter.value.length) ||
-            (!Array.isArray(filter.value) && filter.value))
-        );
-      })
+      .filter((filter) => (
+        filter.context === 'internal'
+        && ((Array.isArray(filter.value) && filter.value.length)
+          || (!Array.isArray(filter.value) && filter.value))
+      ))
       .map(({ facetId, value, searchIn }) => ({ facetId, value, searchIn }));
   }
 
   public filtersAsQueryParams(filters) {
     const queryParams: any = {};
     filters.forEach(
-      filter =>
-        (queryParams[filter.facetId] = Array.isArray(filter.value)
+      (filter) => {
+        queryParams[filter.facetId] = Array.isArray(filter.value)
           ? filter.value.join(',')
-          : filter.value)
+          : filter.value;
+      },
     );
 
     return queryParams;
   }
 
   public getFiltersByFacetId(facetId: string) {
-    return this._filters.filter(filter => filter.facetId === facetId);
+    return this._filters.filter((filter) => filter.facetId === facetId);
   }
 
   public getInputByFacetId(facetId: string) {
-    return this._inputs.filter(input => input.getFacetId() === facetId)[0];
+    return this._inputs.filter((input) => input.getFacetId() === facetId)[0];
   }
 
   public setInputData(facetId, data) {
@@ -216,28 +231,28 @@ export class SearchModel {
   }
 
   public filterTarget(target) {
-    const inputs = this._inputs.filter(input => input.getTarget() === target),
-      targetInput = this.getInputByFacetId(target),
-      facet = this._facets.filter(f => f.id === target)[0],
-      facetData = facet.data;
+    const inputs = this._inputs.filter((input) => input.getTarget() === target);
+    const targetInput = this.getInputByFacetId(target);
+    const facet = this._facets.filter((f) => f.id === target)[0];
+    const facetData = facet.data;
 
     const searchIns = [];
-    inputs.forEach(input => {
-      const filter = this.getFiltersByFacetId(input.getFacetId())[0],
-        searchIn = input.getSearchIn(),
-        value = filter.value;
+    inputs.forEach((input) => {
+      const filter = this.getFiltersByFacetId(input.getFacetId())[0];
+      const searchIn = input.getSearchIn();
+      const { value } = filter;
 
       searchIns.push([searchIn, value]);
     });
 
     // filter
-    facetData.forEach(item => this._filterData(searchIns, item));
+    facetData.forEach((item) => this._filterData(searchIns, item));
 
     // update
     targetInput.setData(facetData);
 
     if (targetInput.getConfig().emptyState) {
-      const isEmpty = !facetData.filter(data => !data.hidden).length;
+      const isEmpty = !facetData.filter((data) => !data.hidden).length;
       targetInput.setIsEmpty(isEmpty);
     }
     targetInput.update();
@@ -263,9 +278,9 @@ export class SearchModel {
     this._config.page.limit = limit;
   }
 
-  private _clearInputs(){
-    this._inputs.forEach(input => {
-      input.clear();
+  private _clearInputs() {
+    this._inputs.forEach((input) => {
+      
     });
   }
 
@@ -300,25 +315,22 @@ export class SearchModel {
   private _filterDataEquals(value, refValue) {
     if (Array.isArray(refValue)) {
       if (Array.isArray(value)) {
-        let inArray = value.length === 0 ? true : false;
-        refValue.forEach(rv => {
+        let inArray = value.length === 0;
+        refValue.forEach((rv) => {
           if (value.indexOf(rv) !== -1) {
             inArray = true;
           }
         });
         return !(inArray);
-      } else {
-        return !(value && refValue.indexOf(value) !== -1);
       }
-    } else {
-      if (Array.isArray(value)) {
-        return !(
-          !value.length || value.indexOf(refValue) !== -1
-        );
-      } else {
-        return !(value && value === refValue);
-      }
+      return !(value && refValue.indexOf(value) !== -1);
     }
+    if (Array.isArray(value)) {
+      return !(
+        !value.length || value.indexOf(refValue) !== -1
+      );
+    }
+    return !(value && value === refValue);
   }
 
   private _filterDataGreaterThan(value, refValue) {
@@ -358,12 +370,12 @@ export class SearchModel {
 
   private _filterDataLike(value, refValue) {
     if (
-      value &&
-      typeof value === 'string' &&
-      typeof refValue === 'string'
+      value
+      && typeof value === 'string'
+      && typeof refValue === 'string'
     ) {
-      const haystack = refValue.toLowerCase(),
-        needle = value.toLocaleLowerCase();
+      const haystack = refValue.toLowerCase();
+      const needle = value.toLocaleLowerCase();
 
       return !(haystack.indexOf(needle) !== -1);
     }
@@ -371,14 +383,12 @@ export class SearchModel {
   }
 
   private _setFilters() {
-    this._config.fields.forEach(field => {
-      field.inputs.forEach(input =>
-        this._filters.push({
-          ...input.filterConfig,
-          facetId: input.facetId,
-          value: input.filterConfig.isArray ? [] : null
-        })
-      );
+    this._config.fields.forEach((field) => {
+      field.inputs.forEach((input) => this._filters.push({
+        ...input.filterConfig,
+        facetId: input.facetId,
+        value: input.filterConfig.isArray ? [] : null,
+      }));
     });
   }
 
@@ -397,26 +407,26 @@ export class SearchModel {
   private _setInputs() {
     this._config.fields.forEach((sectionConfig, sectionIndex) => {
       sectionConfig.inputs.forEach((inputConfig, inputIndex) => {
-        const inputModel = INPUTS_MAP[inputConfig.type];
-        if (!inputModel) {
+        const InputModel = INPUTS_MAP[inputConfig.type];
+        if (!InputModel) {
           throw Error(`Input type ${inputConfig.type} not supported`);
         }
 
         this._inputs.push(
-          new inputModel({ ...inputConfig, inputIndex, sectionIndex })
+          new InputModel({ ...inputConfig, inputIndex, sectionIndex }),
         );
       });
     });
   }
 
   private _setInputsData() {
-    this._facets.forEach(facet => this.setInputData(facet.id, facet.data));
+    this._facets.forEach((facet) => this.setInputData(facet.id, facet.data));
   }
 
   private _getRequestFacets() {
-    const results: IFacet[] = [];
-    this._facets.forEach(f => {
-      const facetConfig = {...f};
+    const results: Facet[] = [];
+    this._facets.forEach((f) => {
+      const facetConfig = { ...f };
       if (!f.hasStaticData) {
         delete facetConfig.data;
       }
@@ -425,8 +435,8 @@ export class SearchModel {
       // searchData control
       if (Array.isArray(facetConfig.data)) {
         facetConfig.data
-          .filter(dataItem => typeof dataItem.searchData !== 'undefined')
-          .forEach(dataItem => {
+          .filter((dataItem) => typeof dataItem.searchData !== 'undefined')
+          .forEach((dataItem) => {
             delete dataItem.searchData;
           });
       }
@@ -437,13 +447,14 @@ export class SearchModel {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SearchService {
   static queryParams: any = null;
+
   private _models: any = {};
 
-  public add(id: string, config: ISearchConfig) {
+  public add(id: string, config: SearchConfig) {
     if (this._models[id]) {
       throw Error(`Search model '${id}' already exists!`);
     }

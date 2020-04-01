@@ -1,18 +1,21 @@
 import { EventHandler } from '@n7-frontend/core';
 import { Subject } from 'rxjs';
-import { takeUntil, first, filter } from 'rxjs/operators';
-import { SearchService } from '../../services';
+import { takeUntil, filter } from 'rxjs/operators';
 import { NavigationStart } from '@angular/router';
+import { SearchService } from '../../services';
 
 export class MainLayoutEH extends EventHandler {
   private destroyed$: Subject<any> = new Subject();
+
   private route: any;
+
   private router: any;
+
   private mainState: any;
 
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
-      switch(type) {
+      switch (type) {
         case 'main-layout.init':
           this.dataSource.onInit(payload);
           this.mainState = payload.mainState;
@@ -24,37 +27,37 @@ export class MainLayoutEH extends EventHandler {
           break;
 
         case 'main-layout.destroy':
-            this.destroyed$.next();
-            break;
+          this.destroyed$.next();
+          break;
 
         default:
-            break;
+          break;
       }
     });
 
     // listen to global events
     EventHandler.globalEvents$.pipe(
-      takeUntil(this.destroyed$)
-    ).subscribe(({type, payload}) => {
-      switch(type){
+      takeUntil(this.destroyed$),
+    ).subscribe(({ type, payload }) => {
+      switch (type) {
         case 'global.navigate':
           this.dataSource.onNavigate(payload);
           break;
-          
-        default: 
+
+        default:
           break;
       }
     });
   }
 
-  private _listenRouterChanges(){
+  private _listenRouterChanges() {
     this.route.queryParams.pipe(
-      filter(params => {
-        if(Object.keys(params).length) return true;
+      filter((params) => {
+        if (Object.keys(params).length) return true;
         return false;
       }),
       // first(),
-    ).subscribe(params => {
+    ).subscribe((params) => {
       this.emitGlobal('queryparams', params);
 
       // to use in searchs
@@ -63,17 +66,17 @@ export class MainLayoutEH extends EventHandler {
 
     // router changed
     this.router.events.pipe(
-        filter(event => event instanceof NavigationStart)
-      )
-      .subscribe((event: NavigationStart) => {
+      filter((event) => event instanceof NavigationStart),
+    )
+      .subscribe(() => {
         this.dataSource.onRouterChanged();
       });
   }
 
 
-  private _listenMainStateChanges(){
+  private _listenMainStateChanges() {
     this.mainState.addCustom('currentNav', new Subject());
-    this.mainState.getCustom$('currentNav').subscribe(val => {
+    this.mainState.getCustom$('currentNav').subscribe((val) => {
       this.emitOuter('currentnavchange', val);
     });
   }

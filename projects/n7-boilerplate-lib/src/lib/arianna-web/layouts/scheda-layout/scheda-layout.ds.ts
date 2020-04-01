@@ -1,41 +1,72 @@
-import { LayoutDataSource } from '@n7-frontend/core';
-import { fromEvent, Subject, of, merge } from 'rxjs';
+import { LayoutDataSource } from '@n7-frontend/core/dist/layout-data-source';
+import {
+  fromEvent, Subject, of, merge,
+} from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import helpers from '../../../common/helpers';
 
 export class AwSchedaLayoutDS extends LayoutDataSource {
   static tree: any = null;
+
   private destroyed$: Subject<any> = new Subject();
+
   private stickyControlTrigger$: Subject<any> = new Subject();
+
   private communication: any;
+
   protected configuration: any;
+
   protected mainState: any;
+
   protected router: any;
+
   protected titleService: any;
+
   // private allBubbles: any[] = null;
   // public selectedBubbles: any[] = [];
   public options: any;
+
   public pageTitle: string;
+
   public hasBreadcrumb: boolean;
+
   public contentParts: any = {};
+
   public tree: any;
+
   public sidebarCollapsed: boolean;
+
   public bubbleChartSectionTitle: string;
+
   public similarItemsSectionTitle: string;
+
   public metadataSectionTitle: string;
+
   public hasMetadata: boolean;
+
   public hasBubbles: boolean;
+
   public bubblesEnabled: boolean;
+
   public hasSimilarItems: boolean;
+
   public hasImage: boolean;
+
   public imageViewerIstance: any;
+
   public sidebarIsSticky = false;
+
   public treeMaxHeight = '100%';
+
   public contentIsLoading = false;
+
   public currentId: string | null = null;
+
   public emptyLabel: string;
 
-  onInit({ configuration, mainState, router, options, titleService, communication }) {
+  onInit({
+    configuration, mainState, router, options, titleService, communication,
+  }) {
     this.configuration = configuration;
     this.mainState = mainState;
     this.router = router;
@@ -43,20 +74,20 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     this.communication = communication;
     this.options = options;
     this.sidebarCollapsed = false;
-    this.bubbleChartSectionTitle = this.configuration.get('scheda-layout')['bubble-chart']['title'];
-    this.similarItemsSectionTitle = this.configuration.get('scheda-layout')['related-items']['title'];
-    this.metadataSectionTitle = this.configuration.get('scheda-layout')['metadata']['title'];
+    this.bubbleChartSectionTitle = this.configuration.get('scheda-layout')['bubble-chart'].title;
+    this.similarItemsSectionTitle = this.configuration.get('scheda-layout')['related-items'].title;
+    this.metadataSectionTitle = this.configuration.get('scheda-layout').metadata.title;
     this.hasSimilarItems = false;
-    this.bubblesEnabled = this.configuration.get('features-enabled') ? this.configuration.get('features-enabled')['bubblechart'] : false;
+    this.bubblesEnabled = this.configuration.get('features-enabled') ? this.configuration.get('features-enabled').bubblechart : false;
     this.one('aw-bubble-chart').updateOptions({
       selectable: false,
       simple: true,
       config: this.configuration,
-      limit: this.configuration.get('bubble-chart').bubbleLimit
+      limit: this.configuration.get('bubble-chart').bubbleLimit,
     });
     this.one('aw-chart-tippy').updateOptions({
-      basePath: this.configuration.get('paths')['entitaBasePath']
-    })
+      basePath: this.configuration.get('paths').entitaBasePath,
+    });
     this.emptyLabel = this.configuration.get('scheda-layout')['empty-label'];
 
     this.mainState.update('headTitle', 'Arianna Web > Patrimonio');
@@ -67,7 +98,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     this._sidebarStickyControl();
   }
 
-  onDestroy(){
+  onDestroy() {
     this.destroyed$.next();
   }
 
@@ -77,13 +108,14 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     }
     return this.communication.request$('getTree', {
       onError: (error) => console.error(error),
-      params: { treeId: id }
+      params: { treeId: id },
     });
   }
 
   setTree(tree) {
     AwSchedaLayoutDS.tree = tree;
   }
+
   getTree = () => AwSchedaLayoutDS.tree;
 
   updateNavigation(text) {
@@ -94,7 +126,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     const maxSimilarItems = this.configuration.get('scheda-layout')['related-items']['max-related-items'];
     return this.communication.request$('getNode', {
       onError: (error) => console.error(error),
-      params: { id: id, maxSimilarItems: maxSimilarItems }
+      params: { id, maxSimilarItems },
     });
   }
 
@@ -107,10 +139,10 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       this.hasImage = !!response.image;
 
       this.contentParts = [];
-      const content = {};
+      const content = { content: null };
 
       if (response.text) {
-        content['content'] = response.text;
+        content.content = response.text;
       }
       this.contentParts.push(content);
       if (response.image) {
@@ -134,10 +166,10 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
           main: {
             text: response.title || response.label,
             classes: 'bold',
-          }
+          },
         },
         tools: response.subTitle,
-        actions: {}
+        actions: {},
       };
 
       this.one('aw-scheda-inner-title').update(titleObj);
@@ -147,21 +179,21 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
       // Breadcrumb section
       const breadcrumbs = {
-        items: []
+        items: [],
       };
 
       if (response.breadcrumbs) {
-        response.breadcrumbs.forEach(element => {
+        response.breadcrumbs.forEach((element) => {
           breadcrumbs.items.push({
             label: element.label,
             anchor: {
               href: [
                 this.configuration.get('paths').schedaBasePath,
-                element.link + '/',
-                helpers.slugify(element.label)
-              ].join('')
-            }
-          })
+                `${element.link}/`,
+                helpers.slugify(element.label),
+              ].join(''),
+            },
+          });
         });
         this.one('aw-scheda-breadcrumbs').update(breadcrumbs);
       }
@@ -171,7 +203,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     }
 
     if (response.relatedItems) {
-      this.one('aw-linked-objects').updateOptions({ context: 'scheda', config: this.configuration })
+      this.one('aw-linked-objects').updateOptions({ context: 'scheda', config: this.configuration });
       this.one('aw-linked-objects').update(response);
     }
 
@@ -193,26 +225,26 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     const source$ = fromEvent(window, 'scroll');
 
     merge(source$, this.stickyControlTrigger$).pipe(
-      takeUntil(this.destroyed$)
+      takeUntil(this.destroyed$),
     ).subscribe(() => {
-      const windowTop = window.pageYOffset,
-        windowBottom = window.scrollY + window.innerHeight,
-        wrapper = document.getElementsByClassName('sticky-parent')[0],
-        wrapperTop = wrapper['offsetTop'],
-        wrapperBottom = wrapperTop + wrapper.clientHeight;
+      const windowTop = window.pageYOffset;
+      const windowBottom = window.scrollY + window.innerHeight;
+      const wrapper = document.getElementsByClassName('sticky-parent')[0] as HTMLElement;
+      const wrapperTop = wrapper.offsetTop;
+      const wrapperBottom = wrapperTop + wrapper.clientHeight;
 
-        this.sidebarIsSticky = wrapperTop <= windowTop;
+      this.sidebarIsSticky = wrapperTop <= windowTop;
 
-        // tree height control
-        if (this.sidebarIsSticky && windowBottom < wrapperBottom) {
-          this.treeMaxHeight = (windowBottom - windowTop - 50) + 'px';
-        } else if (this.sidebarIsSticky && windowBottom >= wrapperBottom) {
-          this.treeMaxHeight = (wrapperBottom - windowTop - 50) + 'px';
-        } else if (windowBottom < wrapperBottom) {
-          this.treeMaxHeight = (windowBottom - wrapperTop - 50) + 'px';
-        } else {
-          this.treeMaxHeight = (wrapperBottom - wrapperTop - 50) + 'px';
-        }
+      // tree height control
+      if (this.sidebarIsSticky && windowBottom < wrapperBottom) {
+        this.treeMaxHeight = `${windowBottom - windowTop - 50}px`;
+      } else if (this.sidebarIsSticky && windowBottom >= wrapperBottom) {
+        this.treeMaxHeight = `${wrapperBottom - windowTop - 50}px`;
+      } else if (windowBottom < wrapperBottom) {
+        this.treeMaxHeight = `${windowBottom - wrapperTop - 50}px`;
+      } else {
+        this.treeMaxHeight = `${wrapperBottom - wrapperTop - 50}px`;
+      }
     });
   }
 }

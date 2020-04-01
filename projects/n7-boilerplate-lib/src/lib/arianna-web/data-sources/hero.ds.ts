@@ -3,8 +3,10 @@ import { DataSource } from '@n7-frontend/core';
 export class AwHeroDS extends DataSource {
   public currentInputValue = '';
 
-  protected transform(data){
-    const { title, text, button, backgroundImage, input } = data;
+  protected transform(data) {
+    const {
+      title, text, button, backgroundImage, input,
+    } = data;
     return {
       title,
       text,
@@ -12,13 +14,13 @@ export class AwHeroDS extends DataSource {
       button: {
         text: button.text,
         anchor: {
-          payload: 'cerca'
-        }
+          payload: 'cerca',
+        },
       },
       input: {
         placeholder: input.placeholder,
-        payload: 'cerca-in-maxxi'
-      }
+        payload: 'cerca-in-maxxi',
+      },
     };
   }
 }

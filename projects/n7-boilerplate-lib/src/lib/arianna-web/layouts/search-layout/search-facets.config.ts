@@ -3,7 +3,7 @@ export default {
   facets: [
     {
       id: 'query',
-      type: 'value'
+      type: 'value',
     },
     {
       id: 'query-all',
@@ -12,29 +12,29 @@ export default {
       data: [
         {
           value: '1',
-          label: 'Cerca in tutti campi delle schede'
-        }
-      ]
+          label: 'Cerca in tutti campi delle schede',
+        },
+      ],
     },
     {
       id: 'query-links',
-      type: 'value'
+      type: 'value',
     },
     {
       id: 'entity-types',
       type: 'value',
       operator: 'OR',
       limit: 10,
-      order: 'count'
+      order: 'count',
     },
     {
       id: 'entity-search',
-      type: 'value'
+      type: 'value',
     },
     {
       id: 'entity-links',
       type: 'value',
-      searchData: ['entity-type']
+      searchData: ['entity-type'],
     },
     /* {
       id: 'date-from',
@@ -59,10 +59,10 @@ export default {
             searchIn: [
               {
                 key: 'label.ngrams',
-                operator: 'LIKE'
-              }
-            ]
-          }
+                operator: 'LIKE',
+              },
+            ],
+          },
         },
         {
           type: 'checkbox',
@@ -71,10 +71,10 @@ export default {
             searchIn: [
               {
                 key: 'label.ngrams^5,text^4,fields.*^3',
-                operator: '='
-              }
-            ]
-          }
+                operator: '=',
+              },
+            ],
+          },
         },
         {
           type: 'link',
@@ -84,17 +84,17 @@ export default {
             searchIn: [
               {
                 key: 'source.entityType',
-                operator: '='
-              }
-            ]
-          }
-        }
-      ]
+                operator: '=',
+              },
+            ],
+          },
+        },
+      ],
     },
     {
       header: {
         label: 'Relazione con',
-        classes: 'related-class'
+        classes: 'related-class',
       },
       inputs: [
         {
@@ -107,10 +107,10 @@ export default {
             searchIn: [
               {
                 key: 'searchData.entity-type',
-                operator: '='
-              }
-            ]
-          }
+                operator: '=',
+              },
+            ],
+          },
         },
         {
           type: 'text',
@@ -125,16 +125,16 @@ export default {
             searchIn: [
               {
                 key: 'label',
-                operator: 'LIKE'
-              }
-            ]
-          }
+                operator: 'LIKE',
+              },
+            ],
+          },
         },
         {
           type: 'link',
           facetId: 'entity-links',
           emptyState: {
-            label: 'La tua ricerca non ha dato risultati, prova a cambiare i filtri'
+            label: 'La tua ricerca non ha dato risultati, prova a cambiare i filtri',
           },
           filterConfig: {
             isArray: true,
@@ -142,14 +142,14 @@ export default {
             searchIn: [
               {
                 key: 'relatedEntities.id',
-                operator: '='
-              }
-            ]
-          }
-        }
-      ]
+                operator: '=',
+              },
+            ],
+          },
+        },
+      ],
     },
-    /*{
+    /* {
       header: {
         label: 'Data',
         classes: 'date-class'
@@ -182,7 +182,7 @@ export default {
           }
         }
       ]
-    }*/
+    } */
   ],
   results: {
     order: {
@@ -194,9 +194,9 @@ export default {
       {
         id: 'description',
         highlight: true,
-        limit: 200
-      }
-    ]
+        limit: 200,
+      },
+    ],
   },
-  page: { offset: 0, limit: 10 }
+  page: { offset: 0, limit: 10 },
 };

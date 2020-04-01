@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { Observable, of } from 'rxjs';
 
 export default (params, configKeys, enabledEntities): Observable<any> => {
@@ -5,7 +6,7 @@ export default (params, configKeys, enabledEntities): Observable<any> => {
 
   console.log('fake-search-request----------->', params);
 
-  let { facets } = params;
+  const { facets } = params;
 
   // query links
   _getFacet('query-links', facets).data = _getQueryLinksData(configKeys, enabledEntities);
@@ -18,61 +19,47 @@ export default (params, configKeys, enabledEntities): Observable<any> => {
 
   // date from
   _getFacet('date-from', facets).data = _getDateFromData();
-  
+
   // date to
   _getFacet('date-to', facets).data = _getDateToData();
-  
+
   return of(params);
-}
+};
 
-const _getFacet = (id, facets) => {
-  return facets.filter(f => f.id === id)[0];
-}
+const _getFacet = (id, facets) => facets.filter((f) => f.id === id)[0];
 
-const _getQueryLinksData = (configKeys, enabledEntities) => {
-  return enabledEntities.map(key => {
-    const config = configKeys[key];
-    return {
-      value: key,
-      label: config.label,
-      counter: Math.floor(Math.random() * 100),
-      
-      // questi vanno aggiunti a mano lato front-end
-      options: {
-        icon: config.icon,
-        classes: `color-${key}`
-      }
-    };
-  });
-}
+const _getQueryLinksData = (configKeys, enabledEntities) => enabledEntities.map((key) => {
+  const config = configKeys[key];
+  return {
+    value: key,
+    label: config.label,
+    counter: Math.floor(Math.random() * 100),
 
-const _getEntityTypesData = (configKeys, enabledEntities) => {
-  return enabledEntities.map(key => {
-    const config = configKeys[key];
-    return {
-      value: key,
-      label: config.label,
-    };
-  });
-}
+    // questi vanno aggiunti a mano lato front-end
+    options: {
+      icon: config.icon,
+      classes: `color-${key}`,
+    },
+  };
+});
 
-const _getDateFromData = () => {
-  return ['1990', '1991', '1992', '1993'].map(key => {
-    return {
-      value: key,
-      label: key,
-    };
-  });
-}
+const _getEntityTypesData = (configKeys, enabledEntities) => enabledEntities.map((key) => {
+  const config = configKeys[key];
+  return {
+    value: key,
+    label: config.label,
+  };
+});
 
-const _getDateToData = () => {
-  return ['2000', '2001', '2002', '2003'].map(key => {
-    return {
-      value: key,
-      label: key,
-    };
-  });
-}
+const _getDateFromData = () => ['1990', '1991', '1992', '1993'].map((key) => ({
+  value: key,
+  label: key,
+}));
+
+const _getDateToData = () => ['2000', '2001', '2002', '2003'].map((key) => ({
+  value: key,
+  label: key,
+}));
 
 const _getEntityLinksData = () => {
   const types = ['places', 'places', 'concepts', 'people', 'people'];
@@ -82,12 +69,12 @@ const _getEntityLinksData = () => {
     const label = key.replace('-', ' ');
     return {
       value: key,
-      label: label,
+      label,
       counter: Math.floor(Math.random() * 100),
       metadata: {
         title: label,
-        'entity-type': types[index]
-      }  
-    }
+        'entity-type': types[index],
+      },
+    };
   });
-}
+};

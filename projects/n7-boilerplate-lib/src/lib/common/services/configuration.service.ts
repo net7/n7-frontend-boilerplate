@@ -1,11 +1,12 @@
-import { Injectable, Inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ConfigurationService {
   private defaults: any = {};
 
   public get = (key) => this.defaults[key];
-  public set = (key, value) => this.defaults[key] = value;
+
+  public set = (key, value) => { this.defaults[key] = value; }
 }

@@ -8,15 +8,15 @@ import * as EH from '../../event-handlers';
 export const AwEntitaLayoutConfig = {
   layoutId: 'aw-entita-layout',
   widgets: [ // array of components of this layout
-    { id: 'aw-entita-nav', hasStaticData: true},
+    { id: 'aw-entita-nav', hasStaticData: true },
     { id: 'aw-entita-metadata-viewer' },
-    { id: 'aw-linked-objects'},
-    { id: 'aw-bubble-chart'},
-    { id: 'aw-chart-tippy'},
-    { 
-      id: 'n7-smart-pagination', 
-      dataSource: SmartPaginationDS, 
-      eventHandler: SmartPaginationEH
+    { id: 'aw-linked-objects' },
+    { id: 'aw-bubble-chart' },
+    { id: 'aw-chart-tippy' },
+    {
+      id: 'n7-smart-pagination',
+      dataSource: SmartPaginationDS,
+      eventHandler: SmartPaginationEH,
     },
   ],
   layoutDS: AwEntitaLayoutDS,
@@ -25,5 +25,5 @@ export const AwEntitaLayoutConfig = {
   widgetsEventHandlers: EH,
   options: {
     // TODO
-  }
+  },
 };

@@ -1,15 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { AbstractLayout } from '../../models/abstract-layout'
+import { AbstractLayout } from '../../models/abstract-layout';
 import { ConfigurationService } from '../../services/configuration.service';
 import { LayoutsConfigurationService } from '../../services/layouts-configuration.service';
 import { MainStateService } from '../../services/main-state.service';
 import { MainLayoutConfig as config } from './main-layout.config';
 
 @Component({
-    selector: 'main-layout',
-    templateUrl: './main-layout.html'
+  selector: 'main-layout',
+  templateUrl: './main-layout.html',
 })
 export class MainLayoutComponent extends AbstractLayout implements OnInit, OnDestroy {
   constructor(
@@ -18,12 +18,12 @@ export class MainLayoutComponent extends AbstractLayout implements OnInit, OnDes
     private configuration: ConfigurationService,
     private layoutsConfiguration: LayoutsConfigurationService,
     private mainState: MainStateService,
-    private titleService: Title
-  ){
+    private titleService: Title,
+  ) {
     super(layoutsConfiguration.get('MainLayoutConfig') || config);
   }
 
-  protected initPayload(){
+  protected initPayload() {
     return {
       configuration: this.configuration,
       mainState: this.mainState,
@@ -31,14 +31,14 @@ export class MainLayoutComponent extends AbstractLayout implements OnInit, OnDes
       route: this.route,
       titleService: this.titleService,
       options: this.config.options || {},
-    }
+    };
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.onInit();
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.onDestroy();
   }
 }

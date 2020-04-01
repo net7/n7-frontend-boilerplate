@@ -1,16 +1,22 @@
 import { DataSource } from '@n7-frontend/core';
-import helpers from '../../common/helpers';
 import { get as _get } from 'lodash'; // used for cherry-picking object keys from app-config.json
+import helpers from '../../common/helpers';
 
 export class AwLinkedObjectsDS extends DataSource {
-
   public currentPage: number;
+
   public totalPages: number;
+
   public totalObjects: number;
+
   public pageSize: number;
+
   public context: string;
+
   public loadedData: any;
+
   public loadingData = false;
+
   public paths: any; // use dynamic object paths from config
 
   protected transform(data) {
@@ -51,10 +57,9 @@ export class AwLinkedObjectsDS extends DataSource {
     } else {
       this.loadedData.actions[1].disabled = false;
     }
-    return;
   }
 
-  public handleIncomingData = incomingData => {
+  public handleIncomingData = (incomingData) => {
     /*
       Called by infinite scroller, adds the incoming
       data to the linked objects component.
@@ -66,7 +71,7 @@ export class AwLinkedObjectsDS extends DataSource {
     this.loadedData.isLoading = false;
   }
 
-  private unpackData = data => {
+  private unpackData = (data) => {
     /*
       Dynamically returns the data object for each HTML component
       data: {
@@ -75,26 +80,25 @@ export class AwLinkedObjectsDS extends DataSource {
       }
     */
     const
-      config = this.options.config,       // app-config.json
-      paths = config.get('item-preview'), // item preview dynamic paths
-      totalCount = data.totalCount,       // total amount of items available on backend
-      totalPages = this.totalPages,       // calculated number of pages
-      page = this.currentPage,            // current page (if using pagination)
-      context = this.context,             // parent layout name
-      size = this.pageSize,               // items per page (if using pagination)
-      labels = config.get('labels'),
-      { dynamicPagination } = this.options,
-      keys = config ? config.get('config-keys') : {};
+      { config } = this.options; // app-config.json
+    const paths = config.get('item-preview'); // item preview dynamic paths
+    const { totalCount } = data; // total amount of items available on backend
+    const page = this.currentPage; // current page (if using pagination)
+    const { context } = this; // parent layout name
+    const size = this.pageSize; // items per page (if using pagination)
+    const labels = config.get('labels');
+    const { dynamicPagination } = this.options;
+    const keys = config ? config.get('config-keys') : {};
     let
-      lengthLimit: null,
-      resultsLimit: null,
-      d = data.items ? data.items : data.relatedItems; // items to iterate over
+      lengthLimit: null;
+    let resultsLimit: null;
+    let d = data.items ? data.items : data.relatedItems; // items to iterate over
 
     if (config) {
       // dynamic search for max-item-length
-      if (config.get(context + '-layout')) {
-        lengthLimit = config.get(context + '-layout')['max-item-length'];
-        resultsLimit = config.get(context + '-layout')['results-limit'];
+      if (config.get(`${context}-layout`)) {
+        lengthLimit = config.get(`${context}-layout`)['max-item-length'];
+        resultsLimit = config.get(`${context}-layout`)['results-limit'];
       }
     }
     // resize data
@@ -105,90 +109,96 @@ export class AwLinkedObjectsDS extends DataSource {
     }
 
     const result = [];
-    const enabledKeys = paths.metadata.info.selection.map(info => info.key);
-    d.forEach(el => {
-
+    const enabledKeys = paths.metadata.info.selection.map((info) => info.key);
+    d.forEach((el) => {
       const itemData = el.item ? el.item : el;
 
-      const infoData = _get(el, paths.metadata.info.data, itemData.fields),
-        infoDataItems = infoData ? infoData.filter(data => enabledKeys.indexOf(data.key) !== -1) : [],
-        toeData = _get(el, paths.metadata.toe.data, itemData.relatedTypesOfEntity),
-        breadcrumbs = _get(el, paths.metadata.breadcrumbs.data, itemData.breadcrumbs);
+      const infoData = _get(el, paths.metadata.info.data, itemData.fields);
+      const infoDataItems = infoData
+        ? infoData.filter((info) => enabledKeys.indexOf(info.key) !== -1)
+        : [];
+      const toeData = _get(el, paths.metadata.toe.data, itemData.relatedTypesOfEntity);
+      const breadcrumbs = _get(el, paths.metadata.breadcrumbs.data, itemData.breadcrumbs);
 
       if (['entita', 'search'].includes(context)) {
-        if (itemData.typeOfEntity && itemData.typeOfEntity != "") {
-          infoDataItems.push({ "key": "Tipo di entità", "value": keys[itemData.typeOfEntity]['singular-label'] })
+        if (itemData.typeOfEntity && itemData.typeOfEntity !== '') {
+          infoDataItems.push({ key: 'Tipo di entità', value: keys[itemData.typeOfEntity]['singular-label'] });
         }
       }
       let classes = ['entita', 'search', 'oggetti-collegati'].includes(context) ? 'is-fullwidth' : '';
-      classes += itemData.typeOfEntity ? ' is-' + config.get('config-keys')[itemData.typeOfEntity]['class-name'] : ' is-oggetto-culturale';
+      classes += itemData.typeOfEntity ? ` is-${config.get('config-keys')[itemData.typeOfEntity]['class-name']}` : ' is-oggetto-culturale';
 
-       //consider the lenght of <em> tags to exclude from count
-       const highlights =  _get(el, paths.title, itemData.label).match(/<em>/g) ? _get(el, paths.title, itemData.label).match(/<em>/g).length * 9 : 0;
+      // consider the lenght of <em> tags to exclude from count
+      const highlights = _get(el, paths.title, itemData.label).match(/<em>/g) ? _get(el, paths.title, itemData.label).match(/<em>/g).length * 9 : 0;
 
-      const itemTitle = +paths.title.maxLength && _get(el, paths.title, itemData.label).length > +paths.title.maxLength  + highlights
-        ? _get(el, paths.title, itemData.label).slice(0, +paths.title.maxLength  + highlights) + '…'
-        : _get(el, paths.title, itemData.label),
-        itemId = _get(el, paths.payload, itemData.id),
-        itemType = itemData.typeOfEntity,
-        itemHref = [
-          itemType ? config.get('paths').entitaBasePath : config.get('paths').schedaBasePath,
-          itemId,
-          helpers.slugify(itemTitle)
-        ].join('/'),
-        item = {
-          image: _get(el, paths.image, itemData.image),
-          title: itemTitle,
-          text: !paths.text ? null : // make text block (in config) optional
-
-            +paths.text.maxLength && _get(el, paths.text.data, itemData.text).length > +paths.text.maxLength ?
-              _get(el, paths.text.data, itemData.text).slice(0, +paths.text.maxLength) + '…' :
-              _get(el, paths.text.data, itemData.text),
-          anchor: {
-            href: itemHref
-          },
-          // payload: { id: _get(el, paths.payload, el.item.id), type: el.item.typeOfEntity, title: itemTitle },
-          classes: classes,
-          metadata: infoDataItems.length || toeData ? [] : null,
-          breadcrumbs: breadcrumbs
-        };
+      const itemTitle = +paths.title.maxLength
+        && _get(el, paths.title, itemData.label).length > +paths.title.maxLength + highlights
+        ? `${_get(el, paths.title, itemData.label).slice(0, +paths.title.maxLength + highlights)}…`
+        : _get(el, paths.title, itemData.label);
+      const itemId = _get(el, paths.payload, itemData.id);
+      const itemType = itemData.typeOfEntity;
+      const itemHref = [
+        itemType ? config.get('paths').entitaBasePath : config.get('paths').schedaBasePath,
+        itemId,
+        helpers.slugify(itemTitle),
+      ].join('/');
+      let text;
+      if (!paths.text) {
+        text = null;
+      } else if (
+        +paths.text.maxLength
+        && _get(el, paths.text.data, itemData.text).length > +paths.text.maxLength
+      ) {
+        text = `${_get(el, paths.text.data, itemData.text).slice(0, +paths.text.maxLength)}…`;
+      } else {
+        text = _get(el, paths.text.data, itemData.text);
+      }
+      const item = {
+        text,
+        classes,
+        breadcrumbs,
+        image: _get(el, paths.image, itemData.image),
+        title: itemTitle,
+        anchor: {
+          href: itemHref,
+        },
+        metadata: infoDataItems.length || toeData ? [] : null,
+      };
       // metadata
       if (infoDataItems.length) {
         item.metadata.push({
-          classes: 'n7-objects__metadata-artist',
-          items: infoDataItems.map(data => ({
-            label: helpers.prettifySnakeCase(data.key, labels[data.key]),
-            value: data.value
-          }))
+          classes: 'aw-item-preview_metadata',
+          items: infoDataItems.map((infoDItem) => ({
+            label: helpers.prettifySnakeCase(infoDItem.key, labels[infoDItem.key]),
+            value: infoDItem.value,
+          })),
         });
       }
       if (toeData) {
         item.metadata.push({
-          classes: 'n7-objects__metadata-linked',
-          items: toeData.map(toe => {
-            return { // persona: 6, Organizz: 12, Luoghi: 2, Concetti: 32
-              value: _get(toe, paths.metadata.toe.value, toe.count),
-              // icon: 'n7-icon-bell' // TODO: link icon to config key
-              icon: keys[_get(toe, paths.metadata.toe.icon, toe.type)]
-                ? keys[_get(toe, paths.metadata.toe.icon, toe.type)].icon
-                : '',
-              classes: 'color-' + keys[_get(toe, paths.metadata.toe.icon, toe.type)]['class-name']
-            };
-          })
+          classes: 'aw-item-preview-entities',
+          items: toeData.map((toe) => ({ // persona: 6, Organizz: 12, Luoghi: 2, Concetti: 32
+            value: _get(toe, paths.metadata.toe.value, toe.count),
+            // icon: 'n7-icon-bell' // TODO: link icon to config key
+            icon: keys[_get(toe, paths.metadata.toe.icon, toe.type)]
+              ? keys[_get(toe, paths.metadata.toe.icon, toe.type)].icon
+              : '',
+            classes: `color-${keys[_get(toe, paths.metadata.toe.icon, toe.type)]['class-name']}`,
+          })),
         });
       }
       // breadcrumbs
       if (breadcrumbs) {
-        item['breadcrumbs'] = { // n7-breadcrumbs uses this as it's own data
-          items: _get(el, paths.metadata.breadcrumbs.data, el.item.breadcrumbs).map(crumb => {
+        item.breadcrumbs = { // n7-breadcrumbs uses this as it's own data
+          items: _get(el, paths.metadata.breadcrumbs.data, el.item.breadcrumbs).map((crumb) => {
             const label = _get(crumb, paths.metadata.breadcrumbs.label, crumb.label);
             return {
               label,
               anchor: {
-                href: itemHref
-              }
+                href: itemHref,
+              },
             };
-          })
+          }),
         };
       }
       result.push(item);
@@ -196,11 +206,11 @@ export class AwLinkedObjectsDS extends DataSource {
     if (context === 'home') {
       const actions = [
         {
-          label: 'Mostra Tutti (' + totalCount + ')'
+          label: `Mostra Tutti (${totalCount})`,
         },
-        lengthLimit ?
-          {
-            label: 'Mostra Altri (' + resultsLimit + ')',
+        lengthLimit
+          ? {
+            label: `Mostra Altri (${resultsLimit})`,
             disabled: false,
           } : null,
       ];
@@ -208,7 +218,7 @@ export class AwLinkedObjectsDS extends DataSource {
         result,
         actions,
         isLoading: false,
-        fallback: config.get('home-layout')['linked-objects-fallback']
+        fallback: config.get('home-layout')['linked-objects-fallback'],
       };
     }
     return { previews: result };
@@ -220,8 +230,8 @@ export class AwLinkedObjectsDS extends DataSource {
       href: queryParams ? href : href + page,
       queryParams: queryParams ? {
         ...queryParams,
-        page: page
-      } : null
+        page,
+      } : null,
     };
   }
 }

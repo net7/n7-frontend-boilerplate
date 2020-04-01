@@ -1,18 +1,17 @@
 import { EventHandler } from '@n7-frontend/core';
-import tippy from "tippy.js";
+import tippy from 'tippy.js';
 
 export class AwChartTippyEH extends EventHandler {
-
   private tippyList: any[] = [] // array of tippy instances
 
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
         case 'aw-chart-tippy.select':
-          this.emitOuter('select', payload)
+          this.emitOuter('select', payload);
           break;
         default:
-          console.warn('(chart-tippy) unhandled inner event of type', type)
+          console.warn('(chart-tippy) unhandled inner event of type', type);
           break;
       }
     });
@@ -21,9 +20,9 @@ export class AwChartTippyEH extends EventHandler {
         case 'aw-home-layout.d3end':
         case 'aw-entita-layout.d3end':
         case 'aw-scheda-layout.d3end':
-          this.dataSource.update(payload)    // creating DOM Elements (templates)
-          setTimeout(() => {                 // wait DOM to be ready
-            this.tippyMaker(payload.bubbles) // assign templates to the bubbles
+          this.dataSource.update(payload); // creating DOM Elements (templates)
+          setTimeout(() => { // wait DOM to be ready
+            this.tippyMaker(payload.bubbles); // assign templates to the bubbles
           });
           break;
         default:
@@ -32,17 +31,17 @@ export class AwChartTippyEH extends EventHandler {
     });
   }
 
-  tippyMaker = bubbles => {
+  tippyMaker = (bubbles) => {
     /*
       Destroys every existing tooltip,
       then creates a new Tippy instance for each bubble.
     */
     // flush existing tooltips
-    this.tippyList.forEach(t => { if (t) { t.destroy() } })
-    this.tippyList = []
+    this.tippyList.forEach((t) => { if (t) { t.destroy(); } });
+    this.tippyList = [];
     // create new tooltips
-    bubbles.forEach(b => { // give a tooltip to each bubble
-      let target: Element = document.getElementById(`g_${b.entity.id}`)
+    bubbles.forEach((b) => { // give a tooltip to each bubble
+      const target: Element = document.getElementById(`g_${b.entity.id}`);
       if (target) {
         this.tippyList.push( // add this tippy to the array of instances
           tippy(target, {
@@ -55,8 +54,8 @@ export class AwChartTippyEH extends EventHandler {
             placement: 'top',
             delay: [150, 30],
             updateDuration: 400,
-          })
-        )
+          }),
+        );
       }
     });
   }

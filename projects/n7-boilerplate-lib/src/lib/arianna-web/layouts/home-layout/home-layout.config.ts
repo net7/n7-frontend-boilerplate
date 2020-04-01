@@ -30,5 +30,5 @@ export const AwHomeLayoutConfig = {
   widgetsEventHandlers: EH,
   options: {
     // TODO
-  }
+  },
 };
