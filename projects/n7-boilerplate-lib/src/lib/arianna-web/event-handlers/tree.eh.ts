@@ -27,6 +27,13 @@ export class AwTreeEH extends EventHandler {
           const currentId = payload.currentItem || payload.tree.id;
           this.dataSource.load(payload);
           this.dataSource.build(currentId);
+
+          const treeNode = document.querySelector('div.aw-scheda__tree');
+          setTimeout(() => {
+            const leafNode = treeNode.querySelector('.is-active');
+            if (leafNode) leafNode.scrollIntoView(true);
+            window.scrollTo(0, 0);
+          });
         } break;
         case 'aw-scheda-layout.routechanged':
           // has output (not first load)
