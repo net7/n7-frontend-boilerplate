@@ -1,6 +1,7 @@
 // MODULES
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { RouterModule } from '@angular/router';
 import { DvComponentsLibModule } from '@n7-frontend/components';
 import { N7BoilerplateCommonModule } from '../common/n7-boilerplate-common.module';
@@ -34,6 +35,7 @@ const COMPONENTS = [
     N7BoilerplateCommonModule,
   ],
   providers: [],
+  entryComponents: COMPONENTS,
   exports: COMPONENTS,
 })
 export class N7BoilerplateAriannaWebModule { }
