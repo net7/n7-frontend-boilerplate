@@ -56,21 +56,18 @@ export class MainLayoutEH extends EventHandler {
         if (Object.keys(params).length) return true;
         return false;
       }),
-      // first(),
     ).subscribe((params) => {
       this.emitGlobal('queryparams', params);
-
       // to use in searchs
       SearchService.queryParams = params;
     });
-
     // router changed
     this.router.events.pipe(
       filter((event) => event instanceof NavigationStart),
-    )
-      .subscribe(() => {
-        this.dataSource.onRouterChanged();
-      });
+    ).subscribe(() => {
+      window.scrollTo(0, 0);
+      this.dataSource.onRouterChanged();
+    });
   }
 
 
