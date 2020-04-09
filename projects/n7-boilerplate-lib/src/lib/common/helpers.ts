@@ -1,4 +1,5 @@
-import slug from 'slug';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import slugify from 'slugify';
 
 const domParser = new DOMParser();
 
@@ -18,7 +19,10 @@ export default {
     }
     const parsedDoc = domParser.parseFromString(str, 'text/html');
     const parsedString = parsedDoc.body.textContent || '';
-    return slug(parsedString, { lower: true });
+    return slugify(parsedString, {
+      remove: /[*+~.()'"!:@,]/g,
+      lower: true
+    });
   },
   browserIsIE() {
     return window.navigator.userAgent.match(/(MSIE|Trident)/);
