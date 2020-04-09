@@ -154,7 +154,7 @@ export class AwTreeDS extends DataSource {
       classes: classes.join(' '),
       text: label || null,
       img: img || null,
-      icon: icon || null,
+      icon: icon || null, // icon that differentiates "Aggregazione Logica" and "Oggetto Culturale"
       toggle: hasBranches ? {
         icon: icon || defaultIcon,
         payload: {
