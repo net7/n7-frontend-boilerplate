@@ -81,11 +81,11 @@ export class AwTreeDS extends DataSource {
   private _getCachedData = () => AwTreeDS.dataCache[this.rootId]
 
   private _normalize = ({
-    id, label, icon, img, branches,
+    id, label, icon, branches, document_type: type, document_classification: classification
   }) => {
     const hasBranches = !!(Array.isArray(branches) && branches.length);
     this._getCachedData().flatData[id] = {
-      id, label, icon, img, hasBranches,
+      id, label, icon, hasBranches, type, classification
     };
     if (hasBranches) {
       branches.forEach((data) => {
@@ -140,9 +140,11 @@ export class AwTreeDS extends DataSource {
 
   private _getTreeItem = (id, inPath) => {
     const {
-      label, icon, img, hasBranches,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      label, img, hasBranches, type, classification
     } = this._getCachedData().flatData[id];
-    const defaultIcon = inPath ? 'n7-icon-angle-down' : 'n7-icon-angle-right';
+    const { icon } = (this.options.config[type] || { icon: null });
+    const arrowIcons = inPath ? 'n7-icon-angle-down' : 'n7-icon-angle-right';
     const classes = [];
     if (inPath) {
       classes.push('is-expanded');
@@ -154,9 +156,9 @@ export class AwTreeDS extends DataSource {
       classes: classes.join(' '),
       text: label || null,
       img: img || null,
-      icon: icon || null, // icon that differentiates "Aggregazione Logica" and "Oggetto Culturale"
+      icon,
       toggle: hasBranches ? {
-        icon: icon || defaultIcon,
+        icon: arrowIcons,
         payload: {
           source: 'toggle',
           id,
