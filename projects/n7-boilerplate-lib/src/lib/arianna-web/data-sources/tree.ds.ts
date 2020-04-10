@@ -140,10 +140,14 @@ export class AwTreeDS extends DataSource {
 
   private _getTreeItem = (id, inPath) => {
     const {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       label, img, hasBranches, type, classification
     } = this._getCachedData().flatData[id];
-    const { icon } = (this.options.config[type] || { icon: null });
+    const defaultIcon = (this.options.config[type] || { icon: null }).icon;
+    let specificIcon = '';
+    if (classification) {
+      const classID = classification.match(/.*\.(\w+)$/)[1]; // get classification characters
+      specificIcon = this.options.config[type].classifications[classID].icon;
+    }
     const arrowIcons = inPath ? 'n7-icon-angle-down' : 'n7-icon-angle-right';
     const classes = [];
     if (inPath) {
@@ -156,7 +160,7 @@ export class AwTreeDS extends DataSource {
       classes: classes.join(' '),
       text: label || null,
       img: img || null,
-      icon,
+      icon: (specificIcon || defaultIcon),
       toggle: hasBranches ? {
         icon: arrowIcons,
         payload: {
