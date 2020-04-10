@@ -81,11 +81,11 @@ export class AwTreeDS extends DataSource {
   private _getCachedData = () => AwTreeDS.dataCache[this.rootId]
 
   private _normalize = ({
-    id, label, icon, img, branches,
+    id, label, icon, branches, document_type: type, document_classification: classification
   }) => {
     const hasBranches = !!(Array.isArray(branches) && branches.length);
     this._getCachedData().flatData[id] = {
-      id, label, icon, img, hasBranches,
+      id, label, icon, hasBranches, type, classification
     };
     if (hasBranches) {
       branches.forEach((data) => {
@@ -140,9 +140,16 @@ export class AwTreeDS extends DataSource {
 
   private _getTreeItem = (id, inPath) => {
     const {
-      label, icon, img, hasBranches,
+      label, img, hasBranches, type, classification
     } = this._getCachedData().flatData[id];
-    const defaultIcon = inPath ? 'n7-icon-angle-down' : 'n7-icon-angle-right';
+    const defaultIcon = (this.options.config[type] || { icon: null }).icon;
+    let specificIcon = '';
+    if (classification) {
+      console.log({ classification });
+      const classID = classification.match(/.*\.(\w+)$/)[1].toUpperCase(); // get classification characters
+      specificIcon = this.options.config[type].classifications[classID].icon;
+    }
+    const arrowIcons = inPath ? 'n7-icon-angle-down' : 'n7-icon-angle-right';
     const classes = [];
     if (inPath) {
       classes.push('is-expanded');
@@ -154,9 +161,9 @@ export class AwTreeDS extends DataSource {
       classes: classes.join(' '),
       text: label || null,
       img: img || null,
-      icon: icon || null,
+      icon: (specificIcon || defaultIcon),
       toggle: hasBranches ? {
-        icon: icon || defaultIcon,
+        icon: arrowIcons,
         payload: {
           source: 'toggle',
           id,

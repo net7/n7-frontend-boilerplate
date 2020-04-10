@@ -15,48 +15,59 @@ export const ApolloProviderConfig = {
     queryBody: `
     {
       getTreeOfItems{
-        id
         label
-        icon
+        id
+        img
+        document_type
+        document_classification
         branches {
           label
           id
           img
+          document_type
+          document_classification
           branches {
             label
             id
-            icon
             img
+            document_type
+            document_classification
             branches {
               label
               id
-              icon
               img
+              document_type
+              document_classification
               branches {
                 label
                 id
-                icon
                 img
+                document_type
+                document_classification
                 branches {
                   label
                   id
-                  icon
                   img
+                  document_type
+                  document_classification
                   branches {
                     label
                     id
-                    icon
                     img
+                    document_type
+                    document_classification
                     branches {
                       label
                       id
-                      icon
                       img
+                      document_type
+                      document_classification
                       branches {
                         label
                         id
-                        icon
                         img
+                        document_type
+                        document_classification
                       }
                     }
                   }

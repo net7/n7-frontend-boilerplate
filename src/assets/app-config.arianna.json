@@ -23,14 +23,18 @@
         {
           "text": "Home",
           "icon": "n7-icon-home",
-          "anchor": { "href": "aw/home" },
+          "anchor": {
+            "href": "aw/home"
+          },
           "_meta": {
             "id": "home"
           }
         },
         {
           "text": "Patrimonio",
-          "anchor" : { "href": "aw/patrimonio" },
+          "anchor": {
+            "href": "aw/patrimonio"
+          },
           "icon": "n7-icon-tree-icon",
           "_meta": {
             "id": "patrimonio"
@@ -38,7 +42,9 @@
         },
         {
           "text": "Galleria",
-          "anchor" : { "href": "aw/galleria" },
+          "anchor": {
+            "href": "aw/galleria"
+          },
           "icon": "n7-icon-th",
           "_meta": {
             "id": "galleria"
@@ -46,7 +52,9 @@
         },
         {
           "text": "Ricerca",
-          "anchor" : { "href": "aw/ricerca" },
+          "anchor": {
+            "href": "aw/ricerca"
+          },
           "icon": "n7-icon-search",
           "_meta": {
             "id": "ricerca"
@@ -54,7 +62,9 @@
         },
         {
           "text": "Utenti",
-          "anchor" : { "href": "aw/utenti" },
+          "anchor": {
+            "href": "aw/utenti"
+          },
           "icon": "n7-icon-facebook",
           "_meta": {
             "id": "utenti"
@@ -273,7 +283,11 @@
   },
   "search-layout": {
     "title": "Cerca nel patrimonio",
-    "results": ["Nessun risultato", "Risultato", "Risultati"],
+    "results": [
+      "Nessun risultato",
+      "Risultato",
+      "Risultati"
+    ],
     "enabledEntities": [
       "oggetto-culturale",
       "aggregazione",
@@ -286,7 +300,10 @@
   },
   "entita-layout": {
     "overview": {
-      "campi": ["data_istituzione", "denominazione_autorita"],
+      "campi": [
+        "data_istituzione",
+        "denominazione_autorita"
+      ],
       "smallChartSize": 3
     },
     "entitiesQuerySize": 30
@@ -295,7 +312,11 @@
     "persona": {
       "color": {
         "hex": "#4D8FF2",
-        "rgb": [77, 143, 242]
+        "rgb": [
+          77,
+          143,
+          242
+        ]
       },
       "icon": "n7-icon-biography",
       "label": "Persone",
@@ -307,7 +328,11 @@
     "luogo": {
       "color": {
         "hex": "#EBC738",
-        "rgb": [235, 199, 56]
+        "rgb": [
+          235,
+          199,
+          56
+        ]
       },
       "icon": "n7-icon-map1",
       "label": "Luoghi",
@@ -318,7 +343,11 @@
     "concetto": {
       "color": {
         "hex": "#33BDCC",
-        "rgb": [51, 189, 204]
+        "rgb": [
+          51,
+          189,
+          204
+        ]
       },
       "icon": "n7-icon-lightbulb",
       "label": "Concetti",
@@ -328,7 +357,11 @@
     "cosa notevole": {
       "color": {
         "hex": "#5BA878",
-        "rgb": [91, 186, 120]
+        "rgb": [
+          91,
+          186,
+          120
+        ]
       },
       "icon": "n7-icon-circle-full",
       "label": "Cose notevoli",
@@ -339,7 +372,11 @@
     "organizzazione": {
       "color": {
         "hex": "#BD883E",
-        "rgb": [189, 136, 62]
+        "rgb": [
+          189,
+          136,
+          62
+        ]
       },
       "icon": "n7-icon-building",
       "label": "Organizzazioni",
@@ -350,18 +387,31 @@
     "oggetto-culturale": {
       "color": {
         "hex": "#9A84C2",
-        "rgb": [154, 132, 194]
+        "rgb": [
+          154,
+          132,
+          194
+        ]
       },
       "icon": "n7-icon-file3",
       "label": "Oggetti Culturali",
       "singular-label": "Oggetto Culturale",
       "input-placeholder": "",
-      "class-name": "oggetto-culturale"
+      "class-name": "oggetto-culturale",
+      "classifications": {
+        "UA": {
+          "icon": "n7-icon-file3"
+        }
+      }
     },
     "aggregazione-logica": {
       "color": {
         "hex": "#A6A5A8",
-        "rgb": [166, 165, 168]
+        "rgb": [
+          166,
+          165,
+          168
+        ]
       },
       "icon": "n7-icon-archive",
       "label": "Fondi",
@@ -372,7 +422,11 @@
     "famiglia": {
       "color": {
         "hex": "#CC6F5C",
-        "rgb": [204, 111, 92]
+        "rgb": [
+          204,
+          111,
+          92
+        ]
       },
       "icon": "n7-icon-users",
       "label": "Famiglia",
@@ -383,7 +437,11 @@
     "evento": {
       "color": {
         "hex": "#E89827;",
-        "rgb": [232, 152, 39]
+        "rgb": [
+          232,
+          152,
+          39
+        ]
       },
       "icon": "n7-icon-calendar-alt",
       "label": "Evento",

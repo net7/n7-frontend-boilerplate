@@ -89,6 +89,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       basePath: this.configuration.get('paths').entitaBasePath,
     });
     this.emptyLabel = this.configuration.get('scheda-layout')['empty-label'];
+    this.one('aw-tree').updateOptions({ config: this.configuration.get('config-keys') });
 
     this.mainState.update('headTitle', 'Arianna Web > Patrimonio');
     this.mainState.update('pageTitle', 'Arianna Web: patrimonio Layout');
