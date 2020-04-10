@@ -49,7 +49,9 @@ export class AwSearchLayoutDS extends LayoutDataSource {
   public isFirstLoading = true;
 
   public resultsLoading = false;
+
   public orderBy = '_score';
+
   public orderDirection = 'DESC';
 
   public options: any;

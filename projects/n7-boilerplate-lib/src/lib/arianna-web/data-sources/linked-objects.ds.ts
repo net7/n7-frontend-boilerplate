@@ -161,6 +161,7 @@ export class AwLinkedObjectsDS extends DataSource {
         title: itemTitle,
         anchor: {
           href: itemHref,
+          target: context === 'search' ? '_blank' : '_self'
         },
         metadata: infoDataItems.length || toeData ? [] : null,
       };
@@ -222,16 +223,5 @@ export class AwLinkedObjectsDS extends DataSource {
       };
     }
     return { previews: result };
-  }
-
-  private _getPaginationAnchor(page) {
-    const { href, queryParams } = this.options.paginationParams;
-    return {
-      href: queryParams ? href : href + page,
-      queryParams: queryParams ? {
-        ...queryParams,
-        page,
-      } : null,
-    };
   }
 }
