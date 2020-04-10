@@ -240,6 +240,11 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
         context: 'entita',
       });
     }
+    res.relatedItems.forEach((el) => {
+      el.relationName = res.label.length > 15
+        ? `${res.label.substr(0, 15)}... `
+        : res.label;
+    });
     this.one('aw-linked-objects').update({ items: res.relatedItems });
     this.drawPagination();
     // update head title

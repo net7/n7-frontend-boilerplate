@@ -38,26 +38,26 @@ export class AwLinkedObjectsDS extends DataSource {
     return this.loadedData;
   }
 
-  public checkForMore = (force?: boolean) => {
-    /*
-      Checks if it is possible to load more item previews.
-      Can receive a boolean argument to force the button to be
-      enabled or disabled. (Used while data is loading)
-    */
-    if (!this.loadedData.actions) {
-      // if not using actions, don't check
-      return;
+    public checkForMore = (force?: boolean) => {
+      /*
+        Checks if it is possible to load more item previews.
+        Can receive a boolean argument to force the button to be
+        enabled or disabled. (Used while data is loading)
+      */
+      if (!this.loadedData.actions) {
+        // if not using actions, don't check
+        return;
+      }
+      if (typeof force !== 'undefined') {
+        this.loadedData.actions[1].disabled = !force;
+        return;
+      }
+      if (this.loadedData.result.length >= this.totalObjects) {
+        this.loadedData.actions[1].disabled = true;
+      } else {
+        this.loadedData.actions[1].disabled = false;
+      }
     }
-    if (typeof force !== 'undefined') {
-      this.loadedData.actions[1].disabled = !force;
-      return;
-    }
-    if (this.loadedData.result.length >= this.totalObjects) {
-      this.loadedData.actions[1].disabled = true;
-    } else {
-      this.loadedData.actions[1].disabled = false;
-    }
-  }
 
   public handleIncomingData = (incomingData) => {
     /*
@@ -93,7 +93,6 @@ export class AwLinkedObjectsDS extends DataSource {
       lengthLimit: null;
     let resultsLimit: null;
     let d = data.items ? data.items : data.relatedItems; // items to iterate over
-
     if (config) {
       // dynamic search for max-item-length
       if (config.get(`${context}-layout`)) {
@@ -163,6 +162,7 @@ export class AwLinkedObjectsDS extends DataSource {
           href: itemHref,
           target: context === 'search' ? '_blank' : '_self'
         },
+        relation: { key: el.relationName, value: el.relation },
         metadata: infoDataItems.length || toeData ? [] : null,
       };
       // metadata

@@ -9,7 +9,9 @@ export class AwChartTippyDS extends DataSource {
     // ==================
     const templates: any[] = bubbles.map((b) => {
       const { count, entity } = b;
-      const { id, label } = entity;
+      const {
+        id, label, relation, relationName
+      } = entity;
       return {
         id,
         selectable,
@@ -19,6 +21,10 @@ export class AwChartTippyDS extends DataSource {
         anchorData: {
           href: `${basePath}${id}/${helpers.slugify(label)}`,
         },
+        relation: {
+          key: relationName,
+          value: relation,
+        }
       };
     });
     return templates;
