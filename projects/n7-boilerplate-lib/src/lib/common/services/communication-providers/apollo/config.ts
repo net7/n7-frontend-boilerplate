@@ -246,6 +246,7 @@ export const ApolloProviderConfig = {
           subTitle
           image
           text
+          document_type
           fields {
             ...
             on KeyValueField {
@@ -308,6 +309,7 @@ export const ApolloProviderConfig = {
           id
           label
           img
+          document_type
           fields {
             ...
             on KeyValueField {

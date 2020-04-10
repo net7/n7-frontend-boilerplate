@@ -10,14 +10,15 @@ export class AwEntitaMetadataViewerDS extends DataSource {
 
     const { context, config } = this.options;
     const labels = this.options.labels || {};
+    const metadataToExclude = (config.get('entita-layout') || {})['metadata-to-exclude'];
 
     let unpackedData = [];
     if (context === 'overview' && data) {
       const configuredKeys = ((config.get('entita-layout') || {}).overview || {}).campi;
       const filteredData = data.filter((d) => configuredKeys.includes(d.key));
-      unpackedData = AwEntitaMetadataViewerDS.unpackFields(filteredData);
+      unpackedData = AwEntitaMetadataViewerDS.unpackFields(filteredData, metadataToExclude);
     } else {
-      unpackedData = AwEntitaMetadataViewerDS.unpackFields(data);
+      unpackedData = AwEntitaMetadataViewerDS.unpackFields(data, metadataToExclude);
     }
     // prettify labels
     unpackedData.forEach((section) => {
@@ -32,7 +33,7 @@ export class AwEntitaMetadataViewerDS extends DataSource {
     };
   }
 
-  static unpackFields(fields) {
+  static unpackFields(fields, metadataToExclude?) {
     /*
       Recursive unpacking for rendering res.fields
       - - -
@@ -42,7 +43,14 @@ export class AwEntitaMetadataViewerDS extends DataSource {
     let extracted = []; // holds transformed object
     // if the server returns an array of key-value tuples
     if (fields instanceof Array) {
-      extracted = fields.map((el) => ({ label: el.key, value: el.value }));
+      extracted = fields
+        .filter((el) => {
+          if (Array.isArray(metadataToExclude) && metadataToExclude.length) {
+            return metadataToExclude.indexOf(el.key) === -1;
+          }
+          return true;
+        })
+        .map((el) => ({ label: el.key, value: el.value }));
       return [{ items: extracted }];
     }
     if (!fields) { return []; } // if is empty → quit
