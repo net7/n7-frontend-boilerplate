@@ -145,7 +145,8 @@ export class AwTreeDS extends DataSource {
     const defaultIcon = (this.options.config[type] || { icon: null }).icon;
     let specificIcon = '';
     if (classification) {
-      const classID = classification.match(/.*\.(\w+)$/)[1]; // get classification characters
+      console.log({ classification });
+      const classID = classification.match(/.*\.(\w+)$/)[1].toUpperCase(); // get classification characters
       specificIcon = this.options.config[type].classifications[classID].icon;
     }
     const arrowIcons = inPath ? 'n7-icon-angle-down' : 'n7-icon-angle-right';
