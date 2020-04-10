@@ -65,43 +65,16 @@
                         <br>
                     </ng-container>
                 </div>
-
                 <div class="aw-home__bubble-results-list-wrapper">
                     <div class="aw-home__bubble-results-list-loading" *ngIf="lb.dataSource.resultsListIsLoading">
-                        <n7-content-placeholder [data]="{
-                            blocks: [{
-                                classes: 'search-result-placeholder-title'
-                            }, {
-                                classes: 'search-result-placeholder-metadata'
-                            }]
-                        }"></n7-content-placeholder>
-                        <n7-content-placeholder [data]="{
-                            blocks: [{
-                                classes: 'search-result-placeholder-title'
-                            }, {
-                                classes: 'search-result-placeholder-metadata'
-                            }]
-                        }"></n7-content-placeholder>
-                        <n7-content-placeholder [data]="{
-                            blocks: [{
-                                classes: 'search-result-placeholder-title'
-                            }, {
-                                classes: 'search-result-placeholder-metadata'
-                            }]
-                        }"></n7-content-placeholder>
-                        <n7-content-placeholder [data]="{
-                            blocks: [{
-                                classes: 'search-result-placeholder-title'
-                            }, {
-                                classes: 'search-result-placeholder-metadata'
-                            }]
-                        }"></n7-content-placeholder>
-                        <n7-content-placeholder [data]="{
-                            blocks: [{
-                                classes: 'search-result-placeholder-title'
-                            }, {
-                                classes: 'search-result-placeholder-metadata'
-                            }]
+                        <n7-content-placeholder 
+                            *ngFor="let i of [1, 2, 3, 4, 5]"
+                            [data]="{
+                                blocks: [{
+                                    classes: 'search-result-placeholder-title'
+                                }, {
+                                    classes: 'search-result-placeholder-metadata'
+                                }]
                         }"></n7-content-placeholder>
                     </div>
                     <div *ngIf="!lb.dataSource.resultsListIsLoading" class="aw-home__bubble-results-list"
@@ -118,11 +91,18 @@
                             </button>
                         </div>
 
-                        <ng-container
+                        <ng-container *ngFor="let preview of (lb.widgets['aw-linked-objects'].ds.out$ | async)?.result">
+                            <n7-smart-breadcrumbs [data]="preview.breadcrumbs">
+                            </n7-smart-breadcrumbs>
+                            <n7-item-preview [data]="preview"
+                                                [emit]="lb.widgets['aw-linked-objects'].emit">
+                            </n7-item-preview>
+                        </ng-container>
+                        <!-- <ng-container
                             *ngFor="let widgetData of (lb.widgets['aw-linked-objects'].ds.out$ | async)?.result;">
                             <n7-item-preview [data]="widgetData" [emit]="lb.widgets['aw-linked-objects'].emit">
                             </n7-item-preview>
-                        </ng-container>
+                        </ng-container> -->
 
                         <ng-container *ngIf="(lb.widgets['aw-linked-objects'].ds.out$ | async)?.isLoading">
                             <div class="aw-home__bubble-results-list-loader">
