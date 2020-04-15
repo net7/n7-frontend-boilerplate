@@ -1,29 +1,15 @@
 import { DataSource } from '@n7-frontend/core';
+import { InputCheckbox, InputCheckboxData } from '@n7-frontend/components';
 import { FacetDataSource } from './facet-datasource';
 
 type FACET_VALUE = string[];
-
-// FIXME: mettere interfaccia checkbox da components
-type CHECKBOX_DATA = {
-  value: string;
-  label: string;
-  checked?: boolean;
-};
-
-// FIXME: mettere interfaccia data da components
-type FACET_DATA = {
-  items: CHECKBOX_DATA[];
-  classes?: string;
-  payload?: any;
-};
-
 
 export class FacetCheckboxDS extends DataSource implements FacetDataSource {
   id: string;
 
   value: FACET_VALUE;
 
-  protected transform(data: FACET_DATA): FACET_DATA {
+  protected transform(data: InputCheckboxData): InputCheckboxData {
     return data;
   }
 
@@ -31,14 +17,14 @@ export class FacetCheckboxDS extends DataSource implements FacetDataSource {
     this.value = value;
 
     if (update) {
-      const { items } = this.input;
-      const updatedItems = items.map((item: CHECKBOX_DATA) => ({
-        ...item,
-        checked: value.indexOf(item.value) !== -1
+      const { checkboxes } = this.input;
+      const updatedCheckboxes = checkboxes.map((checkbox: InputCheckbox) => ({
+        ...checkbox,
+        checked: value.indexOf(checkbox.payload) !== -1
       }));
       this.update({
         ...this.input,
-        items: updatedItems
+        checkboxes: updatedCheckboxes
       });
     }
   }

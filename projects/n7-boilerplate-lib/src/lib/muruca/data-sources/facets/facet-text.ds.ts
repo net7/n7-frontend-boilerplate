@@ -1,22 +1,15 @@
 import { DataSource } from '@n7-frontend/core';
+import { InputTextData } from '@n7-frontend/components';
 import { FacetDataSource } from './facet-datasource';
 
 type FACET_VALUE = string | null;
-
-// FIXME: mettere interfaccia data da components
-type FACET_DATA = {
-  value: FACET_VALUE;
-  classes?: string;
-  placeholder?: string;
-  payload?: any;
-};
 
 export class FacetTextDS extends DataSource implements FacetDataSource {
   id: string;
 
   value: FACET_VALUE;
 
-  protected transform(data: FACET_DATA): FACET_DATA {
+  protected transform(data: InputTextData): InputTextData {
     return data;
   }
 

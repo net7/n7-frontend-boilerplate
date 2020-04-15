@@ -1,29 +1,15 @@
 import { DataSource } from '@n7-frontend/core';
+import { InputSelectData } from '@n7-frontend/components';
 import { FacetDataSource } from './facet-datasource';
 
 type FACET_VALUE = string | null;
-
-// FIXME: mettere interfaccia select da components
-type SELECT_DATA = {
-  value: string;
-  label: string;
-  selected?: boolean;
-};
-
-// FIXME: mettere interfaccia data da components
-type FACET_DATA = {
-  options: SELECT_DATA[];
-  classes?: string;
-  payload: any;
-};
-
 
 export class FacetSelectDS extends DataSource implements FacetDataSource {
   id: string;
 
   value: FACET_VALUE;
 
-  protected transform(data: FACET_DATA): FACET_DATA {
+  protected transform(data: InputSelectData): InputSelectData {
     return data;
   }
 
@@ -32,7 +18,7 @@ export class FacetSelectDS extends DataSource implements FacetDataSource {
 
     if (update) {
       const { options } = this.input;
-      const updatedOptions = options.map((option: SELECT_DATA) => ({
+      const updatedOptions = options.map((option) => ({
         ...option,
         selected: value === option.value
       }));
