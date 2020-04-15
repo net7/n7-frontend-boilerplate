@@ -3,18 +3,32 @@ import { FacetDataSource } from './facet-datasource';
 
 type FACET_VALUE = string | null;
 
+// FIXME: mettere interfaccia data da components
+type FACET_DATA = {
+  value: FACET_VALUE;
+  classes?: string;
+  placeholder?: string;
+  payload?: any;
+};
+
 export class FacetTextDS extends DataSource implements FacetDataSource {
   id: string;
 
   value: FACET_VALUE;
 
-  protected transform(data: string): string {
+  protected transform(data: FACET_DATA): FACET_DATA {
     return data;
   }
 
-  setValue(value: FACET_VALUE) {
+  setValue(value: FACET_VALUE, update = false) {
     this.value = value;
-    this.update(value);
+
+    if (update) {
+      this.update({
+        ...this.input,
+        value
+      });
+    }
   }
 
   getValue = (): FACET_VALUE => this.value;

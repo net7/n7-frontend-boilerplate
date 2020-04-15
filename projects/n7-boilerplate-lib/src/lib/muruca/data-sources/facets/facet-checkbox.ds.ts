@@ -4,11 +4,18 @@ import { FacetDataSource } from './facet-datasource';
 type FACET_VALUE = string[];
 
 // FIXME: mettere interfaccia checkbox da components
-type FACET_DATA = {
+type CHECKBOX_DATA = {
   value: string;
   label: string;
   checked?: boolean;
-}[];
+};
+
+// FIXME: mettere interfaccia data da components
+type FACET_DATA = {
+  items: CHECKBOX_DATA[];
+  classes?: string;
+  payload?: any;
+};
 
 
 export class FacetCheckboxDS extends DataSource implements FacetDataSource {
@@ -20,14 +27,20 @@ export class FacetCheckboxDS extends DataSource implements FacetDataSource {
     return data;
   }
 
-  setValue(value: FACET_VALUE) {
+  setValue(value: FACET_VALUE, update = false) {
     this.value = value;
 
-    const newData = this.input.map((item) => ({
-      ...item,
-      checked: value.indexOf(item.value) !== -1
-    }));
-    this.update(newData);
+    if (update) {
+      const { items } = this.input;
+      const updatedItems = items.map((item: CHECKBOX_DATA) => ({
+        ...item,
+        checked: value.indexOf(item.value) !== -1
+      }));
+      this.update({
+        ...this.input,
+        items: updatedItems
+      });
+    }
   }
 
   getValue = (): FACET_VALUE => this.value;
