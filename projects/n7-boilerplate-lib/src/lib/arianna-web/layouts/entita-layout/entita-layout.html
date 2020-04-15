@@ -108,7 +108,7 @@
                         <n7-item-preview [data]="preview" [emit]="lb.widgets['aw-linked-objects'].emit">
                         </n7-item-preview>
                         <!-- relation -->
-                        <div class="aw-entity_relation">
+                        <div class="aw-entity_relation" *ngIf="preview.relation.value">
                             <p class="aw-entity__relation">Relazione con 
                               <span class="aw-entity__relationKey">{{preview.relation.key}}</span>:
                               <span class="aw-entity__relationValue"> {{preview.relation.value}}</span>

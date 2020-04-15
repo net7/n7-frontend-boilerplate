@@ -12,7 +12,7 @@
         <span *ngIf="d.selectable" class="aw-bubble-popup-menu__link" (click)="onClick('select', {id: d.id})">
           {{ d.isSelected ? 'Deseleziona' : 'Seleziona'}}
         </span>
-        <div *ngIf="d.relation.key" class="aw-bubble-popup-menu__relation">
+        <div *ngIf="d.relation.value" class="aw-bubble-popup-menu__relation">
           <p class="aw-bubble-popup-menu__relation">Relazione con 
             <span class="aw-bubble-popup-menu__relationKey">{{d.relation.key}}</span>: 
             <span class="aw-bubble-popup-menu__relationValue"> {{d.relation.value}}</span>
