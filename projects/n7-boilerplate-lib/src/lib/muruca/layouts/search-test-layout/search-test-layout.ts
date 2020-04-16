@@ -12,15 +12,42 @@ export class MrSearchTestLayoutComponent extends AbstractLayout implements OnIni
     classes: 'search-test-facets',
     sections: [{
       header: {
-        text: 'Relazione con',
-        classes: 'related-class',
+        text: 'Sezione I',
+        classes: 'first-section',
       },
       inputs: [{
-        id: 'input-text',
+        id: 'fullsearch',
         type: 'text',
+        delay: 300,
         data: {
-          id: 'input-text',
+          id: 'fullsearch',
           placeholder: 'Search...',
+          inputPayload: 'key-event',
+          enterPayload: 'enter-event'
+        },
+      }]
+    }, {
+      header: {
+        text: 'Sezione II',
+        classes: 'second-section',
+      },
+      inputs: [{
+        id: 'hasinternal',
+        type: 'checkbox',
+        data: {
+          checkboxes: [{
+            id: 'hasinternal',
+            label: 'Filtro interno',
+            payload: 'click'
+          }]
+        },
+      }, {
+        id: 'internalsearch',
+        type: 'text',
+        delay: 5000,
+        data: {
+          id: 'internalsearch',
+          placeholder: 'Internal...',
           inputPayload: 'key-event',
           enterPayload: 'enter-event'
         },
