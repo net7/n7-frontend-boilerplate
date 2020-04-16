@@ -1,0 +1,38 @@
+<div *ngIf="lb.dataSource.data" class="mr-search-facets {{ lb.dataSource.data.classes || '' }}">
+    <div *ngFor="let section of lb.dataSource.data.sections" class="mr-search-facets__section {{ section.classes || '' }}">
+        <n7-facet-header
+            [data]="section.header"
+        ></n7-facet-header>
+
+        <div *ngFor="let input of section.inputs" class="mr-search-facets__input {{ input.classes || '' }}">
+            <ng-container [ngSwitch]="input.type">
+
+                <!-- INPUT TEXT -->
+                <n7-input-text 
+                *ngSwitchCase="'text'"
+                [data]="lb.widgets[input.id].ds.out$ | async"
+                [emit]="lb.widgets[input.id].emit"></n7-input-text>
+
+                <!-- INPUT CHECKBOX -->
+                <n7-input-checkbox 
+                *ngSwitchCase="'checkbox'"
+                [data]="lb.widgets[input.id].ds.out$ | async"
+                [emit]="lb.widgets[input.id].emit"></n7-input-checkbox>
+                
+                <!-- INPUT SELECT -->
+                <n7-input-select 
+                *ngSwitchCase="'select'"
+                [data]="lb.widgets[input.id].ds.out$ | async"
+                [emit]="lb.widgets[input.id].emit"></n7-input-select>
+                
+                <!-- INPUT LINK -->
+                <n7-input-link 
+                *ngSwitchCase="'link'"
+                [data]="lb.widgets[input.id].ds.out$ | async"
+                [emit]="lb.widgets[input.id].emit"></n7-input-link>
+            
+            </ng-container>
+        </div>
+        
+    </div>
+</div>

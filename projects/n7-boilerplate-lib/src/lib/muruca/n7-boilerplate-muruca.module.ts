@@ -5,9 +5,13 @@ import { DvComponentsLibModule } from '@n7-frontend/components';
 import { N7BoilerplateCommonModule } from '../common/n7-boilerplate-common.module';
 // LAYOUTS
 import { MrHomeLayoutComponent } from './layouts/home-layout/home-layout';
+import { MrSearchFacetsLayoutComponent } from './layouts/search-facets-layout/search-facets-layout';
+import { MrSearchTestLayoutComponent } from './layouts/search-test-layout/search-test-layout';
 
 const COMPONENTS = [
   MrHomeLayoutComponent,
+  MrSearchFacetsLayoutComponent,
+  MrSearchTestLayoutComponent
 ];
 
 @NgModule({

@@ -4,9 +4,11 @@ export class FacetGenericEH extends EventHandler {
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
-        case 'change':
-          // TODO: lanciare evento
-          console.warn('TODO: event', this.dataSource.id, payload);
+        case `${this.dataSource.id}.change`:
+          this.emitOuter('change', {
+            ...payload,
+            id: this.dataSource.id
+          });
           break;
         default:
           break;
