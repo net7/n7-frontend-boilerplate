@@ -1,0 +1,15 @@
+<div class="search-layout" *ngIf="lb.dataSource">
+    <div class="search-wrapper">
+        <div class="filter-section">
+            <h2>Filtra i risultati</h2>
+            <n7-facets-wrapper 
+                [data]="lb.widgets['facets-wrapper'].ds.out$ | async" 
+                [emit]="lb.widgets['facets-wrapper'].emit">
+            </n7-facets-wrapper>
+        </div>
+        <n7-item-preview 
+            *ngFor="let resource of (lb.widgets['mr-resources'].ds.out$ | async)" 
+            [data]="resource">
+        </n7-item-preview>
+    </div>
+</div>

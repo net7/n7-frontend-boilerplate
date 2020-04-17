@@ -1,3 +1,24 @@
 <div class="mr-home" *ngIf="lb.dataSource">
-    <h1>Hello {{ lb.widgets['mr-dummy'].ds.out$ | async }}</h1>
+    <!-- TODO: Replace with <n7-carousel-component> -->
+    <div style="
+        height: 300px;
+        border: 1px solid #dddddd;
+        line-height: 300px;
+        text-align: center;">
+        <em>n7-carousel-component</em>
+    </div>
+    <!-- ========================================== -->
+    <n7-inner-title [data]="lb.widgets['mr-res-header'].ds.out$ | async"></n7-inner-title>
+    <n7-item-preview
+        *ngFor="let resource of (lb.widgets['mr-resources'].ds.out$ | async)"
+        [data]="resource">
+    </n7-item-preview>
+    <n7-hero [data]="lb.widgets['mr-hero'].ds.out$ | async">
+    </n7-hero>
+    <n7-inner-title [data]="lb.widgets['mr-coll-header'].ds.out$ | async">
+    </n7-inner-title>
+    <n7-item-preview
+        *ngFor="let collection of (lb.widgets['mr-collections'].ds.out$ | async)" 
+        [data]="collection">
+    </n7-item-preview>
 </div>

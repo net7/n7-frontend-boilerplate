@@ -175,7 +175,10 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
       this.one('aw-scheda-inner-title').update(titleObj);
 
-      this.one('aw-scheda-metadata').updateOptions({ labels: this.configuration.get('labels') });
+      this.one('aw-scheda-metadata').updateOptions({
+        labels: this.configuration.get('labels'),
+        metadataToExclude: this.configuration.get('scheda-layout')['metadata-to-exclude']
+      });
       this.one('aw-scheda-metadata').update(response);
 
       // Breadcrumb section

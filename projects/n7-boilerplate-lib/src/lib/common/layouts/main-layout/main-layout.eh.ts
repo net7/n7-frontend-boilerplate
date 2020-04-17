@@ -70,7 +70,6 @@ export class MainLayoutEH extends EventHandler {
     });
   }
 
-
   private _listenMainStateChanges() {
     this.mainState.addCustom('currentNav', new Subject());
     this.mainState.getCustom$('currentNav').subscribe((val) => {

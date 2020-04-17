@@ -279,6 +279,10 @@
           "oc-type-bar": "n7-icon-biography"
         }
       ]
+    },
+    "metadata-to-exclude": {
+      "aggregazione-logica": ["schedaRef", "uuid"],
+      "oggetto-culturale": ["dataFine", "node_type", "document_classification"]
     }
   },
   "search-layout": {
@@ -306,7 +310,8 @@
       ],
       "smallChartSize": 3
     },
-    "entitiesQuerySize": 30
+    "entitiesQuerySize": 30,
+    "metadata-to-exclude": ["tipologia", "natura_giuridica"]
   },
   "config-keys": {
     "persona": {
@@ -401,6 +406,15 @@
       "classifications": {
         "UA": {
           "icon": "n7-icon-file3"
+        },
+        "F400": {
+          "icon": "n7-icon-camera-retro"
+        },
+        "UASC": {
+          "icon": "n7-icon-map1"
+        },
+        "OAC300": {
+          "icon": "n7-icon-illustration"
         }
       }
     },
