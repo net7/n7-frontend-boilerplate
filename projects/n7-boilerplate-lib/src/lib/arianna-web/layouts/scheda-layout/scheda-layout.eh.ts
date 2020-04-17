@@ -22,6 +22,7 @@ export class AwSchedaLayoutEH extends EventHandler {
           }
           this.listenRoute();
           this.loadNavigation(paramId);
+          this.emitOuter('viewleaf');
         } break;
 
         case 'aw-scheda-layout.destroy':
