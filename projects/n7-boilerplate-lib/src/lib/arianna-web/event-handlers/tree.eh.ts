@@ -23,7 +23,6 @@ export class AwTreeEH extends EventHandler {
           this.dataSource.build(payload);
           break;
         case 'aw-scheda-layout.navigationresponse': {
-          console.log({ payload });
           if (payload.currentItem) {
             this.dataSource.setActive(payload.currentItem);
           }
