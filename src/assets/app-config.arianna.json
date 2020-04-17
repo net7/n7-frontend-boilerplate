@@ -406,6 +406,15 @@
       "classifications": {
         "UA": {
           "icon": "n7-icon-file3"
+        },
+        "F400": {
+          "icon": "n7-icon-camera-retro"
+        },
+        "UASC": {
+          "icon": "n7-icon-map1"
+        },
+        "OAC300": {
+          "icon": "n7-icon-illustration"
         }
       }
     },
