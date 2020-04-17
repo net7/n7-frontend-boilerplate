@@ -25,7 +25,6 @@ export class AwTreeEH extends EventHandler {
         case 'aw-scheda-layout.navigationresponse': {
           if (payload.currentItem) {
             this.dataSource.setActive(payload.currentItem);
-            // this.scrollLeafIntoView();
           }
           const currentId = payload.currentItem || payload.tree.id;
           this.dataSource.load(payload);
@@ -38,8 +37,7 @@ export class AwTreeEH extends EventHandler {
             this.dataSource.setActive(payload);
             this.dataSource.highlightActive();
             this.scrollLeafIntoView();
-          }
-          break;
+          } break;
         case 'aw-scheda-layout.viewleaf':
           this.dataSource.out$.subscribe(() => {
             this.scrollLeafIntoView();
