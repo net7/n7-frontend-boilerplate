@@ -5,6 +5,14 @@
       <p class="aw-bubble-popup-menu__text">
         {{ d.text }}
       </p>
+
+      <div *ngIf="d.relation.value" class="aw-bubble-popup-menu__relation">
+        <p class="aw-bubble-popup-menu__relation-description">Relazione con 
+          <span class="aw-bubble-popup-menu__relation-key">{{d.relation.key}}</span>: 
+          <span class="aw-bubble-popup-menu__relation-label"> {{d.relation.value}}</span>
+        </p>
+      </div>
+
       <div class="aw-bubble-popup-menu__actions">
         <n7-anchor-wrapper [classes]="'aw-bubble-popup-menu__link'" [data]="d.anchorData">
           Vai alla scheda
@@ -12,12 +20,6 @@
         <span *ngIf="d.selectable" class="aw-bubble-popup-menu__link" (click)="onClick('select', {id: d.id})">
           {{ d.isSelected ? 'Deseleziona' : 'Seleziona'}}
         </span>
-        <div *ngIf="d.relation.value" class="aw-bubble-popup-menu__relation">
-          <p class="aw-bubble-popup-menu__relation">Relazione con 
-            <span class="aw-bubble-popup-menu__relationKey">{{d.relation.key}}</span>: 
-            <span class="aw-bubble-popup-menu__relationValue"> {{d.relation.value}}</span>
-          </p>
-        </div>
       </div>
     </div>
   </div>

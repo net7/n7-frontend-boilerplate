@@ -75,8 +75,8 @@ export class AwSchedaLayoutEH extends EventHandler {
             if (Array.isArray(response.relatedEntities) && response.relatedEntities.length) {
               if (this.dataSource.bubblesEnabled) {
                 response.relatedEntities.forEach((el) => {
-                  el.entity.relationName = response.label.length > 15
-                    ? `${response.label.substr(0, 15)}... `
+                  el.entity.relationName = response.label.length > 30
+                    ? `${response.label.substr(0, 30)}... `
                     : response.label;
                 });
                 this.emitOuter('filterbubbleresponse', response.relatedEntities);
