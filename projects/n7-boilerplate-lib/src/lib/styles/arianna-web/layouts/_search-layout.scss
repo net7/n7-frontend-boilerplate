@@ -196,6 +196,10 @@
             background-color: transparent;
         }
 
+        .n7-breadcrumbs__list {
+            font-size: $font-size-xs;
+        }
+
         /* Hover on breadcrumbs */
         n7-smart-breadcrumbs {
             cursor: pointer;
