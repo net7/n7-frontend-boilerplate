@@ -158,6 +158,7 @@ export const ApolloProviderConfig = {
         }
         relatedItems {
           thumbnail
+          relation
           item {
             label
             id
@@ -252,7 +253,6 @@ export const ApolloProviderConfig = {
         ... on Item {
           id
           label
-          icon
           title
           subTitle
           image
@@ -281,6 +281,7 @@ export const ApolloProviderConfig = {
                 id
                 label
                 typeOfEntity
+                relation
               }
           }
           relatedItems {
