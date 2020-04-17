@@ -75,7 +75,9 @@
     }
 
     &__relation-description {
-        font-size: $font-size-s;
+        margin: 0;
+        padding: 0;
+        font-size: $font-size-xs;
         color: $color-text-light;
     }
 
