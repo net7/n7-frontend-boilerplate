@@ -35,10 +35,22 @@ export class SearchFacetsLayoutEH extends EventHandler {
 
   initChangedListener(data: SearchFacetsConfig, emit$: Subject<any>) {
     data.sections.forEach((section) => {
-      section.inputs.forEach((input) => {
-        this.changed$[input.id] = new Subject();
-        this.changed$[input.id].pipe(
-          debounceTime(input.delay || 1)
+      const sources: {
+        id: string;
+        delay: number;
+      }[] = [];
+
+      if (section.header) {
+        const { id, delay } = section.header;
+        sources.push({ id, delay });
+      }
+      section.inputs.forEach(({ id, delay }) => {
+        sources.push({ id, delay });
+      });
+      sources.forEach((source) => {
+        this.changed$[source.id] = new Subject();
+        this.changed$[source.id].pipe(
+          debounceTime(source.delay || 1)
         ).subscribe((payload) => {
           emit$.next({ type: 'change', payload });
         });

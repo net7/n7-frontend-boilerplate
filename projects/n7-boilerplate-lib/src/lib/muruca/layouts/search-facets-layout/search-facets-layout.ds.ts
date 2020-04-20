@@ -15,8 +15,8 @@ export class SearchFacetsLayoutDS extends LayoutDataSource {
   }
 
   initInputs() {
-    this.data.sections.forEach((section) => {
-      section.inputs.forEach((input) => {
+    this.data.sections.forEach(({ header, inputs }) => {
+      [header, ...inputs].forEach((input) => {
         // set id
         const widgetDataSource = this.getWidgetDataSource(input.id);
         widgetDataSource.id = input.id;

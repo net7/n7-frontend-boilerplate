@@ -13,8 +13,11 @@ export class MrSearchTestLayoutComponent extends AbstractLayout implements OnIni
     classes: 'search-test-facets',
     sections: [{
       header: {
-        text: 'Sezione I',
-        classes: 'first-section',
+        id: 'header-1',
+        data: {
+          text: 'Sezione I',
+          classes: 'first-section'
+        }
       },
       inputs: [{
         id: 'fullsearch',
@@ -29,8 +32,11 @@ export class MrSearchTestLayoutComponent extends AbstractLayout implements OnIni
       }]
     }, {
       header: {
-        text: 'Sezione II',
-        classes: 'second-section',
+        id: 'header-2',
+        data: {
+          text: 'Sezione II',
+          classes: 'second-section'
+        }
       },
       inputs: [{
         id: 'hasinternal',

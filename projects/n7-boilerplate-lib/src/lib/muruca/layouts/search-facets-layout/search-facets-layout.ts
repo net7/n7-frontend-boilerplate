@@ -13,8 +13,11 @@ import { FacetCheckboxDS } from '../../data-sources/facets/facet-checkbox.ds';
 import { FacetSelectDS } from '../../data-sources/facets/facet-select.ds';
 import { FacetLinkDS } from '../../data-sources/facets/facet-link.ds';
 import { FacetGenericEH } from '../../event-handlers/facets/facet-generic.eh';
+import { FacetHeaderDS } from '../../data-sources/facets/facet-header.ds';
+import { FacetHeaderEH } from '../../event-handlers/facets/facet-header.eh';
 
 const DATASOURCE_MAP = {
+  header: FacetHeaderDS,
   text: FacetTextDS,
   checkbox: FacetCheckboxDS,
   select: FacetSelectDS,
@@ -52,8 +55,15 @@ export class MrSearchFacetsLayoutComponent extends AbstractLayout implements OnI
 
   loadWidgets() {
     this.widgets = [];
-    this.data.sections.forEach((section) => {
-      section.inputs.forEach((input) => {
+    this.data.sections.forEach(({ header, inputs }) => {
+      if (header) {
+        this.widgets.push({
+          id: header.id,
+          dataSource: DATASOURCE_MAP.header,
+          eventHandler: FacetHeaderEH
+        });
+      }
+      inputs.forEach((input) => {
         this.widgets.push({
           id: input.id,
           dataSource: DATASOURCE_MAP[input.type],
