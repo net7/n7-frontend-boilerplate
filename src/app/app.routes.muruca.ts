@@ -11,9 +11,6 @@ import {
   MrStaticLayoutComponent
 } from 'n7-boilerplate-lib';
 
-// FIXME: togliere layout search-test
-import { MrSearchTestLayoutComponent } from 'n7-boilerplate-lib/lib/muruca/layouts/search-test-layout/search-test-layout';
-
 export const APP_ROUTES: Routes = [
   {
     path: '',
@@ -27,7 +24,5 @@ export const APP_ROUTES: Routes = [
   { path: 'mr/toponimia', component: MrGlossaryLayoutComponent },
   { path: 'mr/static', component: MrStaticLayoutComponent },
   { path: 'mr/progetto', component: MrStaticLayoutComponent },
-  // FIXME: togliere layout search-test
-  { path: 'mr/search-test', component: MrSearchTestLayoutComponent },
   { path: '**', component: Page404LayoutComponent }
 ];
