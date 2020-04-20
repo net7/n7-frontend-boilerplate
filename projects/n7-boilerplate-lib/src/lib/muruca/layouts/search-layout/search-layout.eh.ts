@@ -18,6 +18,30 @@ export class MrSearchLayoutEH extends EventHandler {
 
           this.dataSource.onInit(payload);
           this.listenToGuest();
+
+          /* setTimeout(() => {
+            this.hostEmit$.next({
+              type: 'updateinputdata',
+              payload: {
+                id: 'input-00',
+                data: {
+                  id: 'input-text-00',
+                  placeholder: 'Cerca su tutto',
+                  icon: 'n7-icon-search',
+                  inputPayload: 'search-input',
+                  enterPayload: 'search-enter',
+                  iconPayload: 'search-icon'
+                }
+              }
+            });
+            this.hostEmit$.next({
+              type: 'updateinputvalue',
+              payload: {
+                id: 'input-00',
+                value: 'Sto cercando...'
+              }
+            });
+          }, 5000); */
           break;
 
         case 'mr-search-layout.destroy':

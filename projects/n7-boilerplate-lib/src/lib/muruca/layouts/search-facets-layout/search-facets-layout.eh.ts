@@ -31,6 +31,7 @@ export class SearchFacetsLayoutEH extends EventHandler {
         case 'mr-search-facets-layout.destroy':
           this.dataSource.onDestroy();
           break;
+
         default:
           break;
       }
@@ -73,7 +74,18 @@ export class SearchFacetsLayoutEH extends EventHandler {
     this.hostEmit$.pipe(
       takeUntil(this.destroyed$)
     ).subscribe(({ type, payload }) => {
-      console.warn(type, payload);
+      switch (type) {
+        case 'updateinputvalue':
+          this.dataSource.updateInputValue(payload.id, payload.value);
+          break;
+
+        case 'updateinputdata':
+          this.dataSource.updateInputData(payload.id, payload.data);
+          break;
+
+        default:
+          break;
+      }
     });
   }
 }
