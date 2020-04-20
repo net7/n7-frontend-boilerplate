@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subject } from 'rxjs';
 import { AbstractLayout } from '../../../common/models/abstract-layout';
 import { SearchTestLayoutConfig as config } from './search-test-layout.config';
 import { SearchFacetsConfig } from '../search-facets-layout/search-facets-config';
@@ -55,12 +56,16 @@ export class MrSearchTestLayoutComponent extends AbstractLayout implements OnIni
     }]
   };
 
+  emit$: Subject<any> = new Subject();
+
   constructor() {
     super(config);
   }
 
   protected initPayload() {
-    return {};
+    return {
+      emit$: this.emit$
+    };
   }
 
   ngOnInit() {

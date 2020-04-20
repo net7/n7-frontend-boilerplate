@@ -15,7 +15,7 @@ export class SearchFacetsLayoutEH extends EventHandler {
       switch (type) {
         case 'mr-search-facets-layout.init':
           this.dataSource.onInit(payload);
-          this.initChangedListener(payload.data);
+          this.initChangedListener(payload.data, payload.emit$);
           break;
 
         case 'mr-search-facets-layout.destroy':
@@ -33,14 +33,14 @@ export class SearchFacetsLayoutEH extends EventHandler {
     });
   }
 
-  initChangedListener(data: SearchFacetsConfig) {
+  initChangedListener(data: SearchFacetsConfig, emit$: Subject<any>) {
     data.sections.forEach((section) => {
       section.inputs.forEach((input) => {
         this.changed$[input.id] = new Subject();
         this.changed$[input.id].pipe(
           debounceTime(input.delay || 1)
         ).subscribe((payload) => {
-          console.warn('#todo', payload);
+          emit$.next({ type: 'change', payload });
         });
       });
     });
