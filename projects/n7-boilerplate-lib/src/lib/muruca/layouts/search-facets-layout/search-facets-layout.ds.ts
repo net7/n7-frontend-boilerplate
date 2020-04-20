@@ -4,6 +4,8 @@ import { SearchFacetsConfig } from './search-facets-config';
 export class SearchFacetsLayoutDS extends LayoutDataSource {
   public data: SearchFacetsConfig;
 
+  private state = {}
+
   onInit(payload) {
     this.data = payload.data;
 
@@ -24,5 +26,9 @@ export class SearchFacetsLayoutDS extends LayoutDataSource {
         this.one(input.id).update(input.data);
       });
     });
+  }
+
+  setState({ inputPayload: id, value }) {
+    this.state[id] = value;
   }
 }
