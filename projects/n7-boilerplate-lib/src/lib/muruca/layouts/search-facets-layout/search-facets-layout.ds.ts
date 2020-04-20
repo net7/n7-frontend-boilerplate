@@ -28,6 +28,11 @@ export class SearchFacetsLayoutDS extends LayoutDataSource {
     });
   }
 
+  updateInput(id, newValue) {
+    const widgetDataSource = this.getWidgetDataSource(id);
+    widgetDataSource.setValue(newValue, true);
+  }
+
   setState({ inputPayload: id, value }) {
     this.state[id] = value;
   }
