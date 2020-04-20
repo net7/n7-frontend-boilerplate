@@ -1,15 +1,15 @@
-<div class="search-layout" *ngIf="lb.dataSource">
+<div class="search-layout"
+     *ngIf="lb.dataSource">
     <div class="search-wrapper">
+        <!-- SIDEBAR -->
         <div class="filter-section">
             <h2>Filtra i risultati</h2>
-            <n7-facets-wrapper 
-                [data]="lb.widgets['facets-wrapper'].ds.out$ | async" 
-                [emit]="lb.widgets['facets-wrapper'].emit">
-            </n7-facets-wrapper>
+            <mr-search-facets-layout [data]="lb.dataSource.facetsConfig">
+            </mr-search-facets-layout>
         </div>
-        <n7-item-preview 
-            *ngFor="let resource of (lb.widgets['mr-resources'].ds.out$ | async)" 
-            [data]="resource">
+        <!-- RESULTS -->
+        <n7-item-preview *ngFor="let resource of (lb.widgets['mr-resources'].ds.out$ | async)"
+                         [data]="resource">
         </n7-item-preview>
     </div>
 </div>

@@ -1,158 +1,154 @@
-export default {
-  totalCount: 0,
-  facets: [
-    {
-      id: 'query',
-      type: 'value',
+import { SearchFacetsConfig } from '../search-facets-layout/search-facets-config';
+
+const configuration: SearchFacetsConfig = {
+  sections: [{
+    header: {
+      text: 'Filtra i risultati'
     },
-    {
-      id: 'query-all',
-      type: 'value',
-      hasStaticData: true,
-      data: [
-        {
-          value: '1',
-          label: 'Cerca in tutti campi delle schede',
-        },
-      ],
+    inputs: [{
+      id: 'input-00',
+      type: 'text',
+      data: {
+        id: 'input-text-00',
+        placeholder: 'Cerca nei titoli',
+        icon: 'n7-icon-search',
+        inputPayload: 'search-input',
+        enterPayload: 'search-enter',
+        iconPayload: 'search-icon'
+      }
+    }]
+  }, {
+    header: {
+      text: 'Toponimi',
+      additionalText: '786',
     },
-    {
-      id: 'query-links',
-      type: 'value',
+    inputs: [{
+      id: 'input-01',
+      type: 'text',
+      data: {
+        id: 'input-text-01',
+        placeholder: 'Search',
+        icon: 'n7-icon-search',
+        inputPayload: 'search-input',
+        enterPayload: 'search-enter',
+        iconPayload: 'search-icon',
+      }
+    }, {
+      id: 'input-02',
+      type: 'link',
+      data: {
+        links: [{
+          text: 'Title',
+          counter: 28,
+        }, {
+          text: 'Title',
+          counter: 21,
+        }, {
+          text: 'Title',
+          counter: 18,
+        }, {
+          text: 'Title',
+          counter: 16,
+        }, {
+          text: 'Title',
+          counter: 11,
+        }, {
+          text: 'Title',
+          counter: 9,
+        }, {
+          text: 'Title',
+          counter: 4,
+        }]
+      }
+    }]
+  }, {
+    header: {
+      text: 'Glossario',
+      additionalText: '96',
     },
-    {
-      id: 'entity-types',
-      type: 'value',
-      operator: 'OR',
-      limit: 10,
-      order: 'count',
+    inputs: [{
+      id: 'input-03',
+      type: 'text',
+      data: {
+        id: 'input-text-01',
+        placeholder: 'Search',
+        icon: 'n7-icon-search',
+        inputPayload: 'search-input',
+        enterPayload: 'search-enter',
+        iconPayload: 'search-icon',
+      }
+    }, {
+      id: 'input-04',
+      type: 'link',
+      data: {
+        links: [{
+          text: 'Title',
+          counter: 28,
+        }, {
+          text: 'Title',
+          counter: 21,
+        }, {
+          text: 'Title',
+          counter: 18,
+        }, {
+          text: 'Title',
+          counter: 16,
+        }, {
+          text: 'Title',
+          counter: 11,
+        }, {
+          text: 'Title',
+          counter: 9,
+        }, {
+          text: 'Title',
+          counter: 4,
+        }]
+      }
+    }]
+  }, {
+    header: {
+      text: 'Continenti',
+      additionalText: '3'
     },
-    {
-      id: 'entity-search',
-      type: 'value',
+    inputs: [{
+      id: 'input-05',
+      type: 'link',
+      data: {
+        links: [{
+          text: 'Title',
+          counter: 32,
+        }, {
+          text: 'Title',
+          counter: 27,
+        }, {
+          text: 'Title',
+          counter: 18,
+        }]
+      }
+    }]
+  }, {
+    header: {
+      text: 'Keywords',
+      additionalText: '108',
+      iconRight: 'n7-icon-angle-down'
     },
-    {
-      id: 'entity-links',
-      type: 'value',
-      searchData: ['entity-type'],
+    inputs: [],
+  }, {
+    header: {
+      text: 'Data di pubblicazione',
+      additionalText: '20',
+      iconRight: 'n7-icon-angle-down'
     },
-  ],
-  fields: [
-    {
-      inputs: [
-        {
-          type: 'text',
-          facetId: 'query',
-          placeholder: 'Cerca nei titoli delle schede',
-          filterConfig: {
-            delay: 500,
-            minChars: 3,
-            searchIn: [
-              {
-                key: 'label.ngrams',
-                operator: 'LIKE',
-              },
-            ],
-          },
-        },
-        {
-          type: 'checkbox',
-          facetId: 'query-all',
-          filterConfig: {
-            searchIn: [
-              {
-                key: 'label.ngrams^5,text^4,fields.*^3',
-                operator: '=',
-              },
-            ],
-          },
-        },
-        {
-          type: 'link',
-          facetId: 'query-links',
-          filterConfig: {
-            isArray: true,
-            searchIn: [
-              {
-                key: 'source.entityType',
-                operator: '=',
-              },
-            ],
-          },
-        },
-      ],
+    inputs: [],
+  }, {
+    header: {
+      text: 'Luogo di pubblicazione',
+      additionalText: '15',
+      iconRight: 'n7-icon-angle-down'
     },
-    {
-      header: {
-        label: 'Relazione con',
-        classes: 'related-class',
-      },
-      inputs: [
-        {
-          type: 'checkbox',
-          facetId: 'entity-types',
-          filterConfig: {
-            isArray: true,
-            context: 'internal',
-            target: 'entity-links',
-            searchIn: [
-              {
-                key: 'searchData.entity-type',
-                operator: '=',
-              },
-            ],
-          },
-        },
-        {
-          type: 'text',
-          facetId: 'entity-search',
-          placeholder: 'Cerca entità',
-          filterConfig: {
-            delay: 500,
-            minChars: 3,
-            context: 'internal',
-            target: 'entity-links',
-            searchIn: [
-              {
-                key: 'label',
-                operator: 'LIKE',
-              },
-            ],
-          },
-        },
-        {
-          type: 'link',
-          facetId: 'entity-links',
-          emptyState: {
-            label: 'La tua ricerca non ha dato risultati, prova a cambiare i filtri',
-          },
-          filterConfig: {
-            isArray: true,
-            limit: 20,
-            searchIn: [
-              {
-                key: 'relatedEntities.id',
-                operator: '=',
-              },
-            ],
-          },
-        },
-      ],
-    },
-  ],
-  results: {
-    order: {
-      type: 'text', // score | text | date
-      key: 'label_sort', // docPath, elastic key, ecc
-      direction: 'ASC', // ASC | DESC
-    },
-    fields: [
-      {
-        id: 'description',
-        highlight: true,
-        limit: 200,
-      },
-    ],
-  },
-  page: { offset: 0, limit: 10 },
+    inputs: [],
+  }],
+  classes: 'facets-wrapper'
 };
+
+export default configuration;

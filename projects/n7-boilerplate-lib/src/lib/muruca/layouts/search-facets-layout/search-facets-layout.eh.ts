@@ -41,6 +41,7 @@ export class SearchFacetsLayoutEH extends EventHandler {
           debounceTime(input.delay || 1)
         ).subscribe((payload) => {
           emit$.next({ type: 'change', payload });
+          this.dataSource.setState(payload);
         });
       });
     });
