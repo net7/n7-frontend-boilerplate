@@ -6,7 +6,8 @@
             <h2>Filtra i risultati</h2>
             <mr-search-facets-layout 
             [data]="lb.dataSource.facetsConfig"
-            [emit$]="emit$">
+            [hostEmit$]="hostEmit$"
+            [guestEmit$]="guestEmit$">
             </mr-search-facets-layout>
         </div>
         <!-- RESULTS -->

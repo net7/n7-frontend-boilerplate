@@ -5,12 +5,19 @@ import { takeUntil } from 'rxjs/operators';
 export class MrSearchLayoutEH extends EventHandler {
   private destroyed$: Subject<boolean> = new Subject();
 
+  private hostEmit$: Subject<any>;
+
+  private guestEmit$: Subject<any>;
+
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
         case 'mr-search-layout.init':
+          this.hostEmit$ = payload.hostEmit$;
+          this.guestEmit$ = payload.guestEmit$;
+
           this.dataSource.onInit(payload);
-          this.listenToFacetsChange(payload.emit$);
+          this.listenToGuest();
           break;
 
         case 'mr-search-layout.destroy':
@@ -29,8 +36,8 @@ export class MrSearchLayoutEH extends EventHandler {
     */
   }
 
-  listenToFacetsChange(emit$) {
-    emit$.pipe(
+  listenToGuest() {
+    this.guestEmit$.pipe(
       takeUntil(this.destroyed$)
     ).subscribe(({ type, payload }) => {
       console.warn(type, payload);

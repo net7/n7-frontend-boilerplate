@@ -1,6 +1,6 @@
 import { EventHandler } from '@n7-frontend/core';
 import { Subject } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, takeUntil } from 'rxjs/operators';
 import { SearchFacetsConfig } from './search-facets-config';
 
 interface ChangedSubjects {
@@ -10,12 +10,22 @@ interface ChangedSubjects {
 export class SearchFacetsLayoutEH extends EventHandler {
   changed$: ChangedSubjects = {};
 
+  private destroyed$: Subject<boolean> = new Subject();
+
+  private hostEmit$: Subject<any>;
+
+  private guestEmit$: Subject<any>;
+
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
         case 'mr-search-facets-layout.init':
+          this.hostEmit$ = payload.hostEmit$;
+          this.guestEmit$ = payload.guestEmit$;
+
           this.dataSource.onInit(payload);
-          this.initChangedListener(payload.data, payload.emit$);
+          this.initChangedListener(payload.data);
+          this.listenToHost();
           break;
 
         case 'mr-search-facets-layout.destroy':
@@ -33,7 +43,7 @@ export class SearchFacetsLayoutEH extends EventHandler {
     });
   }
 
-  initChangedListener(data: SearchFacetsConfig, emit$: Subject<any>) {
+  initChangedListener(data: SearchFacetsConfig) {
     data.sections.forEach((section) => {
       const sources: {
         id: string;
@@ -52,10 +62,18 @@ export class SearchFacetsLayoutEH extends EventHandler {
         this.changed$[source.id].pipe(
           debounceTime(source.delay || 1)
         ).subscribe((payload) => {
-          emit$.next({ type: 'change', payload });
+          this.guestEmit$.next({ type: 'change', payload });
           this.dataSource.setState(payload);
         });
       });
+    });
+  }
+
+  listenToHost() {
+    this.hostEmit$.pipe(
+      takeUntil(this.destroyed$)
+    ).subscribe(({ type, payload }) => {
+      console.warn(type, payload);
     });
   }
 }

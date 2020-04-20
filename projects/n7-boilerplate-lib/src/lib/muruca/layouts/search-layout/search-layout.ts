@@ -11,7 +11,9 @@ import { MrSearchLayoutConfig as config } from './search-layout.config';
   templateUrl: './search-layout.html',
 })
 export class MrSearchLayoutComponent extends AbstractLayout implements OnInit, OnDestroy {
-  emit$: Subject<any> = new Subject();
+  hostEmit$: Subject<any> = new Subject();
+
+  guestEmit$: Subject<any> = new Subject();
 
   constructor(
     layoutsConfiguration: LayoutsConfigurationService,
@@ -25,7 +27,8 @@ export class MrSearchLayoutComponent extends AbstractLayout implements OnInit, O
       // configuration: this.configuration,
       // mainState: this.mainState,
       // communication: this.communication,
-      emit$: this.emit$,
+      hostEmit$: this.hostEmit$,
+      guestEmit$: this.guestEmit$,
       // route: this.route,
       options: this.config.options || {},
     };

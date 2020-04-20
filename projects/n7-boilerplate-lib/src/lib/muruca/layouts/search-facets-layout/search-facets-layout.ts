@@ -31,7 +31,9 @@ const DATASOURCE_MAP = {
 export class MrSearchFacetsLayoutComponent extends AbstractLayout implements OnInit, OnDestroy {
   @Input() data: SearchFacetsConfig;
 
-  @Input() emit$: Subject<any>;
+  @Input() guestEmit$: Subject<any>;
+
+  @Input() hostEmit$: Subject<any>;
 
   constructor() {
     super(config);
@@ -40,7 +42,8 @@ export class MrSearchFacetsLayoutComponent extends AbstractLayout implements OnI
   protected initPayload() {
     return {
       data: this.data,
-      emit$: this.emit$
+      guestEmit$: this.guestEmit$,
+      hostEmit$: this.hostEmit$
     };
   }
 
