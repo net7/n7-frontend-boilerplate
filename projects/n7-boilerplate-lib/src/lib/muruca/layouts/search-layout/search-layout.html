@@ -4,7 +4,9 @@
         <!-- SIDEBAR -->
         <div class="filter-section">
             <h2>Filtra i risultati</h2>
-            <mr-search-facets-layout [data]="lb.dataSource.facetsConfig">
+            <mr-search-facets-layout 
+            [data]="lb.dataSource.facetsConfig"
+            [emit$]="emit$">
             </mr-search-facets-layout>
         </div>
         <!-- RESULTS -->

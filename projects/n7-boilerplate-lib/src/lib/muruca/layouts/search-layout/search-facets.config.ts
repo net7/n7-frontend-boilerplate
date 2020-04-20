@@ -3,7 +3,10 @@ import { SearchFacetsConfig } from '../search-facets-layout/search-facets-config
 const configuration: SearchFacetsConfig = {
   sections: [{
     header: {
-      text: 'Filtra i risultati'
+      id: 'header-filtra',
+      data: {
+        text: 'Filtra i risultati'
+      }
     },
     inputs: [{
       id: 'input-00',
@@ -19,8 +22,11 @@ const configuration: SearchFacetsConfig = {
     }]
   }, {
     header: {
-      text: 'Toponimi',
-      additionalText: '786',
+      id: 'header-toponimi',
+      data: {
+        text: 'Toponimi',
+        additionalText: '786',
+      }
     },
     inputs: [{
       id: 'input-01',
@@ -63,8 +69,11 @@ const configuration: SearchFacetsConfig = {
     }]
   }, {
     header: {
-      text: 'Glossario',
-      additionalText: '96',
+      id: 'header-glossario',
+      data: {
+        text: 'Glossario',
+        additionalText: '96',
+      }
     },
     inputs: [{
       id: 'input-03',
@@ -107,8 +116,11 @@ const configuration: SearchFacetsConfig = {
     }]
   }, {
     header: {
-      text: 'Continenti',
-      additionalText: '3'
+      id: 'header-continenti',
+      data: {
+        text: 'Continenti',
+        additionalText: '3'
+      }
     },
     inputs: [{
       id: 'input-05',
@@ -128,23 +140,32 @@ const configuration: SearchFacetsConfig = {
     }]
   }, {
     header: {
-      text: 'Keywords',
-      additionalText: '108',
-      iconRight: 'n7-icon-angle-down'
+      id: 'header-keywords',
+      data: {
+        text: 'Keywords',
+        additionalText: '108',
+        iconRight: 'n7-icon-angle-right'
+      }
     },
     inputs: [],
   }, {
     header: {
-      text: 'Data di pubblicazione',
-      additionalText: '20',
-      iconRight: 'n7-icon-angle-down'
+      id: 'header-data',
+      data: {
+        text: 'Data di pubblicazione',
+        additionalText: '20',
+        iconRight: 'n7-icon-angle-right'
+      }
     },
     inputs: [],
   }, {
     header: {
-      text: 'Luogo di pubblicazione',
-      additionalText: '15',
-      iconRight: 'n7-icon-angle-down'
+      id: 'header-luogo',
+      data: {
+        text: 'Luogo di pubblicazione',
+        additionalText: '15',
+        iconRight: 'n7-icon-angle-right'
+      }
     },
     inputs: [],
   }],

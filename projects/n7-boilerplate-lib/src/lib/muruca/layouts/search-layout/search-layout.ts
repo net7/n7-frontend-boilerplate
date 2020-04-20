@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subject } from 'rxjs';
 import { AbstractLayout } from '../../../common/models/abstract-layout';
 import { LayoutsConfigurationService } from '../../../common/services/layouts-configuration.service';
 import { MrSearchLayoutConfig as config } from './search-layout.config';
-import { SearchService } from '../../../common/services/search.service';
 // import { CommunicationService } from '../../../common/services/communication.service';
 
 
@@ -11,9 +11,10 @@ import { SearchService } from '../../../common/services/search.service';
   templateUrl: './search-layout.html',
 })
 export class MrSearchLayoutComponent extends AbstractLayout implements OnInit, OnDestroy {
+  emit$: Subject<any> = new Subject();
+
   constructor(
     layoutsConfiguration: LayoutsConfigurationService,
-    private search: SearchService,
     // private communication: CommunicationService,
   ) {
     super(layoutsConfiguration.get('MrSearchLayoutConfig') || config);
@@ -24,7 +25,7 @@ export class MrSearchLayoutComponent extends AbstractLayout implements OnInit, O
       // configuration: this.configuration,
       // mainState: this.mainState,
       // communication: this.communication,
-      search: this.search,
+      emit$: this.emit$,
       // route: this.route,
       options: this.config.options || {},
     };
