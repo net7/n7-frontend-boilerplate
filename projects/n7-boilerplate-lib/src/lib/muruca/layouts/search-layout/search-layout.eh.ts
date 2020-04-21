@@ -25,12 +25,7 @@ export class MrSearchLayoutEH extends EventHandler {
               payload: {
                 id: 'input-00',
                 data: {
-                  id: 'input-text-00',
                   placeholder: 'Cerca su tutto',
-                  icon: 'n7-icon-search',
-                  inputPayload: 'search-input',
-                  enterPayload: 'search-enter',
-                  iconPayload: 'search-icon'
                 }
               }
             });

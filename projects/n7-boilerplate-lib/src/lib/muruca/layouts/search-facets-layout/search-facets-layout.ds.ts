@@ -35,7 +35,10 @@ export class SearchFacetsLayoutDS extends LayoutDataSource {
 
   updateInputData(id, newData) {
     const widgetDataSource = this.getWidgetDataSource(id);
-    widgetDataSource.update(newData);
+    widgetDataSource.update({
+      ...widgetDataSource.input,
+      ...newData
+    });
   }
 
   setState({ inputPayload: id, value }) {
