@@ -279,9 +279,7 @@ export class SearchModel {
   }
 
   private _clearInputs() {
-    this._inputs.forEach((input) => {
-      
-    });
+    // do nothing
   }
 
   private _filterData(searchIns, item) {
