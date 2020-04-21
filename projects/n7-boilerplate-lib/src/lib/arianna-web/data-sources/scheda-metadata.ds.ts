@@ -29,7 +29,7 @@ export class AwSchedaMetadataDS extends DataSource {
         } else if (metadataToExclude.indexOf(field.key) === -1) {
           items.push({
             label: helpers.prettifySnakeCase(field.key, labels[field.key]),
-            value: field.value
+            value: field.value.replace(/(\|\|\|)/g, '\n') // replace repeat sequence ("|||") with end of line
           });
           group.group.push({
             items,
