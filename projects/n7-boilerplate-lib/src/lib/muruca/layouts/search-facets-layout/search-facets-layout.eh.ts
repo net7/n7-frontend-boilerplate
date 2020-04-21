@@ -63,8 +63,14 @@ export class SearchFacetsLayoutEH extends EventHandler {
         this.changed$[source.id].pipe(
           debounceTime(source.delay || 1)
         ).subscribe((payload) => {
-          this.guestEmit$.next({ type: 'change', payload });
           this.dataSource.setState(payload);
+          this.guestEmit$.next({
+            type: 'change',
+            payload: {
+              lastUpdate: payload,
+              state: this.dataSource.getState()
+            }
+          });
         });
       });
     });

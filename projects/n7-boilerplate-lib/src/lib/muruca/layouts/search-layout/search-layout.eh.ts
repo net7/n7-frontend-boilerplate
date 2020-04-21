@@ -2,6 +2,7 @@ import { EventHandler } from '@n7-frontend/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import searchHelper from '../../helpers/search-helper';
 
 export class MrSearchLayoutEH extends EventHandler {
   private destroyed$: Subject<boolean> = new Subject();
@@ -25,6 +26,7 @@ export class MrSearchLayoutEH extends EventHandler {
 
           this.dataSource.onInit(payload);
           this.listenToGuest();
+          this.listenToRouterChanges();
 
 
           /* setTimeout(() => {
@@ -68,14 +70,13 @@ export class MrSearchLayoutEH extends EventHandler {
       takeUntil(this.destroyed$)
     ).subscribe(({ type, payload }) => {
       switch (type) {
-        case 'change':
-          // TODO: update search state
+        case 'change': {
+          const queryParams = searchHelper.stateToQueryParams(payload.state);
           this.router.navigate([], {
-            queryParams: {
-              [payload.id]: payload.value
-            }
+            queryParams
           });
           break;
+        }
 
         default:
           break;
@@ -87,6 +88,7 @@ export class MrSearchLayoutEH extends EventHandler {
     this.activatedRoute.queryParams.pipe(
       takeUntil(this.destroyed$),
     ).subscribe((params) => {
+      // TODO: aggiungere logica richieste
       console.warn('query params', params);
     });
   }
