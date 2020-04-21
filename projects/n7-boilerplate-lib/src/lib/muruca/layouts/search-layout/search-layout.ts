@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { AbstractLayout } from '../../../common/models/abstract-layout';
 import { LayoutsConfigurationService } from '../../../common/services/layouts-configuration.service';
@@ -17,6 +18,8 @@ export class MrSearchLayoutComponent extends AbstractLayout implements OnInit, O
 
   constructor(
     layoutsConfiguration: LayoutsConfigurationService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
     // private communication: CommunicationService,
   ) {
     super(layoutsConfiguration.get('MrSearchLayoutConfig') || config);
@@ -26,10 +29,11 @@ export class MrSearchLayoutComponent extends AbstractLayout implements OnInit, O
     return {
       // configuration: this.configuration,
       // mainState: this.mainState,
+      router: this.router,
+      activatedRoute: this.activatedRoute,
       // communication: this.communication,
       hostEmit$: this.hostEmit$,
       guestEmit$: this.guestEmit$,
-      // route: this.route,
       options: this.config.options || {},
     };
   }

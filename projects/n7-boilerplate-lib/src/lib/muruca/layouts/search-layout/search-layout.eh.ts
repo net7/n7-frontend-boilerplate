@@ -1,4 +1,5 @@
 import { EventHandler } from '@n7-frontend/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -9,15 +10,22 @@ export class MrSearchLayoutEH extends EventHandler {
 
   private guestEmit$: Subject<any>;
 
+  private router: Router;
+
+  private activatedRoute: ActivatedRoute;
+
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
         case 'mr-search-layout.init':
           this.hostEmit$ = payload.hostEmit$;
           this.guestEmit$ = payload.guestEmit$;
+          this.router = payload.router;
+          this.activatedRoute = payload.activatedRoute;
 
           this.dataSource.onInit(payload);
           this.listenToGuest();
+
 
           /* setTimeout(() => {
             this.hostEmit$.next({
@@ -59,7 +67,27 @@ export class MrSearchLayoutEH extends EventHandler {
     this.guestEmit$.pipe(
       takeUntil(this.destroyed$)
     ).subscribe(({ type, payload }) => {
-      console.warn(type, payload);
+      switch (type) {
+        case 'change':
+          // TODO: update search state
+          this.router.navigate([], {
+            queryParams: {
+              [payload.id]: payload.value
+            }
+          });
+          break;
+
+        default:
+          break;
+      }
+    });
+  }
+
+  listenToRouterChanges() {
+    this.activatedRoute.queryParams.pipe(
+      takeUntil(this.destroyed$),
+    ).subscribe((params) => {
+      console.warn('query params', params);
     });
   }
 }
