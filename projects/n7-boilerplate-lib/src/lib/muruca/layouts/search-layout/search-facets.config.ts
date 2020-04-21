@@ -46,24 +46,31 @@ const configuration: SearchFacetsConfig = {
         links: [{
           text: 'Title',
           counter: 28,
+          payload: 'i02t28'
         }, {
           text: 'Title',
           counter: 21,
+          payload: 'i02t21'
         }, {
           text: 'Title',
           counter: 18,
+          payload: 'i02t18'
         }, {
           text: 'Title',
           counter: 16,
+          payload: 'i02t16'
         }, {
           text: 'Title',
           counter: 11,
+          payload: 'i02t11'
         }, {
           text: 'Title',
           counter: 9,
+          payload: 'i02t9'
         }, {
           text: 'Title',
           counter: 4,
+          payload: 'i02t4'
         }]
       }
     }]
@@ -79,7 +86,7 @@ const configuration: SearchFacetsConfig = {
       id: 'input-03',
       type: 'text',
       data: {
-        id: 'input-text-01',
+        id: 'input-text-02',
         placeholder: 'Search',
         icon: 'n7-icon-search',
         inputPayload: 'search-input',
@@ -93,24 +100,31 @@ const configuration: SearchFacetsConfig = {
         links: [{
           text: 'Title',
           counter: 28,
+          payload: 'i04t28'
         }, {
           text: 'Title',
           counter: 21,
+          payload: 'i04t21'
         }, {
           text: 'Title',
           counter: 18,
+          payload: 'i04t18'
         }, {
           text: 'Title',
           counter: 16,
+          payload: 'i04t16'
         }, {
           text: 'Title',
           counter: 11,
+          payload: 'i04t11'
         }, {
           text: 'Title',
           counter: 9,
+          payload: 'i04t9'
         }, {
           text: 'Title',
           counter: 4,
+          payload: 'i04t4'
         }]
       }
     }]

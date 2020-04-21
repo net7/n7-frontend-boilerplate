@@ -41,7 +41,11 @@ export class SearchFacetsLayoutDS extends LayoutDataSource {
     });
   }
 
-  setState({ inputPayload: id, value }) {
+  getState(id?) {
+    return id ? this.state[id] : this.state;
+  }
+
+  setState({ value, id }) {
     this.state[id] = value;
   }
 }

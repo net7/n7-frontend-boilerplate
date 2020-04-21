@@ -59,7 +59,7 @@ export class MrSearchLayoutEH extends EventHandler {
     this.guestEmit$.pipe(
       takeUntil(this.destroyed$)
     ).subscribe(({ type, payload }) => {
-      console.warn(type, payload);
+      console.log(type, payload);
     });
   }
 }
