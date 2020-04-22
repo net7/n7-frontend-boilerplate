@@ -6,6 +6,7 @@ export class MrStaticLayoutEH extends EventHandler {
       switch (type) {
         case 'mr-static-layout.init':
           this.dataSource.onInit(payload);
+          this.fetchJson();
           break;
 
         default:
@@ -13,10 +14,18 @@ export class MrStaticLayoutEH extends EventHandler {
           break;
       }
     });
-
     /*
       this.outerEvents$.subscribe(({ type, payload }) => {
       });
     */
+  }
+
+  private fetchJson() {
+    this.dataSource.pageRequest$()
+      .subscribe((response) => {
+        const title = response.title.rendered;
+        const content = response.content.rendered;
+        this.dataSource.createHTML(title, content);
+      });
   }
 }

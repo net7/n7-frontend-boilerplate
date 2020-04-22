@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AbstractLayout } from '../../../common/models/abstract-layout';
+import { CommunicationService } from '../../../common/services/communication.service';
 import { LayoutsConfigurationService } from '../../../common/services/layouts-configuration.service';
 import { MrStaticLayoutConfig as config } from './static-layout.config';
 
@@ -9,6 +10,7 @@ import { MrStaticLayoutConfig as config } from './static-layout.config';
 })
 export class MrStaticLayoutComponent extends AbstractLayout implements OnInit, OnDestroy {
   constructor(
+    private communication: CommunicationService,
     layoutsConfiguration: LayoutsConfigurationService
   ) {
     super(layoutsConfiguration.get('MrStaticLayoutConfig') || config);
@@ -16,6 +18,7 @@ export class MrStaticLayoutComponent extends AbstractLayout implements OnInit, O
 
   protected initPayload() {
     return {
+      communication: this.communication,
       options: this.config.options || {}
     };
   }

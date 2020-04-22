@@ -1,3 +1,4 @@
 <div class="static-layout" *ngIf="lb.dataSource">
-    Hello, from Static layout!
+        <h1>{{lb.dataSource.RENDER_HTML.title}}</h1>
+        <div class="mr-generated-page-WP" [innerHtml]="lb.dataSource.RENDER_HTML.content"></div>
 </div>

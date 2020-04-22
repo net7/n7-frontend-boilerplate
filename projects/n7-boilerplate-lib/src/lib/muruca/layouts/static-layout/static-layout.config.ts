@@ -4,7 +4,7 @@ import * as DS from '../../data-sources';
 import * as EH from '../../event-handlers';
 
 export const MrStaticLayoutConfig = {
-  layoutId: 'n7-static-layout',
+  layoutId: 'mr-static-layout',
   widgets: [
     // {
     //   id: 'title',          ← Insert a component here.
