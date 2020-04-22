@@ -146,18 +146,13 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
         content.content = response.text;
       }
       this.contentParts.push(content);
+      // image viewer
       if (response.image) {
-        const images = [{ type: 'image', url: response.image, buildPyramid: false }];
-        if (!this.imageViewerIstance) {
-          this.one('aw-scheda-image').update({
-            viewerId: 'scheda-layout-viewer',
-            _setViewer: (viewer) => {
-              this.imageViewerIstance = viewer;
-              viewer.open(images);
-            },
-          });
+        const viewerDataSource = this.getWidgetDataSource('aw-scheda-image');
+        if (!viewerDataSource.hasInstance()) {
+          this.one('aw-scheda-image').update(response);
         } else {
-          this.imageViewerIstance.open(images);
+          viewerDataSource.updateImages(response);
         }
       }
 
