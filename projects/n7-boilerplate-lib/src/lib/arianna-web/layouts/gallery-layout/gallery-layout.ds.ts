@@ -1,0 +1,235 @@
+import { LayoutDataSource } from '@n7-frontend/core';
+import {
+  SearchService,
+  SearchModel
+} from '../../../common/services';
+import { tap, takeUntil } from 'rxjs/operators';
+import { Observable, of, fromEvent, Subject } from 'rxjs';
+import { cloneDeep } from 'lodash';
+import facetsConfig from './gallery-facets.config';
+import helpers from '../../../common/helpers';
+
+const SEARCH_MODEL_ID = 'aw-gallery-layout';
+
+
+export class AwGalleryLayoutDS extends LayoutDataSource {
+  private destroyed$: Subject<any> = new Subject();
+  private communication: any;
+  private configuration: any;
+  private mainState: any;
+  private search: SearchService;
+  private searchModel: SearchModel;
+  private pageTitle: string = 'Galleria'
+  private sidebarIsSticky: boolean = true
+  public currentPage: any = 1; // pagination value (url param)
+  public pageSize = 12; // linked objects page size
+  public isFirstLoading = true; // initial URL check
+  public orderByLabel = 'Ordina per';
+  public orderByOptions: any = [
+    {
+      value: 'label_ASC',
+      label: 'Ordine alfabetico (A→Z)'
+    },
+    {
+      value: 'label_DESC',
+      label: 'Ordine alfabetico (Z→A)'
+    }
+  ];
+  public totalCount: number = 12
+  public resultsTitle: string = 'Risultati'
+  public options: any
+  private prettifyLabels: any;
+  private configKeys: any;
+  private fallback: string;
+  private resetButtonEnabled = true;
+
+  onInit({ configuration, mainState, options, communication, search }) {
+    this.configuration = configuration;
+    this.mainState = mainState;
+    this.communication = communication;
+    this.search = search;
+    this.options = options;
+    this.prettifyLabels = this.configuration.get('labels');
+    this.configKeys = this.configuration.get('config-keys');
+    this.fallback = this.configuration.get('search-layout').fallback;
+
+    // remove first
+    // stateless search
+    if (this.search.model(SEARCH_MODEL_ID)) {
+      this.search.remove(SEARCH_MODEL_ID);
+    }
+
+    this.search.add(SEARCH_MODEL_ID, cloneDeep(facetsConfig));
+    this.searchModel = this.search.model(SEARCH_MODEL_ID);
+
+    // query params control
+    if (SearchService.queryParams) {
+      this.searchModel.updateFiltersFromQueryParams(SearchService.queryParams);
+      SearchService.queryParams = null;
+    }
+
+    this.one('aw-gallery-results').updateOptions({
+      currentPage: this.currentPage,
+      pageSize: this.pageSize,
+    })
+    this.one('aw-gallery-results').update(null)
+    this.mainState.updateCustom('currentNav', 'galleria');
+    this.mainState.update('headTitle', 'Arianna Web > Galleria');
+  }
+  onDestroy() {
+    this.destroyed$.next();
+    SearchService.queryParams = null;
+  }
+
+  onGalleryResponse() {
+    this.resetButtonEnabled = true;
+    if (this.isFirstLoading) {
+      this.isFirstLoading = false;
+      this.one('facets-wrapper').update({ searchModel: this.searchModel });
+      this.searchModel.updateInputsFromFilters();
+    }
+  }
+
+  onOrderByChange(payload) {
+    const [orderBy, direction] = payload.split('_');
+
+    this.searchModel.setSearchConfigOrderBy(orderBy);
+    this.searchModel.setSearchConfigDirection(direction);
+  }
+
+  onPaginationChange(payload): Observable<boolean> {
+    const page = payload.replace('page-', '').replace('goto-', '');
+    return this._updateSearchPage(page);
+  }
+
+  resetPagination() {
+    this._updateSearchPage(1);
+  }
+
+  onResultsLimitChange(payload) {
+    this.pageSize = payload;
+    this.searchModel.setPageConfigLimit(payload);
+
+    // reset page & offset
+    this.currentPage = 1;
+    this.searchModel.setPageConfigOffset(0);
+  }
+
+  public getGalleryModelId = () => SEARCH_MODEL_ID;
+
+  public doGalleryRequest$(): Observable<any> {
+    const requestParams = this.searchModel.getRequestParams();
+    const requestPayload = {
+      searchParameters: {
+        // FIXME: togliere totalCount
+        totalCount: 100,
+        ...requestParams
+      }
+    };
+    return this.communication.request$('search', {
+      onError: error => console.error(error),
+      params: requestPayload
+    }).pipe(
+      tap(({ totalCount, results, facets }) => {
+        this.totalCount = totalCount;
+        let resultsTitleIndex = 0;
+        // results title
+        if (this.totalCount > 1) {
+          resultsTitleIndex = 2;
+        } else if (this.totalCount === 1) {
+          resultsTitleIndex = 1;
+        }
+        this.resultsTitle = this.configuration.get('search-layout').results[
+          resultsTitleIndex
+        ];
+
+        // facets labels
+        this._addFacetsLabels(facets);
+        // facets options
+        this._addFacetsOptions(facets);
+
+        this.searchModel.updateFacets(facets);
+        this.searchModel.updateTotalCount(totalCount);
+
+        this.one('aw-linked-objects').updateOptions({
+          context: 'search',
+          config: this.configuration,
+          page: this.currentPage,
+          pagination: true,
+          dynamicPagination: {
+            total: totalCount
+          },
+          size: this.pageSize
+        });
+
+        // this.one('aw-linked-objects').update({ items: this._normalizeItems(results.items) });
+        this.one('aw-gallery-results').updateOptions({
+          currentPage: this.currentPage,
+          pageSize: this.pageSize,
+        });
+        this.one('aw-gallery-results').update(null)
+      })
+    );
+  }
+
+  private _updateSearchPage(page) {
+    if (+page === this.currentPage) {
+      return of(false);
+    }
+
+    this.currentPage = +page;
+
+    const searchConfig = this.searchModel.getConfig(),
+      pageConfig = searchConfig.page,
+      { limit } = pageConfig,
+      newOffset = (this.currentPage - 1) * limit;
+
+    this.searchModel.setPageConfigOffset(newOffset);
+
+    return of(true);
+  }
+
+  private _addFacetsLabels(facets) {
+    facets
+      .filter(f => Array.isArray(f.data))
+      .forEach(f => {
+        f.data.forEach(dataItem => {
+          const key = dataItem.label;
+          dataItem.label = helpers.prettifySnakeCase(key, this.prettifyLabels[key]);
+        });
+      });
+  }
+
+  private _addFacetsOptions(facets) {
+    facets
+      .filter(f => f.id === 'query-links')
+      .forEach(f => {
+        f.data.forEach(dataItem => {
+          const key = dataItem.value.replace(' ', '-'),
+            config = this.configKeys[key];
+          if (config) {
+            dataItem.options = {
+              icon: config.icon,
+              classes: `color-${key}`
+            };
+          }
+        });
+      });
+  }
+
+  private _normalizeItems(items) {
+    return items.map(singleItem => ({ item: { ...singleItem } }));
+  }
+
+  private _sidebarStickyControl() {
+    const source$ = fromEvent(window, 'scroll');
+
+    source$.pipe(
+      takeUntil(this.destroyed$)
+    ).subscribe(() => {
+      const windowOffsetTop = window.pageYOffset,
+        wrapperOffsetTop = document.getElementsByClassName('sticky-parent')[0]['offsetTop'];
+      this.sidebarIsSticky = wrapperOffsetTop <= windowOffsetTop;
+    });
+  }
+}
