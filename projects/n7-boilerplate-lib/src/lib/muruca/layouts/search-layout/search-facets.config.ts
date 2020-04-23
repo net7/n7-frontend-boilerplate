@@ -143,12 +143,15 @@ const configuration: SearchFacetsConfig = {
         links: [{
           text: 'Title',
           counter: 32,
+          payload: 'input-05-1'
         }, {
           text: 'Title',
           counter: 27,
+          payload: 'input-05-2'
         }, {
           text: 'Title',
           counter: 18,
+          payload: 'input-05-3'
         }]
       }
     }]

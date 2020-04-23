@@ -9,7 +9,7 @@ const ACTIVE_CLASS = 'is-active';
 export class FacetLinkDS extends DataSource implements FacetDataSource {
   id: string;
 
-  value: FACET_VALUE;
+  value: FACET_VALUE = [];
 
   protected transform(data: InputLinkData): InputLinkData {
     return data;
@@ -29,6 +29,18 @@ export class FacetLinkDS extends DataSource implements FacetDataSource {
         links: updatedLinks
       });
     }
+  }
+
+  toggleValue(linkValue) {
+    const exists = this.value.indexOf(linkValue) !== -1;
+    if (!exists) {
+      this.value.push(linkValue);
+    } else if (exists) {
+      this.value.splice(this.value.indexOf(linkValue), 1);
+    }
+
+    // update
+    this.setValue(this.value, true);
   }
 
   getValue = (): FACET_VALUE => this.value;

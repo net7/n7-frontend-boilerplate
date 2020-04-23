@@ -12,9 +12,12 @@ import { FacetTextDS } from '../../data-sources/facets/facet-text.ds';
 import { FacetCheckboxDS } from '../../data-sources/facets/facet-checkbox.ds';
 import { FacetSelectDS } from '../../data-sources/facets/facet-select.ds';
 import { FacetLinkDS } from '../../data-sources/facets/facet-link.ds';
-import { FacetGenericEH } from '../../event-handlers/facets/facet-generic.eh';
 import { FacetHeaderDS } from '../../data-sources/facets/facet-header.ds';
 import { FacetHeaderEH } from '../../event-handlers/facets/facet-header.eh';
+import { FacetTextEH } from '../../event-handlers/facets/facet-text.eh';
+import { FacetCheckboxEH } from '../../event-handlers/facets/facet-checkbox.eh';
+import { FacetSelectEH } from '../../event-handlers/facets/facet-select.eh';
+import { FacetLinkEH } from '../../event-handlers/facets/facet-link.eh';
 
 const DATASOURCE_MAP = {
   header: FacetHeaderDS,
@@ -22,6 +25,14 @@ const DATASOURCE_MAP = {
   checkbox: FacetCheckboxDS,
   select: FacetSelectDS,
   link: FacetLinkDS,
+};
+
+const EVENTHANDLER_MAP = {
+  header: FacetHeaderEH,
+  text: FacetTextEH,
+  checkbox: FacetCheckboxEH,
+  select: FacetSelectEH,
+  link: FacetLinkEH,
 };
 
 @Component({
@@ -63,14 +74,14 @@ export class MrSearchFacetsLayoutComponent extends AbstractLayout implements OnI
         this.widgets.push({
           id: header.id,
           dataSource: DATASOURCE_MAP.header,
-          eventHandler: FacetHeaderEH
+          eventHandler: EVENTHANDLER_MAP.header
         });
       }
       inputs.forEach((input) => {
         this.widgets.push({
           id: input.id,
           dataSource: DATASOURCE_MAP[input.type],
-          eventHandler: FacetGenericEH
+          eventHandler: EVENTHANDLER_MAP[input.type]
         });
       });
     });
