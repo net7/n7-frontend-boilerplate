@@ -17,10 +17,6 @@
         position: relative;
         margin: 0 auto;
         max-width: $page-max-width;
-  
-        // display: grid;
-        // grid-template-columns: $aw-scheda-tree-width minmax($bubble-chart-column-container-min-width,1fr);
-        // grid-column-gap: 0;
     }
 
     &__tree {
