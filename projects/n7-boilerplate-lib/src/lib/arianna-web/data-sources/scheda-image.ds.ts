@@ -15,7 +15,7 @@ export class AwSchedaImageDS extends DataSource {
         sequenceMode: true,
         showReferenceStrip: true,
         autoHideControls: false,
-        showNavigator: true,
+        showNavigator: false,
       },
       _setViewer: (viewer) => {
         this.instance = viewer;
