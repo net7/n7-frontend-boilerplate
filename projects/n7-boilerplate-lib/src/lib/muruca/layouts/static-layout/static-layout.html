@@ -1,4 +1,4 @@
 <div class="mr-static-layout" *ngIf="lb.dataSource.RENDER_HTML">
     <h1 class="mr-generated-title-WP">{{lb.dataSource.RENDER_HTML.title}}</h1>
-    <div class="mr-generated-page-WP" [innerHtml]="lb.dataSource.RENDER_HTML.content"></div>
+    <div class="mr-generated-page-WP" [innerHTML]="lb.dataSource.RENDER_HTML.body | keepHtml"></div>
 </div>

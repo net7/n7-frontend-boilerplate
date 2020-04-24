@@ -23,9 +23,9 @@ export class MrStaticLayoutEH extends EventHandler {
   private fetchJson() {
     this.dataSource.pageRequest$()
       .subscribe((response) => {
-        const title = response.title.rendered;
-        const content = response.content.rendered;
-        this.dataSource.createHTML(title, content);
+        const { title } = response;
+        const { body } = response;
+        this.dataSource.renderHTML(title, body);
       });
   }
 }

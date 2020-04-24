@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DvComponentsLibModule } from '@n7-frontend/components';
 import { N7BoilerplateCommonModule } from '../common/n7-boilerplate-common.module';
+import { EscapeHtmlPipe } from './pipes/keep-html.pipe';
 // LAYOUTS
 import { MrHomeLayoutComponent } from './layouts/home-layout/home-layout';
 import { MrSearchLayoutComponent } from './layouts/search-layout/search-layout';
@@ -19,7 +20,10 @@ const COMPONENTS = [
 ];
 
 @NgModule({
-  declarations: COMPONENTS,
+  declarations: [
+    EscapeHtmlPipe,
+    COMPONENTS
+  ],
   imports: [
     CommonModule,
     DvComponentsLibModule,
