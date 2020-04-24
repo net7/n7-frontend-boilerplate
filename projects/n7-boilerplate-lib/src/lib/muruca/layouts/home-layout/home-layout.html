@@ -1,5 +1,7 @@
 <div class="mr-home mr-layout" *ngIf="lb.dataSource">
-
+    <!-- TODO: Replace with menu component real (now it's fake) -->
+    <n7-nav [data]="lb.widgets['mr-nav'].ds.out$ | async">
+    </n7-nav>
     <section *ngFor="let section of lb.dataSource.pageConfig.sections" class="{{ 'mr-layout__' + section.type }}">
         <ng-container [ngSwitch]="section.type">
 

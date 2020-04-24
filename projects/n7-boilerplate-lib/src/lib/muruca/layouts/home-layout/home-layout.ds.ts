@@ -53,4 +53,12 @@ export class MrHomeLayoutDS extends LayoutDataSource {
       });
     }
   }
+
+  navRequest$(): Observable<any> {
+    return this.communication.request$('nav');
+  }
+
+  createNav(data) {
+    this.one('mr-nav').update({ nav: data });
+  }
 }

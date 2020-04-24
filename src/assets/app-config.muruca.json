@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
   "communication": {
     "defaultProvider": "rest-local",
     "providers": {
@@ -15,17 +14,6 @@
         "config": {
             "nav": "data/api/pages",
             "page": "data/api/page_"
-=======
-    "communication": {
-    "defaultProvider": "rest",
-        "providers": {
-        "rest": {
-            "baseUrl": "http://localhost:3002/",
-            "config": {
-                "nav": "data/api/pages",
-                "page": "data/api/page_"
-            }
->>>>>>> e767710... Add static layout with html wordpress render
         }
       }
     }
