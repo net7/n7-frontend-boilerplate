@@ -104,7 +104,6 @@ export class AwGalleryLayoutDS extends LayoutDataSource {
   }
 
   createGallery(data) {
-    console.log(data);
     const dataGallery = [];
     const { items } = data.results;
     items.forEach((el) => {
