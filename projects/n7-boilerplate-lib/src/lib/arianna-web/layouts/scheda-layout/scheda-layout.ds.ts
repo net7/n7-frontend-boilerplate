@@ -147,7 +147,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       }
       this.contentParts.push(content);
       // image viewer
-      if (response.image) {
+      if (response.images) {
         const viewerDataSource = this.getWidgetDataSource('aw-scheda-image');
         if (!viewerDataSource.hasInstance()) {
           this.one('aw-scheda-image').update(response);

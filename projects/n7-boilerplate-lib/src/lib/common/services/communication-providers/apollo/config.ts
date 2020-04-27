@@ -256,6 +256,7 @@ export const ApolloProviderConfig = {
           title
           subTitle
           image
+          images
           text
           document_type
           fields {
