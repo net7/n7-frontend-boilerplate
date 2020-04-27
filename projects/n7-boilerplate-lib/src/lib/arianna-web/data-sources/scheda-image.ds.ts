@@ -30,8 +30,14 @@ export class AwSchedaImageDS extends DataSource {
   public updateImages(data) {
     if (!this.instance) return;
 
-    const images = this.getTileSources(data.images);
-    this.instance.open(images);
+    // reset
+    this.instance.world.removeAll();
+
+    setTimeout(() => {
+      const images = this.getTileSources(data.images);
+      console.warn('images', images.length, images);
+      this.instance.open(images);
+    });
   }
 
   private getTileSources(images) {
