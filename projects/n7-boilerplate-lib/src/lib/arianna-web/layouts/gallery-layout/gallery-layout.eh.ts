@@ -4,8 +4,11 @@ import { debounceTime, takeUntil } from 'rxjs/operators';
 
 export class AwGalleryLayoutEH extends EventHandler {
   private destroyed$: Subject<any> = new Subject();
+
   private route: any;
+
   private facetsChange$: Subject<any> = new Subject();
+
   private configuration: any;
 
   public listen() {
@@ -39,7 +42,7 @@ export class AwGalleryLayoutEH extends EventHandler {
           break;
 
         default:
-          console.warn('(gallery) unhandled inner event of type', type)
+          console.warn('(gallery) unhandled inner event of type', type);
           break;
       }
     });
@@ -52,7 +55,7 @@ export class AwGalleryLayoutEH extends EventHandler {
 
         case 'aw-gallery-results.pagination':
         case 'aw-gallery-results.goto':
-          this.dataSource.onPaginationChange(payload).subscribe(changed => {
+          this.dataSource.onPaginationChange(payload).subscribe((changed) => {
             if (changed) {
               this.facetsChange$.next();
             }
@@ -63,12 +66,16 @@ export class AwGalleryLayoutEH extends EventHandler {
           this.dataSource.onResultsLimitChange(payload);
           this.facetsChange$.next();
           break;
-            
-            case 'aw-gallery-results.click':
+
+        case 'aw-gallery-results.click':
+          // eslint-disable-next-line no-case-declarations
           const paths = this.dataSource.configuration.get('paths');
           this.emitGlobal('navigate', {
             handler: 'router',
-            path: [payload.type == undefined ? paths.schedaBasePath : paths.entitaBasePath, payload.id]
+            path: [payload.type === undefined
+              ? paths.schedaBasePath
+              : paths.entitaBasePath, payload.id
+            ]
           });
           break;
 
@@ -92,10 +99,9 @@ export class AwGalleryLayoutEH extends EventHandler {
   private _listenToRouterChanges() {
     this.route.queryParams.pipe(
       takeUntil(this.destroyed$)
-    ).subscribe(params => {
+    ).subscribe((params) => {
       this.emitOuter('queryparamschange', params);
       this.facetsChange$.next();
     });
   }
-
 }
