@@ -11,6 +11,7 @@ export class MrStaticLayoutDS extends LayoutDataSource {
   }
 
   pageRequest$(): Observable<any> {
+    // TODO: chanege whit var in url
     const configUrl = this.communication.rest.providerConfig.config.page;
     const getPageNum = window.location.href.match(/([^/]*)\/*$/)[1];
     this.communication.rest.providerConfig.config.page = configUrl + getPageNum;
