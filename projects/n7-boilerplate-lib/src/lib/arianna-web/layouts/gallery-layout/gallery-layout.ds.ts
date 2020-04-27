@@ -1,11 +1,13 @@
 import { LayoutDataSource } from '@n7-frontend/core';
+import { tap, takeUntil } from 'rxjs/operators';
+import {
+  Observable, of, fromEvent, Subject
+} from 'rxjs';
+import { cloneDeep } from 'lodash';
 import {
   SearchService,
   SearchModel
 } from '../../../common/services';
-import { tap, takeUntil } from 'rxjs/operators';
-import { Observable, of, fromEvent, Subject } from 'rxjs';
-import { cloneDeep } from 'lodash';
 import facetsConfig from './gallery-facets.config';
 import helpers from '../../../common/helpers';
 
@@ -14,17 +16,29 @@ const SEARCH_MODEL_ID = 'aw-gallery-layout';
 
 export class AwGalleryLayoutDS extends LayoutDataSource {
   private destroyed$: Subject<any> = new Subject();
+
   private communication: any;
+
   private configuration: any;
+
   private mainState: any;
+
   private search: SearchService;
+
   private searchModel: SearchModel;
-  private pageTitle: string = 'Galleria'
-  private sidebarIsSticky: boolean = true
+
+  private pageTitle = 'Galleria'
+
+  private sidebarIsSticky = true
+
   public currentPage: any = 1; // pagination value (url param)
+
   public pageSize = 12; // linked objects page size
+
   public isFirstLoading = true; // initial URL check
+
   public orderByLabel = 'Ordina per';
+
   public orderByOptions: any = [
     {
       value: 'label_ASC',
@@ -35,15 +49,24 @@ export class AwGalleryLayoutDS extends LayoutDataSource {
       label: 'Ordine alfabetico (Z→A)'
     }
   ];
-  public totalCount: number = 12
-  public resultsTitle: string = 'Risultati'
+
+  public totalCount = 12
+
+  public resultsTitle = 'Risultati'
+
   public options: any
+
   private prettifyLabels: any;
+
   private configKeys: any;
+
   private fallback: string;
+
   private resetButtonEnabled = true;
 
-  onInit({ configuration, mainState, options, communication, search }) {
+  onInit({
+    configuration, mainState, options, communication, search
+  }) {
     this.configuration = configuration;
     this.mainState = mainState;
     this.communication = communication;
@@ -71,11 +94,12 @@ export class AwGalleryLayoutDS extends LayoutDataSource {
     this.one('aw-gallery-results').updateOptions({
       currentPage: this.currentPage,
       pageSize: this.pageSize,
-    })
-    this.one('aw-gallery-results').update(null)
+    });
+    this.one('aw-gallery-results').update(null);
     this.mainState.updateCustom('currentNav', 'galleria');
     this.mainState.update('headTitle', 'Arianna Web > Galleria');
   }
+
   onDestroy() {
     this.destroyed$.next();
     SearchService.queryParams = null;
@@ -127,10 +151,10 @@ export class AwGalleryLayoutDS extends LayoutDataSource {
       }
     };
     return this.communication.request$('search', {
-      onError: error => console.error(error),
+      onError: (error) => console.error(error),
       params: requestPayload
     }).pipe(
-      tap(({ totalCount, results, facets }) => {
+      tap(({ totalCount, facets }) => {
         this.totalCount = totalCount;
         let resultsTitleIndex = 0;
         // results title
@@ -167,7 +191,7 @@ export class AwGalleryLayoutDS extends LayoutDataSource {
           currentPage: this.currentPage,
           pageSize: this.pageSize,
         });
-        this.one('aw-gallery-results').update(null)
+        this.one('aw-gallery-results').update(null);
       })
     );
   }
@@ -179,10 +203,10 @@ export class AwGalleryLayoutDS extends LayoutDataSource {
 
     this.currentPage = +page;
 
-    const searchConfig = this.searchModel.getConfig(),
-      pageConfig = searchConfig.page,
-      { limit } = pageConfig,
-      newOffset = (this.currentPage - 1) * limit;
+    const searchConfig = this.searchModel.getConfig();
+    const pageConfig = searchConfig.page;
+    const { limit } = pageConfig;
+    const newOffset = (this.currentPage - 1) * limit;
 
     this.searchModel.setPageConfigOffset(newOffset);
 
@@ -191,9 +215,9 @@ export class AwGalleryLayoutDS extends LayoutDataSource {
 
   private _addFacetsLabels(facets) {
     facets
-      .filter(f => Array.isArray(f.data))
-      .forEach(f => {
-        f.data.forEach(dataItem => {
+      .filter((f) => Array.isArray(f.data))
+      .forEach((f) => {
+        f.data.forEach((dataItem) => {
           const key = dataItem.label;
           dataItem.label = helpers.prettifySnakeCase(key, this.prettifyLabels[key]);
         });
@@ -202,11 +226,11 @@ export class AwGalleryLayoutDS extends LayoutDataSource {
 
   private _addFacetsOptions(facets) {
     facets
-      .filter(f => f.id === 'query-links')
-      .forEach(f => {
-        f.data.forEach(dataItem => {
-          const key = dataItem.value.replace(' ', '-'),
-            config = this.configKeys[key];
+      .filter((f) => f.id === 'query-links')
+      .forEach((f) => {
+        f.data.forEach((dataItem) => {
+          const key = dataItem.value.replace(' ', '-');
+          const config = this.configKeys[key];
           if (config) {
             dataItem.options = {
               icon: config.icon,
@@ -218,7 +242,7 @@ export class AwGalleryLayoutDS extends LayoutDataSource {
   }
 
   private _normalizeItems(items) {
-    return items.map(singleItem => ({ item: { ...singleItem } }));
+    return items.map((singleItem) => ({ item: { ...singleItem } }));
   }
 
   private _sidebarStickyControl() {
@@ -227,8 +251,8 @@ export class AwGalleryLayoutDS extends LayoutDataSource {
     source$.pipe(
       takeUntil(this.destroyed$)
     ).subscribe(() => {
-      const windowOffsetTop = window.pageYOffset,
-        wrapperOffsetTop = document.getElementsByClassName('sticky-parent')[0]['offsetTop'];
+      const windowOffsetTop = window.pageYOffset;
+      const wrapperOffsetTop = (document.getElementsByClassName('sticky-parent')[0] as HTMLElement).offsetTop;
       this.sidebarIsSticky = wrapperOffsetTop <= windowOffsetTop;
     });
   }

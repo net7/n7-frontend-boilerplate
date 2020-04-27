@@ -128,7 +128,8 @@ export default {
         }
       ]
     },
-    /*{
+    /*
+    {
       header: {
         label: 'Data',
         classes: 'date-class'
@@ -161,7 +162,8 @@ export default {
           }
         }
       ]
-    }*/
+    }
+    */
   ],
   results: {
     order: {
