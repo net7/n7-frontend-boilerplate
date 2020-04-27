@@ -1,4 +1,5 @@
 import { EventHandler } from '@n7-frontend/core';
+import { first, filter } from 'rxjs/operators';
 
 export class AwTreeEH extends EventHandler {
   public listen() {
@@ -39,9 +40,13 @@ export class AwTreeEH extends EventHandler {
             this.scrollLeafIntoView();
           } break;
         case 'aw-scheda-layout.viewleaf':
-          this.dataSource.out$.subscribe(() => {
-            this.scrollLeafIntoView();
-          });
+          this.dataSource.out$
+            .pipe(
+              filter((data) => !!data),
+              first()
+            ).subscribe(() => {
+              this.scrollLeafIntoView();
+            });
           break;
         default:
           break;
