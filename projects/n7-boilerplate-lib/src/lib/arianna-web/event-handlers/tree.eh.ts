@@ -8,6 +8,7 @@ export class AwTreeEH extends EventHandler {
         case 'aw-tree.click':
           if (payload.source === 'toggle') {
             this.dataSource.build(payload.id);
+            this.scrollOpenedIntoView();
           }
           break;
         default:
@@ -52,6 +53,26 @@ export class AwTreeEH extends EventHandler {
           break;
       }
     });
+  }
+
+  private scrollOpenedIntoView = () => {
+    this.dataSource.out$
+      .pipe(
+        filter((data) => !!data),
+        first()
+      ).subscribe(() => {
+        setTimeout(() => {
+          const expandedNode = document.querySelectorAll('.is-expanded .n7-icon-angle-down');
+          const lastExpandedNode = expandedNode.length
+            ? expandedNode[expandedNode.length - 1]
+            : null;
+
+          if (lastExpandedNode && !this.isInViewport(lastExpandedNode)) {
+            lastExpandedNode.scrollIntoView();
+            window.scrollTo(0, 0);
+          }
+        }, 500);
+      });
   }
 
   private scrollLeafIntoView = () => {
