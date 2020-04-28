@@ -119,13 +119,18 @@ export class AwLinkedObjectsDS extends DataSource {
       const toeData = _get(el, paths.metadata.toe.data, itemData.relatedTypesOfEntity);
       const breadcrumbs = _get(el, paths.metadata.breadcrumbs.data, itemData.breadcrumbs);
 
-      if (['entita', 'search'].includes(context)) {
+      if (['entita', 'search', 'gallery'].includes(context)) {
         if (itemData.typeOfEntity && itemData.typeOfEntity !== '') {
           infoDataItems.push({ key: 'Tipo di entità', value: keys[itemData.typeOfEntity]['singular-label'] });
         }
       }
       let classes = ['entita', 'search', 'oggetti-collegati'].includes(context) ? 'is-fullwidth' : '';
       classes += itemData.typeOfEntity ? ` is-${config.get('config-keys')[itemData.typeOfEntity]['class-name']}` : ' is-oggetto-culturale';
+
+      // gallery classes
+      if (context === 'gallery') {
+        classes += ' is-vertical has-image';
+      }
 
       // consider the lenght of <em> tags to exclude from count
       const highlights = _get(el, paths.title, itemData.label).match(/<em>/g) ? _get(el, paths.title, itemData.label).match(/<em>/g).length * 9 : 0;

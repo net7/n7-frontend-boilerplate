@@ -241,7 +241,7 @@ export class AwGalleryLayoutDS extends LayoutDataSource {
         this.searchModel.updateTotalCount(totalCount);
 
         this.one('aw-linked-objects').updateOptions({
-          context: 'search',
+          context: 'gallery',
           config: this.configuration,
           page: this.currentPage,
           pagination: true,
