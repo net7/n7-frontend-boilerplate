@@ -59,16 +59,6 @@
           "_meta": {
             "id": "ricerca"
           }
-        },
-        {
-          "text": "Utenti",
-          "anchor": {
-            "href": "aw/utenti"
-          },
-          "icon": "n7-icon-facebook",
-          "_meta": {
-            "id": "utenti"
-          }
         }
       ]
     },

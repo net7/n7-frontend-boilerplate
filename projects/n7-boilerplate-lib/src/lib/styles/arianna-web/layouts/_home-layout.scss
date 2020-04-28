@@ -554,6 +554,7 @@
             cursor: pointer;
         }
 
+        /* Only last item of the  breadcrumbs is displayed */
         .n7-breadcrumbs__list {
             >*:not(:last-child)   {
                 display: none;

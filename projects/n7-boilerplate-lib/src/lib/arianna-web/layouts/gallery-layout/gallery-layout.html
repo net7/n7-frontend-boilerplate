@@ -1,4 +1,4 @@
-<div class="aw-search n7-side-auto-padding" id="gallery-layout">
+<div class="aw-search aw-gallery n7-side-auto-padding" id="gallery-layout">
     <div class="aw-search__header">
         <div class="aw-search__header-left">
             <h1 class="aw-search__header-title">{{ lb.dataSource.pageTitle }}</h1>
@@ -67,11 +67,13 @@
                 }"></n7-content-placeholder>
             </div>
             <div *ngIf="!lb.dataSource.resultsLoading" class="aw-search__results-wrapper">
-                <div class="n7-grid-2" *ngFor="let preview of (lb.widgets['aw-linked-objects'].ds.out$ | async)?.previews">
-                    <n7-smart-breadcrumbs [data]="preview.breadcrumbs">
-                    </n7-smart-breadcrumbs>
-                    <n7-item-preview [data]="preview" [emit]="lb.widgets['aw-linked-objects'].emit">
-                    </n7-item-preview>
+                <div class="n7-grid-3">
+                    <div *ngFor="let preview of (lb.widgets['aw-linked-objects'].ds.out$ | async)?.previews">
+                        <n7-smart-breadcrumbs [data]="preview.breadcrumbs">
+                        </n7-smart-breadcrumbs>
+                        <n7-item-preview [data]="preview" [emit]="lb.widgets['aw-linked-objects'].emit">
+                        </n7-item-preview>
+                    </div>
                 </div>
                 <ng-container *ngIf="lb.dataSource.totalCount == 0">
                     <div class="aw-search__fallback">
