@@ -128,46 +128,12 @@ export default {
         }
       ]
     },
-    /*{
-      header: {
-        label: 'Data',
-        classes: 'date-class'
-      },
-      inputs: [
-        {
-          type: 'select',
-          facetId: 'date-from',
-          label: 'Dal',
-          filterConfig: {
-            searchIn: [
-              {
-                key: 'source.dateStart',
-                operator: '>='
-              }
-            ]
-          }
-        },
-        {
-          type: 'select',
-          facetId: 'date-to',
-          label: 'Al',
-          filterConfig: {
-            searchIn: [
-              {
-                key: 'source.dateEnd',
-                operator: '<='
-              }
-            ]
-          }
-        }
-      ]
-    }*/
   ],
   results: {
     order: {
-      type: 'text', // score | text | date
-      key: 'label', // docPath, elastic key, ecc
-      direction: 'ASC' // ASC | DESC
+      type: 'score', // score | text | date
+      key: '_score', // docPath, elastic key, ecc
+      direction: 'DESC' // ASC | DESC
     },
     fields: [
       {

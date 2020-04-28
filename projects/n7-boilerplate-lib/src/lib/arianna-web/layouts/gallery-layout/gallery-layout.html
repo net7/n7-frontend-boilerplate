@@ -1,158 +1,94 @@
-<div class="aw-gallery" *ngIf="lb.dataSource">
-
-  <div class="aw-gallery__header">
-    <div class="aw-gallery__header-left">
-      <h1 class="aw-gallery__header-title">{{ lb.dataSource.pageTitle }}</h1>
-    </div>
-  </div>
-
-  <div class="aw-gallery__content-wrapper sticky-parent">
-    
-    <!-- Left sidebar: facets -->
-    <div *ngIf="!(lb.widgets['facets-wrapper'].ds.out$ | async)" class="aw-gallery__sidebar-loading sticky-target">
-        <div class="aw-gallery__facets-loading">
-            <n7-content-placeholder [data]="{
-                blocks: [{
-                    classes: 'gallery-placeholder-facet-input'
-                }, {
-                    classes: 'gallery-placeholder-facet-check'
-                }, {
-                    classes: 'gallery-placeholder-facet-item'
-                }, {
-                    classes: 'gallery-placeholder-facet-item'
-                }, {
-                    classes: 'gallery-placeholder-facet-item'
-                }, {
-                    classes: 'gallery-placeholder-facet-item'
-                }, {
-                    classes: 'gallery-placeholder-facet-item'
-                }]
-            }">
-            </n7-content-placeholder>
+<div class="aw-search n7-side-auto-padding" id="gallery-layout">
+    <div class="aw-search__header">
+        <div class="aw-search__header-left">
+            <h1 class="aw-search__header-title">{{ lb.dataSource.pageTitle }}</h1>
         </div>
     </div>
-    <div *ngIf="!!(lb.widgets['facets-wrapper'].ds.out$ | async)" class="aw-gallery__sidebar sticky-target" [ngClass]="{ 'is-sticky': lb.dataSource.sidebarIsSticky }">
-        <div class="aw-gallery__facets">
-            <!-- <n7-facet-header [data]="{
-                iconLeft: 'n7-icon-search1',
-                text: 'Filtri di ricerca',
-                iconRight: 'n7-icon-angle-down',
-                classes: 'is-expanded',
-                payload: 'header'
-                }"></n7-facet-header> -->
-            <n7-facets-wrapper 
-                [data]="lb.widgets['facets-wrapper'].ds.out$ | async"
-                [emit]="lb.widgets['facets-wrapper'].emit">
-              </n7-facets-wrapper>
-        </div>
-    </div>
-
-    <div class="aw-gallery__content">
-      <div class="aw-gallery__results-header">
-        <div class="aw-gallery__results-header-left">
-          <h3 class="aw-gallery__total">
-            <span class="aw-gallery__total-number">{{ lb.dataSource.totalCount }}</span>&nbsp;
-            <span class="aw-gallery__total-title">{{ lb.dataSource.resultsTitle }}</span>
-          </h3>
-        </div>
-        <div class="aw-gallery__results-header-right">
-          <label class="aw-gallery__results-select-orderby-label"
-            for="aw-gallery__results-select-orderby">{{ lb.dataSource.orderByLabel }}</label>
-          <select (change)="lb.eventHandler.emitInner('orderbychange', $event.target.value)"
-            id="aw-gallery__results-select-orderby">
-            <option *ngFor="let option of lb.dataSource.orderByOptions" [value]="option.value">
-              {{ option.label }}</option>
-          </select>
-        </div>
-      </div>
-      
-      <!-- Gallery details -->
-      <div class="aw-gallery__results-wrapper">
-
-        <!-- Gallery results loader -->
-        <div *ngIf="!(lb.widgets['aw-gallery-results'].ds.out$ | async)"
-             class="aw-gallery__results-wrapper-loader n7-grid-3">
-             <n7-content-placeholder *ngFor="let i of [1,2,3,4,5,6,7,8,9]" [data]="{
-                blocks: [
-                    { classes: 'gallery-placeholder-image' },
-                    { classes: 'gallery-placeholder-title' },
-                    { classes: 'gallery-placeholder-subtitle' }
-                ]
+    <div class="aw-search__content-wrapper sticky-parent">
+        <!-- Left sidebar: facets -->
+        <div *ngIf="!(lb.widgets['facets-wrapper'].ds.out$ | async)" class="aw-search__sidebar-loading sticky-target">
+            <div class="aw-search__facets-loading">
+                <n7-content-placeholder [data]="{
+                    blocks: [{
+                        classes: 'search-placeholder-facet-input'
+                    }, {
+                        classes: 'search-placeholder-facet-check'
+                    }, {
+                        classes: 'search-placeholder-facet-item'
+                    }, {
+                        classes: 'search-placeholder-facet-item'
+                    }, {
+                        classes: 'search-placeholder-facet-item'
+                    }, {
+                        classes: 'search-placeholder-facet-item'
+                    }, {
+                        classes: 'search-placeholder-facet-item'
+                    }]
                 }">
-            </n7-content-placeholder>
-            <n7-content-placeholder *ngFor="let i of [1,2,3,4,5,6,7,8,9]" [data]="{
-                blocks: [
-                    { classes: 'gallery-placeholder-image' },
-                    { classes: 'gallery-placeholder-title' },
-                    { classes: 'gallery-placeholder-subtitle' }
-                ]
-                }">
-            </n7-content-placeholder>
-            <n7-content-placeholder *ngFor="let i of [1,2,3,4,5,6,7,8,9]" [data]="{
-                blocks: [
-                    { classes: 'gallery-placeholder-image' },
-                    { classes: 'gallery-placeholder-title' },
-                    { classes: 'gallery-placeholder-subtitle' }
-                ]
-                }">
-            </n7-content-placeholder>
-            <n7-content-placeholder *ngFor="let i of [1,2,3,4,5,6,7,8,9]" [data]="{
-                blocks: [
-                    { classes: 'gallery-placeholder-image' },
-                    { classes: 'gallery-placeholder-title' },
-                    { classes: 'gallery-placeholder-subtitle' }
-                ]
-                }">
-            </n7-content-placeholder>
-            <n7-content-placeholder *ngFor="let i of [1,2,3,4,5,6,7,8,9]" [data]="{
-                blocks: [
-                    { classes: 'gallery-placeholder-image' },
-                    { classes: 'gallery-placeholder-title' },
-                    { classes: 'gallery-placeholder-subtitle' }
-                ]
-                }">
-            </n7-content-placeholder>
-            <n7-content-placeholder *ngFor="let i of [1,2,3,4,5,6,7,8,9]" [data]="{
-                blocks: [
-                    { classes: 'gallery-placeholder-image' },
-                    { classes: 'gallery-placeholder-title' },
-                    { classes: 'gallery-placeholder-subtitle' }
-                ]
-                }">
-            </n7-content-placeholder>
-        </div>
-
-        <!-- Gallery results and pagination -->
-        <div class="aw-gallery__results">
-            <div class="aw-gallery__results-list n7-grid-3">
-                <n7-item-preview 
-                *ngFor="let item of (lb.widgets['aw-gallery-results'].ds.out$ | async)?.res"
-                class="gallery-result is-vertical"
-                [data]="item">
-                </n7-item-preview>
+                </n7-content-placeholder>
             </div>
-
-            <n7-pagination [data]="(lb.widgets['aw-gallery-results'].ds.out$ | async)?.pagination"
-            [emit]="lb.widgets['aw-gallery-results'].emit">
-            </n7-pagination>
-
-            <!-- <ng-container *ngIf="lb.dataSource.totalCount == 0">
-            <div class="aw-gallery__fallback">
-                <p class="aw-gallery__fallback-string">
-                {{ lb.dataSource.fallback }}
-                </p>
-                <button [disabled]="!lb.dataSource.resetButtonEnabled" class="n7-btn aw-gallery__fallback-button"
-                (click)="lb.eventHandler.emitInner('galleryreset', {})">
-                Resetta la ricerca
-                </button>
-            </div>
-            </ng-container>
-            <n7-pagination *ngIf="lb.dataSource.totalCount > 10"
-            [data]="(lb.widgets['aw-linked-objects'].ds.out$ | async)?.pagination"
-            [emit]="lb.widgets['aw-linked-objects'].emit">
-            </n7-pagination> -->
         </div>
-      </div>
+        <div *ngIf="!!(lb.widgets['facets-wrapper'].ds.out$ | async)" class="aw-search__sidebar sticky-target"
+            [ngClass]="{ 'is-sticky': lb.dataSource.sidebarIsSticky }">
+            <div class="aw-search__facets">
+                <n7-facets-wrapper [data]="lb.widgets['facets-wrapper'].ds.out$ | async"
+                    [emit]="lb.widgets['facets-wrapper'].emit">
+                </n7-facets-wrapper>
+            </div>
+        </div>
+        <div class="aw-search__content">
+            <div class="aw-search__results-header">
+                <div class="aw-search__results-header-left">
+                    <h3 *ngIf="!lb.dataSource.resultsLoading" class="aw-search__total">
+                        <span class="aw-search__total-number">{{ lb.dataSource.totalCount }}</span>&nbsp;
+                        <span class="aw-search__total-title">{{ lb.dataSource.resultsTitle }}</span>
+                    </h3>
+                </div>
+                <div class="aw-search__results-header-right">
+                    <label class="aw-search__results-select-orderby-label"
+                        for="aw-search__results-select-orderby">{{ lb.dataSource.orderByLabel }}</label>
+                    <select (change)="lb.eventHandler.emitInner('orderbychange', $event.target.value)"
+                        id="aw-search__results-select-orderby">
+                        <option *ngFor="let option of lb.dataSource.orderByOptions" [value]="option.value"
+                            [selected]="option.selected">
+                            {{ option.label }}</option>
+                    </select>
+                </div>
+            </div>
+            <!-- Search details -->
+            <div *ngIf="lb.dataSource.resultsLoading" class="aw-search__results-wrapper-loading">
+                <n7-content-placeholder *ngFor="let n of [0,1,2,3,4,5,6,7,8,9]" [data]="{
+                    blocks: [
+                        { classes: 'search-result-placeholder-title' },
+                        { classes: 'search-result-placeholder-metadata' },
+                        { classes: 'search-result-placeholder-metadata' },
+                        { classes: 'search-result-placeholder-metadata' }
+                    ]
+                }"></n7-content-placeholder>
+            </div>
+            <div *ngIf="!lb.dataSource.resultsLoading" class="aw-search__results-wrapper">
+                <ng-container *ngFor="let preview of (lb.widgets['aw-linked-objects'].ds.out$ | async)?.previews">
+                    <n7-smart-breadcrumbs [data]="preview.breadcrumbs">
+                    </n7-smart-breadcrumbs>
+                    <n7-item-preview [data]="preview" [emit]="lb.widgets['aw-linked-objects'].emit">
+                    </n7-item-preview>
+                </ng-container>
+                <ng-container *ngIf="lb.dataSource.totalCount == 0">
+                    <div class="aw-search__fallback">
+                        <p class="aw-search__fallback-string">
+                            {{ lb.dataSource.fallback }}
+                        </p>
+                        <button [disabled]="!lb.dataSource.resetButtonEnabled" class="n7-btn aw-search__fallback-button"
+                            (click)="lb.eventHandler.emitInner('searchreset', {})">
+                            Resetta la ricerca
+                        </button>
+                    </div>
+                </ng-container>
+                <n7-smart-pagination *ngIf="lb.dataSource.totalCount > 10"
+                    [data]="lb.widgets['n7-smart-pagination'].ds.out$ | async"
+                    [emit]="lb.widgets['n7-smart-pagination'].emit">
+                </n7-smart-pagination>
+            </div>
+        </div>
     </div>
-  </div>
 </div>

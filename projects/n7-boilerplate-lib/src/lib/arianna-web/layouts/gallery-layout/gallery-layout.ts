@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AbstractLayout } from "../../../common/models/abstract-layout";
+import { ActivatedRoute } from '@angular/router';
+import { AbstractLayout } from '../../../common/models/abstract-layout';
 import {
   ConfigurationService,
   LayoutsConfigurationService,
@@ -8,7 +9,6 @@ import {
   CommunicationService,
 } from '../../../common/services';
 import { AwGalleryLayoutConfig as config } from './gallery-layout.config';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'aw-gallery-layout',
@@ -34,7 +34,7 @@ export class AwGalleryLayoutComponent extends AbstractLayout implements OnInit, 
       search: this.search,
       route: this.route,
       options: this.config.options || {},
-    }
+    };
   }
 
   ngOnInit() {
@@ -44,5 +44,4 @@ export class AwGalleryLayoutComponent extends AbstractLayout implements OnInit, 
   ngOnDestroy() {
     this.onDestroy();
   }
-
 }

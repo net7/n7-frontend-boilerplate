@@ -302,6 +302,23 @@
     ],
     "fallback": "La tua ricerca non ha dato risultati. Prova a cambiare i parametri oppure a resettare la ricerca cliccando sul pulsante sottostante."
   },
+  "gallery-layout": {
+    "title": "Cerca nel patrimonio",
+    "results": [
+      "Nessun risultato",
+      "Risultato",
+      "Risultati"
+    ],
+    "enabledEntities": [
+      "oggetto-culturale",
+      "aggregazione",
+      "persona",
+      "luogo",
+      "cosa-notevole",
+      "organizzazione"
+    ],
+    "fallback": "La tua ricerca non ha dato risultati. Prova a cambiare i parametri oppure a resettare la ricerca cliccando sul pulsante sottostante."
+  },
   "entita-layout": {
     "overview": {
       "campi": [
@@ -467,7 +484,8 @@
   "paths": {
     "schedaBasePath": "/aw/patrimonio/",
     "entitaBasePath": "/aw/entita/",
-    "searchBasePath": "/aw/ricerca/"
+    "searchBasePath": "/aw/ricerca/",
+    "galleryBasePath": "/aw/galleria/"
   },
   "features-enabled": {
     "bubblechart": true

@@ -1,18 +1,17 @@
-import { LayoutDataSource } from '@n7-frontend/core';
+import { cloneDeep } from 'lodash';
+import { LayoutDataSource } from '@n7-frontend/core/dist/layout-data-source';
 import { tap, takeUntil } from 'rxjs/operators';
 import {
-  Observable, of, fromEvent, Subject
+  Observable, of, fromEvent, Subject,
 } from 'rxjs';
-import { cloneDeep } from 'lodash';
 import {
   SearchService,
-  SearchModel
+  SearchModel,
 } from '../../../common/services';
 import facetsConfig from './gallery-facets.config';
 import helpers from '../../../common/helpers';
 
 const SEARCH_MODEL_ID = 'aw-gallery-layout';
-
 
 export class AwGalleryLayoutDS extends LayoutDataSource {
   private destroyed$: Subject<any> = new Subject();
@@ -27,35 +26,6 @@ export class AwGalleryLayoutDS extends LayoutDataSource {
 
   private searchModel: SearchModel;
 
-  private pageTitle = 'Galleria'
-
-  private sidebarIsSticky = true
-
-  public currentPage: any = 1; // pagination value (url param)
-
-  public pageSize = 12; // linked objects page size
-
-  public isFirstLoading = true; // initial URL check
-
-  public orderByLabel = 'Ordina per';
-
-  public orderByOptions: any = [
-    {
-      value: 'label_ASC',
-      label: 'Ordine alfabetico (A→Z)'
-    },
-    {
-      value: 'label_DESC',
-      label: 'Ordine alfabetico (Z→A)'
-    }
-  ];
-
-  public totalCount = 12
-
-  public resultsTitle = 'Risultati'
-
-  public options: any
-
   private prettifyLabels: any;
 
   private configKeys: any;
@@ -64,10 +34,54 @@ export class AwGalleryLayoutDS extends LayoutDataSource {
 
   private resetButtonEnabled = true;
 
-  private galleryData;
+  public pageTitle: string;
+
+  public resultsTitle: string;
+
+  public totalCount: number;
+
+  public currentPage: any = 1; // pagination value (url param)
+
+  public pageSize = 10; // linked objects page size
+
+  public sidebarIsSticky = false;
+
+  public isFirstLoading = true;
+
+  public resultsLoading = false;
+
+  public orderBy = '_score';
+
+  public orderDirection = 'DESC';
+
+  public options: any;
+
+  public orderByLabel = 'Ordina per';
+
+  public orderByOptions: any = [
+    {
+      value: '_score_DESC',
+      label: 'Ordine per pertinenza',
+      type: 'score',
+      selected: true
+    },
+    {
+      value: 'label_sort_ASC',
+      label: 'Ordine alfabetico (A→Z)',
+      type: 'text',
+      selected: false
+
+    },
+    {
+      value: 'label_sort_DESC',
+      label: 'Ordine alfabetico (Z→A)',
+      type: 'text',
+      selected: false
+    }
+  ];
 
   onInit({
-    configuration, mainState, options, communication, search
+    configuration, mainState, options, communication, search,
   }) {
     this.configuration = configuration;
     this.mainState = mainState;
@@ -76,7 +90,10 @@ export class AwGalleryLayoutDS extends LayoutDataSource {
     this.options = options;
     this.prettifyLabels = this.configuration.get('labels');
     this.configKeys = this.configuration.get('config-keys');
-    this.fallback = this.configuration.get('search-layout').fallback;
+    this.fallback = this.configuration.get('gallery-layout').fallback;
+
+    this.pageTitle = this.configuration.get('gallery-layout').title;
+
     // remove first
     // stateless search
     if (this.search.model(SEARCH_MODEL_ID)) {
@@ -91,38 +108,12 @@ export class AwGalleryLayoutDS extends LayoutDataSource {
       this.searchModel.updateFiltersFromQueryParams(SearchService.queryParams);
       SearchService.queryParams = null;
     }
-    this.doGalleryRequest$().subscribe((res) => {
-      this.galleryData = this.createGallery(res);
-    });
-    this.one('aw-gallery-results').updateOptions({
-      currentPage: this.currentPage,
-      pageSize: this.pageSize,
-    });
-    this.one('aw-gallery-results').update(this.galleryData);
+
+    // sidebar sticky control
+    this._sidebarStickyControl();
+
     this.mainState.updateCustom('currentNav', 'galleria');
     this.mainState.update('headTitle', 'Arianna Web > Galleria');
-  }
-
-  createGallery(data) {
-    const dataGallery = [];
-    const { items } = data.results;
-    items.forEach((el) => {
-      dataGallery.push({
-        image: el.image,
-        title: el.title,
-        classes: 'is-vertical',
-        metadata: [
-          {
-            items: [
-              { label: 'aa', value: '0' },
-              { value: 'bb' }
-            ]
-          }
-        ]
-
-      });
-    });
-    return dataGallery;
   }
 
   onDestroy() {
@@ -130,8 +121,7 @@ export class AwGalleryLayoutDS extends LayoutDataSource {
     SearchService.queryParams = null;
   }
 
-  onGalleryResponse(data) {
-    this.galleryData = data;
+  onSearchResponse() {
     this.resetButtonEnabled = true;
     if (this.isFirstLoading) {
       this.isFirstLoading = false;
@@ -141,15 +131,58 @@ export class AwGalleryLayoutDS extends LayoutDataSource {
   }
 
   onOrderByChange(payload) {
-    const [orderBy, direction] = payload.split('_');
+    const orderBy = payload.substring(0, payload.lastIndexOf('_'));
+    const direction = payload.substring(payload.lastIndexOf('_') + 1);
+    let type = '';
+    // set selected
+    this.orderByOptions.forEach((option) => {
+      if (option.value === payload) {
+        option.selected = true;
+        type = option.type;
+      } else {
+        option.selected = false;
+      }
+    });
+
+    this.orderBy = orderBy;
+    this.orderDirection = direction;
 
     this.searchModel.setSearchConfigOrderBy(orderBy);
     this.searchModel.setSearchConfigDirection(direction);
+    this.searchModel.setSearchConfigType(type);
+  }
+
+  onPageSizeChange(size): Observable<boolean> {
+    this.pageSize = size;
+    return this._updateSearchPage(this.currentPage);
   }
 
   onPaginationChange(payload): Observable<boolean> {
-    const page = payload.replace('page-', '').replace('goto-', '');
+    const page = payload.replace('page-', '');
     return this._updateSearchPage(page);
+  }
+
+  onPaginationGoToChange(payload): Observable<boolean> {
+    const page = payload.replace('goto-', '');
+    return this._updateSearchPage(page);
+  }
+
+  drawPagination = () => {
+    const { href, queryParams } = this._getPaginationParams();
+    this.one('n7-smart-pagination').updateOptions({
+      mode: 'href',
+      href,
+      queryParams,
+    });
+    this.one('n7-smart-pagination').update({
+      totalPages: Math.ceil(this.totalCount / this.pageSize),
+      currentPage: this.currentPage,
+      pageLimit: 5,
+      sizes: {
+        list: [10, 25, 50],
+        active: this.pageSize,
+      },
+    });
   }
 
   resetPagination() {
@@ -157,32 +190,35 @@ export class AwGalleryLayoutDS extends LayoutDataSource {
   }
 
   onResultsLimitChange(payload) {
-    this.pageSize = payload;
-    this.searchModel.setPageConfigLimit(payload);
+    this.setLimit(payload);
 
     // reset page & offset
     this.currentPage = 1;
     this.searchModel.setPageConfigOffset(0);
   }
 
-  public getGalleryModelId = () => SEARCH_MODEL_ID;
+  setLimit(payload) {
+    this.pageSize = payload;
+    this.searchModel.setPageConfigLimit(payload);
+    this.searchModel.setPageConfigOffset((this.currentPage - 1) * this.pageSize);
+  }
 
-  public doGalleryRequest$(): Observable<any> {
+  public getSearchModelId = () => SEARCH_MODEL_ID;
+
+  public doSearchRequest$(): Observable<any> {
     const requestParams = this.searchModel.getRequestParams();
     const requestPayload = {
       searchParameters: {
         // FIXME: togliere totalCount
         totalCount: 100,
         gallery: true,
-        ...requestParams
-      }
+        ...requestParams,
+      },
     };
-
     return this.communication.request$('search', {
       onError: (error) => console.error(error),
-      params: requestPayload
+      params: requestPayload,
     }).pipe(
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       tap(({ totalCount, results, facets }) => {
         this.totalCount = totalCount;
         let resultsTitleIndex = 0;
@@ -192,7 +228,7 @@ export class AwGalleryLayoutDS extends LayoutDataSource {
         } else if (this.totalCount === 1) {
           resultsTitleIndex = 1;
         }
-        this.resultsTitle = this.configuration.get('search-layout').results[
+        this.resultsTitle = this.configuration.get('gallery-layout').results[
           resultsTitleIndex
         ];
 
@@ -209,20 +245,15 @@ export class AwGalleryLayoutDS extends LayoutDataSource {
           config: this.configuration,
           page: this.currentPage,
           pagination: true,
+          paginationParams: this._getPaginationParams(),
           dynamicPagination: {
-            total: totalCount
+            total: totalCount,
           },
-          size: this.pageSize
+          size: this.pageSize,
         });
-
-        // this.one('aw-linked-objects').update({ items: this._normalizeItems(results.items) });
-        this.one('aw-gallery-results').updateOptions({
-          currentPage: this.currentPage,
-          pageSize: this.pageSize,
-        });
-
-        this.one('aw-gallery-results').update(this.galleryData);
-      })
+        this.drawPagination();
+        this.one('aw-linked-objects').update({ items: this._normalizeItems(results.items) });
+      }),
     );
   }
 
@@ -259,12 +290,11 @@ export class AwGalleryLayoutDS extends LayoutDataSource {
       .filter((f) => f.id === 'query-links')
       .forEach((f) => {
         f.data.forEach((dataItem) => {
-          const key = dataItem.value.replace(' ', '-');
-          const config = this.configKeys[key];
+          const config = this.configKeys[dataItem.value];
           if (config) {
             dataItem.options = {
               icon: config.icon,
-              classes: `color-${key}`
+              classes: `color-${config['class-name']}`,
             };
           }
         });
@@ -276,14 +306,37 @@ export class AwGalleryLayoutDS extends LayoutDataSource {
   }
 
   private _sidebarStickyControl() {
+    // no sticky for Internet Explorer
+    if (helpers.browserIsIE()) {
+      return;
+    }
     const source$ = fromEvent(window, 'scroll');
 
     source$.pipe(
-      takeUntil(this.destroyed$)
+      takeUntil(this.destroyed$),
     ).subscribe(() => {
       const windowOffsetTop = window.pageYOffset;
-      const wrapperOffsetTop = document.getElementsByClassName('sticky-parent')[0].offsetTop;
+      const stickyParent = document.getElementsByClassName('sticky-parent')[0] as HTMLElement;
+      const wrapperOffsetTop = stickyParent ? stickyParent.offsetTop : 0;
       this.sidebarIsSticky = wrapperOffsetTop <= windowOffsetTop;
     });
+  }
+
+  private _getPaginationParams() {
+    const requestParams = this.searchModel.getRequestParams();
+    const queryParams = this.searchModel.filtersAsQueryParams(requestParams.filters);
+
+    Object.keys(queryParams).forEach((key) => { queryParams[key] = queryParams[key] || null; });
+
+    // aditional params
+    queryParams.orderby = this.orderBy;
+    queryParams.orderdirection = this.orderDirection;
+    queryParams.page = this.currentPage;
+    queryParams.limit = this.pageSize;
+
+    return {
+      queryParams,
+      href: this.configuration.get('paths').galleryBasePath,
+    };
   }
 }
