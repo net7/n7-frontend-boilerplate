@@ -35,22 +35,18 @@ export default {
   ],
   fields: [
     {
-      header: {
-        label: 'Filtri di ricerca',
-        classes: 'search-filters-header'
-      },
       inputs: [
         {
           type: 'text',
           facetId: 'query',
-          placeholder: 'Cerca',
+          placeholder: 'Cerca nei titoli delle schede',
           // icon: 'n7-icon-search',
           filterConfig: {
             delay: 500,
             minChars: 3,
             searchIn: [
               {
-                key: 'label',
+                key: 'label.ngrams',
                 operator: 'LIKE'
               }
             ]
@@ -62,7 +58,7 @@ export default {
           filterConfig: {
             searchIn: [
               {
-                key: 'query-all',
+                key: 'label.ngrams^5,text^4,fields.*^3',
                 operator: '='
               }
             ]
