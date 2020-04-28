@@ -1,35 +1,17 @@
 import { DataSource } from '@n7-frontend/core';
 
 export class AwGalleryResultsDS extends DataSource {
-  private GALLERY_RESULTS_MOCK = new Array(100)
-
   private pagination: any
 
   protected transform(data) {
-    // eslint-disable-next-line no-param-reassign
-    data = this.GALLERY_RESULTS_MOCK;
+    if (!data) return null;
     const { pageSize, currentPage } = this.options;
-    this.GALLERY_RESULTS_MOCK.fill(
-      {
-        image: 'https://i.imgur.com/2xY0DWR.png',
-        title: 'Costa di Sorrento',
-        classes: 'is-vertical',
-        metadata: [
-          {
-            items: [
-              { label: 'Artista', value: 'John Davies' },
-              { value: 'Fotografia' }
-            ]
-          }
-        ]
-      }
-    );
     // if the data doesn't fit on one page, render the pagination component
     if (data.length > pageSize) {
       this.addPagination(currentPage, Math.ceil(data.length / pageSize), pageSize);
     }
     return {
-      res: this.GALLERY_RESULTS_MOCK.slice(0, pageSize),
+      res: data.slice(0, pageSize),
       pagination: this.pagination
     };
   }
@@ -97,7 +79,8 @@ export class AwGalleryResultsDS extends DataSource {
         firstPage = 1;
       }
 
-      for (let i = firstPage; i <= lastPage; i += 1) {
+      // eslint-disable-next-line no-plusplus
+      for (let i = firstPage; i <= lastPage; i++) {
         result.push({
           text: String(i),
           payload: `page-${String(i)}`,
@@ -110,7 +93,8 @@ export class AwGalleryResultsDS extends DataSource {
         payload: 'page-1',
         classes: currentPage === 1 ? 'is-active' : ''
       });
-      for (let i = 1; i < totalPages; i += 1) {
+      // eslint-disable-next-line no-plusplus
+      for (let i = 1; i < totalPages; i++) {
         result.push({ text: String(i + 1), payload: `page-${String(i + 1)}`, classes: currentPage === i + 1 ? 'is-active' : '' });
       }
     }

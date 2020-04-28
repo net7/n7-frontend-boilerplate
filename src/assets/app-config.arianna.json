@@ -59,16 +59,6 @@
           "_meta": {
             "id": "ricerca"
           }
-        },
-        {
-          "text": "Utenti",
-          "anchor": {
-            "href": "aw/utenti"
-          },
-          "icon": "n7-icon-facebook",
-          "_meta": {
-            "id": "utenti"
-          }
         }
       ]
     },
@@ -302,6 +292,23 @@
     ],
     "fallback": "La tua ricerca non ha dato risultati. Prova a cambiare i parametri oppure a resettare la ricerca cliccando sul pulsante sottostante."
   },
+  "gallery-layout": {
+    "title": "Cerca nella galleria",
+    "results": [
+      "Nessun risultato",
+      "Risultato",
+      "Risultati"
+    ],
+    "enabledEntities": [
+      "oggetto-culturale",
+      "aggregazione",
+      "persona",
+      "luogo",
+      "cosa-notevole",
+      "organizzazione"
+    ],
+    "fallback": "La tua ricerca non ha dato risultati. Prova a cambiare i parametri oppure a resettare la ricerca cliccando sul pulsante sottostante."
+  },
   "entita-layout": {
     "overview": {
       "campi": [
@@ -467,7 +474,8 @@
   "paths": {
     "schedaBasePath": "/aw/patrimonio/",
     "entitaBasePath": "/aw/entita/",
-    "searchBasePath": "/aw/ricerca/"
+    "searchBasePath": "/aw/ricerca/",
+    "galleryBasePath": "/aw/galleria/"
   },
   "features-enabled": {
     "bubblechart": true

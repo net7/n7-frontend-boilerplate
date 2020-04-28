@@ -35,22 +35,18 @@ export default {
   ],
   fields: [
     {
-      header: {
-        label: 'Filtri di ricerca',
-        classes: 'search-filters-header'
-      },
       inputs: [
         {
           type: 'text',
           facetId: 'query',
-          placeholder: 'Cerca',
+          placeholder: 'Cerca nei titoli delle schede',
           // icon: 'n7-icon-search',
           filterConfig: {
             delay: 500,
             minChars: 3,
             searchIn: [
               {
-                key: 'label',
+                key: 'label.ngrams',
                 operator: 'LIKE'
               }
             ]
@@ -62,7 +58,7 @@ export default {
           filterConfig: {
             searchIn: [
               {
-                key: 'query-all',
+                key: 'label.ngrams^5,text^4,fields.*^3',
                 operator: '='
               }
             ]
@@ -128,48 +124,12 @@ export default {
         }
       ]
     },
-    /*
-    {
-      header: {
-        label: 'Data',
-        classes: 'date-class'
-      },
-      inputs: [
-        {
-          type: 'select',
-          facetId: 'date-from',
-          label: 'Dal',
-          filterConfig: {
-            searchIn: [
-              {
-                key: 'source.dateStart',
-                operator: '>='
-              }
-            ]
-          }
-        },
-        {
-          type: 'select',
-          facetId: 'date-to',
-          label: 'Al',
-          filterConfig: {
-            searchIn: [
-              {
-                key: 'source.dateEnd',
-                operator: '<='
-              }
-            ]
-          }
-        }
-      ]
-    }
-    */
   ],
   results: {
     order: {
-      type: 'text', // score | text | date
-      key: 'label', // docPath, elastic key, ecc
-      direction: 'ASC' // ASC | DESC
+      type: 'score', // score | text | date
+      key: '_score', // docPath, elastic key, ecc
+      direction: 'DESC' // ASC | DESC
     },
     fields: [
       {

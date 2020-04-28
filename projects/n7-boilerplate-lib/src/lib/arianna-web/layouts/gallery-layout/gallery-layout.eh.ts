@@ -9,6 +9,8 @@ export class AwGalleryLayoutEH extends EventHandler {
 
   private facetsChange$: Subject<any> = new Subject();
 
+  private aditionalParamsChange$: Subject<any> = new Subject();
+
   private configuration: any;
 
   public listen() {
@@ -19,6 +21,7 @@ export class AwGalleryLayoutEH extends EventHandler {
           this.configuration = payload.configuration;
           this.dataSource.onInit(payload);
           this._listenToFacetsChange();
+          this._listenToAditionalParamsChange();
           this._listenToRouterChanges();
           break;
 
@@ -29,20 +32,17 @@ export class AwGalleryLayoutEH extends EventHandler {
 
         case 'aw-gallery-layout.orderbychange':
           this.dataSource.onOrderByChange(payload);
-          this.facetsChange$.next();
+          this.aditionalParamsChange$.next();
           break;
 
-        case 'aw-gallery-layout.galleryreset':
+        case 'aw-gallery-layout.searchreset':
           this.dataSource.resetButtonEnabled = false;
-          this.dataSource.galleryModel.clear();
-          this.emitGlobal('navigate', {
-            handler: 'router',
-            path: [this.configuration.get('paths').galleryBasePath]
-          });
+          this.dataSource.searchModel.clear();
+          this.aditionalParamsChange$.next();
           break;
 
         default:
-          console.warn('(gallery) unhandled inner event of type', type);
+          console.warn('(search) unhandled inner event of type', type);
           break;
       }
     });
@@ -53,29 +53,10 @@ export class AwGalleryLayoutEH extends EventHandler {
           this.dataSource.resetPagination();
           break;
 
-        case 'aw-gallery-results.pagination':
-        case 'aw-gallery-results.goto':
-          this.dataSource.onPaginationChange(payload).subscribe((changed) => {
-            if (changed) {
-              this.facetsChange$.next();
-            }
-          });
+        case 'n7-smart-pagination.change':
+          this.dataSource.onResultsLimitChange(payload.value);
+          this.aditionalParamsChange$.next();
           break;
-
-        case 'aw-gallery-results.change':
-          this.dataSource.onResultsLimitChange(payload);
-          this.facetsChange$.next();
-          break;
-
-        case 'aw-gallery-results.click': {
-          const paths = this.dataSource.configuration.get('paths');
-          this.emitGlobal('navigate', {
-            handler: 'router',
-            path: [payload.type === undefined
-              ? paths.schedaBasePath
-              : paths.entitaBasePath, payload.id]
-          });
-        } break;
 
         default:
           break;
@@ -85,20 +66,55 @@ export class AwGalleryLayoutEH extends EventHandler {
 
   private _listenToFacetsChange() {
     this.facetsChange$.pipe(
-      debounceTime(500)
+      debounceTime(500),
     ).subscribe(() => {
-      this.dataSource.doGalleryRequest$().subscribe(() => {
-        this.dataSource.onGalleryResponse();
-        this.emitGlobal('galleryresponse', this.dataSource.getGalleryModelId());
+      this.dataSource.resultsLoading = true;
+      this.dataSource.doSearchRequest$().subscribe(() => {
+        this.dataSource.resultsLoading = false;
+        this.dataSource.onSearchResponse();
+        this.emitGlobal('searchresponse', this.dataSource.getSearchModelId());
+      });
+    });
+  }
+
+  private _listenToAditionalParamsChange() {
+    this.aditionalParamsChange$.subscribe(() => {
+      const { searchModel } = this.dataSource;
+      const requestParams = searchModel.getRequestParams();
+      const queryParams = searchModel.filtersAsQueryParams(requestParams.filters);
+
+      Object.keys(queryParams).forEach((key) => { queryParams[key] = queryParams[key] || null; });
+
+      // aditional params
+      queryParams.orderby = this.dataSource.orderBy;
+      queryParams.orderdirection = this.dataSource.orderDirection;
+      queryParams.page = this.dataSource.currentPage;
+      queryParams.limit = this.dataSource.pageSize;
+
+      // router signal
+      this.emitGlobal('navigate', {
+        handler: 'router',
+        path: [],
+        queryParams,
       });
     });
   }
 
   private _listenToRouterChanges() {
     this.route.queryParams.pipe(
-      takeUntil(this.destroyed$)
+      takeUntil(this.destroyed$),
     ).subscribe((params) => {
       this.emitOuter('queryparamschange', params);
+      // aditional params control
+      if (params.orderby && params.orderdirection) {
+        this.dataSource.onOrderByChange(`${params.orderby}_${params.orderdirection}`);
+      }
+      if (params.page) {
+        this.dataSource.onPaginationChange(`page-${params.page}`);
+      }
+      if (params.limit) {
+        this.dataSource.setLimit(+params.limit);
+      }
       this.facetsChange$.next();
     });
   }
