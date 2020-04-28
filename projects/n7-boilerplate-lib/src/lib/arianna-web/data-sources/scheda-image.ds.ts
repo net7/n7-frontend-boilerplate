@@ -5,7 +5,7 @@ export class AwSchedaImageDS extends DataSource {
   private instance;
 
   protected transform(data): ImageViewerData {
-    const tileSources = this.getTileSources(data.image);
+    const tileSources = this.getTileSources(data.images);
 
     return {
       images: [],
@@ -30,8 +30,14 @@ export class AwSchedaImageDS extends DataSource {
   public updateImages(data) {
     if (!this.instance) return;
 
-    const images = this.getTileSources(data.image);
-    this.instance.open(images);
+    // reset
+    this.instance.world.removeAll();
+
+    setTimeout(() => {
+      const images = this.getTileSources(data.images);
+      console.warn('images', images.length, images);
+      this.instance.open(images);
+    });
   }
 
   private getTileSources(images) {

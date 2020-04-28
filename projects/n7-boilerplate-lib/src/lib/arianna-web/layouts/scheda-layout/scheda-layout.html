@@ -30,7 +30,7 @@
 
         <!-- Scheda details -->
         <div class="aw-scheda__scheda-wrapper-loading"
-             *ngIf="lb.dataSource.contentIsLoading">
+             [hidden]="!lb.dataSource.contentIsLoading">
             <!--
                 <n7-content-placeholder [data]="{
                 blocks: [{
@@ -52,7 +52,7 @@
             -->
         </div>
         <div class="aw-scheda__scheda-wrapper"
-             *ngIf="!lb.dataSource.contentIsLoading">
+             [hidden]="lb.dataSource.contentIsLoading">
             <n7-smart-breadcrumbs *ngIf="lb.dataSource.hasBreadcrumb"
                                   [data]="lb.widgets['aw-scheda-breadcrumbs'].ds.out$ | async"
                                   [emit]="lb.widgets['aw-scheda-breadcrumbs'].emit">
@@ -70,7 +70,7 @@
             <n7-inner-title [data]="lb.widgets['aw-scheda-inner-title'].ds.out$ | async">
             </n7-inner-title>
 
-            <n7-image-viewer *ngIf="lb.dataSource.hasImage"
+            <n7-image-viewer [hidden]="!lb.dataSource.hasImage"
                              [data]="lb.widgets['aw-scheda-image'].ds.out$ | async">
             </n7-image-viewer>
 
