@@ -49,7 +49,8 @@ export class N7BoilerplateAriannaWebModule {
     // note: this is just for arianna* sites!
     initStatus.donePromise.then(() => {
       const communication = config.get('communication');
-      communication.providers.apollo.config = apolloConfig;
+      const { defaultProvider } = communication;
+      communication.providers[defaultProvider].config = apolloConfig;
       config.set('communication', communication);
     });
   }
