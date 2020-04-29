@@ -17,6 +17,7 @@
                 }"></n7-content-placeholder>
             </div>
             <div class="aw-scheda__tree-content"
+                 (click)="lb.eventHandler.emitOuter('treeposition', $event)"
                  [ngStyle]="{
                     'max-height': lb.dataSource.treeMaxHeight,
                     'overflow': 'auto'

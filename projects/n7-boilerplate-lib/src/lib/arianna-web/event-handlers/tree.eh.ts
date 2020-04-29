@@ -1,14 +1,23 @@
 import { EventHandler } from '@n7-frontend/core';
-import { first, filter } from 'rxjs/operators';
+import { first, filter, withLatestFrom } from 'rxjs/operators';
+import { ReplaySubject } from 'rxjs';
 
 export class AwTreeEH extends EventHandler {
+  private scrollOffset = 0;
+
+  private currentExpH = 0;
+
+  private targetOffset = new ReplaySubject()
+
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
         case 'aw-tree.click':
           if (payload.source === 'toggle') {
-            this.dataSource.build(payload.id);
-            this.scrollOpenedIntoView();
+            setTimeout(() => {
+              this.dataSource.build(payload.id);
+              this.scrollOpenedIntoView();
+            });
           }
           break;
         default:
@@ -49,6 +58,33 @@ export class AwTreeEH extends EventHandler {
               this.scrollLeafIntoView();
             });
           break;
+        case 'aw-scheda-layout.treeposition': {
+          this.targetOffset.next(payload.target.getBoundingClientRect().top);
+          const expandedNode = document.getElementsByClassName('n7-tree__item is-expanded');
+          const lastExpandedNode = expandedNode.length
+            ? expandedNode[0]
+            : null;
+          // const scroller = document.querySelector('.aw-scheda__tree-content');
+          if (lastExpandedNode) {
+            const expandedHeight = lastExpandedNode.querySelector('.n7-tree__children-wrapper').clientHeight;
+            this.scrollOffset = (lastExpandedNode as HTMLElement).getBoundingClientRect().top;
+            // (lastExpandedNode as HTMLElement).offsetTop
+            //   - scroller.scrollTop
+            //   + this.currentExpH;
+            // this.scrollOffset = payload.target.offsetTop - scroller.scrollTop;
+            // console.log({
+            //   payload,
+            //   // 'payload-target': payload.target,
+            //   height: this.currentExpH,
+            //   target: lastExpandedNode,
+            //   offset: (lastExpandedNode as HTMLElement).offsetTop,
+            //   parentScroll: scroller.scrollTop,
+            //   calculated: this.scrollOffset,
+            //   rect: (lastExpandedNode as HTMLElement).getBoundingClientRect(),
+            // });
+            this.currentExpH = expandedHeight;
+          }
+        } break;
         default:
           break;
       }
@@ -59,17 +95,19 @@ export class AwTreeEH extends EventHandler {
     this.dataSource.out$
       .pipe(
         filter((data) => !!data),
-        first()
-      ).subscribe(() => {
+        first(),
+        withLatestFrom(this.targetOffset),
+      ).subscribe(([, offset]) => {
         setTimeout(() => {
-          const expandedNode = document.querySelectorAll('.is-expanded .n7-icon-angle-down');
+          // console.log({ offset });
+          const expandedNode = document.getElementsByClassName('n7-tree__item is-expanded');
           const lastExpandedNode = expandedNode.length
             ? expandedNode[expandedNode.length - 1]
             : null;
-
-          if (lastExpandedNode && !this.isInViewport(lastExpandedNode)) {
+          if (lastExpandedNode) {
             lastExpandedNode.scrollIntoView();
             window.scrollTo(0, 0);
+            document.querySelector('.aw-scheda__tree-content').scrollTop -= offset;
           }
         }, 500);
       });
