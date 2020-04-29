@@ -7,7 +7,9 @@ export class AwTreeEH extends EventHandler {
 
   private currentExpH = 0;
 
-  private targetOffset = new ReplaySubject()
+  private targetOffset = new ReplaySubject();
+
+  private targetIsOpen = false;
 
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
@@ -16,7 +18,9 @@ export class AwTreeEH extends EventHandler {
           if (payload.source === 'toggle') {
             setTimeout(() => {
               this.dataSource.build(payload.id);
-              this.scrollOpenedIntoView();
+              if (this.targetIsOpen) {
+                this.scrollOpenedIntoView();
+              }
             });
           }
           break;
@@ -59,31 +63,35 @@ export class AwTreeEH extends EventHandler {
             });
           break;
         case 'aw-scheda-layout.treeposition': {
-          this.targetOffset.next(payload.target.getBoundingClientRect().top);
-          const expandedNode = document.getElementsByClassName('n7-tree__item is-expanded');
-          const lastExpandedNode = expandedNode.length
-            ? expandedNode[0]
-            : null;
+          const { target } = payload;
+          const targetRect = target.getBoundingClientRect();
+          this.targetIsOpen = target.className.indexOf('n7-icon-angle-right') !== -1;
+          this.targetOffset.next(targetRect.top);
+          // const expandedNode = document.getElementsByClassName('n7-tree__item is-expanded');
+          // const lastExpandedNode = expandedNode.length
+          //   ? expandedNode[0]
+          //   : null;
           // const scroller = document.querySelector('.aw-scheda__tree-content');
-          if (lastExpandedNode) {
-            const expandedHeight = lastExpandedNode.querySelector('.n7-tree__children-wrapper').clientHeight;
-            this.scrollOffset = (lastExpandedNode as HTMLElement).getBoundingClientRect().top;
-            // (lastExpandedNode as HTMLElement).offsetTop
-            //   - scroller.scrollTop
-            //   + this.currentExpH;
-            // this.scrollOffset = payload.target.offsetTop - scroller.scrollTop;
-            // console.log({
-            //   payload,
-            //   // 'payload-target': payload.target,
-            //   height: this.currentExpH,
-            //   target: lastExpandedNode,
-            //   offset: (lastExpandedNode as HTMLElement).offsetTop,
-            //   parentScroll: scroller.scrollTop,
-            //   calculated: this.scrollOffset,
-            //   rect: (lastExpandedNode as HTMLElement).getBoundingClientRect(),
-            // });
-            this.currentExpH = expandedHeight;
-          }
+          // if (lastExpandedNode) {
+          //   const expandedHeight = lastExpandedNode
+          //   .querySelector('.n7-tree__children-wrapper').clientHeight;
+          //   this.scrollOffset = (lastExpandedNode as HTMLElement).getBoundingClientRect().top;
+          //   (lastExpandedNode as HTMLElement).offsetTop
+          //     - scroller.scrollTop
+          //     + this.currentExpH;
+          //   this.scrollOffset = payload.target.offsetTop - scroller.scrollTop;
+          //   console.log({
+          //     payload,
+          //     // 'payload-target': payload.target,
+          //     height: this.currentExpH,
+          //     target: lastExpandedNode,
+          //     offset: (lastExpandedNode as HTMLElement).offsetTop,
+          //     parentScroll: scroller.scrollTop,
+          //     calculated: this.scrollOffset,
+          //     rect: (lastExpandedNode as HTMLElement).getBoundingClientRect(),
+          //   });
+          //   this.currentExpH = expandedHeight;
+          // }
         } break;
         default:
           break;
@@ -99,17 +107,19 @@ export class AwTreeEH extends EventHandler {
         withLatestFrom(this.targetOffset),
       ).subscribe(([, offset]) => {
         setTimeout(() => {
-          // console.log({ offset });
+          const wrapperEl = document.querySelector('.aw-scheda__tree-content') as HTMLElement;
           const expandedNode = document.getElementsByClassName('n7-tree__item is-expanded');
           const lastExpandedNode = expandedNode.length
             ? expandedNode[expandedNode.length - 1]
             : null;
           if (lastExpandedNode) {
+            const wrapperElRect = wrapperEl.getBoundingClientRect();
+            const offsetToAdjust = offset - wrapperElRect.top;
             lastExpandedNode.scrollIntoView();
+            wrapperEl.scrollTop -= offsetToAdjust;
             window.scrollTo(0, 0);
-            document.querySelector('.aw-scheda__tree-content').scrollTop -= offset;
           }
-        }, 500);
+        });
       });
   }
 
