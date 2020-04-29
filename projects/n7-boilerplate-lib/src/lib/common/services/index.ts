@@ -6,7 +6,5 @@ export * from './json-config.service';
 export * from './search.service';
 
 // communication providers
-export * from './communication-providers/apollo/apollo.provider';
-export * from './communication-providers/apollo/config';
-export * from './communication-providers/rest/rest.provider';
-export * from './communication-providers/rest/config';
+export * from './communication-providers/apollo.provider';
+export * from './communication-providers/rest.provider';

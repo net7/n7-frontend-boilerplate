@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs/operators';
 import { Observable, empty } from 'rxjs';
 import { ConfigurationService } from './configuration.service';
-import { ApolloProvider } from './communication-providers/apollo/apollo.provider';
-import { RestProvider } from './communication-providers/rest/rest.provider';
+import { ApolloProvider } from './communication-providers/apollo.provider';
+import { RestProvider } from './communication-providers/rest.provider';
 
 @Injectable({
   providedIn: 'root',
@@ -28,10 +28,20 @@ export class CommunicationService {
 
   request$(requestId, options: any = {}, provider?) {
     const activeProvider = provider || this.defaultProvider;
-    if (!this[activeProvider]) throw Error(`There is no ${activeProvider} provider`);
+    const activeProviderConfig = this.communicationConfig.providers[activeProvider];
+    // provider.type control for retrocompatibility
+    const activeProviderType = activeProviderConfig.type || activeProvider;
+
+    if (!activeProviderConfig) {
+      throw Error(`There is no config for ${activeProvider} provider`);
+    }
+
+    if (!this[activeProviderType]) {
+      throw Error(`There is no ${activeProviderType} provider`);
+    }
 
     const { onError } = options;
-    return this[activeProvider].request$(requestId, options)
+    return this[activeProviderType].request$(activeProviderConfig, requestId, options)
       .pipe(
         catchError((error) => this.handleError(error, onError)),
       );

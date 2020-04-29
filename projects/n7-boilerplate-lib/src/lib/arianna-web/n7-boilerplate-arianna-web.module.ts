@@ -1,5 +1,5 @@
 // MODULES
-import { NgModule } from '@angular/core';
+import { NgModule, ApplicationInitStatus } from '@angular/core';
 import { CommonModule } from '@angular/common';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { RouterModule } from '@angular/router';
@@ -15,6 +15,8 @@ import { AwGalleryLayoutComponent } from './layouts/gallery-layout/gallery-layou
 import { ChartTippyComponent } from './components/chart-tippy/chart-tippy';
 import { BubbleChartWrapperComponent } from './components/bubble-chart-wrapper/bubble-chart-wrapper';
 import { SmartBreadcrumbsComponent } from './components/smart-breadcrumbs/smart-breadcrumbs';
+import { ConfigurationService } from '../common/services/configuration.service';
+import apolloConfig from './config/apollo.config';
 
 const COMPONENTS = [
   AwEntitaLayoutComponent,
@@ -27,7 +29,6 @@ const COMPONENTS = [
   SmartBreadcrumbsComponent,
 ];
 
-
 @NgModule({
   declarations: COMPONENTS,
   imports: [
@@ -36,8 +37,20 @@ const COMPONENTS = [
     DvComponentsLibModule,
     N7BoilerplateCommonModule,
   ],
-  providers: [],
   entryComponents: COMPONENTS,
   exports: COMPONENTS,
 })
-export class N7BoilerplateAriannaWebModule { }
+export class N7BoilerplateAriannaWebModule {
+  constructor(
+    initStatus: ApplicationInitStatus,
+    config: ConfigurationService
+  ) {
+    // add apollo config on app init
+    // note: this is just for arianna* sites!
+    initStatus.donePromise.then(() => {
+      const communication = config.get('communication');
+      communication.providers.apollo.config = apolloConfig;
+      config.set('communication', communication);
+    });
+  }
+}
