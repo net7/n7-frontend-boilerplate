@@ -3,10 +3,6 @@ import { first, filter, withLatestFrom } from 'rxjs/operators';
 import { ReplaySubject } from 'rxjs';
 
 export class AwTreeEH extends EventHandler {
-  private scrollOffset = 0;
-
-  private currentExpH = 0;
-
   private targetOffset = new ReplaySubject();
 
   private targetIsOpen = false;
@@ -67,31 +63,6 @@ export class AwTreeEH extends EventHandler {
           const targetRect = target.getBoundingClientRect();
           this.targetIsOpen = target.className.indexOf('n7-icon-angle-right') !== -1;
           this.targetOffset.next(targetRect.top);
-          // const expandedNode = document.getElementsByClassName('n7-tree__item is-expanded');
-          // const lastExpandedNode = expandedNode.length
-          //   ? expandedNode[0]
-          //   : null;
-          // const scroller = document.querySelector('.aw-scheda__tree-content');
-          // if (lastExpandedNode) {
-          //   const expandedHeight = lastExpandedNode
-          //   .querySelector('.n7-tree__children-wrapper').clientHeight;
-          //   this.scrollOffset = (lastExpandedNode as HTMLElement).getBoundingClientRect().top;
-          //   (lastExpandedNode as HTMLElement).offsetTop
-          //     - scroller.scrollTop
-          //     + this.currentExpH;
-          //   this.scrollOffset = payload.target.offsetTop - scroller.scrollTop;
-          //   console.log({
-          //     payload,
-          //     // 'payload-target': payload.target,
-          //     height: this.currentExpH,
-          //     target: lastExpandedNode,
-          //     offset: (lastExpandedNode as HTMLElement).offsetTop,
-          //     parentScroll: scroller.scrollTop,
-          //     calculated: this.scrollOffset,
-          //     rect: (lastExpandedNode as HTMLElement).getBoundingClientRect(),
-          //   });
-          //   this.currentExpH = expandedHeight;
-          // }
         } break;
         default:
           break;
@@ -113,13 +84,16 @@ export class AwTreeEH extends EventHandler {
             ? expandedNode[expandedNode.length - 1]
             : null;
           if (lastExpandedNode) {
+            const scrollTreeEl = document.querySelector('.n7-tree') as HTMLElement;
             const wrapperElRect = wrapperEl.getBoundingClientRect();
             const offsetToAdjust = offset - wrapperElRect.top;
+            scrollTreeEl.style.marginBottom = '1000px';
             lastExpandedNode.scrollIntoView();
             wrapperEl.scrollTop -= offsetToAdjust;
             window.scrollTo(0, 0);
+            scrollTreeEl.style.marginBottom = '0px';
           }
-        });
+        }, 200);
       });
   }
 
