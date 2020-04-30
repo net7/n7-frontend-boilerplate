@@ -38,7 +38,7 @@ export class CommunicationService {
     const activeProviderType = activeProviderConfig.type || activeProvider;
 
     if (!this[activeProviderType]) {
-      throw Error(`There is no "${activeProviderType}" provider`);
+      throw Error(`There is no "${activeProviderType}" provider type`);
     }
 
     const { onError } = options;
