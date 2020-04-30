@@ -8,6 +8,9 @@
     HERO
 \* ------------------------------------ */
 .aw-home__top-hero {
+    z-index: 20;
+    position: relative;
+
     .n7-hero {
         height: $top-hero-height;
 
