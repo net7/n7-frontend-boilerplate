@@ -29,15 +29,16 @@ export class CommunicationService {
   request$(requestId, options: any = {}, provider?) {
     const activeProvider = provider || this.defaultProvider;
     const activeProviderConfig = this.communicationConfig.providers[activeProvider];
+
+    if (!activeProviderConfig) {
+      throw Error(`There is no config for "${activeProvider}" provider`);
+    }
+
     // provider.type control for retrocompatibility
     const activeProviderType = activeProviderConfig.type || activeProvider;
 
-    if (!activeProviderConfig) {
-      throw Error(`There is no config for ${activeProvider} provider`);
-    }
-
     if (!this[activeProviderType]) {
-      throw Error(`There is no ${activeProviderType} provider`);
+      throw Error(`There is no "${activeProviderType}" provider`);
     }
 
     const { onError } = options;
