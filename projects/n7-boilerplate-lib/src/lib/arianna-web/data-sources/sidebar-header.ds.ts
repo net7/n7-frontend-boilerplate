@@ -15,11 +15,10 @@ export class AwSidebarHeaderDS extends DataSource {
     const sidebarData = this.output;
     if (sidebarData.classes === 'is-expanded') {
       sidebarData.classes = 'is-collapsed';
-      sidebarData.iconRight = 'n7-icon-tree-icon';
+      sidebarData.iconRight = 'n7-icon-angle-right';
     } else {
       sidebarData.classes = 'is-expanded';
       sidebarData.iconRight = 'n7-icon-angle-left';
     }
-    this.update(sidebarData);
   }
 }

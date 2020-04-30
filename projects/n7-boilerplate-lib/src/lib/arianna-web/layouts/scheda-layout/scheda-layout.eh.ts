@@ -40,7 +40,8 @@ export class AwSchedaLayoutEH extends EventHandler {
         case 'aw-bubble-chart.d3end': // bounce the event, from bubble-chart to chart-tippy
           this.emitOuter('d3end', payload);
           break;
-        case 'aw-sidebar-header.click': this.dataSource.collapseSidebar();
+        case 'aw-sidebar-header.click':
+          this.dataSource.collapseSidebar();
           break;
         case 'aw-bubble-chart.bubble-tooltip-goto-click': {
           const { id, label } = payload;
