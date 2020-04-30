@@ -42,7 +42,7 @@ export class AwGalleryLayoutDS extends LayoutDataSource {
 
   public currentPage: any = 1; // pagination value (url param)
 
-  public pageSize = 10; // linked objects page size
+  public pageSize = 12; // linked objects page size
 
   public sidebarIsSticky = false;
 
@@ -179,7 +179,7 @@ export class AwGalleryLayoutDS extends LayoutDataSource {
       currentPage: this.currentPage,
       pageLimit: 5,
       sizes: {
-        list: [10, 25, 50],
+        list: [12, 24, 48],
         active: this.pageSize,
       },
     });
