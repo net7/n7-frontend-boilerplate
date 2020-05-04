@@ -1,18 +1,36 @@
-<div class="search-layout"
+<div class="mr-search mr-layout"
      *ngIf="lb.dataSource">
-    <div class="search-wrapper">
-        <!-- SIDEBAR -->
-        <div class="filter-section">
-            <h2>Filtra i risultati</h2>
-            <mr-search-facets-layout 
-            [data]="lb.dataSource.facetsConfig"
-            [hostEmit$]="hostEmit$"
-            [guestEmit$]="guestEmit$">
-            </mr-search-facets-layout>
+    <section class="mr-layout__maxwidth">
+
+        <div class="mr-search__title">
+            INNER TITLE COMPONENT HERE
         </div>
-        <!-- RESULTS -->
-        <n7-item-preview *ngFor="let resource of (lb.widgets['mr-resources'].ds.out$ | async)"
-                         [data]="resource">
-        </n7-item-preview>
-    </div>
+        
+        <div class="mr-search__results-content">
+            <aside class="mr-search__facets">
+                <div class="filter-section">
+                    <h2>Filtra i risultati</h2>
+                    <mr-search-facets-layout 
+                    [data]="lb.dataSource.facetsConfig"
+                    [hostEmit$]="hostEmit$"
+                    [guestEmit$]="guestEmit$">
+                    </mr-search-facets-layout>
+                </div>
+            </aside>
+            <div class="mr-search__results-wrapper">
+                <div class="mr-search__results-info">
+                    Inner title with results number and sorting
+                </div>
+                <div class="mr-search__results-filters">
+                    Filter, when active
+                </div>
+                <main class="mr-search__results">
+                    <n7-item-preview *ngFor="let resource of (lb.widgets['mr-resources'].ds.out$ | async)"
+                                    [data]="resource">
+                    </n7-item-preview>
+                </main>
+            </div>
+        </div>
+
+    </section>
 </div>

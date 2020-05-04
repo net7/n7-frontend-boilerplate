@@ -22,10 +22,11 @@ export class MrHomeLayoutDS extends LayoutDataSource {
       }
     });
     this.one('mr-hero').update({
-      text: 'The Totus Mundus project presents a series of information and data about the jesuit Matteo Ricci, its life, the maps he created and the people he collaborated with',
+      title: 'L\'archivio',
+      text: 'Il progetto Unus sufficit orbis presenta infromazioni e dati relativi al lavoro e la vita del gesuita Matteo Ricci: le sue mappe che ha creato e le persone con cui ha collaborato.',
       button: {
         title: '',
-        text: 'Cerca',
+        text: 'Vai alle opere',
         anchor: {
           href: '/button-url',
           target: '_blank'

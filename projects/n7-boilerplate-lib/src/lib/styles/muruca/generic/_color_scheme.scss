@@ -1,0 +1,32 @@
+//
+// COLOR SCHEME
+//
+// Here we define all colors used in components and project
+//
+
+// ------------------------------------ //
+// #COLOR-SCHEME
+// ------------------------------------ //
+// Grayscale (background, borders, text)
+$color-gray-00: #ffffff;
+$color-gray-01: #F7F7F7; // f7f7f7;
+$color-gray-02: #F0F0F0; // f0f0f0;
+$color-gray-03: #DDDDDD; // dddddd;
+$color-gray-04: #ABABAB; // B6B7B9; // ababab;
+$color-gray-05: #2D3439; // 494a4d;
+
+// Brand colors
+$color-main: #5397C7;
+$color-second: #AFA26A;
+$color-third: #7E8F9B;
+$color-text-hover: rgb(26, 64, 204); /* Used for text link in hover state */
+
+// Status colors
+$color-error: #d12c47;
+$color-warning: #f5a623;
+$color-success: #3f7600;
+
+// ------------------------------------ //
+// #HIGHLIGHT-COLOR
+// ------------------------------------ //
+$color-highlight: rgba(255, 251, 0, 0.18);

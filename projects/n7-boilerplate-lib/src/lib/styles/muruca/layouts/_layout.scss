@@ -1,0 +1,35 @@
+/**
+ * LAYOUT
+ *
+ * General style for Muruca layouts.
+ */
+
+/* ------------------------------------ *\
+    LAYOUT
+\* ------------------------------------ */
+.mr-layout {
+    &__maxwidth {
+        max-width: $page-max-width;
+        margin: 0 auto;
+    }
+}
+
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: 1120px) {
+}
+
+@media all and (max-width: $breakpoint-laptop) {
+}
+
+@media all and (max-width: $breakpoint-ipad-portrait) {
+}
+
+@media all and (max-width: $breakpoint-smartphone-landscape) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}
