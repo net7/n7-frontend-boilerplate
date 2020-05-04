@@ -26,6 +26,7 @@ const COMPONENTS = [
     N7BoilerplateCommonModule,
   ],
   providers: [],
+  entryComponents: COMPONENTS,
   exports: COMPONENTS,
 })
 export class N7BoilerplateMurucaModule { }
