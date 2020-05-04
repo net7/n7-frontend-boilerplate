@@ -33,6 +33,7 @@ const COMPONENTS = [
     DvComponentsLibModule,
   ],
   providers: [],
+  entryComponents: COMPONENTS,
   exports: COMPONENTS,
 })
 export class N7BoilerplateCommonModule {
