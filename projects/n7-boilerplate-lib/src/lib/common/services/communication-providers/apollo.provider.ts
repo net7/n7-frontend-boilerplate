@@ -2,30 +2,22 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { ApolloProviderConfig } from './config';
-import { ConfigurationService } from '../../configuration.service';
-import { CommunicationProvider } from '../communication-provider.interface';
+import { CommunicationProvider } from './communication-provider.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApolloProvider implements CommunicationProvider {
-  private providerConfig: any;
+  constructor(
+    private http: HttpClient
+  ) {}
 
-  constructor(private config: ConfigurationService, private http: HttpClient) {
-    try {
-      this.providerConfig = this.config.get('communication').providers.apollo;
-    } catch (err) {
-      throw Error('No config found for apollo provider!');
-    }
-  }
-
-  request$(requestId, options) {
+  request$(providerConfig, requestId: string, options) {
     const { params, method, httpOptions } = options;
-    let query = ApolloProviderConfig[requestId];
+    let query;
 
-    if (this.providerConfig.config && this.providerConfig.config[requestId]) {
-      query = this.providerConfig.config[requestId];
+    if (providerConfig.config && providerConfig.config[requestId]) {
+      query = providerConfig.config[requestId];
     }
 
     query = query || {};
@@ -47,10 +39,10 @@ export class ApolloProvider implements CommunicationProvider {
     let source$: Observable<any>;
 
     if (method && method === 'GET') {
-      source$ = this.http.get(this.providerConfig.baseUrl);
+      source$ = this.http.get(providerConfig.baseUrl);
     } else {
       source$ = this.http.post(
-        this.providerConfig.baseUrl,
+        providerConfig.baseUrl,
         { query: queryBody },
         httpOptions,
       );

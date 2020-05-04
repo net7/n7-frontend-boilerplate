@@ -1,3 +1,7 @@
 export interface CommunicationProvider {
-  request$(requestId: string, options: any);
+  request$(
+    providerConfig: any,
+    requestId: string,
+    options: any
+  );
 }

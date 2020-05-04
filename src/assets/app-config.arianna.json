@@ -1,8 +1,9 @@
 {
   "communication": {
-    "defaultProvider": "apollo",
+    "defaultProvider": "arianna-api",
     "providers": {
-      "apollo": {
+      "arianna-api": {
+        "type": "apollo",
         "baseUrl": "https://aw-unifi-graphql.netseven.it/"
       },
       "rest": {
