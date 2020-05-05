@@ -13,10 +13,10 @@
 
             <!-- COLLECTION -->
             <ng-container *ngSwitchCase="'collection'">
-                <!-- <n7-inner-title 
+                <n7-inner-title 
                 [data]="(lb.widgets[section.id].ds.out$ | async)?.header"
                 [emit]="lb.widgets[section.id].emit">
-                </n7-inner-title> -->
+                </n7-inner-title>
                 <div class="{{ section.grid ? 'n7-grid-' + section.grid : '' }}">
                     <n7-item-preview
                     *ngFor="let item of (lb.widgets[section.id].ds.out$ | async)?.items"
