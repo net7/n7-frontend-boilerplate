@@ -1,5 +1,16 @@
 {
-  "hello": "world",
+  "communication": {
+    "defaultProvider": "rest",
+    "providers": {
+      "rest": {
+        "type": "rest",
+        "baseUrl": "//jsonplaceholder.typicode/",
+        "config": {
+          "sections": "sections"
+        }
+      }
+    }
+  },
   "header": {
     "logo": {
       "image": "https://i.imgur.com/kTND3Do.png",
@@ -114,5 +125,28 @@
         "text": "Arianna Web is powered by Hyperborea.<br><a href='#' target='_blank'>www.hyperborea.com</a>"
       }
     ]
+  },
+  "home-layout": {
+    "sections": [{
+      "id": "slider-1",
+      "type": "slider",
+      "classes": "mr-layout__fullwidth",
+      "grid": null
+    }, {
+      "id": "collection-1",
+      "type": "collection",
+      "classes": "mr-layout__maxwidth",
+      "grid": 4
+    }, {
+      "id": "hero-1",
+      "type": "hero",
+      "classes": "mr-layout__fullwidth",
+      "grid": null
+    }, {
+      "id": "collection-2",
+      "type": "collection",
+      "classes": "mr-layout__maxwidth",
+      "grid": 4
+    }]
   }
 }

@@ -1,38 +1,53 @@
 import { LayoutDataSource } from '@n7-frontend/core/dist/layout-data-source';
+import { ConfigurationService } from '../../../common/services/configuration.service';
+import { CommunicationService } from '../../../common/services/communication.service';
+import homeMock from './home-layout-mock';
 
 export class MrHomeLayoutDS extends LayoutDataSource {
-  onInit() {
-    this.one('mr-resources').updateOptions({ source: 'resources' });
-    this.one('mr-collections').updateOptions({ source: 'collections' });
-    this.some(['mr-resources', 'mr-collections']).update({});
-    this.one('mr-res-header').update({
-      title: 'Le mappe',
-      subtitle: 'Una selezione di alcune mappe di Totus Mundus.',
-      button: {
-        text: 'Visita il catalogo',
-        link: '/catalogo'
-      }
-    });
-    this.one('mr-coll-header').update({
-      title: 'I percorsi',
-      subtitle: 'Visita il mondo di Totus Mundus con una serie di percorsi per te.',
-      button: {
-        text: 'Visita il catalogo',
-        link: '/catalogo'
-      }
-    });
-    this.one('mr-hero').update({
-      title: 'L\'archivio',
-      text: 'Il progetto Unus sufficit orbis presenta infromazioni e dati relativi al lavoro e la vita del gesuita Matteo Ricci: le sue mappe che ha creato e le persone con cui ha collaborato.',
-      button: {
-        title: '',
-        text: 'Vai alle opere',
-        anchor: {
-          href: '/button-url',
-          target: '_blank'
+  private configuration: ConfigurationService;
+
+  private communication: CommunicationService;
+
+  private pageConfig;
+
+  onInit(payload) {
+    this.configuration = payload.configuration;
+    this.communication = payload.communication;
+    this.pageConfig = this.configuration.get('home-layout') || {};
+
+    this.doRequest();
+  }
+
+  doRequest() {
+    const { sections } = this.pageConfig;
+
+    if (sections) {
+      // FIXME: collegare API
+      // this.communication.request$('sections', {
+      //   method: 'POST',
+      //   params: sections.map(({ id, type }) => ({ id, type }))
+      // }).subscribe((response) => {
+      //   this.initSections(response);
+      // });
+
+      this.initSections(homeMock);
+    }
+  }
+
+  initSections(response) {
+    const { sections } = this.pageConfig;
+
+    if (sections) {
+      sections.forEach(({ id }) => {
+        const widgetDataSource = this.getWidgetDataSource(id);
+        const sectionResponse = response.find((section) => section.id === id) || {};
+        // set id
+        widgetDataSource.id = id;
+        // update data
+        if (sectionResponse.data) {
+          this.one(id).update(sectionResponse.data);
         }
-      },
-      image: 'https://i.imgur.com/VHTbVbm.png'
-    });
+      });
+    }
   }
 }
