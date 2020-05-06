@@ -130,22 +130,18 @@
     "sections": [{
       "id": "slider-1",
       "type": "slider",
-      "classes": "mr-layout__fullwidth",
       "grid": null
     }, {
       "id": "collection-1",
       "type": "collection",
-      "classes": "mr-layout__maxwidth",
       "grid": 4
     }, {
       "id": "hero-1",
       "type": "hero",
-      "classes": "mr-layout__fullwidth",
       "grid": null
     }, {
       "id": "collection-2",
       "type": "collection",
-      "classes": "mr-layout__maxwidth",
       "grid": 4
     }]
   }

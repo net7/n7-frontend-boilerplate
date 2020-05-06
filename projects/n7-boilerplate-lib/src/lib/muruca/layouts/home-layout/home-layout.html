@@ -1,6 +1,6 @@
 <div class="mr-home mr-layout" *ngIf="lb.dataSource">
 
-    <section *ngFor="let section of lb.dataSource.pageConfig.sections" class="{{ section.classes || '' }}">
+    <section *ngFor="let section of lb.dataSource.pageConfig.sections" class="{{ 'mr-layout__' + section.type }}">
         <ng-container [ngSwitch]="section.type">
 
             <!-- SLIDER -->
