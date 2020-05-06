@@ -1,13 +1,8 @@
 import { CAROUSEL_MOCK } from '@n7-frontend/components';
 
-export default [{
-  id: 'slider-1',
-  type: 'slider',
-  data: CAROUSEL_MOCK,
-}, {
-  id: 'collection-1',
-  type: 'collection',
-  data: {
+export default {
+  'slider-1': CAROUSEL_MOCK,
+  'collection-1': {
     header: {
       title: 'Le mappe',
       subtitle: 'Una selezione di alcune mappe di Totus Mundus.',
@@ -51,11 +46,8 @@ export default [{
         text: 'A japanese colored version',
       }
     ]
-  }
-}, {
-  id: 'hero-1',
-  type: 'hero',
-  data: {
+  },
+  'hero-1': {
     title: 'L\'archivio',
     text: 'Il progetto Unus sufficit orbis presenta infromazioni e dati relativi al lavoro e la vita del gesuita Matteo Ricci: le sue mappe che ha creato e le persone con cui ha collaborato.',
     button: {
@@ -67,11 +59,8 @@ export default [{
       }
     },
     image: 'https://i.imgur.com/VHTbVbm.png'
-  }
-}, {
-  id: 'collection-2',
-  type: 'collection',
-  data: {
+  },
+  'collection-2': {
     header: {
       title: 'I percorsi',
       subtitle: 'Visita il mondo di Totus Mundus con una serie di percorsi per te.',
@@ -96,4 +85,4 @@ export default [{
       }
     ]
   }
-}];
+};

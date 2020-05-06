@@ -28,7 +28,7 @@ export class MrHomeLayoutDS extends LayoutDataSource {
       // FIXME: collegare API
       // this.communication.request$('sections', {
       //   method: 'POST',
-      //   params: sections.map(({ id, type }) => ({ id, type }))
+      //   params: sections.map(({ id }) => id)
       // }).subscribe((response) => {
       //   this.initSections(response);
       // });
@@ -43,12 +43,12 @@ export class MrHomeLayoutDS extends LayoutDataSource {
     if (sections) {
       sections.forEach(({ id }) => {
         const widgetDataSource = this.getWidgetDataSource(id);
-        const sectionResponse = response.find((section) => section.id === id) || {};
+        const responseData = response[id];
         // set id
         widgetDataSource.id = id;
         // update data
-        if (sectionResponse.data) {
-          this.one(id).update(sectionResponse.data);
+        if (responseData) {
+          this.one(id).update(responseData);
         }
       });
     }
