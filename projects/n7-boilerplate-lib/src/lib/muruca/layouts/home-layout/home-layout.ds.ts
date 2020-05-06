@@ -8,12 +8,15 @@ export class MrHomeLayoutDS extends LayoutDataSource {
 
   private communication: CommunicationService;
 
+  private configId: string;
+
   private pageConfig;
 
   onInit(payload) {
     this.configuration = payload.configuration;
     this.communication = payload.communication;
-    this.pageConfig = this.configuration.get('home-layout') || {};
+    this.configId = payload.configId;
+    this.pageConfig = this.configuration.get(this.configId) || {};
 
     this.doRequest();
   }

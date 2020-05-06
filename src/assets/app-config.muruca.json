@@ -15,18 +15,27 @@
     "logo": {
       "image": "https://i.imgur.com/kTND3Do.png",
       "anchor": {
-        "href": "aw/home"
+        "href": "aw/home-base"
       }
     },
     "nav": {
       "items": [
         {
-          "text": "Home",
+          "text": "Home (base)",
           "anchor": {
-            "href": "mr/home"
+            "href": "mr/home-base"
           },
           "_meta": {
-            "id": "home"
+            "id": "home-base"
+          }
+        },
+        {
+          "text": "Home (pro)",
+          "anchor": {
+            "href": "mr/home-pro"
+          },
+          "_meta": {
+            "id": "home-pro"
           }
         },
         {
@@ -126,7 +135,18 @@
       }
     ]
   },
-  "home-layout": {
+  "home-base": {
+    "sections": [{
+      "id": "hero-1",
+      "type": "hero",
+      "grid": null
+    }, {
+      "id": "collection-2",
+      "type": "collection",
+      "grid": 4
+    }]
+  },
+  "home-pro": {
     "sections": [{
       "id": "slider-1",
       "type": "slider",

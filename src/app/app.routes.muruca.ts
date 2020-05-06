@@ -17,7 +17,8 @@ export const APP_ROUTES: Routes = [
     redirectTo: '/mr/home',
     pathMatch: 'full'
   },
-  { path: 'mr/home', component: MrHomeLayoutComponent },
+  { path: 'mr/home-base', component: MrHomeLayoutComponent, data: { configId: 'home-base' } },
+  { path: 'mr/home-pro', component: MrHomeLayoutComponent, data: { configId: 'home-pro' } },
   { path: 'mr/mappe', component: MrSearchLayoutComponent },
   { path: 'mr/search', component: MrSearchLayoutComponent },
   { path: 'mr/glossary', component: MrGlossaryLayoutComponent },
