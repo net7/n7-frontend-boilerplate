@@ -23,7 +23,7 @@ export const APP_ROUTES: Routes = [
   { path: 'mr/search', component: MrSearchLayoutComponent },
   { path: 'mr/glossary', component: MrGlossaryLayoutComponent },
   { path: 'mr/toponimia', component: MrGlossaryLayoutComponent },
-  { path: 'mr/static', component: MrStaticLayoutComponent },
+  { path: 'mr/static/:page', component: MrStaticLayoutComponent },
   { path: 'mr/progetto', component: MrStaticLayoutComponent },
   { path: '**', component: Page404LayoutComponent }
 ];

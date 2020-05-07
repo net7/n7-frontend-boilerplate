@@ -11,5 +11,11 @@ export class MrHomeLayoutEH extends EventHandler {
           break;
       }
     });
+    this.outerEvents$.subscribe(({ type }) => {
+      switch (type) {
+        default:
+          break;
+      }
+    });
   }
 }

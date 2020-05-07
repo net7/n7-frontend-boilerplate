@@ -8,6 +8,14 @@
         "config": {
           "sections": "sections"
         }
+      },
+      "rest-local": {
+        "type": "rest",
+        "baseUrl": "http://localhost:3002/",
+        "config": {
+            "nav": "data/api/pages",
+            "page": "data/api/page_"
+        }
       }
     }
   },
