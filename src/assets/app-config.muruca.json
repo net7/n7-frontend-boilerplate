@@ -1,3 +1,168 @@
 {
-    "hello": "world"
+  "communication": {
+    "defaultProvider": "rest",
+    "providers": {
+      "rest": {
+        "type": "rest",
+        "baseUrl": "//jsonplaceholder.typicode/",
+        "config": {
+          "sections": "sections"
+        }
+      }
+    }
+  },
+  "header": {
+    "logo": {
+      "image": "https://i.imgur.com/kTND3Do.png",
+      "anchor": {
+        "href": "aw/home-base"
+      }
+    },
+    "nav": {
+      "items": [
+        {
+          "text": "Home (base)",
+          "anchor": {
+            "href": "mr/home-base"
+          },
+          "_meta": {
+            "id": "home-base"
+          }
+        },
+        {
+          "text": "Home (pro)",
+          "anchor": {
+            "href": "mr/home-pro"
+          },
+          "_meta": {
+            "id": "home-pro"
+          }
+        },
+        {
+          "text": "Opere",
+          "anchor": {
+            "href": "mr/mappe"
+          },
+          "_meta": {
+            "id": "mappe"
+          }
+        },
+        {
+          "text": "Mappe",
+          "anchor": {
+            "href": "mr/search"
+          },
+          "_meta": {
+            "id": "search"
+          }
+        },
+        {
+          "text": "Contatti",
+          "anchor": {
+            "href": "aw/ricerca"
+          },
+          "_meta": {
+            "id": "ricerca"
+          }
+        }
+      ]
+    },
+    "menuToggle": {
+      "open": {
+        "payload": "mobile-open"
+      },
+      "close": {
+        "payload": "mobile-close"
+      }
+    }
+  },
+  "footer": {
+    "columns": [
+      {
+        "classes": "col-class",
+        "title": "Arianna Web, archivio digitale online",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur hendrerit elit nunc, at porta ex accumsan id. Fusce quis lobortis sem, non ornare tellus.",
+        "images": [
+          {
+            "url": "https://via.placeholder.com/80",
+            "alttext": "Logo 1",
+            "anchor": {
+              "href": "https://www.google.it"
+            }
+          },
+          {
+            "url": "https://via.placeholder.com/80",
+            "alttext": "Logo 2",
+            "anchor": {
+              "href": "https://www.google.it"
+            }
+          }
+        ]
+      },
+      {
+        "title": "Privacy e info",
+        "links": [
+          {
+            "text": "Info su Arianna Web",
+            "classes": "link-class",
+            "anchor": {
+              "href": "https://www.google.it"
+            }
+          },
+          {
+            "text": "Privacy policy",
+            "classes": "link-class",
+            "anchor": {
+              "href": "https://www.google.it"
+            }
+          },
+          {
+            "text": "Cooklie policy",
+            "anchor": {
+              "href": "https://www.google.it"
+            }
+          },
+          {
+            "text": "Termini e condizioni",
+            "anchor": {
+              "href": "https://www.google.it"
+            }
+          }
+        ]
+      },
+      {
+        "text": "Arianna Web is powered by Hyperborea.<br><a href='#' target='_blank'>www.hyperborea.com</a>"
+      }
+    ]
+  },
+  "home-base": {
+    "sections": [{
+      "id": "hero-1",
+      "type": "hero",
+      "grid": null
+    }, {
+      "id": "collection-2",
+      "type": "collection",
+      "grid": 4
+    }]
+  },
+  "home-pro": {
+    "sections": [{
+      "id": "slider-1",
+      "type": "slider",
+      "grid": null
+    }, {
+      "id": "collection-1",
+      "type": "collection",
+      "grid": 4
+    }, {
+      "id": "hero-1",
+      "type": "hero",
+      "grid": null
+    }, {
+      "id": "collection-2",
+      "type": "collection",
+      "grid": 4
+    }]
+  }
 }

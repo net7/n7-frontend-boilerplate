@@ -7,7 +7,7 @@ type FACET_VALUE = string[];
 export class FacetCheckboxDS extends DataSource implements FacetDataSource {
   id: string;
 
-  value: FACET_VALUE;
+  value: FACET_VALUE = [];
 
   protected transform(data: InputCheckboxData): InputCheckboxData {
     return data;
@@ -26,6 +26,15 @@ export class FacetCheckboxDS extends DataSource implements FacetDataSource {
         ...this.input,
         checkboxes: updatedCheckboxes
       });
+    }
+  }
+
+  toggleValue({ inputPayload, value: isChecked }) {
+    const exists = this.value.indexOf(inputPayload) !== -1;
+    if (isChecked && !exists) {
+      this.value.push(inputPayload);
+    } else if (!isChecked && exists) {
+      this.value.splice(this.value.indexOf(inputPayload), 1);
     }
   }
 

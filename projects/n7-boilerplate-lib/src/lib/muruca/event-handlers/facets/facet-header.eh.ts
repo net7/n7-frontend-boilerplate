@@ -1,12 +1,13 @@
 import { EventHandler } from '@n7-frontend/core';
 
-export class FacetGenericEH extends EventHandler {
+export class FacetHeaderEH extends EventHandler {
   public listen() {
-    this.innerEvents$.subscribe(({ type, payload }) => {
+    this.innerEvents$.subscribe(({ type }) => {
       switch (type) {
-        case `${this.dataSource.id}.change`:
+        case `${this.dataSource.id}.click`:
+          this.dataSource.toggle();
           this.emitOuter('change', {
-            ...payload,
+            isOpen: this.dataSource.isOpen(),
             id: this.dataSource.id
           });
           break;

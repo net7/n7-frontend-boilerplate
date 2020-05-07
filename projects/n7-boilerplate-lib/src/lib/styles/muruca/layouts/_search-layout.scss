@@ -1,0 +1,58 @@
+/**
+ * SEARCH LAYOUT
+ *
+ * Style for the search òlayout.
+ */
+
+/* ------------------------------------ *\
+    SEARCH-LAYOUT
+\* ------------------------------------ */
+.mr-search {
+    &__title {
+        padding: $space*4;
+        background-color: pink;
+    }
+
+    &__results-info {
+        padding: $space*2;
+        background-color: wheat;
+    }
+
+    &__results-filters {
+        padding: $space*2;
+        background-color: lime;
+    }
+
+    &__results-content {
+        display: flex;
+    }
+
+    &__facets {
+        width: calc( ( (100% - 4px) - ( #{$grid-gutter-h} * 3) ) / 4 );
+        margin-right: $grid-gutter-h;
+    }
+
+    &__results-wrapper {
+        flex-grow: 1;
+    }
+}
+
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: 1120px) {
+}
+
+@media all and (max-width: $breakpoint-laptop) {
+}
+
+@media all and (max-width: $breakpoint-ipad-portrait) {
+}
+
+@media all and (max-width: $breakpoint-smartphone-landscape) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}

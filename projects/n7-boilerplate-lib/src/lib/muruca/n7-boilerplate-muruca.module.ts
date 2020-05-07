@@ -9,7 +9,6 @@ import { MrSearchLayoutComponent } from './layouts/search-layout/search-layout';
 import { MrGlossaryLayoutComponent } from './layouts/glossary-layout/glossary-layout';
 import { MrStaticLayoutComponent } from './layouts/static-layout/static-layout';
 import { MrSearchFacetsLayoutComponent } from './layouts/search-facets-layout/search-facets-layout';
-import { MrSearchTestLayoutComponent } from './layouts/search-test-layout/search-test-layout';
 
 const COMPONENTS = [
   MrHomeLayoutComponent,
@@ -17,7 +16,6 @@ const COMPONENTS = [
   MrGlossaryLayoutComponent,
   MrStaticLayoutComponent,
   MrSearchFacetsLayoutComponent,
-  MrSearchTestLayoutComponent,
 ];
 
 @NgModule({
@@ -28,6 +26,7 @@ const COMPONENTS = [
     N7BoilerplateCommonModule,
   ],
   providers: [],
+  entryComponents: COMPONENTS,
   exports: COMPONENTS,
 })
 export class N7BoilerplateMurucaModule { }

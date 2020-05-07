@@ -1,24 +1,40 @@
-<div class="mr-home" *ngIf="lb.dataSource">
-    <!-- TODO: Replace with <n7-carousel-component> -->
-    <div style="
-        height: 300px;
-        border: 1px solid #dddddd;
-        line-height: 300px;
-        text-align: center;">
-        <em>n7-carousel-component</em>
-    </div>
-    <!-- ========================================== -->
-    <n7-inner-title [data]="lb.widgets['mr-res-header'].ds.out$ | async"></n7-inner-title>
-    <n7-item-preview
-        *ngFor="let resource of (lb.widgets['mr-resources'].ds.out$ | async)"
-        [data]="resource">
-    </n7-item-preview>
-    <n7-hero [data]="lb.widgets['mr-hero'].ds.out$ | async">
-    </n7-hero>
-    <n7-inner-title [data]="lb.widgets['mr-coll-header'].ds.out$ | async">
-    </n7-inner-title>
-    <n7-item-preview
-        *ngFor="let collection of (lb.widgets['mr-collections'].ds.out$ | async)" 
-        [data]="collection">
-    </n7-item-preview>
+<div class="mr-home mr-layout" *ngIf="lb.dataSource">
+
+    <section *ngFor="let section of lb.dataSource.pageConfig.sections" class="{{ 'mr-layout__' + section.type }}">
+        <ng-container [ngSwitch]="section.type">
+
+            <!-- SLIDER -->
+            <ng-container *ngSwitchCase="'slider'">
+                <n7-carousel 
+                [data]="lb.widgets[section.id].ds.out$ | async"
+                [emit]="lb.widgets[section.id].emit">
+                </n7-carousel> 
+            </ng-container>
+
+            <!-- COLLECTION -->
+            <ng-container *ngSwitchCase="'collection'">
+                <n7-inner-title 
+                [data]="(lb.widgets[section.id].ds.out$ | async)?.header"
+                [emit]="lb.widgets[section.id].emit">
+                </n7-inner-title>
+                <div class="{{ section.grid ? 'n7-grid-' + section.grid : '' }}">
+                    <n7-item-preview
+                    *ngFor="let item of (lb.widgets[section.id].ds.out$ | async)?.items"
+                    [data]="item"
+                    [emit]="lb.widgets[section.id].emit">
+                    </n7-item-preview>
+                </div>
+            </ng-container>
+
+            <!-- HERO -->
+            <ng-container *ngSwitchCase="'hero'">
+                <n7-hero 
+                [data]="lb.widgets[section.id].ds.out$ | async"
+                [emit]="lb.widgets[section.id].emit">
+                </n7-hero> 
+            </ng-container>
+        
+        </ng-container>
+    </section>
+    
 </div>

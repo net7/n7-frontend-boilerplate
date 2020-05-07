@@ -18,21 +18,16 @@
 
 
 // ------------------------------------ //
-// #N7 COLOR SCHEME
+// #MR COLOR SCHEME
 // ------------------------------------ //
-@import "../../node_modules/@n7-frontend/components/styles/generic/color_scheme";
-
-
-// ------------------------------------ //
-// #DV COLOR SCHEME
-// ------------------------------------ //
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/data-viz/generic/color_scheme";
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/muruca/generic/color_scheme";
 
 
 // ------------------------------------ //
 // #N7 COMPONENTS VARIABLES
 // ------------------------------------ //
 @import "../../node_modules/@n7-frontend/components/styles/generic/variables";
+
 
 // ------------------------------------ //
 // #MR VARIABLES
@@ -53,9 +48,22 @@
 
 
 // ------------------------------------ //
+// #MR COMPONENTS
+// ------------------------------------ //
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/muruca/components/inner-title";
+
+
+// ------------------------------------ //
 // #COMMON LAYOUTS
 // ------------------------------------ //
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/common/layouts/main-layout";
+
+
+// ------------------------------------ //
+// #MR LAYOUTS
+// ------------------------------------ //
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/muruca/layouts/layout";
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/muruca/layouts/search-layout";
 
 
 // ------------------------------------ //

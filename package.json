@@ -37,6 +37,7 @@
     "flatpickr": "^4.6.3",
     "lodash": "^4.17.15",
     "openseadragon": "^2.4.1",
+    "latte-carousel": "^1.6.1",
     "rxjs": "6.0.0",
     "slugify": "^1.4.0",
     "tippy.js": "^5.1.2",
