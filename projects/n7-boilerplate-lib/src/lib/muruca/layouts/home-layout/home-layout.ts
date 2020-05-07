@@ -4,7 +4,6 @@ import { AbstractLayout } from '../../../common/models/abstract-layout';
 import { CommunicationService } from '../../../common/services/communication.service';
 import { LayoutsConfigurationService } from '../../../common/services/layouts-configuration.service';
 import { ConfigurationService } from '../../../common/services/configuration.service';
-import { CommunicationService } from '../../../common/services/communication.service';
 import { MrHomeLayoutConfig as config } from './home-layout.config';
 import { MrSliderDS } from '../../data-sources/slider.ds';
 import { MrCollectionDS } from '../../data-sources/collection.ds';

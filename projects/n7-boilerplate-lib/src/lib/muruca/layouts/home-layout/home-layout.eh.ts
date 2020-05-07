@@ -6,7 +6,6 @@ export class MrHomeLayoutEH extends EventHandler {
       switch (type) {
         case 'mr-home-layout.init':
           this.dataSource.onInit(payload);
-          this.getNavPages();
           break;
         default:
           break;
@@ -18,12 +17,5 @@ export class MrHomeLayoutEH extends EventHandler {
           break;
       }
     });
-  }
-
-  getNavPages() {
-    this.dataSource.navRequest$()
-      .subscribe((response) => {
-        this.dataSource.createNav(response);
-      });
   }
 }
