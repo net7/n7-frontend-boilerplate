@@ -1,8 +1,3 @@
 <main-layout>
-    <ng-container *ngIf="useRouter">
-        <router-outlet></router-outlet>
-    </ng-container>
-    <ng-container *ngIf="!useRouter">
-        <aw-home-layout *ngIf="currentLayout === 'home'"></aw-home-layout>
-    </ng-container>
+    <router-outlet></router-outlet>
 </main-layout>
