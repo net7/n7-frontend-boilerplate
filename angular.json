@@ -20,8 +20,8 @@
                 "with": "src/assets/app-config.arianna.json"
               }, 
               {
-                "replace": "src/app/app.routes.ts",
-                "with": "src/app/app.routes.arianna.ts"
+                "replace": "src/app/app.module.ts",
+                "with": "src/app/app.module.arianna.ts"
               }, 
               {
                 "replace": "src/styles/styles.scss",
@@ -68,8 +68,8 @@
                   "with": "src/assets/app-config.arianna.json"
                 }, 
                 {
-                  "replace": "src/app/app.routes.ts",
-                  "with": "src/app/app.routes.arianna.ts"
+                  "replace": "src/app/app.module.ts",
+                  "with": "src/app/app.module.arianna.ts"
                 }, 
                 {
                   "replace": "src/styles/styles.scss",
@@ -84,8 +84,8 @@
                   "with": "src/assets/app-config.dataviz.json"
                 }, 
                 {
-                  "replace": "src/app/app.routes.ts",
-                  "with": "src/app/app.routes.dataviz.ts"
+                  "replace": "src/app/app.module.ts",
+                  "with": "src/app/app.module.dataviz.ts"
                 }, 
                 {
                   "replace": "src/styles/styles.scss",
@@ -100,8 +100,8 @@
                   "with": "src/assets/app-config.muruca.json"
                 }, 
                 {
-                  "replace": "src/app/app.routes.ts",
-                  "with": "src/app/app.routes.muruca.ts"
+                  "replace": "src/app/app.module.ts",
+                  "with": "src/app/app.module.muruca.ts"
                 }, 
                 {
                   "replace": "src/styles/styles.scss",
