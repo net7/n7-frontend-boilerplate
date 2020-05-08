@@ -175,10 +175,46 @@
   },
   "search-works": {
     "title": "Opere",
-    "total-text": ["Opere", "Opera"]
+    "facetsTitle": "Filtra i risultati",
+    "totalResultsText": ["Opere", "Opera"],
+    "sortLabel": "Ordine",
+    "sortOptions": [{
+      "value": "_score_DESC",
+      "label": "Ordine per pertinenza",
+      "selected": true
+    },
+    {
+      "value": "label_sort_ASC",
+      "label": "Ordine alfabetico (A→Z)",
+      "selected": false
+
+    },
+    {
+      "value": "label_sort_DESC",
+      "label": "Ordine alfabetico (Z→A)",
+      "selected": false
+    }]
   },
   "search-maps": {
     "title": "Mappe",
-    "total-text": ["Mappe", "Mappa"]
+    "facetsTitle": "Filtra i risultati",
+    "totalResultsText": ["Mappe", "Mappa"],
+    "sortLabel": "Ordine",
+    "sortOptions": [{
+      "value": "_score_DESC",
+      "label": "Ordine per pertinenza",
+      "selected": true
+    },
+    {
+      "value": "label_sort_ASC",
+      "label": "Ordine alfabetico (A→Z)",
+      "selected": false
+
+    },
+    {
+      "value": "label_sort_DESC",
+      "label": "Ordine alfabetico (Z→A)",
+      "selected": false
+    }]
   }
 }

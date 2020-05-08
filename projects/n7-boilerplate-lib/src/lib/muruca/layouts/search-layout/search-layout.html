@@ -11,7 +11,7 @@
         <div class="mr-search__results-content">
             <aside class="mr-search__facets">
                 <div class="filter-section">
-                    <h2>Filtra i risultati</h2>
+                    <h2>{{ lb.dataSource.pageConfig['facets-title'] }}</h2>
                     <mr-search-facets-layout 
                     [data]="lb.dataSource.facetsConfig"
                     [hostEmit$]="hostEmit$"
