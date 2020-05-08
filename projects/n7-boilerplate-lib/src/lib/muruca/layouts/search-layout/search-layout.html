@@ -3,7 +3,9 @@
     <section class="mr-layout__maxwidth">
 
         <div class="mr-search__title">
-            <h1>{{ lb.dataSource.pageConfig.title }}</h1>
+            <n7-inner-title
+            [data]="lb.widgets['mr-search-page-title'].ds.out$ | async">
+            </n7-inner-title>
         </div>
         
         <div class="mr-search__results-content">
@@ -19,7 +21,9 @@
             </aside>
             <div class="mr-search__results-wrapper">
                 <div class="mr-search__results-info">
-                    Inner title with results number and sorting
+                    <n7-inner-title
+                    [data]="lb.widgets['mr-search-results-title'].ds.out$ | async">
+                    </n7-inner-title>
                 </div>
                 <div class="mr-search__results-filters">
                     Filter, when active

@@ -174,9 +174,11 @@
     }]
   },
   "search-works": {
-    "title": "Opere"
+    "title": "Opere",
+    "total-text": ["Opere", "Opera"]
   },
   "search-maps": {
-    "title": "Mappe"
+    "title": "Mappe",
+    "total-text": ["Mappe", "Mappa"]
   }
 }

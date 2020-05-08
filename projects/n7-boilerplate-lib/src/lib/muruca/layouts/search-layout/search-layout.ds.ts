@@ -14,6 +14,8 @@ export class MrSearchLayoutDS extends LayoutDataSource {
 
   public pageConfig;
 
+  public totalResultsText: string | null = null;
+
   onInit(payload) {
     this.configuration = payload.configuration;
     this.communication = payload.communication;
@@ -21,7 +23,9 @@ export class MrSearchLayoutDS extends LayoutDataSource {
     this.configId = payload.configId;
     this.pageConfig = this.configuration.get(this.configId);
 
-    this.one('mr-resources').updateOptions({ source: 'search' });
-    this.one('mr-resources').update({});
+    // updates
+    this.one('mr-search-page-title').update({ title: this.pageConfig.title });
+    // this.one('mr-resources').updateOptions({ source: 'search' });
+    // this.one('mr-resources').update({});
   }
 }
