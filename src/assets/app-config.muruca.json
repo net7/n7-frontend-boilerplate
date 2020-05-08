@@ -49,19 +49,19 @@
         {
           "text": "Opere",
           "anchor": {
-            "href": "mr/mappe"
+            "href": "mr/opere"
           },
           "_meta": {
-            "id": "mappe"
+            "id": "opere"
           }
         },
         {
           "text": "Mappe",
           "anchor": {
-            "href": "mr/search"
+            "href": "mr/mappe"
           },
           "_meta": {
-            "id": "search"
+            "id": "mappe"
           }
         },
         {
@@ -172,5 +172,11 @@
       "type": "collection",
       "grid": 4
     }]
+  },
+  "search-works": {
+    "title": "Opere"
+  },
+  "search-maps": {
+    "title": "Mappe"
   }
 }

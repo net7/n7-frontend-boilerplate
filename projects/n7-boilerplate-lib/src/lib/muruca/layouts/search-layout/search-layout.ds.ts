@@ -1,11 +1,25 @@
 import { LayoutDataSource } from '@n7-frontend/core';
 import facetsConfig from './search-facets.config';
+import { ConfigurationService } from '../../../common/services/configuration.service';
+import { CommunicationService } from '../../../common/services/communication.service';
 
 export class MrSearchLayoutDS extends LayoutDataSource {
+  private configuration: ConfigurationService;
+
+  private communication: CommunicationService;
+
+  private configId: string;
+
   public facetsConfig;
 
-  onInit() {
+  public pageConfig;
+
+  onInit(payload) {
+    this.configuration = payload.configuration;
+    this.communication = payload.communication;
     this.facetsConfig = facetsConfig;
+    this.configId = payload.configId;
+    this.pageConfig = this.configuration.get(this.configId);
 
     this.one('mr-resources').updateOptions({ source: 'search' });
     this.one('mr-resources').update({});
