@@ -113,7 +113,7 @@ export class AwGalleryLayoutDS extends LayoutDataSource {
     this._sidebarStickyControl();
 
     this.mainState.updateCustom('currentNav', 'galleria');
-    this.mainState.update('headTitle', 'Arianna Web > Galleria');
+    this.mainState.update('headTitle', 'Arianna4View - Galleria');
   }
 
   onDestroy() {

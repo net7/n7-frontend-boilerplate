@@ -113,7 +113,7 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     this._sidebarStickyControl();
 
     this.mainState.updateCustom('currentNav', 'ricerca');
-    this.mainState.update('headTitle', 'Arianna Web > Ricerca');
+    this.mainState.update('headTitle', 'Arianna4View - Ricerca');
   }
 
   onDestroy() {

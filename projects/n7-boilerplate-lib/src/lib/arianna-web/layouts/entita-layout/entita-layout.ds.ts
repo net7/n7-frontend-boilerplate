@@ -72,7 +72,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     this.mainState.updateCustom('currentNav', 'entita');
 
     // update head title
-    this.mainState.update('headTitle', 'Arianna Web > Entità');
+    this.mainState.update('headTitle', 'Arianna4View - Entità');
   }
 
   public updateComponent = (id, data, options?) => {
@@ -248,7 +248,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     this.one('aw-linked-objects').update({ items: res.relatedItems });
     this.drawPagination();
     // update head title
-    this.mainState.update('headTitle', `Arianna Web > Entità > ${this.myResponse.label}`);
+    this.mainState.update('headTitle', `Arianna4View - Entità - ${this.myResponse.label}`);
   }
 
   private _getPaginationParams() {
