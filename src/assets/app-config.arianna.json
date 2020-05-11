@@ -271,7 +271,7 @@
         }
       ]
     },
-    "metadata-to-exclude": {
+    "metadata-to-show": {
       "aggregazione-logica": ["schedaRef", "uuid"],
       "oggetto-culturale": ["dataFine", "node_type", "document_classification"]
     }
@@ -319,7 +319,7 @@
       "smallChartSize": 3
     },
     "entitiesQuerySize": 30,
-    "metadata-to-exclude": ["tipologia", "natura_giuridica"]
+    "metadata-to-show": ["tipologia", "natura_giuridica"]
   },
   "config-keys": {
     "persona": {

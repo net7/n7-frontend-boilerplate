@@ -3,10 +3,10 @@ import helpers from '../../common/helpers';
 
 export class AwSchedaMetadataDS extends DataSource {
   protected transform(data) {
-    let { labels, metadataToExclude } = this.options;
+    let { labels, metadataToShow } = this.options;
     labels = labels || {};
-    metadataToExclude = metadataToExclude || {};
-    metadataToExclude = metadataToExclude[data.document_type] || [];
+    metadataToShow = metadataToShow || {};
+    metadataToShow = metadataToShow[data.document_type] || [];
 
     const group = { group: [] };
     if (data.fields) {
@@ -14,7 +14,7 @@ export class AwSchedaMetadataDS extends DataSource {
         const items = [];
         if (field.fields) {
           field.fields
-            .filter((item) => metadataToExclude.indexOf(item.key) === -1)
+            .filter((item) => metadataToShow.indexOf(item.key) !== -1)
             .forEach((item) => {
               items.push({
                 label: helpers.prettifySnakeCase(item.key, labels[item.key]),
@@ -26,7 +26,7 @@ export class AwSchedaMetadataDS extends DataSource {
             items,
             title: field.label,
           });
-        } else if (metadataToExclude.indexOf(field.key) === -1) {
+        } else if (metadataToShow.indexOf(field.key) !== -1) {
           items.push({
             label: helpers.prettifySnakeCase(field.key, labels[field.key]),
             value: field.value.replace(/(\|\|\|)/g, '\n') // replace repeat sequence ("|||") with end of line
