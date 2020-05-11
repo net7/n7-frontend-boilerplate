@@ -91,8 +91,8 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     this.emptyLabel = this.configuration.get('scheda-layout')['empty-label'];
     this.one('aw-tree').updateOptions({ config: this.configuration.get('config-keys') });
 
-    this.mainState.update('headTitle', 'Arianna Web > Patrimonio');
-    this.mainState.update('pageTitle', 'Arianna Web: patrimonio Layout');
+    this.mainState.update('headTitle', 'Arianna4View - Patrimonio');
+    this.mainState.update('pageTitle', 'Arianna4View - Patrimonio');
     this.mainState.updateCustom('currentNav', 'patrimonio');
 
     // sidebar sticky control
@@ -198,7 +198,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       }
 
       // update head title
-      this.mainState.update('headTitle', `Arianna Web > Patrimonio > ${response.title || response.label}`);
+      this.mainState.update('headTitle', `Arianna4View - Patrimonio - ${response.title || response.label}`);
     }
 
     if (response.relatedItems) {
