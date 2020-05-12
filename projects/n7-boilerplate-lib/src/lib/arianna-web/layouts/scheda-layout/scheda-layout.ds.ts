@@ -172,7 +172,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
       this.one('aw-scheda-metadata').updateOptions({
         labels: this.configuration.get('labels'),
-        metadataToExclude: this.configuration.get('scheda-layout')['metadata-to-exclude']
+        metadataToShow: this.configuration.get('scheda-layout')['metadata-to-show']
       });
       this.one('aw-scheda-metadata').update(response);
 

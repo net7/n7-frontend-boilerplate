@@ -1,10 +1,9 @@
 {
   "communication": {
-    "defaultProvider": "arianna-api",
+    "defaultProvider": "apollo",
     "providers": {
-      "arianna-api": {
-        "type": "apollo",
-        "baseUrl": "https://aw-unifi-graphql.netseven.it/"
+      "apollo": {
+        "baseUrl": "http://graphql-confindustria.hyperborea.com/"
       },
       "rest": {
         "baseUrl": "https://jsonplaceholder.typicode.com/",
@@ -271,9 +270,9 @@
         }
       ]
     },
-    "metadata-to-exclude": {
-      "aggregazione-logica": ["schedaRef", "uuid"],
-      "oggetto-culturale": ["dataFine", "node_type", "document_classification"]
+    "metadata-to-show": {
+      "aggregazione-logica": ["typology","denominazione","altre_denominazioni","estremo_remoto","estremo_recente","consistenza","consistenza.quantita","consistenza.unitaMisura","produzione","soggettoConservatore","soggettoConservatoreAttuale","tipoResponsabilita","parteConservata","causeAcquisizione","descrizione_interna","lacune","incrementi","tipoNumerazione","estremiNumerazione","altra_documentazione","descrizione_esterna","corredoRicerca","corredoRicerca.tipologia","corredoRicerca.riferimento","corredoRicerca.descrizione"],
+      "oggetto-culturale": ["altra_segnatura","altra_segnatura.tipologia","altra_segnatura.numerazione","intitolazione","altra_intitolazione","altra_intitolazione.tipologia","altra_intitolazione.intitolazione","estremo_remoto","estremo_recente","definizione_tipologia","supporto","legatura","legatura.tipologia","legatura.epoca","legatura.datazione","condizionamento","condizionamento.tipologia","condizionamento.materia","condizionamento.epoca","condizionamento.datazione","altezza","larghezza","spessore","consistenza","consistenza.quantita","consistenza.unitaMisura","numerazione","numerazione.tipoNumerazione","numerazione.numerazione","numerazione.epoca","numerazione.datazione","descrizioneEsterna","descrizioneEsterna.tipologia","descrizioneEsterna.posizione","descrizioneEsterna.trascrizione","statoConservazione","statoConservazione.statoConservazione","descrizioneInterna","descrizioneInterna.tipologiaDocumentaria","descrizioneInterna.descrizione","descrizioneInterna.trascrizione","documentazioneTestuale","documentazioneTestuale.tipologia","documentazioneTestuale.lingua","documentazioneGrafica","documentazioneGrafica.tipologia","documentazioneGrafica.tecnicaEsecutiva","documentazioneCopia","documentazioneCopia.tipologia","documentazioneCopia.epoca","strumentoCorredoInterno","strumentoCorredoInterno.tipologia","strumentoCorredoInterno.oggetto","strumentoCorredoInterno.epoca","corredoRicerca","corredoRicerca.tipologia","corredoRicerca.riferimento","corredoRicerca.descrizione","riferimento"]
     }
   },
   "search-layout": {
@@ -319,8 +318,8 @@
       "smallChartSize": 3
     },
     "entitiesQuerySize": 30,
-    "metadata-to-exclude": ["tipologia", "natura_giuridica"]
-  },
+    "metadata-to-show": ["altraDenominazione.tipologiaDenominazione","altraDenominazione.altraDenominazione","genere","altro_luogo","luogo_nascita","luogo_morte","data_nascita","data_morte","biografia","tipologia","qualifica","natura_giuridica","sede","data_istituzione","data_soppressione","note_storiche","struttura_funzioni","stato","regione","provincia","comune","note_storiche","data_fondazione","data_estinzione","data_inizio","data_fine","ricorrenza","descrizione"]
+  },  
   "config-keys": {
     "persona": {
       "color": {
@@ -482,10 +481,105 @@
     "bubblechart": true
   },
   "labels": {
+    "altre_denominazioni.tipologia": "Altra denominazione - tipologia",
+    "altre_denominazioni.denominazione": "Altra denominazione",
+    "estremo_remoto": "Estremo remoto",
+    "estremo_recente": "Estremo recente",
+    "consistenza.quantita": "Consistenza",
+    "consistenza.unitaMisura": "Consistenza - unità di misura",
+    "produzione": "Soggetto produttore",
+    "conservazione.soggettoConservatore": "Soggetto conservatore",
+    "conservazione.soggettoConservatoreAttuale": "Soggetto conservatore",
+    "conservazione.tipoResponsabilita": "Soggetto conservatore - tipo responsabilità",
+    "conservazione.parteConservata": "Parte conservata",
+    "conservazione.causeAcquisizione": "Storia della custodia",
+    "descrizione_interna": "Descrizione",
+    "altra_documentazione": "Materiali correlati",
+    "storia_ordinamenti": "Storia degli ordinamenti",
+    "descrizione_esterna": "Descrizione esterna",
+    "stato_conservazione": "Stato di conservazione",
+    "statoConservazione": "Stato di conservazione",
+    "storia_ubicazioni": "Storia delle ubicazioni",
+    "storiaUbicazioni": "Storia delle ubicazioni",
+    "corredoRicerca.tipologia": "Strumento di corredo e ricerca",
+    "corredoRicerca.riferimento": "Strumento di corredo e ricerca - riferimento",
+    "corredoRicerca.descrizione": "Strumento di corredo e ricerca - descrizione",
+    "altra_segnatura.tipologia": "Altra segnatura - tipologia",
+    "altra_segnatura.numerazione": "Altra segnatura",
+    "intitolazione": "",
+    "altra_intitolazione.tipologia": "Altra intitolazione - tipologia",
+    "altra_intitolazione.intitolazione": "Altra intitolazione",
+    "definizione_tipologia": "Tipologia",
+    "supporto": "Supporto",
+    "legatura.tipologia": "Legatura",
+    "legatura.epoca": "Legatura - epoca ",
+    "legatura.datazione": "Legatura - datazione",
+    "condizionamento.tipologia": "Condizionamento",
+    "condizionamento.materia": "Condizionamento - materia",
+    "condizionamento.epoca": "Condizionamento - epoca",
+    "condizionamento.datazione": "Condizionamento - datazione",
+    "altezza": "Altezza (mm.)",
+    "larghezza": "Larghezza (mm.)",
+    "spessore": "Spessore (mm.)",
+    "consistenza.quantita": "Consistenza",
+    "consistenza.unitaMisura": "Consistenza - unità di misura",
+    "numerazione.tipoNumerazione": "Numerazione - tipo",
+    "numerazione.numerazione": "Numerazione ",
+    "numerazione.epoca": "Numerazione - epoca ",
+    "numerazione.datazione": "Numerazione - datazione",
+    "descrizioneEsterna.tipologia": "Descrizione esterna",
+    "descrizioneEsterna.posizione": "Descrizione esterna - posizione",
+    "descrizioneEsterna.trascrizione": "Descrizione esterna - trascrizione",
+    "statoConservazione.statoConservazione": "Stato di conservazione",
+    "descrizioneInterna.tipologiaDocumentaria": "Tipologia documentaria",
+    "descrizioneInterna.descrizione": "Descrizione",
+    "descrizioneInterna.trascrizione": "Trascrizione",
+    "documentazioneTestuale.tipologia": "Presenza di documentazione testuale",
+    "documentazioneTestuale.lingua": "Presenza di documentazione testuale - lingua",
+    "documentazioneGrafica.tipologia": "Presenza di documentazione grafica",
+    "documentazioneGrafica.tecnicaEsecutiva": "Presenza di documentazione grafica - tecnica esecutiva",
+    "documentazioneCopia.tipologia": "Presenza di documentazione in copia",
+    "documentazioneCopia.epoca": "Presenza di documentazione in copia - epoca",
+    "strumentoCorredoInterno.tipologia": "Strumenti di corredo interni",
+    "strumentoCorredoInterno.oggetto": "Strumenti di corredo interni - oggetto",
+    "strumentoCorredoInterno.epoca": "Strumenti di corredo interni - epoca",
+    "corredoRicerca.tipologia": "Strumento di corredo e ricerca",
+    "corredoRicerca.riferimento": "Strumento di corredo e ricerca - riferimento",
+    "corredoRicerca.descrizione": "Strumento di corredo e ricerca - descrizione",
+    "typology": "",
     "struttura_funzioni": "Funzioni principali",
-    "fase": "Fase",
-    "intitolazione": "Intitolaz.",
     "aggregazione-logica": "Fondo",
-    "oggetto-culturale": "Oggetto culturale"
+    "oggetto-culturale": "Oggetto culturale",
+    "tipologia": "",
+    "descrizione": "Descrizione",
+    "data_inizio": "Data di inizio",
+    "data_fine": "Data di fine",
+    "ricorrenza": "Ricorrenza",
+    "altraDenominazione.tipologiaDenominazione": "Altra denominazione - tipologia",
+    "altraDenominazione.altraDenominazione": "Altra denominazione",
+    "luogo": "Contesto spaziale",
+    "data_fondazione": "Data di fondazione",
+    "data_estinzione": "Data di estinzione",
+    "note_storiche": "Storia",
+    "stato": "Stato",
+    "regione": "Regione",
+    "provincia": "Provincia",
+    "comune": "Comune",
+    "note_storiche": "Descrizione ",
+    "natura_giuridica": "Natura giuridica",
+    "sede": "Sedi",
+    "data_istituzione": "Data di istituzione",
+    "data_soppressione  ": "Data di soppressione",
+    "note_storiche": "Storia",
+    "struttura_funzioni": "Struttura organizzativa",
+    "genere": "Genere",
+    "altro_luogo": "Luoghi significativi",
+    "luogo_nascita": "Luogo di nascita",
+    "luogo_morte": "Luogo di morte",
+    "data_nascita": "Data di nascita",
+    "data_morte": "Data di morte",
+    "biografia": "Biografia",
+    "tipologia": "Qualifica - tipologia",
+    "qualifica": "Qualifica"
   }
 }
