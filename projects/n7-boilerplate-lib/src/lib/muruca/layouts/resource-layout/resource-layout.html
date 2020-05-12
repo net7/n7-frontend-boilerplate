@@ -1,0 +1,34 @@
+<div class="mr-resource mr-layout"
+     *ngIf="lb.dataSource">
+  <span class="demo">Hello from resource layout</span>
+  <!-- <section *ngFor="let section of lb.dataSource.pageConfig.sections"
+           class="{{ 'mr-layout__' + section.type }}">
+    <ng-container [ngSwitch]="section.type">
+
+      <ng-container *ngSwitchCase="'slider'">
+        <n7-carousel [data]="lb.widgets[section.id].ds.out$ | async"
+                     [emit]="lb.widgets[section.id].emit">
+        </n7-carousel>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'collection'">
+        <n7-inner-title [data]="(lb.widgets[section.id].ds.out$ | async)?.header"
+                        [emit]="lb.widgets[section.id].emit">
+        </n7-inner-title>
+        <div class="{{ section.grid ? 'n7-grid-' + section.grid : '' }}">
+          <n7-item-preview *ngFor="let item of (lb.widgets[section.id].ds.out$ | async)?.items"
+                           [data]="item"
+                           [emit]="lb.widgets[section.id].emit">
+          </n7-item-preview>
+        </div>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'hero'">
+        <n7-hero [data]="lb.widgets[section.id].ds.out$ | async"
+                 [emit]="lb.widgets[section.id].emit">
+        </n7-hero>
+      </ng-container>
+
+    </ng-container>
+  </section> -->
+</div>
