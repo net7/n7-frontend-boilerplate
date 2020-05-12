@@ -19,7 +19,7 @@ export const APP_ROUTES: Routes = [
   },
   { path: 'mr/home-base', component: MrHomeLayoutComponent, data: { configId: 'home-base' } },
   { path: 'mr/home-pro', component: MrHomeLayoutComponent, data: { configId: 'home-pro' } },
-  { path: 'mr/mappe', component: MrSearchLayoutComponent, data: { configId: 'search-maps' } },
+  { path: 'mr/mappe', component: MrSearchLayoutComponent, data: { configId: 'search-works' } },
   { path: 'mr/opere', component: MrSearchLayoutComponent, data: { configId: 'search-works' } },
   { path: 'mr/glossary', component: MrGlossaryLayoutComponent },
   { path: 'mr/toponimia', component: MrGlossaryLayoutComponent },

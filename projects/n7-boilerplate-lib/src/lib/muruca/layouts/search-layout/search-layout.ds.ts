@@ -48,7 +48,24 @@ export class MrSearchLayoutDS extends LayoutDataSource {
       'mr-search-results-title',
       'mr-search-results',
     ]).update(response);
-    // this.one('mr-resources').updateOptions({ source: 'search' });
-    // this.one('mr-resources').update({});
+
+    // pagination
+    this.one('n7-smart-pagination').updateOptions({ mode: 'payload' });
+    this.one('n7-smart-pagination').update(this.getPaginationParams(response));
+  }
+
+  private getPaginationParams(response) {
+    const { totalCount, page } = response;
+    const { pagination: paginationConfig } = this.pageConfig;
+
+    return {
+      totalPages: Math.ceil(totalCount / page.limit),
+      currentPage: page.current,
+      pageLimit: paginationConfig.limit,
+      sizes: {
+        list: paginationConfig.options,
+        active: page.limit,
+      },
+    };
   }
 }

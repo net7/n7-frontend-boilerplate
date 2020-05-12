@@ -4,24 +4,23 @@ export class MrSearchResultsTitleDS extends DataSource {
   protected transform(data) {
     const {
       totalResultsText,
-      sortLabel,
-      sortOptions
+      sort
     } = this.options.config;
-    const { total } = data;
+    const { totalCount } = data;
 
     return {
       title: {
         main: {
-          text: total
+          text: totalCount
         },
         secondary: {
-          text: totalResultsText[total === 1 ? 1 : 0]
+          text: totalResultsText[totalCount === 1 ? 1 : 0]
         }
       },
       actions: {
         select: {
-          label: sortLabel,
-          options: sortOptions.map(({ label, value, selected }) => ({
+          label: sort.label,
+          options: sort.options.map(({ label, value, selected }) => ({
             value,
             selected,
             text: label

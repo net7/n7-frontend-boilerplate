@@ -33,6 +33,10 @@
                     [data]="item">
                     </n7-item-preview>
                 </main>
+                <n7-smart-pagination
+                [data]="lb.widgets['n7-smart-pagination'].ds.out$ | async"
+                [emit]="lb.widgets['n7-smart-pagination'].emit">
+                </n7-smart-pagination>
             </div>
         </div>
 

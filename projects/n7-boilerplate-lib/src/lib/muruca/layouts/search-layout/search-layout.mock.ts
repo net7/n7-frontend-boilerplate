@@ -1,5 +1,6 @@
 export default {
-  total: 10,
+  totalCount: 100,
+  page: { current: 1, limit: 10 },
   results: [
     {
       image: 'https://i.imgur.com/52UFqca.png',
