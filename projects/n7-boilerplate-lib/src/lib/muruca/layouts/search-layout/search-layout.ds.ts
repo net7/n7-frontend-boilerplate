@@ -44,7 +44,10 @@ export class MrSearchLayoutDS extends LayoutDataSource {
   }
 
   handleResponse(response) {
-    this.one('mr-search-results-title').update(response);
+    this.some([
+      'mr-search-results-title',
+      'mr-search-results',
+    ]).update(response);
     // this.one('mr-resources').updateOptions({ source: 'search' });
     // this.one('mr-resources').update({});
   }

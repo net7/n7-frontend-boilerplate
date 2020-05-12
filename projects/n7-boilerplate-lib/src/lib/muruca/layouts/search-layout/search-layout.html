@@ -26,11 +26,11 @@
                     </n7-inner-title>
                 </div>
                 <div class="mr-search__results-filters">
-                    Filter, when active
+                    #TODO: Filter, when active
                 </div>
                 <main class="mr-search__results">
-                    <n7-item-preview *ngFor="let resource of (lb.widgets['mr-resources'].ds.out$ | async)"
-                                    [data]="resource">
+                    <n7-item-preview *ngFor="let item of (lb.widgets['mr-search-results'].ds.out$ | async)"
+                    [data]="item">
                     </n7-item-preview>
                 </main>
             </div>
