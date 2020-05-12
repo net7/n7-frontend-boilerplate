@@ -12,6 +12,8 @@ export class MrSearchLayoutDS extends LayoutDataSource {
 
   private configId: string;
 
+  public state = {};
+
   public facetsConfig;
 
   public pageConfig;
@@ -67,5 +69,17 @@ export class MrSearchLayoutDS extends LayoutDataSource {
         active: page.limit,
       },
     };
+  }
+
+  getState(id?: string) {
+    return id ? this.state[id] : this.state;
+  }
+
+  setState(id: string, value: any) {
+    this.state[id] = value;
+  }
+
+  clearState() {
+    this.state = {};
   }
 }

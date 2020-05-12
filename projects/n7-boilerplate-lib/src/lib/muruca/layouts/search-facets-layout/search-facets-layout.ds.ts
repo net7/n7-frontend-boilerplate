@@ -4,8 +4,6 @@ import { SearchFacetsConfig } from './search-facets-config';
 export class SearchFacetsLayoutDS extends LayoutDataSource {
   public data: SearchFacetsConfig;
 
-  private state = {}
-
   onInit(payload) {
     this.data = payload.data;
 
@@ -41,11 +39,17 @@ export class SearchFacetsLayoutDS extends LayoutDataSource {
     });
   }
 
-  getState(id?) {
-    return id ? this.state[id] : this.state;
+  clearInput(id) {
+    const widgetDataSource = this.getWidgetDataSource(id);
+    widgetDataSource.clear();
+    widgetDataSource.setValue(widgetDataSource.value, true);
   }
 
-  setState({ value, id }) {
-    this.state[id] = value;
+  clearInputs() {
+    this.data.sections.forEach(({ header, inputs }) => {
+      [header, ...inputs].forEach((input) => {
+        this.clearInput(input.id);
+      });
+    });
   }
 }

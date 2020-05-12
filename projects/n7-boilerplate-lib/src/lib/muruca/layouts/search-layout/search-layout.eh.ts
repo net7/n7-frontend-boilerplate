@@ -1,3 +1,4 @@
+import { isEmpty } from 'lodash';
 import { EventHandler } from '@n7-frontend/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -59,10 +60,23 @@ export class MrSearchLayoutEH extends EventHandler {
       }
     });
 
-    /*
-      this.outerEvents$.subscribe(({ type, payload }) => {
-      });
-    */
+
+    this.outerEvents$.subscribe(({ type, payload }) => {
+      switch (type) {
+        case 'n7-smart-pagination.click':
+          this.dataSource.setState('page', payload.page);
+          this.updateRoute();
+          break;
+
+        case 'n7-smart-pagination.change':
+          this.dataSource.setState('limit', payload.value);
+          this.updateRoute();
+          break;
+
+        default:
+          break;
+      }
+    });
   }
 
   listenToGuest() {
@@ -71,10 +85,8 @@ export class MrSearchLayoutEH extends EventHandler {
     ).subscribe(({ type, payload }) => {
       switch (type) {
         case 'change': {
-          const queryParams = searchHelper.stateToQueryParams(payload.state);
-          this.router.navigate([], {
-            queryParams
-          });
+          this.dataSource.setState(payload.id, payload.value);
+          this.updateRoute();
           break;
         }
 
@@ -88,8 +100,40 @@ export class MrSearchLayoutEH extends EventHandler {
     this.activatedRoute.queryParams.pipe(
       takeUntil(this.destroyed$),
     ).subscribe((params) => {
+      // params state control
+      if (isEmpty(params)) {
+        this.clearSearchState();
+      } else if (isEmpty(this.dataSource.getState())) {
+        this.setSearchState(params);
+      }
       // TODO: aggiungere logica richieste
-      console.warn('query params', params);
+      console.warn('query params', params, this.dataSource.getState());
+    });
+  }
+
+  updateRoute() {
+    const queryParams = searchHelper.stateToQueryParams(this.dataSource.getState());
+    this.router.navigate([], {
+      queryParams
+    });
+  }
+
+  private clearSearchState() {
+    this.dataSource.clearState();
+    this.hostEmit$.next({ type: 'clearinputs' });
+  }
+
+  private setSearchState(params) {
+    const stateParams = searchHelper.queryParamsToState(params);
+    Object.keys(stateParams).forEach((key) => {
+      this.dataSource.setState(key, stateParams[key]);
+      this.hostEmit$.next({
+        type: 'updateinputvalue',
+        payload: {
+          id: key,
+          value: stateParams[key]
+        }
+      });
     });
   }
 }
