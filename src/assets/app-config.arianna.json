@@ -1,10 +1,9 @@
 {
   "communication": {
-    "defaultProvider": "arianna-api",
+    "defaultProvider": "apollo",
     "providers": {
-      "arianna-api": {
-        "type": "apollo",
-        "baseUrl": "https://aw-unifi-graphql.netseven.it/"
+      "apollo": {
+        "baseUrl": "http://graphql-confindustria.hyperborea.com/"
       },
       "rest": {
         "baseUrl": "https://jsonplaceholder.typicode.com/",
@@ -319,8 +318,8 @@
       "smallChartSize": 3
     },
     "entitiesQuerySize": 30,
-    "metadata-to-show": ["tipologia", "natura_giuridica"]
-  },
+    "metadata-to-show": ["altraDenominazione.tipologiaDenominazione","altraDenominazione.altraDenominazione","genere","altro_luogo","luogo_nascita","luogo_morte","data_nascita","data_morte","biografia","tipologia","qualifica","natura_giuridica","sede","data_istituzione","data_soppressione","note_storiche","struttura_funzioni","stato","regione","provincia","comune","note_storiche","data_fondazione","data_estinzione","data_inizio","data_fine","ricorrenza","descrizione"]
+  },  
   "config-keys": {
     "persona": {
       "color": {
@@ -550,6 +549,37 @@
     "typology": "",
     "struttura_funzioni": "Funzioni principali",
     "aggregazione-logica": "Fondo",
-    "oggetto-culturale": "Oggetto culturale"
+    "oggetto-culturale": "Oggetto culturale",
+    "tipologia": "",
+    "descrizione": "Descrizione",
+    "data_inizio": "Data di inizio",
+    "data_fine": "Data di fine",
+    "ricorrenza": "Ricorrenza",
+    "altraDenominazione.tipologiaDenominazione": "Altra denominazione - tipologia",
+    "altraDenominazione.altraDenominazione": "Altra denominazione",
+    "luogo": "Contesto spaziale",
+    "data_fondazione": "Data di fondazione",
+    "data_estinzione": "Data di estinzione",
+    "note_storiche": "Storia",
+    "stato": "Stato",
+    "regione": "Regione",
+    "provincia": "Provincia",
+    "comune": "Comune",
+    "note_storiche": "Descrizione ",
+    "natura_giuridica": "Natura giuridica",
+    "sede": "Sedi",
+    "data_istituzione": "Data di istituzione",
+    "data_soppressione  ": "Data di soppressione",
+    "note_storiche": "Storia",
+    "struttura_funzioni": "Struttura organizzativa",
+    "genere": "Genere",
+    "altro_luogo": "Luoghi significativi",
+    "luogo_nascita": "Luogo di nascita",
+    "luogo_morte": "Luogo di morte",
+    "data_nascita": "Data di nascita",
+    "data_morte": "Data di morte",
+    "biografia": "Biografia",
+    "tipologia": "Qualifica - tipologia",
+    "qualifica": "Qualifica"
   }
 }
