@@ -47,7 +47,17 @@ export class MrSearchLayoutEH extends EventHandler {
                 value: 'Sto cercando...'
               }
             });
+            setTimeout(() => {
+              this.hostEmit$.next({
+                type: 'updateinputvalue',
+                payload: {
+                  id: 'input-00',
+                  value: null
+                }
+              });
+            }, 5000);
           }, 5000); */
+
           break;
 
         case 'mr-search-layout.destroy':
@@ -101,9 +111,9 @@ export class MrSearchLayoutEH extends EventHandler {
       takeUntil(this.destroyed$),
     ).subscribe((params) => {
       // params state control
-      if (isEmpty(params)) {
+      if (isEmpty(params) && !isEmpty(this.dataSource.getState())) {
         this.clearSearchState();
-      } else if (isEmpty(this.dataSource.getState())) {
+      } else if (isEmpty(this.dataSource.getState()) && !isEmpty(params)) {
         this.setSearchState(params);
       }
       // TODO: aggiungere logica richieste
