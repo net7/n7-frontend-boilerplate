@@ -1,4 +1,5 @@
 import { of } from 'rxjs';
+import { delay } from 'rxjs/operators';
 import { LayoutDataSource } from '@n7-frontend/core';
 import facetsConfig from './search-facets.config';
 import { ConfigurationService } from '../../../common/services/configuration.service';
@@ -32,17 +33,15 @@ export class MrSearchLayoutDS extends LayoutDataSource {
 
     // manual updates
     this.one('mr-search-page-title').update({});
-
-    // first request
-    this.doRequest$().subscribe((response) => {
-      this.handleResponse(response);
-    });
   }
 
-  doRequest$() {
+  doRequest$(params = {}) {
     // FIXME: togliere commento
     // return this.communication.request$('search', {});
-    return of(resultsMock);
+    console.warn('#TODO: doRequest', params);
+    return of(resultsMock(this.getState('page') || 1)).pipe(
+      delay(5000)
+    );
   }
 
   handleResponse(response) {

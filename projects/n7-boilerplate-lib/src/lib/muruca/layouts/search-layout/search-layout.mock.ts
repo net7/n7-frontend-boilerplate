@@ -1,6 +1,6 @@
-export default {
-  totalCount: 100,
-  page: { current: 1, limit: 10 },
+export default (page) => ({
+  totalCount: Math.round(Math.random() * 1000),
+  page: { current: page, limit: 10 },
   results: [
     {
       image: 'https://i.imgur.com/52UFqca.png',
@@ -52,4 +52,4 @@ export default {
       text: 'A japanese colored version',
     }
   ]
-};
+});

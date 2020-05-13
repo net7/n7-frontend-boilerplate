@@ -26,39 +26,11 @@ export class MrSearchLayoutEH extends EventHandler {
           this.guestEmit$ = payload.guestEmit$;
           this.router = payload.router;
           this.activatedRoute = payload.activatedRoute;
-
-          this.dataSource.onInit(payload);
+          // listeners
           this.listenToGuest();
           this.listenToRouterChanges();
-
-
-          /* setTimeout(() => {
-            this.hostEmit$.next({
-              type: 'updateinputdata',
-              payload: {
-                id: 'input-00',
-                data: {
-                  placeholder: 'Cerca su tutto',
-                }
-              }
-            });
-            this.hostEmit$.next({
-              type: 'updateinputvalue',
-              payload: {
-                id: 'input-00',
-                value: 'Sto cercando...'
-              }
-            });
-            setTimeout(() => {
-              this.hostEmit$.next({
-                type: 'updateinputvalue',
-                payload: {
-                  id: 'input-00',
-                  value: null
-                }
-              });
-            }, 5000);
-          }, 5000); */
+          // init
+          this.dataSource.onInit(payload);
 
           break;
 
@@ -123,8 +95,12 @@ export class MrSearchLayoutEH extends EventHandler {
       } else if (isEmpty(this.dataSource.getState()) && !isEmpty(params)) {
         this.setSearchState(params);
       }
-      // TODO: aggiungere logica richieste
-      console.warn('query params', params, this.dataSource.getState());
+
+      // search request
+      this.dataSource.doRequest$(searchHelper.queryParamsToState(params))
+        .subscribe((response) => {
+          this.dataSource.handleResponse(response);
+        });
     });
   }
 
