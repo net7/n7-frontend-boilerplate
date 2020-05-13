@@ -22,10 +22,12 @@ export class SearchFacetsLayoutEH extends EventHandler {
         case 'mr-search-facets-layout.init':
           this.hostEmit$ = payload.hostEmit$;
           this.guestEmit$ = payload.guestEmit$;
-
-          this.dataSource.onInit(payload);
-          this.initChangedListener(payload.data);
+          // listeners
+          this.listenFacetsReady();
           this.listenToHost();
+          this.initChangedListener(payload.data);
+          // init
+          this.dataSource.onInit(payload);
           break;
 
         case 'mr-search-facets-layout.destroy':
@@ -68,6 +70,14 @@ export class SearchFacetsLayoutEH extends EventHandler {
             type: 'change'
           });
         });
+      });
+    });
+  }
+
+  listenFacetsReady() {
+    this.dataSource.ready$.subscribe(() => {
+      this.guestEmit$.next({
+        type: 'facetsready'
       });
     });
   }

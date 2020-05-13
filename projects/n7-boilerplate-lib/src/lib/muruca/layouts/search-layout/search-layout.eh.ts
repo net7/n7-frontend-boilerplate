@@ -12,6 +12,8 @@ export class MrSearchLayoutEH extends EventHandler {
 
   private guestEmit$: Subject<any>;
 
+  private facetsReady$: Subject<void> = new Subject();
+
   private router: Router;
 
   private activatedRoute: ActivatedRoute;
@@ -94,6 +96,11 @@ export class MrSearchLayoutEH extends EventHandler {
       takeUntil(this.destroyed$)
     ).subscribe(({ type, payload }) => {
       switch (type) {
+        case 'facetsready': {
+          this.facetsReady$.next();
+          break;
+        }
+
         case 'change': {
           this.dataSource.setState(payload.id, payload.value);
           this.updateRoute();
@@ -108,7 +115,7 @@ export class MrSearchLayoutEH extends EventHandler {
 
   listenToRouterChanges() {
     this.activatedRoute.queryParams.pipe(
-      takeUntil(this.destroyed$),
+      takeUntil(this.destroyed$)
     ).subscribe((params) => {
       // params state control
       if (isEmpty(params) && !isEmpty(this.dataSource.getState())) {
@@ -134,15 +141,17 @@ export class MrSearchLayoutEH extends EventHandler {
   }
 
   private setSearchState(params) {
-    const stateParams = searchHelper.queryParamsToState(params);
-    Object.keys(stateParams).forEach((key) => {
-      this.dataSource.setState(key, stateParams[key]);
-      this.hostEmit$.next({
-        type: 'updateinputvalue',
-        payload: {
-          id: key,
-          value: stateParams[key]
-        }
+    this.facetsReady$.subscribe(() => {
+      const stateParams = searchHelper.queryParamsToState(params);
+      Object.keys(stateParams).forEach((key) => {
+        this.dataSource.setState(key, stateParams[key]);
+        this.hostEmit$.next({
+          type: 'updateinputvalue',
+          payload: {
+            id: key,
+            value: stateParams[key]
+          }
+        });
       });
     });
   }

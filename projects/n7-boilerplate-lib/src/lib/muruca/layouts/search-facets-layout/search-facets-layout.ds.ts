@@ -1,8 +1,11 @@
+import { Subject } from 'rxjs';
 import { LayoutDataSource } from '@n7-frontend/core';
 import { SearchFacetsConfig } from './search-facets-config';
 
 export class SearchFacetsLayoutDS extends LayoutDataSource {
   public data: SearchFacetsConfig;
+
+  public ready$: Subject<void> = new Subject();
 
   onInit(payload) {
     this.data = payload.data;
@@ -24,6 +27,9 @@ export class SearchFacetsLayoutDS extends LayoutDataSource {
         this.one(input.id).update(input.data);
       });
     });
+
+    // signal
+    this.ready$.next();
   }
 
   updateInputValue(id, newValue) {
