@@ -34,21 +34,27 @@ export class SearchFacetsLayoutDS extends LayoutDataSource {
 
   updateInputValue(id, newValue) {
     const widgetDataSource = this.getWidgetDataSource(id);
-    widgetDataSource.setValue(newValue, true);
+    if (widgetDataSource) {
+      widgetDataSource.setValue(newValue, true);
+    }
   }
 
   updateInputData(id, newData) {
     const widgetDataSource = this.getWidgetDataSource(id);
-    widgetDataSource.update({
-      ...widgetDataSource.input,
-      ...newData
-    });
+    if (widgetDataSource) {
+      widgetDataSource.update({
+        ...widgetDataSource.input,
+        ...newData
+      });
+    }
   }
 
   clearInput(id) {
     const widgetDataSource = this.getWidgetDataSource(id);
-    widgetDataSource.clear();
-    widgetDataSource.setValue(widgetDataSource.value, true);
+    if (widgetDataSource) {
+      widgetDataSource.clear();
+      widgetDataSource.setValue(widgetDataSource.value, true);
+    }
   }
 
   clearInputs() {
