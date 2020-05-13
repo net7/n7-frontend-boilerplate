@@ -29,10 +29,56 @@
                     #TODO: Filter, when active
                 </div>
                 <main class="mr-search__results">
-                    <n7-item-preview *ngFor="let item of (lb.widgets['mr-search-results'].ds.out$ | async)"
-                    [data]="item">
-                    </n7-item-preview>
-                </main>
+                    <!-- SEARCH RESULTS -->
+                    <ng-container [ngSwitch]="lb.dataSource.sectionState.results">
+                        
+                        <!-- loading -->
+                        <ng-container *ngSwitchCase="'LOADING'">
+                            <div class="mr-search__results-loading">
+                                <n7-content-placeholder *ngFor="let n of [0,1,2,3,4,5,6,7,8,9]" [data]="{
+                                    blocks: [
+                                        { classes: 'search-result-placeholder-title' },
+                                        { classes: 'search-result-placeholder-metadata' },
+                                        { classes: 'search-result-placeholder-metadata' },
+                                        { classes: 'search-result-placeholder-metadata' }
+                                    ]
+                                }"></n7-content-placeholder>
+                            </div>
+                        </ng-container>
+                        
+                        <!-- ok: items > 0 -->
+                        <ng-container *ngSwitchCase="'OK'">
+                            <n7-item-preview *ngFor="let item of (lb.widgets['mr-search-results'].ds.out$ | async)"
+                            [data]="item">
+                            </n7-item-preview>
+                        </ng-container>
+
+                        <!-- ok: items === 0 -->
+                        <ng-container *ngSwitchCase="'EMPTY'">
+                            <div class="mr-search__results-fallback">
+                                <p class="mr-search__results-fallback-string">
+                                    {{ lb.dataSource.pageConfig.fallbackText }}
+                                </p>
+                                <button class="n7-btn mr-search__results-fallback-button"
+                                    (click)="lb.eventHandler.emitInner('searchreset')">
+                                    {{ lb.dataSource.pageConfig.fallbackButton }}
+                                </button>
+                            </div>
+                        </ng-container>
+
+                        <!-- ko: request problem -->
+                        <ng-container *ngSwitchCase="'KO'">
+                            <p class="mr-search__results-ko-string">
+                                {{ lb.dataSource.pageConfig.koText }}
+                            </p>
+                            <button class="n7-btn mr-search__results-ko-button"
+                                (click)="lb.eventHandler.emitInner('searchreset')">
+                                {{ lb.dataSource.pageConfig.koButton }}
+                            </button>
+                        </ng-container>
+                        
+                    </ng-container>
+                </main>               
                 <n7-smart-pagination
                 [data]="lb.widgets['n7-smart-pagination'].ds.out$ | async"
                 [emit]="lb.widgets['n7-smart-pagination'].emit">

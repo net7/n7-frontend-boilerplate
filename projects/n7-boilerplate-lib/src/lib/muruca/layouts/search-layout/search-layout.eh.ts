@@ -2,10 +2,15 @@ import { isEmpty } from 'lodash';
 import { EventHandler } from '@n7-frontend/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { takeUntil, concatMap, debounceTime } from 'rxjs/operators';
+import {
+  takeUntil, debounceTime, tap, switchMap
+} from 'rxjs/operators';
 import searchHelper from '../../helpers/search-helper';
+import { MrSearchLayoutDS } from './search-layout.ds';
 
 export class MrSearchLayoutEH extends EventHandler {
+  public dataSource: MrSearchLayoutDS;
+
   private destroyed$: Subject<boolean> = new Subject();
 
   private hostEmit$: Subject<any>;
@@ -66,10 +71,14 @@ export class MrSearchLayoutEH extends EventHandler {
 
     // search request stream
     this.doSearch$.pipe(
+      tap(() => {
+        this.dataSource.setSectionState('results', 'LOADING');
+      }),
       debounceTime(500),
-      concatMap((params: any) => this.dataSource.doRequest$(params))
+      switchMap((params: any) => this.dataSource.doRequest$(params))
     ).subscribe((response) => {
       this.dataSource.handleResponse(response);
+      this.dataSource.setSectionState('results', 'OK');
     });
   }
 

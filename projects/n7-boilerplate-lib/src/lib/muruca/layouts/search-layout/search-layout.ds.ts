@@ -6,6 +6,8 @@ import { ConfigurationService } from '../../../common/services/configuration.ser
 import { CommunicationService } from '../../../common/services/communication.service';
 import resultsMock from './search-layout.mock';
 
+type SectionStates = 'LOADING' | 'EMPTY' | 'OK' | 'KO';
+
 export class MrSearchLayoutDS extends LayoutDataSource {
   private configuration: ConfigurationService;
 
@@ -13,7 +15,13 @@ export class MrSearchLayoutDS extends LayoutDataSource {
 
   private configId: string;
 
-  public state = {};
+  public state: {
+    [key: string]: string | string[] | null;
+  } = {};
+
+  public sectionState: {
+    [key: string]: SectionStates;
+  } = {};
 
   public facetsConfig;
 
@@ -40,7 +48,7 @@ export class MrSearchLayoutDS extends LayoutDataSource {
     // return this.communication.request$('search', {});
     console.warn('#TODO: doRequest', params);
     return of(resultsMock(this.getState('page') || 1)).pipe(
-      delay(Math.round(Math.random() * 10000))
+      delay(Math.round(Math.random() * 5000))
     );
   }
 
@@ -70,7 +78,7 @@ export class MrSearchLayoutDS extends LayoutDataSource {
     };
   }
 
-  getState(id?: string) {
+  getState(id?: string): any {
     return id ? this.state[id] : this.state;
   }
 
@@ -80,5 +88,9 @@ export class MrSearchLayoutDS extends LayoutDataSource {
 
   clearState() {
     this.state = {};
+  }
+
+  setSectionState(id: string, newState: SectionStates) {
+    this.sectionState[id] = newState;
   }
 }
