@@ -2,7 +2,7 @@ import { isEmpty } from 'lodash';
 import { EventHandler } from '@n7-frontend/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, concatMap, debounceTime } from 'rxjs/operators';
 import searchHelper from '../../helpers/search-helper';
 
 export class MrSearchLayoutEH extends EventHandler {
@@ -13,6 +13,8 @@ export class MrSearchLayoutEH extends EventHandler {
   private guestEmit$: Subject<any>;
 
   private facetsReady$: Subject<void> = new Subject();
+
+  private doSearch$: Subject<any> = new Subject();
 
   private router: Router;
 
@@ -61,6 +63,14 @@ export class MrSearchLayoutEH extends EventHandler {
           break;
       }
     });
+
+    // search request stream
+    this.doSearch$.pipe(
+      debounceTime(500),
+      concatMap((params: any) => this.dataSource.doRequest$(params))
+    ).subscribe((response) => {
+      this.dataSource.handleResponse(response);
+    });
   }
 
   listenToGuest() {
@@ -96,11 +106,7 @@ export class MrSearchLayoutEH extends EventHandler {
         this.setSearchState(params);
       }
 
-      // search request
-      this.dataSource.doRequest$(searchHelper.queryParamsToState(params))
-        .subscribe((response) => {
-          this.dataSource.handleResponse(response);
-        });
+      this.doSearch$.next(searchHelper.queryParamsToState(params));
     });
   }
 

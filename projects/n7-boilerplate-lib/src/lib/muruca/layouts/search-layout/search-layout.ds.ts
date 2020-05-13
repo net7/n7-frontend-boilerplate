@@ -40,7 +40,7 @@ export class MrSearchLayoutDS extends LayoutDataSource {
     // return this.communication.request$('search', {});
     console.warn('#TODO: doRequest', params);
     return of(resultsMock(this.getState('page') || 1)).pipe(
-      delay(5000)
+      delay(Math.round(Math.random() * 10000))
     );
   }
 
