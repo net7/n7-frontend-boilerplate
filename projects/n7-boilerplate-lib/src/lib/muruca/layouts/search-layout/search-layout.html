@@ -26,7 +26,10 @@
                     </n7-inner-title>
                 </div>
                 <div class="mr-search__results-filters">
-                    #TODO: Filter, when active
+                    <n7-tag *ngFor="let tag of (lb.widgets['mr-search-tags'].ds.out$ | async)"
+                    [data]="tag"
+                    [emit]="lb.widgets['mr-search-tags'].emit">
+                    </n7-tag>
                 </div>
                 <main class="mr-search__results">
                     <!-- SEARCH RESULTS -->

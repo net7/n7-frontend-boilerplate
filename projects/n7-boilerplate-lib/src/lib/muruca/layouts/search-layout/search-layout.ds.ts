@@ -15,6 +15,13 @@ export class MrSearchLayoutDS extends LayoutDataSource {
 
   private configId: string;
 
+  private inputsConfig: {
+    [key: string]: {
+      type: string;
+      internal: boolean;
+    };
+  } = {};
+
   public state: {
     [key: string]: string | string[] | null;
   } = {};
@@ -35,6 +42,16 @@ export class MrSearchLayoutDS extends LayoutDataSource {
     this.facetsConfig = facetsConfig;
     this.configId = payload.configId;
     this.pageConfig = this.configuration.get(this.configId);
+
+    // inputs config
+    this.facetsConfig.sections.forEach(({ inputs }) => {
+      inputs.forEach(({ id, type, internal }) => {
+        this.inputsConfig[id] = {
+          type,
+          internal: !!internal
+        };
+      });
+    });
 
     // config
     this.all().updateOptions({ config: this.pageConfig });
@@ -61,6 +78,14 @@ export class MrSearchLayoutDS extends LayoutDataSource {
     // pagination
     this.one('n7-smart-pagination').updateOptions({ mode: 'payload' });
     this.one('n7-smart-pagination').update(this.getPaginationParams(response));
+  }
+
+  updateActiveFilters() {
+    // active "tags" filters
+    this.one('mr-search-tags').update({
+      state: this.state,
+      facetsConfig: this.facetsConfig
+    });
   }
 
   private getPaginationParams(response) {
@@ -93,4 +118,8 @@ export class MrSearchLayoutDS extends LayoutDataSource {
   setSectionState(id: string, newState: SectionStates) {
     this.sectionState[id] = newState;
   }
+
+  inputIsInternal = (id?: string) => this.inputsConfig[id].internal;
+
+  getInputType = (id?: string) => this.inputsConfig[id].type;
 }

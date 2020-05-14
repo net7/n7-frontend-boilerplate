@@ -16,6 +16,7 @@ interface SearchFacetsInput {
   id: string;
   type: 'text' | 'checkbox' | 'select' | 'link';
   data: InputCheckboxData | InputLinkData | InputSelectData | InputTextData;
+  internal?: boolean;
   delay?: number;
   value?: string | string[] | boolean | null;
 }

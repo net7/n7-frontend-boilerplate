@@ -6,3 +6,4 @@ export * from './nav.ds';
 export * from './search/search-results.ds';
 export * from './search/search-page-title.ds';
 export * from './search/search-results-title.ds';
+export * from './search/search-tags.ds';

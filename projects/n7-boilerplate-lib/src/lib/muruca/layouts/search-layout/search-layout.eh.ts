@@ -3,7 +3,10 @@ import { EventHandler } from '@n7-frontend/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import {
-  takeUntil, debounceTime, tap, switchMap
+  takeUntil,
+  debounceTime,
+  tap,
+  switchMap
 } from 'rxjs/operators';
 import searchHelper from '../../helpers/search-helper';
 import { MrSearchLayoutDS } from './search-layout.ds';
@@ -64,6 +67,25 @@ export class MrSearchLayoutEH extends EventHandler {
           this.updateRoute();
           break;
 
+        case 'mr-search-tags.click': {
+          const stateValue = this.dataSource.getState(payload.id);
+          let newValue = null;
+          if (Array.isArray(stateValue)) {
+            stateValue.splice(stateValue.indexOf(payload.value), 1);
+            newValue = stateValue;
+          }
+          this.dataSource.setState(payload.id, newValue);
+          this.hostEmit$.next({
+            type: 'updateinputvalue',
+            payload: {
+              id: payload.id,
+              value: newValue
+            }
+          });
+          this.updateRoute();
+          break;
+        }
+
         default:
           break;
       }
@@ -71,10 +93,11 @@ export class MrSearchLayoutEH extends EventHandler {
 
     // search request stream
     this.doSearch$.pipe(
+      debounceTime(500),
       tap(() => {
+        this.dataSource.updateActiveFilters();
         this.dataSource.setSectionState('results', 'LOADING');
       }),
-      debounceTime(500),
       switchMap((params: any) => this.dataSource.doRequest$(params))
     ).subscribe((response) => {
       this.dataSource.handleResponse(response);
@@ -108,14 +131,14 @@ export class MrSearchLayoutEH extends EventHandler {
     this.activatedRoute.queryParams.pipe(
       takeUntil(this.destroyed$)
     ).subscribe((params) => {
+      const searchState = searchHelper.queryParamsToState(params);
       // params state control
       if (isEmpty(params) && !isEmpty(this.dataSource.getState())) {
         this.clearSearchState();
       } else if (isEmpty(this.dataSource.getState()) && !isEmpty(params)) {
         this.setSearchState(params);
       }
-
-      this.doSearch$.next(searchHelper.queryParamsToState(params));
+      this.doSearch$.next(searchState);
     });
   }
 

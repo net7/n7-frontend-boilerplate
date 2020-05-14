@@ -18,6 +18,8 @@ export const MrSearchLayoutConfig = {
   }, {
     id: 'mr-search-results'
   }, {
+    id: 'mr-search-tags'
+  }, {
     id: 'mr-resources', dataSource: DS.MrItemPreviewsDS,
   }, {
     id: 'n7-smart-pagination',

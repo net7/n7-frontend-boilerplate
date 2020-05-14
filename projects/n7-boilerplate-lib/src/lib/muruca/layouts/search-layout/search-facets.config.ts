@@ -1,5 +1,20 @@
 import { SearchFacetsConfig } from '../search-facets-layout/search-facets-config';
 
+function getLinks(id, prefix) {
+  let i;
+  const limit = Math.round(Math.random() * 10);
+  const links = [];
+  for (i = 0; i < limit; i += 1) {
+    const text = `${prefix} ${i + 1}`;
+    links.push({
+      text,
+      counter: Math.round(Math.random() * 100),
+      payload: text
+    });
+  }
+  return links;
+}
+
 const configuration: SearchFacetsConfig = {
   sections: [{
     header: {
@@ -31,6 +46,7 @@ const configuration: SearchFacetsConfig = {
     inputs: [{
       id: 'input-01',
       type: 'text',
+      internal: true,
       data: {
         id: 'input-text-01',
         placeholder: 'Search',
@@ -43,35 +59,7 @@ const configuration: SearchFacetsConfig = {
       id: 'input-02',
       type: 'link',
       data: {
-        links: [{
-          text: 'Title',
-          counter: 28,
-          payload: 'i02t28'
-        }, {
-          text: 'Title',
-          counter: 21,
-          payload: 'i02t21'
-        }, {
-          text: 'Title',
-          counter: 18,
-          payload: 'i02t18'
-        }, {
-          text: 'Title',
-          counter: 16,
-          payload: 'i02t16'
-        }, {
-          text: 'Title',
-          counter: 11,
-          payload: 'i02t11'
-        }, {
-          text: 'Title',
-          counter: 9,
-          payload: 'i02t9'
-        }, {
-          text: 'Title',
-          counter: 4,
-          payload: 'i02t4'
-        }]
+        links: getLinks('input-02', 'Toponimo')
       }
     }]
   }, {
@@ -85,6 +73,7 @@ const configuration: SearchFacetsConfig = {
     inputs: [{
       id: 'input-03',
       type: 'text',
+      internal: true,
       data: {
         id: 'input-text-02',
         placeholder: 'Search',
@@ -97,35 +86,7 @@ const configuration: SearchFacetsConfig = {
       id: 'input-04',
       type: 'link',
       data: {
-        links: [{
-          text: 'Title',
-          counter: 28,
-          payload: 'i04t28'
-        }, {
-          text: 'Title',
-          counter: 21,
-          payload: 'i04t21'
-        }, {
-          text: 'Title',
-          counter: 18,
-          payload: 'i04t18'
-        }, {
-          text: 'Title',
-          counter: 16,
-          payload: 'i04t16'
-        }, {
-          text: 'Title',
-          counter: 11,
-          payload: 'i04t11'
-        }, {
-          text: 'Title',
-          counter: 9,
-          payload: 'i04t9'
-        }, {
-          text: 'Title',
-          counter: 4,
-          payload: 'i04t4'
-        }]
+        links: getLinks('input-04', 'Concetto')
       }
     }]
   }, {
@@ -140,19 +101,7 @@ const configuration: SearchFacetsConfig = {
       id: 'input-05',
       type: 'link',
       data: {
-        links: [{
-          text: 'Title',
-          counter: 32,
-          payload: 'input-05-1'
-        }, {
-          text: 'Title',
-          counter: 27,
-          payload: 'input-05-2'
-        }, {
-          text: 'Title',
-          counter: 18,
-          payload: 'input-05-3'
-        }]
+        links: getLinks('input-05', 'Continente')
       }
     }]
   }, {
@@ -164,7 +113,13 @@ const configuration: SearchFacetsConfig = {
         iconRight: 'n7-icon-angle-right'
       }
     },
-    inputs: [],
+    inputs: [{
+      id: 'input-06',
+      type: 'link',
+      data: {
+        links: getLinks('input-06', 'Keyword')
+      }
+    }],
   }, {
     header: {
       id: 'header-data',
@@ -174,7 +129,13 @@ const configuration: SearchFacetsConfig = {
         iconRight: 'n7-icon-angle-right'
       }
     },
-    inputs: [],
+    inputs: [{
+      id: 'input-07',
+      type: 'link',
+      data: {
+        links: getLinks('input-07', 'Data')
+      }
+    }],
   }, {
     header: {
       id: 'header-luogo',
@@ -184,7 +145,13 @@ const configuration: SearchFacetsConfig = {
         iconRight: 'n7-icon-angle-right'
       }
     },
-    inputs: [],
+    inputs: [{
+      id: 'input-08',
+      type: 'link',
+      data: {
+        links: getLinks('input-08', 'Luogo')
+      }
+    }],
   }],
   classes: 'facets-wrapper'
 };
