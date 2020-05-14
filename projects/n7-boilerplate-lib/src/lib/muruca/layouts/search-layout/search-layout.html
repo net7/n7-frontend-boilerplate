@@ -22,7 +22,8 @@
             <div class="mr-search__results-wrapper">
                 <div class="mr-search__results-info">
                     <n7-inner-title
-                    [data]="lb.widgets['mr-search-results-title'].ds.out$ | async">
+                    [data]="lb.widgets['mr-search-results-title'].ds.out$ | async"
+                    [emit]="lb.widgets['mr-search-results-title'].emit">
                     </n7-inner-title>
                 </div>
                 <div class="mr-search__results-filters">

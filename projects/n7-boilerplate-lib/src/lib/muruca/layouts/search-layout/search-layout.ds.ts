@@ -64,7 +64,9 @@ export class MrSearchLayoutDS extends LayoutDataSource {
     // FIXME: togliere commento
     // return this.communication.request$('search', {});
     console.warn('#TODO: doRequest', params);
-    return of(resultsMock(this.getState('page') || 1)).pipe(
+    const page = this.getState('page') || 1;
+    const sort = this.getState('sort') || '_score_DESC';
+    return of(resultsMock(page, sort)).pipe(
       delay(Math.round(Math.random() * 5000))
     );
   }

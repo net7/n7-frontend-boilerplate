@@ -1,4 +1,5 @@
-export default (page) => ({
+export default (page, sort) => ({
+  sort,
   totalCount: Math.round(Math.random() * 1000),
   page: { current: page, limit: 10 },
   results: [

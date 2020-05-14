@@ -6,7 +6,7 @@ export class MrSearchResultsTitleDS extends DataSource {
       totalResultsText,
       sort
     } = this.options.config;
-    const { totalCount } = data;
+    const { totalCount, sort: currentSort } = data;
 
     return {
       title: {
@@ -22,7 +22,7 @@ export class MrSearchResultsTitleDS extends DataSource {
           label: sort.label,
           options: sort.options.map(({ label, value, selected }) => ({
             value,
-            selected,
+            selected: currentSort ? value === currentSort : selected,
             text: label
           })),
           payload: 'sort'
