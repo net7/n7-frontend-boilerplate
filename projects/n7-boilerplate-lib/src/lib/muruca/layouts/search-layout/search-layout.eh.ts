@@ -106,6 +106,7 @@ export class MrSearchLayoutEH extends EventHandler {
       switchMap((params: any) => this.dataSource.doRequest$(params))
     ).subscribe((response) => {
       this.dataSource.handleResponse(response);
+      this.updateFacetHeaders(response.headers);
       this.dataSource.setSectionState('results', 'OK');
     });
   }
@@ -151,6 +152,18 @@ export class MrSearchLayoutEH extends EventHandler {
     const queryParams = searchHelper.stateToQueryParams(this.dataSource.getState());
     this.router.navigate([], {
       queryParams
+    });
+  }
+
+  private updateFacetHeaders(headers) {
+    Object.keys(headers).forEach((id) => {
+      this.hostEmit$.next({
+        type: 'updateinputvalue',
+        payload: {
+          id,
+          value: headers[id]
+        }
+      });
     });
   }
 

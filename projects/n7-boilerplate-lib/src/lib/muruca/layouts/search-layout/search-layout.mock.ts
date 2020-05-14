@@ -1,7 +1,18 @@
+import searchFacets from './search-facets.config';
+
+function getHeaders() {
+  const headers = {};
+  searchFacets.sections.forEach(({ header }) => {
+    headers[header.id] = Math.round(Math.random() * 100);
+  });
+  return headers;
+}
+
 export default (page, sort) => ({
   sort,
   totalCount: Math.round(Math.random() * 1000),
   page: { current: page, limit: 10 },
+  headers: getHeaders(),
   results: [
     {
       image: 'https://i.imgur.com/52UFqca.png',
