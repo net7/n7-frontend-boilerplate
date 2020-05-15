@@ -1,6 +1,6 @@
 import { SearchFacetsConfig } from '../search-facets-layout/search-facets-config';
 
-function getLinks(id, prefix) {
+function getLinks(prefix) {
   let i;
   const limit = Math.round(Math.random() * 10);
   const links = [];
@@ -59,7 +59,7 @@ const configuration: SearchFacetsConfig = {
       id: 'input-02',
       type: 'link',
       data: {
-        links: getLinks('input-02', 'Toponimo')
+        links: getLinks('Toponimo')
       }
     }]
   }, {
@@ -86,7 +86,7 @@ const configuration: SearchFacetsConfig = {
       id: 'input-04',
       type: 'link',
       data: {
-        links: getLinks('input-04', 'Concetto')
+        links: getLinks('Concetto')
       }
     }]
   }, {
@@ -101,7 +101,7 @@ const configuration: SearchFacetsConfig = {
       id: 'input-05',
       type: 'link',
       data: {
-        links: getLinks('input-05', 'Continente')
+        links: getLinks('Continente')
       }
     }]
   }, {
@@ -117,7 +117,7 @@ const configuration: SearchFacetsConfig = {
       id: 'input-06',
       type: 'link',
       data: {
-        links: getLinks('input-06', 'Keyword')
+        links: getLinks('Keyword')
       }
     }],
   }, {
@@ -133,7 +133,7 @@ const configuration: SearchFacetsConfig = {
       id: 'input-07',
       type: 'link',
       data: {
-        links: getLinks('input-07', 'Data')
+        links: getLinks('Data')
       }
     }],
   }, {
@@ -149,7 +149,7 @@ const configuration: SearchFacetsConfig = {
       id: 'input-08',
       type: 'link',
       data: {
-        links: getLinks('input-08', 'Luogo')
+        links: getLinks('Luogo')
       }
     }],
   }],
