@@ -63,8 +63,19 @@ export class AwSearchLayoutEH extends EventHandler {
           this.dataSource.resetPagination();
           const { value: textInput } = this.dataSource.searchModel.getFiltersByFacetId('query')[0];
           // Checks if <input type=text>'s value has changed
-          this.textHasChanged = textInput && textInput !== this.previousText;
+          this.textHasChanged = !!(textInput && (textInput !== this.previousText));
           this.previousText = textInput;
+          if (this.textHasChanged && textInput.length > 0) {
+            // Add sort by score option
+            this.dataSource.isSearchingText.next(true);
+          } else if (textInput.length === 0) {
+            // Remove sort by score option
+            this.dataSource.isSearchingText.next(false);
+            setTimeout(() => {
+              this.dataSource.onOrderByChange('label_sort_DESC');
+              this.additionalParamsChange$.next(); // emit from observable stream
+            }, 100);
+          }
         } break;
 
         case 'n7-smart-pagination.change':

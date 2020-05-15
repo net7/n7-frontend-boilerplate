@@ -2,7 +2,7 @@ import { cloneDeep } from 'lodash';
 import { LayoutDataSource } from '@n7-frontend/core/dist/layout-data-source';
 import { tap, takeUntil } from 'rxjs/operators';
 import {
-  Observable, of, fromEvent, Subject,
+  Observable, of, fromEvent, Subject, BehaviorSubject,
 } from 'rxjs';
 import {
   SearchService,
@@ -51,6 +51,9 @@ export class AwSearchLayoutDS extends LayoutDataSource {
   public isFirstLoading = true;
 
   public resultsLoading = false;
+
+  /** True when the user has input a text string */
+  public isSearchingText = new BehaviorSubject(false);
 
   /** Current order method */
   public orderBy = 'label_sort';
