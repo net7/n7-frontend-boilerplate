@@ -1,5 +1,6 @@
 import { of } from 'rxjs';
 import { delay } from 'rxjs/operators';
+import { isEmpty } from 'lodash';
 import { LayoutDataSource } from '@n7-frontend/core';
 import facetsConfig from './search-facets.config';
 import { ConfigurationService } from '../../../common/services/configuration.service';
@@ -61,9 +62,16 @@ export class MrSearchLayoutDS extends LayoutDataSource {
   }
 
   doRequest$(params = {}) {
-    // FIXME: togliere commento
-    // return this.communication.request$('search', {});
     console.warn('#TODO: doRequest', params);
+    // FIXME: togliere commento
+    /* return this.communication.request$('search', {
+      params,
+      onError: (error) => {
+        this.setSectionState('results', 'KO');
+        console.warn('SEARCH ERROR', error);
+      }
+    }); */
+
     const page = this.getState('page') || 1;
     const sort = this.getState('sort') || '_score_DESC';
     return of(resultsMock(page, sort)).pipe(
@@ -76,6 +84,8 @@ export class MrSearchLayoutDS extends LayoutDataSource {
       'mr-search-results-title',
       'mr-search-results',
     ]).update(response);
+
+    this.setSectionState('results', isEmpty(response.results) ? 'EMPTY' : 'OK');
 
     // pagination
     this.one('n7-smart-pagination').updateOptions({ mode: 'payload' });

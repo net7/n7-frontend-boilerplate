@@ -61,11 +61,11 @@
                         <ng-container *ngSwitchCase="'EMPTY'">
                             <div class="mr-search__results-fallback">
                                 <p class="mr-search__results-fallback-string">
-                                    {{ lb.dataSource.pageConfig.fallbackText }}
+                                    {{ lb.dataSource.pageConfig.fallback.text }}
                                 </p>
                                 <button class="n7-btn mr-search__results-fallback-button"
                                     (click)="lb.eventHandler.emitInner('searchreset')">
-                                    {{ lb.dataSource.pageConfig.fallbackButton }}
+                                    {{ lb.dataSource.pageConfig.fallback.button }}
                                 </button>
                             </div>
                         </ng-container>
@@ -73,11 +73,11 @@
                         <!-- ko: request problem -->
                         <ng-container *ngSwitchCase="'KO'">
                             <p class="mr-search__results-ko-string">
-                                {{ lb.dataSource.pageConfig.koText }}
+                                {{ lb.dataSource.pageConfig.ko.text }}
                             </p>
                             <button class="n7-btn mr-search__results-ko-button"
                                 (click)="lb.eventHandler.emitInner('searchreset')">
-                                {{ lb.dataSource.pageConfig.koButton }}
+                                {{ lb.dataSource.pageConfig.ko.button }}
                             </button>
                         </ng-container>
                         

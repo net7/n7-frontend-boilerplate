@@ -41,11 +41,15 @@ export class MrSearchLayoutEH extends EventHandler {
           this.listenToRouterChanges();
           // init
           this.dataSource.onInit(payload);
-
           break;
 
         case 'mr-search-layout.destroy':
           this.destroyed$.next(true);
+          break;
+
+        case 'mr-search-layout.searchreset':
+          this.clearSearchState();
+          this.updateRoute();
           break;
 
         default:
@@ -107,7 +111,6 @@ export class MrSearchLayoutEH extends EventHandler {
     ).subscribe((response) => {
       this.dataSource.handleResponse(response);
       this.updateFacetHeaders(response.headers);
-      this.dataSource.setSectionState('results', 'OK');
     });
   }
 
