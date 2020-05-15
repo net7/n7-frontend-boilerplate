@@ -21,6 +21,12 @@ export class FacetTextDS extends DataSource implements FacetDataSource {
         ...this.input,
         value
       });
+
+      // fix element update
+      const el = document.getElementById(this.output.id) as HTMLInputElement;
+      if (el) {
+        el.value = value;
+      }
     }
   }
 

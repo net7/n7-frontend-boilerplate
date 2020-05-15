@@ -8,7 +8,17 @@ import * as EH from '../../event-handlers';
 export const MrSearchLayoutConfig = {
   layoutId: 'mr-search-layout',
   widgets: [{
-    id: 'facets-wrapper', dataSource: FacetsWrapperDS, eventHandler: FacetsWrapperEH
+    id: 'facets-wrapper',
+    dataSource: FacetsWrapperDS,
+    eventHandler: FacetsWrapperEH
+  }, {
+    id: 'mr-search-page-title'
+  }, {
+    id: 'mr-search-results-title'
+  }, {
+    id: 'mr-search-results'
+  }, {
+    id: 'mr-search-tags'
   }, {
     id: 'mr-resources', dataSource: DS.MrItemPreviewsDS,
   }, {

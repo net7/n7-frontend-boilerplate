@@ -5,5 +5,5 @@ export interface FacetDataSource {
   value: VALUE;
   setValue: (value: VALUE, update?: boolean) => void;
   getValue: () => VALUE;
-  clear?: () => void;
+  clear: () => void;
 }

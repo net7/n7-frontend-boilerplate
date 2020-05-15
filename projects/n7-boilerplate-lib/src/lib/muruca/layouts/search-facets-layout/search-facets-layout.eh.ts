@@ -22,10 +22,12 @@ export class SearchFacetsLayoutEH extends EventHandler {
         case 'mr-search-facets-layout.init':
           this.hostEmit$ = payload.hostEmit$;
           this.guestEmit$ = payload.guestEmit$;
-
-          this.dataSource.onInit(payload);
-          this.initChangedListener(payload.data);
+          // listeners
+          this.listenFacetsReady();
           this.listenToHost();
+          this.initChangedListener(payload.data);
+          // init
+          this.dataSource.onInit(payload);
           break;
 
         case 'mr-search-facets-layout.destroy':
@@ -63,15 +65,19 @@ export class SearchFacetsLayoutEH extends EventHandler {
         this.changed$[source.id].pipe(
           debounceTime(source.delay || 1)
         ).subscribe((payload) => {
-          this.dataSource.setState(payload);
           this.guestEmit$.next({
-            type: 'change',
-            payload: {
-              lastUpdate: payload,
-              state: this.dataSource.getState()
-            }
+            payload,
+            type: 'change'
           });
         });
+      });
+    });
+  }
+
+  listenFacetsReady() {
+    this.dataSource.ready$.subscribe(() => {
+      this.guestEmit$.next({
+        type: 'facetsready'
       });
     });
   }
@@ -87,6 +93,14 @@ export class SearchFacetsLayoutEH extends EventHandler {
 
         case 'updateinputdata':
           this.dataSource.updateInputData(payload.id, payload.data);
+          break;
+
+        case 'clearinput':
+          this.dataSource.clearInput(payload.id);
+          break;
+
+        case 'clearinputs':
+          this.dataSource.clearInputs();
           break;
 
         default:

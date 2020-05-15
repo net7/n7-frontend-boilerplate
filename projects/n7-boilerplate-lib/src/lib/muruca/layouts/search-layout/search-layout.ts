@@ -4,7 +4,8 @@ import { Subject } from 'rxjs';
 import { AbstractLayout } from '../../../common/models/abstract-layout';
 import { LayoutsConfigurationService } from '../../../common/services/layouts-configuration.service';
 import { MrSearchLayoutConfig as config } from './search-layout.config';
-// import { CommunicationService } from '../../../common/services/communication.service';
+import { CommunicationService } from '../../../common/services/communication.service';
+import { ConfigurationService } from '../../../common/services/configuration.service';
 
 
 @Component({
@@ -12,6 +13,8 @@ import { MrSearchLayoutConfig as config } from './search-layout.config';
   templateUrl: './search-layout.html',
 })
 export class MrSearchLayoutComponent extends AbstractLayout implements OnInit, OnDestroy {
+  private configId: string;
+
   hostEmit$: Subject<any> = new Subject();
 
   guestEmit$: Subject<any> = new Subject();
@@ -20,18 +23,20 @@ export class MrSearchLayoutComponent extends AbstractLayout implements OnInit, O
     layoutsConfiguration: LayoutsConfigurationService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    // private communication: CommunicationService,
+    private communication: CommunicationService,
+    private configuration: ConfigurationService,
   ) {
     super(layoutsConfiguration.get('MrSearchLayoutConfig') || config);
   }
 
   protected initPayload() {
     return {
-      // configuration: this.configuration,
+      configId: this.configId,
+      configuration: this.configuration,
       // mainState: this.mainState,
       router: this.router,
       activatedRoute: this.activatedRoute,
-      // communication: this.communication,
+      communication: this.communication,
       hostEmit$: this.hostEmit$,
       guestEmit$: this.guestEmit$,
       options: this.config.options || {},
@@ -39,7 +44,10 @@ export class MrSearchLayoutComponent extends AbstractLayout implements OnInit, O
   }
 
   ngOnInit() {
-    this.onInit();
+    this.activatedRoute.data.subscribe((data) => {
+      this.configId = data.configId;
+      this.onInit();
+    });
   }
 
   ngOnDestroy() {

@@ -6,7 +6,8 @@
         "type": "rest",
         "baseUrl": "//jsonplaceholder.typicode/",
         "config": {
-          "sections": "sections"
+          "sections": "sections",
+          "search": "search"
         }
       },
       "rest-local": {
@@ -49,19 +50,19 @@
         {
           "text": "Opere",
           "anchor": {
-            "href": "mr/mappe"
+            "href": "mr/opere"
           },
           "_meta": {
-            "id": "mappe"
+            "id": "opere"
           }
         },
         {
           "text": "Mappe",
           "anchor": {
-            "href": "mr/search"
+            "href": "mr/mappe"
           },
           "_meta": {
-            "id": "search"
+            "id": "mappe"
           }
         },
         {
@@ -172,5 +173,41 @@
       "type": "collection",
       "grid": 4
     }]
+  },
+  "search-works": {
+    "title": "Opere",
+    "facetsTitle": "Filtra i risultati",
+    "totalResultsText": ["Opere", "Opera"],
+    "sort": {
+      "label": "Ordine",
+      "options": [{
+        "value": "_score_DESC",
+        "label": "Ordine per pertinenza",
+        "selected": true
+      },
+      {
+        "value": "label_sort_ASC",
+        "label": "Ordine alfabetico (A→Z)",
+        "selected": false
+  
+      },
+      {
+        "value": "label_sort_DESC",
+        "label": "Ordine alfabetico (Z→A)",
+        "selected": false
+      }]
+    },
+    "pagination": {
+      "limit": 5,
+      "options": [10, 25, 50]
+    },
+    "fallback": {
+      "text": "La tua ricerca non ha dato risultati. Prova a cambiare i parametri oppure a resettare la ricerca cliccando sul pulsante sottostante.",
+      "button": "Resetta la ricerca"
+    },
+    "ko": {
+      "text": "Oops, abbiamo riscontrato un errore nella ricerca. Prova a cambiare i parametri oppure a resettare la ricerca cliccando sul pulsante sottostante.",
+      "button": "Resetta la ricerca"
+    }
   }
 }

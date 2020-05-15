@@ -14,13 +14,13 @@ export class FacetCheckboxDS extends DataSource implements FacetDataSource {
   }
 
   setValue(value: FACET_VALUE, update = false) {
-    this.value = value;
+    this.value = Array.isArray(value) ? value : [value];
 
     if (update) {
       const { checkboxes } = this.input;
       const updatedCheckboxes = checkboxes.map((checkbox: InputCheckbox) => ({
         ...checkbox,
-        checked: value.indexOf(checkbox.payload) !== -1
+        checked: this.value.indexOf(checkbox.payload) !== -1
       }));
       this.update({
         ...this.input,
