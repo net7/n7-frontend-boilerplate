@@ -23,9 +23,14 @@ export class MrCollectionDS extends DataSource {
             text: header.title,
             classes: 'bold'
           },
-          secondary: {
-            text: header.subtitle,
-            classes: 'italic'
+          actions: {
+            buttons: [
+              {
+                text: header.button.text,
+                payload: header.button.link,
+                classes: 'n7-btn-cta'
+              }
+            ]
           }
         },
         actions: {

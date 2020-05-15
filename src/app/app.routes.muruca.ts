@@ -28,5 +28,7 @@ export const APP_ROUTES: Routes = [
   { path: 'toponimia', component: MrGlossaryLayoutComponent },
   { path: 'static/:slug', component: MrStaticLayoutComponent },
   { path: 'progetto', component: MrStaticLayoutComponent },
+  { path: 'resource-map', component: MrResourceLayoutComponent, data: { configId: 'map' } },
+  { path: 'resource-work', component: MrResourceLayoutComponent, data: { configId: 'work' } },
   { path: '**', component: Page404LayoutComponent }
 ];

@@ -21,6 +21,7 @@ export class MrResourceLayoutDS extends LayoutDataSource {
     this.doRequest();
   }
 
+  /** Request the configured widgets data */
   doRequest() {
     const { sections } = this.pageConfig;
 
@@ -37,9 +38,9 @@ export class MrResourceLayoutDS extends LayoutDataSource {
     }
   }
 
+  /** Load all the configured widgets */
   initSections(response) {
     const { sections } = this.pageConfig;
-
     if (sections) {
       sections.forEach(({ id }) => {
         const widgetDataSource = this.getWidgetDataSource(id);

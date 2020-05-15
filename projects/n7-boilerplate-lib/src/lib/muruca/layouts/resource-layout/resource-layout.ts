@@ -1,27 +1,27 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MrInnerTitleDS } from '../../data-sources/inner-title.ds';
 import { AbstractLayout } from '../../../common/models/abstract-layout';
 import { CommunicationService } from '../../../common/services/communication.service';
 import { LayoutsConfigurationService } from '../../../common/services/layouts-configuration.service';
 import { ConfigurationService } from '../../../common/services/configuration.service';
 import { MrResourceLayoutConfig as config } from './resource-layout.config';
-import { MrSliderDS } from '../../data-sources/slider.ds';
+import { MrImageViewerDS } from '../../data-sources/image-viewer.ds';
+import { MrImageViewerEH } from '../../event-handlers/image-viewer.eh';
+import { MrMetadataDS } from '../../data-sources/metadata.ds';
+import { MrItemPreviewDS } from '../../data-sources/item-preview.ds';
 import { MrCollectionDS } from '../../data-sources/collection.ds';
-import { MrHeroDS } from '../../data-sources/hero.ds';
-import { MrSliderEH } from '../../event-handlers/slider.eh';
-import { MrCollectionEH } from '../../event-handlers/collection.eh';
-import { MrHeroEH } from '../../event-handlers/hero.eh';
 
 const DATASOURCE_MAP = {
-  slider: MrSliderDS,
-  collection: MrCollectionDS,
-  hero: MrHeroDS,
+  viewer: MrImageViewerDS,
+  metadata: MrMetadataDS,
+  preview: MrItemPreviewDS,
+  title: MrInnerTitleDS,
+  collection: MrCollectionDS
 };
 
 const EVENTHANDLER_MAP = {
-  slider: MrSliderEH,
-  collection: MrCollectionEH,
-  hero: MrHeroEH,
+  viewer: MrImageViewerEH,
 };
 
 @Component({
