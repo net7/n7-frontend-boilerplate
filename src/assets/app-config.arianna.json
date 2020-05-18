@@ -3,7 +3,7 @@
     "defaultProvider": "apollo",
     "providers": {
       "apollo": {
-        "baseUrl": "http://graphql-confindustria.hyperborea.com/"
+        "baseUrl": "https://aw-unifi-graphql.netseven.it/"
       },
       "rest": {
         "baseUrl": "https://jsonplaceholder.typicode.com/",
