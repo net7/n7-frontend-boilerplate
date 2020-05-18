@@ -2,7 +2,7 @@ import { cloneDeep } from 'lodash';
 import { LayoutDataSource } from '@n7-frontend/core/dist/layout-data-source';
 import { tap, takeUntil } from 'rxjs/operators';
 import {
-  Observable, of, fromEvent, Subject,
+  Observable, of, fromEvent, Subject, BehaviorSubject,
 } from 'rxjs';
 import {
   SearchService,
@@ -40,9 +40,11 @@ export class AwSearchLayoutDS extends LayoutDataSource {
 
   public totalCount: number;
 
-  public currentPage: any = 1; // pagination value (url param)
+  /** Pagination value (url parameter) */
+  public currentPage: any = 1;
 
-  public pageSize = 10; // linked objects page size
+  /** Linked objects page size */
+  public pageSize = 10;
 
   public sidebarIsSticky = false;
 
@@ -50,29 +52,32 @@ export class AwSearchLayoutDS extends LayoutDataSource {
 
   public resultsLoading = false;
 
-  public orderBy = '_score';
+  /** True when the user has input a text string */
+  public isSearchingText = new BehaviorSubject(false);
 
-  public orderDirection = 'DESC';
+  /** Current order method */
+  public orderBy = 'label_sort';
+
+  /** Current order direction */
+  public orderDirection = 'ASC';
 
   public options: any;
 
   public orderByLabel = 'Ordina per';
 
+  /** Options used to render the HTMLSelect */
   public orderByOptions: any = [
     {
       value: '_score_DESC',
       label: 'Ordine per pertinenza',
       type: 'score',
-      selected: true
-    },
-    {
+      selected: false
+    }, {
       value: 'label_sort_ASC',
       label: 'Ordine alfabetico (A→Z)',
       type: 'text',
-      selected: false
-
-    },
-    {
+      selected: true // Mirrors the default sorting method in `search-facets.config.ts`
+    }, {
       value: 'label_sort_DESC',
       label: 'Ordine alfabetico (Z→A)',
       type: 'text',
@@ -91,27 +96,20 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     this.prettifyLabels = this.configuration.get('labels');
     this.configKeys = this.configuration.get('config-keys');
     this.fallback = this.configuration.get('search-layout').fallback;
-
     this.pageTitle = this.configuration.get('search-layout').title;
-
     // remove first
     // stateless search
     if (this.search.model(SEARCH_MODEL_ID)) {
       this.search.remove(SEARCH_MODEL_ID);
     }
-
     this.search.add(SEARCH_MODEL_ID, cloneDeep(facetsConfig));
     this.searchModel = this.search.model(SEARCH_MODEL_ID);
-
     // query params control
     if (SearchService.queryParams) {
       this.searchModel.updateFiltersFromQueryParams(SearchService.queryParams);
       SearchService.queryParams = null;
     }
-
-    // sidebar sticky control
     this._sidebarStickyControl();
-
     this.mainState.updateCustom('currentNav', 'ricerca');
     this.mainState.update('headTitle', 'Arianna4View - Ricerca');
   }
@@ -130,7 +128,11 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     }
   }
 
-  onOrderByChange(payload) {
+  /**
+   * Handles changes of the HTMLSelect order control
+   * @param payload _score_DESC, label_sort_ASC, label_sort_DESC
+   */
+  onOrderByChange(payload: string) {
     const orderBy = payload.substring(0, payload.lastIndexOf('_'));
     const direction = payload.substring(payload.lastIndexOf('_') + 1);
     let type = '';
@@ -143,10 +145,8 @@ export class AwSearchLayoutDS extends LayoutDataSource {
         option.selected = false;
       }
     });
-
     this.orderBy = orderBy;
     this.orderDirection = direction;
-
     this.searchModel.setSearchConfigOrderBy(orderBy);
     this.searchModel.setSearchConfigDirection(direction);
     this.searchModel.setSearchConfigType(type);

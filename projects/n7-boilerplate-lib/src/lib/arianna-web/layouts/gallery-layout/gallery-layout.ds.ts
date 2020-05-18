@@ -2,7 +2,7 @@ import { cloneDeep } from 'lodash';
 import { LayoutDataSource } from '@n7-frontend/core/dist/layout-data-source';
 import { tap, takeUntil } from 'rxjs/operators';
 import {
-  Observable, of, fromEvent, Subject,
+  Observable, of, fromEvent, Subject, BehaviorSubject,
 } from 'rxjs';
 import {
   SearchService,
@@ -50,9 +50,14 @@ export class AwGalleryLayoutDS extends LayoutDataSource {
 
   public resultsLoading = false;
 
-  public orderBy = '_score';
+  /** True when the user has input a text string */
+  public isSearchingText = new BehaviorSubject(false);
 
-  public orderDirection = 'DESC';
+  /** Current order method */
+  public orderBy = 'label_sort';
+
+  /** Current order direction */
+  public orderDirection = 'ASC';
 
   public options: any;
 
@@ -63,13 +68,13 @@ export class AwGalleryLayoutDS extends LayoutDataSource {
       value: '_score_DESC',
       label: 'Ordine per pertinenza',
       type: 'score',
-      selected: true
+      selected: false
     },
     {
       value: 'label_sort_ASC',
       label: 'Ordine alfabetico (A→Z)',
       type: 'text',
-      selected: false
+      selected: true
 
     },
     {
@@ -130,6 +135,10 @@ export class AwGalleryLayoutDS extends LayoutDataSource {
     }
   }
 
+  /**
+  * Handles changes of the HTMLSelect order control
+  * @param payload _score_DESC, label_sort_ASC, label_sort_DESC
+  */
   onOrderByChange(payload) {
     const orderBy = payload.substring(0, payload.lastIndexOf('_'));
     const direction = payload.substring(payload.lastIndexOf('_') + 1);

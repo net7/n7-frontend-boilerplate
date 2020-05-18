@@ -185,10 +185,10 @@ export default {
     } */
   ],
   results: {
-    order: {
-      type: 'score', // score | text | date
-      key: '_score', // docPath, elastic key, ecc
-      direction: 'DESC' // ASC | DESC
+    order: { // Default Sorting Method
+      type: 'text', // score | text | date
+      key: 'label_sort', // docPath, elastic key, ecc
+      direction: 'ASC' // ASC | DESC
     },
     fields: [
       {
