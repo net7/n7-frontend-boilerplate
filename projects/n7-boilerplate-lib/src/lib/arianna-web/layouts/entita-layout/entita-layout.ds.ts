@@ -1,5 +1,6 @@
 import { LayoutDataSource } from '@n7-frontend/core/dist/layout-data-source';
 import { Observable, of } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 export class AwEntitaLayoutDS extends LayoutDataSource {
   protected configuration: any;
@@ -73,6 +74,22 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
 
     // update head title
     this.mainState.update('headTitle', 'Arianna4View - Entità');
+
+    // one tab control
+    this.oneTabControl();
+  }
+
+  oneTabControl() {
+    const navDS = this.getWidgetDataSource('aw-entita-nav');
+    navDS.out$
+      .pipe(
+        filter((output) => !!output)
+      )
+      .subscribe(({ items }) => {
+        if (items.length === 1) {
+          this.router.navigate([items[0].anchor.href], { replaceUrl: true });
+        }
+      });
   }
 
   public updateComponent = (id, data, options?) => {

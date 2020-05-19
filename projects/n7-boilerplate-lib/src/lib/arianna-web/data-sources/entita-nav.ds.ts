@@ -66,6 +66,11 @@ export class AwEntitaNavDS extends DataSource {
       });
     }
 
+    // one tab control
+    if (navigation.items.length === 2) {
+      navigation.items.shift();
+    }
+
     return navigation;
   }
 }
