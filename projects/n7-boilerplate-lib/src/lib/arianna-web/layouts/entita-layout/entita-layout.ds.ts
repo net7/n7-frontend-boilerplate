@@ -221,7 +221,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       text: this.myResponse.label,
       color: config['class-name'],
     };
-    this.one('aw-entita-nav').updateOptions({ bubblesEnabled: this.bubblesEnabled });
+    this.one('aw-entita-nav').updateOptions({ bubblesEnabled: this.bubblesEnabled, config: this.configuration.get('entita-layout') });
     this.one('aw-entita-metadata-viewer').updateOptions({ context: this.selectedTab, labels: this.configuration.get('labels'), config: this.configuration });
     this.one('aw-entita-metadata-viewer').update(res.fields);
     if (this.selectedTab === 'oggetti-collegati') {
