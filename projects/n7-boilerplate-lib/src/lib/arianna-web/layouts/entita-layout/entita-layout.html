@@ -79,7 +79,10 @@
                     [hidden]="lb.dataSource.selectedTab != 'overview' && lb.dataSource.selectedTab != 'campi'">
                     <div class="aw-entity__content-section-header">
                         <h2 class="aw-entity__content-section-title">Campi</h2>
-                        <a class="n7-btn n7-btn-light" [routerLink]="[lb.dataSource.getNavBasePath() + 'campi']">
+                        <a 
+                        *ngIf="lb.dataSource.selectedTab !== 'campi'"
+                        class="n7-btn n7-btn-light" 
+                        [routerLink]="[lb.dataSource.getNavBasePath() + '/campi']">
                             TUTTI I CAMPI <i class="n7-icon-angle-right"></i>
                         </a>
                     </div>
