@@ -1,7 +1,6 @@
 import { LayoutDataSource } from '@n7-frontend/core/dist/layout-data-source';
 import { ConfigurationService } from '../../../common/services/configuration.service';
 import { CommunicationService } from '../../../common/services/communication.service';
-import homeMock from './home-layout-mock';
 
 export class MrHomeLayoutDS extends LayoutDataSource {
   private configuration: ConfigurationService;
@@ -32,7 +31,7 @@ export class MrHomeLayoutDS extends LayoutDataSource {
         this.initSections(response);
       });
 
-      this.initSections(homeMock);
+      // this.initSections(homeMock);
     }
   }
 

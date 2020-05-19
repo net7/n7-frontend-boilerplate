@@ -1,7 +1,7 @@
 import { LayoutDataSource } from '@n7-frontend/core/dist/layout-data-source';
 import { ConfigurationService } from '../../../common/services/configuration.service';
 import { CommunicationService } from '../../../common/services/communication.service';
-import resourceMock from './resource-layout-mock';
+// import resourceMock from './resource-layout-mock';
 
 export class MrResourceLayoutDS extends LayoutDataSource {
   private configuration: ConfigurationService;
@@ -17,24 +17,21 @@ export class MrResourceLayoutDS extends LayoutDataSource {
     this.communication = payload.communication;
     this.configId = payload.configId;
     this.pageConfig = this.configuration.get(this.configId) || {};
-
     this.doRequest();
   }
 
   /** Request the configured widgets data */
   doRequest() {
     const { sections } = this.pageConfig;
-
     if (sections) {
-      // FIXME: collegare API
-      // this.communication.request$('sections', {
-      //   method: 'POST',
-      //   params: sections.map(({ id }) => id)
-      // }).subscribe((response) => {
-      //   this.initSections(response);
-      // });
-
-      this.initSections(resourceMock);
+      this.communication.request$('sections', {
+        method: 'POST',
+        params: sections.map(({ id }) => id)
+      }).subscribe((d) => {
+        // load sections with the data from serverless
+        this.initSections(d);
+      });
+      // this.initSections(resourceMock); // use mock
     }
   }
 

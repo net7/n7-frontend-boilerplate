@@ -21,7 +21,8 @@
           "search": "search/results",
           "facets": "search/facets",
           "nav": "data/api/pages",
-          "page": "data/api/page_"
+          "page": "data/api/page_",
+          "sections": "get_section"
         }
       }
     }
