@@ -13,9 +13,7 @@
                 <div class="filter-section">
                     <h2>{{ lb.dataSource.pageConfig['facets-title'] }}</h2>
                     <mr-search-facets-layout 
-                    [data]="lb.dataSource.facetsConfig"
-                    [hostEmit$]="hostEmit$"
-                    [guestEmit$]="guestEmit$">
+                    [searchService]="lb.dataSource.searchService">
                     </mr-search-facets-layout>
                 </div>
             </aside>

@@ -6,6 +6,7 @@ import facetsConfig from './search-facets.config';
 import { ConfigurationService } from '../../../common/services/configuration.service';
 import { CommunicationService } from '../../../common/services/communication.service';
 import resultsMock from './search-layout.mock';
+import { MrSearchService } from '../../services/search.service';
 
 type SectionStates = 'LOADING' | 'EMPTY' | 'OK' | 'KO';
 
@@ -23,6 +24,8 @@ export class MrSearchLayoutDS extends LayoutDataSource {
     };
   } = {};
 
+  public searchService: MrSearchService;
+
   public state: {
     [key: string]: string | string[] | null;
   } = {};
@@ -39,6 +42,7 @@ export class MrSearchLayoutDS extends LayoutDataSource {
 
   onInit(payload) {
     this.configuration = payload.configuration;
+    this.searchService = payload.searchService;
     this.communication = payload.communication;
     this.facetsConfig = facetsConfig;
     this.configId = payload.configId;

@@ -1,24 +1,23 @@
-import { isEmpty } from 'lodash';
+// import { isEmpty } from 'lodash';
 import { EventHandler } from '@n7-frontend/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import {
-  takeUntil,
-  debounceTime,
-  tap,
-  switchMap
-} from 'rxjs/operators';
-import searchHelper from '../../helpers/search-helper';
+// import {
+//   takeUntil,
+//   debounceTime,
+//   tap,
+//   switchMap
+// } from 'rxjs/operators';
+// import searchHelper from '../../helpers/search-helper';
 import { MrSearchLayoutDS } from './search-layout.ds';
+import { MrSearchService } from '../../services/search.service';
 
 export class MrSearchLayoutEH extends EventHandler {
   public dataSource: MrSearchLayoutDS;
 
   private destroyed$: Subject<boolean> = new Subject();
 
-  private hostEmit$: Subject<any>;
-
-  private guestEmit$: Subject<any>;
+  private searchService: MrSearchService;
 
   private facetsReady$: Subject<void> = new Subject();
 
@@ -32,15 +31,18 @@ export class MrSearchLayoutEH extends EventHandler {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
         case 'mr-search-layout.init':
-          this.hostEmit$ = payload.hostEmit$;
-          this.guestEmit$ = payload.guestEmit$;
-          this.router = payload.router;
-          this.activatedRoute = payload.activatedRoute;
-          // listeners
-          this.listenToGuest();
-          this.listenToRouterChanges();
+          this.searchService = payload.searchService;
+          // this.router = payload.router;
+          // this.activatedRoute = payload.activatedRoute;
+          // // listeners
+          // this.listenToGuest();
+          // this.listenToRouterChanges();
           // init
           this.dataSource.onInit(payload);
+
+          this.searchService.getState$('input', 'input-00').subscribe((value) => {
+            console.warn('input', value);
+          });
           break;
 
         case 'mr-search-layout.destroy':
@@ -48,8 +50,8 @@ export class MrSearchLayoutEH extends EventHandler {
           break;
 
         case 'mr-search-layout.searchreset':
-          this.clearSearchState();
-          this.updateRoute();
+          // this.clearSearchState();
+          // this.updateRoute();
           break;
 
         default:
@@ -59,7 +61,7 @@ export class MrSearchLayoutEH extends EventHandler {
     });
 
 
-    this.outerEvents$.subscribe(({ type, payload }) => {
+    /* this.outerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
         case 'n7-smart-pagination.click':
           this.dataSource.setState('page', payload.page);
@@ -111,10 +113,10 @@ export class MrSearchLayoutEH extends EventHandler {
     ).subscribe((response) => {
       this.dataSource.handleResponse(response);
       this.updateFacetHeaders(response.headers);
-    });
+    }); */
   }
 
-  listenToGuest() {
+  /* listenToGuest() {
     this.guestEmit$.pipe(
       takeUntil(this.destroyed$)
     ).subscribe(({ type, payload }) => {
@@ -189,5 +191,5 @@ export class MrSearchLayoutEH extends EventHandler {
         });
       });
     });
-  }
+  } */
 }

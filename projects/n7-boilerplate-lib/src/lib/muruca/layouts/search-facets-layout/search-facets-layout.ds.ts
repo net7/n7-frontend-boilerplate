@@ -1,14 +1,14 @@
-import { Subject } from 'rxjs';
 import { LayoutDataSource } from '@n7-frontend/core';
-import { SearchFacetsConfig } from './search-facets-config';
+import { MrSearchService } from '../../services/search.service';
 
 export class SearchFacetsLayoutDS extends LayoutDataSource {
-  public data: SearchFacetsConfig;
+  private searchService: MrSearchService;
 
-  public ready$: Subject<void> = new Subject();
+  public searchConfig;
 
   onInit(payload) {
-    this.data = payload.data;
+    this.searchService = payload.searchService;
+    this.searchConfig = this.searchService.getConfig();
 
     this.initInputs();
   }
@@ -18,7 +18,8 @@ export class SearchFacetsLayoutDS extends LayoutDataSource {
   }
 
   initInputs() {
-    this.data.sections.forEach(({ header, inputs }) => {
+    // set components data
+    this.searchConfig.sections.forEach(({ header, inputs }) => {
       [header, ...inputs].forEach((input) => {
         // set id
         const widgetDataSource = this.getWidgetDataSource(input.id);
@@ -29,7 +30,7 @@ export class SearchFacetsLayoutDS extends LayoutDataSource {
     });
 
     // signal
-    this.ready$.next();
+    this.searchService.facetsReady$.next();
   }
 
   updateInputValue(id, newValue) {
@@ -58,7 +59,7 @@ export class SearchFacetsLayoutDS extends LayoutDataSource {
   }
 
   clearInputs() {
-    this.data.sections.forEach(({ header, inputs }) => {
+    this.searchConfig.sections.forEach(({ header, inputs }) => {
       [header, ...inputs].forEach((input) => {
         this.clearInput(input.id);
       });

@@ -1,8 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { SearchFacetsConfig } from '../layouts/search-facets-layout/search-facets-config';
+
+const INPUT_STATE_CONTEXT = 'input';
 
 @Injectable()
 export class MrSearchService {
+  private config;
+
   private contextState: {
     [key: string]: any;
   } = {};
@@ -10,6 +15,17 @@ export class MrSearchService {
   private state$: {
     [key: string]: Subject<any>;
   } = {};
+
+  public facetsReady$: Subject<void> = new Subject();
+
+  public init(config: SearchFacetsConfig) {
+    this.config = config;
+
+    // init input* state
+    this.initInputState();
+  }
+
+  public getConfig = () => this.config;
 
   public getState$(context: string, id?: string): Subject<any> {
     const stateId = id ? `${context}.${id}` : context;
@@ -67,6 +83,18 @@ export class MrSearchService {
     this.state$[context].next({
       lastUpdated: id,
       state: this.contextState[context]
+    });
+  }
+
+  private initInputState() {
+    // add context state
+    this.addStateContext(INPUT_STATE_CONTEXT);
+
+    // set input state
+    this.config.sections.forEach(({ header, inputs }) => {
+      [header, ...inputs].forEach((input) => {
+        this.addState(INPUT_STATE_CONTEXT, input.id);
+      });
     });
   }
 }

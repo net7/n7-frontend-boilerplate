@@ -1,7 +1,7 @@
 import { EventHandler } from '@n7-frontend/core';
 import { Subject } from 'rxjs';
-import { debounceTime, takeUntil } from 'rxjs/operators';
-import { SearchFacetsConfig } from './search-facets-config';
+import { debounceTime } from 'rxjs/operators';
+import { MrSearchService } from '../../services/search.service';
 
 interface ChangedSubjects {
   [key: string]: Subject<any>;
@@ -12,20 +12,16 @@ export class SearchFacetsLayoutEH extends EventHandler {
 
   private destroyed$: Subject<boolean> = new Subject();
 
-  private hostEmit$: Subject<any>;
-
-  private guestEmit$: Subject<any>;
+  private searchService: MrSearchService;
 
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
         case 'mr-search-facets-layout.init':
-          this.hostEmit$ = payload.hostEmit$;
-          this.guestEmit$ = payload.guestEmit$;
+          this.searchService = payload.searchService;
           // listeners
-          this.listenFacetsReady();
-          this.listenToHost();
-          this.initChangedListener(payload.data);
+          // this.listenToHost();
+          this.initChangedListener(this.searchService.getConfig());
           // init
           this.dataSource.onInit(payload);
           break;
@@ -46,8 +42,8 @@ export class SearchFacetsLayoutEH extends EventHandler {
     });
   }
 
-  initChangedListener(data: SearchFacetsConfig) {
-    data.sections.forEach((section) => {
+  initChangedListener(searchConfig) {
+    searchConfig.sections.forEach((section) => {
       const sources: {
         id: string;
         delay: number;
@@ -64,24 +60,14 @@ export class SearchFacetsLayoutEH extends EventHandler {
         this.changed$[source.id] = new Subject();
         this.changed$[source.id].pipe(
           debounceTime(source.delay || 1)
-        ).subscribe((payload) => {
-          this.guestEmit$.next({
-            payload,
-            type: 'change'
-          });
+        ).subscribe(({ id, value }) => {
+          this.searchService.setState('input', id, value);
         });
       });
     });
   }
 
-  listenFacetsReady() {
-    this.dataSource.ready$.subscribe(() => {
-      this.guestEmit$.next({
-        type: 'facetsready'
-      });
-    });
-  }
-
+  /*
   listenToHost() {
     this.hostEmit$.pipe(
       takeUntil(this.destroyed$)
@@ -107,5 +93,5 @@ export class SearchFacetsLayoutEH extends EventHandler {
           break;
       }
     });
-  }
+  } */
 }
