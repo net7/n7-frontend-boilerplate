@@ -80,7 +80,7 @@ export class AwSearchLayoutEH extends EventHandler {
             // Remove sort by score option
             this.dataSource.isSearchingText.next(false);
             setTimeout(() => {
-              this.dataSource.onOrderByChange('label_sort_DESC');
+              this.dataSource.onOrderByChange('label_sort_ASC');
               this.additionalParamsChange$.next(); // emit from observable stream
             }, 100);
           }
