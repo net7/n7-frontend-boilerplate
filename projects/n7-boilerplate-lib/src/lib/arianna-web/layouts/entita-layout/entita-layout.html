@@ -72,14 +72,18 @@
                 </div>
             </div>
 
-            <ng-container *ngIf="
-            ((lb.dataSource.myResponse.fields || []).length > 0 && lb.dataSource.selectedTab == 'campi') ||
-            (lb.dataSource.showFields && lb.dataSource.selectedTab == 'overview')">
-                <div class="aw-entity__content-section aw-entity__content-section-overview"
-                    [hidden]="lb.dataSource.selectedTab != 'overview' && lb.dataSource.selectedTab != 'campi'">
+            <ng-container 
+                *ngIf="(
+                    lb.widgets['aw-entita-nav'].ds.hasFields &&
+                    ['overview', 'campi'].indexOf(lb.dataSource.selectedTab) !== -1
+                )">
+                <div class="aw-entity__content-section aw-entity__content-section-overview">
                     <div class="aw-entity__content-section-header">
                         <h2 class="aw-entity__content-section-title">Campi</h2>
-                        <a class="n7-btn n7-btn-light" [routerLink]="[lb.dataSource.getNavBasePath() + 'campi']">
+                        <a 
+                        *ngIf="lb.dataSource.selectedTab !== 'campi'"
+                        class="n7-btn n7-btn-light" 
+                        [routerLink]="[lb.dataSource.getNavBasePath() + '/campi']">
                             TUTTI I CAMPI <i class="n7-icon-angle-right"></i>
                         </a>
                     </div>

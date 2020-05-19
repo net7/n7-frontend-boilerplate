@@ -1,5 +1,6 @@
 import { LayoutDataSource } from '@n7-frontend/core/dist/layout-data-source';
 import { Observable, of } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 export class AwEntitaLayoutDS extends LayoutDataSource {
   protected configuration: any;
@@ -73,6 +74,22 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
 
     // update head title
     this.mainState.update('headTitle', 'Arianna4View - Entità');
+
+    // one tab control
+    this.oneTabControl();
+  }
+
+  oneTabControl() {
+    const navDS = this.getWidgetDataSource('aw-entita-nav');
+    navDS.out$
+      .pipe(
+        filter((output) => !!output)
+      )
+      .subscribe(({ items }) => {
+        if (items.length === 1) {
+          this.router.navigate([items[0].anchor.href], { replaceUrl: true });
+        }
+      });
   }
 
   public updateComponent = (id, data, options?) => {
@@ -221,7 +238,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       text: this.myResponse.label,
       color: config['class-name'],
     };
-    this.one('aw-entita-nav').updateOptions({ bubblesEnabled: this.bubblesEnabled });
+    this.one('aw-entita-nav').updateOptions({ bubblesEnabled: this.bubblesEnabled, config: this.configuration.get('entita-layout') });
     this.one('aw-entita-metadata-viewer').updateOptions({ context: this.selectedTab, labels: this.configuration.get('labels'), config: this.configuration });
     this.one('aw-entita-metadata-viewer').update(res.fields);
     if (this.selectedTab === 'oggetti-collegati') {
