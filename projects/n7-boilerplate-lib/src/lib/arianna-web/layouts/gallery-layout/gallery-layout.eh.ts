@@ -73,14 +73,15 @@ export class AwGalleryLayoutEH extends EventHandler {
           // Checks if <input type=text>'s value has changed
           this.textHasChanged = !!(textInput && (textInput !== this.previousText));
           this.previousText = textInput;
+          const activeOrder = this.dataSource.orderByOptions.filter((d) => d.selected)[0].value;
           if (this.textHasChanged && (textInput || '').length > 0) {
             // Add sort by score option
             this.dataSource.isSearchingText.next(true);
-          } else if ((textInput || '').length === 0) {
+          } else if ((textInput || '').length === 0 && /score/i.test(activeOrder)) {
             // Remove sort by score option
             this.dataSource.isSearchingText.next(false);
             setTimeout(() => {
-              this.dataSource.onOrderByChange('label_sort_DESC');
+              this.dataSource.onOrderByChange('label_sort_ASC');
               this.additionalParamsChange$.next(); // emit from observable stream
             }, 100);
           }
