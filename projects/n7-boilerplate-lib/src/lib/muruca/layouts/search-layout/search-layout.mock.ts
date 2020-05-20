@@ -1,8 +1,8 @@
-import searchFacets from './search-facets.config';
+import config from './search-config.mock';
 
 function getHeaders() {
   const headers = {};
-  searchFacets.sections.forEach(({ header }) => {
+  config.facets.sections.forEach(({ header }) => {
     headers[header.id] = Math.round(Math.random() * 100);
   });
   return headers;

@@ -7,7 +7,7 @@ import { MrSearchLayoutConfig as config } from './search-layout.config';
 import { CommunicationService } from '../../../common/services/communication.service';
 import { ConfigurationService } from '../../../common/services/configuration.service';
 import { MrSearchService } from '../../services/search.service';
-import facetsConfig from './search-facets.config';
+import searchConfig from './search-config.mock';
 
 
 @Component({
@@ -48,7 +48,7 @@ export class MrSearchLayoutComponent extends AbstractLayout implements OnInit, O
   ngOnInit() {
     this.activatedRoute.data.subscribe((data) => {
       this.configId = data.configId;
-      this.searchService.init(facetsConfig);
+      this.searchService.init(searchConfig);
       this.onInit();
     });
   }

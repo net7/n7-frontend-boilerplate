@@ -1,12 +1,24 @@
 import { Injectable } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { SearchFacetsConfig } from '../layouts/search-facets-layout/search-facets-config';
+import {
+  filter,
+  switchMap,
+  map,
+  debounceTime
+} from 'rxjs/operators';
+import { CommunicationService } from '../../common/services/communication.service';
+import searchHelper from '../helpers/search-helper';
 
-const INPUT_STATE_CONTEXT = 'input';
+export const INPUT_STATE_CONTEXT = 'input';
+export const FACET_STATE_CONTEXT = 'facet';
+export const REQUEST_STATE_CONTEXT = 'request';
 
 @Injectable()
 export class MrSearchService {
   private config;
+
+  private queryParamKeys: string[] = [];
 
   private contextState: {
     [key: string]: any;
@@ -16,13 +28,26 @@ export class MrSearchService {
     [key: string]: Subject<any>;
   } = {};
 
-  public facetsReady$: Subject<void> = new Subject();
+  private beforeHook: {
+    [key: string]: (value: any) => any;
+  } = {};
 
-  public init(config: SearchFacetsConfig) {
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private communication: CommunicationService,
+  ) { }
+
+  public init(config) {
     this.config = config;
 
-    // init input* state
+    // initial states
     this.initInputState();
+    this.initFacetState();
+
+    // listeners
+    this.onInputsChange();
+    this.onRouteChange();
   }
 
   public getConfig = () => this.config;
@@ -69,10 +94,24 @@ export class MrSearchService {
       throw Error(`Key "${stateId}" does'nt exists`);
     }
 
+    let value = newValue;
+    if (this.beforeHook[stateId]) {
+      value = this.beforeHook[stateId](value);
+    }
+
     // update stream
-    this.state$[stateId].next(newValue);
+    this.state$[stateId].next(value);
     // update context
-    this.setContextState(context, id, newValue);
+    this.setContextState(context, id, value);
+  }
+
+  public setBeforeHook(context: string, id: string, hook) {
+    const stateId = `${context}.${id}`;
+    if (!this.state$[stateId]) {
+      throw Error(`Key "${stateId}" does'nt exists`);
+    }
+
+    this.beforeHook[`${context}.${id}`] = hook;
   }
 
   private setContextState(context: string, id: string, newValue: any) {
@@ -87,13 +126,88 @@ export class MrSearchService {
   }
 
   private initInputState() {
+    const { facets, layoutInputs } = this.config;
     // add context state
     this.addStateContext(INPUT_STATE_CONTEXT);
 
+    // set facets input state
+    facets.sections.forEach(({ header, inputs }) => {
+      [header, ...inputs].forEach(({ id, queryParam }) => {
+        this.addState(INPUT_STATE_CONTEXT, id);
+
+        if (queryParam) {
+          this.queryParamKeys.push(id);
+        }
+      });
+    });
+
+    // set layout input state
+    layoutInputs.forEach(({ id, queryParam }) => {
+      this.addState(INPUT_STATE_CONTEXT, id);
+
+      if (queryParam) {
+        this.queryParamKeys.push(id);
+      }
+    });
+  }
+
+  private initFacetState() {
+    const { facets } = this.config;
+    // add context state
+    this.addStateContext(FACET_STATE_CONTEXT);
+
     // set input state
-    this.config.sections.forEach(({ header, inputs }) => {
+    facets.sections.forEach(({ header, inputs }) => {
       [header, ...inputs].forEach((input) => {
-        this.addState(INPUT_STATE_CONTEXT, input.id);
+        this.addState(FACET_STATE_CONTEXT, input.id);
+      });
+    });
+  }
+
+  private onRouteChange() {
+    const { request } = this.config;
+
+    // add context state
+    this.addStateContext(REQUEST_STATE_CONTEXT);
+
+    // default states
+    ['loading', 'success', 'error'].forEach((id) => {
+      this.addState(REQUEST_STATE_CONTEXT, id);
+    });
+
+    this.activatedRoute.queryParams.pipe(
+      map((params) => {
+        const hookId = `${REQUEST_STATE_CONTEXT}.loading`;
+        // queryParams to state object
+        let state = searchHelper.queryParamsToState(params);
+        if (this.beforeHook[hookId]) {
+          state = this.beforeHook[hookId](state);
+        }
+        // loading signal
+        this.setState(REQUEST_STATE_CONTEXT, 'loading', state);
+        return state;
+      }),
+      debounceTime(request.delay || 1),
+      switchMap((state) => this.communication.request$(request.id, {
+        params: state,
+        onError: (error) => {
+          // error signal
+          this.setState(REQUEST_STATE_CONTEXT, 'error', error);
+        }
+      }, request.provider || null))
+    ).subscribe((response) => {
+      // success signal
+      this.setState(REQUEST_STATE_CONTEXT, 'success', response);
+    });
+  }
+
+  private onInputsChange() {
+    this.getState$('input').pipe(
+      filter(({ lastUpdated }) => this.queryParamKeys.indexOf(lastUpdated) !== -1)
+    ).subscribe(({ state }) => {
+      const queryParams = searchHelper.stateToQueryParams(state);
+      this.router.navigate([], {
+        queryParams
       });
     });
   }

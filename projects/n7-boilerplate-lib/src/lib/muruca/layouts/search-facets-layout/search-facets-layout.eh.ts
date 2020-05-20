@@ -1,7 +1,7 @@
 import { EventHandler } from '@n7-frontend/core';
 import { Subject } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
-import { MrSearchService } from '../../services/search.service';
+import { debounceTime, takeUntil, filter } from 'rxjs/operators';
+import { MrSearchService, INPUT_STATE_CONTEXT, FACET_STATE_CONTEXT } from '../../services/search.service';
 
 interface ChangedSubjects {
   [key: string]: Subject<any>;
@@ -20,14 +20,14 @@ export class SearchFacetsLayoutEH extends EventHandler {
         case 'mr-search-facets-layout.init':
           this.searchService = payload.searchService;
           // listeners
-          // this.listenToHost();
           this.initChangedListener(this.searchService.getConfig());
+          this.initStateListener();
           // init
           this.dataSource.onInit(payload);
           break;
 
         case 'mr-search-facets-layout.destroy':
-          this.dataSource.onDestroy();
+          this.destroyed$.next();
           break;
 
         default:
@@ -42,8 +42,8 @@ export class SearchFacetsLayoutEH extends EventHandler {
     });
   }
 
-  initChangedListener(searchConfig) {
-    searchConfig.sections.forEach((section) => {
+  initChangedListener({ facets }) {
+    facets.sections.forEach((section) => {
       const sources: {
         id: string;
         delay: number;
@@ -67,31 +67,27 @@ export class SearchFacetsLayoutEH extends EventHandler {
     });
   }
 
-  /*
-  listenToHost() {
-    this.hostEmit$.pipe(
-      takeUntil(this.destroyed$)
-    ).subscribe(({ type, payload }) => {
-      switch (type) {
-        case 'updateinputvalue':
-          this.dataSource.updateInputValue(payload.id, payload.value);
-          break;
+  initStateListener() {
+    this.searchService.getState$(INPUT_STATE_CONTEXT)
+      .pipe(
+        takeUntil(this.destroyed$),
+        filter(({ lastUpdated }) => this.dataSource.inputsDS[lastUpdated])
+      ).subscribe(({ lastUpdated, state }) => {
+        const newValue = state[lastUpdated];
+        if (newValue === null) {
+          this.dataSource.clearInput(lastUpdated);
+        } else {
+          this.dataSource.updateInputValue(lastUpdated, newValue);
+        }
+      });
 
-        case 'updateinputdata':
-          this.dataSource.updateInputData(payload.id, payload.data);
-          break;
-
-        case 'clearinput':
-          this.dataSource.clearInput(payload.id);
-          break;
-
-        case 'clearinputs':
-          this.dataSource.clearInputs();
-          break;
-
-        default:
-          break;
-      }
-    });
-  } */
+    this.searchService.getState$(FACET_STATE_CONTEXT)
+      .pipe(
+        takeUntil(this.destroyed$),
+        filter(({ lastUpdated }) => this.dataSource.inputsDS[lastUpdated])
+      ).subscribe(({ lastUpdated, state }) => {
+        const newData = state[lastUpdated];
+        this.dataSource.updateInputData(lastUpdated, newData);
+      });
+  }
 }

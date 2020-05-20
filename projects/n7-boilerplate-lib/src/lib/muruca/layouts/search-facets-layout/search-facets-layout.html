@@ -1,5 +1,5 @@
-<div *ngIf="lb.dataSource.searchConfig" class="mr-search-facets {{ lb.dataSource.searchConfig.classes || '' }}">
-    <div *ngFor="let section of lb.dataSource.searchConfig.sections" class="mr-search-facets__section {{ section.classes || '' }}">
+<div *ngIf="lb.dataSource.facets" class="mr-search-facets {{ lb.dataSource.facets.classes || '' }}">
+    <div *ngFor="let section of lb.dataSource.facets.sections" class="mr-search-facets__section {{ section.classes || '' }}">
         <n7-facet-header
         [data]="lb.widgets[section.header.id].ds.out$ | async"
         [emit]="lb.widgets[section.header.id].emit"

@@ -1,11 +1,6 @@
-import { of } from 'rxjs';
-import { delay } from 'rxjs/operators';
-import { isEmpty } from 'lodash';
 import { LayoutDataSource } from '@n7-frontend/core';
-import facetsConfig from './search-facets.config';
+import facetsConfig from './search-config.mock';
 import { ConfigurationService } from '../../../common/services/configuration.service';
-import { CommunicationService } from '../../../common/services/communication.service';
-import resultsMock from './search-layout.mock';
 import { MrSearchService } from '../../services/search.service';
 
 type SectionStates = 'LOADING' | 'EMPTY' | 'OK' | 'KO';
@@ -13,21 +8,13 @@ type SectionStates = 'LOADING' | 'EMPTY' | 'OK' | 'KO';
 export class MrSearchLayoutDS extends LayoutDataSource {
   private configuration: ConfigurationService;
 
-  private communication: CommunicationService;
-
   private configId: string;
 
-  private inputsConfig: {
-    [key: string]: {
-      type: string;
-      internal: boolean;
-    };
-  } = {};
 
   public searchService: MrSearchService;
 
   public state: {
-    [key: string]: string | string[] | null;
+    [key: string]: any;
   } = {};
 
   public sectionState: {
@@ -43,20 +30,9 @@ export class MrSearchLayoutDS extends LayoutDataSource {
   onInit(payload) {
     this.configuration = payload.configuration;
     this.searchService = payload.searchService;
-    this.communication = payload.communication;
     this.facetsConfig = facetsConfig;
     this.configId = payload.configId;
     this.pageConfig = this.configuration.get(this.configId);
-
-    // inputs config
-    this.facetsConfig.sections.forEach(({ inputs }) => {
-      inputs.forEach(({ id, type, internal }) => {
-        this.inputsConfig[id] = {
-          type,
-          internal: !!internal
-        };
-      });
-    });
 
     // config
     this.all().updateOptions({ config: this.pageConfig });
@@ -65,31 +41,11 @@ export class MrSearchLayoutDS extends LayoutDataSource {
     this.one('mr-search-page-title').update({});
   }
 
-  doRequest$(params = {}) {
-    console.warn('#TODO: doRequest', params);
-    // FIXME: togliere commento
-    /* return this.communication.request$('search', {
-      params,
-      onError: (error) => {
-        this.setSectionState('results', 'KO');
-        console.warn('SEARCH ERROR', error);
-      }
-    }); */
-
-    const page = this.getState('page') || 1;
-    const sort = this.getState('sort') || '_score_DESC';
-    return of(resultsMock(page, sort)).pipe(
-      delay(Math.round(Math.random() * 5000))
-    );
-  }
-
   handleResponse(response) {
     this.some([
       'mr-search-results-title',
       'mr-search-results',
     ]).update(response);
-
-    this.setSectionState('results', isEmpty(response.results) ? 'EMPTY' : 'OK');
 
     // pagination
     this.one('n7-smart-pagination').updateOptions({ mode: 'payload' });
@@ -119,23 +75,7 @@ export class MrSearchLayoutDS extends LayoutDataSource {
     };
   }
 
-  getState(id?: string): any {
-    return id ? this.state[id] : this.state;
-  }
-
-  setState(id: string, value: any) {
-    this.state[id] = value;
-  }
-
-  clearState() {
-    this.state = {};
-  }
-
   setSectionState(id: string, newState: SectionStates) {
     this.sectionState[id] = newState;
   }
-
-  inputIsInternal = (id?: string) => this.inputsConfig[id].internal;
-
-  getInputType = (id?: string) => this.inputsConfig[id].type;
 }

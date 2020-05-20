@@ -61,9 +61,9 @@ export class MrSearchFacetsLayoutComponent extends AbstractLayout implements OnI
   }
 
   loadWidgets() {
-    const searchConfig = this.searchService.getConfig();
+    const { facets } = this.searchService.getConfig();
     this.widgets = [];
-    searchConfig.sections.forEach(({ header, inputs }) => {
+    facets.sections.forEach(({ header, inputs }) => {
       if (header) {
         this.widgets.push({
           id: header.id,
