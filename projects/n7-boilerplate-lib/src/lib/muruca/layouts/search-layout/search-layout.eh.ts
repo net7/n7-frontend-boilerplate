@@ -13,6 +13,10 @@ export class MrSearchLayoutEH extends EventHandler {
 
   private searchService: MrSearchService;
 
+  private searchState: {
+    [key: string]: any;
+  } = {};
+
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
@@ -53,7 +57,7 @@ export class MrSearchLayoutEH extends EventHandler {
           break;
 
         case 'mr-search-tags.click': {
-          const stateValue = this.dataSource.state[payload.id];
+          const stateValue = this.searchState[payload.id];
           let newValue = null;
           if (Array.isArray(stateValue)) {
             stateValue.splice(stateValue.indexOf(payload.value), 1);
@@ -76,7 +80,8 @@ export class MrSearchLayoutEH extends EventHandler {
     });
     // inputs listener
     this.searchService.getState$('input').subscribe(({ lastUpdated, state }) => {
-      this.dataSource.state = state;
+      this.searchState = state;
+      this.dataSource.updateActiveFilters(state);
       console.warn('input', lastUpdated, state);
     });
 
@@ -86,7 +91,7 @@ export class MrSearchLayoutEH extends EventHandler {
 
     this.searchService.getState$('request', 'success').pipe(
       map(() => {
-        const { page, sort } = this.dataSource.state;
+        const { page, sort } = this.searchState;
         return resultsMock(page || 1, sort || '_score_DESC');
       })
     ).subscribe((response) => {

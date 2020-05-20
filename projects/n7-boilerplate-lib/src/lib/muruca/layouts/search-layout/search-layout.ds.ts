@@ -1,5 +1,4 @@
 import { LayoutDataSource } from '@n7-frontend/core';
-import facetsConfig from './search-config.mock';
 import { ConfigurationService } from '../../../common/services/configuration.service';
 import { MrSearchService } from '../../services/search.service';
 
@@ -10,12 +9,7 @@ export class MrSearchLayoutDS extends LayoutDataSource {
 
   private configId: string;
 
-
   public searchService: MrSearchService;
-
-  public state: {
-    [key: string]: any;
-  } = {};
 
   public sectionState: {
     [key: string]: SectionStates;
@@ -30,7 +24,6 @@ export class MrSearchLayoutDS extends LayoutDataSource {
   onInit(payload) {
     this.configuration = payload.configuration;
     this.searchService = payload.searchService;
-    this.facetsConfig = facetsConfig;
     this.configId = payload.configId;
     this.pageConfig = this.configuration.get(this.configId);
 
@@ -52,11 +45,11 @@ export class MrSearchLayoutDS extends LayoutDataSource {
     this.one('n7-smart-pagination').update(this.getPaginationParams(response));
   }
 
-  updateActiveFilters() {
+  updateActiveFilters(state) {
     // active "tags" filters
     this.one('mr-search-tags').update({
-      state: this.state,
-      facetsConfig: this.facetsConfig
+      state,
+      facetsConfig: this.searchService.getConfig().facets
     });
   }
 
