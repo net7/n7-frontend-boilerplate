@@ -1,9 +1,8 @@
 import { EventHandler } from '@n7-frontend/core';
 import { Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { isEmpty } from 'lodash';
 import { MrSearchLayoutDS } from './search-layout.ds';
-import { MrSearchService } from '../../services/search.service';
+import { MrSearchService, REQUEST_STATE_CONTEXT, INPUT_STATE_CONTEXT } from '../../services/search.service';
 import resultsMock from './search-layout.mock';
 
 export class MrSearchLayoutEH extends EventHandler {
@@ -24,7 +23,7 @@ export class MrSearchLayoutEH extends EventHandler {
           this.searchService = payload.searchService;
           this.dataSource.onInit(payload);
           // listeners
-          this.onSearchStateChange();
+          this.initStateListener();
           break;
 
         case 'mr-search-layout.destroy':
@@ -73,30 +72,33 @@ export class MrSearchLayoutEH extends EventHandler {
     });
   }
 
-  onSearchStateChange() {
+  initStateListener() {
     // request listener
-    this.searchService.getState$('request').subscribe(({ lastUpdated, state }) => {
+    this.searchService.getState$(REQUEST_STATE_CONTEXT).subscribe(({ lastUpdated, state }) => {
       console.warn('request', lastUpdated, state);
     });
     // inputs listener
-    this.searchService.getState$('input').subscribe(({ lastUpdated, state }) => {
+    this.searchService.getState$(INPUT_STATE_CONTEXT).subscribe(({ lastUpdated, state }) => {
       this.searchState = state;
       this.dataSource.updateActiveFilters(state);
       console.warn('input', lastUpdated, state);
     });
 
-    this.searchService.getState$('request', 'loading').subscribe(() => {
+    this.searchService.getState$(REQUEST_STATE_CONTEXT, 'loading').subscribe(() => {
       this.dataSource.setSectionState('results', 'LOADING');
     });
 
-    this.searchService.getState$('request', 'success').pipe(
-      map(() => {
-        const { page, sort } = this.searchState;
-        return resultsMock(page || 1, sort || '_score_DESC');
-      })
-    ).subscribe((response) => {
-      this.dataSource.handleResponse(response);
-      this.dataSource.setSectionState('results', isEmpty(response.results) ? 'EMPTY' : 'OK');
+    // hook (test)
+    this.searchService.setBeforeHook(REQUEST_STATE_CONTEXT, 'success', () => {
+      const { page, sort } = this.searchState;
+      return resultsMock(page || 1, sort || '_score_DESC');
     });
+
+    this.searchService.getState$(REQUEST_STATE_CONTEXT, 'success')
+      .subscribe((response) => {
+        this.dataSource.handleResponse(response);
+        // update layout state
+        this.dataSource.setSectionState('results', isEmpty(response.results) ? 'EMPTY' : 'OK');
+      });
   }
 }

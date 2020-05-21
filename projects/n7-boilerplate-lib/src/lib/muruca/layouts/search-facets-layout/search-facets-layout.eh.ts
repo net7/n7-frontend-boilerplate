@@ -1,7 +1,9 @@
 import { EventHandler } from '@n7-frontend/core';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil, filter } from 'rxjs/operators';
-import { MrSearchService, INPUT_STATE_CONTEXT, FACET_STATE_CONTEXT } from '../../services/search.service';
+import {
+  MrSearchService, INPUT_STATE_CONTEXT, FACET_STATE_CONTEXT, REQUEST_STATE_CONTEXT
+} from '../../services/search.service';
 
 interface ChangedSubjects {
   [key: string]: Subject<any>;
@@ -68,6 +70,7 @@ export class SearchFacetsLayoutEH extends EventHandler {
   }
 
   initStateListener() {
+    // listener for input updates
     this.searchService.getState$(INPUT_STATE_CONTEXT)
       .pipe(
         takeUntil(this.destroyed$),
@@ -81,6 +84,7 @@ export class SearchFacetsLayoutEH extends EventHandler {
         }
       });
 
+    // listener for facet updates
     this.searchService.getState$(FACET_STATE_CONTEXT)
       .pipe(
         takeUntil(this.destroyed$),
@@ -88,6 +92,16 @@ export class SearchFacetsLayoutEH extends EventHandler {
       ).subscribe(({ lastUpdated, state }) => {
         const newData = state[lastUpdated];
         this.dataSource.updateInputData(lastUpdated, newData);
+      });
+
+    // listener for facet header updates
+    this.searchService.getState$(REQUEST_STATE_CONTEXT, 'success')
+      .pipe(
+        takeUntil(this.destroyed$)
+      ).subscribe(({ headers }) => {
+        Object.keys(headers).forEach((id) => {
+          this.dataSource.updateInputValue(id, headers[id]);
+        });
       });
   }
 }

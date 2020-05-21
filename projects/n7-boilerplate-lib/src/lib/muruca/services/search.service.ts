@@ -95,6 +95,7 @@ export class MrSearchService {
     }
 
     let value = newValue;
+    // hook control
     if (this.beforeHook[stateId]) {
       value = this.beforeHook[stateId](value);
     }
@@ -111,7 +112,7 @@ export class MrSearchService {
       throw Error(`Key "${stateId}" does'nt exists`);
     }
 
-    this.beforeHook[`${context}.${id}`] = hook;
+    this.beforeHook[stateId] = hook;
   }
 
   private setContextState(context: string, id: string, newValue: any) {
@@ -177,26 +178,17 @@ export class MrSearchService {
 
     this.activatedRoute.queryParams.pipe(
       map((params) => {
-        const hookId = `${REQUEST_STATE_CONTEXT}.loading`;
-        // queryParams to state object
-        let state = searchHelper.queryParamsToState(params);
-        if (this.beforeHook[hookId]) {
-          state = this.beforeHook[hookId](state);
-        }
-        // loading signal
-        this.setState(REQUEST_STATE_CONTEXT, 'loading', state);
-        return state;
+        this.setState(REQUEST_STATE_CONTEXT, 'loading', params);
+        return params;
       }),
       debounceTime(request.delay || 1),
       switchMap((state) => this.communication.request$(request.id, {
         params: state,
         onError: (error) => {
-          // error signal
           this.setState(REQUEST_STATE_CONTEXT, 'error', error);
         }
       }, request.provider || null))
     ).subscribe((response) => {
-      // success signal
       this.setState(REQUEST_STATE_CONTEXT, 'success', response);
     });
   }
