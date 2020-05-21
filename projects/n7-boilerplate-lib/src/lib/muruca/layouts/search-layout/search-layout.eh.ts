@@ -31,7 +31,7 @@ export class MrSearchLayoutEH extends EventHandler {
           break;
 
         case 'mr-search-layout.searchreset':
-          console.warn('#TODO: reset search');
+          this.searchService.reset();
           break;
 
         default:
@@ -39,7 +39,6 @@ export class MrSearchLayoutEH extends EventHandler {
           break;
       }
     });
-
 
     this.outerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
@@ -59,8 +58,7 @@ export class MrSearchLayoutEH extends EventHandler {
           const stateValue = this.searchState[payload.id];
           let newValue = null;
           if (Array.isArray(stateValue)) {
-            stateValue.splice(stateValue.indexOf(payload.value), 1);
-            newValue = stateValue;
+            newValue = stateValue.filter((value) => value !== payload.value);
           }
           this.searchService.setState('input', payload.id, newValue);
           break;

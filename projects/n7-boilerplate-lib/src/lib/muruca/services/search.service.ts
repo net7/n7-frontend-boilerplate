@@ -5,7 +5,8 @@ import {
   filter,
   switchMap,
   map,
-  debounceTime
+  debounceTime,
+  delay,
 } from 'rxjs/operators';
 import { CommunicationService } from '../../common/services/communication.service';
 import searchHelper from '../helpers/search-helper';
@@ -115,6 +116,13 @@ export class MrSearchService {
     this.beforeHook[stateId] = hook;
   }
 
+  public reset() {
+    // clear input states
+    Object.keys(this.contextState[INPUT_STATE_CONTEXT]).forEach((id) => {
+      this.setState(INPUT_STATE_CONTEXT, id, null);
+    });
+  }
+
   private setContextState(context: string, id: string, newValue: any) {
     this.contextState[context] = {
       ...this.contextState[context],
@@ -177,6 +185,7 @@ export class MrSearchService {
     });
 
     this.activatedRoute.queryParams.pipe(
+      delay(1), // fix initial listeners (symbolic timeout)
       map((params) => {
         this.setState(REQUEST_STATE_CONTEXT, 'loading', params);
         return params;
