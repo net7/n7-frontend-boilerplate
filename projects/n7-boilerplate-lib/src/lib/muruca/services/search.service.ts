@@ -7,7 +7,9 @@ import {
   map,
   debounceTime,
   delay,
+  tap,
 } from 'rxjs/operators';
+import { isEmpty } from 'lodash';
 import { CommunicationService } from '../../common/services/communication.service';
 import searchHelper from '../helpers/search-helper';
 
@@ -185,7 +187,22 @@ export class MrSearchService {
     });
 
     this.activatedRoute.queryParams.pipe(
-      delay(1), // fix initial listeners (symbolic timeout)
+      // fix initial listeners (symbolic timeout)
+      delay(1),
+      // query params to state
+      map((params) => searchHelper.queryParamsToState(params)),
+      // state != queryParams control
+      tap((params) => {
+        if (isEmpty(params) && !isEmpty(this.contextState[INPUT_STATE_CONTEXT])) {
+          this.reset();
+        }
+        if (!isEmpty(params) && isEmpty(this.contextState[INPUT_STATE_CONTEXT])) {
+          // update state
+          Object.keys(params).forEach((inputId) => {
+            this.setState(INPUT_STATE_CONTEXT, inputId, params[inputId]);
+          });
+        }
+      }),
       map((params) => {
         this.setState(REQUEST_STATE_CONTEXT, 'loading', params);
         return params;
