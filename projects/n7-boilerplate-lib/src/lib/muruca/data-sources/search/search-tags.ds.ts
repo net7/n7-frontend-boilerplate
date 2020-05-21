@@ -8,21 +8,23 @@ export class MrSearchTagsDS extends DataSource {
 
     // inputs config
     facetsConfig.sections.forEach(({ inputs }) => {
-      inputs.forEach(({ id }) => {
-        if (state[id]) {
-          const values = Array.isArray(state[id]) ? state[id] : [state[id]];
-          values.forEach((value) => {
-            tags.push({
-              text: value,
-              icon: 'n7-icon-close',
-              payload: {
-                id,
-                value
-              }
+      inputs
+        .filter(({ queryParam }) => queryParam)
+        .forEach(({ id }) => {
+          if (state[id]) {
+            const values = Array.isArray(state[id]) ? state[id] : [state[id]];
+            values.forEach((value) => {
+              tags.push({
+                text: value,
+                icon: 'n7-icon-close',
+                payload: {
+                  id,
+                  value
+                }
+              });
             });
-          });
-        }
-      });
+          }
+        });
     });
     return tags;
   }
