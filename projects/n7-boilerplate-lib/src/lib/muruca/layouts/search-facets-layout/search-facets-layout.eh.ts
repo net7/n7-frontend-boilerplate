@@ -1,7 +1,9 @@
 import { EventHandler } from '@n7-frontend/core';
 import { Subject } from 'rxjs';
-import { debounceTime, takeUntil } from 'rxjs/operators';
-import { SearchFacetsConfig } from './search-facets-config';
+import { debounceTime, takeUntil, filter } from 'rxjs/operators';
+import {
+  MrSearchService, INPUT_STATE_CONTEXT, FACET_STATE_CONTEXT, REQUEST_STATE_CONTEXT
+} from '../../services/search.service';
 
 interface ChangedSubjects {
   [key: string]: Subject<any>;
@@ -12,26 +14,22 @@ export class SearchFacetsLayoutEH extends EventHandler {
 
   private destroyed$: Subject<boolean> = new Subject();
 
-  private hostEmit$: Subject<any>;
-
-  private guestEmit$: Subject<any>;
+  private searchService: MrSearchService;
 
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
         case 'mr-search-facets-layout.init':
-          this.hostEmit$ = payload.hostEmit$;
-          this.guestEmit$ = payload.guestEmit$;
+          this.searchService = payload.searchService;
           // listeners
-          this.listenFacetsReady();
-          this.listenToHost();
-          this.initChangedListener(payload.data);
+          this.initChangedListener(this.searchService.getConfig());
+          this.initStateListener();
           // init
           this.dataSource.onInit(payload);
           break;
 
         case 'mr-search-facets-layout.destroy':
-          this.dataSource.onDestroy();
+          this.destroyed$.next();
           break;
 
         default:
@@ -46,8 +44,8 @@ export class SearchFacetsLayoutEH extends EventHandler {
     });
   }
 
-  initChangedListener(data: SearchFacetsConfig) {
-    data.sections.forEach((section) => {
+  initChangedListener({ facets }) {
+    facets.sections.forEach((section) => {
       const sources: {
         id: string;
         delay: number;
@@ -64,48 +62,46 @@ export class SearchFacetsLayoutEH extends EventHandler {
         this.changed$[source.id] = new Subject();
         this.changed$[source.id].pipe(
           debounceTime(source.delay || 1)
-        ).subscribe((payload) => {
-          this.guestEmit$.next({
-            payload,
-            type: 'change'
-          });
+        ).subscribe(({ id, value }) => {
+          this.searchService.setState('input', id, value);
         });
       });
     });
   }
 
-  listenFacetsReady() {
-    this.dataSource.ready$.subscribe(() => {
-      this.guestEmit$.next({
-        type: 'facetsready'
+  initStateListener() {
+    // listener for input updates
+    this.searchService.getState$(INPUT_STATE_CONTEXT)
+      .pipe(
+        takeUntil(this.destroyed$),
+        filter(({ lastUpdated }) => this.dataSource.inputsDS[lastUpdated])
+      ).subscribe(({ lastUpdated, state }) => {
+        const newValue = state[lastUpdated];
+        if (newValue === null) {
+          this.dataSource.clearInput(lastUpdated);
+        } else {
+          this.dataSource.updateInputValue(lastUpdated, newValue);
+        }
       });
-    });
-  }
 
-  listenToHost() {
-    this.hostEmit$.pipe(
-      takeUntil(this.destroyed$)
-    ).subscribe(({ type, payload }) => {
-      switch (type) {
-        case 'updateinputvalue':
-          this.dataSource.updateInputValue(payload.id, payload.value);
-          break;
+    // listener for facet updates
+    this.searchService.getState$(FACET_STATE_CONTEXT)
+      .pipe(
+        takeUntil(this.destroyed$),
+        filter(({ lastUpdated }) => this.dataSource.inputsDS[lastUpdated])
+      ).subscribe(({ lastUpdated, state }) => {
+        const newData = state[lastUpdated];
+        this.dataSource.updateInputData(lastUpdated, newData);
+      });
 
-        case 'updateinputdata':
-          this.dataSource.updateInputData(payload.id, payload.data);
-          break;
-
-        case 'clearinput':
-          this.dataSource.clearInput(payload.id);
-          break;
-
-        case 'clearinputs':
-          this.dataSource.clearInputs();
-          break;
-
-        default:
-          break;
-      }
-    });
+    // listener for facet header updates
+    this.searchService.getState$(REQUEST_STATE_CONTEXT, 'success')
+      .pipe(
+        takeUntil(this.destroyed$)
+      ).subscribe(({ headers }) => {
+        Object.keys(headers).forEach((id) => {
+          this.dataSource.updateInputValue(id, headers[id]);
+        });
+      });
   }
 }

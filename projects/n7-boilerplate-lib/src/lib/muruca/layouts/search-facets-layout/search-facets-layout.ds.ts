@@ -1,67 +1,62 @@
-import { Subject } from 'rxjs';
 import { LayoutDataSource } from '@n7-frontend/core';
-import { SearchFacetsConfig } from './search-facets-config';
+import { MrSearchService } from '../../services/search.service';
 
 export class SearchFacetsLayoutDS extends LayoutDataSource {
-  public data: SearchFacetsConfig;
+  private searchService: MrSearchService;
 
-  public ready$: Subject<void> = new Subject();
+  private inputsDS: {
+    [key: string]: any;
+  } = {};
+
+  public searchConfig;
+
+  public facets;
 
   onInit(payload) {
-    this.data = payload.data;
+    this.searchService = payload.searchService;
+    this.searchConfig = this.searchService.getConfig();
+    this.facets = this.searchConfig.facets;
 
     this.initInputs();
   }
 
-  onDestroy() {
-    // TODO
-  }
-
   initInputs() {
-    this.data.sections.forEach(({ header, inputs }) => {
+    // set components data
+    this.facets.sections.forEach(({ header, inputs }) => {
       [header, ...inputs].forEach((input) => {
         // set id
         const widgetDataSource = this.getWidgetDataSource(input.id);
         widgetDataSource.id = input.id;
-        // update data
-        this.one(input.id).update(input.data);
+        // caching DS for next updates
+        this.inputsDS[input.id] = widgetDataSource;
+        // first update
+        widgetDataSource.update(input.data);
       });
     });
-
-    // signal
-    this.ready$.next();
   }
 
   updateInputValue(id, newValue) {
-    const widgetDataSource = this.getWidgetDataSource(id);
-    if (widgetDataSource) {
-      widgetDataSource.setValue(newValue, true);
-    }
+    const ds = this.inputsDS[id];
+    ds.setValue(newValue, ds.value !== newValue);
   }
 
-  updateInputData(id, newData) {
-    const widgetDataSource = this.getWidgetDataSource(id);
-    if (widgetDataSource) {
-      widgetDataSource.update({
-        ...widgetDataSource.input,
-        ...newData
-      });
-    }
+  updateInputData(id: string, newData) {
+    const ds = this.inputsDS[id];
+    ds.update({
+      ...ds.input,
+      ...newData
+    });
   }
 
-  clearInput(id) {
-    const widgetDataSource = this.getWidgetDataSource(id);
-    if (widgetDataSource) {
-      widgetDataSource.clear();
-      widgetDataSource.setValue(widgetDataSource.value, true);
-    }
+  clearInput(id: string) {
+    const ds = this.inputsDS[id];
+    ds.clear();
+    ds.setValue(ds.value, true);
   }
 
   clearInputs() {
-    this.data.sections.forEach(({ header, inputs }) => {
-      [header, ...inputs].forEach((input) => {
-        this.clearInput(input.id);
-      });
+    Object.keys(this.inputsDS).forEach((id) => {
+      this.clearInput(id);
     });
   }
 }

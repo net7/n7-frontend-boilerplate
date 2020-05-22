@@ -4,10 +4,8 @@ import {
   OnDestroy,
   Input
 } from '@angular/core';
-import { Subject } from 'rxjs';
 import { AbstractLayout } from '../../../common/models/abstract-layout';
 import { SearchFacetsLayoutConfig as config } from './search-facets-layout.config';
-import { SearchFacetsConfig } from './search-facets-config';
 import { FacetTextDS } from '../../data-sources/facets/facet-text.ds';
 import { FacetCheckboxDS } from '../../data-sources/facets/facet-checkbox.ds';
 import { FacetSelectDS } from '../../data-sources/facets/facet-select.ds';
@@ -18,6 +16,7 @@ import { FacetTextEH } from '../../event-handlers/facets/facet-text.eh';
 import { FacetCheckboxEH } from '../../event-handlers/facets/facet-checkbox.eh';
 import { FacetSelectEH } from '../../event-handlers/facets/facet-select.eh';
 import { FacetLinkEH } from '../../event-handlers/facets/facet-link.eh';
+import { MrSearchService } from '../../services/search.service';
 
 const DATASOURCE_MAP = {
   header: FacetHeaderDS,
@@ -40,11 +39,7 @@ const EVENTHANDLER_MAP = {
   templateUrl: './search-facets-layout.html'
 })
 export class MrSearchFacetsLayoutComponent extends AbstractLayout implements OnInit, OnDestroy {
-  @Input() data: SearchFacetsConfig;
-
-  @Input() guestEmit$: Subject<any>;
-
-  @Input() hostEmit$: Subject<any>;
+  @Input() searchService: MrSearchService;
 
   constructor() {
     super(config);
@@ -52,9 +47,7 @@ export class MrSearchFacetsLayoutComponent extends AbstractLayout implements OnI
 
   protected initPayload() {
     return {
-      data: this.data,
-      guestEmit$: this.guestEmit$,
-      hostEmit$: this.hostEmit$
+      searchService: this.searchService
     };
   }
 
@@ -68,8 +61,9 @@ export class MrSearchFacetsLayoutComponent extends AbstractLayout implements OnI
   }
 
   loadWidgets() {
+    const { facets } = this.searchService.getConfig();
     this.widgets = [];
-    this.data.sections.forEach(({ header, inputs }) => {
+    facets.sections.forEach(({ header, inputs }) => {
       if (header) {
         this.widgets.push({
           id: header.id,

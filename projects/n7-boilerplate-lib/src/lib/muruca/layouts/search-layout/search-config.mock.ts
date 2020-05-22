@@ -1,4 +1,4 @@
-import { SearchFacetsConfig } from '../search-facets-layout/search-facets-config';
+import { SearchConfig } from '../search-facets-layout/search-facets-config';
 
 function getLinks(prefix) {
   let i;
@@ -15,7 +15,7 @@ function getLinks(prefix) {
   return links;
 }
 
-const configuration: SearchFacetsConfig = {
+const facets = {
   sections: [{
     header: {
       id: 'header-filtra',
@@ -26,6 +26,7 @@ const configuration: SearchFacetsConfig = {
     inputs: [{
       id: 'input-00',
       type: 'text',
+      queryParam: true,
       data: {
         id: 'input-text-00',
         placeholder: 'Cerca nei titoli',
@@ -46,7 +47,6 @@ const configuration: SearchFacetsConfig = {
     inputs: [{
       id: 'input-01',
       type: 'text',
-      internal: true,
       data: {
         id: 'input-text-01',
         placeholder: 'Search',
@@ -58,6 +58,7 @@ const configuration: SearchFacetsConfig = {
     }, {
       id: 'input-02',
       type: 'link',
+      queryParam: true,
       data: {
         links: getLinks('Toponimo')
       }
@@ -73,7 +74,6 @@ const configuration: SearchFacetsConfig = {
     inputs: [{
       id: 'input-03',
       type: 'text',
-      internal: true,
       data: {
         id: 'input-text-02',
         placeholder: 'Search',
@@ -85,6 +85,7 @@ const configuration: SearchFacetsConfig = {
     }, {
       id: 'input-04',
       type: 'link',
+      queryParam: true,
       data: {
         links: getLinks('Concetto')
       }
@@ -100,6 +101,7 @@ const configuration: SearchFacetsConfig = {
     inputs: [{
       id: 'input-05',
       type: 'link',
+      queryParam: true,
       data: {
         links: getLinks('Continente')
       }
@@ -116,6 +118,7 @@ const configuration: SearchFacetsConfig = {
     inputs: [{
       id: 'input-06',
       type: 'link',
+      queryParam: true,
       data: {
         links: getLinks('Keyword')
       }
@@ -132,6 +135,7 @@ const configuration: SearchFacetsConfig = {
     inputs: [{
       id: 'input-07',
       type: 'link',
+      queryParam: true,
       data: {
         links: getLinks('Data')
       }
@@ -148,6 +152,7 @@ const configuration: SearchFacetsConfig = {
     inputs: [{
       id: 'input-08',
       type: 'link',
+      queryParam: true,
       data: {
         links: getLinks('Luogo')
       }
@@ -156,4 +161,11 @@ const configuration: SearchFacetsConfig = {
   classes: 'facets-wrapper'
 };
 
-export default configuration;
+const layoutInputs = ['page', 'limit', 'sort'].map((id) => ({
+  id,
+  queryParam: true,
+}));
+
+const request = { id: 'search', delay: 500 };
+
+export default { request, facets, layoutInputs } as SearchConfig;

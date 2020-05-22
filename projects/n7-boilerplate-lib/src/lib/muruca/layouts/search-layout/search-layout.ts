@@ -6,6 +6,8 @@ import { LayoutsConfigurationService } from '../../../common/services/layouts-co
 import { MrSearchLayoutConfig as config } from './search-layout.config';
 import { CommunicationService } from '../../../common/services/communication.service';
 import { ConfigurationService } from '../../../common/services/configuration.service';
+import { MrSearchService } from '../../services/search.service';
+import searchConfig from './search-config.mock';
 
 
 @Component({
@@ -25,6 +27,7 @@ export class MrSearchLayoutComponent extends AbstractLayout implements OnInit, O
     private activatedRoute: ActivatedRoute,
     private communication: CommunicationService,
     private configuration: ConfigurationService,
+    private searchService: MrSearchService,
   ) {
     super(layoutsConfiguration.get('MrSearchLayoutConfig') || config);
   }
@@ -37,8 +40,7 @@ export class MrSearchLayoutComponent extends AbstractLayout implements OnInit, O
       router: this.router,
       activatedRoute: this.activatedRoute,
       communication: this.communication,
-      hostEmit$: this.hostEmit$,
-      guestEmit$: this.guestEmit$,
+      searchService: this.searchService,
       options: this.config.options || {},
     };
   }
@@ -46,6 +48,7 @@ export class MrSearchLayoutComponent extends AbstractLayout implements OnInit, O
   ngOnInit() {
     this.activatedRoute.data.subscribe((data) => {
       this.configId = data.configId;
+      this.searchService.init(searchConfig);
       this.onInit();
     });
   }

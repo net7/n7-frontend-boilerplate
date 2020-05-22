@@ -10,6 +10,7 @@ import { MrSearchLayoutComponent } from './layouts/search-layout/search-layout';
 import { MrGlossaryLayoutComponent } from './layouts/glossary-layout/glossary-layout';
 import { MrStaticLayoutComponent } from './layouts/static-layout/static-layout';
 import { MrSearchFacetsLayoutComponent } from './layouts/search-facets-layout/search-facets-layout';
+import { MrSearchService } from './services/search.service';
 
 const COMPONENTS = [
   MrHomeLayoutComponent,
@@ -29,7 +30,9 @@ const COMPONENTS = [
     DvComponentsLibModule,
     N7BoilerplateCommonModule,
   ],
-  providers: [],
+  providers: [
+    MrSearchService
+  ],
   entryComponents: COMPONENTS,
   exports: COMPONENTS,
 })

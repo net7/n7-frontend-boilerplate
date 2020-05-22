@@ -4,10 +4,10 @@
     "providers": {
       "rest": {
         "type": "rest",
-        "baseUrl": "//jsonplaceholder.typicode/",
+        "baseUrl": "//jsonplaceholder.typicode.com/",
         "config": {
           "sections": "sections",
-          "search": "search"
+          "search": "posts"
         }
       },
       "rest-local": {

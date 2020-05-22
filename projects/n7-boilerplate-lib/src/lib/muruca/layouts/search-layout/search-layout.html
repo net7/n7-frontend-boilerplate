@@ -11,11 +11,11 @@
         <div class="mr-search__results-content">
             <aside class="mr-search__facets">
                 <div class="filter-section">
-                    <h2>{{ lb.dataSource.pageConfig['facets-title'] }}</h2>
+                    <h2 *ngIf="lb.dataSource.pageConfig['facets-title']">
+                        {{ lb.dataSource.pageConfig['facets-title'] }}
+                    </h2>
                     <mr-search-facets-layout 
-                    [data]="lb.dataSource.facetsConfig"
-                    [hostEmit$]="hostEmit$"
-                    [guestEmit$]="guestEmit$">
+                    [searchService]="lb.dataSource.searchService">
                     </mr-search-facets-layout>
                 </div>
             </aside>

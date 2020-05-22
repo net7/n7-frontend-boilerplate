@@ -1,46 +1,29 @@
-import { isEmpty } from 'lodash';
 import { EventHandler } from '@n7-frontend/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import {
-  takeUntil,
-  debounceTime,
-  tap,
-  switchMap
-} from 'rxjs/operators';
-import searchHelper from '../../helpers/search-helper';
+import { isEmpty } from 'lodash';
 import { MrSearchLayoutDS } from './search-layout.ds';
+import { MrSearchService, REQUEST_STATE_CONTEXT, INPUT_STATE_CONTEXT } from '../../services/search.service';
+import resultsMock from './search-layout.mock';
 
 export class MrSearchLayoutEH extends EventHandler {
   public dataSource: MrSearchLayoutDS;
 
   private destroyed$: Subject<boolean> = new Subject();
 
-  private hostEmit$: Subject<any>;
+  private searchService: MrSearchService;
 
-  private guestEmit$: Subject<any>;
-
-  private facetsReady$: Subject<void> = new Subject();
-
-  private doSearch$: Subject<any> = new Subject();
-
-  private router: Router;
-
-  private activatedRoute: ActivatedRoute;
+  private searchState: {
+    [key: string]: any;
+  } = {};
 
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
         case 'mr-search-layout.init':
-          this.hostEmit$ = payload.hostEmit$;
-          this.guestEmit$ = payload.guestEmit$;
-          this.router = payload.router;
-          this.activatedRoute = payload.activatedRoute;
-          // listeners
-          this.listenToGuest();
-          this.listenToRouterChanges();
-          // init
+          this.searchService = payload.searchService;
           this.dataSource.onInit(payload);
+          // listeners
+          this.initStateListener();
           break;
 
         case 'mr-search-layout.destroy':
@@ -48,8 +31,7 @@ export class MrSearchLayoutEH extends EventHandler {
           break;
 
         case 'mr-search-layout.searchreset':
-          this.clearSearchState();
-          this.updateRoute();
+          this.searchService.reset();
           break;
 
         default:
@@ -58,75 +40,27 @@ export class MrSearchLayoutEH extends EventHandler {
       }
     });
 
-
     this.outerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
         case 'n7-smart-pagination.click':
-          this.dataSource.setState('page', payload.page);
-          this.updateRoute();
+          this.searchService.setState('input', 'page', payload.page);
           break;
 
         case 'n7-smart-pagination.change':
-          this.dataSource.setState('limit', payload.value);
-          this.updateRoute();
+          this.searchService.setState('input', 'limit', payload.value);
           break;
 
         case 'mr-search-results-title.change':
-          this.dataSource.setState('sort', payload.value);
-          this.updateRoute();
+          this.searchService.setState('input', 'sort', payload.value);
           break;
 
         case 'mr-search-tags.click': {
-          const stateValue = this.dataSource.getState(payload.id);
+          const stateValue = this.searchState[payload.id];
           let newValue = null;
           if (Array.isArray(stateValue)) {
-            stateValue.splice(stateValue.indexOf(payload.value), 1);
-            newValue = stateValue;
+            newValue = stateValue.filter((value) => value !== payload.value);
           }
-          this.dataSource.setState(payload.id, newValue);
-          this.hostEmit$.next({
-            type: 'updateinputvalue',
-            payload: {
-              id: payload.id,
-              value: newValue
-            }
-          });
-          this.updateRoute();
-          break;
-        }
-
-        default:
-          break;
-      }
-    });
-
-    // search request stream
-    this.doSearch$.pipe(
-      debounceTime(500),
-      tap(() => {
-        this.dataSource.updateActiveFilters();
-        this.dataSource.setSectionState('results', 'LOADING');
-      }),
-      switchMap((params: any) => this.dataSource.doRequest$(params))
-    ).subscribe((response) => {
-      this.dataSource.handleResponse(response);
-      this.updateFacetHeaders(response.headers);
-    });
-  }
-
-  listenToGuest() {
-    this.guestEmit$.pipe(
-      takeUntil(this.destroyed$)
-    ).subscribe(({ type, payload }) => {
-      switch (type) {
-        case 'facetsready': {
-          this.facetsReady$.next();
-          break;
-        }
-
-        case 'change': {
-          this.dataSource.setState(payload.id, payload.value);
-          this.updateRoute();
+          this.searchService.setState('input', payload.id, newValue);
           break;
         }
 
@@ -136,58 +70,33 @@ export class MrSearchLayoutEH extends EventHandler {
     });
   }
 
-  listenToRouterChanges() {
-    this.activatedRoute.queryParams.pipe(
-      takeUntil(this.destroyed$)
-    ).subscribe((params) => {
-      const searchState = searchHelper.queryParamsToState(params);
-      // params state control
-      if (isEmpty(params) && !isEmpty(this.dataSource.getState())) {
-        this.clearSearchState();
-      } else if (isEmpty(this.dataSource.getState()) && !isEmpty(params)) {
-        this.setSearchState(params);
-      }
-      this.doSearch$.next(searchState);
+  initStateListener() {
+    // request listener
+    this.searchService.getState$(REQUEST_STATE_CONTEXT).subscribe(({ lastUpdated, state }) => {
+      console.warn('request', lastUpdated, state);
     });
-  }
-
-  updateRoute() {
-    const queryParams = searchHelper.stateToQueryParams(this.dataSource.getState());
-    this.router.navigate([], {
-      queryParams
+    // inputs listener
+    this.searchService.getState$(INPUT_STATE_CONTEXT).subscribe(({ lastUpdated, state }) => {
+      this.searchState = state;
+      this.dataSource.updateActiveFilters(state);
+      console.warn('input', lastUpdated, state);
     });
-  }
 
-  private updateFacetHeaders(headers) {
-    Object.keys(headers).forEach((id) => {
-      this.hostEmit$.next({
-        type: 'updateinputvalue',
-        payload: {
-          id,
-          value: headers[id]
-        }
+    this.searchService.getState$(REQUEST_STATE_CONTEXT, 'loading').subscribe(() => {
+      this.dataSource.setSectionState('results', 'LOADING');
+    });
+
+    // hook (test)
+    this.searchService.setBeforeHook(REQUEST_STATE_CONTEXT, 'success', () => {
+      const { page, sort } = this.searchState;
+      return resultsMock(page || 1, sort || '_score_DESC');
+    });
+
+    this.searchService.getState$(REQUEST_STATE_CONTEXT, 'success')
+      .subscribe((response) => {
+        this.dataSource.handleResponse(response);
+        // update layout state
+        this.dataSource.setSectionState('results', isEmpty(response.results) ? 'EMPTY' : 'OK');
       });
-    });
-  }
-
-  private clearSearchState() {
-    this.dataSource.clearState();
-    this.hostEmit$.next({ type: 'clearinputs' });
-  }
-
-  private setSearchState(params) {
-    this.facetsReady$.subscribe(() => {
-      const stateParams = searchHelper.queryParamsToState(params);
-      Object.keys(stateParams).forEach((key) => {
-        this.dataSource.setState(key, stateParams[key]);
-        this.hostEmit$.next({
-          type: 'updateinputvalue',
-          payload: {
-            id: key,
-            value: stateParams[key]
-          }
-        });
-      });
-    });
   }
 }
