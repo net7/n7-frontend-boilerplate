@@ -2,8 +2,14 @@ import { EventHandler } from '@n7-frontend/core';
 import { Subject } from 'rxjs';
 import { isEmpty } from 'lodash';
 import { MrSearchLayoutDS } from './search-layout.ds';
-import { MrSearchService, REQUEST_STATE_CONTEXT, INPUT_STATE_CONTEXT } from '../../services/search.service';
-import resultsMock from './search-layout.mock';
+import {
+  MrSearchService,
+  RESULTS_STATE_CONTEXT,
+  INPUT_STATE_CONTEXT,
+  LINKS_STATE_CONTEXT
+} from '../../services/search.service';
+import resultsMock from './search-results.mock';
+import linksMock from './search-links.mock';
 
 export class MrSearchLayoutEH extends EventHandler {
   public dataSource: MrSearchLayoutDS;
@@ -72,9 +78,10 @@ export class MrSearchLayoutEH extends EventHandler {
 
   initStateListener() {
     // request listener
-    this.searchService.getState$(REQUEST_STATE_CONTEXT).subscribe(({ lastUpdated, state }) => {
-      console.warn('request', lastUpdated, state);
-    });
+    this.searchService.getState$(RESULTS_STATE_CONTEXT)
+      .subscribe(({ lastUpdated, state }) => {
+        console.warn('request', lastUpdated, state);
+      });
     // inputs listener
     this.searchService.getState$(INPUT_STATE_CONTEXT).subscribe(({ lastUpdated, state }) => {
       this.searchState = state;
@@ -82,17 +89,19 @@ export class MrSearchLayoutEH extends EventHandler {
       console.warn('input', lastUpdated, state);
     });
 
-    this.searchService.getState$(REQUEST_STATE_CONTEXT, 'loading').subscribe(() => {
+    this.searchService.getState$(RESULTS_STATE_CONTEXT, 'loading').subscribe(() => {
       this.dataSource.setSectionState('results', 'LOADING');
     });
 
     // hook (test)
-    this.searchService.setBeforeHook(REQUEST_STATE_CONTEXT, 'success', () => {
+    this.searchService.setBeforeHook(RESULTS_STATE_CONTEXT, 'success', () => {
       const { page, sort } = this.searchState;
       return resultsMock(page || 1, sort || '_score_DESC');
     });
 
-    this.searchService.getState$(REQUEST_STATE_CONTEXT, 'success')
+    this.searchService.setBeforeHook(LINKS_STATE_CONTEXT, 'success', () => linksMock());
+
+    this.searchService.getState$(RESULTS_STATE_CONTEXT, 'success')
       .subscribe((response) => {
         this.dataSource.handleResponse(response);
         // update layout state

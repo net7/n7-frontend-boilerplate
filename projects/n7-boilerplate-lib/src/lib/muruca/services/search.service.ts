@@ -15,7 +15,8 @@ import searchHelper from '../helpers/search-helper';
 
 export const INPUT_STATE_CONTEXT = 'input';
 export const FACET_STATE_CONTEXT = 'facet';
-export const REQUEST_STATE_CONTEXT = 'request';
+export const RESULTS_STATE_CONTEXT = 'results';
+export const LINKS_STATE_CONTEXT = 'links';
 
 @Injectable()
 export class MrSearchService {
@@ -51,6 +52,7 @@ export class MrSearchService {
     // listeners
     this.onInputsChange();
     this.onRouteChange();
+    this.onResultsLoading();
   }
 
   public getConfig = () => this.config;
@@ -176,14 +178,14 @@ export class MrSearchService {
   }
 
   private onRouteChange() {
-    const { request } = this.config;
+    const { results } = this.config.request;
 
     // add context state
-    this.addStateContext(REQUEST_STATE_CONTEXT);
+    this.addStateContext(RESULTS_STATE_CONTEXT);
 
     // default states
     ['loading', 'success', 'error'].forEach((id) => {
-      this.addState(REQUEST_STATE_CONTEXT, id);
+      this.addState(RESULTS_STATE_CONTEXT, id);
     });
 
     this.activatedRoute.queryParams.pipe(
@@ -204,28 +206,69 @@ export class MrSearchService {
         }
       }),
       map((params) => {
-        this.setState(REQUEST_STATE_CONTEXT, 'loading', params);
+        this.setState(RESULTS_STATE_CONTEXT, 'loading', params);
         return params;
       }),
-      debounceTime(request.delay || 1),
-      switchMap((state) => this.communication.request$(request.id, {
+      debounceTime(results.delay || 1),
+      switchMap((state) => this.communication.request$(results.id, {
         params: state,
+        method: 'POST',
         onError: (error) => {
-          this.setState(REQUEST_STATE_CONTEXT, 'error', error);
+          this.setState(RESULTS_STATE_CONTEXT, 'error', error);
         }
-      }, request.provider || null))
+      }, results.provider || null))
     ).subscribe((response) => {
-      this.setState(REQUEST_STATE_CONTEXT, 'success', response);
+      this.setState(RESULTS_STATE_CONTEXT, 'success', response);
     });
   }
 
   private onInputsChange() {
-    this.getState$('input').pipe(
+    this.getState$(INPUT_STATE_CONTEXT).pipe(
       filter(({ lastUpdated }) => this.queryParamKeys.indexOf(lastUpdated) !== -1)
     ).subscribe(({ state }) => {
       const queryParams = searchHelper.stateToQueryParams(state);
       this.router.navigate([], {
         queryParams
+      });
+    });
+  }
+
+  private onResultsLoading() {
+    const { links } = this.config.request;
+
+    if (!links) {
+      return;
+    }
+
+    // add context state
+    this.addStateContext(LINKS_STATE_CONTEXT);
+
+    // default states
+    ['loading', 'success', 'error'].forEach((id) => {
+      this.addState(LINKS_STATE_CONTEXT, id);
+    });
+
+    this.getState$(RESULTS_STATE_CONTEXT, 'loading').pipe(
+      map((params) => {
+        this.setState(LINKS_STATE_CONTEXT, 'loading', params);
+        return params;
+      }),
+      debounceTime(links.delay || 1),
+      switchMap((state) => this.communication.request$(links.id, {
+        params: state,
+        method: 'POST',
+        onError: (error) => {
+          this.setState(LINKS_STATE_CONTEXT, 'error', error);
+        }
+      }, links.provider || null))
+    ).subscribe((response) => {
+      this.setState(LINKS_STATE_CONTEXT, 'success', response);
+
+      // update links
+      Object.keys(response).forEach((id) => {
+        this.setState(FACET_STATE_CONTEXT, id, {
+          links: response[id]
+        });
       });
     });
   }
