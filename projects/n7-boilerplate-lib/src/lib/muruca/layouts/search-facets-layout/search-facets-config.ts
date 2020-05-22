@@ -40,9 +40,16 @@ interface SearchFacetsConfig {
 
 export interface SearchConfig {
   request: {
-    id: string;
-    provider?: string;
-    delay?: number;
+    results: {
+      id: string;
+      delay?: number;
+      provider?: string;
+    };
+    links: {
+      id: string;
+      delay?: number;
+      provider?: string;
+    };
   };
   facets: SearchFacetsConfig;
   layoutInputs: SearchLayoutInput[];

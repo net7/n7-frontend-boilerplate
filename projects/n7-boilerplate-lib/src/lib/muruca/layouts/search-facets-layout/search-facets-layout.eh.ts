@@ -2,7 +2,10 @@ import { EventHandler } from '@n7-frontend/core';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil, filter } from 'rxjs/operators';
 import {
-  MrSearchService, INPUT_STATE_CONTEXT, FACET_STATE_CONTEXT, REQUEST_STATE_CONTEXT
+  MrSearchService,
+  INPUT_STATE_CONTEXT,
+  FACET_STATE_CONTEXT,
+  RESULTS_STATE_CONTEXT
 } from '../../services/search.service';
 
 interface ChangedSubjects {
@@ -95,7 +98,7 @@ export class SearchFacetsLayoutEH extends EventHandler {
       });
 
     // listener for facet header updates
-    this.searchService.getState$(REQUEST_STATE_CONTEXT, 'success')
+    this.searchService.getState$(RESULTS_STATE_CONTEXT, 'success')
       .pipe(
         takeUntil(this.destroyed$)
       ).subscribe(({ headers }) => {

@@ -1,20 +1,5 @@
 import { SearchConfig } from '../search-facets-layout/search-facets-config';
 
-function getLinks(prefix) {
-  let i;
-  const limit = Math.round(Math.random() * 10);
-  const links = [];
-  for (i = 0; i < limit; i += 1) {
-    const text = `${prefix} ${i + 1}`;
-    links.push({
-      text,
-      counter: Math.round(Math.random() * 100),
-      payload: text
-    });
-  }
-  return links;
-}
-
 const facets = {
   sections: [{
     header: {
@@ -60,7 +45,7 @@ const facets = {
       type: 'link',
       queryParam: true,
       data: {
-        links: getLinks('Toponimo')
+        links: []
       }
     }]
   }, {
@@ -87,7 +72,7 @@ const facets = {
       type: 'link',
       queryParam: true,
       data: {
-        links: getLinks('Concetto')
+        links: []
       }
     }]
   }, {
@@ -103,7 +88,7 @@ const facets = {
       type: 'link',
       queryParam: true,
       data: {
-        links: getLinks('Continente')
+        links: []
       }
     }]
   }, {
@@ -120,7 +105,7 @@ const facets = {
       type: 'link',
       queryParam: true,
       data: {
-        links: getLinks('Keyword')
+        links: []
       }
     }],
   }, {
@@ -137,7 +122,7 @@ const facets = {
       type: 'link',
       queryParam: true,
       data: {
-        links: getLinks('Data')
+        links: []
       }
     }],
   }, {
@@ -154,7 +139,7 @@ const facets = {
       type: 'link',
       queryParam: true,
       data: {
-        links: getLinks('Luogo')
+        links: []
       }
     }],
   }],
@@ -166,6 +151,16 @@ const layoutInputs = ['page', 'limit', 'sort'].map((id) => ({
   queryParam: true,
 }));
 
-const request = { id: 'search', delay: 500 };
+const request = {
+  results: {
+    id: 'search',
+    delay: 500
+  },
+  links: {
+    id: 'links',
+  },
+  provider: 'rest',
+  delay: 500
+};
 
 export default { request, facets, layoutInputs } as SearchConfig;

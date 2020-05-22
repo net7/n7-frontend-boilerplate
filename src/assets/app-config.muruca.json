@@ -7,7 +7,8 @@
         "baseUrl": "//jsonplaceholder.typicode.com/",
         "config": {
           "sections": "sections",
-          "search": "posts"
+          "search": "posts",
+          "links": "todos"
         }
       },
       "rest-local": {
@@ -16,7 +17,9 @@
         "config": {
             "home": "get_home",
             "nav": "data/api/pages",
-            "page": "data/api/page_"
+            "page": "data/api/page_",
+            "search": "get_home",
+            "links": "get_home"
         }
       }
     }
