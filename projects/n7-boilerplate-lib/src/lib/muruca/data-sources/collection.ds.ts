@@ -4,10 +4,11 @@ export class MrCollectionDS extends DataSource {
   id: string;
 
   protected transform(data: any): any {
-    const { header } = data;
+    if (data === undefined) { return null; }
+
+    const { header, items } = data;
 
     return {
-      ...data,
       header: {
         title: {
           main: {
@@ -28,7 +29,8 @@ export class MrCollectionDS extends DataSource {
             }
           ]
         }
-      }
+      },
+      items,
     };
   }
 }
