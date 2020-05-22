@@ -226,7 +226,13 @@ export class MrSearchService {
     this.getState$(INPUT_STATE_CONTEXT).pipe(
       filter(({ lastUpdated }) => this.queryParamKeys.indexOf(lastUpdated) !== -1)
     ).subscribe(({ state }) => {
-      const queryParams = searchHelper.stateToQueryParams(state);
+      const filteredState = {};
+      Object.keys(state).forEach((id) => {
+        if (this.queryParamKeys.indexOf(id) !== -1) {
+          filteredState[id] = state[id];
+        }
+      });
+      const queryParams = searchHelper.stateToQueryParams(filteredState);
       this.router.navigate([], {
         queryParams
       });
