@@ -1,6 +1,6 @@
 {
   "communication": {
-    "defaultProvider": "rest",
+    "defaultProvider": "rest-local",
     "providers": {
       "rest": {
         "type": "rest",
@@ -12,8 +12,9 @@
       },
       "rest-local": {
         "type": "rest",
-        "baseUrl": "http://localhost:3002/",
+        "baseUrl": "http://unus-sls.netseven.it/",
         "config": {
+            "home": "get_home",
             "nav": "data/api/pages",
             "page": "data/api/page_"
         }
@@ -147,6 +148,15 @@
   "home-base": {
     "sections": [{
       "id": "hero-1",
+      "type": "hero",
+      "grid": null
+    }, {
+      "id": "collection-1",
+      "type": "collection",
+      "grid": 4
+    },
+    {
+      "id": "hero-2",
       "type": "hero",
       "grid": null
     }, {

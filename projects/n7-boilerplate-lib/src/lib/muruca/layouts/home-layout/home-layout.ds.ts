@@ -23,15 +23,14 @@ export class MrHomeLayoutDS extends LayoutDataSource {
 
   doRequest() {
     const { sections } = this.pageConfig;
-
     if (sections) {
       // FIXME: collegare API
-      // this.communication.request$('sections', {
-      //   method: 'POST',
-      //   params: sections.map(({ id }) => id)
-      // }).subscribe((response) => {
-      //   this.initSections(response);
-      // });
+      this.communication.request$('home', {
+        method: 'POST',
+        params: sections.map(({ id }) => id)
+      }).subscribe((response) => {
+        this.initSections(response);
+      });
 
       this.initSections(homeMock);
     }
