@@ -46,6 +46,8 @@ export class SearchFacetsLayoutDS extends LayoutDataSource {
       ...ds.input,
       ...newData
     });
+    // refresh selected
+    ds.setValue(ds.value, true);
   }
 
   clearInput(id: string) {

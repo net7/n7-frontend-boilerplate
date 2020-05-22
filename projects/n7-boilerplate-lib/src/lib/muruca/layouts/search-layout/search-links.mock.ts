@@ -2,7 +2,7 @@ import config from './search-config.mock';
 
 function getLinks(prefix) {
   let i;
-  const limit = Math.round(Math.random() * 10);
+  const limit = 10;
   const links = [];
   for (i = 0; i < limit; i += 1) {
     const text = `${prefix} ${i + 1}`;
@@ -17,8 +17,12 @@ function getLinks(prefix) {
 
 export default () => {
   const results = {};
-  config.facets.sections.forEach(({ header }) => {
-    results[header.id] = getLinks(header.data.text);
+  config.facets.sections.forEach(({ inputs }) => {
+    inputs
+      .filter((input) => input.type === 'link')
+      .forEach(({ id }) => {
+        results[id] = getLinks(id);
+      });
   });
   return results;
 };

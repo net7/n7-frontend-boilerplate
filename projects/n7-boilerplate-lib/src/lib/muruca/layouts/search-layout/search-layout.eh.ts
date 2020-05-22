@@ -99,7 +99,10 @@ export class MrSearchLayoutEH extends EventHandler {
       return resultsMock(page || 1, sort || '_score_DESC');
     });
 
-    this.searchService.setBeforeHook(LINKS_STATE_CONTEXT, 'success', () => linksMock());
+    this.searchService.setBeforeHook(LINKS_STATE_CONTEXT, 'success', (response) => {
+      console.warn('links', response);
+      return linksMock();
+    });
 
     this.searchService.getState$(RESULTS_STATE_CONTEXT, 'success')
       .subscribe((response) => {

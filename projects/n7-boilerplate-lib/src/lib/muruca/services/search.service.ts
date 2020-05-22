@@ -263,8 +263,10 @@ export class MrSearchService {
       }, links.provider || null))
     ).subscribe((response) => {
       this.setState(LINKS_STATE_CONTEXT, 'success', response);
+    });
 
-      // update links
+    // update links
+    this.getState$(LINKS_STATE_CONTEXT, 'success').subscribe((response) => {
       Object.keys(response).forEach((id) => {
         this.setState(FACET_STATE_CONTEXT, id, {
           links: response[id]
