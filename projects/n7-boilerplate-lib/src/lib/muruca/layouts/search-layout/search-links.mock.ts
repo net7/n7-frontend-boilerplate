@@ -1,5 +1,13 @@
 import config from './search-config.mock';
 
+function getHeaders() {
+  const headers = {};
+  config.facets.sections.forEach(({ header }) => {
+    headers[header.id] = Math.round(Math.random() * 100);
+  });
+  return headers;
+}
+
 function getLinks(prefix) {
   let i;
   const limit = 10;
@@ -24,5 +32,8 @@ export default () => {
         results[id] = getLinks(id);
       });
   });
-  return results;
+  return {
+    headers: getHeaders(),
+    inputs: results,
+  };
 };

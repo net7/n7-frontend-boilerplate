@@ -1,18 +1,8 @@
-import config from './search-config.mock';
-
-function getHeaders() {
-  const headers = {};
-  config.facets.sections.forEach(({ header }) => {
-    headers[header.id] = Math.round(Math.random() * 100);
-  });
-  return headers;
-}
-
-export default (page, sort) => ({
+export default (page, sort, limit) => ({
   sort,
+  page,
+  limit,
   totalCount: Math.round(Math.random() * 1000),
-  page: { current: page, limit: 10 },
-  headers: getHeaders(),
   results: [
     {
       image: 'https://i.imgur.com/52UFqca.png',

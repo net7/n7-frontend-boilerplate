@@ -95,14 +95,14 @@ export class MrSearchLayoutEH extends EventHandler {
 
     // hook (test)
     this.searchService.setBeforeHook(RESULTS_STATE_CONTEXT, 'success', () => {
-      const { page, sort } = this.searchState;
-      return resultsMock(page || 1, sort || '_score_DESC');
+      const { page, sort, limit } = this.searchState;
+      return resultsMock(page || 1, sort || '_score_DESC', limit || 10);
     });
-
     this.searchService.setBeforeHook(LINKS_STATE_CONTEXT, 'success', (response) => {
       console.warn('links', response);
       return linksMock();
     });
+    this.searchService.setBeforeHook(INPUT_STATE_CONTEXT, 'limit', (value) => +value);
 
     this.searchService.getState$(RESULTS_STATE_CONTEXT, 'success')
       .subscribe((response) => {
