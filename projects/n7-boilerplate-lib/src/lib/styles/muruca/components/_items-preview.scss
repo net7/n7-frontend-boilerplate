@@ -1,0 +1,56 @@
+/**
+ * ITEMS-PREVIEW
+ *
+ * Block containing an inner title and some itemm-previews.
+ */
+ 
+/* ------------------------------------ *\
+   #ITEMS-PREVIEW
+\* ------------------------------------ */
+.mr-items-preview {
+    padding-top: $space*3;
+    padding-bottom: $space*6;
+}
+
+.mr-items-preview {
+    /* Inner titles with horizontal displacement of title and subtitle */
+    .n7-inner-title {
+        
+        &__wrapper-texts {
+            display: flex;
+            align-items: center;
+        }
+
+        &__title {
+            margin-right: $space*2;
+            padding-right: $space*2;
+            border-right: 1px solid $color-border-normal;
+        }
+
+        &__subtitle {
+            max-width: 300px;
+            line-height: 1.35;
+        }
+    }
+}
+
+
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: $breakpoint-inner-title-medium) {
+}
+
+@media all and (max-width: $breakpoint-inner-title-small) {
+}
+
+@media all and (max-width: $breakpoint-smartphone-landscape) {
+}
+
+@media all and (min-width: $breakpoint-desktop-wide) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}

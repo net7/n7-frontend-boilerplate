@@ -92,8 +92,7 @@
   "footer": {
     "columns": [
       {
-        "classes": "col-class",
-        "title": "Arianna4View, archivio digitale online",
+        "title": "Unus non sufficit orbis",
         "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur hendrerit elit nunc, at porta ex accumsan id. Fusce quis lobortis sem, non ornare tellus.",
         "images": [
           {
@@ -144,7 +143,7 @@
         ]
       },
       {
-        "text": "Arianna4View is powered by Hyperborea.<br><a href='#' target='_blank'>www.hyperborea.com</a>"
+        "text": "Muruca is powered by Net7 Srl, Pisa.<br><a href='http://www.muruca.org/' target='_blank'>www.muruca.org</a><br><a href='http://www.netseven.it' target='_blank'>www.netseven.it</a>"
       }
     ]
   },

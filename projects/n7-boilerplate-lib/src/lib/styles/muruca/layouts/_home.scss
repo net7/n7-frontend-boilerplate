@@ -1,0 +1,37 @@
+/**
+ * HOME
+ *
+ * Specific style for the Homepage.
+ */
+
+/* ------------------------------------ *\
+    HERO
+\* ------------------------------------ */
+.mr-home {
+    .n7-hero {
+        height: $home-header-height;
+    }
+    .n7-hero__text-wrapper {
+        height: $home-header-height;
+    }
+}
+
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: 1120px) {
+}
+
+@media all and (max-width: $breakpoint-laptop) {
+}
+
+@media all and (max-width: $breakpoint-ipad-portrait) {
+}
+
+@media all and (max-width: $breakpoint-smartphone-landscape) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}
