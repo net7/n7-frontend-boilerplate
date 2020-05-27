@@ -8,7 +8,7 @@ export class AwEntitaMetadataViewerDS extends DataSource {
       changes based on context.
     */
 
-    const { context, config } = this.options;
+    const { context, config, typeOfEntity } = this.options;
     const labels = this.options.labels || {};
     const metadataToShow = (config.get('entita-layout') || {})['metadata-to-show'];
 
@@ -25,7 +25,7 @@ export class AwEntitaMetadataViewerDS extends DataSource {
       section.items
         .filter((item) => item.label)
         .forEach((item) => {
-          item.label = helpers.prettifySnakeCase(item.label, labels[item.label]);
+          item.label = helpers.prettifySnakeCase(item.label, labels[`${typeOfEntity}.${item.label}`]);
         });
     });
     return {

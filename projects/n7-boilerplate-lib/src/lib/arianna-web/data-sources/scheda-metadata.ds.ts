@@ -17,7 +17,7 @@ export class AwSchedaMetadataDS extends DataSource {
             .filter((item) => metadataToShow.indexOf(item.key) !== -1)
             .forEach((item) => {
               items.push({
-                label: helpers.prettifySnakeCase(item.key, labels[item.key]),
+                label: helpers.prettifySnakeCase(item.key, labels[`${data.document_type}.${item.key}`]),
                 value: item.value,
                 order: metadataToShow.indexOf(item.key)
               });
@@ -32,7 +32,7 @@ export class AwSchedaMetadataDS extends DataSource {
           });
         } else if (metadataToShow.indexOf(field.key) !== -1) {
           items.push({
-            label: helpers.prettifySnakeCase(field.key, labels[field.key]),
+            label: helpers.prettifySnakeCase(field.key, labels[`${data.document_type}.${field.key}`]),
             value: field.value.replace(/(\|\|\|)/g, '\n'), // replace repeat sequence ("|||") with end of line
           });
           group.push({

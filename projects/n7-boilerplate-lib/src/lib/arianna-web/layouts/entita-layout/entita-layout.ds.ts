@@ -190,6 +190,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       'aw-entita-metadata-viewer',
       this.myResponse.fields,
       {
+        typeOfEntity: this.myResponse.typeOfEntity,
         context: this.selectedTab,
         config: this.configuration,
         labels: this.configuration.get('labels'),
