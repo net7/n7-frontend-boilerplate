@@ -99,15 +99,14 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     this.one(id).update(data);
   }
 
-  getNavigation(id) {
-    /*
-      Requests data from communication provider
-     */
+  // DEPRECATED
+  /* getNavigation(id) {
+    // Requests data from communication provider
     return this.communication.request$('getEntityDetails', {
       onError: (error) => console.error(error),
       params: { entityId: id, entitiesListSize: this.bubblesSize },
     });
-  }
+  } */
 
   drawPagination = () => {
     const { href, queryParams } = this._getPaginationParams();
