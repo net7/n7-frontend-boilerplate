@@ -152,20 +152,33 @@
     "sections": [{
       "id": "hero-1",
       "type": "hero",
-      "grid": null
+      "grid": null,
+      "options": {
+        "classes":"n7-hero-1"
+      }
+
     }, {
       "id": "collection-1",
       "type": "collection",
-      "grid": 4
+      "grid": 4,
+      "options": {
+        "classes":"is-overlay"
+      }
     },
     {
       "id": "hero-2",
       "type": "hero",
-      "grid": null
+      "grid": null,
+      "options": {
+        "classes":"n7-hero-2"
+      }
     }, {
       "id": "collection-2",
       "type": "collection",
-      "grid": 4
+      "grid": 4,
+      "options": {
+        "classes":"is-vertical"
+      }
     }]
   },
   "home-pro": {

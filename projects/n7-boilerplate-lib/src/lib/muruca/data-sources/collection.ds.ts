@@ -7,6 +7,7 @@ export class MrCollectionDS extends DataSource {
     if (data === undefined) { return null; }
 
     const { header, items } = data;
+    const { classes } = this.options;
 
     return {
       header: {
@@ -25,12 +26,11 @@ export class MrCollectionDS extends DataSource {
             {
               text: header.button.text,
               payload: header.button.link,
-              classes: 'n7-btn-cta'
             }
           ]
         }
       },
-      items,
+      items: items.map((item) => ({ ...item, classes: classes || '' }))
     };
   }
 }
