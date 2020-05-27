@@ -67,9 +67,10 @@ export class MrHomeLayoutComponent extends AbstractLayout implements OnInit, OnD
 
     this.widgets = [];
     if (sections) {
-      sections.forEach(({ id, type }) => {
+      sections.forEach(({ id, type, options }) => {
         this.widgets.push({
           id,
+          options,
           dataSource: DATASOURCE_MAP[type],
           eventHandler: EVENTHANDLER_MAP[type]
         });

@@ -4,6 +4,7 @@ export class MrHeroDS extends DataSource {
   id: string;
 
   protected transform(data: any): any {
-    return data;
+    const { classes } = this.options;
+    return { ...data, classes: classes || '' };
   }
 }
