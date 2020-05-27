@@ -165,7 +165,7 @@ export class AwLinkedObjectsDS extends DataSource {
         title: itemTitle,
         anchor: {
           href: itemHref,
-          target: context === 'search' ? '_blank' : '_self'
+          target: ['gallery', 'search'].includes(context) ? '_blank' : '_self'
         },
         relation: { key: el.relationName, value: el.relation },
         metadata: infoDataItems.length || toeData ? [] : null,
