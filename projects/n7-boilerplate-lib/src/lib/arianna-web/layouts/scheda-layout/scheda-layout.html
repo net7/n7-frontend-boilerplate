@@ -83,8 +83,9 @@
             </section>
 
             <section class="aw-scheda__metadata"
-                     *ngIf="lb.dataSource.hasMetadata">
-                <div class="aw-scheda__inner-title">
+            *ngIf="lb.dataSource.hasMetadata">
+                <div class="aw-scheda__inner-title"
+                *ngIf="lb.dataSource.metadataSectionTitle"> 
                     {{lb.dataSource.metadataSectionTitle}}
                 </div>
                 <n7-metadata-viewer [data]="lb.widgets['aw-scheda-metadata'].ds.out$ | async">
