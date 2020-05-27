@@ -8,35 +8,43 @@ export class AwSchedaMetadataDS extends DataSource {
     metadataToShow = metadataToShow || {};
     metadataToShow = metadataToShow[data.document_type] || [];
 
-    const group = { group: [] };
+    const group = [];
     if (data.fields) {
       data.fields.forEach((field) => {
         const items = [];
-        if (field.fields) {
+        if (field.fields && metadataToShow.indexOf(field.label) !== -1) {
           field.fields
             .filter((item) => metadataToShow.indexOf(item.key) !== -1)
             .forEach((item) => {
               items.push({
                 label: helpers.prettifySnakeCase(item.key, labels[item.key]),
-                value: item.value
+                value: item.value,
+                order: metadataToShow.indexOf(item.key)
               });
             });
 
-          group.group.push({
+          // sort by order (by metadata-to-show)
+          items.sort((a, b) => a.order - b.order);
+          group.push({
             items,
             title: field.label,
+            order: metadataToShow.indexOf(field.label)
           });
         } else if (metadataToShow.indexOf(field.key) !== -1) {
           items.push({
             label: helpers.prettifySnakeCase(field.key, labels[field.key]),
-            value: field.value.replace(/(\|\|\|)/g, '\n') // replace repeat sequence ("|||") with end of line
+            value: field.value.replace(/(\|\|\|)/g, '\n'), // replace repeat sequence ("|||") with end of line
           });
-          group.group.push({
+          group.push({
             items,
+            order: metadataToShow.indexOf(field.key)
           });
         }
       });
     }
-    return group;
+
+    // sort by order (by metadata-to-show)
+    group.sort((a, b) => a.order - b.order);
+    return { group };
   }
 }

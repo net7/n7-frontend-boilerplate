@@ -50,7 +50,10 @@ export class AwEntitaMetadataViewerDS extends DataSource {
           }
           return false;
         })
-        .map((el) => ({ label: el.key, value: el.value }));
+        .map((el) => ({ label: el.key, value: el.value, order: metadataToShow.indexOf(el.key) }));
+
+      // sort by order (metadata-to-show configuration order)
+      extracted.sort((a, b) => a.order - b.order);
       return [{ items: extracted }];
     }
     if (!fields) { return []; } // if is empty → quit
