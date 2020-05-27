@@ -1,4 +1,5 @@
 import { DataSource } from '@n7-frontend/core';
+import { get as _get } from 'lodash';
 import helpers from '../../common/helpers';
 
 export class AwEntitaMetadataViewerDS extends DataSource {
@@ -16,7 +17,7 @@ export class AwEntitaMetadataViewerDS extends DataSource {
 
     let unpackedData = [];
     if (context === 'overview' && data) {
-      const configuredKeys = ((config.get('entita-layout') || {}).overview || {}).campi;
+      const configuredKeys = _get(config.get('entita-layout'), 'overview.campi', []);
       const filteredData = data.filter((d) => configuredKeys.includes(d.key));
       unpackedData = AwEntitaMetadataViewerDS.unpackFields(filteredData, metadataToShow);
     } else {

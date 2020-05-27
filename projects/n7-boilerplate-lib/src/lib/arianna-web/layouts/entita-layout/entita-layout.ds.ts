@@ -1,6 +1,7 @@
 import { LayoutDataSource } from '@n7-frontend/core/dist/layout-data-source';
 import { Observable, of } from 'rxjs';
 import { filter } from 'rxjs/operators';
+import { get as _get } from 'lodash';
 
 export class AwEntitaLayoutDS extends LayoutDataSource {
   protected configuration: any;
@@ -226,7 +227,11 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     const config = this.configuration.get('config-keys')[res.typeOfEntity];
     // console.log('(entita) Apollo responded with: ', { res })
     this.myResponse = res;
-    if ((res.fields || []).filter((field) => ((this.configuration.get('entita-layout') || {}).overview || {}).campi.includes(field.key)).length > 0) {
+    const allowedOverviewMetadata = _get(this.configuration.get('entita-layout'), 'overview.campi', []);
+    if (
+      (res.fields || [])
+        .filter((field) => allowedOverviewMetadata.includes(field.key)).length > 0
+    ) {
       // look at the response array, filtered by configuration values.
       // if the filtered response has some values, show the fields section.
       this.showFields = true;
