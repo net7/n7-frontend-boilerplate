@@ -121,18 +121,28 @@ export class AwEntitaLayoutEH extends EventHandler {
           return;
         }
         // get item from response with id === id and return as promise
-        this.dataSource.loadItem(params.get('id'), params.get('slug'), params.get('tab')).subscribe((res) => {
-          if (res) {
-            this.dataSource.loadContent(res);
-            // remove the entity of this page
-            const entities = res.relatedEntities.filter((entity) => entity.id !== params.get('id'));
-            this.dataSource.updateWidgets(res);
-            if (selectedItem) {
-              this.emitOuter('selectItem', selectedItem);
+        this.dataSource.loadItem(params.get('id'), params.get('slug'), params.get('tab'))
+          .pipe(
+            // filter empty metadata values
+            map((res: any) => {
+              if (res.fields) {
+                res.fields = res.fields.filter(({ value }) => !helpers.metadataIsEmpty(value));
+              }
+              return res;
+            })
+          )
+          .subscribe((res) => {
+            if (res) {
+              this.dataSource.loadContent(res);
+              // remove the entity of this page
+              const entities = res.relatedEntities.filter((entity) => entity.id !== params.get('id'));
+              this.dataSource.updateWidgets(res);
+              if (selectedItem) {
+                this.emitOuter('selectItem', selectedItem);
+              }
+              this.emitOuter('filterbubbleresponse', entities);
             }
-            this.emitOuter('filterbubbleresponse', entities);
-          }
-        });
+          });
       } else {
         this.dataSource.loadItem();
       }
