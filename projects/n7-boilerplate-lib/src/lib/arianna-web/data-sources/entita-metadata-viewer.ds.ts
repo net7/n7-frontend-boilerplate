@@ -2,6 +2,8 @@ import { DataSource } from '@n7-frontend/core';
 import helpers from '../../common/helpers';
 
 export class AwEntitaMetadataViewerDS extends DataSource {
+  public hasGroups = false;
+
   protected transform(data) {
     /*
       Access and use this.options if the rendering
@@ -28,6 +30,9 @@ export class AwEntitaMetadataViewerDS extends DataSource {
           item.label = helpers.prettifySnakeCase(item.label, labels[`${typeOfEntity}.${item.label}`]);
         });
     });
+
+    this.hasGroups = Array.isArray(unpackedData) && !!unpackedData.length;
+
     return {
       group: unpackedData,
     };
@@ -54,7 +59,10 @@ export class AwEntitaMetadataViewerDS extends DataSource {
 
       // sort by order (metadata-to-show configuration order)
       extracted.sort((a, b) => a.order - b.order);
-      return [{ items: extracted }];
+      if (extracted.length) {
+        return [{ items: extracted }];
+      }
+      return [];
     }
     if (!fields) { return []; } // if is empty → quit
     for (let i = 0; i < fields.length; i += 1) {

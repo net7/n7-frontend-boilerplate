@@ -74,7 +74,8 @@
 
             <ng-container 
                 *ngIf="(
-                    lb.widgets['aw-entita-nav'].ds.hasFields &&
+                    lb.widgets['aw-entita-nav'].ds.hasFields && 
+                    lb.widgets['aw-entita-metadata-viewer'].ds.hasGroups &&
                     ['overview', 'campi'].indexOf(lb.dataSource.selectedTab) !== -1
                 )">
                 <div class="aw-entity__content-section aw-entity__content-section-overview">
