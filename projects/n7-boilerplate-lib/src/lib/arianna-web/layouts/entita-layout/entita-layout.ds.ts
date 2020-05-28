@@ -1,6 +1,7 @@
 import { LayoutDataSource } from '@n7-frontend/core/dist/layout-data-source';
 import { Observable, of } from 'rxjs';
 import { filter } from 'rxjs/operators';
+import { get as _get } from 'lodash';
 
 export class AwEntitaLayoutDS extends LayoutDataSource {
   protected configuration: any;
@@ -99,15 +100,14 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     this.one(id).update(data);
   }
 
-  getNavigation(id) {
-    /*
-      Requests data from communication provider
-     */
+  // DEPRECATED
+  /* getNavigation(id) {
+    // Requests data from communication provider
     return this.communication.request$('getEntityDetails', {
       onError: (error) => console.error(error),
       params: { entityId: id, entitiesListSize: this.bubblesSize },
     });
-  }
+  } */
 
   drawPagination = () => {
     const { href, queryParams } = this._getPaginationParams();
@@ -190,6 +190,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       'aw-entita-metadata-viewer',
       this.myResponse.fields,
       {
+        typeOfEntity: this.myResponse.typeOfEntity,
         context: this.selectedTab,
         config: this.configuration,
         labels: this.configuration.get('labels'),
@@ -226,7 +227,11 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     const config = this.configuration.get('config-keys')[res.typeOfEntity];
     // console.log('(entita) Apollo responded with: ', { res })
     this.myResponse = res;
-    if ((res.fields || []).filter((field) => ((this.configuration.get('entita-layout') || {}).overview || {}).campi.includes(field.key)).length > 0) {
+    const allowedOverviewMetadata = _get(this.configuration.get('entita-layout'), 'overview.campi', []);
+    if (
+      (res.fields || [])
+        .filter((field) => allowedOverviewMetadata.includes(field.key)).length > 0
+    ) {
       // look at the response array, filtered by configuration values.
       // if the filtered response has some values, show the fields section.
       this.showFields = true;

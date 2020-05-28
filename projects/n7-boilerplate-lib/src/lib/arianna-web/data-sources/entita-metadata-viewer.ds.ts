@@ -1,20 +1,23 @@
 import { DataSource } from '@n7-frontend/core';
+import { get as _get } from 'lodash';
 import helpers from '../../common/helpers';
 
 export class AwEntitaMetadataViewerDS extends DataSource {
+  public hasGroups = false;
+
   protected transform(data) {
     /*
       Access and use this.options if the rendering
       changes based on context.
     */
 
-    const { context, config } = this.options;
+    const { context, config, typeOfEntity } = this.options;
     const labels = this.options.labels || {};
     const metadataToShow = (config.get('entita-layout') || {})['metadata-to-show'];
 
     let unpackedData = [];
     if (context === 'overview' && data) {
-      const configuredKeys = ((config.get('entita-layout') || {}).overview || {}).campi;
+      const configuredKeys = _get(config.get('entita-layout'), 'overview.campi', []);
       const filteredData = data.filter((d) => configuredKeys.includes(d.key));
       unpackedData = AwEntitaMetadataViewerDS.unpackFields(filteredData, metadataToShow);
     } else {
@@ -25,9 +28,12 @@ export class AwEntitaMetadataViewerDS extends DataSource {
       section.items
         .filter((item) => item.label)
         .forEach((item) => {
-          item.label = helpers.prettifySnakeCase(item.label, labels[item.label]);
+          item.label = helpers.prettifySnakeCase(item.label, labels[`${typeOfEntity}.${item.label}`]);
         });
     });
+
+    this.hasGroups = Array.isArray(unpackedData) && !!unpackedData.length;
+
     return {
       group: unpackedData,
     };
@@ -50,8 +56,14 @@ export class AwEntitaMetadataViewerDS extends DataSource {
           }
           return false;
         })
-        .map((el) => ({ label: el.key, value: el.value }));
-      return [{ items: extracted }];
+        .map((el) => ({ label: el.key, value: el.value, order: metadataToShow.indexOf(el.key) }));
+
+      // sort by order (metadata-to-show configuration order)
+      extracted.sort((a, b) => a.order - b.order);
+      if (extracted.length) {
+        return [{ items: extracted }];
+      }
+      return [];
     }
     if (!fields) { return []; } // if is empty → quit
     for (let i = 0; i < fields.length; i += 1) {

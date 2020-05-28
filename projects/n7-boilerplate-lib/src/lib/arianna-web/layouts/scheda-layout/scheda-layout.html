@@ -71,27 +71,30 @@
             <n7-inner-title [data]="lb.widgets['aw-scheda-inner-title'].ds.out$ | async">
             </n7-inner-title>
 
-            <n7-image-viewer [hidden]="!lb.dataSource.hasImage"
-                             [data]="lb.widgets['aw-scheda-image'].ds.out$ | async">
-            </n7-image-viewer>
+            <section class="aw-scheda__section aw-scheda__image-viewer"
+                     [hidden]="!lb.dataSource.hasImage">
+                <n7-image-viewer [data]="lb.widgets['aw-scheda-image'].ds.out$ | async">
+                </n7-image-viewer>
+            </section>
 
-            <section class="aw-scheda__description"
+            <section class="aw-scheda__section aw-scheda__description"
                      *ngIf="lb.dataSource.contentParts.content">
                 <div *ngFor="let part of lb.dataSource.contentParts">
                     <div [innerHTML]="part.content"></div>
                 </div>
             </section>
 
-            <section class="aw-scheda__metadata"
-                     *ngIf="lb.dataSource.hasMetadata">
-                <div class="aw-scheda__inner-title">
+            <section class="aw-scheda__section aw-scheda__metadata"
+            *ngIf="lb.dataSource.hasMetadata">
+                <div class="aw-scheda__inner-title"
+                *ngIf="lb.dataSource.metadataSectionTitle"> 
                     {{lb.dataSource.metadataSectionTitle}}
                 </div>
                 <n7-metadata-viewer [data]="lb.widgets['aw-scheda-metadata'].ds.out$ | async">
                 </n7-metadata-viewer>
             </section>
 
-            <section class="aw-scheda__bubble-chart"
+            <section class="aw-scheda__section aw-scheda__bubble-chart"
                      *ngIf="lb.dataSource.bubblesEnabled && lb.dataSource.hasBubbles">
                 <div *ngIf="lb.dataSource.hasBubbles"
                      class="aw-scheda__inner-title">
@@ -109,7 +112,7 @@
 
             <section *ngIf="lb.dataSource.hasSimilarItems && lb.dataSource.hasBubbles"
                      id="related-item-container"
-                     class="aw-scheda__related">
+                     class="aw-scheda__section aw-scheda__related">
                 <div class="aw-scheda__inner-title">
                     {{lb.dataSource.similarItemsSectionTitle}}
                 </div>

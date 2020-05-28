@@ -76,7 +76,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     this.sidebarCollapsed = false;
     this.bubbleChartSectionTitle = this.configuration.get('scheda-layout')['bubble-chart'].title;
     this.similarItemsSectionTitle = this.configuration.get('scheda-layout')['related-items'].title;
-    this.metadataSectionTitle = this.configuration.get('scheda-layout').metadata.title;
+    this.metadataSectionTitle = this.getMetadataSectionTitle();
     this.hasSimilarItems = false;
     this.bubblesEnabled = this.configuration.get('features-enabled') ? this.configuration.get('features-enabled').bubblechart : false;
     this.one('aw-bubble-chart').updateOptions({
@@ -101,6 +101,12 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
   onDestroy() {
     this.destroyed$.next();
+  }
+
+  getMetadataSectionTitle() {
+    const layoutConfig = this.configuration.get('scheda-layout');
+    const metadataConfig = layoutConfig.metadata || {};
+    return metadataConfig.title || null;
   }
 
   getNavigation(id) {

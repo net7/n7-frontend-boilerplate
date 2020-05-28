@@ -37,5 +37,10 @@ export default {
   unescapeDoubleQuotes(str) {
     return (str && str !== '') ? str.replace(/\\*(")/g, '$1') : str; // thanks @slevithan!
   },
-
+  metadataIsEmpty(value) {
+    return (
+      !value
+      || value === 'null'
+    );
+  }
 };

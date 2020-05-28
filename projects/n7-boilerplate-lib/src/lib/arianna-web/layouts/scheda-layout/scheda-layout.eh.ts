@@ -1,5 +1,6 @@
 import { EventHandler } from '@n7-frontend/core';
 import { Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
 import helpers from '../../../common/helpers';
 
 export class AwSchedaLayoutEH extends EventHandler {
@@ -70,22 +71,44 @@ export class AwSchedaLayoutEH extends EventHandler {
           this.emitOuter('routechanged', paramId);
         }
         this.dataSource.contentIsLoading = true;
-        this.dataSource.loadItem(paramId).subscribe((response) => {
-          this.dataSource.contentIsLoading = false;
-          if (response) {
-            this.dataSource.loadContent(response);
-            if (Array.isArray(response.relatedEntities) && response.relatedEntities.length) {
-              if (this.dataSource.bubblesEnabled) {
-                response.relatedEntities.forEach((el) => {
-                  el.entity.relationName = response.label.length > 30
-                    ? `${response.label.substr(0, 30)}... `
-                    : response.label;
+        this.dataSource.loadItem(paramId)
+          .pipe(
+            // filter empty metadata values
+            map((response: any) => {
+              if (response.fields) {
+                const filteredFields = [];
+                response.fields.forEach((item) => {
+                  if (item.fields) {
+                    filteredFields.push({
+                      ...item,
+                      fields: item.fields
+                        .filter(({ value: subValue }) => !helpers.metadataIsEmpty(subValue))
+                    });
+                  } else if (!helpers.metadataIsEmpty(item.value)) {
+                    filteredFields.push(item);
+                  }
                 });
-                this.emitOuter('filterbubbleresponse', response.relatedEntities);
+                response.fields = filteredFields;
+              }
+              return response;
+            })
+          )
+          .subscribe((response) => {
+            this.dataSource.contentIsLoading = false;
+            if (response) {
+              this.dataSource.loadContent(response);
+              if (Array.isArray(response.relatedEntities) && response.relatedEntities.length) {
+                if (this.dataSource.bubblesEnabled) {
+                  response.relatedEntities.forEach((el) => {
+                    el.entity.relationName = response.label.length > 30
+                      ? `${response.label.substr(0, 30)}... `
+                      : response.label;
+                  });
+                  this.emitOuter('filterbubbleresponse', response.relatedEntities);
+                }
               }
             }
-          }
-        });
+          });
       }
     });
   }
