@@ -164,6 +164,9 @@
     /* Inner title */
     /* Main title that describes the scheda content */
     .n7-inner-title {
+        margin-bottom: $aw-scheda-content-padding;
+        border-bottom: 2px solid $color-border-normal;
+
         &__title {
             font-weight: $scheda-title-font-weight;
         }
@@ -171,10 +174,27 @@
 
     /* Minor inner titles that descibe the various sections */
     .aw-scheda__inner-title {
-        padding: $aw-scheda-content-padding;
-        border-top: 2px solid $color-border-normal;
+        padding: 0 $aw-scheda-content-padding $aw-scheda-content-padding $aw-scheda-content-padding;
+        // border-top: 2px solid $color-border-normal;
         font-size: $font-size-xxl;
         font-weight: $font-weight-normal;
+    }
+
+    /* Sections */
+    /* Sections that contains ImageViewer, Text, metadata, Buubble chart, Similar objects */
+    .aw-scheda__section {
+        margin-bottom: $aw-scheda-content-padding;
+        border-bottom: 2px solid $color-border-normal;
+
+        &:last-child {
+            margin-bottom: 0;
+            border-bottom: 0;
+        }
+    }
+
+    /* Image viewer */
+    .aw-scheda__image-viewer {
+        margin-top: - $aw-scheda-content-padding;
     }
 
     /* Description text */
