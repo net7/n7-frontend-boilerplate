@@ -64,6 +64,10 @@
         background-color: $color-background-base;
     }
 
+    .aw-scheda__tree-content {
+        min-height: $aw-scheda-minimum-height;
+    }
+
     .n7-sidebar-header__icon-right {
         cursor: pointer;
     }
@@ -114,6 +118,7 @@
     SCHEDA-DETAILS
 \* ------------------------------------ */
 .aw-scheda__scheda-wrapper {
+    min-height: $aw-scheda-minimum-height;
     background-color: $color-background-base;
 
     /* Intro text */
