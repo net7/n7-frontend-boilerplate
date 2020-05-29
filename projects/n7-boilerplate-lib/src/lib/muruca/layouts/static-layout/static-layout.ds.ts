@@ -10,9 +10,8 @@ export class MrStaticLayoutDS extends LayoutDataSource {
     this.communication = payload.communication;
   }
 
-  pageRequest$(): Observable<any> {
-    const getPageNum = window.location.href.match(/([^/]*)\/*$/)[1];
-    return this.communication.request$('page', { urlParams: getPageNum }, 'rest-local');
+  pageRequest$(slug: string): Observable<any> {
+    return this.communication.request$('page', { urlParams: slug });
   }
 
   renderHTML(title, body) {
