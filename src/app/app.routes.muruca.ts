@@ -23,7 +23,7 @@ export const APP_ROUTES: Routes = [
   { path: 'opere', component: MrSearchLayoutComponent, data: { configId: 'search-works' } },
   { path: 'glossary', component: MrGlossaryLayoutComponent },
   { path: 'toponimia', component: MrGlossaryLayoutComponent },
-  { path: 'static/:page', component: MrStaticLayoutComponent },
+  { path: 'static/:slug', component: MrStaticLayoutComponent },
   { path: 'progetto', component: MrStaticLayoutComponent },
   { path: '**', component: Page404LayoutComponent }
 ];
