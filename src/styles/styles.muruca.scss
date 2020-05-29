@@ -50,7 +50,10 @@
 // ------------------------------------ //
 // #MR COMPONENTS
 // ------------------------------------ //
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/muruca/components/footer";
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/muruca/components/header";
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/muruca/components/inner-title";
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/muruca/components/items-preview";
 
 
 // ------------------------------------ //
@@ -62,9 +65,9 @@
 // ------------------------------------ //
 // #MR LAYOUTS
 // ------------------------------------ //
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/muruca/layouts/home";
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/muruca/layouts/layout";
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/muruca/layouts/search-layout";
-
 
 // ------------------------------------ //
 // #COMMON UTILITIES

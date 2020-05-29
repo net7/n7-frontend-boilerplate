@@ -1,0 +1,71 @@
+/**
+ * FOOTER
+ *
+ * General footer structure, (hopefully) suitable for all needs.
+ */
+
+/* ------------------------------------ *\
+   #FOOTER
+\* ------------------------------------ */
+.n7-footer {
+    &__content {
+        padding: $space*6 0;
+    }
+
+    a {
+        color: $color-text-inverse;
+        text-decoration: none;
+        border-bottom: 1px solid rgba($color-border-light,.1);
+        transition: all $transition-durations;
+
+        &:hover {
+            border-bottom: 1px solid rgba($color-border-light,.9);
+        }
+    }
+
+    &__column {
+        &-nav {
+            &-item {
+                margin-bottom: $space;
+            }
+        }
+
+        &-title {
+            margin-bottom: $space*2;
+            font-size: $font-size-s;
+            font-family: $font-family-headings;
+        }
+
+        &-title,
+        &-text {
+            color: $color-text-inverse;
+        }
+
+        &-images {
+            a {
+                margin-right: $space;
+                border-bottom: 0;
+
+                &:hover {
+                    border-bottom: 0;
+                }
+            }
+        }
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: $footer-breakpoint-desktop) {
+}
+
+@media all and (max-width: $breakpoint-ipad-portrait) {
+}
+
+@media all and (max-width: $footer-breakpoint-mobile) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}

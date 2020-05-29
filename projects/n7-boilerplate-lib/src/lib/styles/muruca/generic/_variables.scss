@@ -271,3 +271,18 @@ $gradient-item-preview-list: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, 
 $data-widget-wrapper-height: 265px;
 $data-widget-wrapper-header-height: 44px;
 $data-widget-wrapper-width: auto;
+
+
+// ------------------------------------ //
+// #HOME
+// ------------------------------------ //
+$home-header-height: 420px;
+
+
+// ------------------------------------ //
+// #FOOTER
+// ------------------------------------ //
+$footer-image-height: 60px;
+$footer-background-color: $color-gray-05;
+$footer-breakpoint-desktop: $page-max-width + $grid-gutter-h;
+$footer-breakpoint-mobile: 700px;
