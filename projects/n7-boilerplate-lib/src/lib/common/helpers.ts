@@ -2,6 +2,10 @@
 import slugify from 'slugify';
 
 const domParser = new DOMParser();
+// slugify custom replacements
+slugify.extend({
+  '/': '-'
+});
 
 export default {
   prettifySnakeCase(key: string, label?: string) {
