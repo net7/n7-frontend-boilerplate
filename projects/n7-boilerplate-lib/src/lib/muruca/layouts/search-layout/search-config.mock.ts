@@ -9,11 +9,11 @@ const facets = {
       }
     },
     inputs: [{
-      id: 'input-00',
+      id: 'query',
       type: 'text',
       queryParam: true,
       data: {
-        id: 'input-text-00',
+        id: 'query',
         placeholder: 'Cerca nei titoli',
         icon: 'n7-icon-search',
         inputPayload: 'search-input',
@@ -30,7 +30,7 @@ const facets = {
       }
     },
     inputs: [{
-      id: 'input-01',
+      id: 'input-toponimi-filter',
       type: 'text',
       data: {
         id: 'input-text-01',
@@ -41,7 +41,7 @@ const facets = {
         iconPayload: 'search-icon',
       }
     }, {
-      id: 'input-02',
+      id: 'input-toponimi',
       type: 'link',
       queryParam: true,
       data: {
@@ -57,7 +57,7 @@ const facets = {
       }
     },
     inputs: [{
-      id: 'input-03',
+      id: 'input-glossario-filter',
       type: 'text',
       data: {
         id: 'input-text-02',
@@ -68,7 +68,7 @@ const facets = {
         iconPayload: 'search-icon',
       }
     }, {
-      id: 'input-04',
+      id: 'input-glossario',
       type: 'link',
       queryParam: true,
       data: {
@@ -84,7 +84,7 @@ const facets = {
       }
     },
     inputs: [{
-      id: 'input-05',
+      id: 'input-continenti',
       type: 'link',
       queryParam: true,
       data: {
@@ -101,7 +101,7 @@ const facets = {
       }
     },
     inputs: [{
-      id: 'input-06',
+      id: 'input-keywords',
       type: 'link',
       queryParam: true,
       data: {
@@ -118,7 +118,7 @@ const facets = {
       }
     },
     inputs: [{
-      id: 'input-07',
+      id: 'input-data',
       type: 'link',
       queryParam: true,
       data: {
@@ -135,7 +135,7 @@ const facets = {
       }
     },
     inputs: [{
-      id: 'input-08',
+      id: 'input-luogo',
       type: 'link',
       queryParam: true,
       data: {

@@ -18,8 +18,8 @@
             "home": "get_home",
             "nav": "data/api/pages",
             "page": "data/api/page_",
-            "search": "get_home",
-            "links": "get_home"
+            "search": "search/results",
+            "links": "search/links"
         }
       }
     }

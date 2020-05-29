@@ -5,11 +5,8 @@ import { MrSearchLayoutDS } from './search-layout.ds';
 import {
   MrSearchService,
   RESULTS_STATE_CONTEXT,
-  INPUT_STATE_CONTEXT,
-  LINKS_STATE_CONTEXT
+  INPUT_STATE_CONTEXT
 } from '../../services/search.service';
-import resultsMock from './search-results.mock';
-import linksMock from './search-links.mock';
 
 export class MrSearchLayoutEH extends EventHandler {
   public dataSource: MrSearchLayoutDS;
@@ -93,16 +90,19 @@ export class MrSearchLayoutEH extends EventHandler {
       this.dataSource.setSectionState('results', 'LOADING');
     });
 
-    // hook (test)
-    this.searchService.setBeforeHook(RESULTS_STATE_CONTEXT, 'success', () => {
-      const { page, sort } = this.searchState;
-      return resultsMock(page || 1, sort || '_score_DESC');
+    // default params hook
+    this.searchService.setBeforeHook(RESULTS_STATE_CONTEXT, 'loading', (params = {}) => {
+      const defaultParams = {
+        page: 1,
+        sort: '_score_DESC',
+        limit: 10
+      };
+      Object.keys(defaultParams).forEach((key) => {
+        params[key] = params[key] || defaultParams[key];
+      });
+      return params;
     });
-
-    this.searchService.setBeforeHook(LINKS_STATE_CONTEXT, 'success', (response) => {
-      console.warn('links', response);
-      return linksMock();
-    });
+    this.searchService.setBeforeHook(INPUT_STATE_CONTEXT, 'limit', (value) => +value);
 
     this.searchService.getState$(RESULTS_STATE_CONTEXT, 'success')
       .subscribe((response) => {

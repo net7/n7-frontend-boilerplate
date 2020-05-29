@@ -272,10 +272,10 @@ export class MrSearchService {
     });
 
     // update links
-    this.getState$(LINKS_STATE_CONTEXT, 'success').subscribe((response) => {
-      Object.keys(response).forEach((id) => {
+    this.getState$(LINKS_STATE_CONTEXT, 'success').subscribe(({ inputs }) => {
+      Object.keys(inputs).forEach((id) => {
         this.setState(FACET_STATE_CONTEXT, id, {
-          links: response[id]
+          links: inputs[id]
         });
       });
     });

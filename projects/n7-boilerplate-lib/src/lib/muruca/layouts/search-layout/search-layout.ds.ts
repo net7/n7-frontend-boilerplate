@@ -54,16 +54,16 @@ export class MrSearchLayoutDS extends LayoutDataSource {
   }
 
   private getPaginationParams(response) {
-    const { totalCount, page } = response;
+    const { totalCount, page, limit } = response;
     const { pagination: paginationConfig } = this.pageConfig;
 
     return {
-      totalPages: Math.ceil(totalCount / page.limit),
-      currentPage: page.current,
+      totalPages: Math.ceil(totalCount / limit),
+      currentPage: page,
       pageLimit: paginationConfig.limit,
       sizes: {
         list: paginationConfig.options,
-        active: page.limit,
+        active: limit,
       },
     };
   }
