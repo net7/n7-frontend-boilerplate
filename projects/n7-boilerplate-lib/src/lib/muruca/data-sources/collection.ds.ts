@@ -9,6 +9,13 @@ export class MrCollectionDS extends DataSource {
     const { header, items } = data;
     const { classes } = this.options;
 
+    if (header.button) {
+      header.button = [{
+        text: header.button.text,
+        payload: header.button.anchor
+      }];
+    }
+
     return {
       header: {
         title: {
@@ -22,12 +29,7 @@ export class MrCollectionDS extends DataSource {
           }
         },
         actions: {
-          buttons: [
-            {
-              text: header.button.text,
-              payload: header.button.link,
-            }
-          ]
+          buttons: header.button
         }
       },
       items: items.map((item) => ({ ...item, classes: classes || '' }))
