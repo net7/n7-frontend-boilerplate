@@ -17,9 +17,9 @@ export const APP_ROUTES: Routes = [
     redirectTo: '/home-base',
     pathMatch: 'full'
   },
-  { path: 'home-base', component: MrHomeLayoutComponent, data: { configId: 'home-base' } },
+  { path: 'home', component: MrHomeLayoutComponent, data: { configId: 'home-base' } },
   { path: 'home-pro', component: MrHomeLayoutComponent, data: { configId: 'home-pro' } },
-  { path: 'mappe', component: MrSearchLayoutComponent, data: { configId: 'search-works' } },
+  { path: 'search', component: MrSearchLayoutComponent, data: { configId: 'search-works' } },
   { path: 'opere', component: MrSearchLayoutComponent, data: { configId: 'search-works' } },
   { path: 'glossary', component: MrGlossaryLayoutComponent },
   { path: 'toponimia', component: MrGlossaryLayoutComponent },

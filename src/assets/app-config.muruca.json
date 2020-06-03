@@ -16,7 +16,7 @@
         "baseUrl": "http://unus-sls.netseven.it/",
         "config": {
             "home": "get_home",
-            "nav": "data/api/pages",
+            "menu": "get_menu",
             "page": "data/api/page_",
             "search": "get_home",
             "links": "get_home"
@@ -32,53 +32,7 @@
       }
     },
     "nav": {
-      "items": [
-        {
-          "text": "Home (base)",
-          "anchor": {
-            "href": "mr/home-base"
-          },
-          "_meta": {
-            "id": "home-base"
-          }
-        },
-        {
-          "text": "Home (pro)",
-          "anchor": {
-            "href": "mr/home-pro"
-          },
-          "_meta": {
-            "id": "home-pro"
-          }
-        },
-        {
-          "text": "Opere",
-          "anchor": {
-            "href": "mr/opere"
-          },
-          "_meta": {
-            "id": "opere"
-          }
-        },
-        {
-          "text": "Mappe",
-          "anchor": {
-            "href": "mr/mappe"
-          },
-          "_meta": {
-            "id": "mappe"
-          }
-        },
-        {
-          "text": "Contatti",
-          "anchor": {
-            "href": "aw/ricerca"
-          },
-          "_meta": {
-            "id": "ricerca"
-          }
-        }
-      ]
+      "items": []
     },
     "menuToggle": {
       "open": {

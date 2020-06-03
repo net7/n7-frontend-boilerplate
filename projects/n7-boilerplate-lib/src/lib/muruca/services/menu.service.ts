@@ -4,43 +4,6 @@ import { tap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { ConfigurationService } from '../../common/services/configuration.service';
 
-// FIXME: togliere
-const fakeResponse = [
-  {
-    label: 'Home (base)',
-    slug: 'home-base',
-    isStatic: true
-  },
-  {
-    label: 'Home (pro)',
-    slug: 'home-pro',
-    isStatic: true
-  },
-  {
-    label: 'Chi siamo',
-    slug: 'chi-siamo',
-  },
-  {
-    label: 'Sample Page',
-    slug: 'sample-page',
-  },
-  {
-    label: 'Opere',
-    slug: 'opere',
-    isStatic: true
-  },
-  {
-    label: 'Glossario',
-    slug: 'glossario',
-    isStatic: true
-  },
-  {
-    label: 'Toponimia',
-    slug: 'toponimia',
-    isStatic: true
-  }
-];
-
 @Injectable({
   providedIn: 'root',
 })
@@ -52,9 +15,7 @@ export class MrMenuService {
 
   load(path, rootPath): Promise<any> {
     return this.http.get(path).pipe(
-      // FIXME: togliere
-      catchError(() => of(fakeResponse)),
-      // catchError(() => of(null)),
+      catchError(() => of(null)),
       tap((response) => this._handleResponse(response, rootPath)),
     ).toPromise();
   }
