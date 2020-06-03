@@ -14,7 +14,7 @@ import {
 export const APP_ROUTES: Routes = [
   {
     path: '',
-    redirectTo: '/home-base',
+    redirectTo: '/home',
     pathMatch: 'full'
   },
   { path: 'home', component: MrHomeLayoutComponent, data: { configId: 'home-base' } },
