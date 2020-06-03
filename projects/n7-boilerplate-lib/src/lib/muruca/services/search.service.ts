@@ -20,6 +20,8 @@ export const LINKS_STATE_CONTEXT = 'links';
 
 @Injectable()
 export class MrSearchService {
+  private searchId: string | number;
+
   private config;
 
   private queryParamKeys: string[] = [];
@@ -42,11 +44,12 @@ export class MrSearchService {
     private communication: CommunicationService,
   ) { }
 
-  public init(config) {
-    // clear control
-    this.clear();
-
+  public init(searchId, config) {
+    this.searchId = searchId;
     this.config = config;
+
+    // first clear
+    this.clear();
 
     // initial states
     this.initInputState();
@@ -220,7 +223,7 @@ export class MrSearchService {
       }),
       debounceTime(results.delay || 1),
       switchMap((state) => this.communication.request$(results.id, {
-        params: state,
+        params: { ...state, searchId: this.searchId },
         method: 'POST',
         onError: (error) => {
           this.setState(RESULTS_STATE_CONTEXT, 'error', error);
@@ -270,7 +273,7 @@ export class MrSearchService {
       }),
       debounceTime(links.delay || 1),
       switchMap((state) => this.communication.request$(links.id, {
-        params: state,
+        params: { ...state, searchId: this.searchId },
         method: 'POST',
         onError: (error) => {
           this.setState(LINKS_STATE_CONTEXT, 'error', error);
