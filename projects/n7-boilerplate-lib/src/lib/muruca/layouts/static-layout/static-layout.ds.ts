@@ -11,7 +11,7 @@ export class MrStaticLayoutDS extends LayoutDataSource {
   }
 
   pageRequest$(slug: string): Observable<any> {
-    return this.communication.request$('page', { urlParams: slug });
+    return this.communication.request$('wp-page', { urlParams: slug });
   }
 
   renderHTML(title, body) {

@@ -17,7 +17,7 @@
         "config": {
             "home": "get_home",
             "menu": "get_menu",
-            "page": "data/api/page_",
+            "wp-page": "data/api/",
             "search": "search/results",
             "links": "search/links"
         }
