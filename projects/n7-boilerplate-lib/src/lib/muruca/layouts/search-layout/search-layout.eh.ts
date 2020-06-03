@@ -5,7 +5,8 @@ import { MrSearchLayoutDS } from './search-layout.ds';
 import {
   MrSearchService,
   RESULTS_STATE_CONTEXT,
-  INPUT_STATE_CONTEXT
+  INPUT_STATE_CONTEXT,
+  LINKS_STATE_CONTEXT
 } from '../../services/search.service';
 
 export class MrSearchLayoutEH extends EventHandler {
@@ -18,6 +19,8 @@ export class MrSearchLayoutEH extends EventHandler {
   private searchState: {
     [key: string]: any;
   } = {};
+
+  private linksResponse: any;
 
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
@@ -74,16 +77,13 @@ export class MrSearchLayoutEH extends EventHandler {
   }
 
   initStateListener() {
-    // request listener
-    this.searchService.getState$(RESULTS_STATE_CONTEXT)
-      .subscribe(({ lastUpdated, state }) => {
-        console.warn('request', lastUpdated, state);
-      });
     // inputs listener
-    this.searchService.getState$(INPUT_STATE_CONTEXT).subscribe(({ lastUpdated, state }) => {
+    this.searchService.getState$(INPUT_STATE_CONTEXT).subscribe(({ state }) => {
       this.searchState = state;
-      this.dataSource.updateActiveFilters(state);
-      console.warn('input', lastUpdated, state);
+    });
+    this.searchService.getState$(LINKS_STATE_CONTEXT, 'success').subscribe((response) => {
+      this.linksResponse = response;
+      this.dataSource.updateActiveFilters(this.searchState, this.linksResponse);
     });
 
     this.searchService.getState$(RESULTS_STATE_CONTEXT, 'loading').subscribe(() => {

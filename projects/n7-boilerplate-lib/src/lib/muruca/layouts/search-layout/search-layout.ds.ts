@@ -45,10 +45,11 @@ export class MrSearchLayoutDS extends LayoutDataSource {
     this.one('n7-smart-pagination').update(this.getPaginationParams(response));
   }
 
-  updateActiveFilters(state) {
+  updateActiveFilters(state, linksResponse) {
     // active "tags" filters
     this.one('mr-search-tags').update({
       state,
+      linksResponse,
       facetsConfig: this.searchService.getConfig().facets
     });
   }
