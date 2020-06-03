@@ -196,7 +196,7 @@ export class MrSearchService {
     this.addStateContext(RESULTS_STATE_CONTEXT);
 
     // default states
-    ['loading', 'success', 'error'].forEach((id) => {
+    ['loading', 'request', 'success', 'error'].forEach((id) => {
       this.addState(RESULTS_STATE_CONTEXT, id);
     });
 
@@ -222,6 +222,10 @@ export class MrSearchService {
         return params;
       }),
       debounceTime(results.delay || 1),
+      map((params) => {
+        this.setState(RESULTS_STATE_CONTEXT, 'request', params);
+        return params;
+      }),
       switchMap((state) => this.communication.request$(results.id, {
         params: { ...state, searchId: this.searchId },
         method: 'POST',
@@ -262,7 +266,7 @@ export class MrSearchService {
     this.addStateContext(LINKS_STATE_CONTEXT);
 
     // default states
-    ['loading', 'success', 'error'].forEach((id) => {
+    ['loading', 'request', 'success', 'error'].forEach((id) => {
       this.addState(LINKS_STATE_CONTEXT, id);
     });
 
@@ -272,6 +276,10 @@ export class MrSearchService {
         return params;
       }),
       debounceTime(links.delay || 1),
+      map((params) => {
+        this.setState(LINKS_STATE_CONTEXT, 'request', params);
+        return params;
+      }),
       switchMap((state) => this.communication.request$(links.id, {
         params: { ...state, searchId: this.searchId },
         method: 'POST',
