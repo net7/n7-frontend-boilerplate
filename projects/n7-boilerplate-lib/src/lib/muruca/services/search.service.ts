@@ -43,6 +43,9 @@ export class MrSearchService {
   ) { }
 
   public init(config) {
+    // clear control
+    this.clear();
+
     this.config = config;
 
     // initial states
@@ -125,6 +128,12 @@ export class MrSearchService {
     Object.keys(this.contextState[INPUT_STATE_CONTEXT]).forEach((id) => {
       this.setState(INPUT_STATE_CONTEXT, id, null);
     });
+  }
+
+  private clear() {
+    this.contextState = {};
+    this.state$ = {};
+    this.beforeHook = {};
   }
 
   private setContextState(context: string, id: string, newValue: any) {
