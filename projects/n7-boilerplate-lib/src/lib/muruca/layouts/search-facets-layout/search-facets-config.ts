@@ -22,6 +22,7 @@ interface SearchFacetsInput {
   id: string;
   type: 'text' | 'checkbox' | 'select' | 'link';
   data: InputCheckboxData | InputLinkData | InputSelectData | InputTextData;
+  isMulti?: boolean;
   queryParam?: boolean;
   delay?: number;
   value?: string | string[] | boolean | null;
