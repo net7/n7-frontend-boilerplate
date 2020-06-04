@@ -10,38 +10,41 @@ type InputType = 'text' | 'checkbox' | 'select' | 'link';
 
 type ValueType = 'string' | 'number' | 'boolean';
 
-interface InputHeaderData {
+export interface InputSchema {
+  valueType: ValueType;
+  multiple?: boolean;
+}
+
+export interface InputHeaderData {
   id: string;
   data: FacetHeaderData;
   delay?: number;
 }
 
-interface SearchLayoutInput {
+export interface SearchLayoutInput {
   id: string;
+  schema: InputSchema;
   queryParam?: boolean;
   value?: string | string[] | boolean | null;
 }
 
-interface SearchFacetsInput {
+export interface SearchFacetsInput {
   id: string;
   type: InputType;
   data: InputCheckboxData | InputLinkData | InputSelectData | InputTextData;
-  schema: {
-    valueType: ValueType;
-    multiple?: boolean;
-  };
+  schema: InputSchema;
   queryParam?: boolean;
   delay?: number;
   value?: string | string[] | boolean | null;
 }
 
-interface SearchFacetsSection {
+export interface SearchFacetsSection {
   header: InputHeaderData;
   inputs: SearchFacetsInput[];
   classes?: string;
 }
 
-interface SearchFacetsConfig {
+export interface SearchFacetsConfig {
   sections: SearchFacetsSection[];
   classes?: string;
 }

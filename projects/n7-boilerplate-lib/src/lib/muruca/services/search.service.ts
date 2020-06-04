@@ -12,6 +12,7 @@ import {
 import { isEmpty } from 'lodash';
 import { CommunicationService } from '../../common/services/communication.service';
 import searchHelper from '../helpers/search-helper';
+import { InputSchema } from '../interfaces/search.interface';
 
 export const INPUT_STATE_CONTEXT = 'input';
 export const FACET_STATE_CONTEXT = 'facet';
@@ -25,6 +26,10 @@ export class MrSearchService {
   private config;
 
   private queryParamKeys: string[] = [];
+
+  private inputSchemas: {
+    [key: string]: InputSchema;
+  } = {};
 
   private contextState: {
     [key: string]: any;
@@ -157,22 +162,32 @@ export class MrSearchService {
 
     // set facets input state
     facets.sections.forEach(({ header, inputs }) => {
-      [header, ...inputs].forEach(({ id, queryParam }) => {
+      [header, ...inputs].forEach(({ id, queryParam, schema }) => {
         this.addState(INPUT_STATE_CONTEXT, id);
 
         // is query param?
         if (queryParam) {
           this.queryParamKeys.push(id);
         }
+
+        // schemas
+        if (schema) {
+          this.inputSchemas[id] = schema;
+        }
       });
     });
 
     // set layout input state
-    layoutInputs.forEach(({ id, queryParam }) => {
+    layoutInputs.forEach(({ id, queryParam, schema }) => {
       this.addState(INPUT_STATE_CONTEXT, id);
 
       if (queryParam) {
         this.queryParamKeys.push(id);
+      }
+
+      // schemas
+      if (schema) {
+        this.inputSchemas[id] = schema;
       }
     });
   }
@@ -205,17 +220,21 @@ export class MrSearchService {
       // fix initial listeners (symbolic timeout)
       delay(1),
       // query params to state
-      map((params) => searchHelper.queryParamsToState(params)),
+      map((params) => searchHelper.queryParamsToState(params, this.inputSchemas)),
       // state != queryParams control
       tap((params) => {
-        if (isEmpty(params) && !isEmpty(this.contextState[INPUT_STATE_CONTEXT])) {
+        if (isEmpty(params)) {
           this.reset();
         }
-        if (!isEmpty(params) && isEmpty(this.contextState[INPUT_STATE_CONTEXT])) {
-          // update state
-          Object.keys(params).forEach((inputId) => {
-            this.setState(INPUT_STATE_CONTEXT, inputId, params[inputId]);
-          });
+
+        // update state
+        if (!isEmpty(params)) {
+          const inputContext = this.contextState[INPUT_STATE_CONTEXT];
+          Object.keys(inputContext)
+            .filter((inputId) => inputContext[inputId] !== params[inputId])
+            .forEach((inputId) => {
+              this.setState(INPUT_STATE_CONTEXT, inputId, params[inputId]);
+            });
         }
       }),
       map((params) => {
@@ -249,7 +268,7 @@ export class MrSearchService {
           filteredState[id] = state[id];
         }
       });
-      const queryParams = searchHelper.stateToQueryParams(filteredState);
+      const queryParams = searchHelper.stateToQueryParams(filteredState, this.inputSchemas);
       this.router.navigate([], {
         queryParams
       });
