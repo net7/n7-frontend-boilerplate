@@ -43,7 +43,6 @@ const facets = {
     }, {
       id: 'input-toponimi',
       type: 'link',
-      isMulti: true,
       queryParam: true,
       data: {
         links: []
@@ -70,8 +69,7 @@ const facets = {
       }
     }, {
       id: 'input-glossario',
-      type: 'link',
-      isMulti: true,
+      type: 'linkMulti',
       queryParam: true,
       data: {
         links: []
@@ -87,8 +85,7 @@ const facets = {
     },
     inputs: [{
       id: 'input-continenti',
-      type: 'link',
-      isMulti: true,
+      type: 'linkMulti',
       queryParam: true,
       data: {
         links: []
@@ -105,8 +102,7 @@ const facets = {
     },
     inputs: [{
       id: 'input-keywords',
-      type: 'link',
-      isMulti: true,
+      type: 'linkMulti',
       queryParam: true,
       data: {
         links: []
@@ -123,8 +119,7 @@ const facets = {
     },
     inputs: [{
       id: 'input-data',
-      type: 'link',
-      isMulti: true,
+      type: 'linkMulti',
       queryParam: true,
       data: {
         links: []
@@ -141,8 +136,7 @@ const facets = {
     },
     inputs: [{
       id: 'input-luogo',
-      type: 'link',
-      isMulti: true,
+      type: 'linkMulti',
       queryParam: true,
       data: {
         links: []

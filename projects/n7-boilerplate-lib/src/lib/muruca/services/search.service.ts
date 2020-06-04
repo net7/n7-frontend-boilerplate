@@ -26,8 +26,6 @@ export class MrSearchService {
 
   private queryParamKeys: string[] = [];
 
-  private multiInputs: string[] = [];
-
   private contextState: {
     [key: string]: any;
   } = {};
@@ -159,17 +157,12 @@ export class MrSearchService {
 
     // set facets input state
     facets.sections.forEach(({ header, inputs }) => {
-      [header, ...inputs].forEach(({ id, queryParam, isMulti }) => {
+      [header, ...inputs].forEach(({ id, queryParam }) => {
         this.addState(INPUT_STATE_CONTEXT, id);
 
         // is query param?
         if (queryParam) {
           this.queryParamKeys.push(id);
-        }
-
-        // is multi?
-        if (isMulti) {
-          this.multiInputs.push(id);
         }
       });
     });
@@ -213,8 +206,6 @@ export class MrSearchService {
       delay(1),
       // query params to state
       map((params) => searchHelper.queryParamsToState(params)),
-      // normalize multi
-      map((params) => this.normalizeMulti(params)),
       // state != queryParams control
       tap((params) => {
         if (isEmpty(params) && !isEmpty(this.contextState[INPUT_STATE_CONTEXT])) {
@@ -309,17 +300,5 @@ export class MrSearchService {
         });
       });
     });
-  }
-
-  normalizeMulti(params) {
-    this.multiInputs.forEach((inputId) => {
-      const value = params[inputId];
-      if (value) {
-        params[inputId] = Array.isArray(value)
-          ? value
-          : [value];
-      }
-    });
-    return params;
   }
 }

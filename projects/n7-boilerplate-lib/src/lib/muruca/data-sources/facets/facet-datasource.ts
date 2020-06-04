@@ -1,4 +1,9 @@
-type VALUE = string | string[] | boolean | null;
+type VALUE = string
+  | string[]
+  | number
+  | number[]
+  | boolean
+  | null;
 
 export interface FacetDataSource {
   id: string;

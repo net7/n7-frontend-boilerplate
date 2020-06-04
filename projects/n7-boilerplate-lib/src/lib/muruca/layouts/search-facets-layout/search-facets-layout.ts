@@ -17,6 +17,8 @@ import { FacetCheckboxEH } from '../../event-handlers/facets/facet-checkbox.eh';
 import { FacetSelectEH } from '../../event-handlers/facets/facet-select.eh';
 import { FacetLinkEH } from '../../event-handlers/facets/facet-link.eh';
 import { MrSearchService } from '../../services/search.service';
+import { FacetLinkMultiDS } from '../../data-sources/facets/facet-link-multi.ds';
+import { FacetLinkMultiEH } from '../../event-handlers/facets/facet-link-multi.eh';
 
 const DATASOURCE_MAP = {
   header: FacetHeaderDS,
@@ -24,6 +26,7 @@ const DATASOURCE_MAP = {
   checkbox: FacetCheckboxDS,
   select: FacetSelectDS,
   link: FacetLinkDS,
+  linkMulti: FacetLinkMultiDS,
 };
 
 const EVENTHANDLER_MAP = {
@@ -32,6 +35,7 @@ const EVENTHANDLER_MAP = {
   checkbox: FacetCheckboxEH,
   select: FacetSelectEH,
   link: FacetLinkEH,
+  linkMulti: FacetLinkMultiEH,
 };
 
 @Component({
