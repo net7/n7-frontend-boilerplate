@@ -6,6 +6,10 @@ import {
   FacetHeaderData,
 } from '@n7-frontend/components';
 
+type InputType = 'text' | 'checkbox' | 'select' | 'link';
+
+type ValueType = 'string' | 'number' | 'boolean';
+
 interface InputHeaderData {
   id: string;
   data: FacetHeaderData;
@@ -20,8 +24,12 @@ interface SearchLayoutInput {
 
 interface SearchFacetsInput {
   id: string;
-  type: 'text' | 'checkbox' | 'select' | 'link';
+  type: InputType;
   data: InputCheckboxData | InputLinkData | InputSelectData | InputTextData;
+  schema: {
+    valueType: ValueType;
+    multiple?: boolean;
+  };
   queryParam?: boolean;
   delay?: number;
   value?: string | string[] | boolean | null;

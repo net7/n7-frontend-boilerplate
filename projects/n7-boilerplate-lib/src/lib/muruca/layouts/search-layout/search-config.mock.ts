@@ -12,6 +12,9 @@ const facets = {
       id: 'query',
       type: 'text',
       queryParam: true,
+      schema: {
+        valueType: 'string'
+      },
       data: {
         id: 'query',
         placeholder: 'Cerca nei titoli',
@@ -32,6 +35,9 @@ const facets = {
     inputs: [{
       id: 'input-toponimi-filter',
       type: 'text',
+      schema: {
+        valueType: 'string'
+      },
       data: {
         id: 'input-text-01',
         placeholder: 'Search',
@@ -44,6 +50,10 @@ const facets = {
       id: 'input-toponimi',
       type: 'link',
       queryParam: true,
+      schema: {
+        valueType: 'string',
+        // multiple: true
+      },
       data: {
         links: []
       }
@@ -59,6 +69,9 @@ const facets = {
     inputs: [{
       id: 'input-glossario-filter',
       type: 'text',
+      schema: {
+        valueType: 'string'
+      },
       data: {
         id: 'input-text-02',
         placeholder: 'Search',
@@ -69,8 +82,12 @@ const facets = {
       }
     }, {
       id: 'input-glossario',
-      type: 'linkMulti',
+      type: 'link',
       queryParam: true,
+      schema: {
+        valueType: 'string',
+        multiple: true
+      },
       data: {
         links: []
       }
@@ -85,8 +102,12 @@ const facets = {
     },
     inputs: [{
       id: 'input-continenti',
-      type: 'linkMulti',
+      type: 'link',
       queryParam: true,
+      schema: {
+        valueType: 'string',
+        multiple: true
+      },
       data: {
         links: []
       }
@@ -102,8 +123,12 @@ const facets = {
     },
     inputs: [{
       id: 'input-keywords',
-      type: 'linkMulti',
+      type: 'link',
       queryParam: true,
+      schema: {
+        valueType: 'string',
+        multiple: true
+      },
       data: {
         links: []
       }
@@ -119,8 +144,12 @@ const facets = {
     },
     inputs: [{
       id: 'input-data',
-      type: 'linkMulti',
+      type: 'link',
       queryParam: true,
+      schema: {
+        valueType: 'string',
+        multiple: true
+      },
       data: {
         links: []
       }
@@ -136,8 +165,12 @@ const facets = {
     },
     inputs: [{
       id: 'input-luogo',
-      type: 'linkMulti',
+      type: 'link',
       queryParam: true,
+      schema: {
+        valueType: 'string',
+        multiple: true
+      },
       data: {
         links: []
       }

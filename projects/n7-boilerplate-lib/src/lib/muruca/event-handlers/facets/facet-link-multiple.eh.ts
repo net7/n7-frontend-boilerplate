@@ -1,6 +1,6 @@
 import { EventHandler } from '@n7-frontend/core';
 
-export class FacetLinkMultiEH extends EventHandler {
+export class FacetLinkMultipleEH extends EventHandler {
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {

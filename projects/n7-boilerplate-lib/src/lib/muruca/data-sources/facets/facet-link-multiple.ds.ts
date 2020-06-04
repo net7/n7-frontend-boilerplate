@@ -4,7 +4,7 @@ import { FacetDataSource } from './facet-datasource';
 
 const ACTIVE_CLASS = 'is-active';
 
-export class FacetLinkMultiDS extends DataSource implements FacetDataSource {
+export class FacetLinkMultipleDS extends DataSource implements FacetDataSource {
   id: string;
 
   value = [];

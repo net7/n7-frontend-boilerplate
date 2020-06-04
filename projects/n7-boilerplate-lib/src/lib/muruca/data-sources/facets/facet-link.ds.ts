@@ -29,6 +29,11 @@ export class FacetLinkDS extends DataSource implements FacetDataSource {
     }
   }
 
+  toggleValue(linkValue) {
+    // update
+    this.setValue(this.value !== linkValue ? linkValue : null, true);
+  }
+
   getValue = () => this.value;
 
   clear() {
