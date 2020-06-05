@@ -17,6 +17,8 @@ import { FacetCheckboxEH } from '../../event-handlers/facets/facet-checkbox.eh';
 import { FacetSelectEH } from '../../event-handlers/facets/facet-select.eh';
 import { FacetLinkEH } from '../../event-handlers/facets/facet-link.eh';
 import { MrSearchService } from '../../services/search.service';
+import { FacetLinkMultipleDS } from '../../data-sources/facets/facet-link-multiple.ds';
+import { FacetLinkMultipleEH } from '../../event-handlers/facets/facet-link-multiple.eh';
 
 const DATASOURCE_MAP = {
   header: FacetHeaderDS,
@@ -24,6 +26,7 @@ const DATASOURCE_MAP = {
   checkbox: FacetCheckboxDS,
   select: FacetSelectDS,
   link: FacetLinkDS,
+  'link-multiple': FacetLinkMultipleDS,
 };
 
 const EVENTHANDLER_MAP = {
@@ -32,6 +35,7 @@ const EVENTHANDLER_MAP = {
   checkbox: FacetCheckboxEH,
   select: FacetSelectEH,
   link: FacetLinkEH,
+  'link-multiple': FacetLinkMultipleEH,
 };
 
 @Component({
@@ -72,10 +76,16 @@ export class MrSearchFacetsLayoutComponent extends AbstractLayout implements OnI
         });
       }
       inputs.forEach((input) => {
+        let inputType = input.type;
+        const { multiple } = input.schema;
+        // multiple control
+        if (multiple) {
+          inputType += '-multiple';
+        }
         this.widgets.push({
           id: input.id,
-          dataSource: DATASOURCE_MAP[input.type],
-          eventHandler: EVENTHANDLER_MAP[input.type]
+          dataSource: DATASOURCE_MAP[inputType],
+          eventHandler: EVENTHANDLER_MAP[inputType]
         });
       });
     });

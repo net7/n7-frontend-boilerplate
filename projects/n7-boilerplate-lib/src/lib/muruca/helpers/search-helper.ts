@@ -1,10 +1,4 @@
-type QueryParams = {
-  [key: string]: string;
-}
-
-type StateObject = {
-  [key: string]: string | string[];
-}
+import { InputSchema } from '../interfaces/search.interface';
 
 const hasValue = (value) => {
   if (Array.isArray(value)) {
@@ -14,24 +8,58 @@ const hasValue = (value) => {
 };
 
 export default {
-  stateToQueryParams(state: StateObject): QueryParams {
-    const queryParams = {} as QueryParams;
+  stateToQueryParams(state, schemas: { [key: string]: InputSchema }) {
+    const queryParams = {};
 
     Object.keys(state).forEach((key) => {
       const value = state[key];
+      const schema = schemas[key];
+      const { multiple, valueType } = schema;
       if (hasValue(value)) {
-        queryParams[key] = Array.isArray(value) ? value.join(',') : value;
+        switch (valueType) {
+          case 'number':
+          case 'string':
+            queryParams[key] = multiple ? value.join(',') : value;
+            break;
+
+          case 'boolean':
+            queryParams[key] = multiple ? value.map((v) => +v).join(',') : +value;
+            break;
+
+          default:
+            break;
+        }
       }
     });
     return queryParams;
   },
-  queryParamsToState(queryParams: QueryParams): StateObject {
-    const state = {} as StateObject;
+  queryParamsToState(queryParams, schemas: { [key: string]: InputSchema }) {
+    const state = {};
 
     Object.keys(queryParams).forEach((key) => {
       const value = queryParams[key];
+      const schema = schemas[key];
+      const { multiple, valueType } = schema;
       if (hasValue(value)) {
-        state[key] = value.indexOf(',') !== -1 ? value.split(',') : value;
+        if (hasValue(value)) {
+          switch (valueType) {
+            case 'number':
+              state[key] = multiple ? value.split(',').map((v) => +v) : +value;
+              break;
+
+            case 'string':
+              state[key] = multiple ? value.split(',').map((v) => `${v}`) : `${value}`;
+              break;
+
+            case 'boolean':
+              state[key] = multiple ? value.split(',').map((v) => !!v) : !!value;
+              break;
+
+
+            default:
+              break;
+          }
+        }
       }
     });
     return state;

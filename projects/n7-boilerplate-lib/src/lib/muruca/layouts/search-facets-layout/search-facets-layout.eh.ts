@@ -5,7 +5,7 @@ import {
   MrSearchService,
   INPUT_STATE_CONTEXT,
   FACET_STATE_CONTEXT,
-  LINKS_STATE_CONTEXT
+  FACETS_REQUEST_STATE_CONTEXT
 } from '../../services/search.service';
 
 interface ChangedSubjects {
@@ -98,7 +98,7 @@ export class SearchFacetsLayoutEH extends EventHandler {
       });
 
     // listener for facet header updates
-    this.searchService.getState$(LINKS_STATE_CONTEXT, 'success')
+    this.searchService.getState$(FACETS_REQUEST_STATE_CONTEXT, 'success')
       .pipe(
         takeUntil(this.destroyed$)
       ).subscribe(({ headers }) => {

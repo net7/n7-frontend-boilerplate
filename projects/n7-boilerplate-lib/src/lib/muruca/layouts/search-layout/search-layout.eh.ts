@@ -4,8 +4,9 @@ import { isEmpty } from 'lodash';
 import { MrSearchLayoutDS } from './search-layout.ds';
 import {
   MrSearchService,
-  RESULTS_STATE_CONTEXT,
-  INPUT_STATE_CONTEXT
+  RESULTS_REQUEST_STATE_CONTEXT,
+  INPUT_STATE_CONTEXT,
+  FACETS_REQUEST_STATE_CONTEXT
 } from '../../services/search.service';
 
 export class MrSearchLayoutEH extends EventHandler {
@@ -18,6 +19,8 @@ export class MrSearchLayoutEH extends EventHandler {
   private searchState: {
     [key: string]: any;
   } = {};
+
+  private linksResponse: any;
 
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
@@ -74,24 +77,21 @@ export class MrSearchLayoutEH extends EventHandler {
   }
 
   initStateListener() {
-    // request listener
-    this.searchService.getState$(RESULTS_STATE_CONTEXT)
-      .subscribe(({ lastUpdated, state }) => {
-        console.warn('request', lastUpdated, state);
-      });
     // inputs listener
-    this.searchService.getState$(INPUT_STATE_CONTEXT).subscribe(({ lastUpdated, state }) => {
+    this.searchService.getState$(INPUT_STATE_CONTEXT).subscribe(({ state }) => {
       this.searchState = state;
-      this.dataSource.updateActiveFilters(state);
-      console.warn('input', lastUpdated, state);
+    });
+    this.searchService.getState$(FACETS_REQUEST_STATE_CONTEXT, 'success').subscribe((response) => {
+      this.linksResponse = response;
+      this.dataSource.updateActiveFilters(this.searchState, this.linksResponse);
     });
 
-    this.searchService.getState$(RESULTS_STATE_CONTEXT, 'loading').subscribe(() => {
+    this.searchService.getState$(RESULTS_REQUEST_STATE_CONTEXT, 'loading').subscribe(() => {
       this.dataSource.setSectionState('results', 'LOADING');
     });
 
     // default params hook
-    this.searchService.setBeforeHook(RESULTS_STATE_CONTEXT, 'loading', (params = {}) => {
+    this.searchService.setBeforeHook(RESULTS_REQUEST_STATE_CONTEXT, 'loading', (params = {}) => {
       const defaultParams = {
         page: 1,
         sort: '_score_DESC',
@@ -104,7 +104,7 @@ export class MrSearchLayoutEH extends EventHandler {
     });
     this.searchService.setBeforeHook(INPUT_STATE_CONTEXT, 'limit', (value) => +value);
 
-    this.searchService.getState$(RESULTS_STATE_CONTEXT, 'success')
+    this.searchService.getState$(RESULTS_REQUEST_STATE_CONTEXT, 'success')
       .subscribe((response) => {
         this.dataSource.handleResponse(response);
         // update layout state

@@ -48,7 +48,7 @@ export class MrSearchLayoutComponent extends AbstractLayout implements OnInit, O
   ngOnInit() {
     this.activatedRoute.data.subscribe((data) => {
       this.configId = data.configId;
-      this.searchService.init(searchConfig);
+      this.searchService.init(this.configId, searchConfig);
       this.onInit();
     });
   }

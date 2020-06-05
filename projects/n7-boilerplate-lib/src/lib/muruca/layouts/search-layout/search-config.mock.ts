@@ -1,4 +1,4 @@
-import { SearchConfig } from '../search-facets-layout/search-facets-config';
+import { SearchConfig } from '../../interfaces/search.interface';
 
 const facets = {
   sections: [{
@@ -12,6 +12,10 @@ const facets = {
       id: 'query',
       type: 'text',
       queryParam: true,
+      delay: 500,
+      schema: {
+        valueType: 'string'
+      },
       data: {
         id: 'query',
         placeholder: 'Cerca nei titoli',
@@ -32,6 +36,10 @@ const facets = {
     inputs: [{
       id: 'input-toponimi-filter',
       type: 'text',
+      delay: 500,
+      schema: {
+        valueType: 'string'
+      },
       data: {
         id: 'input-text-01',
         placeholder: 'Search',
@@ -44,6 +52,10 @@ const facets = {
       id: 'input-toponimi',
       type: 'link',
       queryParam: true,
+      schema: {
+        valueType: 'string',
+        // multiple: true
+      },
       data: {
         links: []
       }
@@ -59,6 +71,10 @@ const facets = {
     inputs: [{
       id: 'input-glossario-filter',
       type: 'text',
+      delay: 500,
+      schema: {
+        valueType: 'string'
+      },
       data: {
         id: 'input-text-02',
         placeholder: 'Search',
@@ -71,6 +87,10 @@ const facets = {
       id: 'input-glossario',
       type: 'link',
       queryParam: true,
+      schema: {
+        valueType: 'string',
+        multiple: true
+      },
       data: {
         links: []
       }
@@ -87,6 +107,10 @@ const facets = {
       id: 'input-continenti',
       type: 'link',
       queryParam: true,
+      schema: {
+        valueType: 'string',
+        multiple: true
+      },
       data: {
         links: []
       }
@@ -104,6 +128,10 @@ const facets = {
       id: 'input-keywords',
       type: 'link',
       queryParam: true,
+      schema: {
+        valueType: 'string',
+        multiple: true
+      },
       data: {
         links: []
       }
@@ -121,6 +149,10 @@ const facets = {
       id: 'input-data',
       type: 'link',
       queryParam: true,
+      schema: {
+        valueType: 'string',
+        multiple: true
+      },
       data: {
         links: []
       }
@@ -138,6 +170,10 @@ const facets = {
       id: 'input-luogo',
       type: 'link',
       queryParam: true,
+      schema: {
+        valueType: 'string',
+        multiple: true
+      },
       data: {
         links: []
       }
@@ -149,6 +185,9 @@ const facets = {
 const layoutInputs = ['page', 'limit', 'sort'].map((id) => ({
   id,
   queryParam: true,
+  schema: {
+    valueType: id === 'sort' ? 'string' : 'number'
+  }
 }));
 
 const request = {
@@ -156,8 +195,8 @@ const request = {
     id: 'search',
     delay: 500
   },
-  links: {
-    id: 'links',
+  facets: {
+    id: 'facets',
   },
   provider: 'rest',
   delay: 500

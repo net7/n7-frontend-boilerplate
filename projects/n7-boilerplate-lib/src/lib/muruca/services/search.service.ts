@@ -12,17 +12,24 @@ import {
 import { isEmpty } from 'lodash';
 import { CommunicationService } from '../../common/services/communication.service';
 import searchHelper from '../helpers/search-helper';
+import { InputSchema } from '../interfaces/search.interface';
 
 export const INPUT_STATE_CONTEXT = 'input';
 export const FACET_STATE_CONTEXT = 'facet';
-export const RESULTS_STATE_CONTEXT = 'results';
-export const LINKS_STATE_CONTEXT = 'links';
+export const RESULTS_REQUEST_STATE_CONTEXT = 'resultsRequest';
+export const FACETS_REQUEST_STATE_CONTEXT = 'facetsRequest';
 
 @Injectable()
 export class MrSearchService {
+  private searchId: string | number;
+
   private config;
 
   private queryParamKeys: string[] = [];
+
+  private inputSchemas: {
+    [key: string]: InputSchema;
+  } = {};
 
   private contextState: {
     [key: string]: any;
@@ -42,11 +49,12 @@ export class MrSearchService {
     private communication: CommunicationService,
   ) { }
 
-  public init(config) {
-    // clear control
-    this.clear();
-
+  public init(searchId, config) {
+    this.searchId = searchId;
     this.config = config;
+
+    // first clear
+    this.clear();
 
     // initial states
     this.initInputState();
@@ -154,21 +162,32 @@ export class MrSearchService {
 
     // set facets input state
     facets.sections.forEach(({ header, inputs }) => {
-      [header, ...inputs].forEach(({ id, queryParam }) => {
+      [header, ...inputs].forEach(({ id, queryParam, schema }) => {
         this.addState(INPUT_STATE_CONTEXT, id);
 
+        // is query param?
         if (queryParam) {
           this.queryParamKeys.push(id);
+        }
+
+        // schemas
+        if (schema) {
+          this.inputSchemas[id] = schema;
         }
       });
     });
 
     // set layout input state
-    layoutInputs.forEach(({ id, queryParam }) => {
+    layoutInputs.forEach(({ id, queryParam, schema }) => {
       this.addState(INPUT_STATE_CONTEXT, id);
 
       if (queryParam) {
         this.queryParamKeys.push(id);
+      }
+
+      // schemas
+      if (schema) {
+        this.inputSchemas[id] = schema;
       }
     });
   }
@@ -190,44 +209,59 @@ export class MrSearchService {
     const { results } = this.config.request;
 
     // add context state
-    this.addStateContext(RESULTS_STATE_CONTEXT);
+    this.addStateContext(RESULTS_REQUEST_STATE_CONTEXT);
 
     // default states
-    ['loading', 'success', 'error'].forEach((id) => {
-      this.addState(RESULTS_STATE_CONTEXT, id);
+    ['loading', 'request', 'success', 'error'].forEach((id) => {
+      this.addState(RESULTS_REQUEST_STATE_CONTEXT, id);
     });
 
     this.activatedRoute.queryParams.pipe(
       // fix initial listeners (symbolic timeout)
       delay(1),
       // query params to state
-      map((params) => searchHelper.queryParamsToState(params)),
+      map((params) => searchHelper.queryParamsToState(params, this.inputSchemas)),
       // state != queryParams control
       tap((params) => {
-        if (isEmpty(params) && !isEmpty(this.contextState[INPUT_STATE_CONTEXT])) {
+        if (isEmpty(params)) {
           this.reset();
         }
-        if (!isEmpty(params) && isEmpty(this.contextState[INPUT_STATE_CONTEXT])) {
-          // update state
-          Object.keys(params).forEach((inputId) => {
-            this.setState(INPUT_STATE_CONTEXT, inputId, params[inputId]);
-          });
+
+        // update state
+        if (!isEmpty(params)) {
+          const inputContext = this.contextState[INPUT_STATE_CONTEXT];
+          if (isEmpty(inputContext)) {
+            Object.keys(params)
+              .forEach((inputId) => {
+                this.setState(INPUT_STATE_CONTEXT, inputId, params[inputId]);
+              });
+          } else {
+            Object.keys(inputContext)
+              .filter((inputId) => inputContext[inputId] !== params[inputId])
+              .forEach((inputId) => {
+                this.setState(INPUT_STATE_CONTEXT, inputId, params[inputId]);
+              });
+          }
         }
       }),
       map((params) => {
-        this.setState(RESULTS_STATE_CONTEXT, 'loading', params);
+        this.setState(RESULTS_REQUEST_STATE_CONTEXT, 'loading', params);
         return params;
       }),
       debounceTime(results.delay || 1),
+      map((params) => {
+        this.setState(RESULTS_REQUEST_STATE_CONTEXT, 'request', params);
+        return params;
+      }),
       switchMap((state) => this.communication.request$(results.id, {
-        params: state,
+        params: { ...state, searchId: this.searchId },
         method: 'POST',
         onError: (error) => {
-          this.setState(RESULTS_STATE_CONTEXT, 'error', error);
+          this.setState(RESULTS_REQUEST_STATE_CONTEXT, 'error', error);
         }
       }, results.provider || null))
     ).subscribe((response) => {
-      this.setState(RESULTS_STATE_CONTEXT, 'success', response);
+      this.setState(RESULTS_REQUEST_STATE_CONTEXT, 'success', response);
     });
   }
 
@@ -241,7 +275,7 @@ export class MrSearchService {
           filteredState[id] = state[id];
         }
       });
-      const queryParams = searchHelper.stateToQueryParams(filteredState);
+      const queryParams = searchHelper.stateToQueryParams(filteredState, this.inputSchemas);
       this.router.navigate([], {
         queryParams
       });
@@ -249,39 +283,43 @@ export class MrSearchService {
   }
 
   private onResultsLoading() {
-    const { links } = this.config.request;
+    const { facets } = this.config.request;
 
-    if (!links) {
+    if (!facets) {
       return;
     }
 
     // add context state
-    this.addStateContext(LINKS_STATE_CONTEXT);
+    this.addStateContext(FACETS_REQUEST_STATE_CONTEXT);
 
     // default states
-    ['loading', 'success', 'error'].forEach((id) => {
-      this.addState(LINKS_STATE_CONTEXT, id);
+    ['loading', 'request', 'success', 'error'].forEach((id) => {
+      this.addState(FACETS_REQUEST_STATE_CONTEXT, id);
     });
 
-    this.getState$(RESULTS_STATE_CONTEXT, 'loading').pipe(
+    this.getState$(RESULTS_REQUEST_STATE_CONTEXT, 'loading').pipe(
       map((params) => {
-        this.setState(LINKS_STATE_CONTEXT, 'loading', params);
+        this.setState(FACETS_REQUEST_STATE_CONTEXT, 'loading', params);
         return params;
       }),
-      debounceTime(links.delay || 1),
-      switchMap((state) => this.communication.request$(links.id, {
-        params: state,
+      debounceTime(facets.delay || 1),
+      map((params) => {
+        this.setState(FACETS_REQUEST_STATE_CONTEXT, 'request', params);
+        return params;
+      }),
+      switchMap((state) => this.communication.request$(facets.id, {
+        params: { ...state, searchId: this.searchId },
         method: 'POST',
         onError: (error) => {
-          this.setState(LINKS_STATE_CONTEXT, 'error', error);
+          this.setState(FACETS_REQUEST_STATE_CONTEXT, 'error', error);
         }
-      }, links.provider || null))
+      }, facets.provider || null))
     ).subscribe((response) => {
-      this.setState(LINKS_STATE_CONTEXT, 'success', response);
+      this.setState(FACETS_REQUEST_STATE_CONTEXT, 'success', response);
     });
 
-    // update links
-    this.getState$(LINKS_STATE_CONTEXT, 'success').subscribe(({ inputs }) => {
+    // update facet links
+    this.getState$(FACETS_REQUEST_STATE_CONTEXT, 'success').subscribe(({ inputs }) => {
       Object.keys(inputs).forEach((id) => {
         this.setState(FACET_STATE_CONTEXT, id, {
           links: inputs[id]

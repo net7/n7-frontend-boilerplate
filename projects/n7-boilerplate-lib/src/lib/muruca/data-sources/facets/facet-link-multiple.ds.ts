@@ -4,10 +4,10 @@ import { FacetDataSource } from './facet-datasource';
 
 const ACTIVE_CLASS = 'is-active';
 
-export class FacetLinkDS extends DataSource implements FacetDataSource {
+export class FacetLinkMultipleDS extends DataSource implements FacetDataSource {
   id: string;
 
-  value = null;
+  value = [];
 
   protected transform(data: InputLinkData): InputLinkData {
     return data;
@@ -20,7 +20,7 @@ export class FacetLinkDS extends DataSource implements FacetDataSource {
       const { links } = this.input;
       const updatedLinks = links.map((link: InputLink) => ({
         ...link,
-        classes: this.value === link.payload ? ACTIVE_CLASS : ''
+        classes: this.value.includes(link.payload) ? ACTIVE_CLASS : ''
       }));
       this.update({
         ...this.input,
@@ -30,13 +30,20 @@ export class FacetLinkDS extends DataSource implements FacetDataSource {
   }
 
   toggleValue(linkValue) {
+    const exists = this.value.includes(linkValue);
+    if (!exists) {
+      this.value.push(linkValue);
+    } else if (exists) {
+      this.value.splice(this.value.indexOf(linkValue), 1);
+    }
+
     // update
-    this.setValue(this.value !== linkValue ? linkValue : null, true);
+    this.setValue(this.value, true);
   }
 
   getValue = () => this.value;
 
   clear() {
-    this.value = null;
+    this.value = [];
   }
 }
