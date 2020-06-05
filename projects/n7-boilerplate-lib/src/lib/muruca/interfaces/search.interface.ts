@@ -56,7 +56,7 @@ export interface SearchConfig {
       delay?: number;
       provider?: string;
     };
-    links: {
+    facets: {
       id: string;
       delay?: number;
       provider?: string;

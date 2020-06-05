@@ -16,8 +16,8 @@ import { InputSchema } from '../interfaces/search.interface';
 
 export const INPUT_STATE_CONTEXT = 'input';
 export const FACET_STATE_CONTEXT = 'facet';
-export const RESULTS_STATE_CONTEXT = 'results';
-export const LINKS_STATE_CONTEXT = 'links';
+export const RESULTS_REQUEST_STATE_CONTEXT = 'resultsRequest';
+export const FACETS_REQUEST_STATE_CONTEXT = 'facetsRequest';
 
 @Injectable()
 export class MrSearchService {
@@ -209,11 +209,11 @@ export class MrSearchService {
     const { results } = this.config.request;
 
     // add context state
-    this.addStateContext(RESULTS_STATE_CONTEXT);
+    this.addStateContext(RESULTS_REQUEST_STATE_CONTEXT);
 
     // default states
     ['loading', 'request', 'success', 'error'].forEach((id) => {
-      this.addState(RESULTS_STATE_CONTEXT, id);
+      this.addState(RESULTS_REQUEST_STATE_CONTEXT, id);
     });
 
     this.activatedRoute.queryParams.pipe(
@@ -238,23 +238,23 @@ export class MrSearchService {
         }
       }),
       map((params) => {
-        this.setState(RESULTS_STATE_CONTEXT, 'loading', params);
+        this.setState(RESULTS_REQUEST_STATE_CONTEXT, 'loading', params);
         return params;
       }),
       debounceTime(results.delay || 1),
       map((params) => {
-        this.setState(RESULTS_STATE_CONTEXT, 'request', params);
+        this.setState(RESULTS_REQUEST_STATE_CONTEXT, 'request', params);
         return params;
       }),
       switchMap((state) => this.communication.request$(results.id, {
         params: { ...state, searchId: this.searchId },
         method: 'POST',
         onError: (error) => {
-          this.setState(RESULTS_STATE_CONTEXT, 'error', error);
+          this.setState(RESULTS_REQUEST_STATE_CONTEXT, 'error', error);
         }
       }, results.provider || null))
     ).subscribe((response) => {
-      this.setState(RESULTS_STATE_CONTEXT, 'success', response);
+      this.setState(RESULTS_REQUEST_STATE_CONTEXT, 'success', response);
     });
   }
 
@@ -276,43 +276,43 @@ export class MrSearchService {
   }
 
   private onResultsLoading() {
-    const { links } = this.config.request;
+    const { facets } = this.config.request;
 
-    if (!links) {
+    if (!facets) {
       return;
     }
 
     // add context state
-    this.addStateContext(LINKS_STATE_CONTEXT);
+    this.addStateContext(FACETS_REQUEST_STATE_CONTEXT);
 
     // default states
     ['loading', 'request', 'success', 'error'].forEach((id) => {
-      this.addState(LINKS_STATE_CONTEXT, id);
+      this.addState(FACETS_REQUEST_STATE_CONTEXT, id);
     });
 
-    this.getState$(RESULTS_STATE_CONTEXT, 'loading').pipe(
+    this.getState$(RESULTS_REQUEST_STATE_CONTEXT, 'loading').pipe(
       map((params) => {
-        this.setState(LINKS_STATE_CONTEXT, 'loading', params);
+        this.setState(FACETS_REQUEST_STATE_CONTEXT, 'loading', params);
         return params;
       }),
-      debounceTime(links.delay || 1),
+      debounceTime(facets.delay || 1),
       map((params) => {
-        this.setState(LINKS_STATE_CONTEXT, 'request', params);
+        this.setState(FACETS_REQUEST_STATE_CONTEXT, 'request', params);
         return params;
       }),
-      switchMap((state) => this.communication.request$(links.id, {
+      switchMap((state) => this.communication.request$(facets.id, {
         params: { ...state, searchId: this.searchId },
         method: 'POST',
         onError: (error) => {
-          this.setState(LINKS_STATE_CONTEXT, 'error', error);
+          this.setState(FACETS_REQUEST_STATE_CONTEXT, 'error', error);
         }
-      }, links.provider || null))
+      }, facets.provider || null))
     ).subscribe((response) => {
-      this.setState(LINKS_STATE_CONTEXT, 'success', response);
+      this.setState(FACETS_REQUEST_STATE_CONTEXT, 'success', response);
     });
 
-    // update links
-    this.getState$(LINKS_STATE_CONTEXT, 'success').subscribe(({ inputs }) => {
+    // update facet links
+    this.getState$(FACETS_REQUEST_STATE_CONTEXT, 'success').subscribe(({ inputs }) => {
       Object.keys(inputs).forEach((id) => {
         this.setState(FACET_STATE_CONTEXT, id, {
           links: inputs[id]

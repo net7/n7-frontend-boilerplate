@@ -195,8 +195,8 @@ const request = {
     id: 'search',
     delay: 500
   },
-  links: {
-    id: 'links',
+  facets: {
+    id: 'facets',
   },
   provider: 'rest',
   delay: 500
