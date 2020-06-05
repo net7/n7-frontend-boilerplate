@@ -230,11 +230,18 @@ export class MrSearchService {
         // update state
         if (!isEmpty(params)) {
           const inputContext = this.contextState[INPUT_STATE_CONTEXT];
-          Object.keys(inputContext)
-            .filter((inputId) => inputContext[inputId] !== params[inputId])
-            .forEach((inputId) => {
-              this.setState(INPUT_STATE_CONTEXT, inputId, params[inputId]);
-            });
+          if (isEmpty(inputContext)) {
+            Object.keys(params)
+              .forEach((inputId) => {
+                this.setState(INPUT_STATE_CONTEXT, inputId, params[inputId]);
+              });
+          } else {
+            Object.keys(inputContext)
+              .filter((inputId) => inputContext[inputId] !== params[inputId])
+              .forEach((inputId) => {
+                this.setState(INPUT_STATE_CONTEXT, inputId, params[inputId]);
+              });
+          }
         }
       }),
       map((params) => {
