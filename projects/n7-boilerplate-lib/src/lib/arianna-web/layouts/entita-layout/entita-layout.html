@@ -95,7 +95,7 @@
             </ng-container>
 
             <div class="aw-entity__content-section aw-entity__content-section-overview"
-                *ngIf="(lb.widgets['aw-linked-objects'].ds.out$ | async)?.previews"
+                *ngIf="(lb.widgets['aw-linked-objects'].ds.out$ | async)?.previews && lb.dataSource.myResponse.relatedItems"
                 [hidden]="lb.dataSource.selectedTab != 'overview' && lb.dataSource.selectedTab != 'oggetti-collegati'">
                 <div class="aw-entity__content-section-header">
                     <h2 class="aw-entity__content-section-title">Oggetti collegati</h2>
