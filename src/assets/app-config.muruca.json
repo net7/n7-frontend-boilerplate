@@ -19,7 +19,7 @@
             "menu": "get_menu",
             "wp-page": "data/api/",
             "search": "search/results",
-            "facets": "search/links"
+            "facets": "search/facets"
         }
       }
     }
