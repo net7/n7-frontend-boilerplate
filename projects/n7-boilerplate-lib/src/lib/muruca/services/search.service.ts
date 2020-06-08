@@ -9,7 +9,7 @@ import {
   delay,
   tap,
 } from 'rxjs/operators';
-import { isEmpty } from 'lodash';
+import { isEmpty, xor } from 'lodash';
 import { CommunicationService } from '../../common/services/communication.service';
 import searchHelper from '../helpers/search-helper';
 import { InputSchema } from '../interfaces/search.interface';
@@ -237,9 +237,9 @@ export class MrSearchService {
               });
           } else {
             Object.keys(inputContext)
-              .filter((inputId) => inputContext[inputId] !== params[inputId])
+              .filter((inputId) => this.notEquals(inputContext[inputId], params[inputId]))
               .forEach((inputId) => {
-                this.setState(INPUT_STATE_CONTEXT, inputId, params[inputId]);
+                this.setState(INPUT_STATE_CONTEXT, inputId, params[inputId] || null);
               });
           }
         }
@@ -326,5 +326,12 @@ export class MrSearchService {
         });
       });
     });
+  }
+
+  notEquals(val1, val2) {
+    if (Array.isArray(val1) && Array.isArray(val2)) {
+      return !!xor(val1, val2).length;
+    }
+    return val1 !== val2;
   }
 }
