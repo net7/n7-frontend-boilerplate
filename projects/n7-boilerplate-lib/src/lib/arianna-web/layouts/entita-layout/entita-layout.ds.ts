@@ -110,6 +110,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
   } */
 
   drawPagination = () => {
+    if (!this.myResponse.relatedItems) return;
     const { href, queryParams } = this._getPaginationParams();
     this.one('n7-smart-pagination').updateOptions({
       mode: 'href',
@@ -160,7 +161,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
         size: this.pageSize,
       });
       this.one('aw-linked-objects').update({ items: this.myResponse.relatedItems });
-    } else if (tab === 'overview') {
+    } else if (tab === 'overview' && this.myResponse.relatedItems) {
       this.one('aw-linked-objects').updateOptions({
         size: 3,
         config: this.configuration,
@@ -168,7 +169,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       });
       this.one('aw-linked-objects').update({ items: this.myResponse.relatedItems });
     }
-    if (tab === 'overview' || tab === 'entita-collegate') {
+    if ((tab === 'overview' || tab === 'entita-collegate') && this.myResponse.relatedEntities) {
       setTimeout(() => { this.updateBubbes(this.myResponse.relatedEntities); }, 800);
     }
   }
