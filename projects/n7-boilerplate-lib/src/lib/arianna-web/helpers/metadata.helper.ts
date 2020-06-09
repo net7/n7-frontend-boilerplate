@@ -14,35 +14,60 @@ const getLink = (fields: any[], paths) => {
   }
   return `<a href="${basePath}${id}/${slug}" target="_blank">${label}</a>`;
 };
-const getRepeater = (fields: any[]) => {
+const getRepeater = (fields: any[], labels, metadataToShow, type) => {
   const html = [];
   html.push('<dl>');
-  fields.forEach(({ key, value }) => {
-    html.push(`<dt>${key}</dt>`);
-    html.push(`<dd>${value}</dd>`);
-  });
+  fields
+    .filter(({ key }) => metadataToShow.includes(key))
+    .map(({ key, value }) => ({
+      key,
+      value,
+      order: metadataToShow.indexOf(key),
+      label: helpers.prettifySnakeCase(key, labels[`${type}.${key}`])
+    }))
+    .sort((a, b) => a.order - b.order)
+    .forEach(({ label, value }) => {
+      html.push(`<dt>${label}</dt>`);
+      html.push(`<dd>${value}</dd>`);
+    });
   html.push('</dl>');
-  return html.join();
+  return html.length > 2 ? html.join() : null;
 };
 
 export default {
-  normalize: (data: any[], paths) => {
+  normalize: ({
+    fields: data,
+    paths,
+    labels,
+    metadataToShow,
+    type
+  }) => {
     const result = [];
     if (Array.isArray(data)) {
       data.forEach(({
         key, value, label, fields
       }) => {
+        // link & repeater control
         if (fields && Array.isArray(fields)) {
           if (isLink(fields)) {
             result.push({ key: label, value: getLink(fields, paths) });
           } else if (isRepeater(fields)) {
-            result.push({ key: label, value: getRepeater(fields) });
+            result.push({ key: label, value: getRepeater(fields, labels, metadataToShow, type) });
           }
+        // default
         } else {
           result.push({ key, value });
         }
       });
     }
-    return result;
+    return result
+      .filter(({ key, value }) => metadataToShow.includes(key) && !helpers.metadataIsEmpty(value))
+      .map(({ key, value }) => ({
+        key,
+        value,
+        order: metadataToShow.indexOf(key),
+        label: helpers.prettifySnakeCase(key, labels[`${type}.${key}`]),
+      }))
+      .sort((a, b) => a.order - b.order);
   }
 };

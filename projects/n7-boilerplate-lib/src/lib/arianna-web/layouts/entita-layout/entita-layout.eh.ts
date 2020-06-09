@@ -2,7 +2,6 @@ import { EventHandler } from '@n7-frontend/core';
 import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import helpers from '../../../common/helpers';
-import metadataHelper from '../../helpers/metadata.helper';
 
 export class AwEntitaLayoutEH extends EventHandler {
   private destroyed$: Subject<any> = new Subject();
@@ -123,22 +122,6 @@ export class AwEntitaLayoutEH extends EventHandler {
         }
         // get item from response with id === id and return as promise
         this.dataSource.loadItem(params.get('id'), params.get('slug'), params.get('tab'))
-          .pipe(
-            // normalize link & repeater fields
-            map((res: any) => {
-              if (res.fields) {
-                res.fields = metadataHelper.normalize(res.fields, this.configuration.get('paths'));
-              }
-              return res;
-            }),
-            // filter empty metadata values
-            map((res: any) => {
-              if (res.fields) {
-                res.fields = res.fields.filter(({ value }) => !helpers.metadataIsEmpty(value));
-              }
-              return res;
-            })
-          )
           .subscribe((res) => {
             if (res) {
               this.dataSource.loadContent(res);

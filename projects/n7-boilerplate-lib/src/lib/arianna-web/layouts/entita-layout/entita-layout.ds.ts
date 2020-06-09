@@ -1,7 +1,8 @@
 import { LayoutDataSource } from '@n7-frontend/core/dist/layout-data-source';
 import { Observable, of } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { filter, tap } from 'rxjs/operators';
 import { get as _get } from 'lodash';
+import metadataHelper from '../../helpers/metadata.helper';
 
 export class AwEntitaLayoutDS extends LayoutDataSource {
   protected configuration: any;
@@ -20,7 +21,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
 
   public pageTitle: string;
 
-  public showFields = false;
+  public hasMetadataFields = false;
 
   public myResponse: any; // backend response object
 
@@ -187,16 +188,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       selected,
       basePath: this.getNavBasePath(),
     });
-    this.updateComponent(
-      'aw-entita-metadata-viewer',
-      this.myResponse.fields,
-      {
-        typeOfEntity: this.myResponse.typeOfEntity,
-        context: this.selectedTab,
-        config: this.configuration,
-        labels: this.configuration.get('labels'),
-      },
-    );
+    this.updateComponent('aw-entita-metadata-viewer', this.getFields(this.myResponse));
     this.drawPagination();
   }
 
@@ -218,7 +210,18 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       return this.communication.request$('getEntityDetails', {
         onError: (error) => console.error(error),
         params: { entityId: id, entitiesListSize: this.bubblesSize },
-      });
+      }).pipe(
+        // global metadata tab control
+        tap(({ fields, typeOfEntity }) => {
+          this.hasMetadataFields = !!metadataHelper.normalize({
+            fields,
+            paths: this.configuration.get('paths'),
+            labels: this.configuration.get('labels'),
+            metadataToShow: _get(this.configuration.get('entita-layout'), 'metadata-to-show', []),
+            type: typeOfEntity
+          }).length;
+        })
+      );
     }
     this.pageTitle = 'Entità Test';
     return of(null);
@@ -228,25 +231,17 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     const config = this.configuration.get('config-keys')[res.typeOfEntity];
     // console.log('(entita) Apollo responded with: ', { res })
     this.myResponse = res;
-    const allowedOverviewMetadata = _get(this.configuration.get('entita-layout'), 'overview.campi', []);
-    if (
-      (res.fields || [])
-        .filter((field) => allowedOverviewMetadata.includes(field.key)).length > 0
-    ) {
-      // look at the response array, filtered by configuration values.
-      // if the filtered response has some values, show the fields section.
-      this.showFields = true;
-    } else {
-      this.showFields = false;
-    }
     this.navHeader = { // always render nav header
       icon: config ? config.icon : '',
       text: this.myResponse.label,
       color: config['class-name'],
     };
-    this.one('aw-entita-nav').updateOptions({ bubblesEnabled: this.bubblesEnabled, config: this.configuration.get('entita-layout') });
-    this.one('aw-entita-metadata-viewer').updateOptions({ context: this.selectedTab, labels: this.configuration.get('labels'), config: this.configuration });
-    this.one('aw-entita-metadata-viewer').update(res.fields);
+    this.one('aw-entita-nav').updateOptions({
+      bubblesEnabled: this.bubblesEnabled,
+      config: this.configuration.get('entita-layout'),
+      hasMetadataFields: this.hasMetadataFields
+    });
+    this.one('aw-entita-metadata-viewer').update(this.getFields(res));
     if (this.selectedTab === 'oggetti-collegati') {
       this.one('aw-linked-objects').updateOptions({
         context: this.selectedTab,
@@ -294,5 +289,23 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       `${this.currentId}/`,
       this.currentSlug,
     ].join('');
+  }
+
+  public getFields(response) {
+    const { fields, typeOfEntity } = response;
+    const paths = this.configuration.get('paths');
+    const labels = this.configuration.get('labels');
+    let metadataToShow = _get(this.configuration.get('entita-layout'), 'metadata-to-show', []);
+    if (this.selectedTab === 'overview') {
+      metadataToShow = _get(this.configuration.get('entita-layout'), 'overview.campi', []);
+    }
+
+    return metadataHelper.normalize({
+      fields,
+      paths,
+      labels,
+      metadataToShow,
+      type: typeOfEntity
+    });
   }
 }
