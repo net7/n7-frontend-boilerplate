@@ -2,10 +2,6 @@
 import slugify from 'slugify';
 
 const domParser = new DOMParser();
-// slugify custom replacements
-slugify.extend({
-  '/': '-'
-});
 
 export default {
   prettifySnakeCase(key: string, label?: string) {
@@ -22,7 +18,9 @@ export default {
       return '';
     }
     const parsedDoc = domParser.parseFromString(str, 'text/html');
-    const parsedString = parsedDoc.body.textContent || '';
+    let parsedString = parsedDoc.body.textContent || '';
+    // custom replacements
+    parsedString = parsedString.replace(/\//g, '-');
     return slugify(parsedString, {
       remove: /[*+~.()'"!:@,]/g,
       lower: true
