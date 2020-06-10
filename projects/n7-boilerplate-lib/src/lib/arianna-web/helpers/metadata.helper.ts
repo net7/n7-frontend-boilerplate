@@ -16,7 +16,7 @@ const getLink = (fields: any[], paths) => {
   if (schedaTypes.includes(type)) {
     basePath = paths.schedaBasePath;
   }
-  return `<a href="${basePath}${id}/${slug}" target="_blank">${label}</a>`;
+  return `<a href="${basePath}${id}/${slug}">${label}</a>`;
 };
 
 const getRepeater = (fields: any[], labels, metadataToShow, type) => {
