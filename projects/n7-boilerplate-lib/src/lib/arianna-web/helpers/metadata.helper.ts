@@ -1,7 +1,11 @@
 import helpers from '../../common/helpers';
 
+const metadataIsEmpty = (value) => (!value || value === 'null');
+
 const isLink = (fields: any[]) => !!fields.filter(({ key }) => key === 'isLink').length;
+
 const isRepeater = (fields: any[]) => Array.isArray(fields);
+
 const getLink = (fields: any[], paths) => {
   const schedaTypes = ['oggetto-culturale', 'aggregazione-logica'];
   const label = fields.find(({ key }) => key === 'label').value;
@@ -14,11 +18,11 @@ const getLink = (fields: any[], paths) => {
   }
   return `<a href="${basePath}${id}/${slug}" target="_blank">${label}</a>`;
 };
+
 const getRepeater = (fields: any[], labels, metadataToShow, type) => {
   const html = [];
-  html.push('<dl>');
   fields
-    .filter(({ key }) => metadataToShow.includes(key))
+    .filter(({ key, value }) => metadataToShow.includes(key) && !metadataIsEmpty(value))
     .map(({ key, value }) => ({
       key,
       value,
@@ -30,8 +34,9 @@ const getRepeater = (fields: any[], labels, metadataToShow, type) => {
       html.push(`<dt>${label}</dt>`);
       html.push(`<dd>${value}</dd>`);
     });
-  html.push('</dl>');
-  return html.length > 2 ? html.join() : null;
+  return html.length
+    ? `<dl>${html.join('')}</dl>`
+    : null;
 };
 
 export default {
@@ -54,14 +59,14 @@ export default {
           } else if (isRepeater(fields)) {
             result.push({ key: label, value: getRepeater(fields, labels, metadataToShow, type) });
           }
-        // default
+          // default
         } else {
           result.push({ key, value });
         }
       });
     }
     return result
-      .filter(({ key, value }) => metadataToShow.includes(key) && !helpers.metadataIsEmpty(value))
+      .filter(({ key, value }) => metadataToShow.includes(key) && !metadataIsEmpty(value))
       .map(({ key, value }) => ({
         key,
         value,

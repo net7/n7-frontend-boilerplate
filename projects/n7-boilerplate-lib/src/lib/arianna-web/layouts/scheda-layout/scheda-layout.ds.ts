@@ -3,7 +3,9 @@ import {
   fromEvent, Subject, of, merge,
 } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { get as _get } from 'lodash';
 import helpers from '../../../common/helpers';
+import metadataHelper from '../../helpers/metadata.helper';
 
 export class AwSchedaLayoutDS extends LayoutDataSource {
   static tree: any = null;
@@ -175,12 +177,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       };
 
       this.one('aw-scheda-inner-title').update(titleObj);
-
-      this.one('aw-scheda-metadata').updateOptions({
-        labels: this.configuration.get('labels'),
-        metadataToShow: this.configuration.get('scheda-layout')['metadata-to-show']
-      });
-      this.one('aw-scheda-metadata').update(response);
+      this.one('aw-scheda-metadata').update(this.getFields(response));
 
       // Breadcrumb section
       const breadcrumbs = {
@@ -250,6 +247,22 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       } else {
         this.treeMaxHeight = `${wrapperBottom - wrapperTop - 50}px`;
       }
+    });
+  }
+
+  public getFields(response) {
+    const { fields, document_type: documenType } = response;
+    const paths = this.configuration.get('paths');
+    const labels = this.configuration.get('labels');
+    let metadataToShow = _get(this.configuration.get('scheda-layout'), 'metadata-to-show', {});
+    metadataToShow = metadataToShow[documenType] || [];
+
+    return metadataHelper.normalize({
+      fields,
+      paths,
+      labels,
+      metadataToShow,
+      type: documenType
     });
   }
 }
