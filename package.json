@@ -12,9 +12,9 @@
     "e2e": "ng e2e",
     "repackage": "ng build n7-boilerplate-lib",
     "postrepackage": "node scripts/repackage",
-    "package:serve": "ng build n7-boilerplate-lib --watch",
+    "package:serve": "ng build n7-boilerplate-lib --prod --watch",
     "package:copy": "node scripts/build-after",
-    "package:build": "ng build n7-boilerplate-lib && npm run package:copy",
+    "package:build": "ng build n7-boilerplate-lib --prod && npm run package:copy",
     "update:components": "npm update @n7-frontend/components"
   },
   "private": true,
