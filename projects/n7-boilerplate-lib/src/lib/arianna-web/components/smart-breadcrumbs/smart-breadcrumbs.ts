@@ -63,9 +63,9 @@ export class SmartBreadcrumbsComponent implements AfterViewInit {
 
   @Input() emit: any;
 
-  @ViewChild('bcol', { read: ElementRef, static: false }) bcol: ElementRef
+  @ViewChild('bcol', { read: ElementRef }) bcol: ElementRef
 
-  @ViewChild('bcdiv', { read: ElementRef, static: false }) bcdiv: ElementRef
+  @ViewChild('bcdiv', { read: ElementRef }) bcdiv: ElementRef
 
   ngAfterViewInit() {
     if (this.bcdiv && this.bcol) {
