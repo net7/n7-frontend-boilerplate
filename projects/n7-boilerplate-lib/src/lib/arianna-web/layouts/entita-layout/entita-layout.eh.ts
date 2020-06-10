@@ -122,15 +122,6 @@ export class AwEntitaLayoutEH extends EventHandler {
         }
         // get item from response with id === id and return as promise
         this.dataSource.loadItem(params.get('id'), params.get('slug'), params.get('tab'))
-          .pipe(
-            // filter empty metadata values
-            map((res: any) => {
-              if (res.fields) {
-                res.fields = res.fields.filter(({ value }) => !helpers.metadataIsEmpty(value));
-              }
-              return res;
-            })
-          )
           .subscribe((res) => {
             if (res) {
               this.dataSource.loadContent(res);
