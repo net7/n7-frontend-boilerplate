@@ -12,7 +12,9 @@ export class MrCollectionDS extends DataSource {
     if (header.button) {
       header.button = [{
         text: header.button.text,
-        payload: header.button.anchor
+        anchor: {
+          href: header.button.anchor
+        }
       }];
     }
 
@@ -32,7 +34,13 @@ export class MrCollectionDS extends DataSource {
           buttons: header.button
         }
       },
-      items: items.map((item) => ({ ...item, classes: classes || '' }))
+      items: items.map((item) => ({
+        ...item,
+        anchor: {
+          href: item.anchor
+        },
+        classes: classes || ''
+      }))
     };
   }
 }

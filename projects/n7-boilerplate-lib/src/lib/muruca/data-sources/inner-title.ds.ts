@@ -18,8 +18,10 @@ export class MrInnerTitleDS extends DataSource {
       actions: {
         buttons: [
           {
+            anchor: {
+              href: button.link,
+            },
             text: button.text,
-            payload: button.link,
             classes: 'n7-btn-cta'
           }
         ]
