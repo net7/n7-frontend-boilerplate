@@ -198,7 +198,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     });
     if (queryList.length > 0) { // if there are pending bubble queries
       forkJoin(queryList).subscribe((forkres) => {
-        forkres.forEach((r) => {
+        forkres.forEach((r: any) => {
           const bubbleConfig = this.configuration.get('config-keys')[r.typeOfEntity];
           tagsData.push({
             label: r.label,
