@@ -1,7 +1,6 @@
 import { LayoutDataSource } from '@n7-frontend/core/dist/layout-data-source';
 import { ConfigurationService } from '../../../common/services/configuration.service';
 import { CommunicationService } from '../../../common/services/communication.service';
-import homeMock from './home-layout-mock';
 
 export class MrHomeLayoutDS extends LayoutDataSource {
   private configuration: ConfigurationService;
@@ -24,15 +23,12 @@ export class MrHomeLayoutDS extends LayoutDataSource {
   doRequest() {
     const { sections } = this.pageConfig;
     if (sections) {
-      // FIXME: collegare API
       this.communication.request$('home', {
         method: 'POST',
         params: sections.map(({ id }) => id)
       }).subscribe((response) => {
         this.initSections(response);
       });
-
-      this.initSections(homeMock);
     }
   }
 
