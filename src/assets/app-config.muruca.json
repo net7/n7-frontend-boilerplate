@@ -157,6 +157,7 @@
   },
   "search-works": {
     "searchId": "work",
+    "resourcePath": "/work",
     "title": "Opere",
     "facetsTitle": "Filtra i risultati",
     "totalResultsText": ["Opere", "Opera"],
@@ -195,6 +196,7 @@
   },
   "search-maps": {
     "searchId": "map",
+    "resourcePath": "/map",
     "title": "Mappe",
     "facetsTitle": "Filtra i risultati",
     "totalResultsText": ["Mappe", "Mappa"],
