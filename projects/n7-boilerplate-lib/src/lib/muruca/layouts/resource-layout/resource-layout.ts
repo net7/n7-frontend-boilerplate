@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { map } from 'rxjs/operators';
 import { MrInnerTitleDS } from '../../data-sources/inner-title.ds';
 import { AbstractLayout } from '../../../common/models/abstract-layout';
 import { CommunicationService } from '../../../common/services/communication.service';
@@ -35,7 +36,8 @@ export class MrResourceLayoutComponent extends AbstractLayout implements OnInit,
     layoutsConfiguration: LayoutsConfigurationService,
     private activatedRoute: ActivatedRoute,
     private configuration: ConfigurationService,
-    private communication: CommunicationService
+    private communication: CommunicationService,
+    private route: ActivatedRoute
   ) {
     super(layoutsConfiguration.get('MrResourceLayoutConfig') || config);
   }
@@ -45,7 +47,8 @@ export class MrResourceLayoutComponent extends AbstractLayout implements OnInit,
       configId: this.configId,
       configuration: this.configuration,
       communication: this.communication,
-      options: this.config.options || {}
+      options: this.config.options || {},
+      route: this.route
     };
   }
 
@@ -62,7 +65,12 @@ export class MrResourceLayoutComponent extends AbstractLayout implements OnInit,
   }
 
   loadWidgets() {
-    const resourceConfig = this.configuration.get(this.configId) || {};
+    let resourceConfig: any = {};
+    this.route.paramMap
+      .pipe(map((res) => res.get('type')))
+      .subscribe((type) => {
+        resourceConfig = this.configuration.get(type);
+      });
     const { sections } = resourceConfig;
 
     this.widgets = [];

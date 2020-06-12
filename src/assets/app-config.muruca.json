@@ -20,9 +20,7 @@
           "wp-page": "data/api/",
           "search": "search/results",
           "facets": "search/facets",
-          "nav": "data/api/pages",
-          "page": "data/api/page_",
-          "sections": "get_section"
+          "resource": "get_resource/work/9"
         }
       }
     }

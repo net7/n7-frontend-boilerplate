@@ -1,5 +1,5 @@
 <div class="mr-resource mr-layout"
-     *ngIf="lb.dataSource">
+     *ngIf="lb.dataSource && lb.dataSource.pageConfig">
   <section *ngFor="let section of lb.dataSource.pageConfig.sections"
            class="{{ 'mr-layout__' + section.type }}">
     <ng-container [ngSwitch]="section.type">
@@ -27,11 +27,16 @@
 
       <!-- COLLECTION -->
       <ng-container *ngSwitchCase="'collection'">
-        <div class="{{ section.grid ? 'n7-grid-' + section.grid : '' }}">
-          <n7-item-preview *ngFor="let item of (lb.widgets[section.id].ds.out$ | async)?.items"
-                           [data]="item"
-                           [emit]="lb.widgets[section.id].emit">
-          </n7-item-preview>
+        <div class="mr-layout__maxwidth mr-items-preview">
+          <n7-inner-title [data]="(lb.widgets[section.id].ds.out$ | async)?.header"
+                          [emit]="lb.widgets[section.id].emit">
+          </n7-inner-title>
+          <div class="{{ section.grid ? 'n7-grid-' + section.grid : '' }}">
+            <n7-item-preview *ngFor="let item of (lb.widgets[section.id].ds.out$ | async)?.items"
+                             [data]="item"
+                             [emit]="lb.widgets[section.id].emit">
+            </n7-item-preview>
+          </div>
         </div>
       </ng-container>
 

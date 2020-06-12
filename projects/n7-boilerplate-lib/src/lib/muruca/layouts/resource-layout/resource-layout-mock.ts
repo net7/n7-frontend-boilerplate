@@ -85,14 +85,9 @@ export default {
     }]
   },
   'collection-2': {
-    // header: {
-    //   title: 'Bibliografia',
-    //   subtitle: 'Visita il mondo di Totus Mundus con una serie di percorsi per te.',
-    //   button: {
-    //     text: 'Visita il catalogo',
-    //     link: '/catalogo'
-    //   }
-    // },
+    header: {
+      title: 'Bibliografia',
+    },
     items: [
       {
         image: 'https://i.imgur.com/31D4TpW.png',
@@ -148,6 +143,9 @@ export default {
     }]
   },
   'collection-1': {
+    header: {
+      title: 'Termini e toponimi collegati',
+    },
     items: [
       {
         title: 'Preface of Qi Guangzong',
