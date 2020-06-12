@@ -5,6 +5,6 @@ export class FooterDS extends DataSource {
     if (!data) {
       return null;
     }
-    return data.items;
+    return data;
   }
 }

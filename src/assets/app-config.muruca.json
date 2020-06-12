@@ -33,14 +33,6 @@
     },
     "nav": {
       "items": []
-    },
-    "menuToggle": {
-      "open": {
-        "payload": "mobile-open"
-      },
-      "close": {
-        "payload": "mobile-close"
-      }
     }
   },
   "footer": {
