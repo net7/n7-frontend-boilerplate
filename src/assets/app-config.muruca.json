@@ -159,6 +159,7 @@
     "title": "Opere",
     "facetsTitle": "Filtra i risultati",
     "totalResultsText": ["Opere", "Opera"],
+    "filtersTitle": "Filtri attivi:",
     "sort": {
       "label": "Ordine",
       "options": [{
