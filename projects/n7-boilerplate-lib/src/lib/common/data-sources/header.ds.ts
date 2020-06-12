@@ -32,6 +32,17 @@ export class HeaderDS extends DataSource {
     });
   }
 
+  public onRouterChange() {
+    let { classes } = this.output;
+    classes = classes || '';
+    classes = classes.split(' ');
+
+    if (classes.includes(MOBILE_CLASS)) {
+      classes.splice(classes.indexOf(MOBILE_CLASS), 1);
+      this.output.classes = classes.join(' ');
+    }
+  }
+
   public onClick(payload) {
     // mobile control
     if (['mobile-open', 'mobile-close'].includes(payload)) {

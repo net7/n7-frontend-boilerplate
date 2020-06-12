@@ -18,6 +18,10 @@ export class HeaderEH extends EventHandler {
           this.dataSource.onCurrentNavChange(payload);
           break;
 
+        case 'main-layout.routerchange':
+          this.dataSource.onRouterChange();
+          break;
+
         default:
           break;
       }
