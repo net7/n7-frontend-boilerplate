@@ -1,11 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router, NavigationStart } from '@angular/router';
+import { filter } from 'rxjs/operators';
 import {
   N7BoilerplateCommonModule,
   N7BoilerplateMurucaModule,
   JsonConfigService,
   MrMenuService,
+  MainStateService,
 } from 'n7-boilerplate-lib';
 import globalConfig from './config/global';
 import layoutsConfig from './config/layouts';
@@ -44,4 +46,16 @@ const MENU_PATH = 'http://unus-sls.netseven.it/get_menu';
   }],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(
+    private router: Router,
+    private mainState: MainStateService
+  ) {
+    this.router.events.pipe(
+      filter((event) => event instanceof NavigationStart),
+    ).subscribe((event: any) => {
+      const { url } = event;
+      this.mainState.updateCustom('currentNav', url);
+    });
+  }
+}

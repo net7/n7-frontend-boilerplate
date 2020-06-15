@@ -3,6 +3,8 @@ import { HeaderData } from '@n7-frontend/components';
 
 const MOBILE_CLASS = 'is-mobile-nav-displayed';
 
+const ACTIVE_CLASS = 'is-active';
+
 export class HeaderDS extends DataSource {
   protected transform(data): HeaderData {
     if (!data) {
@@ -24,11 +26,7 @@ export class HeaderDS extends DataSource {
 
   public onCurrentNavChange(payload) {
     this.output.nav.items.forEach((item) => {
-      if (item._meta.id === payload) {
-        item.classes = 'is-current';
-      } else {
-        item.classes = '';
-      }
+      item.classes = item._meta.id === payload ? ACTIVE_CLASS : '';
     });
   }
 
