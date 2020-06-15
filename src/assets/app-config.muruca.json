@@ -1,4 +1,5 @@
 {
+  "name": "Totus Mundus",
   "communication": {
     "defaultProvider": "rest-local",
     "providers": {
@@ -29,19 +30,11 @@
     "logo": {
       "image": "https://i.imgur.com/kTND3Do.png",
       "anchor": {
-        "href": "mr/home-base"
+        "href": "/"
       }
     },
     "nav": {
       "items": []
-    },
-    "menuToggle": {
-      "open": {
-        "payload": "mobile-open"
-      },
-      "close": {
-        "payload": "mobile-close"
-      }
     }
   },
   "footer": {
@@ -103,70 +96,107 @@
     ]
   },
   "home-base": {
-    "sections": [
-      {
-        "id": "hero-1",
-        "type": "hero",
-        "grid": null,
-        "options": {
-          "classes": "n7-hero-1",
-          "background": true
-        }
-      },
-      {
-        "id": "collection-1",
-        "type": "collection",
-        "grid": 4,
-        "options": {
-          "classes": "is-overlay"
-        }
-      },
-      {
-        "id": "hero-2",
-        "type": "hero",
-        "grid": null,
-        "options": {
-          "classes": "n7-hero-2",
-          "background": false
-        }
-      },
-      {
-        "id": "collection-2",
-        "type": "collection",
-        "grid": 4,
-        "options": {
-          "classes": "is-vertical"
-        }
+    "title": "Home",
+    "sections": [{
+      "id": "hero-1",
+      "type": "hero",
+      "grid": null,
+      "options": {
+        "classes":"n7-hero-1",
+        "background": true
+      }
+
+    }, {
+      "id": "collection-1",
+      "type": "collection",
+      "grid": 4,
+      "options": {
+        "classes":"is-overlay"
+      }
+    },
+    {
+      "id": "hero-2",
+      "type": "hero",
+      "grid": null,
+      "options": {
+        "classes":"n7-hero-2",
+        "background": false
+      }
+    }, {
+      "id": "collection-2",
+      "type": "collection",
+      "grid": 4,
+      "options": {
+        "classes":"is-vertical"
       }
     ]
   },
   "home-pro": {
-    "sections": [
-      {
-        "id": "slider-1",
-        "type": "slider",
-        "grid": null
-      },
-      {
-        "id": "collection-1",
-        "type": "collection",
-        "grid": 4
-      },
-      {
-        "id": "hero-1",
-        "type": "hero",
-        "grid": null
-      },
-      {
-        "id": "collection-2",
-        "type": "collection",
-        "grid": 4
-      }
-    ]
+    "title": "Home (pro)",
+    "sections": [{
+      "id": "slider-1",
+      "type": "slider",
+      "grid": null
+    }, {
+      "id": "collection-1",
+      "type": "collection",
+      "grid": 4
+    }, {
+      "id": "hero-1",
+      "type": "hero",
+      "grid": null
+    }, {
+      "id": "collection-2",
+      "type": "collection",
+      "grid": 4
+    }]
   },
   "search-works": {
     "title": "Opere",
+    "searchId": "work",
+    "resourcePath": "/work",
     "facetsTitle": "Filtra i risultati",
+    "totalResultsText": ["Opere", "Opera"],
+    "filtersTitle": "Filtri attivi:",
+    "sort": {
+      "label": "Ordine",
+      "options": [{
+        "value": "_score_DESC",
+        "label": "Ordine per pertinenza",
+        "selected": true
+      },
+      {
+        "value": "label_sort_ASC",
+        "label": "Ordine alfabetico (A→Z)",
+        "selected": false
+  
+      },
+      {
+        "value": "label_sort_DESC",
+        "label": "Ordine alfabetico (Z→A)",
+        "selected": false
+      }]
+    },
+    "pagination": {
+      "limit": 5,
+      "options": [10, 25, 50]
+    },
+    "fallback": {
+      "text": "La tua ricerca non ha dato risultati. Prova a cambiare i parametri oppure a resettare la ricerca cliccando sul pulsante sottostante.",
+      "button": "Resetta la ricerca"
+    },
+    "ko": {
+      "text": "Oops, abbiamo riscontrato un errore nella ricerca. Prova a cambiare i parametri oppure a resettare la ricerca cliccando sul pulsante sottostante.",
+      "button": "Resetta la ricerca"
+    }
+  },
+  "search-maps": {
+    "title": "Mappe",
+    "searchId": "map",
+    "resourcePath": "/map",
+    "facetsTitle": "Filtra i risultati",
+    "totalResultsText": ["Mappe", "Mappa"],
+    "filtersTitle": "Filtri attivi:",
     "totalResultsText": [
       "Opere",
       "Opera"

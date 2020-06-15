@@ -11,8 +11,8 @@
         <div class="mr-search__results-content">
             <aside class="mr-search__facets">
                 <div class="filter-section">
-                    <h2 *ngIf="lb.dataSource.pageConfig['facets-title']">
-                        {{ lb.dataSource.pageConfig['facets-title'] }}
+                    <h2 *ngIf="lb.dataSource.pageConfig['facetsTitle']">
+                        {{ lb.dataSource.pageConfig['facetsTitle'] }}
                     </h2>
                     <mr-search-facets-layout 
                     [searchService]="lb.dataSource.searchService">
@@ -27,6 +27,11 @@
                     </n7-inner-title>
                 </div>
                 <div class="mr-search__results-filters">
+                    <span *ngIf="(
+                        lb.dataSource.pageConfig['filtersTitle'] && 
+                        lb.widgets['mr-search-tags'].ds.hasFilters
+                    )" 
+                    class="mr-search__results-filters-title">{{ lb.dataSource.pageConfig['filtersTitle'] }}</span>
                     <n7-tag *ngFor="let tag of (lb.widgets['mr-search-tags'].ds.out$ | async)"
                     [data]="tag"
                     [emit]="lb.widgets['mr-search-tags'].emit">
@@ -57,7 +62,7 @@
                             </n7-item-preview>
                         </ng-container>
 
-                        <!-- ok: items === 0 -->
+                        <!-- empty: items === 0 -->
                         <ng-container *ngSwitchCase="'EMPTY'">
                             <div class="mr-search__results-fallback">
                                 <p class="mr-search__results-fallback-string">

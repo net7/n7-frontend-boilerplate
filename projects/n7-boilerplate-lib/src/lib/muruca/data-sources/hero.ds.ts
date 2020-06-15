@@ -5,15 +5,23 @@ export class MrHeroDS extends DataSource {
 
   protected transform(data: any): any {
     const { classes, background } = this.options;
-    let back;
-    let image;
-    if (background) {
-      back = data.image; image = false;
-    } else {
-      image = data.image; back = false;
-    }
+    const {
+      text, image, title, button
+    } = data;
+    const backgroundImage = background ? image : null;
+
     return {
-      ...data, classes, backgroundImage: back, image: image || ''
+      text,
+      title,
+      classes,
+      backgroundImage,
+      image: backgroundImage ? image : null,
+      button: button ? {
+        ...button,
+        anchor: {
+          href: button.anchor
+        }
+      } : null
     };
   }
 }

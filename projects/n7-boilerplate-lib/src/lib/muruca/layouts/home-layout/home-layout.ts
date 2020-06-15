@@ -4,6 +4,7 @@ import { AbstractLayout } from '../../../common/models/abstract-layout';
 import { CommunicationService } from '../../../common/services/communication.service';
 import { LayoutsConfigurationService } from '../../../common/services/layouts-configuration.service';
 import { ConfigurationService } from '../../../common/services/configuration.service';
+import { MainStateService } from '../../../common/services/main-state.service';
 import { MrHomeLayoutConfig as config } from './home-layout.config';
 import { MrSliderDS } from '../../data-sources/slider.ds';
 import { MrCollectionDS } from '../../data-sources/collection.ds';
@@ -35,7 +36,8 @@ export class MrHomeLayoutComponent extends AbstractLayout implements OnInit, OnD
     layoutsConfiguration: LayoutsConfigurationService,
     private activatedRoute: ActivatedRoute,
     private configuration: ConfigurationService,
-    private communication: CommunicationService
+    private communication: CommunicationService,
+    private mainState: MainStateService,
   ) {
     super(layoutsConfiguration.get('MrHomeLayoutConfig') || config);
   }
@@ -43,6 +45,7 @@ export class MrHomeLayoutComponent extends AbstractLayout implements OnInit, OnD
   protected initPayload() {
     return {
       configId: this.configId,
+      mainState: this.mainState,
       configuration: this.configuration,
       communication: this.communication,
       options: this.config.options || {}

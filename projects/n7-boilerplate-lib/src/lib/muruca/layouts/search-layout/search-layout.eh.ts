@@ -102,7 +102,6 @@ export class MrSearchLayoutEH extends EventHandler {
       });
       return params;
     });
-    this.searchService.setBeforeHook(INPUT_STATE_CONTEXT, 'limit', (value) => +value);
 
     this.searchService.getState$(RESULTS_REQUEST_STATE_CONTEXT, 'success')
       .subscribe((response) => {

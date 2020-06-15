@@ -28,11 +28,11 @@ export class MainLayoutDS extends LayoutDataSource {
 
     // update header
     if (this.configuration.get('header')) {
-      this.one('header').update({ items: this.configuration.get('header') });
+      this.one('header').update(this.configuration.get('header'));
     }
 
     if (this.configuration.get('footer')) {
-      this.one('footer').update({ items: this.configuration.get('footer') });
+      this.one('footer').update(this.configuration.get('footer'));
     }
 
     // main state updates

@@ -23,15 +23,16 @@ export class MrMenuService {
   private _handleResponse(response, rootPath) {
     if (response) {
       const headerConfig = this.configuration.get('header');
-      headerConfig.nav.items = response.map(({ label, slug, isStatic }) => ({
-        text: label,
-        anchor: {
-          href: isStatic ? slug : `${rootPath}/${slug}`
-        },
-        _meta: {
-          id: slug
-        }
-      }));
+      headerConfig.nav.items = response.map(({ label, slug, isStatic }) => {
+        const href = isStatic ? `/${slug}` : `/${rootPath}/${slug}`;
+        return {
+          text: label,
+          anchor: { href },
+          _meta: {
+            id: href
+          }
+        };
+      });
       this.configuration.set('header', headerConfig);
     }
   }

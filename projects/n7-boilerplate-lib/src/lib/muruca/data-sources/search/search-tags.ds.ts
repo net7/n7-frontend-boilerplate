@@ -2,6 +2,8 @@ import { DataSource } from '@n7-frontend/core';
 import { TagData } from '@n7-frontend/components';
 
 export class MrSearchTagsDS extends DataSource {
+  public hasFilters = false;
+
   protected transform(data): TagData[] {
     const { state, linksResponse, facetsConfig } = data;
     const { inputs: linkInputs } = linksResponse;
@@ -31,6 +33,8 @@ export class MrSearchTagsDS extends DataSource {
           }
         });
     });
+
+    this.hasFilters = !!tags.length;
     return tags;
   }
 }

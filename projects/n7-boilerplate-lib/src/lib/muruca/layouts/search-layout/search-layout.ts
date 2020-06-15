@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject } from 'rxjs';
 import { AbstractLayout } from '../../../common/models/abstract-layout';
 import { LayoutsConfigurationService } from '../../../common/services/layouts-configuration.service';
 import { MrSearchLayoutConfig as config } from './search-layout.config';
 import { CommunicationService } from '../../../common/services/communication.service';
 import { ConfigurationService } from '../../../common/services/configuration.service';
+import { MainStateService } from '../../../common/services/main-state.service';
 import { MrSearchService } from '../../services/search.service';
 import searchConfig from './search-config.mock';
 
@@ -17,10 +17,6 @@ import searchConfig from './search-config.mock';
 export class MrSearchLayoutComponent extends AbstractLayout implements OnInit, OnDestroy {
   private configId: string;
 
-  hostEmit$: Subject<any> = new Subject();
-
-  guestEmit$: Subject<any> = new Subject();
-
   constructor(
     layoutsConfiguration: LayoutsConfigurationService,
     private router: Router,
@@ -28,6 +24,8 @@ export class MrSearchLayoutComponent extends AbstractLayout implements OnInit, O
     private communication: CommunicationService,
     private configuration: ConfigurationService,
     private searchService: MrSearchService,
+    private mainState: MainStateService,
+
   ) {
     super(layoutsConfiguration.get('MrSearchLayoutConfig') || config);
   }
@@ -36,7 +34,7 @@ export class MrSearchLayoutComponent extends AbstractLayout implements OnInit, O
     return {
       configId: this.configId,
       configuration: this.configuration,
-      // mainState: this.mainState,
+      mainState: this.mainState,
       router: this.router,
       activatedRoute: this.activatedRoute,
       communication: this.communication,
@@ -48,7 +46,8 @@ export class MrSearchLayoutComponent extends AbstractLayout implements OnInit, O
   ngOnInit() {
     this.activatedRoute.data.subscribe((data) => {
       this.configId = data.configId;
-      this.searchService.init(this.configId, searchConfig);
+      const { searchId } = this.configuration.get(this.configId);
+      this.searchService.init(searchId, searchConfig);
       this.onInit();
     });
   }
