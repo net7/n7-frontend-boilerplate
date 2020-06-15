@@ -18,3 +18,8 @@ export * from './static-layout/static-layout';
 export * from './static-layout/static-layout.ds';
 export * from './static-layout/static-layout.eh';
 export * from './static-layout/static-layout.config';
+// resource layout
+export * from './resource-layout/resource-layout';
+export * from './resource-layout/resource-layout.ds';
+export * from './resource-layout/resource-layout.eh';
+export * from './resource-layout/resource-layout.config';

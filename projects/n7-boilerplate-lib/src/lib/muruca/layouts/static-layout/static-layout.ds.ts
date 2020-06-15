@@ -19,10 +19,16 @@ export class MrStaticLayoutDS extends LayoutDataSource {
     this.mainState = payload.mainState;
   }
 
+  /**
+   * Make a request to serverless based on the url slug
+   * Example:
+   * - base-url/static/sample-page
+   * - base-url/static/another-page
+   */
   pageRequest$(slug: string): Observable<any> {
     return this.communication.request$('wp-page', { urlParams: slug });
   }
-
+  
   handleResponse(response: any) {
     const { title, body } = response;
     this.setHtml(title, body);

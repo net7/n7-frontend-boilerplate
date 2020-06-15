@@ -16,11 +16,12 @@
         "type": "rest",
         "baseUrl": "http://unus-sls.netseven.it/",
         "config": {
-            "home": "get_home",
-            "menu": "get_menu",
-            "wp-page": "data/api/",
-            "search": "search/results",
-            "facets": "search/facets"
+          "home": "get_home",
+          "menu": "get_menu",
+          "wp-page": "data/api/",
+          "search": "search/results",
+          "facets": "search/facets",
+          "resource": "get_resource/work/9"
         }
       }
     }
@@ -128,7 +129,7 @@
       "options": {
         "classes":"is-vertical"
       }
-    }]
+    ]
   },
   "home-pro": {
     "title": "Home (pro)",
@@ -196,28 +197,37 @@
     "facetsTitle": "Filtra i risultati",
     "totalResultsText": ["Mappe", "Mappa"],
     "filtersTitle": "Filtri attivi:",
+    "totalResultsText": [
+      "Opere",
+      "Opera"
+    ],
     "sort": {
       "label": "Ordine",
-      "options": [{
-        "value": "_score_DESC",
-        "label": "Ordine per pertinenza",
-        "selected": true
-      },
-      {
-        "value": "label_sort_ASC",
-        "label": "Ordine alfabetico (A→Z)",
-        "selected": false
-  
-      },
-      {
-        "value": "label_sort_DESC",
-        "label": "Ordine alfabetico (Z→A)",
-        "selected": false
-      }]
+      "options": [
+        {
+          "value": "_score_DESC",
+          "label": "Ordine per pertinenza",
+          "selected": true
+        },
+        {
+          "value": "label_sort_ASC",
+          "label": "Ordine alfabetico (A→Z)",
+          "selected": false
+        },
+        {
+          "value": "label_sort_DESC",
+          "label": "Ordine alfabetico (Z→A)",
+          "selected": false
+        }
+      ]
     },
     "pagination": {
       "limit": 5,
-      "options": [10, 25, 50]
+      "options": [
+        10,
+        25,
+        50
+      ]
     },
     "fallback": {
       "text": "La tua ricerca non ha dato risultati. Prova a cambiare i parametri oppure a resettare la ricerca cliccando sul pulsante sottostante.",
@@ -227,5 +237,73 @@
       "text": "Oops, abbiamo riscontrato un errore nella ricerca. Prova a cambiare i parametri oppure a resettare la ricerca cliccando sul pulsante sottostante.",
       "button": "Resetta la ricerca"
     }
+  },
+  "work": {
+    "sections": [
+      {
+        "id": "title-1",
+        "type": "title",
+        "grid": null
+      },
+      {
+        "id": "viewer-1",
+        "type": "viewer",
+        "grid": null
+      },
+      {
+        "id": "metadata-1",
+        "type": "metadata",
+        "grid": null
+      },
+      {
+        "id": "metadata-2",
+        "type": "metadata",
+        "grid": null
+      },
+      {
+        "id": "collection-1",
+        "type": "collection",
+        "grid": 3
+      },
+      {
+        "id": "preview-2",
+        "type": "preview",
+        "grid": null
+      }
+    ]
+  },
+  "map": {
+    "sections": [
+      {
+        "id": "title-2",
+        "type": "title",
+        "grid": null
+      },
+      {
+        "id": "metadata-3",
+        "type": "metadata",
+        "grid": null
+      },
+      {
+        "id": "metadata-1",
+        "type": "metadata",
+        "grid": null
+      },
+      {
+        "id": "metadata-2",
+        "type": "metadata",
+        "grid": null
+      },
+      {
+        "id": "collection-2",
+        "type": "collection",
+        "grid": 3
+      },
+      {
+        "id": "collection-1",
+        "type": "collection",
+        "grid": 3
+      }
+    ]
   }
 }

@@ -1,7 +1,6 @@
 import { DataSource } from '@n7-frontend/core';
 
 export class MrInnerTitleDS extends DataSource {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   protected transform(data: any): any {
     const { title, subtitle, button } = data;
     return {
@@ -15,7 +14,7 @@ export class MrInnerTitleDS extends DataSource {
           classes: 'italic'
         }
       },
-      actions: {
+      actions: button ? {
         buttons: [
           {
             anchor: {
@@ -25,7 +24,7 @@ export class MrInnerTitleDS extends DataSource {
             classes: 'n7-btn-cta'
           }
         ]
-      }
+      } : null
     };
   }
 }
