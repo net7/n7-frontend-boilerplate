@@ -39,9 +39,7 @@ export class MrStaticLayoutEH extends EventHandler {
       map((params: ParamMap) => params.get('slug')),
       switchMap((slug: string) => this.dataSource.pageRequest$(slug))
     ).subscribe((response) => {
-      const { title } = response;
-      const { body } = response;
-      this.dataSource.renderHTML(title, body);
+      this.dataSource.handleResponse(response);
     });
   }
 }

@@ -1,5 +1,6 @@
 import { LayoutDataSource } from '@n7-frontend/core';
 import { ConfigurationService } from '../../../common/services/configuration.service';
+import { MainStateService } from '../../../common/services/main-state.service';
 import { MrSearchService } from '../../services/search.service';
 
 type SectionStates = 'LOADING' | 'EMPTY' | 'OK' | 'KO';
@@ -7,9 +8,12 @@ type SectionStates = 'LOADING' | 'EMPTY' | 'OK' | 'KO';
 export class MrSearchLayoutDS extends LayoutDataSource {
   private configuration: ConfigurationService;
 
+  private mainState: MainStateService;
+
   private configId: string;
 
   public searchService: MrSearchService;
+
 
   public sectionState: {
     [key: string]: SectionStates;
@@ -23,6 +27,7 @@ export class MrSearchLayoutDS extends LayoutDataSource {
 
   onInit(payload) {
     this.configuration = payload.configuration;
+    this.mainState = payload.mainState;
     this.searchService = payload.searchService;
     this.configId = payload.configId;
     this.pageConfig = this.configuration.get(this.configId);
@@ -32,6 +37,9 @@ export class MrSearchLayoutDS extends LayoutDataSource {
 
     // manual updates
     this.one('mr-search-page-title').update({});
+
+    // update head title
+    this.updateHeadTitle();
   }
 
   handleResponse(response) {
@@ -71,5 +79,11 @@ export class MrSearchLayoutDS extends LayoutDataSource {
 
   setSectionState(id: string, newState: SectionStates) {
     this.sectionState[id] = newState;
+  }
+
+  private updateHeadTitle() {
+    const appName = this.configuration.get('name');
+    const pageTitle = this.pageConfig.title;
+    this.mainState.update('headTitle', [appName, pageTitle].join(' > '));
   }
 }

@@ -1,4 +1,5 @@
 {
+  "name": "Totus Mundus",
   "communication": {
     "defaultProvider": "rest-local",
     "providers": {
@@ -94,6 +95,7 @@
     ]
   },
   "home-base": {
+    "title": "Home",
     "sections": [{
       "id": "hero-1",
       "type": "hero",
@@ -129,6 +131,7 @@
     }]
   },
   "home-pro": {
+    "title": "Home (pro)",
     "sections": [{
       "id": "slider-1",
       "type": "slider",
@@ -148,9 +151,9 @@
     }]
   },
   "search-works": {
+    "title": "Opere",
     "searchId": "work",
     "resourcePath": "/work",
-    "title": "Opere",
     "facetsTitle": "Filtra i risultati",
     "totalResultsText": ["Opere", "Opera"],
     "filtersTitle": "Filtri attivi:",
@@ -187,9 +190,9 @@
     }
   },
   "search-maps": {
+    "title": "Mappe",
     "searchId": "map",
     "resourcePath": "/map",
-    "title": "Mappe",
     "facetsTitle": "Filtra i risultati",
     "totalResultsText": ["Mappe", "Mappa"],
     "filtersTitle": "Filtri attivi:",

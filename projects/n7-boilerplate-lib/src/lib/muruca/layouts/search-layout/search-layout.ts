@@ -5,6 +5,7 @@ import { LayoutsConfigurationService } from '../../../common/services/layouts-co
 import { MrSearchLayoutConfig as config } from './search-layout.config';
 import { CommunicationService } from '../../../common/services/communication.service';
 import { ConfigurationService } from '../../../common/services/configuration.service';
+import { MainStateService } from '../../../common/services/main-state.service';
 import { MrSearchService } from '../../services/search.service';
 import searchConfig from './search-config.mock';
 
@@ -23,6 +24,8 @@ export class MrSearchLayoutComponent extends AbstractLayout implements OnInit, O
     private communication: CommunicationService,
     private configuration: ConfigurationService,
     private searchService: MrSearchService,
+    private mainState: MainStateService,
+
   ) {
     super(layoutsConfiguration.get('MrSearchLayoutConfig') || config);
   }
@@ -31,7 +34,7 @@ export class MrSearchLayoutComponent extends AbstractLayout implements OnInit, O
     return {
       configId: this.configId,
       configuration: this.configuration,
-      // mainState: this.mainState,
+      mainState: this.mainState,
       router: this.router,
       activatedRoute: this.activatedRoute,
       communication: this.communication,
