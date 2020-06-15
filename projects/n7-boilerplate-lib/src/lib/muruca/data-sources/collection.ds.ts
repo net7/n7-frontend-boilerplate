@@ -9,7 +9,7 @@ export class MrCollectionDS extends DataSource {
     const { header, items } = data;
     const { classes } = this.options;
 
-    if (header.button) {
+    if ((header || {}).button) {
       header.button = [{
         text: header.button.text,
         payload: header.button.anchor
@@ -23,10 +23,18 @@ export class MrCollectionDS extends DataSource {
             text: header.title,
             classes: 'bold'
           },
-          secondary: {
+          secondary: header.subtitle ? {
             text: header.subtitle,
-            classes: 'italic'
-          }
+          } : false,
+          actions: header.button ? {
+            buttons: [
+              {
+                text: header.button.text,
+                payload: header.button.link,
+                classes: 'n7-btn-cta'
+              }
+            ]
+          } : false
         },
         actions: {
           buttons: header.button

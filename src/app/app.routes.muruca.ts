@@ -8,7 +8,8 @@ import {
   MrHomeLayoutComponent,
   MrSearchLayoutComponent,
   MrGlossaryLayoutComponent,
-  MrStaticLayoutComponent
+  MrStaticLayoutComponent,
+  MrResourceLayoutComponent
 } from 'n7-boilerplate-lib';
 
 export const APP_ROUTES: Routes = [
@@ -20,10 +21,13 @@ export const APP_ROUTES: Routes = [
   { path: 'home', component: MrHomeLayoutComponent, data: { configId: 'home-base' } },
   { path: 'home-pro', component: MrHomeLayoutComponent, data: { configId: 'home-pro' } },
   { path: 'search', component: MrSearchLayoutComponent, data: { configId: 'search-works' } },
+  { path: 'mappe', component: MrSearchLayoutComponent, data: { configId: 'search-works' } },
   { path: 'opere', component: MrSearchLayoutComponent, data: { configId: 'search-works' } },
   { path: 'glossary', component: MrGlossaryLayoutComponent },
+  { path: 'resource', component: MrResourceLayoutComponent },
   { path: 'toponimia', component: MrGlossaryLayoutComponent },
   { path: 'static/:slug', component: MrStaticLayoutComponent },
   { path: 'progetto', component: MrStaticLayoutComponent },
+  { path: 'resource/:type/:id', component: MrResourceLayoutComponent, data: { configId: ':type' } },
   { path: '**', component: Page404LayoutComponent }
 ];
