@@ -13,25 +13,21 @@ export class MrResourceLayoutDS extends LayoutDataSource {
 
   private pageConfig;
 
-  /** Current resource, based on url */
-  private resource: { id: string; type: string }
-
   onInit(payload) {
     this.configuration = payload.configuration;
     this.communication = payload.communication;
     this.configId = payload.configId;
+    this.pageConfig = this.configuration.get(this.configId);
   }
 
   /** Request the configured widgets data */
-  pageRequest$({ type, id }): Observable<any> {
-    this.resource = { id, type };
-    const { sections } = this.configuration.get(type);
-    this.pageConfig = { sections };
+  pageRequest$(slug): Observable<any> {
+    const { sections } = this.pageConfig;
     return this.communication.request$('resource', {
       method: 'POST',
       params: {
-        type,
-        id,
+        slug,
+        type: this.pageConfig.type,
         sections: sections.map((s) => s.id),
       }
     });
@@ -45,7 +41,7 @@ export class MrResourceLayoutDS extends LayoutDataSource {
     // TODO: remove this 👆🏻 line
 
 
-    const { sections } = this.configuration.get(this.resource.type);
+    const { sections } = this.pageConfig;
     // console.log({ sections });
     sections.forEach(({ id }) => {
       const widgetDataSource = this.getWidgetDataSource(id);

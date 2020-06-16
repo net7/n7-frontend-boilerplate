@@ -25,11 +25,8 @@ export class MrResourceLayoutEH extends EventHandler {
   private listenRoute() {
     this.route.paramMap.pipe(
       takeUntil(this.destroy$),
-      map((params: ParamMap) => ({
-        type: params.get('type'),
-        id: params.get('id')
-      })),
-      switchMap(({ id, type }) => this.dataSource.pageRequest$({ type, id }))
+      map((params: ParamMap) => params.get('slug')),
+      switchMap((slug) => this.dataSource.pageRequest$(slug))
     ).subscribe((response) => {
       this.dataSource.initSections(response);
     });
