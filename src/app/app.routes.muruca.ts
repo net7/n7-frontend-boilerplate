@@ -7,7 +7,6 @@ import {
   // MURUCA
   MrHomeLayoutComponent,
   MrSearchLayoutComponent,
-  MrGlossaryLayoutComponent,
   MrStaticLayoutComponent,
   MrResourceLayoutComponent
 } from 'n7-boilerplate-lib';
@@ -22,11 +21,8 @@ export const APP_ROUTES: Routes = [
   { path: 'home-pro', component: MrHomeLayoutComponent, data: { configId: 'home-pro' } },
   { path: 'opere', component: MrSearchLayoutComponent, data: { configId: 'search-works' } },
   { path: 'mappe', component: MrSearchLayoutComponent, data: { configId: 'search-maps' } },
-  { path: 'glossary', component: MrGlossaryLayoutComponent },
-  { path: 'resource', component: MrResourceLayoutComponent },
-  { path: 'toponimia', component: MrGlossaryLayoutComponent },
+  { path: 'mappa/:slug', component: MrResourceLayoutComponent, data: { configId: 'resource-map' } },
+  { path: 'opera/:slug', component: MrResourceLayoutComponent, data: { configId: 'resource-work' } },
   { path: 'static/:slug', component: MrStaticLayoutComponent },
-  { path: 'progetto', component: MrStaticLayoutComponent },
-  { path: 'resource/:type/:id', component: MrResourceLayoutComponent, data: { configId: ':type' } },
   { path: '**', component: Page404LayoutComponent }
 ];
