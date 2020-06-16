@@ -294,13 +294,13 @@
     "type": "map",
     "sections": [
       {
-        "id": "title-2",
+        "id": "title-1",
         "type": "title",
         "grid": null
       },
       {
-        "id": "metadata-3",
-        "type": "metadata",
+        "id": "viewer-1",
+        "type": "viewer",
         "grid": null
       },
       {
@@ -314,14 +314,14 @@
         "grid": null
       },
       {
-        "id": "collection-2",
+        "id": "collection-1",
         "type": "collection",
         "grid": 3
       },
       {
-        "id": "collection-1",
-        "type": "collection",
-        "grid": 3
+        "id": "preview-2",
+        "type": "preview",
+        "grid": null
       }
     ]
   }

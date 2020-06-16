@@ -3,7 +3,6 @@ import { Observable } from 'rxjs';
 import { ConfigurationService } from '../../../common/services/configuration.service';
 import { CommunicationService } from '../../../common/services/communication.service';
 import { MainStateService } from '../../../common/services/main-state.service';
-import resourceMock from './resource-layout-mock';
 
 export class MrResourceLayoutDS extends LayoutDataSource {
   private configuration: ConfigurationService;
@@ -38,11 +37,6 @@ export class MrResourceLayoutDS extends LayoutDataSource {
   }
 
   handleResponse(response) {
-    // fake response from local mockup
-    // eslint-disable-next-line no-param-reassign
-    response = resourceMock;
-    // TODO: remove this 👆🏻 line
-
     this.initSections(response);
     this.updateHeadTitle(response);
   }
