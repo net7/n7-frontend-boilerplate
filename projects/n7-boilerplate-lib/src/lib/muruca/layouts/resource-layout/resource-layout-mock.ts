@@ -7,10 +7,7 @@ export default {
       button: {
         title: '',
         text: 'Vai alle opere',
-        anchor: {
-          href: '/button-url',
-          target: '_blank'
-        }
+        link: '/button-url'
       },
     },
     'title-2': {
@@ -27,26 +24,7 @@ export default {
         { url: 'https://i.imgur.com/Zb9g5LK.png', classes: 'is-active' },
         { url: 'https://i.imgur.com/ODmWj8U.png' },
         { url: 'https://i.imgur.com/yTVXoSe.png' },
-      ],
-      viewerId: 'seadragon-viewer',
-      libOptions: {
-        /* SHOW GROUP */
-        showNavigator: false, // shows the mini-map
-        autoHideControls: false,
-
-        /* SHOW BUTTONS */
-        showRotationControl: false,
-        showSequenceControl: true,
-        showHomeControl: true,
-        showZoomControl: true,
-
-        /* SEQUENCE */
-        sequenceMode: true, // allows having multiple images (as in array of images + zoomed image)
-        showReferenceStrip: true, // shows the images array (default: horizontally)
-
-        navigationControlAnchor: 'TOP_RIGHT',
-      },
-      _setViewer(viewer) { return viewer; }
+      ]
     },
     'preview-2': {
       title: 'Collezione di appartenenza',
