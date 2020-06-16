@@ -28,7 +28,7 @@ export class MrResourceLayoutEH extends EventHandler {
       map((params: ParamMap) => params.get('slug')),
       switchMap((slug) => this.dataSource.pageRequest$(slug))
     ).subscribe((response) => {
-      this.dataSource.initSections(response);
+      this.dataSource.handleResponse(response);
     });
   }
 }

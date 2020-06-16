@@ -254,6 +254,7 @@
     }
   },
   "resource-work": {
+    "title": "Opera",
     "type": "work",
     "sections": [
       {
@@ -289,6 +290,7 @@
     ]
   },
   "resource-map": {
+    "title": "Mappa",
     "type": "map",
     "sections": [
       {
