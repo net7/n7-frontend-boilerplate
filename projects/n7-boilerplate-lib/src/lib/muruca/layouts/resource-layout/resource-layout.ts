@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs/operators';
 import { MrInnerTitleDS } from '../../data-sources/inner-title.ds';
 import { AbstractLayout } from '../../../common/models/abstract-layout';
 import { CommunicationService } from '../../../common/services/communication.service';
 import { LayoutsConfigurationService } from '../../../common/services/layouts-configuration.service';
 import { ConfigurationService } from '../../../common/services/configuration.service';
+import { MainStateService } from '../../../common/services/main-state.service';
 import { MrResourceLayoutConfig as config } from './resource-layout.config';
 import { MrImageViewerDS } from '../../data-sources/image-viewer.ds';
 import { MrImageViewerEH } from '../../event-handlers/image-viewer.eh';
@@ -37,6 +37,7 @@ export class MrResourceLayoutComponent extends AbstractLayout implements OnInit,
     private activatedRoute: ActivatedRoute,
     private configuration: ConfigurationService,
     private communication: CommunicationService,
+    private mainState: MainStateService,
     private route: ActivatedRoute
   ) {
     super(layoutsConfiguration.get('MrResourceLayoutConfig') || config);
@@ -47,6 +48,7 @@ export class MrResourceLayoutComponent extends AbstractLayout implements OnInit,
       configId: this.configId,
       configuration: this.configuration,
       communication: this.communication,
+      mainState: this.mainState,
       options: this.config.options || {},
       route: this.route
     };
@@ -65,13 +67,7 @@ export class MrResourceLayoutComponent extends AbstractLayout implements OnInit,
   }
 
   loadWidgets() {
-    let resourceConfig: any = {};
-    this.route.paramMap
-      .pipe(map((res) => res.get('type')))
-      .subscribe((type) => {
-        resourceConfig = this.configuration.get(type);
-      });
-    const { sections } = resourceConfig;
+    const { sections } = this.configuration.get(this.configId);
 
     this.widgets = [];
     if (sections) {
