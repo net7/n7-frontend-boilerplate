@@ -39,7 +39,7 @@
                 </div>
                 <main class="mr-search__results">
                     <!-- SEARCH RESULTS -->
-                    <ng-container [ngSwitch]="lb.dataSource.sectionState.results">
+                    <ng-container [ngSwitch]="layoutState.get$('results') | async">
                         
                         <!-- loading -->
                         <ng-container *ngSwitchCase="'LOADING'">
@@ -55,8 +55,8 @@
                             </div>
                         </ng-container>
                         
-                        <!-- ok: items > 0 -->
-                        <ng-container *ngSwitchCase="'OK'">
+                        <!-- success: items > 0 -->
+                        <ng-container *ngSwitchCase="'SUCCESS'">
                             <n7-item-preview *ngFor="let item of (lb.widgets['mr-search-results'].ds.out$ | async)"
                             [data]="item">
                             </n7-item-preview>
@@ -75,8 +75,8 @@
                             </div>
                         </ng-container>
 
-                        <!-- ko: request problem -->
-                        <ng-container *ngSwitchCase="'KO'">
+                        <!-- error: request problem -->
+                        <ng-container *ngSwitchCase="'ERROR'">
                             <p class="mr-search__results-ko-string">
                                 {{ lb.dataSource.pageConfig.ko.text }}
                             </p>

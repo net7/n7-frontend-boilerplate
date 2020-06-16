@@ -8,6 +8,7 @@ import {
   INPUT_STATE_CONTEXT,
   FACETS_REQUEST_STATE_CONTEXT
 } from '../../services/search.service';
+import { MrLayoutStateService, LayoutState } from '../../services/layout-state.service';
 
 export class MrSearchLayoutEH extends EventHandler {
   public dataSource: MrSearchLayoutDS;
@@ -15,6 +16,8 @@ export class MrSearchLayoutEH extends EventHandler {
   private destroyed$: Subject<boolean> = new Subject();
 
   private searchService: MrSearchService;
+
+  private layoutState: MrLayoutStateService;
 
   private searchState: {
     [key: string]: any;
@@ -27,6 +30,7 @@ export class MrSearchLayoutEH extends EventHandler {
       switch (type) {
         case 'mr-search-layout.init':
           this.searchService = payload.searchService;
+          this.layoutState = payload.layoutState;
           this.dataSource.onInit(payload);
           // listeners
           this.initStateListener();
@@ -87,7 +91,7 @@ export class MrSearchLayoutEH extends EventHandler {
     });
 
     this.searchService.getState$(RESULTS_REQUEST_STATE_CONTEXT, 'loading').subscribe(() => {
-      this.dataSource.setSectionState('results', 'LOADING');
+      this.layoutState.set('results', LayoutState.LOADING);
     });
 
     // default params hook
@@ -107,7 +111,7 @@ export class MrSearchLayoutEH extends EventHandler {
       .subscribe((response) => {
         this.dataSource.handleResponse(response);
         // update layout state
-        this.dataSource.setSectionState('results', isEmpty(response.results) ? 'EMPTY' : 'OK');
+        this.layoutState.set('results', isEmpty(response.results) ? LayoutState.EMPTY : LayoutState.SUCCESS);
       });
   }
 }

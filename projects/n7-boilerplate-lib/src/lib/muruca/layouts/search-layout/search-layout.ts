@@ -7,6 +7,7 @@ import { CommunicationService } from '../../../common/services/communication.ser
 import { ConfigurationService } from '../../../common/services/configuration.service';
 import { MainStateService } from '../../../common/services/main-state.service';
 import { MrSearchService } from '../../services/search.service';
+import { MrLayoutStateService } from '../../services/layout-state.service';
 import searchConfig from './search-config.mock';
 
 
@@ -24,6 +25,7 @@ export class MrSearchLayoutComponent extends AbstractLayout implements OnInit, O
     private communication: CommunicationService,
     private configuration: ConfigurationService,
     private searchService: MrSearchService,
+    public layoutState: MrLayoutStateService,
     private mainState: MainStateService,
 
   ) {
@@ -39,6 +41,7 @@ export class MrSearchLayoutComponent extends AbstractLayout implements OnInit, O
       activatedRoute: this.activatedRoute,
       communication: this.communication,
       searchService: this.searchService,
+      layoutState: this.layoutState,
       options: this.config.options || {},
     };
   }
@@ -48,6 +51,8 @@ export class MrSearchLayoutComponent extends AbstractLayout implements OnInit, O
       this.configId = data.configId;
       const { searchId } = this.configuration.get(this.configId);
       this.searchService.init(searchId, searchConfig);
+      // add layout states
+      this.layoutState.add(['results']);
       this.onInit();
     });
   }

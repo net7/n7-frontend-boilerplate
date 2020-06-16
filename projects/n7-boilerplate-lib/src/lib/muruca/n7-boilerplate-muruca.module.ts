@@ -11,6 +11,7 @@ import { MrResourceLayoutComponent } from './layouts/resource-layout/resource-la
 import { MrSearchFacetsLayoutComponent } from './layouts/search-facets-layout/search-facets-layout';
 import { MrSearchLayoutComponent } from './layouts/search-layout/search-layout';
 import { MrSearchService } from './services/search.service';
+import { MrLayoutStateService } from './services/layout-state.service';
 import { MrStaticLayoutComponent } from './layouts/static-layout/static-layout';
 
 const COMPONENTS = [
@@ -33,7 +34,8 @@ const COMPONENTS = [
     N7BoilerplateCommonModule,
   ],
   providers: [
-    MrSearchService
+    MrSearchService,
+    MrLayoutStateService
   ],
   entryComponents: COMPONENTS,
   exports: COMPONENTS,
