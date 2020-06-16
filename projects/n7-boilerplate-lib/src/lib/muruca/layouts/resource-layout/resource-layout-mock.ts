@@ -73,6 +73,7 @@ export default {
           image: 'https://i.imgur.com/31D4TpW.png',
           title: 'Relazione del viaggio da Parigi a Shanghai attraverso la Siberia. Zikawei, 5 XII 1912',
           text: 'A japanese colored version',
+          link: '/',
           metadata: [{
             items: [
               { label: 'Autore', value: 'D\'Elia, Pasquale' },
@@ -87,6 +88,7 @@ export default {
           image: 'https://i.imgur.com/31D4TpW.png',
           title: 'Relazione del viaggio da Parigi a Shanghai attraverso la Siberia. Zikawei, 5 XII 1912',
           text: 'A japanese colored version',
+          link: '/',
           metadata: [{
             items: [
               { label: 'Autore', value: 'D\'Elia, Pasquale' },
@@ -101,6 +103,7 @@ export default {
           image: 'https://i.imgur.com/31D4TpW.png',
           title: 'Relazione del viaggio da Parigi a Shanghai attraverso la Siberia. Zikawei, 5 XII 1912',
           text: 'A japanese colored version',
+          link: '/',
           metadata: [{
             items: [
               { label: 'Autore', value: 'D\'Elia, Pasquale' },
