@@ -113,5 +113,11 @@ export class MrSearchLayoutEH extends EventHandler {
         // update layout state
         this.layoutState.set('results', isEmpty(response.results) ? LayoutState.EMPTY : LayoutState.SUCCESS);
       });
+
+    this.searchService.getState$(RESULTS_REQUEST_STATE_CONTEXT, 'error')
+      .subscribe((error) => {
+        console.warn(RESULTS_REQUEST_STATE_CONTEXT, error);
+        this.layoutState.set('results', LayoutState.ERROR);
+      });
   }
 }
