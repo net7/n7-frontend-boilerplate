@@ -45,6 +45,7 @@
     "tslib": "^1.10.0",
     "vis-data": "^6.5.3",
     "vis-timeline": "^7.3.6",
+    "vis-util": "^4.3.2",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
