@@ -3,8 +3,6 @@ import { ConfigurationService } from '../../../common/services/configuration.ser
 import { MainStateService } from '../../../common/services/main-state.service';
 import { MrSearchService } from '../../services/search.service';
 
-type SectionStates = 'LOADING' | 'EMPTY' | 'OK' | 'KO';
-
 export class MrSearchLayoutDS extends LayoutDataSource {
   private configuration: ConfigurationService;
 
@@ -13,11 +11,6 @@ export class MrSearchLayoutDS extends LayoutDataSource {
   private configId: string;
 
   public searchService: MrSearchService;
-
-
-  public sectionState: {
-    [key: string]: SectionStates;
-  } = {};
 
   public facetsConfig;
 
@@ -75,10 +68,6 @@ export class MrSearchLayoutDS extends LayoutDataSource {
         active: limit,
       },
     };
-  }
-
-  setSectionState(id: string, newState: SectionStates) {
-    this.sectionState[id] = newState;
   }
 
   private updateHeadTitle() {
