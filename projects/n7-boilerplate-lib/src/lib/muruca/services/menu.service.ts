@@ -8,23 +8,29 @@ import { ConfigurationService } from '../../common/services/configuration.servic
   providedIn: 'root',
 })
 export class MrMenuService {
+  private dynamicPaths: string[] = [];
+
   constructor(
     private http: HttpClient,
     private configuration: ConfigurationService,
   ) {}
 
-  load(path, rootPath): Promise<any> {
+  load(path): Promise<any> {
     return this.http.get(path).pipe(
       catchError(() => of(null)),
-      tap((response) => this._handleResponse(response, rootPath)),
+      tap((response) => this._handleResponse(response)),
     ).toPromise();
   }
 
-  private _handleResponse(response, rootPath) {
+  private _handleResponse(response) {
     if (response) {
       const headerConfig = this.configuration.get('header');
       headerConfig.nav.items = response.map(({ label, slug, isStatic }) => {
-        const href = isStatic ? `/${slug}` : `/${rootPath}/${slug}`;
+        const href = `/${slug}`;
+        // dynamic path control
+        if (!isStatic) {
+          this.dynamicPaths.push(href);
+        }
         return {
           text: label,
           anchor: { href },
@@ -36,4 +42,6 @@ export class MrMenuService {
       this.configuration.set('header', headerConfig);
     }
   }
+
+  public isDynamicPath = (path: string) => this.dynamicPaths.includes(path);
 }

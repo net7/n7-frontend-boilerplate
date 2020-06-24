@@ -1,7 +1,7 @@
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, UrlSegment } from '@angular/router';
 import { Subject } from 'rxjs';
 import { EventHandler } from '@n7-frontend/core';
-import { takeUntil, switchMap, map } from 'rxjs/operators';
+import { takeUntil, switchMap } from 'rxjs/operators';
 import { MrStaticLayoutDS } from './static-layout.ds';
 
 export class MrStaticLayoutEH extends EventHandler {
@@ -34,10 +34,9 @@ export class MrStaticLayoutEH extends EventHandler {
   }
 
   private listenRoute() {
-    this.route.paramMap.pipe(
+    this.route.url.pipe(
       takeUntil(this.destroy$),
-      map((params: ParamMap) => params.get('slug')),
-      switchMap((slug: string) => this.dataSource.pageRequest$(slug))
+      switchMap((url: UrlSegment[]) => this.dataSource.pageRequest$(url[0].path))
     ).subscribe((response) => {
       this.dataSource.handleResponse(response);
     });

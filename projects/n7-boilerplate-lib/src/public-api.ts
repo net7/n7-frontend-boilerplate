@@ -35,3 +35,4 @@ export * from './lib/muruca/data-sources';
 export * from './lib/muruca/event-handlers';
 export * from './lib/muruca/layouts';
 export * from './lib/muruca/services/menu.service';
+export * from './lib/muruca/guards/dynamic-path.guard';
