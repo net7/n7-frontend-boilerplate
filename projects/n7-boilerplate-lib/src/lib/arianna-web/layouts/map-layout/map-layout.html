@@ -1,0 +1,12 @@
+<div class="map-layout">
+    Hello, from Map layout!
+    <span *ngIf="lb.dataSource">DataSource Loaded</span>
+    <n7-inner-title
+        *ngIf="false"
+        [data]="lb.widgets['inner-title'].ds.out$ | async">
+    </n7-inner-title>
+
+    <n7-map
+        *ngIf="false">
+    </n7-map>
+</div>
