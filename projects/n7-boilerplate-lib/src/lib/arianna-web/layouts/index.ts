@@ -27,3 +27,9 @@ export * from './gallery-layout/gallery-layout';
 export * from './gallery-layout/gallery-layout.ds';
 export * from './gallery-layout/gallery-layout.eh';
 export * from './gallery-layout/gallery-layout.config';
+
+// map layout
+export * from './map-layout/map-layout';
+export * from './map-layout/map-layout.ds';
+export * from './map-layout/map-layout.eh';
+export * from './map-layout/map-layout.config';
