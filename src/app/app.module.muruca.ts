@@ -40,7 +40,7 @@ const MENU_PATH = 'http://unus-sls.netseven.it/get_menu';
     multi: true
   }, {
     provide: APP_INITIALIZER,
-    useFactory: (menuService: MrMenuService) => () => menuService.load(MENU_PATH, 'static'),
+    useFactory: (menuService: MrMenuService) => () => menuService.load(MENU_PATH),
     deps: [MrMenuService],
     multi: true
   }],
