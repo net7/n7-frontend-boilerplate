@@ -41,6 +41,9 @@
             "styles": [
               "./node_modules/flatpickr/dist/flatpickr.min.css",
               "./node_modules/latte-carousel/dist/latte-carousel.min.css",
+              "./node_modules/leaflet/dist/leaflet.css",
+              "./node_modules/leaflet.markercluster/dist/MarkerCluster.css",
+              "./node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css",
               "src/styles/styles.scss"
             ],
             "scripts": []

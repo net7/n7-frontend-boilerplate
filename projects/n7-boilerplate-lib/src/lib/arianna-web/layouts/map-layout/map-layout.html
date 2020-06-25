@@ -2,4 +2,18 @@
      id="map-layout"
      *ngIf="lb.dataSource">
      Hello from map layout.
+     <hr>
+     <n7-inner-title
+          [data]="{
+               title: {
+                    main: {
+                         text: 'I luoghi dell\'archivio'
+                    }
+               }
+          }">
+     </n7-inner-title>
+     <hr>
+     <n7-map [data]="lb.widgets['aw-map'].ds.out$ | async">
+     </n7-map>
+     <hr>
 </div>
