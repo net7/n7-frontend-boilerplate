@@ -29,3 +29,6 @@ export * from './search-layout-tabs.ds';
 
 // Gallery Layout
 export * from './gallery-results.ds';
+
+// Map Layout
+export * from './map.ds';
