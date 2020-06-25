@@ -8,9 +8,11 @@
     SEARCH-LAYOUT
 \* ------------------------------------ */
 .mr-search {
+    background-color: #FAFBFC;
+
+
     &__title {
-        padding: $space*4;
-        background-color: pink;
+        padding: $space*4 0;
     }
 
     &__results-info {
