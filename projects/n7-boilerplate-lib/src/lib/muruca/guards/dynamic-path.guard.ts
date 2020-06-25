@@ -23,7 +23,8 @@ export class DynamicPathGuard implements CanActivate {
   ): Observable<boolean> | Promise<boolean> | boolean {
     const { url } = state;
     if (!this.menuService.isDynamicPath(url)) {
-      this.router.navigate(['/not-found']);
+      const { notFoundPath } = next.data;
+      this.router.navigate([notFoundPath ? `/${notFoundPath}` : '/']);
       return false;
     }
     return true;
