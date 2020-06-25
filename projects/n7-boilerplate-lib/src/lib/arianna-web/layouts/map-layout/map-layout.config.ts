@@ -6,7 +6,9 @@ import * as EH from '../../event-handlers';
 export const AwMapLayoutConfig = {
   layoutId: 'aw-map-layout',
   widgets: [ // array of components of this layout
-    { id: 'aw-map', hasStaticData: true }
+    { id: 'aw-map', hasStaticData: true },
+    { id: 'aw-scheda-inner-title' },
+    { id: 'aw-linked-objects' }
   ],
   layoutDS: AwMapLayoutDS,
   layoutEH: AwMapLayoutEH,

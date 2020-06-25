@@ -1,4 +1,5 @@
 import { LayoutDataSource } from '@n7-frontend/core/dist/layout-data-source';
+import { MAP_RESULTS } from './map-mock';
 
 export class AwMapLayoutDS extends LayoutDataSource {
   protected configuration: any;
@@ -31,5 +32,26 @@ export class AwMapLayoutDS extends LayoutDataSource {
     this.location = location;
     this.titleService = titleService;
     this.mainState.update('headTitle', 'Arianna4View - Mappa');
+
+    this.one('aw-scheda-inner-title').update({
+      title: {
+        main: {
+          text: '1.252 Oggetti culturali collegati a Firenze'
+        }
+      }
+    });
+
+    this.one('aw-linked-objects').updateOptions({
+      context: 'map',
+      config: this.configuration,
+      page: 1,
+      // pagination: true,
+      // paginationParams: this._getPaginationParams(),
+      // dynamicPagination: {
+      //   total: totalCount,
+      // },
+      size: 10,
+    });
+    this.one('aw-linked-objects').update(MAP_RESULTS);
   }
 }

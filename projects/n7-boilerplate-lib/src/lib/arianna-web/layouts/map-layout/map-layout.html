@@ -1,10 +1,7 @@
 <div class="aw-map"
      id="map-layout"
      *ngIf="lb.dataSource">
-     Hello from map layout.
-     <hr>
-     <n7-inner-title
-          [data]="{
+     <n7-inner-title [data]="{
                title: {
                     main: {
                          text: 'I luoghi dell\'archivio'
@@ -12,8 +9,22 @@
                }
           }">
      </n7-inner-title>
-     <hr>
      <n7-map [data]="lb.widgets['aw-map'].ds.out$ | async">
      </n7-map>
-     <hr>
+     <!-- RESULT LIST -->
+     <ng-container *ngIf="lb.widgets['aw-scheda-inner-title'].ds.out$ | async">
+          <n7-inner-title
+               [data]="lb.widgets['aw-scheda-inner-title'].ds.out$ | async">
+          </n7-inner-title>
+     </ng-container>
+     
+     <ng-container *ngIf="lb.widgets['aw-linked-objects'].ds.out$ | async">
+          <div *ngFor="let preview of (lb.widgets['aw-linked-objects'].ds.out$ | async)?.previews">
+               <n7-smart-breadcrumbs [data]="preview.breadcrumbs">
+               </n7-smart-breadcrumbs>
+               <n7-item-preview [data]="preview"
+                                [emit]="lb.widgets['aw-linked-objects'].emit">
+               </n7-item-preview>
+          </div>
+     </ng-container>
 </div>
