@@ -19,7 +19,7 @@ export class MrHeroDS extends DataSource {
       button: button ? {
         ...button,
         anchor: {
-          href: button.anchor
+          href: button.link
         }
       } : null
     };
