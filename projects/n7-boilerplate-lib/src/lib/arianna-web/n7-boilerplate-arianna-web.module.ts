@@ -7,10 +7,11 @@ import { DvComponentsLibModule } from '@n7-frontend/components';
 import { N7BoilerplateCommonModule } from '../common/n7-boilerplate-common.module';
 // LAYOUTS
 import { AwEntitaLayoutComponent } from './layouts/entita-layout/entita-layout';
+import { AwGalleryLayoutComponent } from './layouts/gallery-layout/gallery-layout';
 import { AwHomeLayoutComponent } from './layouts/home-layout/home-layout';
+import { AwMapLayoutComponent } from './layouts/map-layout/map-layout';
 import { AwSchedaLayoutComponent } from './layouts/scheda-layout/scheda-layout';
 import { AwSearchLayoutComponent } from './layouts/search-layout/search-layout';
-import { AwGalleryLayoutComponent } from './layouts/gallery-layout/gallery-layout';
 // COMPONENTS
 import { ChartTippyComponent } from './components/chart-tippy/chart-tippy';
 import { BubbleChartWrapperComponent } from './components/bubble-chart-wrapper/bubble-chart-wrapper';
@@ -20,10 +21,11 @@ import apolloConfig from './config/apollo.config';
 
 const COMPONENTS = [
   AwEntitaLayoutComponent,
+  AwGalleryLayoutComponent,
   AwHomeLayoutComponent,
+  AwMapLayoutComponent,
   AwSchedaLayoutComponent,
   AwSearchLayoutComponent,
-  AwGalleryLayoutComponent,
   BubbleChartWrapperComponent,
   ChartTippyComponent,
   SmartBreadcrumbsComponent,
