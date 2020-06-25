@@ -2,7 +2,7 @@ import { DataSource } from '@n7-frontend/core';
 
 export class MrInnerTitleDS extends DataSource {
   protected transform(data: any): any {
-    const { title, subtitle, button } = data;
+    const { title, description, button } = data;
     return {
       title: {
         main: {
@@ -10,7 +10,7 @@ export class MrInnerTitleDS extends DataSource {
           classes: 'bold'
         },
         secondary: {
-          text: subtitle,
+          text: description,
           classes: 'italic'
         }
       },
