@@ -3,8 +3,8 @@ import { FacetHeaderData } from '@n7-frontend/components';
 import { FacetDataSource } from './facet-datasource';
 
 type FACET_VALUE = string | null;
-const ICON_OPEN = 'n7-icon-angle-down';
-const ICON_CLOSE = 'n7-icon-angle-right';
+const ICON_OPEN = 'n7-icon-angle-up';
+const ICON_CLOSE = 'n7-icon-angle-down';
 
 export class FacetHeaderDS extends DataSource implements FacetDataSource {
   id: string;

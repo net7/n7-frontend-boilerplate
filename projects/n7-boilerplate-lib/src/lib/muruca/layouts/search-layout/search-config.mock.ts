@@ -121,7 +121,7 @@ const facets = {
       data: {
         text: 'Keywords',
         additionalText: '108',
-        iconRight: 'n7-icon-angle-right'
+        iconRight: 'n7-icon-angle-down'
       }
     },
     inputs: [{
@@ -142,7 +142,7 @@ const facets = {
       data: {
         text: 'Data di pubblicazione',
         additionalText: '20',
-        iconRight: 'n7-icon-angle-right'
+        iconRight: 'n7-icon-angle-down'
       }
     },
     inputs: [{
@@ -163,7 +163,7 @@ const facets = {
       data: {
         text: 'Luogo di pubblicazione',
         additionalText: '15',
-        iconRight: 'n7-icon-angle-right'
+        iconRight: 'n7-icon-angle-down'
       }
     },
     inputs: [{
