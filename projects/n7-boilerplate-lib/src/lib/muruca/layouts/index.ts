@@ -8,6 +8,11 @@ export * from './search-layout/search-layout';
 export * from './search-layout/search-layout.ds';
 export * from './search-layout/search-layout.eh';
 export * from './search-layout/search-layout.config';
+// search facets-layout
+export * from './search-facets-layout/search-facets-layout';
+export * from './search-facets-layout/search-facets-layout.ds';
+export * from './search-facets-layout/search-facets-layout.eh';
+export * from './search-facets-layout/search-facets-layout.config';
 // glossary layout
 export * from './glossary-layout/glossary-layout';
 export * from './glossary-layout/glossary-layout.ds';

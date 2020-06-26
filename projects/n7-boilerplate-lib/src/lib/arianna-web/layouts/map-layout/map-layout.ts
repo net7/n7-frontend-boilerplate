@@ -38,7 +38,6 @@ export class AwMapLayoutComponent extends AbstractLayout implements OnInit, OnDe
       mainState: this.mainState,
       router: this.router,
       route: this.route,
-      location: this.location,
       titleService: this.titleService,
       communication: this.communication,
       options: this.config.options || {},
