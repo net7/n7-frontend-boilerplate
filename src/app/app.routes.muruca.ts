@@ -7,8 +7,12 @@ import {
   MrHomeLayoutComponent,
   MrSearchLayoutComponent,
   MrStaticLayoutComponent,
-  MrResourceLayoutComponent
+  MrResourceLayoutComponent,
+  // OTHER
+  DynamicPathGuard
 } from 'n7-boilerplate-lib';
+
+const NOT_FOUND_PATH = 'page-404';
 
 export const APP_ROUTES: Routes = [
   {
@@ -22,6 +26,13 @@ export const APP_ROUTES: Routes = [
   { path: 'mappe', component: MrSearchLayoutComponent, data: { configId: 'search-maps' } },
   { path: 'mappa/:slug', component: MrResourceLayoutComponent, data: { configId: 'resource-map' } },
   { path: 'opera/:slug', component: MrResourceLayoutComponent, data: { configId: 'resource-work' } },
-  { path: 'static/:slug', component: MrStaticLayoutComponent },
-  { path: '**', component: Page404LayoutComponent }
+  { path: NOT_FOUND_PATH, component: Page404LayoutComponent },
+  {
+    path: '**',
+    component: MrStaticLayoutComponent,
+    canActivate: [DynamicPathGuard],
+    data: {
+      notFoundPath: NOT_FOUND_PATH
+    }
+  }
 ];

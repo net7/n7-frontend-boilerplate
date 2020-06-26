@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { AbstractLayout } from '../../../common/models/abstract-layout';
@@ -12,24 +13,24 @@ import { CommunicationService } from '../../../common/services/communication.ser
   selector: 'aw-map-layout',
   templateUrl: './map-layout.html',
 })
-
 export class AwMapLayoutComponent extends AbstractLayout implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private location: Location,
     private configuration: ConfigurationService,
     private layoutsConfiguration: LayoutsConfigurationService,
+    private communication: CommunicationService,
     private mainState: MainStateService,
     private titleService: Title,
-    private communication: CommunicationService,
   ) {
-    super(layoutsConfiguration.get('AwPatrimonioLayoutConfig') || config);
+    super(layoutsConfiguration.get('AwMapLayoutConfig') || config);
   }
 
-  /**
-   * Optional variables that can be accessed from the layout's logic.
-   * If removed, they must also be removed from the layout's DataSource file,
-   * and from this file imports.
+  /*
+    Optional variables that can be accessed from the layout's logic.
+    If removed, they must also be removed from the layout's DataSource file,
+    and from this file imports.
    */
   protected initPayload() {
     return {

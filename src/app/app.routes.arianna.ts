@@ -1,4 +1,3 @@
-
 import { Routes } from '@angular/router';
 
 import {
@@ -9,7 +8,8 @@ import {
   AwSchedaLayoutComponent,
   AwEntitaLayoutComponent,
   AwSearchLayoutComponent,
-  AwGalleryLayoutComponent
+  AwGalleryLayoutComponent,
+  AwMapLayoutComponent
 } from 'n7-boilerplate-lib';
 
 export const APP_ROUTES: Routes = [
@@ -22,6 +22,7 @@ export const APP_ROUTES: Routes = [
   { path: 'aw/entita/:id/:slug', redirectTo: 'aw/entita/:id/:slug/overview' },
   { path: 'aw/ricerca', component: AwSearchLayoutComponent },
   { path: 'aw/galleria', component: AwGalleryLayoutComponent },
+  { path: 'aw/mappa/:id/:slug', component: AwMapLayoutComponent },
   {
     path: '',
     redirectTo: '/aw/home',

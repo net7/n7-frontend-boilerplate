@@ -434,7 +434,10 @@
       "ricorrenza",
       "descrizione"
     ]
-  },  
+  },
+  "map-layout": {
+
+  }, 
   "config-keys": {
     "persona": {
       "color": {
