@@ -25,7 +25,7 @@
     }
 
     /* Current page */
-    &__nav-item.is-current {
+    &__nav-item.is-active {
         .n7-header__nav-label {
             color: $color-text-link;
         }
