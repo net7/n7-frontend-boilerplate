@@ -9,9 +9,10 @@
         </div>
         
         <div class="mr-search__results-content">
-            <aside class="mr-search__facets">
-                <div class="filter-section">
-                    <h2 *ngIf="lb.dataSource.pageConfig['facetsTitle']">
+            <aside class="mr-facets">
+                <div class="mr-facets__contents">
+                    <h2 class="mr-facets__title" 
+                        *ngIf="lb.dataSource.pageConfig['facetsTitle']">
                         {{ lb.dataSource.pageConfig['facetsTitle'] }}
                     </h2>
                     <mr-search-facets-layout 

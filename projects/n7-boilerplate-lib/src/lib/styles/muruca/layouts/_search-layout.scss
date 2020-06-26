@@ -10,30 +10,15 @@
 .mr-search {
     background-color: #FAFBFC;
 
-
     &__title {
         padding: $space*4 0;
-    }
-
-    &__results-info {
-        .n7-inner-title {
-            padding: 0 0 $space*3 0;
-        }
-    }
-
-    &__results-filters {
-        padding: $space*2;
-        background-color: $color-background-base;
-        border: 1px solid $color-border-normal;
-        border-radius: $border-radius;
-        margin-bottom: $space*3;
     }
 
     &__results-content {
         display: flex;
     }
 
-    &__facets {
+    .mr-facets {
         flex-shrink: 0;
         width: calc( ( (100% - 4px) - ( 1px * 3) ) / 4 );
         margin-right: $grid-gutter-h;
@@ -41,6 +26,42 @@
 
     &__results-wrapper {
         flex-grow: 1;
+    }
+}
+
+
+/* ------------------------------------ *\
+    FACETS
+\* ------------------------------------ */
+.mr-search {
+}
+
+
+/* ------------------------------------ *\
+    RESULTS
+\* ------------------------------------ */
+.mr-search {
+    &__results-info {
+        .n7-inner-title {
+            height: $space*6;
+            margin-bottom: 0;
+            padding: 0;
+            align-items: flex-start;
+        }
+    }
+}
+
+
+/* ------------------------------------ *\
+    RESULTS-ACTIVE-FILTERS
+\* ------------------------------------ */
+.mr-search {
+    &__results-filters {
+        padding: $space*2;
+        background-color: $color-background-base;
+        border: 1px solid $color-border-normal;
+        border-radius: $border-radius;
+        margin-bottom: $space*3;
     }
 }
 

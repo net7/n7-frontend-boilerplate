@@ -9,9 +9,10 @@
 \* ------------------------------------ */
 .n7-facet-header {
     border-top: 1px solid $color-border-normal;
+    cursor: pointer;
 
     &__text {
-        margin-right: $space;
+        margin-right: $space/2;
         margin-left: 0;
         font-size: $font-size-xs;
         line-height: $facet-header-height;
@@ -27,12 +28,13 @@
 
     &__icon-left,
     &__icon-right {
-        width: $facet-header-height;
+        width: $facet-header-height/2;
         height: $facet-header-height;
         text-align: center;
         line-height: $facet-header-height;
         background: $facet-header-icon-background;
         font-size: $font-size-l;
+        transition: color $transition-durations;
     }
 
     &__icon-right {
@@ -42,11 +44,11 @@
 
 
 /* ------------------------------------ *\
-   #FACETS
+   #HOVER
 \* ------------------------------------ */
-.mr-search-facets {
-    &__section {
-        margin-bottom: $space*3;
+.n7-facet-header:hover {
+    .n7-facet-header__icon-right {
+        color: $color-text-link;
     }
 }
 
