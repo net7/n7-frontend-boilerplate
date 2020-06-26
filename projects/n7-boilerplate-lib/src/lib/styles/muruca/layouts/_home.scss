@@ -7,12 +7,45 @@
 /* ------------------------------------ *\
     HERO
 \* ------------------------------------ */
-.mr-home {
-    .n7-hero {
-        height: $home-header-height;
+/* Hero 1 */
+.mr-home {    
+    .n7-hero-1 {
+        height: $home-hero-1-height;
+
+        .n7-hero__text-wrapper {
+            height: $home-hero-1-height;
+        }
+
+        .n7-hero__text {
+            margin-bottom:  0;
+            max-width: 50%;
+        }
+
+        .n7-hero__input-wrapper {
+            width: 100%;
+            text-align: right;
+
+            .n7-btn {
+                display: inline-block;
+            }
+        }
     }
-    .n7-hero__text-wrapper {
-        height: $home-header-height;
+}
+
+/* Hero 2 */
+.mr-home {
+    .n7-hero-2 {
+        height: $home-hero-2-height;
+
+        .n7-hero__text-wrapper {
+            height: $home-hero-2-height;
+        }
+
+        .n7-hero__input-wrapper {
+            .n7-btn {
+                display: inline-block;
+            }
+        }
     }
 }
 

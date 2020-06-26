@@ -8,19 +8,25 @@
     SEARCH-LAYOUT
 \* ------------------------------------ */
 .mr-search {
+    background-color: #FAFBFC;
+
+
     &__title {
-        padding: $space*4;
-        background-color: pink;
+        padding: $space*4 0;
     }
 
     &__results-info {
-        padding: $space*2;
-        background-color: wheat;
+        .n7-inner-title {
+            padding: 0 0 $space*3 0;
+        }
     }
 
     &__results-filters {
         padding: $space*2;
-        background-color: lime;
+        background-color: $color-background-base;
+        border: 1px solid $color-border-normal;
+        border-radius: $border-radius;
+        margin-bottom: $space*3;
     }
 
     &__results-content {
@@ -28,7 +34,8 @@
     }
 
     &__facets {
-        width: calc( ( (100% - 4px) - ( #{$grid-gutter-h} * 3) ) / 4 );
+        flex-shrink: 0;
+        width: calc( ( (100% - 4px) - ( 1px * 3) ) / 4 );
         margin-right: $grid-gutter-h;
     }
 

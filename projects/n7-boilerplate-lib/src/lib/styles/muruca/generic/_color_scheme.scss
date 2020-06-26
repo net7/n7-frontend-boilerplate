@@ -19,7 +19,7 @@ $color-gray-05: #2D3439; // 494a4d;
 $color-main: #5397C7;
 $color-second: #AFA26A;
 $color-third: #7E8F9B;
-$color-text-hover: rgb(26, 64, 204); /* Used for text link in hover state */
+$color-text-hover: darken( $color-main, 10 ); /* Used for text link in hover state */
 
 // Status colors
 $color-error: #d12c47;
