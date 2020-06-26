@@ -8,32 +8,18 @@
     SEARCH-LAYOUT
 \* ------------------------------------ */
 .mr-search {
+    padding-bottom: $space*12;
     background-color: #FAFBFC;
-
 
     &__title {
         padding: $space*4 0;
-    }
-
-    &__results-info {
-        .n7-inner-title {
-            padding: 0 0 $space*3 0;
-        }
-    }
-
-    &__results-filters {
-        padding: $space*2;
-        background-color: $color-background-base;
-        border: 1px solid $color-border-normal;
-        border-radius: $border-radius;
-        margin-bottom: $space*3;
     }
 
     &__results-content {
         display: flex;
     }
 
-    &__facets {
+    .mr-facets {
         flex-shrink: 0;
         width: calc( ( (100% - 4px) - ( 1px * 3) ) / 4 );
         margin-right: $grid-gutter-h;
@@ -41,6 +27,82 @@
 
     &__results-wrapper {
         flex-grow: 1;
+    }
+}
+
+
+/* ------------------------------------ *\
+    FACETS
+\* ------------------------------------ */
+.mr-search {
+}
+
+
+/* ------------------------------------ *\
+    RESULTS
+\* ------------------------------------ */
+.mr-search {
+    &__results-info {
+        .n7-inner-title {
+            height: $space*6;
+            margin-bottom: 0;
+            padding: 0;
+            align-items: flex-start;
+        }
+    }
+}
+
+
+/* ------------------------------------ *\
+    RESULTS-ACTIVE-FILTERS
+\* ------------------------------------ */
+.mr-search {
+    &__results-filters {
+        display: flex;
+        padding: $space*2 $space*2 $space $space*2;
+        background-color: $color-background-base;
+        border: 1px solid $color-border-normal;
+        border-radius: $border-radius;
+        margin-bottom: $space*3;
+
+        .mr-search__results-filters-title {
+            flex-shrink: 0;
+            margin-right: $space;
+        }
+
+        .mr-search__results-filters-wrapper {
+            margin-right: $space;
+        }
+
+        .n7-tag {
+            display: inline-block;
+            margin-right: $space;
+            margin-bottom: $space;
+            background-color: $color-success;
+            padding: 0;
+            height: $mr-search-result-filter-height;
+
+            .n7-tag__text {
+                display: inline-block;
+                line-height: $mr-search-result-filter-height;
+                padding: 0 $space;
+                vertical-align: top;
+            }
+
+            .n7-tag__icon {
+                display: inline-block;
+                line-height: $mr-search-result-filter-height;
+                height: $mr-search-result-filter-height;
+                padding: 0 $space;
+                background-color: rgba($color-background-base, .15);
+                border-radius: 0 $border-radius-hard $border-radius-hard 0;
+                transition: all $transition-durations;
+
+                &:hover {
+                    background-color: rgba($color-background-base, .25);
+                }
+            }
+        }
     }
 }
 

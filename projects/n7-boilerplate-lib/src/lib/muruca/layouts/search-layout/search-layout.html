@@ -9,9 +9,10 @@
         </div>
         
         <div class="mr-search__results-content">
-            <aside class="mr-search__facets">
-                <div class="filter-section">
-                    <h2 *ngIf="lb.dataSource.pageConfig['facetsTitle']">
+            <aside class="mr-facets">
+                <div class="mr-facets__contents">
+                    <h2 class="mr-facets__title" 
+                        *ngIf="lb.dataSource.pageConfig['facetsTitle']">
                         {{ lb.dataSource.pageConfig['facetsTitle'] }}
                     </h2>
                     <mr-search-facets-layout 
@@ -32,10 +33,12 @@
                         lb.widgets['mr-search-tags'].ds.hasFilters
                     )" 
                     class="mr-search__results-filters-title">{{ lb.dataSource.pageConfig['filtersTitle'] }}</span>
-                    <n7-tag *ngFor="let tag of (lb.widgets['mr-search-tags'].ds.out$ | async)"
-                    [data]="tag"
-                    [emit]="lb.widgets['mr-search-tags'].emit">
-                    </n7-tag>
+                    <div class="mr-search__results-filters-wrapper">
+                        <n7-tag *ngFor="let tag of (lb.widgets['mr-search-tags'].ds.out$ | async)"
+                        [data]="tag"
+                        [emit]="lb.widgets['mr-search-tags'].emit">
+                        </n7-tag>
+                    </div>
                 </div>
                 <main class="mr-search__results">
                     <!-- SEARCH RESULTS -->
@@ -43,7 +46,7 @@
                         
                         <!-- loading -->
                         <ng-container *ngSwitchCase="'LOADING'">
-                            <div class="mr-search__results-loading">
+                            <div class="mr-search__results-loading n7-grid-3">
                                 <n7-content-placeholder *ngFor="let n of [0,1,2,3,4,5,6,7,8,9]" [data]="{
                                     blocks: [
                                         { classes: 'search-result-placeholder-title' },
@@ -57,9 +60,11 @@
                         
                         <!-- success: items > 0 -->
                         <ng-container *ngSwitchCase="'SUCCESS'">
-                            <n7-item-preview *ngFor="let item of (lb.widgets['mr-search-results'].ds.out$ | async)"
-                            [data]="item">
-                            </n7-item-preview>
+                            <div class="n7-grid-3">
+                                <n7-item-preview *ngFor="let item of (lb.widgets['mr-search-results'].ds.out$ | async)"
+                                [data]="item">
+                                </n7-item-preview>
+                            </div>
                         </ng-container>
 
                         <!-- empty: items === 0 -->

@@ -118,7 +118,7 @@ $gradient-item-preview-list: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, 
 // $button-normal-height: 32px;
 
 // Normal button
-// $color-button-text: $color-text-link;
+$color-button-text: $color-text;
 // $color-button-text-hover: $color-text-link-hover;
 // $color-button-text-disabled: rgba($color-text-link, .4);
 
@@ -261,7 +261,7 @@ $gradient-item-preview-list: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, 
 // ------------------------------------ //
 // #FACET-HEADER
 // ------------------------------------ //
-$facet-header-height: 50px;
+$facet-header-height: 60px;
 $facet-header-text-color: $color-text;
 $facet-header-background: transparent;
 $facet-header-icon-background: transparent;
@@ -289,3 +289,9 @@ $footer-image-height: 60px;
 $footer-background-color: $color-gray-05;
 $footer-breakpoint-desktop: $page-max-width + $grid-gutter-h;
 $footer-breakpoint-mobile: 700px;
+
+
+// ------------------------------------ //
+// #SEARCH-RESULTS-FILTERS
+// ------------------------------------ //
+$mr-search-result-filter-height: 26px;

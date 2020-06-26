@@ -1,0 +1,64 @@
+/**
+ * FACETS
+ *
+ * Element that wraps all the facets in a sidebar.
+ */
+ 
+/* ------------------------------------ *\
+    FACETS
+\* ------------------------------------ */
+.mr-facets {
+    &__title {
+        height: $space*6;
+        margin-bottom: 0;
+        padding: 0;
+    }
+
+    /* Wraps the actual facets */
+    &__facets-wrapper {
+
+    }
+
+    /* Single facet wrapper */
+    &__single-facet {
+
+        /* Facet header */
+        .n7-facet-header {
+
+        }
+    }
+
+    /* The facet content */
+    &__single-facet-content {
+        padding-bottom: $space*3;
+    }
+
+    &__single-facet-inner-content {
+        padding-bottom: $space*1.5;
+
+        &:last-child {
+            padding-bottom: 0;
+        }
+    }
+
+    /* Single row counter */
+    .n7-input-link__counter {
+        background-color: $color-third;
+    }
+}
+
+
+/* ------------------------------------ *\
+    ACTIVE-ITEM
+\* ------------------------------------ */
+/* Active */
+.n7-input-link {
+    .n7-input-link__link.is-active {
+        &:before {
+            content: "\e93d";
+            font-family: 'n7-icon';
+            // margin-right: $space;
+            // color: red !important;
+        }
+    }
+}

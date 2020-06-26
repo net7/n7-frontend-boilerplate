@@ -1,12 +1,12 @@
-<div *ngIf="lb.dataSource.facets" class="mr-search-facets {{ lb.dataSource.facets.classes || '' }}">
-    <div *ngFor="let section of lb.dataSource.facets.sections" class="mr-search-facets__section {{ section.classes || '' }}">
+<div *ngIf="lb.dataSource.facets" class="mr-facets__facets-wrapper {{ lb.dataSource.facets.classes || '' }}">
+    <div *ngFor="let section of lb.dataSource.facets.sections" class="mr-facets__single-facet {{ section.classes || '' }}">
         <n7-facet-header
         [data]="lb.widgets[section.header.id].ds.out$ | async"
         [emit]="lb.widgets[section.header.id].emit"
         ></n7-facet-header>
 
-        <div [hidden]="!lb.widgets[section.header.id].ds.isOpen()" class="mr-search-facets__wrapper">
-            <div *ngFor="let input of section.inputs" class="mr-search-facets__input {{ input.classes || '' }}">
+        <div [hidden]="!lb.widgets[section.header.id].ds.isOpen()" class="mr-facets__single-facet-content">
+            <div *ngFor="let input of section.inputs" class="mr-facets__single-facet-inner-content {{ input.classes || '' }}">
                 <ng-container [ngSwitch]="input.type">
     
                     <!-- INPUT TEXT -->
@@ -42,7 +42,5 @@
                 </ng-container>
             </div>
         </div>
-        
-        
     </div>
 </div>
