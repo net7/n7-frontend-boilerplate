@@ -99,7 +99,7 @@ export class MrSearchLayoutEH extends EventHandler {
       const defaultParams = {
         page: 1,
         sort: '_score_DESC',
-        limit: 10
+        limit: 12
       };
       Object.keys(defaultParams).forEach((key) => {
         params[key] = params[key] || defaultParams[key];
