@@ -23,15 +23,17 @@ export class SearchFacetsLayoutDS extends LayoutDataSource {
   initInputs() {
     // set components data
     this.facets.sections.forEach(({ header, inputs }) => {
-      [header, ...inputs].forEach((input) => {
-        // set id
-        const widgetDataSource = this.getWidgetDataSource(input.id);
-        widgetDataSource.id = input.id;
-        // caching DS for next updates
-        this.inputsDS[input.id] = widgetDataSource;
-        // first update
-        widgetDataSource.update(input.data);
-      });
+      [header, ...inputs]
+        .filter((input) => input)
+        .forEach((input) => {
+          // set id
+          const widgetDataSource = this.getWidgetDataSource(input.id);
+          widgetDataSource.id = input.id;
+          // caching DS for next updates
+          this.inputsDS[input.id] = widgetDataSource;
+          // first update
+          widgetDataSource.update(input.data);
+        });
     });
   }
 

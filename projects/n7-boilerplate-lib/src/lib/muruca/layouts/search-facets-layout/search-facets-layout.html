@@ -1,11 +1,12 @@
 <div *ngIf="lb.dataSource.facets" class="mr-facets__facets-wrapper {{ lb.dataSource.facets.classes || '' }}">
     <div *ngFor="let section of lb.dataSource.facets.sections" class="mr-facets__single-facet {{ section.classes || '' }}">
         <n7-facet-header
+        *ngIf="section.header"
         [data]="lb.widgets[section.header.id].ds.out$ | async"
         [emit]="lb.widgets[section.header.id].emit"
         ></n7-facet-header>
 
-        <div [hidden]="!lb.widgets[section.header.id].ds.isOpen()" class="mr-facets__single-facet-content">
+        <div [hidden]="section.header && !lb.widgets[section.header.id].ds.isOpen()" class="mr-facets__single-facet-content">
             <div *ngFor="let input of section.inputs" class="mr-facets__single-facet-inner-content {{ input.classes || '' }}">
                 <ng-container [ngSwitch]="input.type">
     

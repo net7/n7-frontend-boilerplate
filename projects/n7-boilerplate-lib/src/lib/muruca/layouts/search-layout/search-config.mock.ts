@@ -2,12 +2,6 @@ import { SearchConfig } from '../../interfaces/search.interface';
 
 const facets = {
   sections: [{
-    header: {
-      id: 'header-filtra',
-      data: {
-        text: 'Filtra i risultati'
-      }
-    },
     inputs: [{
       id: 'query',
       type: 'text',

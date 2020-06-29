@@ -162,19 +162,24 @@ export class MrSearchService {
 
     // set facets input state
     facets.sections.forEach(({ header, inputs }) => {
-      [header, ...inputs].forEach(({ id, queryParam, schema }) => {
-        this.addState(INPUT_STATE_CONTEXT, id);
+      [header, ...inputs]
+        .filter((input) => input)
+        .forEach(({ id, queryParam, schema }) => {
+          if (!id) {
+            return;
+          }
+          this.addState(INPUT_STATE_CONTEXT, id);
 
-        // is query param?
-        if (queryParam) {
-          this.queryParamKeys.push(id);
-        }
+          // is query param?
+          if (queryParam) {
+            this.queryParamKeys.push(id);
+          }
 
-        // schemas
-        if (schema) {
-          this.inputSchemas[id] = schema;
-        }
-      });
+          // schemas
+          if (schema) {
+            this.inputSchemas[id] = schema;
+          }
+        });
     });
 
     // set layout input state
@@ -199,9 +204,11 @@ export class MrSearchService {
 
     // set input state
     facets.sections.forEach(({ header, inputs }) => {
-      [header, ...inputs].forEach((input) => {
-        this.addState(FACET_STATE_CONTEXT, input.id);
-      });
+      [header, ...inputs]
+        .filter((input) => input)
+        .forEach((input) => {
+          this.addState(FACET_STATE_CONTEXT, input.id);
+        });
     });
   }
 
