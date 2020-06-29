@@ -10,7 +10,6 @@ import { MrSearchService } from '../../services/search.service';
 import { MrLayoutStateService } from '../../services/layout-state.service';
 import searchConfig from './search-config.mock';
 
-
 @Component({
   selector: 'mr-search-layout',
   templateUrl: './search-layout.html',

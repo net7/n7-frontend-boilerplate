@@ -18,9 +18,6 @@ export class MrLayoutStateService {
   add(id: string | string[]) {
     const ids = Array.isArray(id) ? id : [id];
     ids.forEach((key) => {
-      if (this.stateContainers[key]) {
-        throw Error(`Layout state id '${key}' already exists`);
-      }
       this.stateContainers[key] = new Subject();
       // initial state
       this.stateContainers[key].next(LayoutState.IDLE);
