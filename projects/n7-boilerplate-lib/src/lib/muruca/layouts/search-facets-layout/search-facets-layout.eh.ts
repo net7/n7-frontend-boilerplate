@@ -66,7 +66,7 @@ export class SearchFacetsLayoutEH extends EventHandler {
         this.changed$[source.id].pipe(
           debounceTime(source.delay || 1)
         ).subscribe(({ id, value }) => {
-          this.searchService.setState('input', id, value);
+          this.searchService.setState(INPUT_STATE_CONTEXT, id, value);
         });
       });
     });
