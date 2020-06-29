@@ -27,12 +27,12 @@
                     [emit]="lb.widgets['mr-search-results-title'].emit">
                     </n7-inner-title>
                 </div>
-                <div class="mr-search__results-filters">
-                    <span *ngIf="(
-                        lb.dataSource.pageConfig['filtersTitle'] && 
-                        lb.widgets['mr-search-tags'].ds.hasFilters
-                    )" 
-                    class="mr-search__results-filters-title">{{ lb.dataSource.pageConfig['filtersTitle'] }}</span>
+                <div *ngIf="(
+                    lb.dataSource.pageConfig['filtersTitle'] && 
+                    lb.widgets['mr-search-tags'].ds.hasFilters
+                )" 
+                class="mr-search__results-filters">
+                    <span class="mr-search__results-filters-title">{{ lb.dataSource.pageConfig['filtersTitle'] }}</span>
                     <div class="mr-search__results-filters-wrapper">
                         <n7-tag *ngFor="let tag of (lb.widgets['mr-search-tags'].ds.out$ | async)"
                         [data]="tag"
