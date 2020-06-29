@@ -8,7 +8,8 @@ export class FacetHeaderEH extends EventHandler {
           this.dataSource.toggle();
           this.emitOuter('change', {
             isOpen: this.dataSource.isOpen(),
-            id: this.dataSource.id
+            id: this.dataSource.id,
+            value: this.dataSource.value
           });
           break;
         default:
