@@ -39,6 +39,7 @@ export class MrResourceLayoutDS extends LayoutDataSource {
 
   handleResponse(response) {
     this.initSections(response);
+    // this.initSections(resourceLayoutMock);
     this.updateHeadTitle(response);
   }
 
@@ -54,6 +55,7 @@ export class MrResourceLayoutDS extends LayoutDataSource {
       widgetDataSource.id = id;
       // update data
       if (responseSection) {
+        // this.one(id).update(responseSection);
         this.one(id).update(responseSection);
       }
     });
