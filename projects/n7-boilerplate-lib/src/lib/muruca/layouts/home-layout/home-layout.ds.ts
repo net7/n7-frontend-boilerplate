@@ -1,7 +1,9 @@
 import { LayoutDataSource } from '@n7-frontend/core/dist/layout-data-source';
+import { isEmpty } from 'lodash';
 import { ConfigurationService } from '../../../common/services/configuration.service';
 import { CommunicationService } from '../../../common/services/communication.service';
 import { MainStateService } from '../../../common/services/main-state.service';
+import { MrLayoutStateService, LayoutState } from '../../services/layout-state.service';
 
 export class MrHomeLayoutDS extends LayoutDataSource {
   private configuration: ConfigurationService;
@@ -9,6 +11,8 @@ export class MrHomeLayoutDS extends LayoutDataSource {
   private communication: CommunicationService;
 
   private mainState: MainStateService;
+
+  private layoutState: MrLayoutStateService;
 
   private configId: string;
 
@@ -18,6 +22,7 @@ export class MrHomeLayoutDS extends LayoutDataSource {
     this.configuration = payload.configuration;
     this.communication = payload.communication;
     this.mainState = payload.mainState;
+    this.layoutState = payload.layoutState;
     this.configId = payload.configId;
     this.pageConfig = this.configuration.get(this.configId) || {};
 
@@ -29,13 +34,21 @@ export class MrHomeLayoutDS extends LayoutDataSource {
 
   doRequest() {
     const { sections } = this.pageConfig;
-    if (sections) {
+    if (!isEmpty(sections)) {
+      this.layoutState.set('content', LayoutState.LOADING);
       this.communication.request$('home', {
         method: 'POST',
-        params: sections.map(({ id }) => id)
+        params: sections.map(({ id }) => id),
+        onError: (err) => {
+          console.warn(`Error loading ${this.configId} sections`, err.message);
+          this.layoutState.set('content', LayoutState.ERROR);
+        }
       }).subscribe((response) => {
+        this.layoutState.set('content', LayoutState.SUCCESS);
         this.initSections(response);
       });
+    } else {
+      console.warn(`There are no sections configured for ${this.configId} layout`);
     }
   }
 

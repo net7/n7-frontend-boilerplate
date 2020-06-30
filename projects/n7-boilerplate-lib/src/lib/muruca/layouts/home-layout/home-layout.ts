@@ -5,6 +5,7 @@ import { CommunicationService } from '../../../common/services/communication.ser
 import { LayoutsConfigurationService } from '../../../common/services/layouts-configuration.service';
 import { ConfigurationService } from '../../../common/services/configuration.service';
 import { MainStateService } from '../../../common/services/main-state.service';
+import { MrLayoutStateService } from '../../services/layout-state.service';
 import { MrHomeLayoutConfig as config } from './home-layout.config';
 import { MrSliderDS } from '../../data-sources/slider.ds';
 import { MrCollectionDS } from '../../data-sources/collection.ds';
@@ -38,6 +39,7 @@ export class MrHomeLayoutComponent extends AbstractLayout implements OnInit, OnD
     private configuration: ConfigurationService,
     private communication: CommunicationService,
     private mainState: MainStateService,
+    public layoutState: MrLayoutStateService,
   ) {
     super(layoutsConfiguration.get('MrHomeLayoutConfig') || config);
   }
@@ -48,6 +50,7 @@ export class MrHomeLayoutComponent extends AbstractLayout implements OnInit, OnD
       mainState: this.mainState,
       configuration: this.configuration,
       communication: this.communication,
+      layoutState: this.layoutState,
       options: this.config.options || {}
     };
   }
@@ -55,6 +58,7 @@ export class MrHomeLayoutComponent extends AbstractLayout implements OnInit, OnD
   ngOnInit() {
     this.activatedRoute.data.subscribe((data) => {
       this.configId = data.configId;
+      this.layoutState.add('content');
       this.loadWidgets();
       this.onInit();
     });
