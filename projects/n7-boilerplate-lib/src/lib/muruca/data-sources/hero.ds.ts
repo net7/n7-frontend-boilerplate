@@ -15,11 +15,11 @@ export class MrHeroDS extends DataSource {
       title,
       classes,
       backgroundImage,
-      image: backgroundImage ? image : null,
+      image: !backgroundImage ? image : null,
       button: button ? {
         ...button,
         anchor: {
-          href: button.anchor
+          href: button.link
         }
       } : null
     };

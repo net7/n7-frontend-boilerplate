@@ -21,7 +21,7 @@
           "wp-page": "data/api/",
           "search": "search/results",
           "facets": "search/facets",
-          "resource": "get_resource/work/9"
+          "resource": "get_resource"
         }
       }
     }
@@ -287,11 +287,6 @@
         "id": "collection-1",
         "type": "collection",
         "grid": 3
-      },
-      {
-        "id": "preview-2",
-        "type": "preview",
-        "grid": null
       }
     ]
   },
@@ -305,8 +300,8 @@
         "grid": null
       },
       {
-        "id": "viewer-1",
-        "type": "viewer",
+        "id": "metadata-3",
+        "type": "metadata",
         "grid": null
       },
       {
@@ -320,14 +315,14 @@
         "grid": null
       },
       {
-        "id": "collection-1",
+        "id": "collection-2",
         "type": "collection",
         "grid": 3
       },
       {
-        "id": "preview-2",
-        "type": "preview",
-        "grid": null
+        "id": "collection-1",
+        "type": "collection",
+        "grid": 3
       }
     ]
   }

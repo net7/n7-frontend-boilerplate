@@ -45,7 +45,7 @@ export class MrCollectionDS extends DataSource {
       items: items.map((item) => ({
         ...item,
         anchor: {
-          href: item.anchor
+          href: item.link
         },
         classes: classes || ''
       }))
