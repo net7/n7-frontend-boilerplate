@@ -13,14 +13,19 @@ import { MrSearchLayoutComponent } from './layouts/search-layout/search-layout';
 import { MrSearchService } from './services/search.service';
 import { MrLayoutStateService } from './services/layout-state.service';
 import { MrStaticLayoutComponent } from './layouts/static-layout/static-layout';
+// COMPONENTS
+import { ReadMoreComponent } from './components/read-more/read-more';
 
 const COMPONENTS = [
+  // Layout components
   MrGlossaryLayoutComponent,
   MrHomeLayoutComponent,
   MrResourceLayoutComponent,
   MrSearchFacetsLayoutComponent,
   MrSearchLayoutComponent,
   MrStaticLayoutComponent,
+  // Custom components
+  ReadMoreComponent
 ];
 
 @NgModule({
