@@ -1,41 +1,57 @@
 <div class="mr-home mr-layout" *ngIf="lb.dataSource">
-    <section *ngFor="let section of lb.dataSource.pageConfig.sections" class="{{ 'mr-layout__' + section.type }}">
-        <ng-container [ngSwitch]="section.type">
-
-            <!-- SLIDER -->
-            <ng-container *ngSwitchCase="'slider'">
-                <n7-carousel 
-                [data]="lb.widgets[section.id].ds.out$ | async"
-                [emit]="lb.widgets[section.id].emit">
-                </n7-carousel> 
-            </ng-container>
-
-            <!-- COLLECTION -->
-            <ng-container *ngSwitchCase="'collection'">
-                <div class="mr-layout__maxwidth mr-items-preview">
-                    <n7-inner-title 
-                    [data]="(lb.widgets[section.id].ds.out$ | async)?.header"
-                    [emit]="lb.widgets[section.id].emit">
-                    </n7-inner-title>
-                    <div class="{{ section.grid ? 'n7-grid-' + section.grid : '' }}">
-                        <n7-item-preview
-                        *ngFor="let item of (lb.widgets[section.id].ds.out$ | async)?.items"
-                        [data]="item"
-                        [emit]="lb.widgets[section.id].emit">
-                        </n7-item-preview>
-                    </div>
-                </div>
-            </ng-container>
-
-            <!-- HERO -->
-            <ng-container *ngSwitchCase="'hero'">
-                <n7-hero 
-                [data]="lb.widgets[section.id].ds.out$ | async"
-                [emit]="lb.widgets[section.id].emit">
-                </n7-hero> 
-            </ng-container>
-        
+    <!-- HOME CONTENT -->
+    <ng-container [ngSwitch]="layoutState.get$('content') | async">
+        <!-- loading -->
+        <ng-container *ngSwitchCase="'LOADING'">
+            loading...
         </ng-container>
-    </section>
-    
+
+        <!-- error -->
+        <ng-container *ngSwitchCase="'ERROR'">
+            error!
+        </ng-container>
+
+        <!-- success -->
+        <ng-container *ngSwitchCase="'SUCCESS'">
+            <section *ngFor="let section of lb.dataSource.pageConfig.sections" class="{{ 'mr-layout__' + section.type }}">
+                <ng-container [ngSwitch]="section.type">
+        
+                    <!-- SLIDER -->
+                    <ng-container *ngSwitchCase="'slider'">
+                        <n7-carousel 
+                        [data]="lb.widgets[section.id].ds.out$ | async"
+                        [emit]="lb.widgets[section.id].emit">
+                        </n7-carousel> 
+                    </ng-container>
+        
+                    <!-- COLLECTION -->
+                    <ng-container *ngSwitchCase="'collection'">
+                        <div class="mr-layout__maxwidth mr-items-preview">
+                            <n7-inner-title 
+                            [data]="(lb.widgets[section.id].ds.out$ | async)?.header"
+                            [emit]="lb.widgets[section.id].emit">
+                            </n7-inner-title>
+                            <div class="{{ section.grid ? 'n7-grid-' + section.grid : '' }}">
+                                <n7-item-preview
+                                *ngFor="let item of (lb.widgets[section.id].ds.out$ | async)?.items"
+                                [data]="item"
+                                [emit]="lb.widgets[section.id].emit">
+                                </n7-item-preview>
+                            </div>
+                        </div>
+                    </ng-container>
+        
+                    <!-- HERO -->
+                    <ng-container *ngSwitchCase="'hero'">
+                        <n7-hero 
+                        [data]="lb.widgets[section.id].ds.out$ | async"
+                        [emit]="lb.widgets[section.id].emit">
+                        </n7-hero> 
+                    </ng-container>
+                
+                </ng-container>
+            </section>
+        </ng-container>
+
+    </ng-container>
 </div>

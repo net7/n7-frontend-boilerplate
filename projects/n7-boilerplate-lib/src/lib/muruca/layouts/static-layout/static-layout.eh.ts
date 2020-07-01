@@ -1,13 +1,16 @@
 import { ActivatedRoute, UrlSegment } from '@angular/router';
 import { Subject } from 'rxjs';
 import { EventHandler } from '@n7-frontend/core';
-import { takeUntil, switchMap } from 'rxjs/operators';
+import { takeUntil, switchMap, tap } from 'rxjs/operators';
+import { MrLayoutStateService, LayoutState } from '../../services/layout-state.service';
 import { MrStaticLayoutDS } from './static-layout.ds';
 
 export class MrStaticLayoutEH extends EventHandler {
   private route: ActivatedRoute;
 
   public dataSource: MrStaticLayoutDS;
+
+  private layoutState: MrLayoutStateService;
 
   private destroy$: Subject<void> = new Subject();
 
@@ -16,6 +19,7 @@ export class MrStaticLayoutEH extends EventHandler {
       switch (type) {
         case 'mr-static-layout.init':
           this.route = payload.route;
+          this.layoutState = payload.layoutState;
           this.dataSource.onInit(payload);
 
           // listen route
@@ -36,8 +40,15 @@ export class MrStaticLayoutEH extends EventHandler {
   private listenRoute() {
     this.route.url.pipe(
       takeUntil(this.destroy$),
-      switchMap((url: UrlSegment[]) => this.dataSource.pageRequest$(url[0].path))
+      tap(() => {
+        this.layoutState.set('content', LayoutState.LOADING);
+      }),
+      switchMap((url: UrlSegment[]) => this.dataSource.pageRequest$(url[0].path, (err) => {
+        console.warn(`Error loading static layout for ${url[0].path}`, err.message);
+        this.layoutState.set('content', LayoutState.ERROR);
+      }))
     ).subscribe((response) => {
+      this.layoutState.set('content', LayoutState.SUCCESS);
       this.dataSource.handleResponse(response);
     });
   }

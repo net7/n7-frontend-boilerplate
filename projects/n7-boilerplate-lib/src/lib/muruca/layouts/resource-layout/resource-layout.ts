@@ -6,6 +6,7 @@ import { CommunicationService } from '../../../common/services/communication.ser
 import { LayoutsConfigurationService } from '../../../common/services/layouts-configuration.service';
 import { ConfigurationService } from '../../../common/services/configuration.service';
 import { MainStateService } from '../../../common/services/main-state.service';
+import { MrLayoutStateService } from '../../services/layout-state.service';
 import { MrResourceLayoutConfig as config } from './resource-layout.config';
 import { MrImageViewerDS } from '../../data-sources/image-viewer.ds';
 import { MrImageViewerEH } from '../../event-handlers/image-viewer.eh';
@@ -38,7 +39,8 @@ export class MrResourceLayoutComponent extends AbstractLayout implements OnInit,
     private configuration: ConfigurationService,
     private communication: CommunicationService,
     private mainState: MainStateService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public layoutState: MrLayoutStateService,
   ) {
     super(layoutsConfiguration.get('MrResourceLayoutConfig') || config);
   }
@@ -49,6 +51,7 @@ export class MrResourceLayoutComponent extends AbstractLayout implements OnInit,
       configuration: this.configuration,
       communication: this.communication,
       mainState: this.mainState,
+      layoutState: this.layoutState,
       options: this.config.options || {},
       route: this.route
     };
@@ -56,6 +59,7 @@ export class MrResourceLayoutComponent extends AbstractLayout implements OnInit,
 
   ngOnInit() {
     this.activatedRoute.data.subscribe((data) => {
+      this.layoutState.add('content');
       this.configId = data.configId;
       this.loadWidgets();
       this.onInit();

@@ -1,52 +1,70 @@
 <div class="mr-resource mr-layout"
      *ngIf="lb.dataSource && lb.dataSource.pageConfig">
-  <section *ngFor="let section of lb.dataSource.pageConfig.sections"
-           class="{{ 'mr-layout__' + section.type }}">
-    <ng-container [ngSwitch]="section.type">
+     <!-- RESOURCE LAYOUT CONTENT -->
+    <ng-container [ngSwitch]="layoutState.get$('content') | async">
+        <!-- loading -->
+        <ng-container *ngSwitchCase="'LOADING'">
+            loading...
+        </ng-container>
 
-      <!-- INNER TITLE -->
-      <ng-container *ngSwitchCase="'title'">
-        <n7-inner-title [data]="lb.widgets[section.id].ds.out$ | async"
-                        [emit]="lb.widgets[section.id].emit">
-        </n7-inner-title>
-      </ng-container>
+        <!-- error -->
+        <ng-container *ngSwitchCase="'ERROR'">
+            error!
+        </ng-container>
 
-      <!-- IMAGE VIEWER -->
-      <ng-container *ngSwitchCase="'viewer'">
-        <n7-image-viewer [data]="lb.widgets[section.id].ds.out$ | async"
-                         [emit]="lb.widgets[section.id].emit">
-        </n7-image-viewer>
-      </ng-container>
+        <!-- success -->
+        <ng-container *ngSwitchCase="'SUCCESS'">
 
-      <!-- METADATA VIEWER -->
-      <ng-container *ngSwitchCase="'metadata'">
-        <n7-metadata-viewer [data]="lb.widgets[section.id].ds.out$ | async"
-                            [emit]="lb.widgets[section.id].emit">
-        </n7-metadata-viewer>
-      </ng-container>
-
-      <!-- COLLECTION -->
-      <ng-container *ngSwitchCase="'collection'">
-        <div class="mr-layout__maxwidth mr-items-preview">
-          <n7-inner-title [data]="(lb.widgets[section.id].ds.out$ | async)?.header"
-                          [emit]="lb.widgets[section.id].emit">
-          </n7-inner-title>
-          <div class="{{ section.grid ? 'n7-grid-' + section.grid : '' }}">
-            <n7-item-preview *ngFor="let item of (lb.widgets[section.id].ds.out$ | async)?.items"
-                             [data]="item"
-                             [emit]="lb.widgets[section.id].emit">
-            </n7-item-preview>
-          </div>
-        </div>
-      </ng-container>
-
-      <!-- ITEM PREVIEW -->
-      <ng-container *ngSwitchCase="'preview'">
-        <n7-item-preview [data]="lb.widgets[section.id].ds.out$ | async"
-                         [emit]="lb.widgets[section.id].emit">
-        </n7-item-preview>
-      </ng-container>
-
+            <section *ngFor="let section of lb.dataSource.pageConfig.sections"
+                     class="{{ 'mr-layout__' + section.type }}">
+              <ng-container [ngSwitch]="section.type">
+          
+                <!-- INNER TITLE -->
+                <ng-container *ngSwitchCase="'title'">
+                  <n7-inner-title [data]="lb.widgets[section.id].ds.out$ | async"
+                                  [emit]="lb.widgets[section.id].emit">
+                  </n7-inner-title>
+                </ng-container>
+          
+                <!-- IMAGE VIEWER -->
+                <ng-container *ngSwitchCase="'viewer'">
+                  <n7-image-viewer [data]="lb.widgets[section.id].ds.out$ | async"
+                                   [emit]="lb.widgets[section.id].emit">
+                  </n7-image-viewer>
+                </ng-container>
+          
+                <!-- METADATA VIEWER -->
+                <ng-container *ngSwitchCase="'metadata'">
+                  <n7-metadata-viewer [data]="lb.widgets[section.id].ds.out$ | async"
+                                      [emit]="lb.widgets[section.id].emit">
+                  </n7-metadata-viewer>
+                </ng-container>
+          
+                <!-- COLLECTION -->
+                <ng-container *ngSwitchCase="'collection'">
+                  <div class="mr-layout__maxwidth mr-items-preview">
+                    <n7-inner-title [data]="(lb.widgets[section.id].ds.out$ | async)?.header"
+                                    [emit]="lb.widgets[section.id].emit">
+                    </n7-inner-title>
+                    <div class="{{ section.grid ? 'n7-grid-' + section.grid : '' }}">
+                      <n7-item-preview *ngFor="let item of (lb.widgets[section.id].ds.out$ | async)?.items"
+                                       [data]="item"
+                                       [emit]="lb.widgets[section.id].emit">
+                      </n7-item-preview>
+                    </div>
+                  </div>
+                </ng-container>
+          
+                <!-- ITEM PREVIEW -->
+                <ng-container *ngSwitchCase="'preview'">
+                  <n7-item-preview [data]="lb.widgets[section.id].ds.out$ | async"
+                                   [emit]="lb.widgets[section.id].emit">
+                  </n7-item-preview>
+                </ng-container>
+          
+              </ng-container>
+            </section>
+        </ng-container>
+    
     </ng-container>
-  </section>
 </div>
