@@ -24,9 +24,10 @@ export class MrResourceLayoutDS extends LayoutDataSource {
   }
 
   /** Request the configured widgets data */
-  pageRequest$(slug): Observable<any> {
+  pageRequest$(slug, onError: (err: any) => void): Observable<any> {
     const { sections } = this.pageConfig;
     return this.communication.request$('resource', {
+      onError,
       method: 'POST',
       params: {
         slug,
