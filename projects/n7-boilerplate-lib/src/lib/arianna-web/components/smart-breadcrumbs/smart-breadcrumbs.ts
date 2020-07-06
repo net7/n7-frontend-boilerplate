@@ -104,7 +104,6 @@ export class SmartBreadcrumbsComponent implements AfterViewInit {
     appendTo: document.body, // silence tippy interactive warning
   });
 
-
   getWidths = (parent: ElementRef, child: ElementRef) => {
     const pw = parent.nativeElement.clientWidth;
     const cw = child.nativeElement.clientWidth;

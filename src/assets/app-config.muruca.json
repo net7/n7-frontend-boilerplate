@@ -275,8 +275,7 @@
       },
       {
         "id": "metadata-1",
-        "type": "metadata",
-        "grid": null
+        "type": "metadata"
       },
       {
         "id": "metadata-2",
@@ -302,7 +301,10 @@
       {
         "id": "metadata-3",
         "type": "metadata",
-        "grid": null
+        "grid": null,
+        "options": {
+          "hideLabels": true
+        }
       },
       {
         "id": "metadata-1",
@@ -325,5 +327,8 @@
         "grid": 3
       }
     ]
+  },
+  "labels": {
+    "descrizione": ""
   }
 }
