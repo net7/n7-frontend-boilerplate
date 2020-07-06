@@ -22,13 +22,13 @@
       </ng-container>
 
       <!-- METADATA VIEWER -->
-      <mr-read-more data="{ height: 100px }">
-        <ng-container *ngSwitchCase="'metadata'">
+      <ng-container *ngSwitchCase="'metadata'">
+        <mr-read-more [data]="{ limit: 150 }">
           <n7-metadata-viewer [data]="lb.widgets[section.id].ds.out$ | async"
                               [emit]="lb.widgets[section.id].emit">
           </n7-metadata-viewer>
-        </ng-container>
-      </mr-read-more>
+        </mr-read-more>
+      </ng-container>
 
       <!-- COLLECTION -->
       <ng-container *ngSwitchCase="'collection'">
