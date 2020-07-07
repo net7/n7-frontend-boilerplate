@@ -92,5 +92,12 @@ export class AwFacetsWrapperEH extends EventHandler {
         queryParams,
       });
     });
+
+    // trigger pagination
+    setTimeout(() => {
+      this.dataSource.paginate$.subscribe(() => {
+        console.log('pagination state', this.dataSource.paginationState);
+      });
+    }, 500);
   }
 }

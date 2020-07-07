@@ -1,5 +1,5 @@
 import { DataSource } from '@n7-frontend/core';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { AwSearchModel } from '../search/aw-search.model';
 
@@ -9,7 +9,9 @@ const HEADER_ICON_CLOSE = 'n7-icon-angle-right';
 export class AwFacetsWrapperDS extends DataSource {
   public searchModel: AwSearchModel;
 
-  private facetsPaginationState = {} as any;
+  public paginate$: Subject<void> = new Subject();
+
+  public paginationState = {} as any;
 
   protected transform(data) {
     if (!this.searchModel) {
@@ -187,7 +189,7 @@ export class AwFacetsWrapperDS extends DataSource {
     this.searchModel.getFilters().filter((filter) => (
       filter.pagination
     )).forEach(({ pagination }) => {
-      this.facetsPaginationState = {
+      this.paginationState = {
         ...pagination,
         loading: false
       };
@@ -202,13 +204,17 @@ export class AwFacetsWrapperDS extends DataSource {
         debounceTime(300)
       ).subscribe(({ target }) => {
         const { scrollTop, clientHeight, scrollHeight } = target as HTMLElement;
+        const {
+          offset, limit, totalCount, loading
+        } = this.paginationState;
         const margin = 150;
         if (
-          scrollTop + clientHeight >= scrollHeight - margin
-          && this.facetsPaginationState.loading === false
+          (scrollTop + clientHeight >= scrollHeight - margin)
+          && (offset + limit < totalCount)
+          && loading === false
         ) {
-          this.facetsPaginationState.loading = true;
-          console.log('hola');
+          this.paginationState.loading = true;
+          this.paginationState.offset = offset + limit;
         }
       });
     }, 100);
