@@ -3,8 +3,6 @@ import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
 export class AwFacetsWrapperEH extends EventHandler {
-  private _facetsChanged = false;
-
   private internalFacetsChange$: Subject<any> = new Subject();
 
   private externalFacetsChange$: Subject<any> = new Subject();
@@ -21,7 +19,6 @@ export class AwFacetsWrapperEH extends EventHandler {
           const { facetId } = payload.eventPayload.inputPayload;
           const input = this.dataSource.getInputByFacetId(facetId);
           const context = input.getContext();
-          this._facetsChanged = true;
 
           // update
           this.dataSource.onFacetChange(payload);

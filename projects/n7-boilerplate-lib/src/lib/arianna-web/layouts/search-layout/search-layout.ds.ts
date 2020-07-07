@@ -2,7 +2,7 @@ import { cloneDeep } from 'lodash';
 import { LayoutDataSource } from '@n7-frontend/core/dist/layout-data-source';
 import { tap, takeUntil } from 'rxjs/operators';
 import {
-  Observable, of, fromEvent, Subject, BehaviorSubject,
+  Observable, of, fromEvent, Subject, BehaviorSubject, forkJoin,
 } from 'rxjs';
 import facetsConfig from './search-facets.config';
 import helpers from '../../../common/helpers';
@@ -212,11 +212,11 @@ export class AwSearchLayoutDS extends LayoutDataSource {
         ...requestParams,
       },
     };
-    return this.communication.request$('search', {
+    const resultsReq$ = this.communication.request$('search', {
       onError: (error) => console.error(error),
       params: requestPayload,
     }).pipe(
-      tap(({ totalCount, results, facets }) => {
+      tap(({ totalCount, results }) => {
         this.totalCount = totalCount;
         let resultsTitleIndex = 0;
         // results title
@@ -228,13 +228,6 @@ export class AwSearchLayoutDS extends LayoutDataSource {
         this.resultsTitle = this.configuration.get('search-layout').results[
           resultsTitleIndex
         ];
-
-        // facets labels
-        this._addFacetsLabels(facets);
-        // facets options
-        this._addFacetsOptions(facets);
-
-        this.searchModel.updateFacets(facets);
         this.searchModel.updateTotalCount(totalCount);
 
         this.one('aw-linked-objects').updateOptions({
@@ -252,6 +245,19 @@ export class AwSearchLayoutDS extends LayoutDataSource {
         this.one('aw-linked-objects').update({ items: this._normalizeItems(results.items) });
       }),
     );
+    const facetsReq$ = this.communication.request$('facets', {
+      onError: (error) => console.error(error),
+      params: requestPayload,
+    }).pipe(
+      tap(({ facets }) => {
+        // facets labels
+        this._addFacetsLabels(facets);
+        // facets options
+        this._addFacetsOptions(facets);
+        this.searchModel.updateFacets(facets);
+      }),
+    );
+    return forkJoin(resultsReq$, facetsReq$);
   }
 
   private _updateSearchPage(page) {
