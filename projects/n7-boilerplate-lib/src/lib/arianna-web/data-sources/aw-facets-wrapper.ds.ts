@@ -1,4 +1,6 @@
 import { DataSource } from '@n7-frontend/core';
+import { fromEvent } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 import { AwSearchModel } from '../search/aw-search.model';
 
 const HEADER_ICON_OPEN = 'n7-icon-angle-down';
@@ -7,9 +9,13 @@ const HEADER_ICON_CLOSE = 'n7-icon-angle-right';
 export class AwFacetsWrapperDS extends DataSource {
   public searchModel: AwSearchModel;
 
+  private facetsPaginationState = {} as any;
+
   protected transform(data) {
     if (!this.searchModel) {
       this.searchModel = data.searchModel;
+      this.initPaginationState();
+      this.initPaginationListener();
     }
 
     const id = this.searchModel.getId();
@@ -175,5 +181,36 @@ export class AwFacetsWrapperDS extends DataSource {
         id: `${groupId}-header`,
       },
     } : null;
+  }
+
+  private initPaginationState() {
+    this.searchModel.getFilters().filter((filter) => (
+      filter.pagination
+    )).forEach(({ pagination }) => {
+      this.facetsPaginationState = {
+        ...pagination,
+        loading: false
+      };
+    });
+  }
+
+  private initPaginationListener() {
+    setTimeout(() => {
+      const scrollEl = document.querySelector('.n7-facets-wrapper__group-aw-search-layout-1 .n7-facet__section-input-links');
+      const scroll$ = fromEvent(scrollEl, 'scroll');
+      scroll$.pipe(
+        debounceTime(300)
+      ).subscribe(({ target }) => {
+        const { scrollTop, clientHeight, scrollHeight } = target as HTMLElement;
+        const margin = 150;
+        if (
+          scrollTop + clientHeight >= scrollHeight - margin
+          && this.facetsPaginationState.loading === false
+        ) {
+          this.facetsPaginationState.loading = true;
+          console.log('hola');
+        }
+      });
+    }, 100);
   }
 }

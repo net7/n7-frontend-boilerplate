@@ -3,9 +3,9 @@ import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
 export class AwFacetsWrapperEH extends EventHandler {
-  private internalFacetsChange$: Subject<any> = new Subject();
+  public internalFacetsChange$: Subject<any> = new Subject();
 
-  private externalFacetsChange$: Subject<any> = new Subject();
+  public externalFacetsChange$: Subject<any> = new Subject();
 
   public listen() {
     // listen to inner (widget) events
@@ -69,14 +69,6 @@ export class AwFacetsWrapperEH extends EventHandler {
         default:
           break;
       }
-    });
-
-    // internal facets change
-    this.internalFacetsChange$.pipe(
-      debounceTime(500),
-    ).subscribe((target) => {
-      this.dataSource.filterTarget(target);
-      this.dataSource.updateFilteredTarget(target);
     });
 
     // internal facets change

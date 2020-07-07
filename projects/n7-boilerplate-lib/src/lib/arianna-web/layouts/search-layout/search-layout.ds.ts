@@ -1,6 +1,8 @@
 import { cloneDeep } from 'lodash';
 import { LayoutDataSource } from '@n7-frontend/core/dist/layout-data-source';
-import { tap, takeUntil } from 'rxjs/operators';
+import {
+  tap, takeUntil, debounceTime, switchMap
+} from 'rxjs/operators';
 import {
   Observable, of, fromEvent, Subject, BehaviorSubject, forkJoin,
 } from 'rxjs';
@@ -110,6 +112,9 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     this._sidebarStickyControl();
     this.mainState.updateCustom('currentNav', 'ricerca');
     this.mainState.update('headTitle', 'Arianna4View - Ricerca');
+
+    // listen to internal filters
+    this.listenToInternalFilters();
   }
 
   onDestroy() {
@@ -203,18 +208,10 @@ export class AwSearchLayoutDS extends LayoutDataSource {
 
   public getSearchModelId = () => SEARCH_MODEL_ID;
 
-  public doSearchRequest$(): Observable<any> {
-    const requestParams = this.searchModel.getRequestParams();
-    const requestPayload = {
-      searchParameters: {
-        // FIXME: togliere totalCount
-        totalCount: 100,
-        ...requestParams,
-      },
-    };
-    const resultsReq$ = this.communication.request$('search', {
+  private getResultsReq$(params): Observable<any> {
+    return this.communication.request$('search', {
+      params,
       onError: (error) => console.error(error),
-      params: requestPayload,
     }).pipe(
       tap(({ totalCount, results }) => {
         this.totalCount = totalCount;
@@ -245,9 +242,12 @@ export class AwSearchLayoutDS extends LayoutDataSource {
         this.one('aw-linked-objects').update({ items: this._normalizeItems(results.items) });
       }),
     );
-    const facetsReq$ = this.communication.request$('facets', {
+  }
+
+  private getFacetsReq$(params) {
+    return this.communication.request$('facets', {
+      params,
       onError: (error) => console.error(error),
-      params: requestPayload,
     }).pipe(
       tap(({ facets }) => {
         // facets labels
@@ -257,7 +257,43 @@ export class AwSearchLayoutDS extends LayoutDataSource {
         this.searchModel.updateFacets(facets);
       }),
     );
+  }
+
+  public doSearchRequest$(): Observable<any> {
+    const requestParams = this.searchModel.getRequestParams();
+    const params = {
+      searchParameters: {
+        // FIXME: togliere totalCount
+        totalCount: 100,
+        ...requestParams,
+      },
+    };
+    const resultsReq$ = this.getResultsReq$(params);
+    const facetsReq$ = this.getFacetsReq$(params);
     return forkJoin(resultsReq$, facetsReq$);
+  }
+
+  private listenToInternalFilters() {
+    const facetsWrapperEH = this.getWidgetEventHandler('facets-wrapper');
+    facetsWrapperEH.internalFacetsChange$.pipe(
+      debounceTime(500),
+      switchMap(() => {
+        const requestParams = this.searchModel.getRequestParams();
+        const internalFilters = this.searchModel.getInternalFilters();
+        const filters = [...requestParams.filters, ...internalFilters];
+        const params = {
+          searchParameters: {
+            // FIXME: togliere totalCount
+            totalCount: 100,
+            ...requestParams,
+            filters
+          },
+        };
+        return this.getFacetsReq$(params);
+      })
+    ).subscribe(() => {
+      // do nothing
+    });
   }
 
   private _updateSearchPage(page) {

@@ -58,6 +58,11 @@ export interface Filter {
   isArray?: boolean;
   context?: 'internal' | 'external';
   target?: string;
+  pagination?: {
+    totalCount: number;
+    limit: number;
+    offset: number;
+  };
 }
 
 export class AwSearchModel {
@@ -203,7 +208,12 @@ export class AwSearchModel {
         && ((Array.isArray(filter.value) && filter.value.length)
           || (!Array.isArray(filter.value) && filter.value))
       ))
-      .map(({ facetId, value, searchIn }) => ({ facetId, value, searchIn }));
+      .map(({
+        facetId, value, searchIn/* , pagination */
+      }) => ({
+        // FIXME: mettere pagination
+        facetId, value, searchIn/* , pagination */
+      }));
   }
 
   public filtersAsQueryParams(filters) {
