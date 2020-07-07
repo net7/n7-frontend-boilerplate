@@ -4,12 +4,10 @@ import { tap, takeUntil } from 'rxjs/operators';
 import {
   Observable, of, fromEvent, Subject, BehaviorSubject,
 } from 'rxjs';
-import {
-  SearchService,
-  SearchModel,
-} from '../../../common/services';
 import facetsConfig from './search-facets.config';
 import helpers from '../../../common/helpers';
+import { AwSearchService } from '../../search/aw-search.service';
+import { AwSearchModel } from '../../search/aw-search.model';
 
 const SEARCH_MODEL_ID = 'aw-search-layout';
 
@@ -22,9 +20,9 @@ export class AwSearchLayoutDS extends LayoutDataSource {
 
   private mainState: any;
 
-  private search: SearchService;
+  private search: AwSearchService;
 
-  private searchModel: SearchModel;
+  private searchModel: AwSearchModel;
 
   private prettifyLabels: any;
 
@@ -105,9 +103,9 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     this.search.add(SEARCH_MODEL_ID, cloneDeep(facetsConfig));
     this.searchModel = this.search.model(SEARCH_MODEL_ID);
     // query params control
-    if (SearchService.queryParams) {
-      this.searchModel.updateFiltersFromQueryParams(SearchService.queryParams);
-      SearchService.queryParams = null;
+    if (AwSearchModel.queryParams) {
+      this.searchModel.updateFiltersFromQueryParams(AwSearchModel.queryParams);
+      AwSearchModel.queryParams = null;
     }
     this._sidebarStickyControl();
     this.mainState.updateCustom('currentNav', 'ricerca');
@@ -116,7 +114,7 @@ export class AwSearchLayoutDS extends LayoutDataSource {
 
   onDestroy() {
     this.destroyed$.next();
-    SearchService.queryParams = null;
+    AwSearchModel.queryParams = null;
   }
 
   onSearchResponse() {

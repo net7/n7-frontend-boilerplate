@@ -34,9 +34,9 @@
              class="aw-search__sidebar sticky-target"
              [ngClass]="{ 'is-sticky': lb.dataSource.sidebarIsSticky }">
             <div class="aw-search__facets">
-                <n7-facets-wrapper [data]="lb.widgets['facets-wrapper'].ds.out$ | async"
+                <aw-facets-wrapper [data]="lb.widgets['facets-wrapper'].ds.out$ | async"
                                    [emit]="lb.widgets['facets-wrapper'].emit">
-                </n7-facets-wrapper>
+                </aw-facets-wrapper>
             </div>
         </div>
         <div class="aw-search__content">

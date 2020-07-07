@@ -1,7 +1,7 @@
-import { FacetInput } from './facet-input';
-import helpers from '../../helpers';
+import { AwFacetInput } from './aw-facet-input';
+import helpers from '../../../common/helpers';
 
-export class FacetInputText extends FacetInput {
+export class AwFacetInputText extends AwFacetInput {
   protected transform() {
     const facetId = this.getFacetId();
     const payload = {

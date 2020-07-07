@@ -2,7 +2,7 @@ import { EventHandler } from '@n7-frontend/core';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
-export class FacetsWrapperEH extends EventHandler {
+export class AwFacetsWrapperEH extends EventHandler {
   private _facetsChanged = false;
 
   private internalFacetsChange$: Subject<any> = new Subject();

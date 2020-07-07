@@ -1,12 +1,11 @@
 import { DataSource } from '@n7-frontend/core';
-import { SearchModel } from '../services/search.service';
+import { AwSearchModel } from '../search/aw-search.model';
 
 const HEADER_ICON_OPEN = 'n7-icon-angle-down';
 const HEADER_ICON_CLOSE = 'n7-icon-angle-right';
 
-
-export class FacetsWrapperDS extends DataSource {
-  public searchModel: SearchModel;
+export class AwFacetsWrapperDS extends DataSource {
+  public searchModel: AwSearchModel;
 
   protected transform(data) {
     if (!this.searchModel) {

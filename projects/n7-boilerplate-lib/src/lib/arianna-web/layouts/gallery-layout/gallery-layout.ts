@@ -7,7 +7,7 @@ import { LayoutsConfigurationService } from '../../../common/services/layouts-co
 import { MainStateService } from '../../../common/services/main-state.service';
 import { CommunicationService } from '../../../common/services/communication.service';
 import { AwGalleryLayoutConfig as config } from './gallery-layout.config';
-import { SearchService } from '../../../common/services/search.service';
+import { AwSearchService } from '../../search/aw-search.service';
 
 @Component({
   selector: 'aw-gallery-layout',
@@ -21,7 +21,7 @@ export class AwGalleryLayoutComponent extends AbstractLayout implements OnInit, 
     private layoutsConfiguration: LayoutsConfigurationService,
     private mainState: MainStateService,
     private communication: CommunicationService,
-    private search: SearchService,
+    private search: AwSearchService,
     private route: ActivatedRoute
   ) {
     super(config);

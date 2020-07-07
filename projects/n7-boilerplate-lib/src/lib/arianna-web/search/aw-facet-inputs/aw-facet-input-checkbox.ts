@@ -1,6 +1,6 @@
-import { FacetInput } from './facet-input';
+import { AwFacetInput } from './aw-facet-input';
 
-export class FacetInputCheckbox extends FacetInput {
+export class AwFacetInputCheckbox extends AwFacetInput {
   protected transform() {
     const facetId = this.getFacetId();
 

@@ -18,6 +18,7 @@ import { BubbleChartWrapperComponent } from './components/bubble-chart-wrapper/b
 import { SmartBreadcrumbsComponent } from './components/smart-breadcrumbs/smart-breadcrumbs';
 import { ConfigurationService } from '../common/services/configuration.service';
 import apolloConfig from './config/apollo.config';
+import { AwFacetsWrapperComponent } from './components';
 
 const COMPONENTS = [
   AwEntitaLayoutComponent,
@@ -29,6 +30,7 @@ const COMPONENTS = [
   BubbleChartWrapperComponent,
   ChartTippyComponent,
   SmartBreadcrumbsComponent,
+  AwFacetsWrapperComponent,
 ];
 
 @NgModule({

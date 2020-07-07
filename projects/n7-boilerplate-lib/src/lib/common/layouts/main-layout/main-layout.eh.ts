@@ -2,7 +2,7 @@ import { EventHandler } from '@n7-frontend/core';
 import { Subject } from 'rxjs';
 import { takeUntil, filter } from 'rxjs/operators';
 import { NavigationStart } from '@angular/router';
-import { SearchService } from '../../services';
+import { AwSearchModel } from '../../../arianna-web/search/aw-search.model';
 
 export class MainLayoutEH extends EventHandler {
   private destroyed$: Subject<any> = new Subject();
@@ -59,7 +59,7 @@ export class MainLayoutEH extends EventHandler {
     ).subscribe((params) => {
       this.emitGlobal('queryparams', params);
       // to use in searchs
-      SearchService.queryParams = params;
+      AwSearchModel.queryParams = params;
     });
     // router changed
     this.router.events.pipe(

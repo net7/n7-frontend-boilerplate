@@ -4,12 +4,10 @@ import { tap, takeUntil } from 'rxjs/operators';
 import {
   Observable, of, fromEvent, Subject, BehaviorSubject,
 } from 'rxjs';
-import {
-  SearchService,
-  SearchModel,
-} from '../../../common/services';
 import facetsConfig from './gallery-facets.config';
 import helpers from '../../../common/helpers';
+import { AwSearchService } from '../../search/aw-search.service';
+import { AwSearchModel } from '../../search/aw-search.model';
 
 const SEARCH_MODEL_ID = 'aw-gallery-layout';
 
@@ -22,9 +20,9 @@ export class AwGalleryLayoutDS extends LayoutDataSource {
 
   private mainState: any;
 
-  private search: SearchService;
+  private search: AwSearchService;
 
-  private searchModel: SearchModel;
+  private searchModel: AwSearchModel;
 
   private prettifyLabels: any;
 
@@ -109,9 +107,9 @@ export class AwGalleryLayoutDS extends LayoutDataSource {
     this.searchModel = this.search.model(SEARCH_MODEL_ID);
 
     // query params control
-    if (SearchService.queryParams) {
-      this.searchModel.updateFiltersFromQueryParams(SearchService.queryParams);
-      SearchService.queryParams = null;
+    if (AwSearchModel.queryParams) {
+      this.searchModel.updateFiltersFromQueryParams(AwSearchModel.queryParams);
+      AwSearchModel.queryParams = null;
     }
 
     // sidebar sticky control
@@ -123,7 +121,7 @@ export class AwGalleryLayoutDS extends LayoutDataSource {
 
   onDestroy() {
     this.destroyed$.next();
-    SearchService.queryParams = null;
+    AwSearchModel.queryParams = null;
   }
 
   onSearchResponse() {

@@ -1,9 +1,9 @@
 /* eslint-disable */
-import { FacetInput } from './facet-input';
+import { AwFacetInput } from './aw-facet-input';
 
 const RESULTS_LIMIT = 1000;
 
-export class FacetInputLink extends FacetInput {
+export class AwFacetInputLink extends AwFacetInput {
   private facetValue: string | string[];
 
   protected transform() {
