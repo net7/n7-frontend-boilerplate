@@ -26,6 +26,10 @@ export const APP_ROUTES: Routes = [
   { path: 'mappe', component: MrSearchLayoutComponent, data: { configId: 'search-maps' } },
   { path: 'mappa/:slug', component: MrResourceLayoutComponent, data: { configId: 'resource-map' } },
   { path: 'opera/:slug', component: MrResourceLayoutComponent, data: { configId: 'resource-work' } },
+  { path: 'opera/:slug/facsimile', component: MrResourceLayoutComponent, data: { configId: 'resource-work-facsimile' } },
+  { path: 'opera/:slug/metadati', component: MrResourceLayoutComponent, data: { configId: 'resource-work-metadati' } },
+  { path: 'opera/:slug/trascrizione', component: MrResourceLayoutComponent, data: { configId: 'resource-work-trascrizione' } },
+  { path: 'opera/:slug/bibliografia', component: MrResourceLayoutComponent, data: { configId: 'resource-work-bibliografia' } },
   { path: NOT_FOUND_PATH, component: Page404LayoutComponent },
   {
     path: '**',
