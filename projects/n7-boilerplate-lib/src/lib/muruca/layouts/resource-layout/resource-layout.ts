@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MrInnerTitleDS } from '../../data-sources/inner-title.ds';
 import { AbstractLayout } from '../../../common/models/abstract-layout';
 import { CommunicationService } from '../../../common/services/communication.service';
 import { LayoutsConfigurationService } from '../../../common/services/layouts-configuration.service';
@@ -8,18 +7,28 @@ import { ConfigurationService } from '../../../common/services/configuration.ser
 import { MainStateService } from '../../../common/services/main-state.service';
 import { MrLayoutStateService } from '../../services/layout-state.service';
 import { MrResourceLayoutConfig as config } from './resource-layout.config';
-import { MrImageViewerDS } from '../../data-sources/image-viewer.ds';
 import { MrImageViewerEH } from '../../event-handlers/image-viewer.eh';
-import { MrMetadataDS } from '../../data-sources/metadata.ds';
-import { MrItemPreviewDS } from '../../data-sources/item-preview.ds';
-import { MrCollectionDS } from '../../data-sources/collection.ds';
+import {
+  MrBreadcrumbsDS,
+  MrCollectionDS,
+  MrImageViewerDS,
+  MrInfoBoxDS,
+  MrInnerTitleDS,
+  MrItemPreviewDS,
+  MrMetadataDS,
+  MrTextViewerDS,
+} from '../../data-sources';
 
 const DATASOURCE_MAP = {
-  viewer: MrImageViewerDS,
+  breadcrumbs: MrBreadcrumbsDS,
+  collection: MrCollectionDS,
+  info: MrInfoBoxDS,
   metadata: MrMetadataDS,
   preview: MrItemPreviewDS,
+  text: MrTextViewerDS,
   title: MrInnerTitleDS,
-  collection: MrCollectionDS
+  viewer: MrImageViewerDS,
+  tabs: (d) => d
 };
 
 const EVENTHANDLER_MAP = {

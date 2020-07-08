@@ -260,19 +260,28 @@
     }
   },
   "tabs": {
-    "work": [{
-      "id": "facsimile",
-      "label": "Facsimile"
-    }, {
-      "id": "metadati",
-      "label": "Metadati"
-    }, {
-      "id": "trascrizione",
-      "label": "Trascrizione"
-    }, {
-      "id": "bibliografia",
-      "label": "Bibliografia"
-    }]
+    "work": [
+      {
+        "id": "facsimile",
+        "label": "Facsimile"
+      },
+      {
+        "id": "metadati",
+        "label": "Metadati"
+      },
+      {
+        "id": "trascrizione",
+        "label": "Trascrizione"
+      },
+      {
+        "id": "bibliografia",
+        "label": "Bibliografia"
+      },
+      {
+        "id": "sandbox",
+        "label": "Sandbox"
+      }
+    ]
   },
   "resource-work-facsimile": {
     "title": "Opera > Facsimile",
@@ -280,13 +289,24 @@
     "type": "work",
     "sections": [
       {
+        "id": "breadcrumbs-1",
+        "type": "breadcrumbs"
+      },
+      {
         "id": "title-1",
-        "type": "title",
-        "grid": null
-      }, {
+        "type": "title"
+      },
+      {
+        "id": "tab-bar",
+        "type": "tabs"
+      },
+      {
         "id": "viewer-1",
-        "type": "viewer",
-        "grid": null
+        "type": "viewer"
+      },
+      {
+        "id": "metadata-1",
+        "type": "metadata"
       }
     ]
   },
@@ -296,17 +316,27 @@
     "type": "work",
     "sections": [
       {
+        "id": "breadcrumbs-1",
+        "type": "breadcrumbs"
+      },
+      {
         "id": "title-1",
-        "type": "title",
-        "grid": null
-      }, {
+        "type": "title"
+      },
+      {
+        "id": "tab-bar",
+        "type": "tabs"
+      },
+      {
         "id": "metadata-1",
         "type": "metadata"
-      }, {
+      },
+      {
         "id": "metadata-2",
         "type": "metadata",
         "grid": null
-      }, {
+      },
+      {
         "id": "collection-1",
         "type": "collection",
         "grid": 3
@@ -319,20 +349,24 @@
     "type": "work",
     "sections": [
       {
+        "id": "breadcrumbs-1",
+        "type": "breadcrumbs"
+      },
+      {
         "id": "title-1",
-        "type": "title",
-        "grid": null
-      }, {
+        "type": "title"
+      },
+      {
+        "id": "tab-bar",
+        "type": "tabs"
+      },
+      {
+        "id": "text-1",
+        "type": "text"
+      },
+      {
         "id": "metadata-1",
         "type": "metadata"
-      }, {
-        "id": "metadata-2",
-        "type": "metadata",
-        "grid": null
-      }, {
-        "id": "collection-1",
-        "type": "collection",
-        "grid": 3
       }
     ]
   },
@@ -342,17 +376,59 @@
     "type": "work",
     "sections": [
       {
+        "id": "tab-bar",
+        "type": "tabs"
+      },
+      {
         "id": "title-1",
-        "type": "title",
-        "grid": null
-      }, {
+        "type": "title"
+      },
+      {
         "id": "metadata-1",
         "type": "metadata"
-      }, {
+      },
+      {
+        "id": "metadata-2",
+        "type": "metadata"
+      },
+      {
+        "id": "collection-1",
+        "type": "collection",
+        "grid": 3
+      }
+    ]
+  },
+  "resource-work-sandbox": {
+    "title": "Opera > Sandbox",
+    "tabs": "work",
+    "type": "work",
+    "sections": [
+      {
+        "id": "title-1",
+        "type": "title"
+      },
+      {
+        "id": "breadcrumbs-1",
+        "type": "breadcrumbs"
+      },
+      {
+        "id": "tab-bar",
+        "type": "tabs"
+      },
+      {
+        "id": "text-1",
+        "type": "text"
+      },
+      {
+        "id": "metadata-1",
+        "type": "metadata"
+      },
+      {
         "id": "metadata-2",
         "type": "metadata",
         "grid": null
-      }, {
+      },
+      {
         "id": "collection-1",
         "type": "collection",
         "grid": 3

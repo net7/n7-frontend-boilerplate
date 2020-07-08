@@ -30,6 +30,7 @@ export const APP_ROUTES: Routes = [
   { path: 'opera/:slug/metadati', component: MrResourceLayoutComponent, data: { configId: 'resource-work-metadati' } },
   { path: 'opera/:slug/trascrizione', component: MrResourceLayoutComponent, data: { configId: 'resource-work-trascrizione' } },
   { path: 'opera/:slug/bibliografia', component: MrResourceLayoutComponent, data: { configId: 'resource-work-bibliografia' } },
+  { path: 'opera/:slug/sandbox', component: MrResourceLayoutComponent, data: { configId: 'resource-work-sandbox' } },
   { path: NOT_FOUND_PATH, component: Page404LayoutComponent },
   {
     path: '**',

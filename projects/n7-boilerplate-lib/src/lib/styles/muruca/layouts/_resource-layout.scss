@@ -1,0 +1,45 @@
+/**
+ * RESOURCE
+ *
+ * Specific style for the Resource page.
+ */
+
+.mr-layout {
+    &__tabs {
+        span {
+            margin: 0 2px;
+            background: #f0f0f0;
+            color: black;
+        }
+    }
+}
+
+.text-viewer {
+
+    &__mock {
+        background-color: #f8f6e2;
+        height: 600px;
+        line-height: 600px;
+        text-align: center;
+    }
+
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: 1120px) {
+}
+
+@media all and (max-width: $breakpoint-laptop) {
+}
+
+@media all and (max-width: $breakpoint-ipad-portrait) {
+}
+
+@media all and (max-width: $breakpoint-smartphone-landscape) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}
