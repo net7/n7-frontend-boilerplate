@@ -259,6 +259,106 @@
       "button": "Resetta la ricerca"
     }
   },
+  "tabs": {
+    "work": [{
+      "id": "facsimile",
+      "label": "Facsimile"
+    }, {
+      "id": "metadati",
+      "label": "Metadati"
+    }, {
+      "id": "trascrizione",
+      "label": "Trascrizione"
+    }, {
+      "id": "bibliografia",
+      "label": "Bibliografia"
+    }]
+  },
+  "resource-work-facsimile": {
+    "title": "Opera > Facsimile",
+    "tabs": "work",
+    "type": "work",
+    "sections": [
+      {
+        "id": "title-1",
+        "type": "title",
+        "grid": null
+      }, {
+        "id": "viewer-1",
+        "type": "viewer",
+        "grid": null
+      }
+    ]
+  },
+  "resource-work-metadati": {
+    "title": "Opera > Metadati",
+    "tabs": "work",
+    "type": "work",
+    "sections": [
+      {
+        "id": "title-1",
+        "type": "title",
+        "grid": null
+      }, {
+        "id": "metadata-1",
+        "type": "metadata"
+      }, {
+        "id": "metadata-2",
+        "type": "metadata",
+        "grid": null
+      }, {
+        "id": "collection-1",
+        "type": "collection",
+        "grid": 3
+      }
+    ]
+  },
+  "resource-work-trascrizione": {
+    "title": "Opera > Trascrizione",
+    "tabs": "work",
+    "type": "work",
+    "sections": [
+      {
+        "id": "title-1",
+        "type": "title",
+        "grid": null
+      }, {
+        "id": "metadata-1",
+        "type": "metadata"
+      }, {
+        "id": "metadata-2",
+        "type": "metadata",
+        "grid": null
+      }, {
+        "id": "collection-1",
+        "type": "collection",
+        "grid": 3
+      }
+    ]
+  },
+  "resource-work-bibliografia": {
+    "title": "Opera > Bibliografia",
+    "tabs": "work",
+    "type": "work",
+    "sections": [
+      {
+        "id": "title-1",
+        "type": "title",
+        "grid": null
+      }, {
+        "id": "metadata-1",
+        "type": "metadata"
+      }, {
+        "id": "metadata-2",
+        "type": "metadata",
+        "grid": null
+      }, {
+        "id": "collection-1",
+        "type": "collection",
+        "grid": 3
+      }
+    ]
+  },
   "resource-work": {
     "title": "Opera",
     "type": "work",

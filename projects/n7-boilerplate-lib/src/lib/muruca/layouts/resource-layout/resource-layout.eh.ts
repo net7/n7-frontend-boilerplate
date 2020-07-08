@@ -16,13 +16,20 @@ export class MrResourceLayoutEH extends EventHandler {
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
-        case 'mr-resource-layout.init':
+        case 'mr-resource-layout.init': {
           this.route = payload.route;
+          const { slug, tab } = this.route.snapshot.params;
+          this.dataSource.tab = tab;
+          this.dataSource.slug = slug;
           this.layoutState = payload.layoutState;
           this.dataSource.onInit(payload);
           this.listenRoute();
+        } break;
+        case 'mr-resource-layout.destroy':
+          this.destroy$.next();
           break;
         default:
+          console.warn('unhandled inner event of type', type);
           break;
       }
     });
@@ -37,6 +44,7 @@ export class MrResourceLayoutEH extends EventHandler {
       map((params: ParamMap) => params.get('slug')),
       switchMap((slug) => this.dataSource.pageRequest$(slug, (err) => {
         console.warn(`Error loading resource layout for ${slug}`, err.message);
+        this.dataSource.slug = slug;
         this.layoutState.set('content', LayoutState.ERROR);
       }))
     ).subscribe((response) => {

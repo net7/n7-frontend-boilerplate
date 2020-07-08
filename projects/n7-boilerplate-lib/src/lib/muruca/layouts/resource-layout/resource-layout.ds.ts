@@ -13,7 +13,13 @@ export class MrResourceLayoutDS extends LayoutDataSource {
 
   private configId: string;
 
-  private pageConfig;
+  private pageConfig: any;
+
+  public tabConfig: any;
+
+  public slug: string;
+
+  public tab: string;
 
   onInit(payload) {
     this.configuration = payload.configuration;
@@ -21,6 +27,7 @@ export class MrResourceLayoutDS extends LayoutDataSource {
     this.mainState = payload.mainState;
     this.configId = payload.configId;
     this.pageConfig = this.configuration.get(this.configId);
+    this.tabConfig = this.configuration.get('tabs')[this.pageConfig.tabs];
   }
 
   /** Request the configured widgets data */
@@ -39,14 +46,12 @@ export class MrResourceLayoutDS extends LayoutDataSource {
 
   handleResponse(response) {
     this.initSections(response);
-    // this.initSections(resourceLayoutMock);
     this.updateHeadTitle(response);
   }
 
   /** Load all the configured widgets */
   private initSections(response) {
     const { sections } = this.pageConfig;
-    // console.log({ sections });
     sections.forEach(({ id }) => {
       const widgetDataSource = this.getWidgetDataSource(id);
       if (!widgetDataSource) return;
@@ -55,7 +60,6 @@ export class MrResourceLayoutDS extends LayoutDataSource {
       widgetDataSource.id = id;
       // update data
       if (responseSection) {
-        // this.one(id).update(responseSection);
         this.one(id).update(responseSection);
       }
     });

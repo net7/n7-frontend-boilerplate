@@ -14,6 +14,13 @@
 
     <!-- success -->
     <ng-container *ngSwitchCase="'SUCCESS'">
+      <!-- Dynamic TABS loaded from configuration -->
+      <ng-container *ngFor="let tab of lb.dataSource.tabConfig">
+        <n7-anchor-wrapper [data]="{ href: '/opera' + '/' + lb.dataSource.slug + '/' + tab.id }">
+          <span class="n7-btn n7-btn-light">{{tab.label}}</span>
+        </n7-anchor-wrapper>
+      </ng-container>
+
       <section *ngFor="let section of lb.dataSource.pageConfig.sections"
                class="{{ 'mr-layout__' + section.type }}">
         <ng-container [ngSwitch]="section.type">
