@@ -36,14 +36,6 @@ export default {
       type: 'value',
       searchData: ['entity-type'],
     },
-    /* {
-      id: 'date-from',
-      type: 'value'
-    },
-    {
-      id: 'date-to',
-      type: 'value'
-    } */
   ],
   fields: [
     {
@@ -52,7 +44,6 @@ export default {
           type: 'text',
           facetId: 'query',
           placeholder: 'Cerca nei titoli delle schede',
-          // icon: 'n7-icon-search',
           filterConfig: {
             delay: 500,
             minChars: 3,
@@ -116,7 +107,6 @@ export default {
           type: 'text',
           facetId: 'entity-search',
           placeholder: 'Cerca entità',
-          // icon: 'n7-icon-search',
           filterConfig: {
             delay: 500,
             minChars: 3,
@@ -154,40 +144,6 @@ export default {
         },
       ],
     },
-    /* {
-      header: {
-        label: 'Data',
-        classes: 'date-class'
-      },
-      inputs: [
-        {
-          type: 'select',
-          facetId: 'date-from',
-          label: 'Dal',
-          filterConfig: {
-            searchIn: [
-              {
-                key: 'source.dateStart',
-                operator: '>='
-              }
-            ]
-          }
-        },
-        {
-          type: 'select',
-          facetId: 'date-to',
-          label: 'Al',
-          filterConfig: {
-            searchIn: [
-              {
-                key: 'source.dateEnd',
-                operator: '<='
-              }
-            ]
-          }
-        }
-      ]
-    } */
   ],
   results: {
     order: { // Default Sorting Method

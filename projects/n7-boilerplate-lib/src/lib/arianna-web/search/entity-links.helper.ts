@@ -4,7 +4,7 @@ import {
 } from 'rxjs/operators';
 
 const ENTITY_LINKS_CLASS = 'entity-links';
-const ENTITY_LINKS_PARENT_SELECTOR = '.n7-facets-wrapper__group-aw-search-layout-1 .n7-facet__section-input-links';
+const ENTITY_LINKS_PARENT_SELECTOR = '.n7-facets-wrapper__group:last-child .n7-facet__section-input-links';
 const LOADER_ID = 'entity-links-loader';
 
 let paginationState = {} as any;

@@ -6,9 +6,9 @@ import {
 import entityLinksHelper from '../../search/entity-links.helper';
 
 export class AwSearchLayoutEH extends EventHandler {
-  private destroyed$: Subject<any> = new Subject();
+  public layoutId = 'aw-search-layout';
 
-  private configuration: any;
+  private destroyed$: Subject<any> = new Subject();
 
   private route: any;
 
@@ -28,9 +28,8 @@ export class AwSearchLayoutEH extends EventHandler {
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
-        case 'aw-search-layout.init': {
+        case `${this.layoutId}.init`: {
           this.route = payload.route;
-          this.configuration = payload.configuration;
           this.dataSource.onInit(payload);
           this._listenToFacetsChange();
           this._listenToAdditionalParamsChange();
@@ -46,18 +45,18 @@ export class AwSearchLayoutEH extends EventHandler {
           }
         } break;
 
-        case 'aw-search-layout.destroy':
+        case `${this.layoutId}.destroy`:
           this.dataSource.onDestroy();
           this.destroyed$.next();
           break;
 
-        case 'aw-search-layout.orderbychange':
+        case `${this.layoutId}.orderbychange`:
           // handle the change of result-order
           this.dataSource.onOrderByChange(payload);
           this.additionalParamsChange$.next(); // emit from observable stream
           break;
 
-        case 'aw-search-layout.searchreset':
+        case `${this.layoutId}.searchreset`:
           this.dataSource.resetButtonEnabled = false;
           this.dataSource.searchModel.clear();
           this.additionalParamsChange$.next();

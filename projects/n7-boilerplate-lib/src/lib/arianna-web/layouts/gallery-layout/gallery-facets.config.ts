@@ -40,7 +40,6 @@ export default {
           type: 'text',
           facetId: 'query',
           placeholder: 'Cerca nei titoli delle schede',
-          // icon: 'n7-icon-search',
           filterConfig: {
             delay: 500,
             minChars: 3,
@@ -90,8 +89,6 @@ export default {
         {
           type: 'text',
           facetId: 'entity-search',
-          placeholder: 'Cerca entità',
-          // icon: 'n7-icon-search',
           filterConfig: {
             delay: 500,
             minChars: 3,

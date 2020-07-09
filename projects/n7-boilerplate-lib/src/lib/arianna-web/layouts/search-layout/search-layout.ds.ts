@@ -12,9 +12,19 @@ import { AwSearchService } from '../../search/aw-search.service';
 import { AwSearchModel } from '../../search/aw-search.model';
 import entityLinksHelper from '../../search/entity-links.helper';
 
-const SEARCH_MODEL_ID = 'aw-search-layout';
-
 export class AwSearchLayoutDS extends LayoutDataSource {
+  public layoutId = 'aw-search-layout';
+
+  public configId = 'search-layout';
+
+  public currentNav = 'ricerca';
+
+  public headTitle = 'Arianna4View - Ricerca';
+
+  public facetsConfig: any = facetsConfig;
+
+  public paginationList = [10, 25, 50];
+
   private destroyed$: Subject<any> = new Subject();
 
   private communication: any;
@@ -31,9 +41,9 @@ export class AwSearchLayoutDS extends LayoutDataSource {
 
   private configKeys: any;
 
-  private fallback: string;
+  public fallback: string;
 
-  private resetButtonEnabled = true;
+  public resetButtonEnabled = true;
 
   public pageTitle: string;
 
@@ -96,23 +106,23 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     this.options = options;
     this.prettifyLabels = this.configuration.get('labels');
     this.configKeys = this.configuration.get('config-keys');
-    this.fallback = this.configuration.get('search-layout').fallback;
-    this.pageTitle = this.configuration.get('search-layout').title;
+    this.fallback = this.configuration.get(this.configId).fallback;
+    this.pageTitle = this.configuration.get(this.configId).title;
     // remove first
     // stateless search
-    if (this.search.model(SEARCH_MODEL_ID)) {
-      this.search.remove(SEARCH_MODEL_ID);
+    if (this.search.model(this.layoutId)) {
+      this.search.remove(this.layoutId);
     }
-    this.search.add(SEARCH_MODEL_ID, cloneDeep(facetsConfig));
-    this.searchModel = this.search.model(SEARCH_MODEL_ID);
+    this.search.add(this.layoutId, cloneDeep(this.facetsConfig));
+    this.searchModel = this.search.model(this.layoutId);
     // query params control
     if (AwSearchModel.queryParams) {
       this.searchModel.updateFiltersFromQueryParams(AwSearchModel.queryParams);
       AwSearchModel.queryParams = null;
     }
     this._sidebarStickyControl();
-    this.mainState.updateCustom('currentNav', 'ricerca');
-    this.mainState.update('headTitle', 'Arianna4View - Ricerca');
+    this.mainState.updateCustom('currentNav', this.currentNav);
+    this.mainState.update('headTitle', this.headTitle);
   }
 
   onDestroy() {
@@ -180,7 +190,7 @@ export class AwSearchLayoutDS extends LayoutDataSource {
       currentPage: this.currentPage,
       pageLimit: 5,
       sizes: {
-        list: [10, 25, 50],
+        list: this.paginationList,
         active: this.pageSize,
       },
     });
@@ -204,7 +214,7 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     this.searchModel.setPageConfigOffset((this.currentPage - 1) * this.pageSize);
   }
 
-  public getSearchModelId = () => SEARCH_MODEL_ID;
+  public getSearchModelId = () => this.layoutId;
 
   private getResultsReq$(params): Observable<any> {
     return this.communication.request$('search', {
@@ -220,7 +230,7 @@ export class AwSearchLayoutDS extends LayoutDataSource {
         } else if (this.totalCount === 1) {
           resultsTitleIndex = 1;
         }
-        this.resultsTitle = this.configuration.get('search-layout').results[
+        this.resultsTitle = this.configuration.get(this.configId).results[
           resultsTitleIndex
         ];
         this.searchModel.updateTotalCount(totalCount);
@@ -263,8 +273,8 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     const requestParams = this.searchModel.getRequestParams();
     const params = {
       searchParameters: {
-        // FIXME: togliere totalCount
-        totalCount: 100,
+        totalCount: 0, // fake param for apollo
+        gallery: !!(this.configId === 'gallery-layout'),
         ...requestParams,
       },
     };
