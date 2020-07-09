@@ -1,6 +1,5 @@
 import { EventHandler } from '@n7-frontend/core';
 import { Subject } from 'rxjs';
-import helpers from '../../../common/helpers';
 
 export class AwSchedaLayoutEH extends EventHandler {
   private destroyed$: Subject<any> = new Subject();
@@ -35,26 +34,11 @@ export class AwSchedaLayoutEH extends EventHandler {
       }
     });
 
-    this.outerEvents$.subscribe(({ type, payload }) => {
+    this.outerEvents$.subscribe(({ type }) => {
       switch (type) {
-        case 'aw-bubble-chart.d3end': // bounce the event, from bubble-chart to chart-tippy
-          this.emitOuter('d3end', payload);
-          break;
         case 'aw-sidebar-header.click':
           this.dataSource.collapseSidebar();
           break;
-        case 'aw-bubble-chart.bubble-tooltip-goto-click': {
-          const { id, label } = payload;
-          this.emitGlobal('navigate', {
-            handler: 'router',
-            path: [
-              this.configuration.get('paths').entitaBasePath,
-              id,
-              helpers.slugify(label),
-              'overview',
-            ],
-          });
-        } break;
         default:
           break;
       }

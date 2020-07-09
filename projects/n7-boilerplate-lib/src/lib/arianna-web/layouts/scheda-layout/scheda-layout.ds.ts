@@ -81,12 +81,12 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     this.metadataSectionTitle = this.getMetadataSectionTitle();
     this.hasSimilarItems = false;
     this.bubblesEnabled = this.configuration.get('features-enabled') ? this.configuration.get('features-enabled').bubblechart : false;
-    this.one('aw-bubble-chart').updateOptions({
-      selectable: false,
-      simple: true,
-      config: this.configuration,
-      limit: this.configuration.get('bubble-chart').bubbleLimit,
-    });
+    // this.one('aw-bubble-chart').updateOptions({
+    //   selectable: false,
+    //   simple: true,
+    //   config: this.configuration,
+    //   limit: this.configuration.get('bubble-chart').bubbleLimit,
+    // });
     this.one('aw-chart-tippy').updateOptions({
       basePath: this.configuration.get('paths').entitaBasePath,
     });
@@ -207,6 +207,10 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     if (response.relatedItems) {
       this.one('aw-linked-objects').updateOptions({ context: 'scheda', config: this.configuration });
       this.one('aw-linked-objects').update(response);
+    }
+    if (response.relatedEntities) {
+      this.one('aw-related-entities').updateOptions({ context: 'scheda', config: this.configuration, list: 'relatedEntities' });
+      this.one('aw-related-entities').update(response.relatedEntities);
     }
 
     // control sticky
