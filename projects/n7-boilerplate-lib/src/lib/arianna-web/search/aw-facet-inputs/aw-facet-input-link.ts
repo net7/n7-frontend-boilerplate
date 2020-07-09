@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { AwFacetInput } from './aw-facet-input';
 
 const RESULTS_LIMIT = 1000;
@@ -11,21 +10,25 @@ export class AwFacetInputLink extends AwFacetInput {
     const results = [];
     let resultsCounter = 0;
 
-    for (const itemData of this.data) {
-      const { label, counter, hidden } = itemData;
-      let { value, options } = itemData;
+    this.data.forEach(({
+      label,
+      counter,
+      hidden,
+      value: rawValue,
+      options: rawOptions
+    }) => {
       if (hidden) {
-        continue;
+        return;
       }
       resultsCounter += 1;
 
       if (resultsCounter > RESULTS_LIMIT) {
-        break;
+        return;
       }
 
       // normalize value
-      value = `${value}`;
-      options = options || {};
+      const value = `${rawValue}`;
+      const options = rawOptions || {};
 
       const classes = [];
       if (options.classes) { classes.push(options.classes); }
@@ -45,38 +48,7 @@ export class AwFacetInputLink extends AwFacetInput {
         classes: classes.join(' '),
         _meta: { facetId, value },
       });
-    }
-
-    /* const results: any[] = this.data.map(({ label, value, counter, hidden, options }) => {
-      if (hidden) {
-        return;
-      }
-
-      resultsCounter += 1;
-      // normalize value
-      value = '' + value;
-      options = options || {};
-
-      const classes = [];
-      if (options.classes) { classes.push(options.classes); }
-      if (this._isActive(this.facetValue, value)) { classes.push('is-active'); }
-
-      return {
-        type: 'link',
-        id: this.getId(),
-        text: label,
-        counter,
-        payload: {
-          facetId,
-          source: 'input-link',
-          value
-        },
-        icon: options.icon || null,
-        classes: classes.join(' '),
-        _meta: { facetId, value }
-      };
     });
-     */
 
     // empty state control
     const itemEmpty = results.filter((item) => item.id === 'empty')[0];
