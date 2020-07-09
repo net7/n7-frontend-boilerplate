@@ -209,10 +209,9 @@ export class AwSearchModel {
           || (!Array.isArray(filter.value) && filter.value))
       ))
       .map(({
-        facetId, value, searchIn/* , pagination */
+        facetId, value, searchIn, pagination
       }) => ({
-        // FIXME: mettere pagination
-        facetId, value, searchIn/* , pagination */
+        facetId, value, searchIn, pagination
       }));
   }
 

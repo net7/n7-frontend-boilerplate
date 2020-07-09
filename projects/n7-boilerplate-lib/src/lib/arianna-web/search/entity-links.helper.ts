@@ -22,9 +22,8 @@ export default {
         const requestParams = dataSource.searchModel.getRequestParams();
         const internalFilters = dataSource.searchModel.getInternalFilters();
         if (pagination) {
-          // FIXME: togliere as any!
           const entityLinks = internalFilters
-            .find((filter) => filter.facetId === ENTITY_LINKS_CLASS) as any;
+            .find((filter) => filter.facetId === ENTITY_LINKS_CLASS);
           if (entityLinks) {
             entityLinks.pagination = pagination;
           } else {
@@ -35,17 +34,15 @@ export default {
               facetId,
               value,
               searchIn,
-              // FIXME: togliere commento
-              // pagination: paginationState
+              pagination: paginationState
             });
           }
-          console.warn('fixme: aggiungere pagination request filters', internalFilters);
         }
         const filters = [...requestParams.filters, ...internalFilters];
         const params = {
           searchParameters: {
-            // FIXME: togliere totalCount
             totalCount: 100,
+            gallery: !!(dataSource.searchModel.getId() === 'aw-gallery-layout'),
             ...requestParams,
             filters
           },
@@ -61,9 +58,7 @@ export default {
   paginationFilterControl(searchModel, facets) {
     // pagination control
     const { pagination } = searchModel.getFiltersByFacetId(ENTITY_LINKS_CLASS)[0];
-    // FIXME: togliere commento
-    // const isPaginated = !!(pagination && pagination.offset > 0);
-    const isPaginated = !!pagination;
+    const isPaginated = !!(pagination && pagination.offset > 0);
     if (isPaginated) {
       const entityLinksInput = searchModel.getInputByFacetId(ENTITY_LINKS_CLASS);
       const facet = facets.find(({ id }) => id === ENTITY_LINKS_CLASS);
@@ -97,14 +92,10 @@ export default {
         const margin = 150;
         if (
           (scrollTop + clientHeight >= scrollHeight - margin)
-          // FIXME: togliere commento
-          // && (offset + limit < totalCount)
+          && (offset + limit < totalCount)
           && loading === false
         ) {
-          console.warn('fixme: aggiungere controllo totalCount:', {
-            offset, limit, totalCount, loading
-          });
-          // paginationState.loading = true;
+          paginationState.loading = true;
           paginationState.offset = offset + limit;
           this.paginate$.next(paginationState);
         }

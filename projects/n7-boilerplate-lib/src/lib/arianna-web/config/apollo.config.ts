@@ -524,6 +524,7 @@ export default {
           operator
           limit
           order
+          totalCount
           data {
             label
             value
