@@ -1,15 +1,16 @@
 import { cloneDeep } from 'lodash';
 import { LayoutDataSource } from '@n7-frontend/core/dist/layout-data-source';
 import {
-  tap, takeUntil, debounceTime, switchMap
+  tap, takeUntil
 } from 'rxjs/operators';
 import {
-  Observable, of, fromEvent, Subject, BehaviorSubject, forkJoin,
+  Observable, of, fromEvent, Subject, BehaviorSubject, forkJoin
 } from 'rxjs';
 import facetsConfig from './search-facets.config';
 import helpers from '../../../common/helpers';
 import { AwSearchService } from '../../search/aw-search.service';
 import { AwSearchModel } from '../../search/aw-search.model';
+import entityLinksHelper from '../../search/entity-links.helper';
 
 const SEARCH_MODEL_ID = 'aw-search-layout';
 
@@ -112,9 +113,6 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     this._sidebarStickyControl();
     this.mainState.updateCustom('currentNav', 'ricerca');
     this.mainState.update('headTitle', 'Arianna4View - Ricerca');
-
-    // listen to internal filters
-    this.listenToInternalFilters();
   }
 
   onDestroy() {
@@ -250,6 +248,8 @@ export class AwSearchLayoutDS extends LayoutDataSource {
       onError: (error) => console.error(error),
     }).pipe(
       tap(({ facets }) => {
+        // entity links pagination control
+        entityLinksHelper.paginationFilterControl(this.searchModel, facets);
         // facets labels
         this._addFacetsLabels(facets);
         // facets options
@@ -271,29 +271,6 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     const resultsReq$ = this.getResultsReq$(params);
     const facetsReq$ = this.getFacetsReq$(params);
     return forkJoin(resultsReq$, facetsReq$);
-  }
-
-  private listenToInternalFilters() {
-    const facetsWrapperEH = this.getWidgetEventHandler('facets-wrapper');
-    facetsWrapperEH.internalFacetsChange$.pipe(
-      debounceTime(500),
-      switchMap(() => {
-        const requestParams = this.searchModel.getRequestParams();
-        const internalFilters = this.searchModel.getInternalFilters();
-        const filters = [...requestParams.filters, ...internalFilters];
-        const params = {
-          searchParameters: {
-            // FIXME: togliere totalCount
-            totalCount: 100,
-            ...requestParams,
-            filters
-          },
-        };
-        return this.getFacetsReq$(params);
-      })
-    ).subscribe(() => {
-      // do nothing
-    });
   }
 
   private _updateSearchPage(page) {

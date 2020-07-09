@@ -1,6 +1,9 @@
 import { EventHandler } from '@n7-frontend/core';
 import { Subject } from 'rxjs';
-import { debounceTime, takeUntil } from 'rxjs/operators';
+import {
+  debounceTime, takeUntil
+} from 'rxjs/operators';
+import entityLinksHelper from '../../search/entity-links.helper';
 
 export class AwSearchLayoutEH extends EventHandler {
   private destroyed$: Subject<any> = new Subject();
@@ -32,6 +35,7 @@ export class AwSearchLayoutEH extends EventHandler {
           this._listenToFacetsChange();
           this._listenToAdditionalParamsChange();
           this._listenToRouterChanges();
+          this._listenToInternalFilters();
           const { value: textInput } = this.dataSource.searchModel.getFiltersByFacetId('query')[0];
           if ((textInput || '').length > 0) {
             this.dataSource.isSearchingText.next(true);
@@ -117,6 +121,16 @@ export class AwSearchLayoutEH extends EventHandler {
         });
       }
     });
+  }
+
+  /**
+   * Handles entity links pagination
+   */
+  private _listenToInternalFilters() {
+    entityLinksHelper.listenToChanges(this.dataSource)
+      .subscribe(() => {
+        this.emitGlobal('searchresponse', this.dataSource.getSearchModelId());
+      });
   }
 
   /**

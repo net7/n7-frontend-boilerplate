@@ -1,7 +1,6 @@
 import { DataSource } from '@n7-frontend/core';
-import { fromEvent, Subject } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
 import { AwSearchModel } from '../search/aw-search.model';
+import entityLinksHelper from '../search/entity-links.helper';
 
 const HEADER_ICON_OPEN = 'n7-icon-angle-down';
 const HEADER_ICON_CLOSE = 'n7-icon-angle-right';
@@ -9,15 +8,10 @@ const HEADER_ICON_CLOSE = 'n7-icon-angle-right';
 export class AwFacetsWrapperDS extends DataSource {
   public searchModel: AwSearchModel;
 
-  public paginate$: Subject<void> = new Subject();
-
-  public paginationState = {} as any;
-
   protected transform(data) {
     if (!this.searchModel) {
       this.searchModel = data.searchModel;
-      this.initPaginationState();
-      this.initPaginationListener();
+      entityLinksHelper.initPagination(this.searchModel);
     }
 
     const id = this.searchModel.getId();
@@ -106,6 +100,9 @@ export class AwFacetsWrapperDS extends DataSource {
   }
 
   public updateFilteredTarget(target) {
+    if (!this.searchModel) {
+      return;
+    }
     const input = this.searchModel.getInputByFacetId(target);
     this.output.groups
       .map((group) => group.facet)
@@ -183,40 +180,5 @@ export class AwFacetsWrapperDS extends DataSource {
         id: `${groupId}-header`,
       },
     } : null;
-  }
-
-  private initPaginationState() {
-    this.searchModel.getFilters().filter((filter) => (
-      filter.pagination
-    )).forEach(({ pagination }) => {
-      this.paginationState = {
-        ...pagination,
-        loading: false
-      };
-    });
-  }
-
-  private initPaginationListener() {
-    setTimeout(() => {
-      const scrollEl = document.querySelector('.n7-facets-wrapper__group-aw-search-layout-1 .n7-facet__section-input-links');
-      const scroll$ = fromEvent(scrollEl, 'scroll');
-      scroll$.pipe(
-        debounceTime(300)
-      ).subscribe(({ target }) => {
-        const { scrollTop, clientHeight, scrollHeight } = target as HTMLElement;
-        const {
-          offset, limit, totalCount, loading
-        } = this.paginationState;
-        const margin = 150;
-        if (
-          (scrollTop + clientHeight >= scrollHeight - margin)
-          && (offset + limit < totalCount)
-          && loading === false
-        ) {
-          this.paginationState.loading = true;
-          this.paginationState.offset = offset + limit;
-        }
-      });
-    }, 100);
   }
 }
