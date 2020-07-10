@@ -2,7 +2,7 @@ import { DataSource } from '@n7-frontend/core';
 import { ItemPreviewData } from '@n7-frontend/components';
 
 export class AwRelatedEntitiesDS extends DataSource {
-  protected transform = (data) => {
+  protected transform = (data): { previews: ItemPreviewData[] } => {
     const basePath = this.options.config.get('paths').entitaBasePath;
     const previews: ItemPreviewData[] = data.map((d) => ({
       title: d.entity.label,

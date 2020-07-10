@@ -30,28 +30,6 @@
         </div>
 
         <!-- Scheda details -->
-        <div class="aw-scheda__scheda-wrapper-loading"
-             [hidden]="!lb.dataSource.contentIsLoading">
-            <!--
-                <n7-content-placeholder [data]="{
-                blocks: [{
-                    classes: 'content-placeholder-title'
-                }, {
-                    classes: 'content-placeholder-item-preview'
-                }, {
-                    classes: 'content-placeholder-item-preview'
-                }, {
-                    classes: 'content-placeholder-item-preview'
-                }, {
-                    classes: 'content-placeholder-item-preview'
-                }, {
-                    classes: 'content-placeholder-item-preview'
-                }, {
-                    classes: 'content-placeholder-item-preview'
-                }]
-            }"></n7-content-placeholder>
-            -->
-        </div>
         <div class="aw-scheda__scheda-wrapper"
              [hidden]="lb.dataSource.contentIsLoading">
             <n7-smart-breadcrumbs *ngIf="lb.dataSource.hasBreadcrumb"
@@ -95,11 +73,11 @@
             </section>
 
             <!-- ENTITA COLLEGATE -->
-            <section *ngIf="lb.dataSource.hasBubbles"
+            <section *ngIf="lb.dataSource.hasRelatedEntities"
                      id="related-item-container"
                      class="aw-scheda__section aw-scheda__related">
                 <div class="aw-scheda__inner-title">
-                    {{lb.dataSource.bubbleChartSectionTitle}}
+                    {{lb.dataSource.relatedEntitiesHeader}}
                 </div>
                 <div class="aw-scheda__related-items n7-grid-2">
                     <ng-container *ngFor="let preview of (lb.widgets['aw-related-entities'].ds.out$ | async)?.previews">
@@ -111,7 +89,7 @@
             </section>
 
             <!-- OGGETTI CULTURALI SIMILI -->
-            <section *ngIf="lb.dataSource.hasSimilarItems && lb.dataSource.hasBubbles"
+            <section *ngIf="lb.dataSource.hasSimilarItems"
                      id="related-item-container"
                      class="aw-scheda__section aw-scheda__related">
                 <div class="aw-scheda__inner-title">
