@@ -131,8 +131,7 @@ export default {
             limit: 20,
             pagination: {
               limit: 10,
-              offset: 0,
-              totalCount: null
+              offset: 0
             },
             searchIn: [
               {

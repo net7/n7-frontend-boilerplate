@@ -259,7 +259,7 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     }).pipe(
       tap(({ facets }) => {
         // entity links pagination control
-        entityLinksHelper.paginationFilterControl(this.searchModel, facets);
+        entityLinksHelper.onFacetsResponse(this.searchModel, facets);
         // facets labels
         this._addFacetsLabels(facets);
         // facets options

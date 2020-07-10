@@ -111,6 +111,10 @@ export default {
           filterConfig: {
             isArray: true,
             limit: 20,
+            pagination: {
+              limit: 10,
+              offset: 0
+            },
             searchIn: [
               {
                 key: 'relatedEntities.id',

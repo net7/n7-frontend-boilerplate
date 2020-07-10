@@ -5,11 +5,9 @@ import {
 
 const ENTITY_LINKS_CLASS = 'entity-links';
 const ENTITY_LINKS_PARENT_SELECTOR = '.n7-facets-wrapper__group:last-child .n7-facet__section-input-links';
-const LOADER_ID = 'entity-links-loader';
-
-let paginationState = {} as any;
 
 export default {
+  paginationState: {} as any,
   paginate$: new Subject(),
   listenToChanges(dataSource) {
     const facetsWrapperEH = dataSource.getWidgetEventHandler('facets-wrapper');
@@ -22,10 +20,11 @@ export default {
         const requestParams = dataSource.searchModel.getRequestParams();
         const internalFilters = dataSource.searchModel.getInternalFilters();
         if (pagination) {
+          const { limit, offset } = this.paginationState;
           const entityLinks = internalFilters
             .find((filter) => filter.facetId === ENTITY_LINKS_CLASS);
           if (entityLinks) {
-            entityLinks.pagination = pagination;
+            entityLinks.pagination = { limit, offset };
           } else {
             const {
               facetId, value, searchIn
@@ -34,9 +33,11 @@ export default {
               facetId,
               value,
               searchIn,
-              pagination: paginationState
+              pagination: { limit, offset }
             });
           }
+        } else {
+          this.paginationState.offset = 0;
         }
         const filters = [...requestParams.filters, ...internalFilters];
         const params = {
@@ -48,34 +49,53 @@ export default {
           },
         };
 
-        // add loader
-        this.addLoader();
-
         return dataSource.getFacetsReq$(params);
       })
     );
   },
-  paginationFilterControl(searchModel, facets) {
+  onFacetsResponse(searchModel, facets) {
     // pagination control
-    const { pagination } = searchModel.getFiltersByFacetId(ENTITY_LINKS_CLASS)[0];
-    const isPaginated = !!(pagination && pagination.offset > 0);
-    if (isPaginated) {
-      const entityLinksInput = searchModel.getInputByFacetId(ENTITY_LINKS_CLASS);
-      const facet = facets.find(({ id }) => id === ENTITY_LINKS_CLASS);
-      const oldData = entityLinksInput.getData() || [];
-      const newData = oldData.concat(facet.data);
-      facet.data = newData;
-
-      // remove loader
-      this.removeLoader();
+    const entityLinksFacet = facets.find(({ id }) => id === ENTITY_LINKS_CLASS);
+    const { totalCount } = entityLinksFacet;
+    let { limit, offset } = this.paginationState;
+    if (typeof limit === 'undefined') {
+      limit = 10;
     }
+    if (typeof offset === 'undefined') {
+      offset = 0;
+    }
+    // FIXME: togliere oppure
+    this.paginationState.totalCount = totalCount || 50;
+    if (offset > 0) {
+      const entityLinksInput = searchModel.getInputByFacetId(ENTITY_LINKS_CLASS);
+      const oldData = entityLinksInput.getData() || [];
+      // remove fake loading element
+      if (oldData.length) {
+        oldData.pop();
+      }
+      const newData = oldData.concat(entityLinksFacet.data);
+      entityLinksFacet.data = newData;
+    }
+
+    if (this.paginationState.totalCount > (limit + offset)) {
+      entityLinksFacet.data.push({
+        counter: null,
+        label: 'Loading...',
+        searchData: [],
+        value: 'loading',
+      });
+    }
+
+    // update loading state
+    this.paginationState.loading = false;
   },
   initPagination(searchModel) {
     searchModel.getFilters().filter((filter) => (
       filter.pagination
     )).forEach(({ pagination }) => {
-      paginationState = {
+      this.paginationState = {
         ...pagination,
+        ...this.paginationState,
         loading: false
       };
     });
@@ -88,40 +108,19 @@ export default {
         const { scrollTop, clientHeight, scrollHeight } = target as HTMLElement;
         const {
           offset, limit, totalCount, loading
-        } = paginationState;
+        } = this.paginationState;
         const margin = 150;
         if (
           (scrollTop + clientHeight >= scrollHeight - margin)
           && (offset + limit < totalCount)
           && loading === false
         ) {
-          paginationState.loading = true;
-          paginationState.offset = offset + limit;
-          this.paginate$.next(paginationState);
+          this.paginationState.loading = true;
+          this.paginationState.offset = offset + limit;
+          this.paginate$.next(this.paginationState);
         }
       });
     });
-  },
-  addLoader() {
-    const scrollEl = document.querySelector(ENTITY_LINKS_PARENT_SELECTOR);
-    const loader = document.createElement('div');
-    const loaderText = document.createTextNode('loading...');
-    loader.appendChild(loaderText);
-    [
-      'n7-facet__section-input',
-      'n7-facet__section-input-link',
-      'n7-facet__section-input-loader'
-    ].forEach((loaderClass) => {
-      loader.classList.add(loaderClass);
-    });
-    loader.id = LOADER_ID;
-    scrollEl.appendChild(loader);
-  },
-  removeLoader() {
-    const loader = document.getElementById(LOADER_ID);
-    if (loader) {
-      loader.parentElement.removeChild(loader);
-    }
   },
   updatePaginationState(newState) {
     this.paginationState = {

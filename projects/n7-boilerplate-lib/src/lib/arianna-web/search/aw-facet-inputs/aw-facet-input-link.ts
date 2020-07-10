@@ -33,6 +33,7 @@ export class AwFacetInputLink extends AwFacetInput {
       const classes = [];
       if (options.classes) { classes.push(options.classes); }
       if (this._isActive(this.facetValue, value)) { classes.push('is-active'); }
+      if (value === 'loading') { classes.push('loader-link'); }
 
       results.push({
         type: 'link',
