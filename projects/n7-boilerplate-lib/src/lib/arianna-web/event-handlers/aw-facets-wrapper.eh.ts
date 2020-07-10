@@ -60,7 +60,7 @@ export class AwFacetsWrapperEH extends EventHandler {
             internalFilters.forEach((filter) => {
               const input = this.dataSource.searchModel.getInputByFacetId(filter.facetId);
               const target = input.getTarget();
-              this.dataSource.filterTarget(target);
+              // this.dataSource.filterTarget(target);
               this.dataSource.updateFilteredTarget(target);
             });
           }
