@@ -58,7 +58,6 @@ export class AwBubbleChartEH extends EventHandler {
           this.dataSource.selected = [];
           this.emitOuter('selection', []);
           break;
-        case 'aw-scheda-layout.filterbubbleresponse':
         case 'aw-entita-layout.filterbubbleresponse':
         case 'aw-home-layout.filterbubbleresponse':
           this.dataSource.updateChart(payload);

@@ -30,28 +30,6 @@
         </div>
 
         <!-- Scheda details -->
-        <div class="aw-scheda__scheda-wrapper-loading"
-             [hidden]="!lb.dataSource.contentIsLoading">
-            <!--
-                <n7-content-placeholder [data]="{
-                blocks: [{
-                    classes: 'content-placeholder-title'
-                }, {
-                    classes: 'content-placeholder-item-preview'
-                }, {
-                    classes: 'content-placeholder-item-preview'
-                }, {
-                    classes: 'content-placeholder-item-preview'
-                }, {
-                    classes: 'content-placeholder-item-preview'
-                }, {
-                    classes: 'content-placeholder-item-preview'
-                }, {
-                    classes: 'content-placeholder-item-preview'
-                }]
-            }"></n7-content-placeholder>
-            -->
-        </div>
         <div class="aw-scheda__scheda-wrapper"
              [hidden]="lb.dataSource.contentIsLoading">
             <n7-smart-breadcrumbs *ngIf="lb.dataSource.hasBreadcrumb"
@@ -85,32 +63,33 @@
             </section>
 
             <section class="aw-scheda__section aw-scheda__metadata"
-            *ngIf="lb.dataSource.hasMetadata">
+                     *ngIf="lb.dataSource.hasMetadata">
                 <div class="aw-scheda__inner-title"
-                *ngIf="lb.dataSource.metadataSectionTitle"> 
+                     *ngIf="lb.dataSource.metadataSectionTitle">
                     {{lb.dataSource.metadataSectionTitle}}
                 </div>
                 <n7-metadata-viewer [data]="lb.widgets['aw-scheda-metadata'].ds.out$ | async">
                 </n7-metadata-viewer>
             </section>
 
-            <section class="aw-scheda__section aw-scheda__bubble-chart"
-                     *ngIf="lb.dataSource.bubblesEnabled && lb.dataSource.hasBubbles">
-                <div *ngIf="lb.dataSource.hasBubbles"
-                     class="aw-scheda__inner-title">
-                    {{lb.dataSource.bubbleChartSectionTitle}}
+            <!-- ENTITA COLLEGATE -->
+            <section *ngIf="lb.dataSource.hasRelatedEntities"
+                     id="related-item-container"
+                     class="aw-scheda__section aw-scheda__related">
+                <div class="aw-scheda__inner-title">
+                    {{lb.dataSource.relatedEntitiesHeader}}
                 </div>
-                <aw-bubble-chart-wrapper>
-                    <aw-chart-tippy [data]="lb.widgets['aw-chart-tippy'].ds.out$ | async"
-                                    [emit]="lb.widgets['aw-chart-tippy'].emit">
-                    </aw-chart-tippy>
-                    <n7-bubble-chart [data]="lb.widgets['aw-bubble-chart'].ds.out$ | async"
-                                     [emit]="lb.widgets['aw-bubble-chart'].emit">
-                    </n7-bubble-chart>
-                </aw-bubble-chart-wrapper>
+                <div class="aw-scheda__related-items n7-grid-2">
+                    <ng-container *ngFor="let preview of (lb.widgets['aw-related-entities'].ds.out$ | async)?.previews">
+                        <n7-item-preview [data]="preview"
+                                         [emit]="lb.widgets['aw-related-entities'].emit">
+                        </n7-item-preview>
+                    </ng-container>
+                </div>
             </section>
 
-            <section *ngIf="lb.dataSource.hasSimilarItems && lb.dataSource.hasBubbles"
+            <!-- OGGETTI CULTURALI SIMILI -->
+            <section *ngIf="lb.dataSource.hasSimilarItems"
                      id="related-item-container"
                      class="aw-scheda__section aw-scheda__related">
                 <div class="aw-scheda__inner-title">

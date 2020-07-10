@@ -24,8 +24,6 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
   protected titleService: any;
 
-  // private allBubbles: any[] = null;
-  // public selectedBubbles: any[] = [];
   public options: any;
 
   public pageTitle: string;
@@ -38,7 +36,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
   public sidebarCollapsed: boolean;
 
-  public bubbleChartSectionTitle: string;
+  public relatedEntitiesHeader: string;
 
   public similarItemsSectionTitle: string;
 
@@ -46,9 +44,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
   public hasMetadata: boolean;
 
-  public hasBubbles: boolean;
-
-  public bubblesEnabled: boolean;
+  public hasRelatedEntities: boolean;
 
   public hasSimilarItems: boolean;
 
@@ -76,17 +72,10 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     this.communication = communication;
     this.options = options;
     this.sidebarCollapsed = false;
-    this.bubbleChartSectionTitle = this.configuration.get('scheda-layout')['bubble-chart'].title;
+    this.relatedEntitiesHeader = this.configuration.get('scheda-layout')['related-entities'].title;
     this.similarItemsSectionTitle = this.configuration.get('scheda-layout')['related-items'].title;
     this.metadataSectionTitle = this.getMetadataSectionTitle();
     this.hasSimilarItems = false;
-    this.bubblesEnabled = this.configuration.get('features-enabled') ? this.configuration.get('features-enabled').bubblechart : false;
-    this.one('aw-bubble-chart').updateOptions({
-      selectable: false,
-      simple: true,
-      config: this.configuration,
-      limit: this.configuration.get('bubble-chart').bubbleLimit,
-    });
     this.one('aw-chart-tippy').updateOptions({
       basePath: this.configuration.get('paths').entitaBasePath,
     });
@@ -144,7 +133,8 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       this.hasMetadata = Array.isArray(response.fields) && response.fields.length;
       this.hasSimilarItems = Array.isArray(response.relatedItems) && response.relatedItems.length;
       this.hasBreadcrumb = Array.isArray(response.breadcrumbs) && response.breadcrumbs.length;
-      this.hasBubbles = Array.isArray(response.relatedEntities) && response.relatedEntities.length;
+      this.hasRelatedEntities = Array.isArray(response.relatedEntities)
+        && response.relatedEntities.length;
       this.hasImage = !!response.image;
 
       this.contentParts = [];
@@ -207,6 +197,10 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     if (response.relatedItems) {
       this.one('aw-linked-objects').updateOptions({ context: 'scheda', config: this.configuration });
       this.one('aw-linked-objects').update(response);
+    }
+    if (response.relatedEntities) {
+      this.one('aw-related-entities').updateOptions({ context: 'scheda', config: this.configuration, list: 'relatedEntities' });
+      this.one('aw-related-entities').update(response.relatedEntities);
     }
 
     // control sticky
