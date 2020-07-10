@@ -122,5 +122,11 @@ export default {
     if (loader) {
       loader.parentElement.removeChild(loader);
     }
+  },
+  updatePaginationState(newState) {
+    this.paginationState = {
+      ...this.paginationState,
+      ...newState
+    };
   }
 };
