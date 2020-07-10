@@ -211,7 +211,10 @@ export class AwSearchModel {
       .map(({
         facetId, value, searchIn, pagination
       }) => ({
-        facetId, value, searchIn, pagination
+        facetId,
+        value,
+        searchIn,
+        pagination: pagination || null
       }));
   }
 
