@@ -94,23 +94,6 @@
                 </n7-metadata-viewer>
             </section>
 
-            <!-- BUBBLE CHART -->
-            <section class="aw-scheda__section aw-scheda__bubble-chart"
-                     *ngIf="lb.dataSource.bubblesEnabled && lb.dataSource.hasBubbles && false">
-                <div *ngIf="lb.dataSource.hasBubbles"
-                     class="aw-scheda__inner-title">
-                    {{lb.dataSource.bubbleChartSectionTitle}}
-                </div>
-                <aw-bubble-chart-wrapper>
-                    <aw-chart-tippy [data]="lb.widgets['aw-chart-tippy'].ds.out$ | async"
-                                    [emit]="lb.widgets['aw-chart-tippy'].emit">
-                    </aw-chart-tippy>
-                    <n7-bubble-chart [data]="lb.widgets['aw-bubble-chart'].ds.out$ | async"
-                                     [emit]="lb.widgets['aw-bubble-chart'].emit">
-                    </n7-bubble-chart>
-                </aw-bubble-chart-wrapper>
-            </section>
-
             <!-- ENTITA COLLEGATE -->
             <section *ngIf="lb.dataSource.hasBubbles"
                      id="related-item-container"
