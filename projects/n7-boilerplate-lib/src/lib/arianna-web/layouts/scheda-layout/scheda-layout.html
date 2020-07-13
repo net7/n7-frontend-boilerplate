@@ -50,7 +50,8 @@
             </n7-inner-title>
 
             <section class="aw-scheda__section aw-scheda__image-viewer"
-                     [hidden]="!lb.dataSource.hasImage">
+            [ngClass]="{ 'navigation-hidden': !lb.widgets['aw-scheda-image'].ds.hasNavigation }"
+            [hidden]="!lb.dataSource.hasImage">
                 <n7-image-viewer [data]="lb.widgets['aw-scheda-image'].ds.out$ | async">
                 </n7-image-viewer>
             </section>

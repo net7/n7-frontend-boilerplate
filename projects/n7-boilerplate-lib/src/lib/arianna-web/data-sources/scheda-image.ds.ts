@@ -4,8 +4,12 @@ import { ImageViewerData } from '@n7-frontend/components';
 export class AwSchedaImageDS extends DataSource {
   private instance;
 
+  public hasNavigation = false;
+
   protected transform(data): ImageViewerData {
     const tileSources = this.getTileSources(data.images);
+
+    this.hasNavigation = Array.isArray(data.images) && data.images.length > 1;
 
     return {
       images: [],
@@ -35,7 +39,7 @@ export class AwSchedaImageDS extends DataSource {
 
     setTimeout(() => {
       const images = this.getTileSources(data.images);
-      console.warn('images', images.length, images);
+      this.hasNavigation = Array.isArray(data.images) && data.images.length > 1;
       this.instance.open(images);
     });
   }
