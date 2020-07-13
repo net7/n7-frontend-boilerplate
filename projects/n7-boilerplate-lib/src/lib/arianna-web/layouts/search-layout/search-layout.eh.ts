@@ -110,7 +110,6 @@ export class AwSearchLayoutEH extends EventHandler {
     ).subscribe(() => {
       this.dataSource.resultsLoading = true;
       if (this.textHasChanged) {
-        this.textHasChanged = false;
         this.additionalParamsChange$.next();
       } else {
         this.dataSource.doSearchRequest$().subscribe(() => {
@@ -153,15 +152,16 @@ export class AwSearchLayoutEH extends EventHandler {
       if (this.textHasChanged) {
         queryParams.orderby = '_score';
         queryParams.orderdirection = 'DESC';
+        this.textHasChanged = false;
       }
 
-      this.facetsChange$.next();
-
-      /* this.emitGlobal('navigate', {
+      this.emitGlobal('navigate', {
         handler: 'router',
         path: [],
         queryParams,
-      }); */
+      });
+
+      this.facetsChange$.next();
     });
   }
 
