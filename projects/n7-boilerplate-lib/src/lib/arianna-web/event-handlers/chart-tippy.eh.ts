@@ -52,7 +52,7 @@ export class AwChartTippyEH extends EventHandler {
             flip: false,
             theme: 'light-border no-padding',
             placement: 'top',
-            delay: [150, 30],
+            delay: 150,
             updateDuration: 400,
           }),
         );
