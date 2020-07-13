@@ -62,6 +62,12 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
   public emptyLabel: string;
 
+  /** Switch loaded-content and loaded-empty states */
+  public hasContent = true;
+
+  /** String to render in the loaded-empty state */
+  public emptyStateString: string;
+
   onInit({
     configuration, mainState, router, options, titleService, communication,
   }) {
@@ -80,6 +86,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       basePath: this.configuration.get('paths').entitaBasePath,
     });
     this.emptyLabel = this.configuration.get('scheda-layout')['empty-label'];
+    this.emptyStateString = this.configuration.get('scheda-layout')['empty-html'];
     this.one('aw-tree').updateOptions({ config: this.configuration.get('config-keys') });
 
     this.mainState.update('headTitle', 'Arianna4View - Patrimonio');
@@ -136,6 +143,8 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       this.hasRelatedEntities = Array.isArray(response.relatedEntities)
         && response.relatedEntities.length;
       this.hasImage = !!response.image;
+      this.hasContent = !!(this.hasMetadata || this.hasSimilarItems
+        || this.hasRelatedEntities || this.hasImage);
 
       this.contentParts = [];
       const content = { content: null };
