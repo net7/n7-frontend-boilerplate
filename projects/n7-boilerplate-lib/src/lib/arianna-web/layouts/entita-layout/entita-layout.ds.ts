@@ -271,7 +271,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     const labels = this.configuration.get('labels');
     let metadataToShow = _get(this.configuration.get('entita-layout'), 'metadata-to-show', []);
     if (this.selectedTab === 'overview') {
-      metadataToShow = _get(this.configuration.get('entita-layout'), 'overview.campi', []);
+      metadataToShow = _get(this.configuration.get('entita-layout'), 'overview.informazioni', []);
     }
 
     return metadataHelper.normalize({

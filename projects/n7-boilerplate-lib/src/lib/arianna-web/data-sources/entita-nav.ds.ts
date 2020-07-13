@@ -16,9 +16,9 @@ export class AwEntitaNavDS extends DataSource {
     });
     if (hasMetadataFields) {
       navigation.items.push({
-        text: 'CAMPI',
-        anchor: { href: `${param.basePath}/campi` },
-        classes: selected === 'campi' ? 'is-selected' : '',
+        text: 'INFORMAZIONI',
+        anchor: { href: `${param.basePath}/informazioni` },
+        classes: selected === 'informazioni' ? 'is-selected' : '',
       });
     }
     if (data.relatedItems) {

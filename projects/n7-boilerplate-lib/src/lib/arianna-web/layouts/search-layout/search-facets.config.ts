@@ -12,7 +12,7 @@ export default {
       data: [
         {
           value: '1',
-          label: 'Cerca in tutti campi delle schede',
+          label: 'Cerca in tutte le informazioni delle schede',
         },
       ],
     },
