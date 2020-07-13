@@ -58,17 +58,8 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     this.titleService = titleService;
     this.currentId = '';
     this.currentPage = +this.route.snapshot.queryParams.page;
-    this.bubblesEnabled = this.configuration.get('features-enabled') ? this.configuration.get('features-enabled').bubblechart : false;
-    this.bubblesSize = this.configuration.get('entita-layout') ? this.configuration.get('entita-layout').entitiesQuerySize : this.bubblesSize;
-    this.one('aw-bubble-chart').updateOptions({
-      selectable: false,
-      simple: true,
+    this.one('aw-related-entities').updateOptions({
       config: this.configuration,
-      limit: this.configuration.get('bubble-chart').bubbleLimit,
-      smallChartSize: this.configuration.get('entita-layout').overview.smallChartSize,
-    });
-    this.one('aw-chart-tippy').updateOptions({
-      basePath: this.configuration.get('paths').entitaBasePath,
     });
 
     // navigation update
@@ -100,15 +91,6 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     }
     this.one(id).update(data);
   }
-
-  // DEPRECATED
-  /* getNavigation(id) {
-    // Requests data from communication provider
-    return this.communication.request$('getEntityDetails', {
-      onError: (error) => console.error(error),
-      params: { entityId: id, entitiesListSize: this.bubblesSize },
-    });
-  } */
 
   drawPagination = () => {
     if (!this.myResponse.relatedItems) return;
@@ -170,9 +152,6 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       });
       this.one('aw-linked-objects').update({ items: this.myResponse.relatedItems });
     }
-    if ((tab === 'overview' || tab === 'entita-collegate') && this.myResponse.relatedEntities) {
-      setTimeout(() => { this.updateBubbes(this.myResponse.relatedEntities); }, 800);
-    }
   }
 
   updateWidgets(data) {
@@ -189,14 +168,8 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       basePath: this.getNavBasePath(),
     });
     this.updateComponent('aw-entita-metadata-viewer', this.getFields(this.myResponse));
+    this.one('aw-related-entities').update(this.myResponse.relatedEntities);
     this.drawPagination();
-  }
-
-  updateBubbes(data) {
-    /*
-      Helper function to update the graph
-    */
-    this.one('aw-bubble-chart').update(data);
   }
 
   loadItem(id, slug, tab): Observable<any> {
@@ -264,6 +237,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
         : res.label;
     });
     this.one('aw-linked-objects').update({ items: res.relatedItems });
+    this.one('aw-related-entities').update(res.relatedEntities);
     this.drawPagination();
     // update head title
     this.mainState.update('headTitle', `Arianna4View - Entità - ${this.myResponse.label}`);
@@ -297,7 +271,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     const labels = this.configuration.get('labels');
     let metadataToShow = _get(this.configuration.get('entita-layout'), 'metadata-to-show', []);
     if (this.selectedTab === 'overview') {
-      metadataToShow = _get(this.configuration.get('entita-layout'), 'overview.campi', []);
+      metadataToShow = _get(this.configuration.get('entita-layout'), 'overview.informazioni', []);
     }
 
     return metadataHelper.normalize({

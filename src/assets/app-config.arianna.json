@@ -255,7 +255,7 @@
       "max-related-items": 6
     },
     "metadata": {
-      "title": "Campi"
+      "title": "Informazioni"
     },
     "tree": {
       "icon-expand": "n7-icon-angle-right",
@@ -380,7 +380,7 @@
   },
   "entita-layout": {
     "overview": {
-      "campi": [
+      "informazioni": [
         "data_istituzione",
         "denominazione_autorita"
       ],

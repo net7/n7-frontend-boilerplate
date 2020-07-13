@@ -165,7 +165,7 @@ export class AwHomeLayoutEH extends EventHandler {
               path: [basePath],
               queryParams: { query },
             });
-          } else if (source === 'extendsearch') { // click on <Cerca in tutti i campi> (call to action)
+          } else if (source === 'extendsearch') { // click on <Cerca in tutte le informazioni> (call to action)
             this.emitGlobal('navigate', {
               handler: 'router',
               path: [this.configuration.get('paths').searchBasePath],
