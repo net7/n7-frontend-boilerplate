@@ -9,10 +9,11 @@ export class AwEntitaNavDS extends DataSource {
     const navigation = { items: [], payload: 'entita-nav' };
     const { hasMetadataFields } = this.options;
 
+    // commented code: no overview tab
     navigation.items.push({
       text: 'OVERVIEW',
       anchor: { href: `${param.basePath}/overview` },
-      classes: selected === 'overview' ? 'is-selected' : '',
+      classes: selected === 'overview' ? 'is-selected overview-tab' : 'overview-tab',
     });
     if (hasMetadataFields) {
       navigation.items.push({

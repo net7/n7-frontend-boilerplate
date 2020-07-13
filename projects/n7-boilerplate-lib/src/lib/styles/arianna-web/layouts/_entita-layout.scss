@@ -122,6 +122,10 @@
                     background: $entity-nav-item-active-decoration-bg;
                 }
             }
+            // hide overview tab
+            &.overview-tab {
+                display: none;
+            }
         }
 
         .n7-nav__link {
