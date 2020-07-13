@@ -9,8 +9,7 @@ export class AwEntitaNavDS extends DataSource {
     const navigation = { items: [], payload: 'entita-nav' };
     const { hasMetadataFields } = this.options;
 
-    // commented code: no overview tab
-    navigation.items.push({
+    /* navigation.items.push({
       text: 'OVERVIEW',
       anchor: { href: `${param.basePath}/overview` },
       classes: selected === 'overview' ? 'is-selected overview-tab' : 'overview-tab',
@@ -21,7 +20,12 @@ export class AwEntitaNavDS extends DataSource {
         anchor: { href: `${param.basePath}/informazioni` },
         classes: selected === 'informazioni' ? 'is-selected' : '',
       });
-    }
+    } */
+    navigation.items.push({
+      text: 'INFORMAZIONI',
+      anchor: { href: `${param.basePath}/informazioni` },
+      classes: selected === 'informazioni' ? 'is-selected' : '',
+    });
     if (data.relatedItems) {
       navigation.items.push({
         text: 'OGGETTI COLLEGATI',
@@ -57,7 +61,7 @@ export class AwEntitaNavDS extends DataSource {
     }
 
     // one tab control
-    if (navigation.items.length === 2) {
+    if (navigation.items.length === 2 && !hasMetadataFields) {
       navigation.items.shift();
     }
 

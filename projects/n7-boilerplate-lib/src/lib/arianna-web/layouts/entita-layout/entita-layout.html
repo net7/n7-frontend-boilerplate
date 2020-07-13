@@ -78,9 +78,8 @@
             </div>
 
             <ng-container *ngIf="(
-                    lb.widgets['aw-entita-metadata-viewer'].ds.hasFields && 
-                    ['overview', 'informazioni'].includes(lb.dataSource.selectedTab)
-                )">
+                ['overview', 'informazioni'].includes(lb.dataSource.selectedTab)
+            )">
                 <div class="aw-entity__content-section aw-entity__content-section-overview">
                     <div class="aw-entity__content-section-header">
                         <h2 class="aw-entity__content-section-title"
@@ -91,8 +90,11 @@
                             TUTTE LE INFORMAZIONI <i class="n7-icon-angle-right"></i>
                         </a>
                     </div>
+                    <p *ngIf="lb.dataSource.fallbackText">
+                        {{ lb.dataSource.fallbackText }}
+                    </p>
                     <n7-metadata-viewer class="aw-entity-layout__metadata-viewer"
-                                        [data]="lb.widgets['aw-entita-metadata-viewer'].ds.out$ | async ">
+                                        [data]="lb.widgets['aw-entita-metadata-viewer'].ds.out$ | async">
                     </n7-metadata-viewer>
                 </div>
             </ng-container>
