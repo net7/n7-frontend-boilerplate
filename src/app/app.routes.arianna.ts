@@ -19,7 +19,7 @@ export const APP_ROUTES: Routes = [
   { path: 'aw/patrimonio/:id', component: AwSchedaLayoutComponent },
   { path: 'aw/patrimonio', redirectTo: 'aw/patrimonio/' },
   { path: 'aw/entita/:id/:slug/:tab', component: AwEntitaLayoutComponent },
-  { path: 'aw/entita/:id/:slug', redirectTo: 'aw/entita/:id/:slug/overview' },
+  { path: 'aw/entita/:id/:slug', redirectTo: 'aw/entita/:id/:slug/informazioni' },
   { path: 'aw/ricerca', component: AwSearchLayoutComponent },
   { path: 'aw/galleria', component: AwGalleryLayoutComponent },
   { path: 'aw/mappa/:id/:slug', component: AwMapLayoutComponent },
