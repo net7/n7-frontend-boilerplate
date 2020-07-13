@@ -45,6 +45,8 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
   // ========================
   private communication: any;
 
+  public fallbackText = '';
+
   onInit({
     configuration, mainState, router, route, location, options, titleService, communication,
   }) {
@@ -239,6 +241,10 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     this.one('aw-linked-objects').update({ items: res.relatedItems });
     this.one('aw-related-entities').update(res.relatedEntities);
     this.drawPagination();
+    // fallback text
+    if (!this.hasMetadataFields) {
+      this.fallbackText = this.configuration.get('entita-layout').fallback;
+    }
     // update head title
     this.mainState.update('headTitle', `Arianna4View - Entità - ${this.myResponse.label}`);
   }
