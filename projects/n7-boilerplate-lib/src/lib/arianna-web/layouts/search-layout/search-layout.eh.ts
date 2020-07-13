@@ -110,8 +110,8 @@ export class AwSearchLayoutEH extends EventHandler {
     ).subscribe(() => {
       this.dataSource.resultsLoading = true;
       if (this.textHasChanged) {
+        this.textHasChanged = false;
         this.additionalParamsChange$.next();
-        this.textHasChanged = false; // reset
       } else {
         this.dataSource.doSearchRequest$().subscribe(() => {
           this.dataSource.resultsLoading = false;
@@ -155,11 +155,13 @@ export class AwSearchLayoutEH extends EventHandler {
         queryParams.orderdirection = 'DESC';
       }
 
-      this.emitGlobal('navigate', {
+      this.facetsChange$.next();
+
+      /* this.emitGlobal('navigate', {
         handler: 'router',
         path: [],
         queryParams,
-      });
+      }); */
     });
   }
 
