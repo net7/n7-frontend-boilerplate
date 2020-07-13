@@ -1,7 +1,6 @@
 import { EventHandler } from '@n7-frontend/core';
 import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import helpers from '../../../common/helpers';
 
 export class AwEntitaLayoutEH extends EventHandler {
   private destroyed$: Subject<any> = new Subject();
@@ -41,9 +40,6 @@ export class AwEntitaLayoutEH extends EventHandler {
 
     this.outerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
-        case 'aw-bubble-chart.d3end': // bounce the event, from bubble-chart to chart-tippy
-          this.emitOuter('d3end', payload);
-          break;
         case 'aw-entita-nav.click':
           if (payload) {
             this.dataSource.selectedTab = payload;
@@ -66,23 +62,6 @@ export class AwEntitaLayoutEH extends EventHandler {
             options,
           );
         } break;
-        case 'aw-bubble-chart.bubble-tooltip-goto-click': {
-          const { id, label } = payload;
-          this.emitGlobal('navigate', {
-            handler: 'router',
-            path: [
-              this.configuration.get('paths').entitaBasePath,
-              id,
-              helpers.slugify(label),
-              'overview',
-            ],
-          });
-        } break;
-        case 'aw-bubble-chart.bubble-filtered':
-          if (this.dataSource.selectedTab === 'overview' || this.dataSource.selectedTab === 'entita-collegate') {
-            this.emitOuter('filterbubbleresponse', payload.relatedEntities);
-          }
-          break;
         case 'n7-smart-pagination.change':
           this.handlePageSizeChange(payload.value);
           break;
@@ -126,12 +105,10 @@ export class AwEntitaLayoutEH extends EventHandler {
             if (res) {
               this.dataSource.loadContent(res);
               // remove the entity of this page
-              const entities = res.relatedEntities.filter((entity) => entity.id !== params.get('id'));
               this.dataSource.updateWidgets(res);
               if (selectedItem) {
                 this.emitOuter('selectItem', selectedItem);
               }
-              this.emitOuter('filterbubbleresponse', entities);
             }
           });
       } else {

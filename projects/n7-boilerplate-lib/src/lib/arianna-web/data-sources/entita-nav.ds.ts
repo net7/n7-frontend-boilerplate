@@ -5,8 +5,7 @@ export class AwEntitaNavDS extends DataSource {
     if (!param) {
       return null;
     }
-    const { data } = param;
-    const { selected } = param;
+    const { data, selected } = param;
     const navigation = { items: [], payload: 'entita-nav' };
     const { hasMetadataFields } = this.options;
 
@@ -34,7 +33,7 @@ export class AwEntitaNavDS extends DataSource {
         classes: selected === 'oggetti-collegati' ? 'is-selected' : '',
       });
     }
-    if (data.relatedEntities && this.options.bubblesEnabled) {
+    if (data.relatedEntities) {
       navigation.items.push({
         text: 'ENTITÀ COLLEGATE',
         anchor: { href: `${param.basePath}/entita-collegate` },

@@ -12,6 +12,7 @@ export const AwEntitaLayoutConfig = {
     { id: 'aw-entita-metadata-viewer' },
     { id: 'aw-linked-objects' },
     { id: 'aw-bubble-chart' },
+    { id: 'aw-related-entities' },
     { id: 'aw-chart-tippy' },
     {
       id: 'n7-smart-pagination',
