@@ -108,7 +108,7 @@ export class AwTreeEH extends EventHandler {
           this.scrollLeafIntoView();
         }
       }
-    }, 200);
+    });
   };
 
   private isInViewport = (elem) => {
