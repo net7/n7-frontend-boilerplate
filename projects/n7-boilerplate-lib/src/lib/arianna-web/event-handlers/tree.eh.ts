@@ -98,14 +98,17 @@ export class AwTreeEH extends EventHandler {
   }
 
   private scrollLeafIntoView = () => {
-    const treeNode = document.querySelector('div.aw-scheda__tree');
     setTimeout(() => {
-      const leafNode = treeNode.querySelector('.is-active');
+      const treeNode = document.querySelector('div.aw-scheda__tree');
+      const leafNode = treeNode.querySelector('.is-active') as HTMLElement;
       if (leafNode && !this.isInViewport(leafNode)) {
         leafNode.scrollIntoView();
         window.scrollTo(0, 0);
+        if (!this.isInViewport(leafNode)) {
+          this.scrollLeafIntoView();
+        }
       }
-    }, 200);
+    });
   };
 
   private isInViewport = (elem) => {
