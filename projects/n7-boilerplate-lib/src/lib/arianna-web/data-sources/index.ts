@@ -33,3 +33,6 @@ export * from './gallery-results.ds';
 
 // Map Layout
 export * from './map.ds';
+
+// Timeline Layout
+export * from './timeline.ds';
