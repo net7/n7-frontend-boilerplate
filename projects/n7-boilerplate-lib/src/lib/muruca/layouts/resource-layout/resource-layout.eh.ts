@@ -41,10 +41,10 @@ export class MrResourceLayoutEH extends EventHandler {
       tap(() => {
         this.layoutState.set('content', LayoutState.LOADING);
       }),
-      map((params: ParamMap) => params.get('slug')),
-      switchMap((slug) => this.dataSource.pageRequest$(slug, (err) => {
-        console.warn(`Error loading resource layout for ${slug}`, err.message);
-        this.dataSource.slug = slug;
+      map((params: ParamMap) => params.get('id')),
+      switchMap((id) => this.dataSource.pageRequest$(id, (err) => {
+        console.warn(`Error loading resource layout for ${id}`, err.message);
+        this.dataSource.id = id;
         this.layoutState.set('content', LayoutState.ERROR);
       }))
     ).subscribe((response) => {
