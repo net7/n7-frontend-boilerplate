@@ -13,7 +13,7 @@ export class MrCollectionDS extends DataSource {
       header.button = [{
         text: header.button.text,
         anchor: {
-          href: header.button.anchor
+          href: header.button.link
         }
       }];
     }
