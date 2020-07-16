@@ -25,6 +25,8 @@ export class AwSearchLayoutEH extends EventHandler {
   /** Is true when the search is triggered with a new text-string */
   private textHasChanged = false;
 
+  private facetIdChanged: string;
+
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
@@ -71,6 +73,7 @@ export class AwSearchLayoutEH extends EventHandler {
     this.outerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
         case 'facets-wrapper.facetschange': {
+          this.facetIdChanged = payload.facetId;
           this.dataSource.resetPagination();
           const { value: textInput } = this.dataSource.searchModel.getFiltersByFacetId('query')[0];
           // Checks if <input type=text>'s value has changed
@@ -112,7 +115,7 @@ export class AwSearchLayoutEH extends EventHandler {
       if (this.textHasChanged) {
         this.additionalParamsChange$.next();
       } else {
-        this.dataSource.doSearchRequest$().subscribe(() => {
+        this.dataSource.doSearchRequest$(this.facetIdChanged).subscribe(() => {
           this.dataSource.resultsLoading = false;
           this.dataSource.onSearchResponse();
           this.emitGlobal('searchresponse', this.dataSource.getSearchModelId());

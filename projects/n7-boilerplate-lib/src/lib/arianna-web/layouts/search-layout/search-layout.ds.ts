@@ -269,7 +269,7 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     );
   }
 
-  public doSearchRequest$(): Observable<any> {
+  public doSearchRequest$(facetId): Observable<any> {
     const requestParams = this.searchModel.getRequestParams();
     const params = {
       searchParameters: {
@@ -279,7 +279,10 @@ export class AwSearchLayoutDS extends LayoutDataSource {
       },
     };
     const resultsReq$ = this.getResultsReq$(params);
-    const facetsReq$ = this.getFacetsReq$(params);
+    let facetsReq$ = of(null);
+    if (!entityLinksHelper.isEntityLinksClass(facetId)) {
+      facetsReq$ = this.getFacetsReq$(params);
+    }
     return forkJoin(resultsReq$, facetsReq$);
   }
 

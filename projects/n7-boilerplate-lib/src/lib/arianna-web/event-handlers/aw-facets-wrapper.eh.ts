@@ -28,7 +28,7 @@ export class AwFacetsWrapperEH extends EventHandler {
             this.internalFacetsChange$.next(input.getTarget());
             // external
           } else {
-            this.externalFacetsChange$.next();
+            this.externalFacetsChange$.next(facetId);
           }
         }
           break;
@@ -74,13 +74,13 @@ export class AwFacetsWrapperEH extends EventHandler {
     // internal facets change
     this.externalFacetsChange$.pipe(
       debounceTime(500),
-    ).subscribe(() => {
+    ).subscribe((facetId) => {
       const requestParams = this.dataSource.getRequestParams();
       const queryParams = this.dataSource.filtersAsQueryParams(requestParams.filters);
 
       Object.keys(queryParams).forEach((key) => { queryParams[key] = queryParams[key] || null; });
       // signal
-      this.emitOuter('facetschange');
+      this.emitOuter('facetschange', { facetId });
 
       // reset page
       queryParams.page = 1;

@@ -114,5 +114,6 @@ export default {
       ...this.paginationState,
       ...newState
     };
-  }
+  },
+  isEntityLinksClass: (facetId) => facetId === ENTITY_LINKS_CLASS,
 };
