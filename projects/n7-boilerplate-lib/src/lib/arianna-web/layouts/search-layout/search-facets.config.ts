@@ -61,7 +61,7 @@ export default {
           filterConfig: {
             searchIn: [
               {
-                key: 'label.ngrams^5,text^4,fields.*^3',
+                key: 'label.ngrams^5,text^4,fields.*.label^3',
                 operator: '=',
               },
             ],
@@ -130,7 +130,7 @@ export default {
             isArray: true,
             limit: 20,
             pagination: {
-              limit: 10,
+              limit: 50,
               offset: 0
             },
             searchIn: [

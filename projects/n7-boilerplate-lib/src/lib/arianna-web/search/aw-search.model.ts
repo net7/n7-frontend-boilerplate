@@ -1,5 +1,5 @@
 /* eslint-disable max-classes-per-file */
-import { get as _get } from 'lodash';
+import { get as _get, isEmpty as _isEmpty } from 'lodash';
 import { Subject } from 'rxjs';
 import {
   AwFacetInput,
@@ -197,7 +197,13 @@ export class AwSearchModel {
       results: this._config.results,
       filters: this._filters
         .filter((filter) => filter.context !== 'internal')
-        .map(({ facetId, value, searchIn }) => ({ facetId, value, searchIn })),
+        .map(({
+          facetId, value, searchIn, pagination
+        }) => (pagination ? {
+          facetId, value, searchIn, pagination
+        } : {
+          facetId, value, searchIn
+        })),
     };
   }
 
@@ -205,16 +211,12 @@ export class AwSearchModel {
     return this._filters
       .filter((filter) => (
         filter.context === 'internal'
-        && ((Array.isArray(filter.value) && filter.value.length)
-          || (!Array.isArray(filter.value) && filter.value))
+        && !_isEmpty(filter.value)
       ))
       .map(({
-        facetId, value, searchIn, pagination
+        facetId, value, searchIn
       }) => ({
-        facetId,
-        value,
-        searchIn,
-        pagination: pagination || null
+        facetId, value, searchIn
       }));
   }
 

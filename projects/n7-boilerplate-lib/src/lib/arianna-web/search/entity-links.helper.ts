@@ -19,24 +19,7 @@ export default {
       switchMap((pagination) => {
         const requestParams = dataSource.searchModel.getRequestParams();
         const internalFilters = dataSource.searchModel.getInternalFilters();
-        if (pagination) {
-          const { limit, offset } = this.paginationState;
-          const entityLinks = internalFilters
-            .find((filter) => filter.facetId === ENTITY_LINKS_CLASS);
-          if (entityLinks) {
-            entityLinks.pagination = { limit, offset };
-          } else {
-            const {
-              facetId, value, searchIn
-            } = dataSource.searchModel.getFiltersByFacetId(ENTITY_LINKS_CLASS)[0];
-            internalFilters.push({
-              facetId,
-              value,
-              searchIn,
-              pagination: { limit, offset }
-            });
-          }
-        } else {
+        if (!pagination) {
           this.paginationState.offset = 0;
         }
         const filters = [...requestParams.filters, ...internalFilters];
@@ -65,7 +48,7 @@ export default {
       offset = 0;
     }
     // FIXME: togliere oppure
-    this.paginationState.totalCount = totalCount || 50;
+    this.paginationState.totalCount = totalCount || 150;
     if (offset > 0) {
       const entityLinksInput = searchModel.getInputByFacetId(ENTITY_LINKS_CLASS);
       const oldData = entityLinksInput.getData() || [];
