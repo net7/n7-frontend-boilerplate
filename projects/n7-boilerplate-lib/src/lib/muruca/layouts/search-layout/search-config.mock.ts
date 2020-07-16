@@ -21,21 +21,21 @@ const facets = {
     }]
   }, {
     header: {
-      id: 'header-toponimi',
+      id: 'header-toponyms',
       data: {
         text: 'Toponimi',
         additionalText: '786',
       }
     },
     inputs: [{
-      id: 'input-toponimi-filter',
+      id: 'toponyms-filter',
       type: 'text',
       delay: 500,
       schema: {
         valueType: 'string'
       },
       data: {
-        id: 'input-text-01',
+        id: 'text-01',
         placeholder: 'Search',
         icon: 'n7-icon-search',
         inputPayload: 'search-input',
@@ -43,7 +43,7 @@ const facets = {
         iconPayload: 'search-icon',
       }
     }, {
-      id: 'input-toponimi',
+      id: 'toponyms',
       type: 'link',
       queryParam: true,
       schema: {
@@ -56,29 +56,29 @@ const facets = {
     }]
   }, {
     header: {
-      id: 'header-glossario',
+      id: 'header-glossary',
       data: {
         text: 'Glossario',
         additionalText: '96',
       }
     },
     inputs: [{
-      id: 'input-glossario-filter',
+      id: 'glossary-filter',
       type: 'text',
       delay: 500,
       schema: {
         valueType: 'string'
       },
       data: {
-        id: 'input-text-02',
-        placeholder: 'Search',
+        id: 'text-02',
+        placeholder: 'Cerca',
         icon: 'n7-icon-search',
         inputPayload: 'search-input',
         enterPayload: 'search-enter',
         iconPayload: 'search-icon',
       }
     }, {
-      id: 'input-glossario',
+      id: 'glossary',
       type: 'link',
       queryParam: true,
       schema: {
@@ -91,14 +91,14 @@ const facets = {
     }]
   }, {
     header: {
-      id: 'header-continenti',
+      id: 'header-continents',
       data: {
         text: 'Continenti',
         additionalText: '3'
       }
     },
     inputs: [{
-      id: 'input-continenti',
+      id: 'continents',
       type: 'link',
       queryParam: true,
       schema: {
@@ -119,7 +119,7 @@ const facets = {
       }
     },
     inputs: [{
-      id: 'input-keywords',
+      id: 'keywords',
       type: 'link',
       queryParam: true,
       schema: {
@@ -132,7 +132,7 @@ const facets = {
     }],
   }, {
     header: {
-      id: 'header-data',
+      id: 'header-date',
       data: {
         text: 'Data di pubblicazione',
         additionalText: '20',
@@ -140,7 +140,7 @@ const facets = {
       }
     },
     inputs: [{
-      id: 'input-data',
+      id: 'date',
       type: 'link',
       queryParam: true,
       schema: {
@@ -153,7 +153,7 @@ const facets = {
     }],
   }, {
     header: {
-      id: 'header-luogo',
+      id: 'header-place',
       data: {
         text: 'Luogo di pubblicazione',
         additionalText: '15',
@@ -161,7 +161,7 @@ const facets = {
       }
     },
     inputs: [{
-      id: 'input-luogo',
+      id: 'place',
       type: 'link',
       queryParam: true,
       schema: {
