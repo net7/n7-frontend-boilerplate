@@ -24,7 +24,7 @@ const facets = {
       id: 'header-toponyms',
       data: {
         text: 'Toponimi',
-        additionalText: '786',
+        additionalText: null,
       }
     },
     inputs: [{
@@ -59,7 +59,7 @@ const facets = {
       id: 'header-glossary',
       data: {
         text: 'Glossario',
-        additionalText: '96',
+        additionalText: null,
       }
     },
     inputs: [{
@@ -94,7 +94,7 @@ const facets = {
       id: 'header-continents',
       data: {
         text: 'Continenti',
-        additionalText: '3'
+        additionalText: null
       }
     },
     inputs: [{
@@ -114,7 +114,7 @@ const facets = {
       id: 'header-keywords',
       data: {
         text: 'Keywords',
-        additionalText: '108',
+        additionalText: null,
         iconRight: 'n7-icon-angle-down'
       }
     },
@@ -135,7 +135,7 @@ const facets = {
       id: 'header-date',
       data: {
         text: 'Data di pubblicazione',
-        additionalText: '20',
+        additionalText: null,
         iconRight: 'n7-icon-angle-down'
       }
     },
@@ -156,7 +156,7 @@ const facets = {
       id: 'header-place',
       data: {
         text: 'Luogo di pubblicazione',
-        additionalText: '15',
+        additionalText: null,
         iconRight: 'n7-icon-angle-down'
       }
     },

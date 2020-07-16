@@ -6,7 +6,7 @@ export class MrSearchResultsTitleDS extends DataSource {
       totalResultsText,
       sort
     } = this.options.config;
-    const { totalCount, sort: currentSort } = data;
+    const { total_count: totalCount, sort: currentSort } = data;
     const mainText = `<strong>${totalCount || 0}</strong> ${totalResultsText[totalCount === 1 ? 1 : 0]}`;
 
     return {

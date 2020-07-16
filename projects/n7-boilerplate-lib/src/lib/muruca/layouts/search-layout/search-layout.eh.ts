@@ -98,8 +98,8 @@ export class MrSearchLayoutEH extends EventHandler {
     this.searchService.setBeforeHook(RESULTS_REQUEST_STATE_CONTEXT, 'loading', (params = {}) => {
       const defaultParams = {
         page: 1,
-        sort: '_score_DESC',
-        limit: 12
+        sort: '_score',
+        limit: 1
       };
       Object.keys(defaultParams).forEach((key) => {
         params[key] = params[key] || defaultParams[key];

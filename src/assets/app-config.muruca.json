@@ -173,17 +173,17 @@
       "label": "Ordine",
       "options": [
         {
-          "value": "_score_DESC",
+          "value": "_score",
           "label": "Ordine per pertinenza",
           "selected": true
         },
         {
-          "value": "label_sort_ASC",
+          "value": "sort_ASC",
           "label": "Ordine alfabetico (A→Z)",
           "selected": false
         },
         {
-          "value": "label_sort_DESC",
+          "value": "sort_DESC",
           "label": "Ordine alfabetico (Z→A)",
           "selected": false
         }
@@ -223,17 +223,17 @@
       "label": "Ordine",
       "options": [
         {
-          "value": "_score_DESC",
+          "value": "_score",
           "label": "Ordine per pertinenza",
           "selected": true
         },
         {
-          "value": "label_sort_ASC",
+          "value": "sort_ASC",
           "label": "Ordine alfabetico (A→Z)",
           "selected": false
         },
         {
-          "value": "label_sort_DESC",
+          "value": "sort_DESC",
           "label": "Ordine alfabetico (Z→A)",
           "selected": false
         }
