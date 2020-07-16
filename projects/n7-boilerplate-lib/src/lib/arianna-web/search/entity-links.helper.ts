@@ -2,6 +2,7 @@ import { Subject, merge, fromEvent } from 'rxjs';
 import {
   debounceTime, switchMap, mapTo
 } from 'rxjs/operators';
+import { isEmpty } from 'lodash';
 
 const ENTITY_LINKS_CLASS = 'entity-links';
 const ENTITY_LINKS_PARENT_SELECTOR = '.n7-facets-wrapper__group:last-child .n7-facet__section-input-links';
@@ -114,6 +115,15 @@ export default {
       ...this.paginationState,
       ...newState
     };
+  },
+  clearInternalFilters(searchModel) {
+    const searchFilter = searchModel.getFiltersByFacetId('entity-search')[0];
+    const typesFilter = searchModel.getFiltersByFacetId('entity-types')[0];
+    if (!isEmpty(searchFilter.value) || !isEmpty(typesFilter.value)) {
+      searchFilter.value = '';
+      typesFilter.value = [];
+      searchModel.updateInputsFromFilters();
+    }
   },
   isEntityLinksClass: (facetId) => facetId === ENTITY_LINKS_CLASS,
 };

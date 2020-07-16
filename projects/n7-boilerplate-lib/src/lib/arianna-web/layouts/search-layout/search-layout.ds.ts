@@ -281,6 +281,7 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     const resultsReq$ = this.getResultsReq$(params);
     let facetsReq$ = of(null);
     if (!entityLinksHelper.isEntityLinksClass(facetId)) {
+      entityLinksHelper.clearInternalFilters(this.searchModel);
       facetsReq$ = this.getFacetsReq$(params);
     }
     return forkJoin(resultsReq$, facetsReq$);
