@@ -36,7 +36,7 @@ export class AwTimelineLayoutDS extends LayoutDataSource {
     this.one('aw-scheda-inner-title').update({
       title: {
         main: {
-          text: '1.252 Oggetti culturali collegati a 2009'
+          text: '<strong>68</strong> Oggetti culturali collegati a "V Congresso mondiale di sociologia, Washington D.C. (1962)"'
         }
       }
     });
