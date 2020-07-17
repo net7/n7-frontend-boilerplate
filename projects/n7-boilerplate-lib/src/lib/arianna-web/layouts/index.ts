@@ -33,3 +33,9 @@ export * from './map-layout/map-layout';
 export * from './map-layout/map-layout.ds';
 export * from './map-layout/map-layout.eh';
 export * from './map-layout/map-layout.config';
+
+// timeline layout
+export * from './timeline-layout/timeline-layout';
+export * from './timeline-layout/timeline-layout.ds';
+export * from './timeline-layout/timeline-layout.eh';
+export * from './timeline-layout/timeline-layout.config';
