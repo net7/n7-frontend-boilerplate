@@ -16,7 +16,10 @@ export class AwFacetsWrapperEH extends EventHandler {
           if (!payload.eventPayload.inputPayload) {
             return;
           }
-          const { facetId } = payload.eventPayload.inputPayload;
+          const { facetId, value } = payload.eventPayload.inputPayload;
+          if (value === '__loading__') {
+            return;
+          }
           const input = this.dataSource.getInputByFacetId(facetId);
           const context = input.getContext();
 
