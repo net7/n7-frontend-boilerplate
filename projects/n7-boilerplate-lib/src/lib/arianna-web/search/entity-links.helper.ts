@@ -52,8 +52,7 @@ export default {
     if (typeof offset === 'undefined') {
       offset = 0;
     }
-    // FIXME: togliere oppure
-    this.paginationState.totalCount = totalCount || 150;
+    this.paginationState.totalCount = totalCount;
     if (offset > 0) {
       const entityLinksInput = searchModel.getInputByFacetId(ENTITY_LINKS_CLASS);
       const oldData = entityLinksInput.getData() || [];
@@ -70,8 +69,14 @@ export default {
         counter: null,
         label: 'Loading...',
         searchData: [],
-        value: 'loading',
+        value: '__loading__',
       });
+    }
+
+    // empty state
+    if (!totalCount) {
+      const entityLinksInput = searchModel.getInputByFacetId(ENTITY_LINKS_CLASS);
+      entityLinksInput.setIsEmpty(true);
     }
 
     // update loading state
