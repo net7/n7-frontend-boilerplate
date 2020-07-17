@@ -112,7 +112,7 @@ export default {
             isArray: true,
             limit: 20,
             pagination: {
-              limit: 10,
+              limit: 50,
               offset: 0
             },
             searchIn: [
