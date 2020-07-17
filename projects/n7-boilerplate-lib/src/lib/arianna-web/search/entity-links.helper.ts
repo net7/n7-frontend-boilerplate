@@ -44,6 +44,8 @@ export default {
   onFacetsResponse(searchModel, facets) {
     // pagination control
     const entityLinksFacet = facets.find(({ id }) => id === ENTITY_LINKS_CLASS);
+    // FIXME: togliere
+    entityLinksFacet.totalCount = 150;
     const { totalCount } = entityLinksFacet;
     let { limit, offset } = this.paginationState;
     if (typeof limit === 'undefined') {
