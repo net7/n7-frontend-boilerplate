@@ -56,41 +56,6 @@ const facets = {
     }]
   }, {
     header: {
-      id: 'header-glossary',
-      data: {
-        text: 'Glossario',
-        additionalText: null,
-      }
-    },
-    inputs: [{
-      id: 'glossary-filter',
-      type: 'text',
-      delay: 500,
-      schema: {
-        valueType: 'string'
-      },
-      data: {
-        id: 'text-02',
-        placeholder: 'Cerca',
-        icon: 'n7-icon-search',
-        inputPayload: 'search-input',
-        enterPayload: 'search-enter',
-        iconPayload: 'search-icon',
-      }
-    }, {
-      id: 'glossary',
-      type: 'link',
-      queryParam: true,
-      schema: {
-        valueType: 'string',
-        multiple: true
-      },
-      data: {
-        links: []
-      }
-    }]
-  }, {
-    header: {
       id: 'header-continents',
       data: {
         text: 'Continenti',
