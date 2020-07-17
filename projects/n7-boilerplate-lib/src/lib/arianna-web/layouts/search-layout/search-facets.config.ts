@@ -36,14 +36,6 @@ export default {
       type: 'value',
       searchData: ['entity-type'],
     },
-    /* {
-      id: 'date-from',
-      type: 'value'
-    },
-    {
-      id: 'date-to',
-      type: 'value'
-    } */
   ],
   fields: [
     {
@@ -52,7 +44,6 @@ export default {
           type: 'text',
           facetId: 'query',
           placeholder: 'Cerca nei titoli delle schede',
-          // icon: 'n7-icon-search',
           filterConfig: {
             delay: 500,
             minChars: 3,
@@ -70,7 +61,7 @@ export default {
           filterConfig: {
             searchIn: [
               {
-                key: 'label.ngrams^5,text^4,fields.*^3',
+                key: 'label.ngrams^5,text^4,fields.*.label^3',
                 operator: '=',
               },
             ],
@@ -116,7 +107,6 @@ export default {
           type: 'text',
           facetId: 'entity-search',
           placeholder: 'Cerca entità',
-          // icon: 'n7-icon-search',
           filterConfig: {
             delay: 500,
             minChars: 3,
@@ -139,6 +129,10 @@ export default {
           filterConfig: {
             isArray: true,
             limit: 20,
+            pagination: {
+              limit: 50,
+              offset: 0
+            },
             searchIn: [
               {
                 key: 'relatedEntities.id',
@@ -149,40 +143,6 @@ export default {
         },
       ],
     },
-    /* {
-      header: {
-        label: 'Data',
-        classes: 'date-class'
-      },
-      inputs: [
-        {
-          type: 'select',
-          facetId: 'date-from',
-          label: 'Dal',
-          filterConfig: {
-            searchIn: [
-              {
-                key: 'source.dateStart',
-                operator: '>='
-              }
-            ]
-          }
-        },
-        {
-          type: 'select',
-          facetId: 'date-to',
-          label: 'Al',
-          filterConfig: {
-            searchIn: [
-              {
-                key: 'source.dateEnd',
-                operator: '<='
-              }
-            ]
-          }
-        }
-      ]
-    } */
   ],
   results: {
     order: { // Default Sorting Method

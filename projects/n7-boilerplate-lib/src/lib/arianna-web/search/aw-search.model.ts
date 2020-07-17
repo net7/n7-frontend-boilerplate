@@ -1,25 +1,24 @@
 /* eslint-disable max-classes-per-file */
-import { get as _get } from 'lodash';
-import { Injectable } from '@angular/core';
+import { get as _get, isEmpty as _isEmpty } from 'lodash';
 import { Subject } from 'rxjs';
 import {
-  FacetInput,
-  FacetInputCheckbox,
-  FacetInputText,
-  FacetInputLink,
-  FacetInputSelect,
-} from '../models';
-import helpers from '../helpers';
+  AwFacetInput,
+  AwFacetInputCheckbox,
+  AwFacetInputText,
+  AwFacetInputLink,
+  AwFacetInputSelect,
+} from './aw-facet-inputs';
+import helpers from '../../common/helpers';
 
 export type FilterOperators = '=' | '>' | '<' | '>=' | '<=' | '<>' | 'LIKE';
 export type FacetTypes = 'value' | 'range';
 export type FacetOperators = 'OR' | 'AND';
 
 const INPUTS_MAP = {
-  checkbox: FacetInputCheckbox,
-  text: FacetInputText,
-  link: FacetInputLink,
-  select: FacetInputSelect,
+  checkbox: AwFacetInputCheckbox,
+  text: AwFacetInputText,
+  link: AwFacetInputLink,
+  select: AwFacetInputSelect,
 };
 
 const FILTERS_MAP = {
@@ -32,7 +31,7 @@ const FILTERS_MAP = {
   LIKE: '_filterDataLike',
 };
 
-export interface SearchConfig {
+export interface AwSearchConfig {
   totalCount: number;
   facets: any;
   page: any;
@@ -59,26 +58,33 @@ export interface Filter {
   isArray?: boolean;
   context?: 'internal' | 'external';
   target?: string;
+  pagination?: {
+    totalCount: number;
+    limit: number;
+    offset: number;
+  };
 }
 
-export class SearchModel {
+export class AwSearchModel {
+  static queryParams: any = null;
+
   private _id: string;
 
   private _filters: Filter[] = [];
 
   private _facets: Facet[] = [];
 
-  private _inputs: FacetInput[] = [];
+  private _inputs: AwFacetInput[] = [];
 
   private _page: any;
 
   private _totalCount: number | null;
 
-  private _config: SearchConfig;
+  private _config: AwSearchConfig;
 
   private _results$: Subject<any[]> = new Subject();
 
-  constructor(id: string, config: SearchConfig) {
+  constructor(id: string, config: AwSearchConfig) {
     this._id = id;
     this._config = config;
 
@@ -91,9 +97,9 @@ export class SearchModel {
 
     // query params control
     /* eslint-disable @typescript-eslint/no-use-before-define */
-    if (SearchService.queryParams) {
-      this.updateFiltersFromQueryParams(SearchService.queryParams);
-      SearchService.queryParams = null;
+    if (AwSearchModel.queryParams) {
+      this.updateFiltersFromQueryParams(AwSearchModel.queryParams);
+      AwSearchModel.queryParams = null;
     }
   }
 
@@ -191,7 +197,13 @@ export class SearchModel {
       results: this._config.results,
       filters: this._filters
         .filter((filter) => filter.context !== 'internal')
-        .map(({ facetId, value, searchIn }) => ({ facetId, value, searchIn })),
+        .map(({
+          facetId, value, searchIn, pagination
+        }) => (pagination ? {
+          facetId, value, searchIn, pagination
+        } : {
+          facetId, value, searchIn
+        })),
     };
   }
 
@@ -199,10 +211,13 @@ export class SearchModel {
     return this._filters
       .filter((filter) => (
         filter.context === 'internal'
-        && ((Array.isArray(filter.value) && filter.value.length)
-          || (!Array.isArray(filter.value) && filter.value))
+        && !_isEmpty(filter.value)
       ))
-      .map(({ facetId, value, searchIn }) => ({ facetId, value, searchIn }));
+      .map(({
+        facetId, value, searchIn
+      }) => ({
+        facetId, value, searchIn
+      }));
   }
 
   public filtersAsQueryParams(filters) {
@@ -441,32 +456,5 @@ export class SearchModel {
       results.push(facetConfig);
     });
     return results;
-  }
-}
-
-@Injectable({
-  providedIn: 'root',
-})
-export class SearchService {
-  static queryParams: any = null;
-
-  private _models: any = {};
-
-  public add(id: string, config: SearchConfig) {
-    if (this._models[id]) {
-      throw Error(`Search model '${id}' already exists!`);
-    }
-
-    this._models[id] = new SearchModel(id, config);
-  }
-
-  public remove(id: string) {
-    if (this._models[id]) {
-      delete this._models[id];
-    }
-  }
-
-  public model(id: string): SearchModel {
-    return this._models[id] || null;
   }
 }

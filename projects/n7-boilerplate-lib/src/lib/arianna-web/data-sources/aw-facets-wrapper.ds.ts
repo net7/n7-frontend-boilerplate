@@ -1,16 +1,17 @@
 import { DataSource } from '@n7-frontend/core';
-import { SearchModel } from '../services/search.service';
+import { AwSearchModel } from '../search/aw-search.model';
+import entityLinksHelper from '../search/entity-links.helper';
 
 const HEADER_ICON_OPEN = 'n7-icon-angle-down';
 const HEADER_ICON_CLOSE = 'n7-icon-angle-right';
 
-
-export class FacetsWrapperDS extends DataSource {
-  public searchModel: SearchModel;
+export class AwFacetsWrapperDS extends DataSource {
+  public searchModel: AwSearchModel;
 
   protected transform(data) {
     if (!this.searchModel) {
       this.searchModel = data.searchModel;
+      entityLinksHelper.initPagination(this.searchModel);
     }
 
     const id = this.searchModel.getId();
@@ -99,6 +100,9 @@ export class FacetsWrapperDS extends DataSource {
   }
 
   public updateFilteredTarget(target) {
+    if (!this.searchModel) {
+      return;
+    }
     const input = this.searchModel.getInputByFacetId(target);
     this.output.groups
       .map((group) => group.facet)

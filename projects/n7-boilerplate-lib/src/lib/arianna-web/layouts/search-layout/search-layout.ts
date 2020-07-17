@@ -4,7 +4,7 @@ import { AbstractLayout } from '../../../common/models/abstract-layout';
 import { ConfigurationService } from '../../../common/services/configuration.service';
 import { LayoutsConfigurationService } from '../../../common/services/layouts-configuration.service';
 import { MainStateService } from '../../../common/services/main-state.service';
-import { SearchService } from '../../../common/services/search.service';
+import { AwSearchService } from '../../search/aw-search.service';
 import { CommunicationService } from '../../../common/services/communication.service';
 import { AwSearchLayoutConfig as config } from './search-layout.config';
 
@@ -19,7 +19,7 @@ export class AwSearchLayoutComponent extends AbstractLayout implements OnInit, O
     private layoutsConfiguration: LayoutsConfigurationService,
     private mainState: MainStateService,
     private communication: CommunicationService,
-    private search: SearchService,
+    private search: AwSearchService,
     private route: ActivatedRoute,
   ) {
     super(layoutsConfiguration.get('AwSearchLayoutConfig') || config);

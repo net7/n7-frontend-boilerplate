@@ -1,11 +1,14 @@
 import { EventHandler } from '@n7-frontend/core';
 import { Subject } from 'rxjs';
-import { debounceTime, takeUntil } from 'rxjs/operators';
+import {
+  debounceTime, takeUntil
+} from 'rxjs/operators';
+import entityLinksHelper from '../../search/entity-links.helper';
 
 export class AwSearchLayoutEH extends EventHandler {
-  private destroyed$: Subject<any> = new Subject();
+  public layoutId = 'aw-search-layout';
 
-  private configuration: any;
+  private destroyed$: Subject<any> = new Subject();
 
   private route: any;
 
@@ -22,16 +25,18 @@ export class AwSearchLayoutEH extends EventHandler {
   /** Is true when the search is triggered with a new text-string */
   private textHasChanged = false;
 
+  private facetIdChanged: string;
+
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
-        case 'aw-search-layout.init': {
+        case `${this.layoutId}.init`: {
           this.route = payload.route;
-          this.configuration = payload.configuration;
           this.dataSource.onInit(payload);
           this._listenToFacetsChange();
           this._listenToAdditionalParamsChange();
           this._listenToRouterChanges();
+          this._listenToInternalFilters();
           const { value: textInput } = this.dataSource.searchModel.getFiltersByFacetId('query')[0];
           if ((textInput || '').length > 0) {
             this.dataSource.isSearchingText.next(true);
@@ -42,18 +47,18 @@ export class AwSearchLayoutEH extends EventHandler {
           }
         } break;
 
-        case 'aw-search-layout.destroy':
+        case `${this.layoutId}.destroy`:
           this.dataSource.onDestroy();
           this.destroyed$.next();
           break;
 
-        case 'aw-search-layout.orderbychange':
+        case `${this.layoutId}.orderbychange`:
           // handle the change of result-order
           this.dataSource.onOrderByChange(payload);
           this.additionalParamsChange$.next(); // emit from observable stream
           break;
 
-        case 'aw-search-layout.searchreset':
+        case `${this.layoutId}.searchreset`:
           this.dataSource.resetButtonEnabled = false;
           this.dataSource.searchModel.clear();
           this.additionalParamsChange$.next();
@@ -68,6 +73,7 @@ export class AwSearchLayoutEH extends EventHandler {
     this.outerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
         case 'facets-wrapper.facetschange': {
+          this.facetIdChanged = payload.facetId;
           this.dataSource.resetPagination();
           const { value: textInput } = this.dataSource.searchModel.getFiltersByFacetId('query')[0];
           // Checks if <input type=text>'s value has changed
@@ -108,15 +114,24 @@ export class AwSearchLayoutEH extends EventHandler {
       this.dataSource.resultsLoading = true;
       if (this.textHasChanged) {
         this.additionalParamsChange$.next();
-        this.textHasChanged = false; // reset
       } else {
-        this.dataSource.doSearchRequest$().subscribe(() => {
+        this.dataSource.doSearchRequest$(this.facetIdChanged).subscribe(() => {
           this.dataSource.resultsLoading = false;
           this.dataSource.onSearchResponse();
           this.emitGlobal('searchresponse', this.dataSource.getSearchModelId());
         });
       }
     });
+  }
+
+  /**
+   * Handles entity links pagination
+   */
+  private _listenToInternalFilters() {
+    entityLinksHelper.listenToChanges(this.dataSource)
+      .subscribe(() => {
+        this.emitGlobal('searchresponse', this.dataSource.getSearchModelId());
+      });
   }
 
   /**
@@ -140,6 +155,7 @@ export class AwSearchLayoutEH extends EventHandler {
       if (this.textHasChanged) {
         queryParams.orderby = '_score';
         queryParams.orderdirection = 'DESC';
+        this.textHasChanged = false;
       }
 
       this.emitGlobal('navigate', {
@@ -147,6 +163,8 @@ export class AwSearchLayoutEH extends EventHandler {
         path: [],
         queryParams,
       });
+
+      this.facetsChange$.next();
     });
   }
 

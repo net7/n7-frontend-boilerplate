@@ -15,6 +15,7 @@ export * from './tree.eh';
 
 // Search layout
 export * from './search-layout-tabs.eh';
+export * from './aw-facets-wrapper.eh';
 
 // Gallery layout
 export * from './gallery-results.eh';

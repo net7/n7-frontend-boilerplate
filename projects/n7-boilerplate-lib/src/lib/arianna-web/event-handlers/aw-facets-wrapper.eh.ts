@@ -2,12 +2,10 @@ import { EventHandler } from '@n7-frontend/core';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
-export class FacetsWrapperEH extends EventHandler {
-  private _facetsChanged = false;
+export class AwFacetsWrapperEH extends EventHandler {
+  public internalFacetsChange$: Subject<any> = new Subject();
 
-  private internalFacetsChange$: Subject<any> = new Subject();
-
-  private externalFacetsChange$: Subject<any> = new Subject();
+  public externalFacetsChange$: Subject<any> = new Subject();
 
   public listen() {
     // listen to inner (widget) events
@@ -18,10 +16,12 @@ export class FacetsWrapperEH extends EventHandler {
           if (!payload.eventPayload.inputPayload) {
             return;
           }
-          const { facetId } = payload.eventPayload.inputPayload;
+          const { facetId, value } = payload.eventPayload.inputPayload;
+          if (value === '__loading__') {
+            return;
+          }
           const input = this.dataSource.getInputByFacetId(facetId);
           const context = input.getContext();
-          this._facetsChanged = true;
 
           // update
           this.dataSource.onFacetChange(payload);
@@ -31,7 +31,7 @@ export class FacetsWrapperEH extends EventHandler {
             this.internalFacetsChange$.next(input.getTarget());
             // external
           } else {
-            this.externalFacetsChange$.next();
+            this.externalFacetsChange$.next(facetId);
           }
         }
           break;
@@ -63,7 +63,7 @@ export class FacetsWrapperEH extends EventHandler {
             internalFilters.forEach((filter) => {
               const input = this.dataSource.searchModel.getInputByFacetId(filter.facetId);
               const target = input.getTarget();
-              this.dataSource.filterTarget(target);
+              // this.dataSource.filterTarget(target);
               this.dataSource.updateFilteredTarget(target);
             });
           }
@@ -75,23 +75,15 @@ export class FacetsWrapperEH extends EventHandler {
     });
 
     // internal facets change
-    this.internalFacetsChange$.pipe(
-      debounceTime(500),
-    ).subscribe((target) => {
-      this.dataSource.filterTarget(target);
-      this.dataSource.updateFilteredTarget(target);
-    });
-
-    // internal facets change
     this.externalFacetsChange$.pipe(
       debounceTime(500),
-    ).subscribe(() => {
+    ).subscribe((facetId) => {
       const requestParams = this.dataSource.getRequestParams();
       const queryParams = this.dataSource.filtersAsQueryParams(requestParams.filters);
 
       Object.keys(queryParams).forEach((key) => { queryParams[key] = queryParams[key] || null; });
       // signal
-      this.emitOuter('facetschange');
+      this.emitOuter('facetschange', { facetId });
 
       // reset page
       queryParams.page = 1;

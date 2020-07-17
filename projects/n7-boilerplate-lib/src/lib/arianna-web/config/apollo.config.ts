@@ -402,125 +402,108 @@ export default {
   search: {
     queryName: 'search',
     queryBody: `{
-        search(__PARAMS__){
-          totalCount
-          facets {
-            id
+      search(__PARAMS__){
+        totalCount
+        results {
+          order{
             type
-            operator
-            limit
-            order
-            data {
-              label
-              value
-              counter
-              searchData {
-                key
-                value
-              }
-            }
+            key
+            direction
           }
-          results {
-            order{
-              type
-              key
-              direction
-            }
-            fields
-            {
+          fields
+          {
+            id
+            highlight
+            limit
+          }
+          items {
+            ... on Entity {
               id
-              highlight
-              limit
-            }
-            items {
-              ... on Entity {
-                id
-                label
-                typeOfEntity
-                fields {
-                  ...
-                  on KeyValueField {
-                    key
-                    value
+              label
+              typeOfEntity
+              fields {
+                ...
+                on KeyValueField {
+                  key
+                  value
+                }
+                ... on KeyValueFieldGroup {
+                  label
+                  fields {
+                    ...
+                    on KeyValueField {
+                      key
+                      value
+                    }
                   }
-                  ... on KeyValueFieldGroup {
+                }
+              }
+              relatedEntities {
+                  count
+                  entity{
+                    id
                     label
+                    typeOfEntity
+                  }
+              }
+              relatedItems {
+                  thumbnail
+                  item {
+                    label
+                    id
                     fields {
                       ...
                       on KeyValueField {
                         key
                         value
                       }
-                    }
-                  }
-                }
-                relatedEntities {
-                    count
-                    entity{
-                      id
-                      label
-                      typeOfEntity
-                    }
-                }
-                relatedItems {
-                    thumbnail
-                    item {
-                      label
-                      id
-                      fields {
-                        ...
-                        on KeyValueField {
-                          key
-                          value
-                        }
-                        ... on KeyValueFieldGroup {
-                          label
-                          fields {
-                            ...
-                            on KeyValueField {
-                              key
-                              value
-                            }
+                      ... on KeyValueFieldGroup {
+                        label
+                        fields {
+                          ...
+                          on KeyValueField {
+                            key
+                            value
                           }
                         }
                       }
-                  }
-                  relatedTypesOfEntity {
-                    type
-                    count
-                  }
+                    }
                 }
-              }
-              ... on Item {
-                id
-                label
-                icon
-                title
-                subTitle
-                image
-                text
                 relatedTypesOfEntity {
                   type
                   count
                 }
-                breadcrumbs {
-                  label
-                  link
+              }
+            }
+            ... on Item {
+              id
+              label
+              icon
+              title
+              subTitle
+              image
+              text
+              relatedTypesOfEntity {
+                type
+                count
+              }
+              breadcrumbs {
+                label
+                link
+              }
+              fields {
+                ...
+                on KeyValueField {
+                  key
+                  value
                 }
-                fields {
-                  ...
-                  on KeyValueField {
-                    key
-                    value
-                  }
-                  ... on KeyValueFieldGroup {
-                    label
-                    fields {
-                      ...
-                      on KeyValueField {
-                        key
-                        value
-                      }
+                ... on KeyValueFieldGroup {
+                  label
+                  fields {
+                    ...
+                    on KeyValueField {
+                      key
+                      value
                     }
                   }
                 }
@@ -528,7 +511,32 @@ export default {
             }
           }
         }
-      }`,
+      }
+    }`,
+  },
+  facets: {
+    queryName: 'search',
+    queryBody: `{
+      search(__PARAMS__){
+        facets {
+          id
+          type
+          operator
+          limit
+          order
+          totalCount
+          data {
+            label
+            value
+            counter
+            searchData {
+              key
+              value
+            }
+          }
+        }
+      }
+    }`,
   },
   getMissingBubble: {
     queryName: 'getEntity',

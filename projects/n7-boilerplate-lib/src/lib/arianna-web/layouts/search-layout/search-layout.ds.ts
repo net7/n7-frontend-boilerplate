@@ -1,19 +1,30 @@
 import { cloneDeep } from 'lodash';
 import { LayoutDataSource } from '@n7-frontend/core/dist/layout-data-source';
-import { tap, takeUntil } from 'rxjs/operators';
 import {
-  Observable, of, fromEvent, Subject, BehaviorSubject,
+  tap, takeUntil
+} from 'rxjs/operators';
+import {
+  Observable, of, fromEvent, Subject, BehaviorSubject, forkJoin
 } from 'rxjs';
-import {
-  SearchService,
-  SearchModel,
-} from '../../../common/services';
 import facetsConfig from './search-facets.config';
 import helpers from '../../../common/helpers';
-
-const SEARCH_MODEL_ID = 'aw-search-layout';
+import { AwSearchService } from '../../search/aw-search.service';
+import { AwSearchModel } from '../../search/aw-search.model';
+import entityLinksHelper from '../../search/entity-links.helper';
 
 export class AwSearchLayoutDS extends LayoutDataSource {
+  public layoutId = 'aw-search-layout';
+
+  public configId = 'search-layout';
+
+  public currentNav = 'ricerca';
+
+  public headTitle = 'Arianna4View - Ricerca';
+
+  public facetsConfig: any = facetsConfig;
+
+  public paginationList = [10, 25, 50];
+
   private destroyed$: Subject<any> = new Subject();
 
   private communication: any;
@@ -22,17 +33,17 @@ export class AwSearchLayoutDS extends LayoutDataSource {
 
   private mainState: any;
 
-  private search: SearchService;
+  private search: AwSearchService;
 
-  private searchModel: SearchModel;
+  private searchModel: AwSearchModel;
 
   private prettifyLabels: any;
 
   private configKeys: any;
 
-  private fallback: string;
+  public fallback: string;
 
-  private resetButtonEnabled = true;
+  public resetButtonEnabled = true;
 
   public pageTitle: string;
 
@@ -95,28 +106,28 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     this.options = options;
     this.prettifyLabels = this.configuration.get('labels');
     this.configKeys = this.configuration.get('config-keys');
-    this.fallback = this.configuration.get('search-layout').fallback;
-    this.pageTitle = this.configuration.get('search-layout').title;
+    this.fallback = this.configuration.get(this.configId).fallback;
+    this.pageTitle = this.configuration.get(this.configId).title;
     // remove first
     // stateless search
-    if (this.search.model(SEARCH_MODEL_ID)) {
-      this.search.remove(SEARCH_MODEL_ID);
+    if (this.search.model(this.layoutId)) {
+      this.search.remove(this.layoutId);
     }
-    this.search.add(SEARCH_MODEL_ID, cloneDeep(facetsConfig));
-    this.searchModel = this.search.model(SEARCH_MODEL_ID);
+    this.search.add(this.layoutId, cloneDeep(this.facetsConfig));
+    this.searchModel = this.search.model(this.layoutId);
     // query params control
-    if (SearchService.queryParams) {
-      this.searchModel.updateFiltersFromQueryParams(SearchService.queryParams);
-      SearchService.queryParams = null;
+    if (AwSearchModel.queryParams) {
+      this.searchModel.updateFiltersFromQueryParams(AwSearchModel.queryParams);
+      AwSearchModel.queryParams = null;
     }
     this._sidebarStickyControl();
-    this.mainState.updateCustom('currentNav', 'ricerca');
-    this.mainState.update('headTitle', 'Arianna4View - Ricerca');
+    this.mainState.updateCustom('currentNav', this.currentNav);
+    this.mainState.update('headTitle', this.headTitle);
   }
 
   onDestroy() {
     this.destroyed$.next();
-    SearchService.queryParams = null;
+    AwSearchModel.queryParams = null;
   }
 
   onSearchResponse() {
@@ -179,7 +190,7 @@ export class AwSearchLayoutDS extends LayoutDataSource {
       currentPage: this.currentPage,
       pageLimit: 5,
       sizes: {
-        list: [10, 25, 50],
+        list: this.paginationList,
         active: this.pageSize,
       },
     });
@@ -203,22 +214,14 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     this.searchModel.setPageConfigOffset((this.currentPage - 1) * this.pageSize);
   }
 
-  public getSearchModelId = () => SEARCH_MODEL_ID;
+  public getSearchModelId = () => this.layoutId;
 
-  public doSearchRequest$(): Observable<any> {
-    const requestParams = this.searchModel.getRequestParams();
-    const requestPayload = {
-      searchParameters: {
-        // FIXME: togliere totalCount
-        totalCount: 100,
-        ...requestParams,
-      },
-    };
+  private getResultsReq$(params): Observable<any> {
     return this.communication.request$('search', {
+      params,
       onError: (error) => console.error(error),
-      params: requestPayload,
     }).pipe(
-      tap(({ totalCount, results, facets }) => {
+      tap(({ totalCount, results }) => {
         this.totalCount = totalCount;
         let resultsTitleIndex = 0;
         // results title
@@ -227,16 +230,9 @@ export class AwSearchLayoutDS extends LayoutDataSource {
         } else if (this.totalCount === 1) {
           resultsTitleIndex = 1;
         }
-        this.resultsTitle = this.configuration.get('search-layout').results[
+        this.resultsTitle = this.configuration.get(this.configId).results[
           resultsTitleIndex
         ];
-
-        // facets labels
-        this._addFacetsLabels(facets);
-        // facets options
-        this._addFacetsOptions(facets);
-
-        this.searchModel.updateFacets(facets);
         this.searchModel.updateTotalCount(totalCount);
 
         this.one('aw-linked-objects').updateOptions({
@@ -254,6 +250,41 @@ export class AwSearchLayoutDS extends LayoutDataSource {
         this.one('aw-linked-objects').update({ items: this._normalizeItems(results.items) });
       }),
     );
+  }
+
+  private getFacetsReq$(params) {
+    return this.communication.request$('facets', {
+      params,
+      onError: (error) => console.error(error),
+    }).pipe(
+      tap(({ facets }) => {
+        // entity links pagination control
+        entityLinksHelper.onFacetsResponse(this.searchModel, facets);
+        // facets labels
+        this._addFacetsLabels(facets);
+        // facets options
+        this._addFacetsOptions(facets);
+        this.searchModel.updateFacets(facets);
+      }),
+    );
+  }
+
+  public doSearchRequest$(facetId): Observable<any> {
+    const requestParams = this.searchModel.getRequestParams();
+    const params = {
+      searchParameters: {
+        totalCount: 0, // fake param for apollo
+        gallery: !!(this.configId === 'gallery-layout'),
+        ...requestParams,
+      },
+    };
+    const resultsReq$ = this.getResultsReq$(params);
+    let facetsReq$ = of(null);
+    if (!entityLinksHelper.isEntityLinksClass(facetId)) {
+      entityLinksHelper.clearInternalFilters(this.searchModel);
+      facetsReq$ = this.getFacetsReq$(params);
+    }
+    return forkJoin(resultsReq$, facetsReq$);
   }
 
   private _updateSearchPage(page) {

@@ -1,10 +1,10 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'n7-facets-wrapper',
-  templateUrl: './facets-wrapper.html',
+  selector: 'aw-facets-wrapper',
+  templateUrl: './aw-facets-wrapper.html',
 })
-export class FacetsWrapperComponent {
+export class AwFacetsWrapperComponent {
   @Input() data: any;
 
   @Input() emit: any;

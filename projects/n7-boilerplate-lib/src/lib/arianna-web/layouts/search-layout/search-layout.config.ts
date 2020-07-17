@@ -2,8 +2,10 @@ import { AwSearchLayoutDS } from './search-layout.ds';
 import { AwSearchLayoutEH } from './search-layout.eh';
 import * as DS from '../../data-sources';
 import * as EH from '../../event-handlers';
-import { FacetsWrapperDS, SmartPaginationDS } from '../../../common/data-sources';
-import { FacetsWrapperEH, SmartPaginationEH } from '../../../common/event-handlers';
+import { SmartPaginationDS } from '../../../common/data-sources';
+import { SmartPaginationEH } from '../../../common/event-handlers';
+import { AwFacetsWrapperDS } from '../../data-sources';
+import { AwFacetsWrapperEH } from '../../event-handlers';
 
 export const AwSearchLayoutConfig = {
   layoutId: 'aw-search-layout',
@@ -12,7 +14,7 @@ export const AwSearchLayoutConfig = {
    * in this layout
    */
   widgets: [
-    { id: 'facets-wrapper', dataSource: FacetsWrapperDS, eventHandler: FacetsWrapperEH },
+    { id: 'facets-wrapper', dataSource: AwFacetsWrapperDS, eventHandler: AwFacetsWrapperEH },
     { id: 'aw-linked-objects' },
     { id: 'aw-search-layout-tabs', hasStaticData: true },
     {

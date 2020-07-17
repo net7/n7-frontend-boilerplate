@@ -6,7 +6,7 @@ interface FacetInputData {
   options?: any;
 }
 
-export abstract class FacetInput {
+export abstract class AwFacetInput {
   static index = 0;
 
   private id: string;
@@ -23,7 +23,7 @@ export abstract class FacetInput {
     this.config = config;
     this._setId();
 
-    FacetInput.index += 1;
+    AwFacetInput.index += 1;
   }
 
   public abstract setActive(facetValue: any): void;
@@ -63,6 +63,6 @@ export abstract class FacetInput {
   public setData = (newData: FacetInputData[]) => { this.data = newData; }
 
   private _setId() {
-    this.id = `facet-input-${this.getType()}-${FacetInput.index}`;
+    this.id = `facet-input-${this.getType()}-${AwFacetInput.index}`;
   }
 }

@@ -15,13 +15,11 @@ import { MainLayoutComponent } from './layouts/main-layout/main-layout';
 import { Page404LayoutComponent } from './layouts/page404-layout/page404-layout';
 
 // components
-import { FacetsWrapperComponent } from './components/facets-wrapper/facets-wrapper';
 import { SmartPaginationComponent } from './components/smart-pagination/smart-pagination';
 
 const COMPONENTS = [
   MainLayoutComponent,
   Page404LayoutComponent,
-  FacetsWrapperComponent,
   SmartPaginationComponent,
 ];
 
