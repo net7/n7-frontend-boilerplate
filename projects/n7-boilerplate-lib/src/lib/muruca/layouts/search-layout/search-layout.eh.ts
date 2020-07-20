@@ -6,7 +6,8 @@ import {
   MrSearchService,
   RESULTS_REQUEST_STATE_CONTEXT,
   INPUT_STATE_CONTEXT,
-  FACETS_REQUEST_STATE_CONTEXT
+  FACETS_REQUEST_STATE_CONTEXT,
+  SECTION_STATE_CONTEXT
 } from '../../services/search.service';
 import { MrLayoutStateService, LayoutState } from '../../services/layout-state.service';
 
@@ -88,6 +89,19 @@ export class MrSearchLayoutEH extends EventHandler {
     this.searchService.getState$(FACETS_REQUEST_STATE_CONTEXT, 'success').subscribe((response) => {
       this.linksResponse = response;
       this.dataSource.updateActiveFilters(this.searchState, this.linksResponse);
+
+      // update sections
+      if (response.inputs) {
+        const { inputs } = response;
+        Object.keys(inputs).forEach((inputKey) => {
+          const currentInput = inputs[inputKey];
+          this.searchService.setState(
+            SECTION_STATE_CONTEXT,
+            `section-${inputKey}`,
+            Array.isArray(currentInput) && currentInput.length ? 'is-not-empty' : 'is-empty'
+          );
+        });
+      }
     });
 
     this.searchService.getState$(RESULTS_REQUEST_STATE_CONTEXT, 'loading').subscribe(() => {

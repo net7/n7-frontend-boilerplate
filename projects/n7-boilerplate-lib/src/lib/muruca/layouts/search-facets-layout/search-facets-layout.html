@@ -1,5 +1,7 @@
 <div *ngIf="lb.dataSource.facets" class="mr-facets__facets-wrapper {{ lb.dataSource.facets.classes || '' }}">
-    <div *ngFor="let section of lb.dataSource.facets.sections" class="mr-facets__single-facet {{ section.classes || '' }}">
+    <div *ngFor="let section of lb.dataSource.facets.sections" 
+    class="mr-facets__single-facet {{ section.classes || '' }}"
+    [ngClass]="lb.dataSource.searchService.getState$('section', section.id) | async">
         <n7-facet-header
         *ngIf="section.header"
         [data]="lb.widgets[section.header.id].ds.out$ | async"

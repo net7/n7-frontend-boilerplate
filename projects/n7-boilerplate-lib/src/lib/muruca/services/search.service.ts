@@ -16,6 +16,7 @@ import { InputSchema } from '../interfaces/search.interface';
 
 export const INPUT_STATE_CONTEXT = 'input';
 export const FACET_STATE_CONTEXT = 'facet';
+export const SECTION_STATE_CONTEXT = 'section';
 export const RESULTS_REQUEST_STATE_CONTEXT = 'resultsRequest';
 export const FACETS_REQUEST_STATE_CONTEXT = 'facetsRequest';
 
@@ -59,6 +60,7 @@ export class MrSearchService {
     // initial states
     this.initInputState();
     this.initFacetState();
+    this.initSectionState();
 
     // listeners
     this.onInputsChange();
@@ -209,6 +211,17 @@ export class MrSearchService {
         .forEach((input) => {
           this.addState(FACET_STATE_CONTEXT, input.id);
         });
+    });
+  }
+
+  private initSectionState() {
+    const { facets } = this.config;
+    // add context state
+    this.addStateContext(SECTION_STATE_CONTEXT);
+
+    // set input state
+    facets.sections.forEach(({ id }) => {
+      this.addState(SECTION_STATE_CONTEXT, id);
     });
   }
 
