@@ -2,6 +2,7 @@ import { SearchConfig } from '../../interfaces/search.interface';
 
 const facets = {
   sections: [{
+    id: 'section-query',
     inputs: [{
       id: 'query',
       type: 'text',
@@ -20,6 +21,7 @@ const facets = {
       }
     }]
   }, {
+    id: 'section-toponyms',
     header: {
       id: 'header-toponyms',
       data: {
@@ -48,13 +50,14 @@ const facets = {
       queryParam: true,
       schema: {
         valueType: 'string',
-        // multiple: true
+        multiple: true
       },
       data: {
         links: []
       }
     }]
   }, {
+    id: 'section-continents',
     header: {
       id: 'header-continents',
       data: {
@@ -75,6 +78,7 @@ const facets = {
       }
     }]
   }, {
+    id: 'section-keywords',
     header: {
       id: 'header-keywords',
       data: {
@@ -96,6 +100,7 @@ const facets = {
       }
     }],
   }, {
+    id: 'section-date',
     header: {
       id: 'header-date',
       data: {
@@ -117,6 +122,7 @@ const facets = {
       }
     }],
   }, {
+    id: 'section-place',
     header: {
       id: 'header-place',
       data: {

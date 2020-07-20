@@ -16,6 +16,7 @@ import { InputSchema } from '../interfaces/search.interface';
 
 export const INPUT_STATE_CONTEXT = 'input';
 export const FACET_STATE_CONTEXT = 'facet';
+export const SECTION_STATE_CONTEXT = 'section';
 export const RESULTS_REQUEST_STATE_CONTEXT = 'resultsRequest';
 export const FACETS_REQUEST_STATE_CONTEXT = 'facetsRequest';
 
@@ -59,6 +60,7 @@ export class MrSearchService {
     // initial states
     this.initInputState();
     this.initFacetState();
+    this.initSectionState();
 
     // listeners
     this.onInputsChange();
@@ -212,6 +214,17 @@ export class MrSearchService {
     });
   }
 
+  private initSectionState() {
+    const { facets } = this.config;
+    // add context state
+    this.addStateContext(SECTION_STATE_CONTEXT);
+
+    // set input state
+    facets.sections.forEach(({ id }) => {
+      this.addState(SECTION_STATE_CONTEXT, id);
+    });
+  }
+
   private onRouteChange() {
     const { results } = this.config.request;
 
@@ -311,11 +324,21 @@ export class MrSearchService {
       }),
       debounceTime(facets.delay || 1),
       map((params) => {
+        params.facets = [];
+        this.config.facets.sections.forEach(({ inputs }) => {
+          inputs.filter(({ type }) => type === 'link')
+            .forEach(({ id }) => {
+              params.facets.push(id);
+            });
+        });
         this.setState(FACETS_REQUEST_STATE_CONTEXT, 'request', params);
         return params;
       }),
       switchMap((state) => this.communication.request$(facets.id, {
-        params: { ...state, searchId: this.searchId },
+        params: {
+          ...state,
+          searchId: this.searchId
+        },
         method: 'POST',
         onError: (error) => {
           this.setState(FACETS_REQUEST_STATE_CONTEXT, 'error', error);
