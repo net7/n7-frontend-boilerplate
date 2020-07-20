@@ -20,13 +20,10 @@ export default {
       switchMap((pagination) => {
         const requestParams = dataSource.searchModel.getRequestParams();
         const internalFilters = dataSource.searchModel.getInternalFilters();
-        if (!pagination) {
-          this.paginationState.offset = 0;
-        } else {
-          const entityLinksFilter = requestParams.filters
-            .find(({ facetId }) => facetId === ENTITY_LINKS_CLASS);
-          entityLinksFilter.pagination.offset = this.paginationState.offset;
-        }
+        this.paginationState.offset = pagination ? this.paginationState.offset : 0;
+        const entityLinksFilter = requestParams.filters
+          .find(({ facetId }) => facetId === ENTITY_LINKS_CLASS);
+        entityLinksFilter.pagination.offset = this.paginationState.offset;
         const filters = [...requestParams.filters, ...internalFilters];
         const params = {
           searchParameters: {
@@ -74,9 +71,15 @@ export default {
     }
 
     // empty state
-    if (!totalCount) {
-      const entityLinksInput = searchModel.getInputByFacetId(ENTITY_LINKS_CLASS);
-      entityLinksInput.setIsEmpty(true);
+    const entityLinksInput = searchModel.getInputByFacetId(ENTITY_LINKS_CLASS);
+    entityLinksInput.setIsEmpty(!totalCount);
+
+    // fix scroll
+    if (offset === 0) {
+      const scrollEl = document.querySelector(ENTITY_LINKS_PARENT_SELECTOR);
+      if (scrollEl) {
+        scrollEl.scrollTop = 0;
+      }
     }
 
     // update loading state
