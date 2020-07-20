@@ -324,11 +324,21 @@ export class MrSearchService {
       }),
       debounceTime(facets.delay || 1),
       map((params) => {
+        params.facets = [];
+        this.config.facets.sections.forEach(({ inputs }) => {
+          inputs.filter(({ type }) => type === 'link')
+            .forEach(({ id }) => {
+              params.facets.push(id);
+            });
+        });
         this.setState(FACETS_REQUEST_STATE_CONTEXT, 'request', params);
         return params;
       }),
       switchMap((state) => this.communication.request$(facets.id, {
-        params: { ...state, searchId: this.searchId },
+        params: {
+          ...state,
+          searchId: this.searchId
+        },
         method: 'POST',
         onError: (error) => {
           this.setState(FACETS_REQUEST_STATE_CONTEXT, 'error', error);
