@@ -17,7 +17,7 @@ export class MrResourceLayoutDS extends LayoutDataSource {
 
   public tabConfig: any;
 
-  public slug: string;
+  public id: string;
 
   public tab: string;
 
@@ -31,13 +31,13 @@ export class MrResourceLayoutDS extends LayoutDataSource {
   }
 
   /** Request the configured widgets data */
-  pageRequest$(slug, onError: (err: any) => void): Observable<any> {
+  pageRequest$(id, onError: (err: any) => void): Observable<any> {
     const { sections } = this.pageConfig;
     return this.communication.request$('resource', {
       onError,
       method: 'POST',
       params: {
-        slug,
+        id,
         type: this.pageConfig.type,
         sections: sections.map((s) => s.id),
       }

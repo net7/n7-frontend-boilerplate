@@ -21,21 +21,21 @@ const facets = {
     }]
   }, {
     header: {
-      id: 'header-toponimi',
+      id: 'header-toponyms',
       data: {
         text: 'Toponimi',
-        additionalText: '786',
+        additionalText: null,
       }
     },
     inputs: [{
-      id: 'input-toponimi-filter',
+      id: 'toponyms-filter',
       type: 'text',
       delay: 500,
       schema: {
         valueType: 'string'
       },
       data: {
-        id: 'input-text-01',
+        id: 'text-01',
         placeholder: 'Search',
         icon: 'n7-icon-search',
         inputPayload: 'search-input',
@@ -43,7 +43,7 @@ const facets = {
         iconPayload: 'search-icon',
       }
     }, {
-      id: 'input-toponimi',
+      id: 'toponyms',
       type: 'link',
       queryParam: true,
       schema: {
@@ -56,49 +56,14 @@ const facets = {
     }]
   }, {
     header: {
-      id: 'header-glossario',
-      data: {
-        text: 'Glossario',
-        additionalText: '96',
-      }
-    },
-    inputs: [{
-      id: 'input-glossario-filter',
-      type: 'text',
-      delay: 500,
-      schema: {
-        valueType: 'string'
-      },
-      data: {
-        id: 'input-text-02',
-        placeholder: 'Search',
-        icon: 'n7-icon-search',
-        inputPayload: 'search-input',
-        enterPayload: 'search-enter',
-        iconPayload: 'search-icon',
-      }
-    }, {
-      id: 'input-glossario',
-      type: 'link',
-      queryParam: true,
-      schema: {
-        valueType: 'string',
-        multiple: true
-      },
-      data: {
-        links: []
-      }
-    }]
-  }, {
-    header: {
-      id: 'header-continenti',
+      id: 'header-continents',
       data: {
         text: 'Continenti',
-        additionalText: '3'
+        additionalText: null
       }
     },
     inputs: [{
-      id: 'input-continenti',
+      id: 'continents',
       type: 'link',
       queryParam: true,
       schema: {
@@ -114,12 +79,12 @@ const facets = {
       id: 'header-keywords',
       data: {
         text: 'Keywords',
-        additionalText: '108',
+        additionalText: null,
         iconRight: 'n7-icon-angle-down'
       }
     },
     inputs: [{
-      id: 'input-keywords',
+      id: 'keywords',
       type: 'link',
       queryParam: true,
       schema: {
@@ -132,15 +97,15 @@ const facets = {
     }],
   }, {
     header: {
-      id: 'header-data',
+      id: 'header-date',
       data: {
         text: 'Data di pubblicazione',
-        additionalText: '20',
+        additionalText: null,
         iconRight: 'n7-icon-angle-down'
       }
     },
     inputs: [{
-      id: 'input-data',
+      id: 'date',
       type: 'link',
       queryParam: true,
       schema: {
@@ -153,15 +118,15 @@ const facets = {
     }],
   }, {
     header: {
-      id: 'header-luogo',
+      id: 'header-place',
       data: {
         text: 'Luogo di pubblicazione',
-        additionalText: '15',
+        additionalText: null,
         iconRight: 'n7-icon-angle-down'
       }
     },
     inputs: [{
-      id: 'input-luogo',
+      id: 'place',
       type: 'link',
       queryParam: true,
       schema: {

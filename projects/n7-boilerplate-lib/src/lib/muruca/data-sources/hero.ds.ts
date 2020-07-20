@@ -1,4 +1,5 @@
 import { DataSource } from '@n7-frontend/core';
+import linksHelper from '../helpers/links-helper';
 
 export class MrHeroDS extends DataSource {
   id: string;
@@ -16,10 +17,11 @@ export class MrHeroDS extends DataSource {
       classes,
       backgroundImage,
       image: !backgroundImage ? image : null,
-      button: button ? {
+      button: button && button.link ? {
         ...button,
         anchor: {
-          href: button.link
+          href: linksHelper.getRouterLink(button.link),
+          queryParams: linksHelper.getQueryParams(button.link)
         }
       } : null
     };

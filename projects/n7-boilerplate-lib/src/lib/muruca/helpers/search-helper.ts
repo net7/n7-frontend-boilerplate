@@ -55,7 +55,6 @@ export default {
               state[key] = multiple ? value.split(',').map((v) => !!v) : !!value;
               break;
 
-
             default:
               break;
           }

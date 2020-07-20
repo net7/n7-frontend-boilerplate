@@ -1,4 +1,5 @@
 import { DataSource } from '@n7-frontend/core';
+import linksHelper from '../helpers/links-helper';
 
 export class MrInnerTitleDS extends DataSource {
   protected transform(data: any): any {
@@ -14,11 +15,12 @@ export class MrInnerTitleDS extends DataSource {
           classes: 'italic'
         }
       },
-      actions: button ? {
+      actions: button && button.link ? {
         buttons: [
           {
             anchor: {
-              href: button.link,
+              href: linksHelper.getRouterLink(button.link),
+              queryParams: linksHelper.getQueryParams(button.link)
             },
             text: button.text,
             classes: 'n7-btn-cta'
