@@ -291,11 +291,11 @@
     "type": "work",
     "sections": [
       {
-        "id": "breadcrumbs-1",
+        "id": "breadcrumbs",
         "type": "breadcrumbs"
       },
       {
-        "id": "title-1",
+        "id": "header",
         "type": "title"
       },
       {
@@ -303,11 +303,11 @@
         "type": "tabs"
       },
       {
-        "id": "viewer-1",
+        "id": "image-viewer",
         "type": "viewer"
       },
       {
-        "id": "metadata-1",
+        "id": "metadata",
         "type": "metadata"
       }
     ]
@@ -318,11 +318,11 @@
     "type": "work",
     "sections": [
       {
-        "id": "breadcrumbs-1",
+        "id": "breadcrumbs",
         "type": "breadcrumbs"
       },
       {
-        "id": "title-1",
+        "id": "header",
         "type": "title"
       },
       {
@@ -330,11 +330,11 @@
         "type": "tabs"
       },
       {
-        "id": "metadata-1",
+        "id": "metadata",
         "type": "metadata"
       },
       {
-        "id": "metadata-2",
+        "id": "metadata-size",
         "type": "metadata",
         "grid": null
       },
@@ -351,11 +351,11 @@
     "type": "work",
     "sections": [
       {
-        "id": "breadcrumbs-1",
+        "id": "breadcrumbs",
         "type": "breadcrumbs"
       },
       {
-        "id": "title-1",
+        "id": "header",
         "type": "title"
       },
       {
@@ -363,11 +363,11 @@
         "type": "tabs"
       },
       {
-        "id": "text-1",
+        "id": "header",
         "type": "text"
       },
       {
-        "id": "metadata-1",
+        "id": "metadata",
         "type": "metadata"
       }
     ]
@@ -382,15 +382,15 @@
         "type": "tabs"
       },
       {
-        "id": "title-1",
+        "id": "header",
         "type": "title"
       },
       {
-        "id": "metadata-1",
+        "id": "metadata",
         "type": "metadata"
       },
       {
-        "id": "metadata-2",
+        "id": "metadata-size",
         "type": "metadata"
       },
       {
@@ -406,11 +406,11 @@
     "type": "work",
     "sections": [
       {
-        "id": "title-1",
+        "id": "header",
         "type": "title"
       },
       {
-        "id": "breadcrumbs-1",
+        "id": "breadcrumbs",
         "type": "breadcrumbs"
       },
       {
@@ -418,15 +418,15 @@
         "type": "tabs"
       },
       {
-        "id": "text-1",
+        "id": "header",
         "type": "text"
       },
       {
-        "id": "metadata-1",
+        "id": "metadata",
         "type": "metadata"
       },
       {
-        "id": "metadata-2",
+        "id": "metadata-size",
         "type": "metadata",
         "grid": null
       },
@@ -442,21 +442,21 @@
     "type": "work",
     "sections": [
       {
-        "id": "title-1",
+        "id": "header",
         "type": "title",
         "grid": null
       },
       {
-        "id": "viewer-1",
+        "id": "image-viewer",
         "type": "viewer",
         "grid": null
       },
       {
-        "id": "metadata-1",
+        "id": "metadata",
         "type": "metadata"
       },
       {
-        "id": "metadata-2",
+        "id": "metadata-size",
         "type": "metadata",
         "grid": null
       },
@@ -472,12 +472,12 @@
     "type": "map",
     "sections": [
       {
-        "id": "title-1",
+        "id": "header",
         "type": "title",
         "grid": null
       },
       {
-        "id": "metadata-3",
+        "id": "metadata-description",
         "type": "metadata",
         "grid": null,
         "options": {
@@ -485,12 +485,12 @@
         }
       },
       {
-        "id": "metadata-1",
+        "id": "metadata",
         "type": "metadata",
         "grid": null
       },
       {
-        "id": "metadata-2",
+        "id": "metadata-size",
         "type": "metadata",
         "grid": null
       },
@@ -498,6 +498,48 @@
         "id": "collection-2",
         "type": "collection",
         "grid": 3
+      },
+      {
+        "id": "collection-1",
+        "type": "collection",
+        "grid": 3
+      }
+    ]
+  },
+  "resource-toponimi": {
+    "title": "Toponimi",
+    "type": "work",
+    "sections": [
+      {
+        "id": "header",
+        "type": "title",
+        "grid": null
+      },
+      {
+        "id": "metadata",
+        "type": "metadata",
+        "grid": null
+      },
+      {
+        "id": "collection-1",
+        "type": "collection",
+        "grid": 3
+      }
+    ]
+  },
+  "resource-termini": {
+    "title": "Termini",
+    "type": "work",
+    "sections": [
+      {
+        "id": "header",
+        "type": "title",
+        "grid": null
+      },
+      {
+        "id": "metadata",
+        "type": "metadata",
+        "grid": null
       },
       {
         "id": "collection-1",

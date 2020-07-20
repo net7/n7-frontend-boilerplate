@@ -26,6 +26,8 @@ export const APP_ROUTES: Routes = [
   { path: 'maps', component: MrSearchLayoutComponent, data: { configId: 'search-maps' } },
   { path: 'map/:id/:slug', component: MrResourceLayoutComponent, data: { configId: 'resource-map' } },
   { path: 'work/:id/:slug', component: MrResourceLayoutComponent, data: { configId: 'resource-work' } },
+  { path: 'work/:id/:slug/toponimi', component: MrResourceLayoutComponent, data: { configId: 'resource-toponimi' } },
+  { path: 'work/:id/:slug/termini', component: MrResourceLayoutComponent, data: { configId: 'resource-termini' } },
   { path: 'work/:id/:slug/facsimile', component: MrResourceLayoutComponent, data: { configId: 'resource-work-facsimile' } },
   { path: 'work/:id/:slug/metadati', component: MrResourceLayoutComponent, data: { configId: 'resource-work-metadati' } },
   { path: 'work/:id/:slug/trascrizione', component: MrResourceLayoutComponent, data: { configId: 'resource-work-trascrizione' } },
