@@ -340,6 +340,15 @@ export default {
                 }
               }
             }
+            relatedEntities {
+              count
+              entity {
+                id
+                label
+                typeOfEntity
+                relation
+              }
+            }
           }
         }
       }`,
