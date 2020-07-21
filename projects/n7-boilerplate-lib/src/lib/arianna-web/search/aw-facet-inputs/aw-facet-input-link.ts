@@ -1,6 +1,6 @@
 import { AwFacetInput } from './aw-facet-input';
 
-const RESULTS_LIMIT = 1000;
+const RESULTS_LIMIT = 2000;
 
 export class AwFacetInputLink extends AwFacetInput {
   private facetValue: string | string[];
