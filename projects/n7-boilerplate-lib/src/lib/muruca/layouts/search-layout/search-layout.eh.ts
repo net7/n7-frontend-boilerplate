@@ -86,6 +86,11 @@ export class MrSearchLayoutEH extends EventHandler {
     this.searchService.getState$(INPUT_STATE_CONTEXT).subscribe(({ state }) => {
       this.searchState = state;
     });
+    this.searchService.getState$(INPUT_STATE_CONTEXT, 'query').subscribe((val) => {
+      this.emitOuter('inputquerychange', val);
+
+      this.searchService.setState(INPUT_STATE_CONTEXT, 'sort', val ? '_score' : 'sort_ASC');
+    });
     this.searchService.getState$(FACETS_REQUEST_STATE_CONTEXT, 'success').subscribe((response) => {
       this.linksResponse = response;
       this.dataSource.updateActiveFilters(this.searchState, this.linksResponse);
@@ -110,9 +115,10 @@ export class MrSearchLayoutEH extends EventHandler {
 
     // default params hook
     this.searchService.setBeforeHook(RESULTS_REQUEST_STATE_CONTEXT, 'loading', (params = {}) => {
+      // FIXME: prendere da configurazione
       const defaultParams = {
         page: 1,
-        sort: '_score',
+        sort: 'sort_ASC',
         limit: 12
       };
       Object.keys(defaultParams).forEach((key) => {

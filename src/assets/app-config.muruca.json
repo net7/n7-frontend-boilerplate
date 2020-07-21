@@ -175,12 +175,13 @@
         {
           "value": "_score",
           "label": "Ordine per pertinenza",
-          "selected": true
+          "selected": false,
+          "disabled": true
         },
         {
           "value": "sort_ASC",
           "label": "Ordine alfabetico (A→Z)",
-          "selected": false
+          "selected": true
         },
         {
           "value": "sort_DESC",
@@ -225,12 +226,13 @@
         {
           "value": "_score",
           "label": "Ordine per pertinenza",
-          "selected": true
+          "selected": false,
+          "disabled": true
         },
         {
           "value": "sort_ASC",
           "label": "Ordine alfabetico (A→Z)",
-          "selected": false
+          "selected": true
         },
         {
           "value": "sort_DESC",
