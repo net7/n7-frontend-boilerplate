@@ -269,7 +269,7 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     );
   }
 
-  public doSearchRequest$(facetId): Observable<any> {
+  public doSearchRequest$(): Observable<any> {
     const requestParams = this.searchModel.getRequestParams();
     const params = {
       searchParameters: {
@@ -278,12 +278,12 @@ export class AwSearchLayoutDS extends LayoutDataSource {
         ...requestParams,
       },
     };
+    // update offset
+    entityLinksHelper.resetOffset();
+    entityLinksHelper.updateParamsOffset(params.searchParameters);
+
     const resultsReq$ = this.getResultsReq$(params);
-    let facetsReq$ = of(null);
-    if (!entityLinksHelper.isEntityLinksClass(facetId)) {
-      entityLinksHelper.clearInternalFilters(this.searchModel);
-      facetsReq$ = this.getFacetsReq$(params);
-    }
+    const facetsReq$ = this.getFacetsReq$(params);
     return forkJoin(resultsReq$, facetsReq$);
   }
 
