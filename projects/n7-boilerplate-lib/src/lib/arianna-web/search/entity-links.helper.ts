@@ -2,7 +2,7 @@ import { Subject, merge, fromEvent } from 'rxjs';
 import {
   debounceTime, switchMap, mapTo
 } from 'rxjs/operators';
-import { isEmpty } from 'lodash';
+// import { isEmpty } from 'lodash';
 
 const ENTITY_LINKS_CLASS = 'entity-links';
 const ENTITY_LINKS_PARENT_SELECTOR = '.n7-facets-wrapper__group:last-child .n7-facet__section-input-links';
@@ -21,9 +21,7 @@ export default {
         const requestParams = dataSource.searchModel.getRequestParams();
         const internalFilters = dataSource.searchModel.getInternalFilters();
         this.paginationState.offset = pagination ? this.paginationState.offset : 0;
-        const entityLinksFilter = requestParams.filters
-          .find(({ facetId }) => facetId === ENTITY_LINKS_CLASS);
-        entityLinksFilter.pagination.offset = this.paginationState.offset;
+        this.updateParamsOffset(requestParams);
         const filters = [...requestParams.filters, ...internalFilters];
         const params = {
           searchParameters: {
@@ -118,13 +116,7 @@ export default {
       });
     });
   },
-  updatePaginationState(newState) {
-    this.paginationState = {
-      ...this.paginationState,
-      ...newState
-    };
-  },
-  clearInternalFilters(searchModel) {
+  /* clearInternalFilters(searchModel) {
     const searchFilter = searchModel.getFiltersByFacetId('entity-search')[0];
     const typesFilter = searchModel.getFiltersByFacetId('entity-types')[0];
     if (!isEmpty(searchFilter.value) || !isEmpty(typesFilter.value)) {
@@ -132,6 +124,17 @@ export default {
       typesFilter.value = [];
       searchModel.updateInputsFromFilters();
     }
+  }, */
+  updateParamsOffset(params) {
+    const entityLinksFilter = params.filters
+      .find(({ facetId }) => facetId === ENTITY_LINKS_CLASS);
+
+    if (entityLinksFilter) {
+      entityLinksFilter.pagination.offset = this.paginationState.offset;
+    }
+  },
+  resetOffset() {
+    this.paginationState.offset = 0;
   },
   isEntityLinksClass: (facetId) => facetId === ENTITY_LINKS_CLASS,
 };
