@@ -146,6 +146,10 @@
     }
 }
 
+/* facet links loader */
+.loader-link .loader-link {
+    @extend .n7-loader;
+}
 
 /* ------------------------------------ *\
    #CONTENT
