@@ -18,8 +18,11 @@ export class MrSearchResultsTitleDS extends DataSource {
       actions: {
         select: {
           label: sort.label,
-          options: sort.options.map(({ label, value, selected }) => ({
+          options: sort.options.map(({
+            label, value, selected, disabled
+          }) => ({
             value,
+            disabled,
             selected: currentSort ? value === currentSort : selected,
             text: label
           })),
@@ -27,5 +30,15 @@ export class MrSearchResultsTitleDS extends DataSource {
         }
       }
     };
+  }
+
+  OnInputQueryChange(value) {
+    const { sort } = this.options.config;
+    sort.options.forEach((option) => {
+      if (option.value === '_score') {
+        option.disabled = !value;
+      }
+    });
+    this.update(this.input);
   }
 }

@@ -108,6 +108,15 @@
 
 
 /* ------------------------------------ *\
+    INNER TITLE
+\* ------------------------------------ */
+.mr-search {
+    select.n7-inner-title__sorting-select option:disabled {
+        display: none;
+    }
+}
+
+/* ------------------------------------ *\
    #MEDIA-QUERIES
 \* ------------------------------------ */
 @media all and (max-width: 1120px) {

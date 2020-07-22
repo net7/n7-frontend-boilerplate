@@ -11,5 +11,15 @@ export class MrSearchResultsTitleEH extends EventHandler {
           break;
       }
     });
+
+    this.outerEvents$.subscribe(({ type, payload }) => {
+      switch (type) {
+        case 'mr-search-layout.inputquerychange':
+          this.dataSource.OnInputQueryChange(payload);
+          break;
+        default:
+          break;
+      }
+    });
   }
 }

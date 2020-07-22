@@ -26,6 +26,9 @@
         .n7-facet-header {
 
         }
+        &.is-empty {
+            display: none;
+        }
     }
 
     /* The facet content */
