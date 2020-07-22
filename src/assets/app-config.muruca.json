@@ -99,16 +99,16 @@
     "title": "Home",
     "sections": [
       {
-        "id": "hero-1",
+        "id": "hero-main",
         "type": "hero",
         "grid": null,
         "options": {
-          "classes": "n7-hero-1",
+          "classes": "n7-hero-main",
           "background": true
         }
       },
       {
-        "id": "collection-1",
+        "id": "collection-continents",
         "type": "collection",
         "grid": 4,
         "options": {
@@ -116,16 +116,16 @@
         }
       },
       {
-        "id": "hero-2",
+        "id": "hero-works",
         "type": "hero",
         "grid": null,
         "options": {
-          "classes": "n7-hero-2",
+          "classes": "n7-hero-works",
           "background": false
         }
       },
       {
-        "id": "collection-2",
+        "id": "collection-works",
         "type": "collection",
         "grid": 4,
         "options": {
@@ -143,17 +143,17 @@
         "grid": null
       },
       {
-        "id": "collection-1",
+        "id": "collection-continents",
         "type": "collection",
         "grid": 4
       },
       {
-        "id": "hero-1",
+        "id": "hero-main",
         "type": "hero",
         "grid": null
       },
       {
-        "id": "collection-2",
+        "id": "",
         "type": "collection",
         "grid": 4
       }
@@ -339,7 +339,7 @@
         "grid": null
       },
       {
-        "id": "collection-1",
+        "id": "collection-continents",
         "type": "collection",
         "grid": 3
       }
@@ -394,7 +394,7 @@
         "type": "metadata"
       },
       {
-        "id": "collection-1",
+        "id": "collection-continents",
         "type": "collection",
         "grid": 3
       }
@@ -431,7 +431,7 @@
         "grid": null
       },
       {
-        "id": "collection-1",
+        "id": "collection-continents",
         "type": "collection",
         "grid": 3
       }
@@ -461,7 +461,7 @@
         "grid": null
       },
       {
-        "id": "collection-1",
+        "id": "collection-continents",
         "type": "collection",
         "grid": 3
       }
@@ -495,20 +495,20 @@
         "grid": null
       },
       {
-        "id": "collection-2",
+        "id": "collection-works",
         "type": "collection",
         "grid": 3
       },
       {
-        "id": "collection-1",
+        "id": "collection-continents",
         "type": "collection",
         "grid": 3
       }
     ]
   },
-  "resource-toponimi": {
+  "toponyms": {
     "title": "Toponimi",
-    "type": "work",
+    "type": "toponyms",
     "sections": [
       {
         "id": "header",
@@ -521,15 +521,15 @@
         "grid": null
       },
       {
-        "id": "collection-1",
+        "id": "collection-toponyms",
         "type": "collection",
         "grid": 3
       }
     ]
   },
-  "resource-termini": {
+  "keywords": {
     "title": "Termini",
-    "type": "work",
+    "type": "keywords",
     "sections": [
       {
         "id": "header",
@@ -542,7 +542,7 @@
         "grid": null
       },
       {
-        "id": "collection-1",
+        "id": "collection-keywords",
         "type": "collection",
         "grid": 3
       }
