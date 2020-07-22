@@ -118,6 +118,9 @@ export class AwFacetsWrapperDS extends DataSource {
   }
 
   public updateInputLinks() {
+    if (!this.searchModel) {
+      return;
+    }
     const linksFacetIds = this.searchModel.getInputs()
       .filter((input) => input.getType() === 'link')
       .map((input) => input.getFacetId());

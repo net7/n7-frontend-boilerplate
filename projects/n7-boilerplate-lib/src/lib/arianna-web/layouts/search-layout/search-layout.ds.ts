@@ -281,6 +281,8 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     // update offset
     entityLinksHelper.resetOffset();
     entityLinksHelper.updateParamsOffset(params.searchParameters);
+    // initial loader
+    entityLinksHelper.addInitialLoader(this);
 
     const resultsReq$ = this.getResultsReq$(params);
     const facetsReq$ = this.getFacetsReq$(params);
