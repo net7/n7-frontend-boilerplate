@@ -94,6 +94,7 @@
                     </ng-container>
                 </main>               
                 <n7-smart-pagination
+                *ngIf="(layoutState.get$('results') | async) === 'SUCCESS'"
                 [data]="lb.widgets['n7-smart-pagination'].ds.out$ | async"
                 [emit]="lb.widgets['n7-smart-pagination'].emit">
                 </n7-smart-pagination>
