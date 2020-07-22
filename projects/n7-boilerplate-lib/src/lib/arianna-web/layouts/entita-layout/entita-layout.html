@@ -81,7 +81,8 @@
                 ['overview', 'informazioni'].includes(lb.dataSource.selectedTab)
             )">
                 <div class="aw-entity__content-section aw-entity__content-section-overview">
-                    <div class="aw-entity__content-section-header">
+                    <div class="aw-entity__content-section-header"
+                         *ngIf="lb.dataSource.selectedTab === 'overview'">
                         <h2 class="aw-entity__content-section-title"
                             *ngIf="lb.dataSource.selectedTab === 'overview'">Informazioni</h2>
                         <a *ngIf="lb.dataSource.selectedTab !== 'informazioni'"
