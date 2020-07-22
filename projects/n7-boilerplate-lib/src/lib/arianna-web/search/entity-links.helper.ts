@@ -7,6 +7,13 @@ import {
 const ENTITY_LINKS_CLASS = 'entity-links';
 const ENTITY_LINKS_PARENT_SELECTOR = '.n7-facets-wrapper__group:last-child .n7-facet__section-input-links';
 
+const loaderItem = {
+  counter: null,
+  label: 'Loading...',
+  searchData: [],
+  value: '__loading__',
+};
+
 export default {
   paginationState: {} as any,
   paginate$: new Subject(),
@@ -31,6 +38,11 @@ export default {
             filters
           },
         };
+
+        // initial loader
+        if (this.paginationState.offset === 0) {
+          this.addInitialLoader(dataSource);
+        }
 
         return dataSource.getFacetsReq$(params);
       })
@@ -60,12 +72,7 @@ export default {
     }
 
     if (this.paginationState.totalCount > (limit + offset)) {
-      entityLinksFacet.data.push({
-        counter: null,
-        label: 'Loading...',
-        searchData: [],
-        value: '__loading__',
-      });
+      entityLinksFacet.data.push(loaderItem);
     }
 
     // empty state
@@ -136,5 +143,9 @@ export default {
   resetOffset() {
     this.paginationState.offset = 0;
   },
-  isEntityLinksClass: (facetId) => facetId === ENTITY_LINKS_CLASS,
+  addInitialLoader(dataSource) {
+    dataSource.searchModel.setInputData(ENTITY_LINKS_CLASS, [loaderItem]);
+    const facetsWrapperDS = dataSource.getWidgetDataSource('facets-wrapper');
+    facetsWrapperDS.updateInputLinks();
+  }
 };
