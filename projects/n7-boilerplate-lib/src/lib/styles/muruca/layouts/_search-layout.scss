@@ -79,6 +79,7 @@
         .mr-search__results-filters-title {
             flex-shrink: 0;
             margin-right: $space;
+            padding-top: $space/4;
         }
 
         .mr-search__results-filters-wrapper {
@@ -89,30 +90,6 @@
             display: inline-block;
             margin-right: $space;
             margin-bottom: $space;
-            background-color: $color-success;
-            padding: 0;
-            height: $mr-search-result-filter-height;
-
-            .n7-tag__text {
-                display: inline-block;
-                line-height: $mr-search-result-filter-height;
-                padding: 0 $space;
-                vertical-align: top;
-            }
-
-            .n7-tag__icon {
-                display: inline-block;
-                line-height: $mr-search-result-filter-height;
-                height: $mr-search-result-filter-height;
-                padding: 0 $space;
-                background-color: rgba($color-background-base, .15);
-                border-radius: 0 $border-radius-hard $border-radius-hard 0;
-                transition: all $transition-durations;
-
-                &:hover {
-                    background-color: rgba($color-background-base, .25);
-                }
-            }
         }
     }
 }
