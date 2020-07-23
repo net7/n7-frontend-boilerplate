@@ -246,7 +246,7 @@
     "linked-objects-fallback": "Non sono stati trovati oggetti culturali collegati alle entità selezionate. Prova a cambiare le entità selezionate o resetta la ricerca."
   },
   "scheda-layout": {
-    "empty-html": "<span>Non sono presenti informazioni<span>",
+    "empty-html": "<span>Non sono disponibili informazioni.<span>",
     "empty-label": "<h2>Benvenuto nel patrimonio archivistico dell'Università di Firenze</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p><h3>Subtitle</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>",
     "related-entities": {
       "title": "Entità collegate"
@@ -387,7 +387,7 @@
       ],
       "smallChartSize": 3
     },
-    "fallback": "Non sono disponibili informazioni per questa entità",
+    "fallback": "Non sono disponibili informazioni per questa entità.",
     "entitiesQuerySize": 30,
     "metadata-to-show": [
       "TIPOLOGIA",
@@ -556,7 +556,7 @@
       },
       "icon": "n7-icon-archive",
       "label": "Fondi",
-      "singular-label": "Fondo",
+      "singular-label": "Aggregazione logica",
       "input-placeholder": "",
       "class-name": "aggregazione-logica"
     },
@@ -668,7 +668,7 @@
     "corredoRicerca.descrizione": "Strumento di corredo e ricerca - descrizione",
     "aggregazione-logica.typology": "",
     "struttura_funzioni": "Funzioni principali",
-    "aggregazione-logica": "Fondo",
+    "aggregazione-logica": "Aggregazione logica",
     "oggetto-culturale": "Oggetto culturale",
     "tipologia": "",
     "descrizione": "Descrizione",

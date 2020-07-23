@@ -81,7 +81,8 @@
                 ['overview', 'informazioni'].includes(lb.dataSource.selectedTab)
             )">
                 <div class="aw-entity__content-section aw-entity__content-section-overview">
-                    <div class="aw-entity__content-section-header">
+                    <div class="aw-entity__content-section-header"
+                         *ngIf="lb.dataSource.selectedTab === 'overview'">
                         <h2 class="aw-entity__content-section-title"
                             *ngIf="lb.dataSource.selectedTab === 'overview'">Informazioni</h2>
                         <a *ngIf="lb.dataSource.selectedTab !== 'informazioni'"
@@ -90,7 +91,8 @@
                             TUTTE LE INFORMAZIONI <i class="n7-icon-angle-right"></i>
                         </a>
                     </div>
-                    <p *ngIf="lb.dataSource.fallbackText">
+                    <p *ngIf="lb.dataSource.fallbackText"
+                       class="aw-entity__content-section-empty">
                         {{ lb.dataSource.fallbackText }}
                     </p>
                     <n7-metadata-viewer class="aw-entity-layout__metadata-viewer"
@@ -151,11 +153,11 @@
 
                 <!-- ENTITA COLLEGATE -->
                 <section id="related-item-container"
-                         class="aw-scheda__section aw-scheda__related">
-                    <div class="aw-scheda__inner-title">
+                         class="aw-entity__section aw-entity__related">
+                    <div class="aw-entity__inner-title">
                         {{lb.dataSource.relatedEntitiesHeader}}
                     </div>
-                    <div class="aw-scheda__related-items n7-grid-2">
+                    <div class="aw-entity__related-items n7-grid-2">
                         <ng-container
                                       *ngFor="let preview of (lb.widgets['aw-related-entities'].ds.out$ | async)?.previews">
                             <n7-item-preview [data]="preview"

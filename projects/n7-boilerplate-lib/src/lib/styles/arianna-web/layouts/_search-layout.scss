@@ -149,6 +149,11 @@
 /* facet links loader */
 .loader-link .loader-link {
     @extend .n7-loader;
+
+    padding: 0;
+    margin: $space auto 0;
+    width: 40px !important;
+    height: 40px !important;
 }
 
 /* ------------------------------------ *\
