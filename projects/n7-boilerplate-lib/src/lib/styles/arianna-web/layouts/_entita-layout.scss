@@ -240,7 +240,7 @@
         }
     }
 
-    /* List of objects in overview and elated objects */
+    /* List of objects in overview and related objects */
     &__content-item-previews {
         .n7-item-preview {
             margin-top: 0;
@@ -315,6 +315,20 @@
     .aw-entity__bubble-chart-wrapper {
         .n7-bubble-chart {
             height: $bubble-section-entity-detail;
+        }
+    }
+
+    /* Related entities list */
+    .aw-entity__related-items {
+        // padding: 0 $aw-scheda-content-padding $aw-scheda-content-padding $aw-scheda-content-padding;
+        /* Targeting elements in the last row */
+        >*:nth-child(2n + 1):nth-last-child(-n + 2),
+        >*:nth-child(2n + 1):nth-last-child(-n + 2) ~ * {
+            .n7-item-preview {
+                margin-bottom: 0;
+                padding-bottom: 0;
+                border-bottom: 0;
+            }
         }
     }
 
