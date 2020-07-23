@@ -18,7 +18,15 @@
 /* ------------------------------------ *\
    #MEDIA-QUERIES
 \* ------------------------------------ */
-@media all and (max-width: 1120px) {
+@media all and (max-width: $page-max-width + $space*4) {
+
+    .mr-layout {
+        padding-left: $space*2;
+        padding-right: $space*2;
+        &__maxwidth {
+        }
+    }
+
 }
 
 @media all and (max-width: $breakpoint-laptop) {

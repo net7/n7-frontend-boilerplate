@@ -50,6 +50,17 @@
 /* ------------------------------------ *\
    #MEDIA-QUERIES
 \* ------------------------------------ */
+@media all and (max-width: $page-max-width + $space*4) {
+
+    .n7-header {
+        padding-left: $space*2;
+        padding-right: $space*2;
+        &__content {
+        }
+    }
+
+}
+
 @media all and (max-width: $header-breakpoint-mobile) {
 }
 
