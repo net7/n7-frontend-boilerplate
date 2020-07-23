@@ -387,7 +387,7 @@
       ],
       "smallChartSize": 3
     },
-    "fallback": "Non sono disponibili informazioni per questa entità",
+    "fallback": "Non sono disponibili informazioni per questa entità.",
     "entitiesQuerySize": 30,
     "metadata-to-show": [
       "TIPOLOGIA",

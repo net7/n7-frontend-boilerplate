@@ -183,7 +183,7 @@
 .aw-entity {
     &__content-section {
         padding: $space*3;
-        border-bottom: 2px solid $color-border-light;
+        // border-bottom: 2px solid $color-border-light;
     }
 
     &__content-section-header {
@@ -330,6 +330,13 @@
                 border-bottom: 0;
             }
         }
+    }
+
+    /* Empty state */
+    &__content-section-empty {
+        display: block;
+        margin: $space auto;
+        text-align: center;
     }
 
     /* Loading */
