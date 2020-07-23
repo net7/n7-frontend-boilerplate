@@ -12,7 +12,7 @@
     background-color: #fafbfc;
 
     &__title {
-        padding: $space*4 0;
+        padding: $space*2 0;
     }
 
     &__results-content {
@@ -48,6 +48,17 @@
             margin-bottom: 0;
             padding: 0;
             align-items: flex-start;
+        }
+
+        .n7-inner-title__title {
+            font-weight: $font-weight-normal;
+            font-size: $font-size-l;
+            font-family: $font-family-main;
+        }
+
+        .n7-inner-title__sorting-label,
+        .n7-inner-title__sorting-select {
+            font-size: $font-size-s;
         }
     }
 }
