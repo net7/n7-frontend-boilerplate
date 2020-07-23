@@ -10,6 +10,8 @@
 .n7-tree {
     /* First level elements */
     &__item-contents {
+        position: relative;
+        
         /* n7-anchor-wrapper directive */
         > * {
         }
@@ -30,12 +32,32 @@
     }
     
     &__item-toggle {
+        position: absolute;
+        z-index: 100;
+        width: $tree-caret-width;
+        top: 0;
+        bottom: 0;
+        border: 0 !important;
+
         &:hover {
             
         }
     }
 
     &__item-details {
+        position: relative;
+        padding-left: $tree-caret-width;
+        border-left: 1px solid $color-border-normal;
+
+        &:after {
+            content: " ";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: $tree-caret-width;
+            border-right: 1px solid $color-border-light;
+        }
+
         &:hover {
             .n7-tree__item-text {
             }
