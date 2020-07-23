@@ -1,0 +1,57 @@
+/**
+ * TAG
+ *
+ * Tag component, with value, label and icon to click and remove it.
+ * Can be used as tag element and as active filter indication.
+ */
+
+/* ------------------------------------ *\
+    TAG
+\* ------------------------------------ */
+.n7-tag {
+    background-color: $color-third;
+    padding: 0;
+    height: $mr-search-result-filter-height;
+
+    .n7-tag__text {
+        display: inline-block;
+        line-height: $mr-search-result-filter-height;
+        padding: 0 $space;
+        vertical-align: top;
+        font-weight: $font-weight-bold;
+        max-width: 200px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .n7-tag__icon {
+        display: inline-block;
+        line-height: $mr-search-result-filter-height;
+        height: $mr-search-result-filter-height;
+        padding: 0 $space;
+        background-color: rgba($color-background-base, .15);
+        border-radius: 0 $border-radius-hard $border-radius-hard 0;
+        transition: all $transition-durations;
+
+        &:hover {
+            background-color: rgba($color-background-base, .25);
+        }
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: $breakpoint-laptop) {
+}
+
+@media all and (max-width: $breakpoint-ipad-portrait) {
+}
+
+@media all and (max-width: $breakpoint-smartphone-landscape) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}
