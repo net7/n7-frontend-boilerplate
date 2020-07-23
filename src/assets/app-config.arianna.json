@@ -556,7 +556,7 @@
       },
       "icon": "n7-icon-archive",
       "label": "Fondi",
-      "singular-label": "Fondo",
+      "singular-label": "Aggregazione logica",
       "input-placeholder": "",
       "class-name": "aggregazione-logica"
     },
@@ -668,7 +668,7 @@
     "corredoRicerca.descrizione": "Strumento di corredo e ricerca - descrizione",
     "aggregazione-logica.typology": "",
     "struttura_funzioni": "Funzioni principali",
-    "aggregazione-logica": "Fondo",
+    "aggregazione-logica": "Aggregazione logica",
     "oggetto-culturale": "Oggetto culturale",
     "tipologia": "",
     "descrizione": "Descrizione",
