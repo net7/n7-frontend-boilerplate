@@ -506,9 +506,9 @@
       }
     ]
   },
-  "toponyms": {
+  "toponym": {
     "title": "Toponimi",
-    "type": "toponyms",
+    "type": "toponym",
     "sections": [
       {
         "id": "header",
