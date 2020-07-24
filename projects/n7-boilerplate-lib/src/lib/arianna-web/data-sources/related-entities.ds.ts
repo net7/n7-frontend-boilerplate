@@ -8,7 +8,6 @@ export class AwRelatedEntitiesDS extends DataSource {
       title: d.entity.label,
       anchor: {
         href: `${basePath}${d.entity.id}/${d.entity.label}`,
-        target: '_blank'
       },
       classes: `is-${d.entity.typeOfEntity}`, // adds color to the title
       metadata: [{

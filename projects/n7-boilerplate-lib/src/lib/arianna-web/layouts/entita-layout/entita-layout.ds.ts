@@ -47,6 +47,8 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
 
   public fallbackText = '';
 
+  public loading = true;
+
   onInit({
     configuration, mainState, router, route, location, options, titleService, communication,
   }) {
@@ -178,6 +180,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     /*
       Loads the data for the selected nav item, into the adjacent text block.
     */
+    this.loading = true;
     if (id && tab) {
       this.currentId = id; // store selected item from url
       this.currentSlug = slug; // store selected item from url
@@ -203,6 +206,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
   }
 
   loadContent(res) {
+    this.loading = false;
     const config = this.configuration.get('config-keys')[res.typeOfEntity];
     // console.log('(entita) Apollo responded with: ', { res })
     this.myResponse = res;
