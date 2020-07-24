@@ -3,7 +3,7 @@
 
     <div class="aw-entity__sidebar">
         <!-- Custom header -->
-        <div *ngIf="!(lb.widgets['aw-entita-nav'].ds.out$ | async)"
+        <div *ngIf="lb.dataSource.loading"
              class="aw-entity__sidebar-title-wrapper-loading">
             <n7-content-placeholder [data]="{
                 blocks: [{
@@ -12,7 +12,7 @@
             }">
             </n7-content-placeholder>
         </div>
-        <div *ngIf="!!(lb.widgets['aw-entita-nav'].ds.out$ | async)"
+        <div *ngIf="!lb.dataSource.loading"
              class="aw-entity__sidebar-title-wrapper color-{{lb.dataSource.navHeader.color}}">
             <h1 class="aw-entity__sidebar-title">
                 <span class="aw-entity__sidebar-title-icon {{lb.dataSource.navHeader.icon}}"></span>
@@ -20,7 +20,7 @@
             </h1>
         </div>
         <!-- Navigation -->
-        <div *ngIf="!(lb.widgets['aw-entita-nav'].ds.out$ | async)"
+        <div *ngIf="lb.dataSource.loading"
              class="aw-entity__sidebar-nav-loading">
             <n7-content-placeholder *ngFor="let n of [0,1,2]"
                                     [data]="{
@@ -30,13 +30,14 @@
             }">
             </n7-content-placeholder>
         </div>
-        <n7-nav [data]="lb.widgets['aw-entita-nav'].ds.out$ | async"
-                [emit]="lb.widgets['aw-entita-nav'].emit">
+        <n7-nav *ngIf="!lb.dataSource.loading" 
+        [data]="lb.widgets['aw-entita-nav'].ds.out$ | async"
+        [emit]="lb.widgets['aw-entita-nav'].emit">
         </n7-nav>
     </div>
 
     <!-- lb.dataSource.selectedTab -->
-    <div *ngIf="!(lb.widgets['aw-entita-nav'].ds.out$ | async)"
+    <div *ngIf="lb.dataSource.loading"
          class="aw-entity__content-loading">
         <div class="aw-entity__content-loading-title">
             <n7-content-placeholder [data]="{
@@ -54,7 +55,7 @@
         </div>
     </div>
 
-    <div *ngIf="!!(lb.widgets['aw-entita-nav'].ds.out$ | async)"
+    <div *ngIf="!lb.dataSource.loading"
          class="aw-entity__content">
         <section>
             <div *ngIf="lb.dataSource.myResponse.wikiTab || lb.dataSource.myResponse.extraTab"
