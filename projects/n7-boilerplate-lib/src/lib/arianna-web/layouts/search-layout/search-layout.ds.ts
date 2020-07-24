@@ -236,7 +236,7 @@ export class AwSearchLayoutDS extends LayoutDataSource {
         this.searchModel.updateTotalCount(totalCount);
 
         this.one('aw-linked-objects').updateOptions({
-          context: 'search',
+          context: this.configId === 'gallery-layout' ? 'gallery' : 'search',
           config: this.configuration,
           page: this.currentPage,
           pagination: true,
@@ -366,9 +366,14 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     queryParams.page = this.currentPage;
     queryParams.limit = this.pageSize;
 
+    let href = this.configuration.get('paths').searchBasePath;
+    if (this.configId === 'gallery-layout') {
+      href = this.configuration.get('paths').galleryBasePath;
+    }
+
     return {
+      href,
       queryParams,
-      href: this.configuration.get('paths').searchBasePath,
     };
   }
 }
