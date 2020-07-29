@@ -14,11 +14,13 @@ export class AwRelatedEntitiesDS extends DataSource {
         items: [{
           label: 'Tipo di entità',
           value: d.entity.typeOfEntity,
-        }, {
-          label: d.entity.relationName || (d.entity.relation && 'Relazione'),
-          value: d.entity.relation || null
-        }]
-      }]
+        }],
+      }],
+      // A special kind of metadata, not to be viewed as other metadata
+      relation: {
+        key: d.entity.relationName,
+        value: d.entity.relation || null
+      },
     })) : [];
     return { previews };
   };
