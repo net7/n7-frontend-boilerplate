@@ -13,6 +13,10 @@
         max-width: $page-max-width;
         margin: 0 auto;
     }
+
+    &__content {
+        border: 3px solid tomato;
+    }
 }
 
 
