@@ -108,16 +108,18 @@
         </div>
         <div class="aw-scheda__related-items n7-grid-2">
             <ng-container *ngFor="let preview of (lb.widgets['aw-related-entities'].ds.out$ | async)?.previews">
-                <n7-item-preview [data]="preview"
-                                 [emit]="lb.widgets['aw-related-entities'].emit">
-                </n7-item-preview>
-                <!-- relation -->
-                <div class="aw-entity__relation"
-                        *ngIf="preview.relation?.value">
-                    <p class="aw-entity__relation-description">Relazione con
-                        <span class="aw-entity__relation-key">{{preview.relation.key}}</span>:
-                        <span class="aw-entity__relation-value"> {{preview.relation.value}}</span>
-                    </p>
+                <div class="aw-entity__content-item-preview-wrapper">
+                    <n7-item-preview [data]="preview"
+                                     [emit]="lb.widgets['aw-related-entities'].emit">
+                    </n7-item-preview>
+                    <!-- relation -->
+                    <div class="aw-entity__relation"
+                         *ngIf="preview.relation?.value">
+                        <p class="aw-entity__relation-description">Relazione con
+                            <span class="aw-entity__relation-key">{{preview.relation.key}}</span>:
+                            <span class="aw-entity__relation-value"> {{preview.relation.value}}</span>
+                        </p>
+                    </div>
                 </div>
             </ng-container>
         </div>
