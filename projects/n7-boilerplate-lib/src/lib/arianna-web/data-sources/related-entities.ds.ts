@@ -14,10 +14,9 @@ export class AwRelatedEntitiesDS extends DataSource {
         items: [{
           label: 'Tipo di entità',
           value: d.entity.typeOfEntity,
-          relation: {
-            key: d.entity.relationName,
-            value: d.entity.relation || null
-          },
+        }, {
+          label: d.entity.relationName || (d.entity.relation && 'Relazione'),
+          value: d.entity.relation || null
         }]
       }]
     })) : [];
