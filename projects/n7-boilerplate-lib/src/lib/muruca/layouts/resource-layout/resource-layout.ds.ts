@@ -1,6 +1,5 @@
 import { LayoutDataSource } from '@n7-frontend/core/dist/layout-data-source';
 import { Observable } from 'rxjs';
-import { concat } from 'lodash';
 import { ConfigurationService } from '../../../common/services/configuration.service';
 import { CommunicationService } from '../../../common/services/communication.service';
 import { MainStateService } from '../../../common/services/main-state.service';
@@ -54,7 +53,7 @@ export class MrResourceLayoutDS extends LayoutDataSource {
   /** Load all the configured widgets */
   private initSections(response) {
     const { top, content } = this.pageConfig.sections;
-    const sections = concat(top, content);
+    const sections = top.concat(content);
     sections.forEach(({ id }) => {
       const widgetDataSource = this.getWidgetDataSource(id);
       if (!widgetDataSource) return;
