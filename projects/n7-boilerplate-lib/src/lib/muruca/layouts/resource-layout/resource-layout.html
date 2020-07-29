@@ -14,103 +14,115 @@
 
     <!-- success -->
     <ng-container *ngSwitchCase="'SUCCESS'">
-
-      <section *ngFor="let section of lb.dataSource.pageConfig.sections"
-               class="{{ 'mr-layout__' + section.type }}">
-        <ng-container [ngSwitch]="section.type">
-
-          <!-- TABS -->
-          <ng-container *ngSwitchCase="'tabs'">
-            <ng-container *ngFor="let tab of lb.dataSource.tabConfig">
-              <n7-anchor-wrapper [data]="{ href: '/opera' + '/' + lb.dataSource.slug + '/' + tab.id }">
-                <span class="n7-btn n7-btn-light">{{tab.label}}</span>
-              </n7-anchor-wrapper>
-            </ng-container>
-          </ng-container>
-
-          <!-- INNER TITLE -->
-          <div class="mr-resource__title">
-            <ng-container *ngSwitchCase="'title'">
-                <n7-inner-title [data]="lb.widgets[section.id].ds.out$ | async"
-                                [emit]="lb.widgets[section.id].emit">
-                </n7-inner-title>
-            </ng-container>
-          </div>
-
-          <!-- IMAGE VIEWER -->
-          <ng-container *ngSwitchCase="'viewer'">
-            <n7-image-viewer [data]="lb.widgets[section.id].ds.out$ | async"
-                             [emit]="lb.widgets[section.id].emit">
-            </n7-image-viewer>
-          </ng-container>
-
-          <!-- METADATA VIEWER -->
-          <ng-container *ngSwitchCase="'metadata'">
-            <mr-read-more [data]="{ limit: 130 }">
-              <n7-metadata-viewer [data]="lb.widgets[section.id].ds.out$ | async"
-                                  [emit]="lb.widgets[section.id].emit">
-              </n7-metadata-viewer>
-            </mr-read-more>
-          </ng-container>
-
-          <!-- COLLECTION -->
-          <ng-container *ngSwitchCase="'collection'">
-            <div class="mr-layout__maxwidth mr-items-preview">
-              <n7-inner-title [data]="(lb.widgets[section.id].ds.out$ | async)?.header"
-                              [emit]="lb.widgets[section.id].emit">
-              </n7-inner-title>
-              <div class="{{ section.grid ? 'n7-grid-' + section.grid : '' }}">
-                <n7-item-preview *ngFor="let item of (lb.widgets[section.id].ds.out$ | async)?.items"
-                                 [data]="item"
-                                 [emit]="lb.widgets[section.id].emit">
-                </n7-item-preview>
-              </div>
-            </div>
-          </ng-container>
-
-          <!-- ITEM PREVIEW -->
-          <ng-container *ngSwitchCase="'preview'">
-            <n7-item-preview [data]="lb.widgets[section.id].ds.out$ | async"
-                             [emit]="lb.widgets[section.id].emit">
-            </n7-item-preview>
-          </ng-container>
-
-          <!-- TEXT VIEWER -->
-          <ng-container *ngSwitchCase="'text'">
-            <div class="text-viewer__mock">n7-text-viewer</div>
-          </ng-container>
-
-          <!-- INFO BOX -->
-          <ng-container *ngSwitchCase="'info'">
-            <div class="info-box__mock">info-box</div>
-          </ng-container>
-
-          <!-- BREADCRUMBS -->
-          <ng-container *ngSwitchCase="'breadcrumbs'">
-            <n7-breadcrumbs [data]="{
-              items: [{
-                label: 'Home',
-                anchor: { href: '/home' }
-              }, {
-                label: 'Opere',
-                anchor: { href: '/opere' }
-              }, {
-                label: 'Opere giovanili',
-                anchor: { href: '/opere-giovanili' }
-              }, {
-                label: 'Canzoniere',
-                anchor: { href: '/canzoniere' }
-              }, {
-                label: 'Canzoniere (Rerum vulgarium fragmenta)',
-                anchor: { href: '/canzoniere/rerum-vulgarium-fragmenta' }
-              }]
-            }">
-            </n7-breadcrumbs>
-          </ng-container>
-
-        </ng-container>
-      </section>
+      <ng-container *ngIf="lb.dataSource.pageConfig.sections as sections">
+        <!-- Pass the list of blocks to render to the block template -->
+        <ng-container *ngTemplateOutlet="blocks; context: { $implicit: sections.top }"></ng-container>
+        <div class="mr-resource__content">
+          <ng-container *ngTemplateOutlet="blocks; context: { $implicit: sections.content }"></ng-container>
+        </div>
+      </ng-container>
     </ng-container>
 
   </ng-container>
 </div>
+
+
+
+
+<ng-template #blocks
+             let-list>
+  <section *ngFor="let section of list"
+           class="{{ 'mr-layout__' + section.type }}">
+    <ng-container [ngSwitch]="section.type">
+      <!-- TABS -->
+      <!-- TABS -->
+      <ng-container *ngSwitchCase="'tabs'">
+        <ng-container *ngFor="let tab of lb.dataSource.tabConfig">
+          <n7-anchor-wrapper [data]="{ href: '/opera' + '/' + lb.dataSource.slug + '/' + tab.id }">
+            <span class="n7-btn n7-btn-light">{{tab.label}}</span>
+          </n7-anchor-wrapper>
+        </ng-container>
+      </ng-container>
+
+      <!-- INNER TITLE -->
+      <div class="mr-resource__title">
+        <ng-container *ngSwitchCase="'title'">
+          <n7-inner-title [data]="lb.widgets[section.id].ds.out$ | async"
+                          [emit]="lb.widgets[section.id].emit">
+          </n7-inner-title>
+        </ng-container>
+      </div>
+
+      <!-- IMAGE VIEWER -->
+      <ng-container *ngSwitchCase="'viewer'">
+        <n7-image-viewer [data]="lb.widgets[section.id].ds.out$ | async"
+                         [emit]="lb.widgets[section.id].emit">
+        </n7-image-viewer>
+      </ng-container>
+
+      <!-- METADATA VIEWER -->
+      <ng-container *ngSwitchCase="'metadata'">
+        <mr-read-more [data]="{ limit: 130 }">
+          <n7-metadata-viewer [data]="lb.widgets[section.id].ds.out$ | async"
+                              [emit]="lb.widgets[section.id].emit">
+          </n7-metadata-viewer>
+        </mr-read-more>
+      </ng-container>
+
+      <!-- COLLECTION -->
+      <ng-container *ngSwitchCase="'collection'">
+        <div class="mr-layout__maxwidth mr-items-preview">
+          <n7-inner-title [data]="(lb.widgets[section.id].ds.out$ | async)?.header"
+                          [emit]="lb.widgets[section.id].emit">
+          </n7-inner-title>
+          <div class="{{ section.grid ? 'n7-grid-' + section.grid : '' }}">
+            <n7-item-preview *ngFor="let item of (lb.widgets[section.id].ds.out$ | async)?.items"
+                             [data]="item"
+                             [emit]="lb.widgets[section.id].emit">
+            </n7-item-preview>
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- ITEM PREVIEW -->
+      <ng-container *ngSwitchCase="'preview'">
+        <n7-item-preview [data]="lb.widgets[section.id].ds.out$ | async"
+                         [emit]="lb.widgets[section.id].emit">
+        </n7-item-preview>
+      </ng-container>
+
+      <!-- TEXT VIEWER -->
+      <ng-container *ngSwitchCase="'text'">
+        <div class="text-viewer__mock">n7-text-viewer</div>
+      </ng-container>
+
+      <!-- INFO BOX -->
+      <ng-container *ngSwitchCase="'info'">
+        <div class="info-box__mock">info-box</div>
+      </ng-container>
+
+      <!-- BREADCRUMBS -->
+      <ng-container *ngSwitchCase="'breadcrumbs'">
+        <n7-breadcrumbs [data]="{
+            items: [{
+              label: 'Home',
+              anchor: { href: '/home' }
+            }, {
+              label: 'Opere',
+              anchor: { href: '/opere' }
+            }, {
+              label: 'Opere giovanili',
+              anchor: { href: '/opere-giovanili' }
+            }, {
+              label: 'Canzoniere',
+              anchor: { href: '/canzoniere' }
+            }, {
+              label: 'Canzoniere (Rerum vulgarium fragmenta)',
+              anchor: { href: '/canzoniere/rerum-vulgarium-fragmenta' }
+            }]
+          }">
+        </n7-breadcrumbs>
+      </ng-container>
+    </ng-container>
+  </section>
+</ng-template>

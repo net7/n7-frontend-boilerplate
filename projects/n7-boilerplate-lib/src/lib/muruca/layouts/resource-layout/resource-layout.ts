@@ -80,8 +80,8 @@ export class MrResourceLayoutComponent extends AbstractLayout implements OnInit,
   }
 
   loadWidgets() {
-    const { sections } = this.configuration.get(this.configId);
-
+    const { top, content } = this.configuration.get(this.configId).sections;
+    const sections = top.concat(content);
     this.widgets = [];
     if (sections) {
       sections.forEach(({ id, type, options }) => {
