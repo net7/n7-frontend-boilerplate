@@ -29,11 +29,13 @@
           </ng-container>
 
           <!-- INNER TITLE -->
-          <ng-container *ngSwitchCase="'title'">
-            <n7-inner-title [data]="lb.widgets[section.id].ds.out$ | async"
-                            [emit]="lb.widgets[section.id].emit">
-            </n7-inner-title>
-          </ng-container>
+          <div class="mr-resource__title">
+            <ng-container *ngSwitchCase="'title'">
+                <n7-inner-title [data]="lb.widgets[section.id].ds.out$ | async"
+                                [emit]="lb.widgets[section.id].emit">
+                </n7-inner-title>
+            </ng-container>
+          </div>
 
           <!-- IMAGE VIEWER -->
           <ng-container *ngSwitchCase="'viewer'">

@@ -1,40 +1,24 @@
 /**
- * RESOURCE
+ * STATIC
  *
- * Specific style for the Resource page.
+ * Specific style for static pages.
+ * Inner content HTML is produced by WP text editor (formerly Gutenberg).
  */
 
 /* ------------------------------------ *\
-   #RESOURCE
+   #STATIC
 \* ------------------------------------ */
-.mr-resource {
-    /* Page title */
+.mr-static {
     &__title {
-        max-width: $page-max-width;
+        max-width: $page-readable-width;
+        margin: 0 auto $space*6 auto;
+        padding: $space*6 0;
+        border-bottom: 1px solid $color-border-normal;
+    }
+
+    &__content {
         margin: 0 auto;
     }
-}
-
-
-.mr-layout {
-    &__tabs {
-        span {
-            margin: 0 2px;
-            background: #f0f0f0;
-            color: black;
-        }
-    }
-}
-
-.text-viewer {
-
-    &__mock {
-        background-color: #f8f6e2;
-        height: 600px;
-        line-height: 600px;
-        text-align: center;
-    }
-
 }
 
 
