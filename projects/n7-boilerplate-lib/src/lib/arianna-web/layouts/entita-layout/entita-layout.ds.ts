@@ -242,6 +242,11 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
         ? `${res.label.substr(0, 30)}... `
         : res.label;
     });
+    res.relatedEntities.forEach((el) => {
+      el.relationName = res.label.length > 30
+        ? `${res.label.substr(0, 30)}... `
+        : res.label;
+    });
     this.one('aw-linked-objects').update({ items: res.relatedItems });
     this.one('aw-related-entities').update(res.relatedEntities);
     this.drawPagination();
