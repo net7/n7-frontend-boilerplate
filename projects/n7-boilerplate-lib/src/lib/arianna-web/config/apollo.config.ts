@@ -185,6 +185,7 @@ export default {
                 id
                 label
                 typeOfEntity
+                relation
             }
             count
           }
@@ -226,6 +227,7 @@ export default {
               id
               label
               typeOfEntity
+              relation
             }
           }
           relatedItems {
@@ -453,6 +455,7 @@ export default {
                     id
                     label
                     typeOfEntity
+                    relation
                   }
               }
               relatedItems {
