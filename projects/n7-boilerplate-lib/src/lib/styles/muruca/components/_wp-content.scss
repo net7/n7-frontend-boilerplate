@@ -11,23 +11,26 @@
     /* Paragraph */
     p {
         max-width: $page-readable-width;
-        margin: $space*3 auto $space*6;
+        margin: $space * 3 auto $space * 6;
         font-family: $font-family-text;
         font-size: $font-size-xl;
     }
 
-     /* Headings */
-     h2, h2, h3 {
+    /* Headings */
+    h2,
+    h2,
+    h3 {
         max-width: $page-readable-width;
-        margin: $space*3 auto $space*6;
+        margin: $space * 3 auto $space * 6;
         font-family: $font-family-headings;
         // font-size: $font-size-xl;
     }
 
     /* List */
-    ul, ol {
+    ul,
+    ol {
         max-width: $page-readable-width;
-        margin: $space*3 auto $space*6;
+        margin: $space * 3 auto $space * 6;
         font-family: $font-family-text;
         font-size: $font-size-xl;
     }
@@ -37,14 +40,14 @@
         display: inline-block;
         position: relative;
         max-width: 900px;
-        margin: 0 auto $space*3;
+        margin: 0 auto $space * 3;
         padding: 73px; // $space*4;
         left: 50%;
         transform: translateX(-50%);
         // border: 2px solid rgba($color-text-light, .14);
         background-color: $color-background-medium;
         border-radius: $border-radius;
-        box-shadow: 0 1px 1px rgba(0,0,0,.05), 0 5px 25px rgba(0,0,0,.05);
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05), 0 5px 25px rgba(0, 0, 0, 0.05);
 
         &:before {
             content: "“";
@@ -98,11 +101,11 @@
     /* Images */
     .wp-block-image {
         max-width: $page-max-width;
-        margin: $space*3 auto $space*6;
+        margin: $space * 3 auto $space * 6;
 
         img {
             border-radius: $border-radius;
-            box-shadow: 0 1px 1px rgba(0,0,0,.05), 0 5px 25px rgba(0,0,0,.05);
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.095), 0 5px 25px rgba(0, 0, 0, 0.095);
         }
 
         /* Center alignment, 700px max width */
@@ -146,9 +149,133 @@
         }
     }
 
+    /* Gallery */
+    .wp-block-gallery {
+        display: flex;
+        @include consistent;
+
+        .blocks-gallery-grid {
+            // UL element
+            @include consistent;
+            padding: 0;
+            margin: 0 auto;
+            list-style: none;
+            max-width: none;
+        }
+
+        .blocks-gallery-item {
+            figure {
+                margin: 0;
+
+                a {
+                    display: block;
+                    width: 150px;
+                    height: 150px;
+                    overflow: hidden;
+                    border-radius: $border-radius;
+                    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.095), 0 5px 25px rgba(0, 0, 0, 0.095);
+                    transition: all $transition-durations;
+
+                    img {
+                        border-radius: 0;
+                        box-shadow: none;
+                    }
+                }
+            }
+
+            img {
+                display: block;
+                transform: scale(1);
+                transition: 0.3s ease-in-out;
+                border-radius: $border-radius;
+                box-shadow: 0 1px 1px rgba(0, 0, 0, 0.095), 0 5px 25px rgba(0, 0, 0, 0.095);
+            }
+
+            figure:hover a {
+                box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 10px 25px rgba(0, 0, 0, 0.1);
+
+                img {
+                    transform: scale(1.1);
+                }
+            }
+        }
+
+        .blocks-gallery-item__caption {
+            margin-top: $space/2;
+            margin-bottom: $space;
+            color: $color-text-light;
+            font-size: $font-size-s;
+            font-family: $font-family-main;
+        }
+
+        /* Grid 3 */
+        &.columns-3 {
+            .blocks-gallery-item {
+                float: left;
+                margin-right: $grid-gutter-h;
+
+                &:nth-of-type(3n + 3) {
+                    margin-right: 0;
+                }
+
+                &:nth-of-type(3n + 1) {
+                    clear: both;
+                }
+            }
+        }
+
+        /* Grid 4 */
+        &.columns-4 {
+            .blocks-gallery-item {
+                float: left;
+                margin-right: $grid-gutter-h;
+
+                &:nth-of-type(4n + 4) {
+                    margin-right: 0;
+                }
+
+                &:nth-of-type(4n + 1) {
+                    clear: both;
+                }
+            }
+        }
+
+        /* Grid 5 */
+        &.columns-5 {
+            .blocks-gallery-item {
+                float: left;
+                margin-right: $grid-gutter-h;
+
+                &:nth-of-type(5n + 5) {
+                    margin-right: 0;
+                }
+
+                &:nth-of-type(5n + 1) {
+                    clear: both;
+                }
+            }
+        }
+
+        /* Grid 6 */
+        &.columns-6 {
+            .blocks-gallery-item {
+                float: left;
+                margin-right: $grid-gutter-h;
+
+                &:nth-of-type(6n + 6) {
+                    margin-right: 0;
+                }
+
+                &:nth-of-type(6n + 1) {
+                    clear: both;
+                }
+            }
+        }
+    }
+
     /* Table */
     .wp-block-table {
-        margin: $space*3 auto $space*6 auto;
+        margin: $space * 3 auto $space * 6 auto;
         max-width: $page-readable-width;
 
         table {
@@ -174,6 +301,8 @@
     figcaption {
         margin-top: $space;
         color: $color-text-light;
+        font-size: $font-size-m;
+        font-family: $font-family-main;
     }
 }
 
