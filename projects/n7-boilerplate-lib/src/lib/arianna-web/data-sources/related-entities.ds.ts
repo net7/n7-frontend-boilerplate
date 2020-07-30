@@ -19,7 +19,7 @@ export class AwRelatedEntitiesDS extends DataSource {
       }],
       // A special kind of metadata, not to be viewed as other metadata
       relation: {
-        key: d.entity.relationName || title,
+        key: d.relationName || title,
         value: d.entity.relation || null
       },
     })) : [];
