@@ -91,13 +91,18 @@
                             </button>
                         </div>
 
-                        <ng-container *ngFor="let preview of (lb.widgets['aw-linked-objects'].ds.out$ | async)?.result">
-                            <n7-smart-breadcrumbs [data]="preview.breadcrumbs">
-                            </n7-smart-breadcrumbs>
-                            <n7-item-preview [data]="preview"
-                                                [emit]="lb.widgets['aw-linked-objects'].emit">
-                            </n7-item-preview>
-                        </ng-container>
+                        <div class="aw-item-preview-list">
+                            <ng-container *ngFor="let preview of (lb.widgets['aw-linked-objects'].ds.out$ | async)?.result">
+                                <div class="aw-item-preview-wrapper">
+                                    <n7-smart-breadcrumbs [data]="preview.breadcrumbs">
+                                    </n7-smart-breadcrumbs>
+                                    <n7-item-preview [data]="preview"
+                                                        [emit]="lb.widgets['aw-linked-objects'].emit">
+                                    </n7-item-preview>
+                                </div>
+                            </ng-container>
+                        </div>
+                        
                         <!-- <ng-container
                             *ngFor="let widgetData of (lb.widgets['aw-linked-objects'].ds.out$ | async)?.result;">
                             <n7-item-preview [data]="widgetData" [emit]="lb.widgets['aw-linked-objects'].emit">

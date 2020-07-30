@@ -8,11 +8,6 @@
    #ITEM-PREVIEW
 \* ------------------------------------ */
 .n7-item-preview {
-    margin: 0 0 $space 0;
-    padding-top: $space*1.5;
-    padding-bottom: $space*2;
-    border-bottom: 1px solid $color-border-light;
-
     /* Main fields */
     &__title {
         margin-bottom: $space*1.5; //  $space/2;
@@ -38,6 +33,11 @@
     /* Metadata wrapper  */
     &__metadata {
         margin-top: -$space/2;
+    }
+
+    /* Metadata group */
+    &__metadata-group:last-child {
+        margin-bottom: 0;
     }
 }
 
@@ -209,11 +209,54 @@
 
 
 /* ------------------------------------ *\
-   #BREADCRUMBS-INTEGRATION
+   #RELATION-DESCRIPTION
 \* ------------------------------------ */
-.aw-search__results-wrapper {
+/* Description of the relation with an entity, OC or AL */
+.aw-item-preview-relation {
+    display: inline-block;
+    margin-top: $space*1.5;
+    padding: $space/2 $space;
+    background-color: $color-background-light;
+    border-radius: $border-radius;
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.05);
+
+    &__description {
+        margin: 0;
+        padding: 0;
+        font-size: $font-size-xs;
+        color: $color-text-light;
+    }
+
+    &__key {
+        color: $color-text;
+    }
+
+    &__value {
+        font-weight: $font-weight-bold;
+        color: $color-text;
+    }
+}
+
+
+/* ------------------------------------ *\
+   #ITEM-PREVIEW-WRAPPER
+\* ------------------------------------ */
+/* When the item preview needs to be wrapped with other elements
+like breadcrumbs or relation description */
+.aw-item-preview-wrapper {
+    margin-bottom: $space*1.8;
+    padding-bottom: $space*2.5;
+    border-bottom: 1px solid $color-border-light;
+    cursor: pointer;
+
     .n7-breadcrumbs {
-        margin-bottom: -$space/2;
+        padding: 0 0 $space*1.2 0;
+        background-color: transparent;
+        cursor: pointer;
+
+        a {
+            font-size: $font-size-xs;
+        }
     }
 }
 

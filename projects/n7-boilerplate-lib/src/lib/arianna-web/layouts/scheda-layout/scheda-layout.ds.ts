@@ -208,7 +208,15 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       this.one('aw-linked-objects').update(response);
     }
     if (response.relatedEntities) {
-      this.one('aw-related-entities').updateOptions({ context: 'scheda', config: this.configuration, list: 'relatedEntities' });
+      response.relatedEntities.forEach((el) => {
+        const label = response.title || response.label;
+        el.relationName = label.length > 30
+          ? `${label.substr(0, 30)}... `
+          : label;
+      });
+      this.one('aw-related-entities').updateOptions({
+        context: 'scheda', config: this.configuration, list: 'relatedEntities', title: response.title
+      });
       this.one('aw-related-entities').update(response.relatedEntities);
     }
 

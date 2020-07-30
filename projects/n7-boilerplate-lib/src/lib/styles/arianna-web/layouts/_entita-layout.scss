@@ -218,15 +218,6 @@
         padding-top: $space*1.5;
     }
 
-    .n7-breadcrumbs {
-        padding: 0;
-        background-color: transparent;
-    }
-
-    .n7-breadcrumbs__list {
-        font-size: $font-size-xs;
-    }
-
     /* Hover on breadcrumbs */
     n7-smart-breadcrumbs {
         cursor: pointer;
@@ -238,55 +229,6 @@
                 }
             }
         }
-    }
-
-    /* List of objects in overview and related objects */
-    &__content-item-previews {
-        .n7-item-preview {
-            margin-top: 0;
-            padding-top: $space;
-            border-bottom: 0;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-    }
-
-    &__content-item-preview-wrapper {
-        margin: 0 0 $space*1.5 0;
-        padding-bottom: $space*2;
-        border-bottom: 1px solid #eff0f1;
-
-        &:last-child {
-            margin: 0;
-            padding-bottom: 0;
-            border-bottom: 0;
-        }
-    }
-
-    /* Descriptor of the relation between Entity and O.C. */
-    &__relation {
-        display: inline-block;
-        margin-top: $space*0.75;
-        padding: $space/3 $space;
-        background-color: $color-background-medium;
-        border-radius: $border-radius;
-        box-shadow: inset 0 0 10px rgba(0,0,0,.06);
-    }
-
-    &__relation-description {
-        margin: 0;
-        padding: 0;
-        font-size: $font-size-xs;
-        color: $color-text-light;
-    }
-
-    &__relation-key {
-        color: $color-text;
-    }
-
-    &__relation-value {
-        font-weight: $font-weight-bold;
-        color: $color-text;
     }
 
     .n7-pagination {
