@@ -92,9 +92,6 @@
     /* Bubble facets and chart wrapper */
     &__bubble-wrapper {
         display: flex;
-        // display: grid;
-        // grid-template-columns: 220px minmax(200px, 1fr) 300px;
-        // grid-column-gap: $grid-gutter-h/2;
         max-width: $page-max-width;
         margin: 0 auto;
         padding: $space*4 0;
@@ -524,19 +521,8 @@
 
     &__bubble-results-list {
         overflow: auto;
+        padding-top: $space*1.5;
         
-        .n7-item-preview {
-            padding-top: 0;
-            border-bottom: 1px solid $color-border-normal;
-        }
-
-        > *:last-child {
-            > .n7-item-preview {
-                margin-bottom: 0;
-                border-bottom: none;
-            }
-        }
-
         /* Breadcrumbs */
         n7-smart-breadcrumbs {
             cursor: pointer;
@@ -550,27 +536,17 @@
             }
         }
 
-        .n7-breadcrumbs {
-            padding: 0;
-            margin-top: $space*1.5;
-            margin-bottom: $space;
-            cursor: pointer;
-        }
-
         /* Only last item of the  breadcrumbs is displayed */
         .n7-breadcrumbs__list {
             >*:not(:last-child)   {
                 display: none;
             }
+        }
 
-            .n7-breadcrumbs__item {
-                font-size: $font-size-xs;
-                cursor: pointer;
-
-                a {
-                    cursor: pointer;
-                }
-            }
+        /* Item peview entity icons */
+        .aw-item-preview-entities {
+            background-color: $color-background-base;
+            box-shadow: 0 0 8px rgba(0,0,0,0.05);
         }
     }
 

@@ -165,10 +165,6 @@
         overflow: hidden;
         padding: $space*2 0 0;
         box-shadow: 0 2px 20px 0 rgba(0,0,0,0.05);
-        
-        .n7-breadcrumbs {
-            padding: 0;
-        }
     }
 
     &__total {
@@ -201,14 +197,6 @@
         border-radius: $border-radius 0 0 0;
         box-shadow: 0 2px 20px 0 rgba(0,0,0,0.05);
         
-        .n7-breadcrumbs {
-            background-color: transparent;
-        }
-
-        .n7-breadcrumbs__list {
-            font-size: $font-size-xs;
-        }
-
         /* Hover on breadcrumbs */
         n7-smart-breadcrumbs {
             cursor: pointer;
@@ -228,7 +216,7 @@
     }
 
     .n7-pagination {
-        padding: $space 0;
+        padding-top: $space*4;
     }
 
     /* No results */
