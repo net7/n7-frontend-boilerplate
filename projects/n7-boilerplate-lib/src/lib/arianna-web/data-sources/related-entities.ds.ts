@@ -4,6 +4,7 @@ import { ItemPreviewData } from '@n7-frontend/components';
 export class AwRelatedEntitiesDS extends DataSource {
   protected transform = (data): { previews: ItemPreviewData[] } => {
     const basePath = this.options.config.get('paths').entitaBasePath;
+    const { title } = this.options;
     const previews: ItemPreviewData[] = data ? data.map((d) => ({
       title: d.entity.label,
       anchor: {
@@ -18,7 +19,7 @@ export class AwRelatedEntitiesDS extends DataSource {
       }],
       // A special kind of metadata, not to be viewed as other metadata
       relation: {
-        key: d.entity.relationName,
+        key: d.entity.relationName || title,
         value: d.entity.relation || null
       },
     })) : [];
