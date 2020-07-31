@@ -113,11 +113,18 @@ export class AwLinkedObjectsDS extends DataSource {
       const itemData = el.item ? el.item : el;
 
       const infoData = _get(el, paths.metadata.info.data, itemData.fields);
-      const infoDataItems = infoData
-        ? infoData.filter((info) => enabledKeys.indexOf(info.key) !== -1)
-        : [];
       const toeData = _get(el, paths.metadata.toe.data, itemData.relatedTypesOfEntity);
       const breadcrumbs = _get(el, paths.metadata.breadcrumbs.data, itemData.breadcrumbs);
+      let infoDataItems = infoData
+        ? infoData.filter((info) => enabledKeys.indexOf(info.key) !== -1)
+        : [];
+
+      // order metadata
+      infoDataItems = infoDataItems.map((info) => ({
+        ...info,
+        order: enabledKeys.indexOf(info.key)
+      }));
+      infoDataItems.sort((a, b) => a.order - b.order);
 
       if (['entita', 'search', 'gallery'].includes(context)) {
         if (itemData.typeOfEntity && itemData.typeOfEntity !== '') {
