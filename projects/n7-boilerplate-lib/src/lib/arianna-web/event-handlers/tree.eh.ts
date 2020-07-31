@@ -100,7 +100,7 @@ export class AwTreeEH extends EventHandler {
   private scrollLeafIntoView = () => {
     setTimeout(() => {
       const treeNode = document.querySelector('div.aw-scheda__tree');
-      const leafNode = treeNode.querySelector('.is-active') as HTMLElement;
+      const leafNode = treeNode.querySelector('.is-active .n7-tree__item-contents') as HTMLElement;
       if (leafNode && !this.isInViewport(leafNode)) {
         leafNode.scrollIntoView();
         window.scrollTo(0, 0);
