@@ -91,6 +91,9 @@
 
     /* Last child also */
     .n7-breadcrumbs__item:last-child {
+        white-space: normal;
+        overflow: visible;
+
         .n7-breadcrumbs__label {
             cursor: pointer;
         }
