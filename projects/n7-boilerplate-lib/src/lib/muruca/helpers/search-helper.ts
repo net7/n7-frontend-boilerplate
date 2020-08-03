@@ -12,9 +12,15 @@ export default {
     const queryParams = {};
 
     Object.keys(state).forEach((key) => {
-      const value = state[key];
       const schema = schemas[key];
       const { multiple, valueType } = schema;
+
+      let value = state[key];
+      if (valueType === 'string') {
+        if (multiple) {
+          value = value.map((k) => k.replace(/,/g, '%2C'));
+        }
+      } // D%27Elia %252C %20 Pasquale
       if (hasValue(value)) {
         switch (valueType) {
           case 'number':
@@ -43,6 +49,7 @@ export default {
       if (hasValue(value)) {
         if (hasValue(value)) {
           switch (valueType) {
+            // http://localhost:4200/maps?sort=sort_ASC&limit=12&authors=D%27Elia%5C%2C%20Pasquale&continents=Asia
             case 'number':
               state[key] = multiple ? value.split(',').map((v) => +v) : +value;
               break;

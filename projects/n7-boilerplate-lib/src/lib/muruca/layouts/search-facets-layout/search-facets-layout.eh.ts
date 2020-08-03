@@ -6,7 +6,6 @@ import {
   INPUT_STATE_CONTEXT,
   FACET_STATE_CONTEXT,
   FACETS_REQUEST_STATE_CONTEXT,
-  SECTION_STATE_CONTEXT
 } from '../../services/search.service';
 
 interface ChangedSubjects {
@@ -106,14 +105,6 @@ export class SearchFacetsLayoutEH extends EventHandler {
         Object.keys(headers).forEach((id) => {
           this.dataSource.updateInputValue(id, headers[id]);
         });
-      });
-
-    // listener for section updates
-    this.searchService.getState$(SECTION_STATE_CONTEXT)
-      .pipe(
-        takeUntil(this.destroyed$)
-      ).subscribe(({ lastUpdated, state }) => {
-        console.log('section', lastUpdated, state);
       });
   }
 }

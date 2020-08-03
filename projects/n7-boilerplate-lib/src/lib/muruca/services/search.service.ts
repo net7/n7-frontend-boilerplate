@@ -73,7 +73,7 @@ export class MrSearchService {
   public getState$(context: string, id?: string): Subject<any> {
     const stateId = id ? `${context}.${id}` : context;
     if (!this.state$[stateId]) {
-      throw Error(`Key "${stateId}" does'nt exists`);
+      throw Error(`Key "${stateId}" does not exist`);
     }
 
     return this.state$[stateId];
@@ -94,7 +94,7 @@ export class MrSearchService {
     const stateId = `${context}.${id}`;
     if (!this.state$[context]) {
       throw Error(`
-        State context "${context}" does'nt exists.
+        State context "${context}" does not exist.
         You must add context first
       `);
     }
@@ -109,7 +109,7 @@ export class MrSearchService {
   public setState(context: string, id: string, newValue: any) {
     const stateId = `${context}.${id}`;
     if (!this.state$[stateId]) {
-      throw Error(`Key "${stateId}" does'nt exists`);
+      throw Error(`Key "${stateId}" does not exist`);
     }
 
     let value = newValue;
@@ -127,7 +127,7 @@ export class MrSearchService {
   public setBeforeHook(context: string, id: string, hook) {
     const stateId = `${context}.${id}`;
     if (!this.state$[stateId]) {
-      throw Error(`Key "${stateId}" does'nt exists`);
+      throw Error(`Key "${stateId}" does not exist`);
     }
 
     this.beforeHook[stateId] = hook;

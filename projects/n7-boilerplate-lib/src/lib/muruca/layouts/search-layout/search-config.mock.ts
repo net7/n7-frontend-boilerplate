@@ -78,6 +78,27 @@ const facets = {
       }
     }]
   }, {
+    id: 'section-authors',
+    header: {
+      id: 'header-authors',
+      data: {
+        text: 'Autori',
+        additionalText: null
+      }
+    },
+    inputs: [{
+      id: 'authors',
+      type: 'link',
+      queryParam: true,
+      schema: {
+        valueType: 'string',
+        multiple: true
+      },
+      data: {
+        links: []
+      }
+    }]
+  }, {
     id: 'section-keywords',
     header: {
       id: 'header-keywords',
