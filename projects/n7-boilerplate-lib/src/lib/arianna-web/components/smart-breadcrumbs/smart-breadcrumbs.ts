@@ -79,7 +79,7 @@ export class SmartBreadcrumbsComponent implements AfterViewInit {
           tippyData.appendChild(liArray[i].cloneNode(true)); // add <li> to tippy data (<ol>)
           liArray[i].children[0].innerText = '…'; // convert to ellipsis
           liArray[i].className = 'n7-breadcrumbs__item-ellipsis'; // set class to list item
-          this.tippyBuilder(liArray[i], tippyData); // append tooltip to ellipsis
+          this.tippyBuilder(liArray[i].children[0], tippyData); // append tooltip to ellipsis
           i += 1;
           // update widths
           ({ parentWidth, childWidth } = this.getWidths(this.bcdiv, this.bcol));
