@@ -344,7 +344,15 @@ export class MrSearchService {
           this.setState(FACETS_REQUEST_STATE_CONTEXT, 'error', error);
         }
       }, facets.provider || null))
-    ).subscribe((response) => {
+    ).subscribe((response: any) => {
+      // clean up
+      const { inputs } = response;
+      Object.keys(inputs).forEach((inputKey) => {
+        inputs[inputKey] = inputs[inputKey].map((item) => ({
+          ...item,
+          payload: item.payload && typeof item.payload === 'string' ? encodeURIComponent(item.payload) : item.payload
+        }));
+      });
       this.setState(FACETS_REQUEST_STATE_CONTEXT, 'success', response);
     });
 

@@ -14,13 +14,7 @@ export default {
     Object.keys(state).forEach((key) => {
       const schema = schemas[key];
       const { multiple, valueType } = schema;
-
-      let value = state[key];
-      if (valueType === 'string') {
-        if (multiple) {
-          value = value.map((k) => k.replace(/,/g, '%2C'));
-        }
-      } // D%27Elia %252C %20 Pasquale
+      const value = state[key];
       if (hasValue(value)) {
         switch (valueType) {
           case 'number':

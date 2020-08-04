@@ -17,7 +17,6 @@ export class MrSearchTagsDS extends DataSource {
           if (state[id]) {
             const values = Array.isArray(state[id]) ? state[id] : [state[id]];
             values
-              // .map((v) => v.replace(/,/g, '%2C'))
               .forEach((value) => {
                 let text = value;
                 if (linkInputs[id]) {
