@@ -8,14 +8,42 @@
    #RESOURCE
 \* ------------------------------------ */
 .mr-resource {
-    /* Page title */
-    &__title {
-        max-width: $page-max-width;
-        margin: 0 auto;
+    background-color: $color-background-light;
+
+    /* Top section: breadcrumbs, title, tabs */
+    &__top {
+        /* Breadcrumbs */
+        .mr-resource__breadcrumbs {
+            background-color: $color-background-base;
+            border-bottom: 1px solid $color-border-light;
+            box-shadow: 0 3px 5px rgba(0,0,0,.03);
+        }
+
+        .n7-breadcrumbs {
+            max-width: $page-max-width;
+            margin: 0 auto;
+            background-color: transparent;      
+        }
+
+        /* Page title */
+        .mr-resource__title {
+            max-width: $page-max-width;
+            margin: 0 auto;
+
+            .n7-inner-title__title {
+                font-family: $font-family-main;
+                font-weight: $font-weight-bold;
+            }
+        }
     }
 
+    /* Content secttion */
     &__content {
-        border: 3px solid tomato;
+        box-sizing: border-box;
+        max-width: $page-max-width;
+        margin: 0 auto;
+        background-color: $color-background-base;
+        padding: $space*6 $space*10;
     }
 }
 
