@@ -16,20 +16,21 @@ export class MrSearchTagsDS extends DataSource {
         .forEach(({ id }) => {
           if (state[id]) {
             const values = Array.isArray(state[id]) ? state[id] : [state[id]];
-            values.forEach((value) => {
-              let text = value;
-              if (linkInputs[id]) {
-                text = linkInputs[id].find(({ payload }) => payload === value).text;
-              }
-              tags.push({
-                text,
-                icon: 'n7-icon-close',
-                payload: {
-                  id,
-                  value
+            values
+              .forEach((value) => {
+                let text = value;
+                if (linkInputs[id]) {
+                  text = linkInputs[id].find(({ payload }) => payload === value)?.text;
                 }
+                tags.push({
+                  text,
+                  icon: 'n7-icon-close',
+                  payload: {
+                    id,
+                    value
+                  }
+                });
               });
-            });
           }
         });
     });
