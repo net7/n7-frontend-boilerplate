@@ -31,7 +31,7 @@
 <ng-template #blocks
              let-list>
   <section *ngFor="let section of list"
-           class="{{ 'mr-resource__' + section.type }}">
+           class="{{ 'mr-resource__section mr-resource__' + section.type }}">
     <ng-container [ngSwitch]="section.type">
       <!-- TABS -->
       <!-- TABS -->
@@ -59,6 +59,7 @@
 
       <!-- METADATA VIEWER -->
       <ng-container *ngSwitchCase="'metadata'">
+        <h3 class="mr-resource__section-title mr-resource__metadata">Metadati</h3>
         <mr-read-more [data]="{ limit: 130 }">
           <n7-metadata-viewer [data]="lb.widgets[section.id].ds.out$ | async"
                               [emit]="lb.widgets[section.id].emit">
