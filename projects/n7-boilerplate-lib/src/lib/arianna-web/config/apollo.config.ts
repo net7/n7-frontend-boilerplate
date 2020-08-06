@@ -288,33 +288,33 @@ export default {
                 }
             }
             relatedItems {
-                thumbnail
-                item {
-                  label
-                  id
-                  fields {
-                    ...
-                    on KeyValueField {
-                      key
-                      value
-                    }
-                    ... on KeyValueFieldGroup {
-                      label
-                      fields {
-                        ...
-                        on KeyValueField {
-                          key
-                          value
-                        }
+              thumbnail
+              item {
+                label
+                id
+                fields {
+                  ...
+                  on KeyValueField {
+                    key
+                    value
+                  }
+                  ... on KeyValueFieldGroup {
+                    label
+                    fields {
+                      ...
+                      on KeyValueField {
+                        key
+                        value
                       }
                     }
                   }
-                  relatedTypesOfEntity {
-                    type
-                    count
-                  }
+                }
+                relatedTypesOfEntity {
+                  type
+                  count
                 }
               }
+            }
             breadcrumbs {
               label
               link
@@ -350,6 +350,10 @@ export default {
                 typeOfEntity
                 relation
               }
+            }
+            breadcrumbs {
+              label
+              link
             }
           }
         }
