@@ -59,10 +59,20 @@
 
         /* Metadata */
         .mr-resource__metadata {
-            display: flex;
             padding: $space*6 0;
             margin: 0 $space*10;
             border-bottom: 2px solid $color-border-normal;
+
+            .mr-resource__metadata-content {
+                display: flex;
+            }
+
+            .n7-metadata-viewer__group:last-child,
+            .n7-metadata-viewer__item:last-child {
+                margin-bottom:  0;
+            }
+
+            /* With title */
         }
     }
 }
