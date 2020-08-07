@@ -1,6 +1,7 @@
 import { EventHandler } from '@n7-frontend/core';
 import { Subject } from 'rxjs';
 import { isEmpty } from 'lodash';
+import { takeUntil } from 'rxjs/operators';
 import { MrSearchLayoutDS } from './search-layout.ds';
 import {
   MrSearchService,
@@ -83,15 +84,21 @@ export class MrSearchLayoutEH extends EventHandler {
 
   initStateListener() {
     // inputs listener
-    this.searchService.getState$(INPUT_STATE_CONTEXT).subscribe(({ state }) => {
+    this.searchService.getState$(INPUT_STATE_CONTEXT).pipe(
+      takeUntil(this.destroyed$)
+    ).subscribe(({ state }) => {
       this.searchState = state;
     });
-    this.searchService.getState$(INPUT_STATE_CONTEXT, 'query').subscribe((val) => {
+    this.searchService.getState$(INPUT_STATE_CONTEXT, 'query').pipe(
+      takeUntil(this.destroyed$)
+    ).subscribe((val) => {
       this.emitOuter('inputquerychange', val);
 
       this.searchService.setState(INPUT_STATE_CONTEXT, 'sort', val ? '_score' : 'sort_ASC');
     });
-    this.searchService.getState$(FACETS_REQUEST_STATE_CONTEXT, 'success').subscribe((response) => {
+    this.searchService.getState$(FACETS_REQUEST_STATE_CONTEXT, 'success').pipe(
+      takeUntil(this.destroyed$)
+    ).subscribe((response) => {
       this.linksResponse = response;
       this.dataSource.updateActiveFilters(this.searchState, this.linksResponse);
 
@@ -109,7 +116,9 @@ export class MrSearchLayoutEH extends EventHandler {
       }
     });
 
-    this.searchService.getState$(RESULTS_REQUEST_STATE_CONTEXT, 'loading').subscribe(() => {
+    this.searchService.getState$(RESULTS_REQUEST_STATE_CONTEXT, 'loading').pipe(
+      takeUntil(this.destroyed$)
+    ).subscribe(() => {
       this.layoutState.set('results', LayoutState.LOADING);
     });
 
