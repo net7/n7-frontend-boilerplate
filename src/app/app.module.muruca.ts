@@ -5,7 +5,7 @@ import { filter } from 'rxjs/operators';
 import {
   N7BoilerplateCommonModule,
   N7BoilerplateMurucaModule,
-  JsonConfigService,
+  LocalConfigService,
   MrMenuService,
   MainStateService,
 } from 'n7-boilerplate-lib';
@@ -14,8 +14,8 @@ import layoutsConfig from './config/layouts';
 import { APP_ROUTES } from './app.routes.muruca';
 
 import { AppComponent } from './app.component';
+import configMuruca from './config-muruca';
 
-const JSON_PATH = './assets/app-config.json';
 const MENU_PATH = 'http://unus-sls.netseven.it/get_menu';
 
 @NgModule({
@@ -35,8 +35,10 @@ const MENU_PATH = 'http://unus-sls.netseven.it/get_menu';
   ],
   providers: [{
     provide: APP_INITIALIZER,
-    useFactory: (jsonConfigService: JsonConfigService) => () => jsonConfigService.load(JSON_PATH),
-    deps: [JsonConfigService],
+    useFactory: (
+      localConfigService: LocalConfigService
+    ) => () => localConfigService.load(configMuruca),
+    deps: [LocalConfigService],
     multi: true
   }, {
     provide: APP_INITIALIZER,
