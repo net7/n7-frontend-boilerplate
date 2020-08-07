@@ -1,6 +1,9 @@
+import searchWorksFacetsConfig from './search-works-facets.config';
+
 export default {
   title: 'Opere',
   searchId: 'work',
+  searchConfig: searchWorksFacetsConfig,
   resourcePath: '/work',
   facetsTitle: 'Filtra i risultati',
   totalResultsText: [

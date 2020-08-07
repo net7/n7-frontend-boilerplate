@@ -1,4 +1,4 @@
-import { SearchConfig } from '../../interfaces/search.interface';
+import { MrSearchConfig } from 'n7-boilerplate-lib';
 
 const facets = {
   sections: [{
@@ -188,4 +188,4 @@ const request = {
   delay: 500
 };
 
-export default { request, facets, layoutInputs } as SearchConfig;
+export default { request, facets, layoutInputs } as MrSearchConfig;

@@ -10,47 +10,47 @@ type InputType = 'text' | 'checkbox' | 'select' | 'link';
 
 type ValueType = 'string' | 'number' | 'boolean';
 
-export interface InputSchema {
+export interface MrInputSchema {
   valueType: ValueType;
   multiple?: boolean;
 }
 
-export interface InputHeaderData {
+export interface MrInputHeaderData {
   id: string;
   data: FacetHeaderData;
   delay?: number;
 }
 
-export interface SearchLayoutInput {
+export interface MrSearchLayoutInput {
   id: string;
-  schema: InputSchema;
+  schema: MrInputSchema;
   queryParam?: boolean;
   value?: string | string[] | boolean | null;
 }
 
-export interface SearchFacetsInput {
+export interface MrSearchFacetsInput {
   id: string;
   type: InputType;
   data: InputCheckboxData | InputLinkData | InputSelectData | InputTextData;
-  schema: InputSchema;
+  schema: MrInputSchema;
   queryParam?: boolean;
   delay?: number;
   value?: string | string[] | boolean | null;
 }
 
-export interface SearchFacetsSection {
+export interface MrSearchFacetsSection {
   id: string;
-  header: InputHeaderData;
-  inputs: SearchFacetsInput[];
+  header: MrInputHeaderData;
+  inputs: MrSearchFacetsInput[];
   classes?: string;
 }
 
-export interface SearchFacetsConfig {
-  sections: SearchFacetsSection[];
+export interface MrSearchFacetsConfig {
+  sections: MrSearchFacetsSection[];
   classes?: string;
 }
 
-export interface SearchConfig {
+export interface MrSearchConfig {
   request: {
     results: {
       id: string;
@@ -63,6 +63,6 @@ export interface SearchConfig {
       provider?: string;
     };
   };
-  facets: SearchFacetsConfig;
-  layoutInputs: SearchLayoutInput[];
+  facets: MrSearchFacetsConfig;
+  layoutInputs: MrSearchLayoutInput[];
 }

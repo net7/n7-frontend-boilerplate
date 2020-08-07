@@ -1,4 +1,4 @@
-import { InputSchema } from '../interfaces/search.interface';
+import { MrInputSchema } from '../interfaces/search.interface';
 
 const hasValue = (value) => {
   if (Array.isArray(value)) {
@@ -8,7 +8,7 @@ const hasValue = (value) => {
 };
 
 export default {
-  stateToQueryParams(state, schemas: { [key: string]: InputSchema }) {
+  stateToQueryParams(state, schemas: { [key: string]: MrInputSchema }) {
     const queryParams = {};
 
     Object.keys(state).forEach((key) => {
@@ -33,7 +33,7 @@ export default {
     });
     return queryParams;
   },
-  queryParamsToState(queryParams, schemas: { [key: string]: InputSchema }) {
+  queryParamsToState(queryParams, schemas: { [key: string]: MrInputSchema }) {
     const state = {};
 
     Object.keys(queryParams).forEach((key) => {
