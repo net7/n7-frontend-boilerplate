@@ -19,7 +19,7 @@
         <div class="mr-resource__top">
             <ng-container *ngTemplateOutlet="blocks; context: { $implicit: sections.top }"></ng-container>
         </div>
-        <div class="mr-resource__content">
+        <div class="mr-resource__content mr-side-margin">
           <ng-container *ngTemplateOutlet="blocks; context: { $implicit: sections.content }"></ng-container>
         </div>
       </ng-container>
@@ -45,9 +45,11 @@
 
       <!-- INNER TITLE -->
     <ng-container *ngSwitchCase="'title'">
-        <n7-inner-title [data]="lb.widgets[section.id].ds.out$ | async"
-                        [emit]="lb.widgets[section.id].emit">
-        </n7-inner-title>
+        <div class="mr-resource mr-side-margin">
+            <n7-inner-title [data]="lb.widgets[section.id].ds.out$ | async"
+                            [emit]="lb.widgets[section.id].emit">
+            </n7-inner-title>
+        </div>
     </ng-container>
 
       <!-- IMAGE VIEWER -->

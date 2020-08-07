@@ -1,0 +1,22 @@
+/**
+ * UTILITIES
+ *
+ * Various utilities classes used to fix minor and common problems.
+ */
+
+/* ------------------------------------ *\
+    UTILITIES
+\* ------------------------------------ */
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: $page-max-width + $space*4) {
+
+    /* This adds a side padding to elements when the page is under the pag max width */
+    .mr-side-margin {
+        margin-left: $space*2;
+        margin-right: $space*2;
+    }
+
+}
