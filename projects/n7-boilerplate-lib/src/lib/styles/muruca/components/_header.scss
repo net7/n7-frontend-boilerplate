@@ -32,15 +32,14 @@
     }
     
     &__nav-link {
+        padding: 0 $space;
         &:focus {
         }
     }
 
-    &__nav-icon {
-    }
-
     &__nav-label {
         font-family: $font-family-headings;
+        font-size: $font-size-s;
         font-weight: $font-weight-bold;
         text-transform: uppercase;
     }
