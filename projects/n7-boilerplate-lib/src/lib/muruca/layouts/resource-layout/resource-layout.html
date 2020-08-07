@@ -16,7 +16,9 @@
     <ng-container *ngSwitchCase="'SUCCESS'">
       <ng-container *ngIf="lb.dataSource.pageConfig.sections as sections">
         <!-- Pass the list of blocks to render to the block template -->
-        <ng-container *ngTemplateOutlet="blocks; context: { $implicit: sections.top }"></ng-container>
+        <div class="mr-resource__top">
+            <ng-container *ngTemplateOutlet="blocks; context: { $implicit: sections.top }"></ng-container>
+        </div>
         <div class="mr-resource__content">
           <ng-container *ngTemplateOutlet="blocks; context: { $implicit: sections.content }"></ng-container>
         </div>
@@ -26,13 +28,10 @@
   </ng-container>
 </div>
 
-
-
-
 <ng-template #blocks
              let-list>
   <section *ngFor="let section of list"
-           class="{{ 'mr-layout__' + section.type }}">
+           class="{{ 'mr-resource__section mr-resource__' + section.type }}">
     <ng-container [ngSwitch]="section.type">
       <!-- TABS -->
       <!-- TABS -->
@@ -45,13 +44,11 @@
       </ng-container>
 
       <!-- INNER TITLE -->
-      <div class="mr-resource__title">
-        <ng-container *ngSwitchCase="'title'">
-          <n7-inner-title [data]="lb.widgets[section.id].ds.out$ | async"
-                          [emit]="lb.widgets[section.id].emit">
-          </n7-inner-title>
-        </ng-container>
-      </div>
+    <ng-container *ngSwitchCase="'title'">
+        <n7-inner-title [data]="lb.widgets[section.id].ds.out$ | async"
+                        [emit]="lb.widgets[section.id].emit">
+        </n7-inner-title>
+    </ng-container>
 
       <!-- IMAGE VIEWER -->
       <ng-container *ngSwitchCase="'viewer'">
@@ -62,6 +59,7 @@
 
       <!-- METADATA VIEWER -->
       <ng-container *ngSwitchCase="'metadata'">
+        <h3 class="mr-resource__section-title mr-resource__metadata-title">Metadati</h3>
         <mr-read-more [data]="{ limit: 130 }">
           <n7-metadata-viewer [data]="lb.widgets[section.id].ds.out$ | async"
                               [emit]="lb.widgets[section.id].emit">

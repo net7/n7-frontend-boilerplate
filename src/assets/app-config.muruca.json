@@ -28,7 +28,7 @@
   },
   "header": {
     "logo": {
-      "image": "https://i.imgur.com/kTND3Do.png",
+      "image": "/assets/logo-muruca.png",
       "anchor": {
         "href": "/"
       }
@@ -357,8 +357,7 @@
     "tabs": "work",
     "type": "work",
     "sections": {
-      "top": [],
-      "content": [
+      "top": [
         {
           "id": "breadcrumbs",
           "type": "breadcrumbs"
@@ -366,7 +365,9 @@
         {
           "id": "header",
           "type": "title"
-        },
+        }
+      ],
+      "content": [
         {
           "id": "tab-bar",
           "type": "tabs"
@@ -491,13 +492,17 @@
     "title": "Mappa",
     "type": "map",
     "sections": {
-      "top": [],
-      "content": [
+      "top": [
+        {
+          "id": "breadcrumbs",
+          "type": "breadcrumbs"
+        },
         {
           "id": "header",
-          "type": "title",
-          "grid": null
-        },
+          "type": "title"
+        }
+      ],
+      "content": [
         {
           "id": "metadata-description",
           "type": "metadata",
