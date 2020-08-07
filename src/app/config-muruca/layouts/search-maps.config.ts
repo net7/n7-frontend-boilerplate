@@ -1,6 +1,9 @@
+import searchMapsFacetsConfig from './search-maps-facets.config';
+
 export default {
   title: 'Mappe',
   searchId: 'map',
+  searchConfig: searchMapsFacetsConfig,
   facetsTitle: 'Filtra i risultati',
   resourcePath: '/map',
   totalResultsText: [

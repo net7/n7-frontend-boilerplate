@@ -8,7 +8,6 @@ import { ConfigurationService } from '../../../common/services/configuration.ser
 import { MainStateService } from '../../../common/services/main-state.service';
 import { MrSearchService } from '../../services/search.service';
 import { MrLayoutStateService } from '../../services/layout-state.service';
-import searchConfig from './search-config.mock';
 
 @Component({
   selector: 'mr-search-layout',
@@ -48,7 +47,7 @@ export class MrSearchLayoutComponent extends AbstractLayout implements OnInit, O
   ngOnInit() {
     this.activatedRoute.data.subscribe((data) => {
       this.configId = data.configId;
-      const { searchId } = this.configuration.get(this.configId);
+      const { searchId, searchConfig } = this.configuration.get(this.configId);
       this.searchService.init(searchId, searchConfig);
       // add layout states
       this.layoutState.add(['results']);

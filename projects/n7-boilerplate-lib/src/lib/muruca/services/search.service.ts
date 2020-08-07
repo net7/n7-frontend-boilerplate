@@ -12,7 +12,7 @@ import {
 import { isEmpty, xor } from 'lodash';
 import { CommunicationService } from '../../common/services/communication.service';
 import searchHelper from '../helpers/search-helper';
-import { InputSchema } from '../interfaces/search.interface';
+import { MrInputSchema } from '../interfaces/search.interface';
 
 export const INPUT_STATE_CONTEXT = 'input';
 export const FACET_STATE_CONTEXT = 'facet';
@@ -29,7 +29,7 @@ export class MrSearchService {
   private queryParamKeys: string[] = [];
 
   private inputSchemas: {
-    [key: string]: InputSchema;
+    [key: string]: MrInputSchema;
   } = {};
 
   private contextState: {
