@@ -5,12 +5,9 @@ import * as EH from '../../event-handlers';
 
 export const MrStaticLayoutConfig = {
   layoutId: 'mr-static-layout',
-  widgets: [
-    // {
-    //   id: 'title',          ← Insert a component here.
-    //   hasStaticData: true,  ← Renders the widget before this.one().update is called.
-    // }
-  ],
+  widgets: [{
+    id: 'mr-static-metadata'
+  }],
   layoutDS: MrStaticLayoutDS,
   layoutEH: MrStaticLayoutEH,
   widgetsDataSources: DS,
