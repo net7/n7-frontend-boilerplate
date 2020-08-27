@@ -16,7 +16,7 @@ export default {
       config: {
         home: 'get_home',
         menu: 'get_menu',
-        'wp-page': 'data/api/',
+        static: 'get_static/',
         search: 'search/results',
         facets: 'search/facets',
         resource: 'get_resource'
