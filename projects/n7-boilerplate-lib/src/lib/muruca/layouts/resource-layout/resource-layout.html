@@ -99,24 +99,7 @@
 
             <!-- BREADCRUMBS -->
             <ng-container *ngSwitchCase="'breadcrumbs'">
-                <n7-breadcrumbs [data]="{
-                items: [{
-                    label: 'Home',
-                    anchor: { href: '/home' }
-                }, {
-                    label: 'Opere',
-                    anchor: { href: '/opere' }
-                }, {
-                    label: 'Opere giovanili',
-                    anchor: { href: '/opere-giovanili' }
-                }, {
-                    label: 'Canzoniere',
-                    anchor: { href: '/canzoniere' }
-                }, {
-                    label: 'Canzoniere (Rerum vulgarium fragmenta)',
-                    anchor: { href: '/canzoniere/rerum-vulgarium-fragmenta' }
-                }]
-                }">
+                <n7-breadcrumbs [data]="lb.widgets[section.id].ds.out$ | async">
                 </n7-breadcrumbs>
             </ng-container>
         </ng-container>
