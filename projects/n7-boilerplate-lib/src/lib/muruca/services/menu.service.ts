@@ -15,11 +15,20 @@ export class MrMenuService {
     private configuration: ConfigurationService,
   ) {}
 
-  load(path): Promise<any> {
-    return this.http.get(path).pipe(
-      catchError(() => of(null)),
-      tap((response) => this._handleResponse(response)),
-    ).toPromise();
+  load(): Promise<any> {
+    const { defaultProvider, providers } = this.configuration.get('communication');
+    const currentProvider = providers[defaultProvider] || {};
+    const { baseUrl } = currentProvider;
+    const menuPath = currentProvider?.config?.menu;
+
+    if (baseUrl && menuPath) {
+      const url = baseUrl + menuPath;
+      return this.http.get(url).pipe(
+        catchError(() => of(null)),
+        tap((response) => this._handleResponse(response)),
+      ).toPromise();
+    }
+    return of(null).toPromise();
   }
 
   private _handleResponse(response) {
