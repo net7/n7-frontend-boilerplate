@@ -17,6 +17,7 @@ import {
   MrItemPreviewDS,
   MrMetadataDS,
   MrTextViewerDS,
+  MrResourceTabsDS,
 } from '../../data-sources';
 
 const DATASOURCE_MAP = {
@@ -28,7 +29,7 @@ const DATASOURCE_MAP = {
   text: MrTextViewerDS,
   title: MrInnerTitleDS,
   viewer: MrImageViewerDS,
-  tabs: (d) => d
+  tabs: MrResourceTabsDS
 };
 
 const EVENTHANDLER_MAP = {
