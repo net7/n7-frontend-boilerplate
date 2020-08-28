@@ -7,9 +7,7 @@ import { ConfigurationService } from '../../common/services/configuration.servic
 @Injectable({
   providedIn: 'root',
 })
-export class MrMenuService {
-  private dynamicPaths: string[] = [];
-
+export class MrFooterService {
   constructor(
     private http: HttpClient,
     private configuration: ConfigurationService,
@@ -19,7 +17,7 @@ export class MrMenuService {
     const { defaultProvider, providers } = this.configuration.get('communication');
     const currentProvider = providers[defaultProvider] || {};
     const { baseUrl } = currentProvider;
-    const menuPath = currentProvider?.config?.menu;
+    const menuPath = currentProvider?.config?.footer;
 
     if (baseUrl && menuPath) {
       const url = baseUrl + menuPath;
@@ -33,24 +31,7 @@ export class MrMenuService {
 
   private _handleResponse(response) {
     if (response) {
-      const headerConfig = this.configuration.get('header');
-      headerConfig.nav.items = response.map(({ label, slug, isStatic }) => {
-        const href = `/${slug}`;
-        // dynamic path control
-        if (!isStatic) {
-          this.dynamicPaths.push(href);
-        }
-        return {
-          text: label,
-          anchor: { href },
-          _meta: {
-            id: href
-          }
-        };
-      });
-      this.configuration.set('header', headerConfig);
+      this.configuration.set('footer', { columns: response });
     }
   }
-
-  public isDynamicPath = (path: string) => this.dynamicPaths.includes(path);
 }

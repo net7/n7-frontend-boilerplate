@@ -13,8 +13,11 @@
 
         <!-- success -->
         <ng-container *ngSwitchCase="'SUCCESS'">
-            <h1 class="mr-static__title mr-generated-title-WP">{{lb.dataSource.html.title}}</h1>
-            <div class="mr-static__content mr-wp-content" [innerHTML]="lb.dataSource.html.body | keepHtml"></div>
+            <h1 class="mr-static__title mr-generated-title-WP">{{lb.dataSource.title}}</h1>
+            <n7-metadata-viewer 
+            [data]="lb.widgets['mr-static-metadata'].ds.out$ | async">
+            </n7-metadata-viewer>
+            <div class="mr-static__content mr-wp-content" [innerHTML]="lb.dataSource.content | keepHtml"></div>
         </ng-container>
     
     </ng-container>

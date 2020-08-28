@@ -15,3 +15,5 @@ export * from './search/search-page-title.ds';
 export * from './search/search-results-title.ds';
 export * from './search/search-results.ds';
 export * from './search/search-tags.ds';
+// static layout
+export * from './static-metadata.ds';

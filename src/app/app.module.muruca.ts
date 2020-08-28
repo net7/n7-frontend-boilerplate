@@ -7,6 +7,7 @@ import {
   N7BoilerplateMurucaModule,
   LocalConfigService,
   MrMenuService,
+  MrFooterService,
   MainStateService,
 } from 'n7-boilerplate-lib';
 import globalConfig from './config/global';
@@ -15,8 +16,6 @@ import { APP_ROUTES } from './app.routes.muruca';
 
 import { AppComponent } from './app.component';
 import configMuruca from './config-muruca';
-
-const MENU_PATH = 'http://unus-sls.netseven.it/get_menu';
 
 @NgModule({
   declarations: [
@@ -42,8 +41,13 @@ const MENU_PATH = 'http://unus-sls.netseven.it/get_menu';
     multi: true
   }, {
     provide: APP_INITIALIZER,
-    useFactory: (menuService: MrMenuService) => () => menuService.load(MENU_PATH),
+    useFactory: (menuService: MrMenuService) => () => menuService.load(),
     deps: [MrMenuService],
+    multi: true
+  }, {
+    provide: APP_INITIALIZER,
+    useFactory: (footerService: MrFooterService) => () => footerService.load(),
+    deps: [MrFooterService],
     multi: true
   }],
   bootstrap: [AppComponent]

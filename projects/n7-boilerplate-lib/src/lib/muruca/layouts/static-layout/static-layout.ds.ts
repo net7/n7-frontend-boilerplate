@@ -11,7 +11,9 @@ export class MrStaticLayoutDS extends LayoutDataSource {
 
   private mainState: MainStateService;
 
-  public html: any;
+  public content: string | null;
+
+  public title: string | null;
 
   onInit(payload) {
     this.communication = payload.communication;
@@ -19,30 +21,23 @@ export class MrStaticLayoutDS extends LayoutDataSource {
     this.mainState = payload.mainState;
   }
 
-  /**
-   * Make a request to serverless based on the url slug
-   * Example:
-   * - base-url/static/sample-page
-   * - base-url/static/another-page
-   */
   pageRequest$(slug: string, onError: (err: any) => void): Observable<any> {
-    return this.communication.request$('wp-page', {
+    return this.communication.request$('static', {
       onError,
       urlParams: slug,
     });
   }
 
   handleResponse(response: any) {
-    const { title, body } = response;
-    this.setHtml(title, body);
-    this.updateHeadTitle(title);
+    this.setHtml(response);
+    this.updateHeadTitle(response.title);
   }
 
-  setHtml(title, body) {
-    this.html = {
-      title,
-      body,
-    };
+  setHtml(response) {
+    const { content, title } = response;
+    this.title = title;
+    this.content = content;
+    this.one('mr-static-metadata').update(response);
   }
 
   updateHeadTitle(pageTitle: string) {

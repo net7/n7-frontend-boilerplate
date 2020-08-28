@@ -13,13 +13,15 @@ export default {
     'rest-local': {
       type: 'rest',
       baseUrl: 'http://unus-sls.netseven.it/',
+      // baseUrl: 'http://localhost:3125/',
       config: {
         home: 'get_home',
         menu: 'get_menu',
-        'wp-page': 'data/api/',
+        static: 'get_static/',
         search: 'search/results',
         facets: 'search/facets',
-        resource: 'get_resource'
+        resource: 'get_resource',
+        footer: 'get_footer'
       }
     }
   }
