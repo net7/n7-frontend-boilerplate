@@ -21,6 +21,9 @@ export class MrResourceLayoutDS extends LayoutDataSource {
 
   public tab: string;
 
+  /** Stores "max height" for the read-more-wrapper from configuration */
+  public maxHeight: number;
+
   onInit(payload) {
     this.configuration = payload.configuration;
     this.communication = payload.communication;
@@ -28,6 +31,7 @@ export class MrResourceLayoutDS extends LayoutDataSource {
     this.configId = payload.configId;
     this.pageConfig = this.configuration.get(this.configId);
     this.tabConfig = this.configuration.get('tabs')[this.pageConfig.tabs];
+    this.maxHeight = this.configuration.get(this.configId).maxheight;
   }
 
   /** Request the configured widgets data */
