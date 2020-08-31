@@ -21,6 +21,8 @@ export class MrResourceLayoutDS extends LayoutDataSource {
 
   public tab: string;
 
+  public slug: string;
+
   onInit(payload) {
     this.configuration = payload.configuration;
     this.communication = payload.communication;
@@ -65,6 +67,18 @@ export class MrResourceLayoutDS extends LayoutDataSource {
         this.one(id).update(responseSection);
       }
     });
+
+    // update tabs
+    if (this.tabConfig) {
+      const tabSection = sections.find(({ type }) => type === 'tabs');
+      this.one(tabSection.id).updateOptions({
+        id: this.id,
+        root: this.pageConfig.tabs,
+        slug: this.slug,
+        currentTab: this.tab
+      });
+      this.one(tabSection.id).update(this.tabConfig);
+    }
   }
 
   private updateHeadTitle({ title: resourceTitle }) {

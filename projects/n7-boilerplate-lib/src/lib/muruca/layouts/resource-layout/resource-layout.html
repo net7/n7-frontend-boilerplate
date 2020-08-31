@@ -33,9 +33,9 @@
 
             <!-- TABS -->
             <ng-container *ngSwitchCase="'tabs'">
-                <ng-container *ngFor="let tab of lb.dataSource.tabConfig">
-                    <n7-anchor-wrapper [data]="{ href: '/opera' + '/' + lb.dataSource.slug + '/' + tab.id }">
-                        <span class="n7-btn n7-btn-light">{{tab.label}}</span>
+                <ng-container *ngFor="let tab of lb.widgets[section.id].ds.out$ | async">
+                    <n7-anchor-wrapper [data]="tab.anchor" [classes]="tab.classes">
+                        <span class="n7-btn n7-btn-light">{{ tab.label }}</span>
                     </n7-anchor-wrapper>
                 </ng-container>
             </ng-container>

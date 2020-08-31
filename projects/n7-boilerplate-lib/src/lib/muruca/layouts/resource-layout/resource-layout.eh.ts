@@ -18,9 +18,11 @@ export class MrResourceLayoutEH extends EventHandler {
       switch (type) {
         case 'mr-resource-layout.init': {
           this.route = payload.route;
-          const { slug, tab } = this.route.snapshot.params;
-          this.dataSource.tab = tab;
+          const { slug, id } = this.route.snapshot.params;
+          const { url } = this.route.snapshot;
+          this.dataSource.tab = url[url.length - 1].path;
           this.dataSource.slug = slug;
+          this.dataSource.id = id;
           this.layoutState = payload.layoutState;
           this.dataSource.onInit(payload);
           this.listenRoute();

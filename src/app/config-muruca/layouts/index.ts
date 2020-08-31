@@ -11,6 +11,7 @@ import resourceWorkSandboxConfig from './resource-work-sandbox.config';
 import resourceMapConfig from './resource-map.config';
 import resourceToponymConfig from './resource-toponym.config';
 import resourceKeywordConfig from './resource-keyword.config';
+import resourceWorkConfig from './resource-work.config';
 
 export default {
   tabs: tabsConfig,
@@ -18,6 +19,7 @@ export default {
   'home-pro': homeProConfig,
   'search-works': searchWorksConfig,
   'search-maps': searchMapsConfig,
+  'resource-work': resourceWorkConfig,
   'resource-work-facsimile': resourceWorkFacsimileConfig,
   'resource-work-metadati': resourceWorkMetadatiConfig,
   'resource-work-trascrizione': resourceWorkTrascrizioneConfig,
