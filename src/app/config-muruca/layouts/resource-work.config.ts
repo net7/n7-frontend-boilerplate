@@ -17,17 +17,20 @@ export default {
       },
       {
         id: 'metadata',
-        type: 'metadata'
+        type: 'metadata',
+        title: 'Metadati'
       },
       {
         id: 'metadata-size',
         type: 'metadata',
-        grid: null
+        grid: null,
+        title: 'Dimensioni'
       },
       {
         id: 'collection-continents',
         type: 'collection',
-        grid: 3
+        grid: 3,
+        title: 'Collezione di appartenenza'
       }
     ]
   }
