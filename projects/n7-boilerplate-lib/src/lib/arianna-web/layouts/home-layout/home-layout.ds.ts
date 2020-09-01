@@ -2,9 +2,10 @@ import { LayoutDataSource } from '@n7-frontend/core/dist/layout-data-source';
 import { Subject, forkJoin, fromEvent } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import helpers from '../../../common/helpers';
+import { CommunicationProvider } from '../../../../lib/common/services/communication-providers/communication-provider.interface';
 
 export class AwHomeLayoutDS extends LayoutDataSource {
-  private communication: any;
+  private communication: CommunicationProvider;
 
   private mainState: any;
 

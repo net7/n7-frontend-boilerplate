@@ -11,6 +11,7 @@ import helpers from '../../../common/helpers';
 import { AwSearchService } from '../../search/aw-search.service';
 import { AwSearchModel } from '../../search/aw-search.model';
 import entityLinksHelper from '../../search/entity-links.helper';
+import { CommunicationProvider } from '../../../../lib/common/services/communication-providers/communication-provider.interface';
 
 export class AwSearchLayoutDS extends LayoutDataSource {
   public layoutId = 'aw-search-layout';
@@ -27,7 +28,7 @@ export class AwSearchLayoutDS extends LayoutDataSource {
 
   private destroyed$: Subject<any> = new Subject();
 
-  private communication: any;
+  private communication: CommunicationProvider;
 
   private configuration: any;
 
@@ -283,7 +284,6 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     entityLinksHelper.updateParamsOffset(params.searchParameters);
     // initial loader
     entityLinksHelper.addInitialLoader(this);
-
     const resultsReq$ = this.getResultsReq$(params);
     const facetsReq$ = this.getFacetsReq$(params);
     return forkJoin(resultsReq$, facetsReq$);

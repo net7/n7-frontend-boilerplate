@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CommunicationProvider } from './communication-provider.interface';
-
+import { Observable } from 'rxjs';
+import { CommunicationProvider, ProviderConfig, RestOptions } from './communication-provider.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -9,11 +9,15 @@ import { CommunicationProvider } from './communication-provider.interface';
 export class RestProvider implements CommunicationProvider {
   constructor(
     private http: HttpClient,
-  ) {}
+  ) { }
 
-  request$(providerConfig, requestId, options: any = {}) {
+  request$(
+    requestId: string,
+    providerConfig: ProviderConfig,
+    options: RestOptions,
+  ): Observable<any> {
     const {
-      params, httpOptions, urlParams = '',
+      params, httpOptions, urlParams = ''
     } = options;
     let { method } = options;
     let point;

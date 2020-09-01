@@ -6,6 +6,7 @@ import { takeUntil } from 'rxjs/operators';
 import { get as _get } from 'lodash';
 import helpers from '../../../common/helpers';
 import metadataHelper from '../../helpers/metadata.helper';
+import { CommunicationProvider } from '../../../../lib/common/services/communication-providers/communication-provider.interface';
 
 export class AwSchedaLayoutDS extends LayoutDataSource {
   static tree: any = null;
@@ -14,7 +15,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
   private stickyControlTrigger$: Subject<any> = new Subject();
 
-  private communication: any;
+  private communication: CommunicationProvider;
 
   protected configuration: any;
 
