@@ -1,4 +1,4 @@
-import { LayoutDataSource } from '@n7-frontend/core/dist/layout-data-source';
+import { LayoutDataSource, _t } from '@n7-frontend/core';
 import { Observable } from 'rxjs';
 import { ConfigurationService } from '../../../common/services/configuration.service';
 import { CommunicationService } from '../../../common/services/communication.service';
@@ -22,6 +22,11 @@ export class MrResourceLayoutDS extends LayoutDataSource {
   public tab: string;
 
   public slug: string;
+
+  public readMoreConfig = {
+    limit: 130,
+    label: _t('readmore#label')
+  }
 
   onInit(payload) {
     this.configuration = payload.configuration;

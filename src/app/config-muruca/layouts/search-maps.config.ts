@@ -6,10 +6,7 @@ export default {
   searchConfig: searchMapsFacetsConfig,
   facetsTitle: 'Filtra i risultati',
   resourcePath: '/map',
-  totalResultsText: [
-    'Mappe',
-    'Mappa'
-  ],
+  totalResultsText: 'search#maps_total',
   filtersTitle: 'Filtri attivi:',
   sort: {
     label: 'Ordine',

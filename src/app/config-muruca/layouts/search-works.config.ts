@@ -6,10 +6,7 @@ export default {
   searchConfig: searchWorksFacetsConfig,
   resourcePath: '/work',
   facetsTitle: 'Filtra i risultati',
-  totalResultsText: [
-    'Opere',
-    'Opera'
-  ],
+  totalResultsText: 'search#works_total',
   filtersTitle: 'Filtri attivi:',
   sort: {
     label: 'Ordine',
