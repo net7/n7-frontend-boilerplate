@@ -1,4 +1,4 @@
-import { LayoutDataSource } from '@n7-frontend/core';
+import { LayoutDataSource, _t } from '@n7-frontend/core';
 import { ConfigurationService } from '../../../common/services/configuration.service';
 import { MainStateService } from '../../../common/services/main-state.service';
 import { MrSearchService } from '../../services/search.service';
@@ -33,6 +33,9 @@ export class MrSearchLayoutDS extends LayoutDataSource {
 
     // update head title
     this.updateHeadTitle();
+
+    // update translations
+    this.addTranslations(this.pageConfig);
   }
 
   handleResponse(response) {
@@ -74,5 +77,29 @@ export class MrSearchLayoutDS extends LayoutDataSource {
     const appName = this.configuration.get('name');
     const pageTitle = this.pageConfig.title;
     this.mainState.update('headTitle', [appName, pageTitle].join(' > '));
+  }
+
+  private addTranslations(config) {
+    if (config.facetsTitle) {
+      config.facetsTitle = _t(config.facetsTitle);
+    }
+    if (config.filtersTitle) {
+      config.filtersTitle = _t(config.filtersTitle);
+    }
+    if (config?.sort?.label) {
+      config.sort.label = _t(config.sort.label);
+      config.sort.options = config.sort.options.map((option) => ({
+        ...option,
+        label: _t(option.label)
+      }));
+    }
+    ['text', 'button'].forEach((key) => {
+      if (config.fallback) {
+        config.fallback[key] = _t(config.fallback[key]);
+      }
+      if (config.ko) {
+        config.ko[key] = _t(config.ko[key]);
+      }
+    });
   }
 }

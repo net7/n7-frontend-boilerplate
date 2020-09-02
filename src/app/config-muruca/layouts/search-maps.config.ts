@@ -4,27 +4,27 @@ export default {
   title: 'Mappe',
   searchId: 'map',
   searchConfig: searchMapsFacetsConfig,
-  facetsTitle: 'Filtra i risultati',
+  facetsTitle: 'search#facets_title',
   resourcePath: '/map',
   totalResultsText: 'search#maps_total',
-  filtersTitle: 'Filtri attivi:',
+  filtersTitle: 'search#filters_title',
   sort: {
-    label: 'Ordine',
+    label: 'search#sort_title',
     options: [
       {
         value: '_score',
-        label: 'Ordine per pertinenza',
+        label: 'search#sort_score',
         selected: false,
         disabled: true
       },
       {
         value: 'sort_ASC',
-        label: 'Ordine alfabetico (A→Z)',
+        label: 'search#sort_asc',
         selected: true
       },
       {
         value: 'sort_DESC',
-        label: 'Ordine alfabetico (Z→A)',
+        label: 'search#sort_desc',
         selected: false
       }
     ]
@@ -41,11 +41,11 @@ export default {
     classes: 'is-vertical'
   },
   fallback: {
-    text: 'La tua ricerca non ha dato risultati. Prova a cambiare i parametri oppure a resettare la ricerca cliccando sul pulsante sottostante.',
-    button: 'Resetta la ricerca'
+    text: 'search#fallback_text',
+    button: 'search#fallback_button'
   },
   ko: {
-    text: 'Oops, abbiamo riscontrato un errore nella ricerca. Prova a cambiare i parametri oppure a resettare la ricerca cliccando sul pulsante sottostante.',
-    button: 'Resetta la ricerca'
+    text: 'search#ko_text',
+    button: 'search#ko_button'
   }
 };
