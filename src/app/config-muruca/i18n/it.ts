@@ -31,4 +31,9 @@ export default {
   'resource#metadata': 'Metadati',
   'resource#metadata_size': 'Dimensioni',
   'resource#collection_continents': 'Collezione di appartenenza',
+  'tabs#work_facsimile': 'Facsimile',
+  'tabs#work_metadati': 'Metadati',
+  'tabs#work_trascrizione': 'Trascrizione',
+  'tabs#work_bibliografia': 'Bibliografia',
+  'tabs#work_sandbox': 'Sandbox',
 };

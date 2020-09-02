@@ -2,23 +2,23 @@ export default {
   work: [
     {
       id: 'facsimile',
-      label: 'Facsimile'
+      label: 'tabs#work_facsimile'
     },
     {
       id: 'metadati',
-      label: 'Metadati'
+      label: 'tabs#work_metadati'
     },
     {
       id: 'trascrizione',
-      label: 'Trascrizione'
+      label: 'tabs#work_trascrizione'
     },
     {
       id: 'bibliografia',
-      label: 'Bibliografia'
+      label: 'tabs#work_bibliografia'
     },
     {
       id: 'sandbox',
-      label: 'Sandbox'
+      label: 'tabs#work_sandbox'
     }
   ]
 };
