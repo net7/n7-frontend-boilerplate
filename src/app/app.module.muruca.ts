@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { RouterModule, Router, NavigationStart } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { translate } from '@n7-frontend/core';
 import {
   N7BoilerplateCommonModule,
   N7BoilerplateMurucaModule,
@@ -16,6 +17,13 @@ import { APP_ROUTES } from './app.routes.muruca';
 
 import { AppComponent } from './app.component';
 import configMuruca from './config-muruca';
+import i18n from './config-muruca/i18n';
+
+// load translations
+translate.init({
+  defaultLang: 'it',
+  translations: i18n
+});
 
 @NgModule({
   declarations: [

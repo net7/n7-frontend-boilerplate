@@ -13,7 +13,7 @@ const facets = {
       },
       data: {
         id: 'query',
-        placeholder: 'Cerca nei titoli',
+        placeholder: 'search#placeholder_query',
         icon: 'n7-icon-search',
         inputPayload: 'search-input',
         enterPayload: 'search-enter',
@@ -25,7 +25,7 @@ const facets = {
     header: {
       id: 'header-toponyms',
       data: {
-        text: 'Toponimi',
+        text: 'search#header_toponyms',
         additionalText: null,
       }
     },
@@ -61,7 +61,7 @@ const facets = {
     header: {
       id: 'header-continents',
       data: {
-        text: 'Continenti',
+        text: 'search#header_continents',
         additionalText: null
       }
     },
@@ -82,7 +82,7 @@ const facets = {
     header: {
       id: 'header-authors',
       data: {
-        text: 'Autori',
+        text: 'search#header_authors',
         additionalText: null
       }
     },
@@ -103,7 +103,7 @@ const facets = {
     header: {
       id: 'header-keywords',
       data: {
-        text: 'Keywords',
+        text: 'search#header_keywords',
         additionalText: null,
         iconRight: 'n7-icon-angle-down'
       }
@@ -125,7 +125,7 @@ const facets = {
     header: {
       id: 'header-date',
       data: {
-        text: 'Data di pubblicazione',
+        text: 'search#header_date',
         additionalText: null,
         iconRight: 'n7-icon-angle-down'
       }
@@ -147,7 +147,7 @@ const facets = {
     header: {
       id: 'header-place',
       data: {
-        text: 'Luogo di pubblicazione',
+        text: 'search#header_place',
         additionalText: null,
         iconRight: 'n7-icon-angle-down'
       }

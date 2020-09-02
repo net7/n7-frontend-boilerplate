@@ -1,4 +1,4 @@
-import { LayoutDataSource } from '@n7-frontend/core/dist/layout-data-source';
+import { LayoutDataSource, _t } from '@n7-frontend/core';
 import { Observable } from 'rxjs';
 import { ConfigurationService } from '../../../common/services/configuration.service';
 import { CommunicationService } from '../../../common/services/communication.service';
@@ -23,6 +23,11 @@ export class MrResourceLayoutDS extends LayoutDataSource {
 
   public slug: string;
 
+  public readMoreConfig = {
+    limit: 130,
+    label: _t('readmore#label')
+  }
+
   onInit(payload) {
     this.configuration = payload.configuration;
     this.communication = payload.communication;
@@ -30,6 +35,14 @@ export class MrResourceLayoutDS extends LayoutDataSource {
     this.configId = payload.configId;
     this.pageConfig = this.configuration.get(this.configId);
     this.tabConfig = this.configuration.get('tabs')[this.pageConfig.tabs];
+
+    // add translations
+    ['top', 'content'].forEach((type) => {
+      this.pageConfig.sections[type] = this.pageConfig.sections[type].map((section) => ({
+        ...section,
+        title: _t(section.title)
+      }));
+    });
   }
 
   /** Request the configured widgets data */

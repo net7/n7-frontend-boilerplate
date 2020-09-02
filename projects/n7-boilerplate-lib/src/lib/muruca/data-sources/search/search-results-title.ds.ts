@@ -1,4 +1,4 @@
-import { DataSource } from '@n7-frontend/core';
+import { DataSource, _t } from '@n7-frontend/core';
 
 export class MrSearchResultsTitleDS extends DataSource {
   protected transform(data) {
@@ -7,7 +7,14 @@ export class MrSearchResultsTitleDS extends DataSource {
       sort
     } = this.options.config;
     const { total_count: totalCount, sort: currentSort } = data;
-    const mainText = `<strong>${totalCount || 0}</strong> ${totalResultsText[totalCount === 1 ? 1 : 0]}`;
+    const mainText = _t(totalResultsText, { total: totalCount }, (key, { total }) => {
+      if (total === 0) {
+        return `${key}_0`;
+      } if (total === 1) {
+        return `${key}_1`;
+      }
+      return key;
+    });
 
     return {
       title: {
