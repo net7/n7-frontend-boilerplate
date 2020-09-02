@@ -1,4 +1,4 @@
-import { DataSource } from '@n7-frontend/core';
+import { DataSource, _t } from '@n7-frontend/core';
 import { FacetHeaderData } from '@n7-frontend/components';
 import { FacetDataSource } from './facet-datasource';
 
@@ -14,6 +14,7 @@ export class FacetHeaderDS extends DataSource implements FacetDataSource {
   protected transform(data: FacetHeaderData): FacetHeaderData {
     return {
       ...data,
+      text: _t(data.text),
       iconRight: data.iconRight || ICON_OPEN
     };
   }

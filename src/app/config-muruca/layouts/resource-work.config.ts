@@ -18,19 +18,19 @@ export default {
       {
         id: 'metadata',
         type: 'metadata',
-        title: 'Metadati'
+        title: 'resource#metadata'
       },
       {
         id: 'metadata-size',
         type: 'metadata',
         grid: null,
-        title: 'Dimensioni'
+        title: 'resource#metadata_size'
       },
       {
         id: 'collection-continents',
         type: 'collection',
         grid: 3,
-        title: 'Collezione di appartenenza'
+        title: 'resource#collection_continents'
       }
     ]
   }

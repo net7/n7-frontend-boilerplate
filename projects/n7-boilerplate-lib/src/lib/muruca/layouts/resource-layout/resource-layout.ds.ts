@@ -35,6 +35,14 @@ export class MrResourceLayoutDS extends LayoutDataSource {
     this.configId = payload.configId;
     this.pageConfig = this.configuration.get(this.configId);
     this.tabConfig = this.configuration.get('tabs')[this.pageConfig.tabs];
+
+    // add translations
+    ['top', 'content'].forEach((type) => {
+      this.pageConfig.sections[type] = this.pageConfig.sections[type].map((section) => ({
+        ...section,
+        title: _t(section.title)
+      }));
+    });
   }
 
   /** Request the configured widgets data */

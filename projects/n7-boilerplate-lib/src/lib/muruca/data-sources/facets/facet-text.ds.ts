@@ -1,4 +1,4 @@
-import { DataSource } from '@n7-frontend/core';
+import { DataSource, _t } from '@n7-frontend/core';
 import { InputTextData } from '@n7-frontend/components';
 import { FacetDataSource } from './facet-datasource';
 
@@ -10,7 +10,10 @@ export class FacetTextDS extends DataSource implements FacetDataSource {
   value: FACET_VALUE;
 
   protected transform(data: InputTextData): InputTextData {
-    return data;
+    return {
+      ...data,
+      placeholder: _t(data.placeholder)
+    };
   }
 
   setValue(value: FACET_VALUE, update = false) {
