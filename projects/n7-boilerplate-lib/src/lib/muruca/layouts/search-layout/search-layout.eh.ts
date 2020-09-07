@@ -83,6 +83,14 @@ export class MrSearchLayoutEH extends EventHandler {
   }
 
   initStateListener() {
+    // default params
+    const { pageConfig } = this.dataSource;
+    const defaultLimit = pageConfig.pagination.options[0];
+    let defaultSort = pageConfig.sort.options.find((option) => option.selected === true)?.value;
+    if (!defaultSort) {
+      defaultSort = pageConfig.sort.options[0].value;
+    }
+
     // inputs listener
     this.searchService.getState$(INPUT_STATE_CONTEXT).pipe(
       takeUntil(this.destroyed$)
@@ -105,12 +113,13 @@ export class MrSearchLayoutEH extends EventHandler {
       // update sections
       if (response.inputs) {
         const { inputs } = response;
-        Object.keys(inputs).forEach((inputKey) => {
-          const currentInput = inputs[inputKey];
+        const { facets } = inputs;
+        Object.keys(facets).forEach((inputKey) => {
+          const { total_count: totalCount } = facets[inputKey];
           this.searchService.setState(
             SECTION_STATE_CONTEXT,
             `section-${inputKey}`,
-            Array.isArray(currentInput) && currentInput.length ? 'is-not-empty' : 'is-empty'
+            totalCount ? 'is-not-empty' : 'is-empty'
           );
         });
       }
@@ -122,17 +131,40 @@ export class MrSearchLayoutEH extends EventHandler {
       this.layoutState.set('results', LayoutState.LOADING);
     });
 
-    // default params hook
-    this.searchService.setBeforeHook(RESULTS_REQUEST_STATE_CONTEXT, 'loading', (params = {}) => {
-      // FIXME: prendere da configurazione
-      const defaultParams = {
-        page: 1,
-        sort: 'sort_ASC',
-        limit: 12
+    // results params hook
+    this.searchService.setBeforeHook(RESULTS_REQUEST_STATE_CONTEXT, 'loading', (params: any = {}) => {
+      const results = {
+        sort: defaultSort,
+        limit: defaultLimit,
+        offset: 0
       };
-      Object.keys(defaultParams).forEach((key) => {
-        params[key] = params[key] || defaultParams[key];
-      });
+
+      // sort check
+      if (params.sort) {
+        results.sort = params.sort;
+      }
+
+      // offset check
+      if (params.page && params.page > 1) {
+        results.offset = results.limit * params.page;
+      }
+
+      params.results = results;
+
+      // cleanup
+      Object.keys(params)
+        .filter((key) => ['sort', 'page'].includes(key))
+        .forEach((key) => {
+          delete params[key];
+        });
+
+      return params;
+    });
+
+    // facets params hook
+    this.searchService.setBeforeHook(FACETS_REQUEST_STATE_CONTEXT, 'loading', (params: any = {}) => {
+      // clean up
+      delete params.results;
       return params;
     });
 

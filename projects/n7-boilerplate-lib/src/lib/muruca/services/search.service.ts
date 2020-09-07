@@ -319,16 +319,18 @@ export class MrSearchService {
 
     this.getState$(RESULTS_REQUEST_STATE_CONTEXT, 'loading').pipe(
       map((params) => {
-        this.setState(FACETS_REQUEST_STATE_CONTEXT, 'loading', params);
-        return params;
+        const facetsParams = { ...params };
+        this.setState(FACETS_REQUEST_STATE_CONTEXT, 'loading', facetsParams);
+        return facetsParams;
       }),
       debounceTime(facets.delay || 1),
       map((params) => {
         params.facets = [];
         this.config.facets.sections.forEach(({ inputs }) => {
           inputs.filter(({ type }) => type === 'link')
-            .forEach(({ id }) => {
-              params.facets.push(id);
+            .forEach(({ id, limit }) => {
+              const offset = 0;
+              params.facets.push({ id, limit, offset });
             });
         });
         this.setState(FACETS_REQUEST_STATE_CONTEXT, 'request', params);
@@ -347,8 +349,9 @@ export class MrSearchService {
     ).subscribe((response: any) => {
       // clean up
       const { inputs } = response;
-      Object.keys(inputs).forEach((inputKey) => {
-        inputs[inputKey] = inputs[inputKey].map((item) => ({
+      const { facets: responseFacets } = inputs;
+      Object.keys(responseFacets).forEach((inputKey) => {
+        responseFacets[inputKey].values = responseFacets[inputKey].values.map((item) => ({
           ...item,
           payload: item.payload && typeof item.payload === 'string' ? encodeURIComponent(item.payload) : item.payload
         }));
@@ -358,9 +361,10 @@ export class MrSearchService {
 
     // update facet links
     this.getState$(FACETS_REQUEST_STATE_CONTEXT, 'success').subscribe(({ inputs }) => {
-      Object.keys(inputs).forEach((id) => {
+      const { facets: responseFacets } = inputs;
+      Object.keys(responseFacets).forEach((id) => {
         this.setState(FACET_STATE_CONTEXT, id, {
-          links: inputs[id]
+          links: responseFacets[id].values
         });
       });
     });
