@@ -33,6 +33,7 @@ const facets = {
       id: 'toponyms-filter',
       type: 'text',
       delay: 500,
+      target: 'toponyms',
       schema: {
         valueType: 'string'
       },

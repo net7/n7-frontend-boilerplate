@@ -1,3 +1,5 @@
+// FIXME: togliere disable
+/* eslint-disable @typescript-eslint/camelcase */
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -7,7 +9,7 @@ import {
   map,
   debounceTime,
   delay,
-  tap,
+  tap
 } from 'rxjs/operators';
 import { isEmpty, xor } from 'lodash';
 import { CommunicationService } from '../../common/services/communication.service';
@@ -19,6 +21,36 @@ export const FACET_STATE_CONTEXT = 'facet';
 export const SECTION_STATE_CONTEXT = 'section';
 export const RESULTS_REQUEST_STATE_CONTEXT = 'resultsRequest';
 export const FACETS_REQUEST_STATE_CONTEXT = 'facetsRequest';
+
+// FIXME: togliere facetsMock
+function generateMockItems(key) {
+  return Array(Math.round(Math.random() * 500)).fill(null).map((_, index) => ({
+    text: `${key}-${index}`,
+    payload: `${key}-${index}`,
+    counter: Math.round(Math.random() * 100)
+  }));
+}
+const facetsMock = (inputKey?) => {
+  const facets = {};
+  (inputKey ? [inputKey] : [
+    'date',
+    'toponyms',
+    'keywords',
+    'place',
+    'continents',
+    'authors'
+  ]).forEach((key) => {
+    const values = generateMockItems(key);
+    facets[key] = {
+      total_count: values.length,
+      values: values.slice(0, 50)
+    };
+  });
+  return {
+    total_count: 100,
+    facets
+  };
+};
 
 @Injectable()
 export class MrSearchService {
@@ -35,6 +67,16 @@ export class MrSearchService {
   private contextState: {
     [key: string]: any;
   } = {};
+
+  private internalFilterState: {
+    globalParams: any;
+    facets: {
+      [key: string]: any;
+    };
+  } = {
+    globalParams: {},
+    facets: {}
+  };
 
   private state$: {
     [key: string]: Subject<any>;
@@ -64,6 +106,7 @@ export class MrSearchService {
 
     // listeners
     this.onInputsChange();
+    this.onInternalInputsChange();
     this.onRouteChange();
     this.onResultsLoading();
   }
@@ -166,7 +209,9 @@ export class MrSearchService {
     facets.sections.forEach(({ header, inputs }) => {
       [header, ...inputs]
         .filter((input) => input)
-        .forEach(({ id, queryParam, schema }) => {
+        .forEach(({
+          id, queryParam, schema, limit
+        }) => {
           if (!id) {
             return;
           }
@@ -181,6 +226,13 @@ export class MrSearchService {
           if (schema) {
             this.inputSchemas[id] = schema;
           }
+
+          // links internal state
+          this.internalFilterState.facets[id] = {
+            id,
+            limit,
+            offset: 0,
+          };
         });
     });
 
@@ -302,6 +354,66 @@ export class MrSearchService {
     });
   }
 
+  private onInternalInputsChange() {
+    this.getState$(INPUT_STATE_CONTEXT).pipe(
+      filter(({ lastUpdated }) => this.queryParamKeys.indexOf(lastUpdated) === -1),
+      map(({ lastUpdated, state }) => {
+        const { sections } = this.config.facets;
+        let inputConfig;
+        sections.forEach((section) => {
+          section.inputs.forEach((input) => {
+            if (input.id === lastUpdated) {
+              inputConfig = input;
+            }
+          });
+        });
+        if (inputConfig && inputConfig.target) {
+          return {
+            inputConfig,
+            value: state[lastUpdated]
+          };
+        }
+        return null;
+      }),
+      filter((data) => data !== null),
+    ).subscribe(({ inputConfig, value }) => {
+      const { target } = inputConfig;
+      // update internal filters
+      this.internalFilterState.facets[target].query = value;
+      this.doFacetRequest(target);
+    });
+  }
+
+  private doFacetRequest(target) {
+    const { facets } = this.config.request;
+    const { globalParams } = this.internalFilterState;
+    const {
+      id, limit, offset, query
+    } = this.internalFilterState.facets[target];
+    this.communication.request$(facets.id, {
+      params: {
+        ...globalParams,
+        facets: [{
+          id, limit, offset, query
+        }],
+        searchId: this.searchId
+      },
+      method: 'POST',
+      onError: (error) => {
+        console.warn('facet request error', error);
+      }
+    }, facets.provider || null)
+      .pipe(
+      // FIXME: togliere questo map
+        map((response) => {
+          console.warn('FIXME: togliere mock', { response });
+          return facetsMock(target);
+        })
+      ).subscribe((response) => {
+        console.log('facet req$', response);
+      });
+  }
+
   private onResultsLoading() {
     const { facets } = this.config.request;
 
@@ -321,6 +433,8 @@ export class MrSearchService {
       map((params) => {
         const facetsParams = { ...params };
         this.setState(FACETS_REQUEST_STATE_CONTEXT, 'loading', facetsParams);
+        // updated internal filter state
+        this.internalFilterState.globalParams = { ...facetsParams };
         return facetsParams;
       }),
       debounceTime(facets.delay || 1),
@@ -345,11 +459,18 @@ export class MrSearchService {
         onError: (error) => {
           this.setState(FACETS_REQUEST_STATE_CONTEXT, 'error', error);
         }
-      }, facets.provider || null))
+      }, facets.provider || null)),
+      // FIXME: togliere questo map
+      map((response) => {
+        console.warn('FIXME: togliere mock', { response });
+        return facetsMock();
+      })
     ).subscribe((response: any) => {
-      // clean up
       const { facets: responseFacets } = response;
       Object.keys(responseFacets).forEach((inputKey) => {
+        // update internal filter state
+        const { total_count } = responseFacets[inputKey];
+        this.internalFilterState.facets[inputKey].total_count = total_count;
         responseFacets[inputKey].values = responseFacets[inputKey].values.map((item) => ({
           ...item,
           payload: item.payload && typeof item.payload === 'string' ? encodeURIComponent(item.payload) : item.payload
