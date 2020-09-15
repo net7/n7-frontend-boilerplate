@@ -348,8 +348,7 @@ export class MrSearchService {
       }, facets.provider || null))
     ).subscribe((response: any) => {
       // clean up
-      const { inputs } = response;
-      const { facets: responseFacets } = inputs;
+      const { facets: responseFacets } = response;
       Object.keys(responseFacets).forEach((inputKey) => {
         responseFacets[inputKey].values = responseFacets[inputKey].values.map((item) => ({
           ...item,
@@ -360,8 +359,8 @@ export class MrSearchService {
     });
 
     // update facet links
-    this.getState$(FACETS_REQUEST_STATE_CONTEXT, 'success').subscribe(({ inputs }) => {
-      const { facets: responseFacets } = inputs;
+    this.getState$(FACETS_REQUEST_STATE_CONTEXT, 'success').subscribe((response) => {
+      const { facets: responseFacets } = response;
       Object.keys(responseFacets).forEach((id) => {
         this.setState(FACET_STATE_CONTEXT, id, {
           links: responseFacets[id].values

@@ -111,9 +111,8 @@ export class MrSearchLayoutEH extends EventHandler {
       this.dataSource.updateActiveFilters(this.searchState, this.linksResponse);
 
       // update sections
-      if (response.inputs) {
-        const { inputs } = response;
-        const { facets } = inputs;
+      if (response) {
+        const { facets } = response;
         Object.keys(facets).forEach((inputKey) => {
           const { total_count: totalCount } = facets[inputKey];
           this.searchService.setState(

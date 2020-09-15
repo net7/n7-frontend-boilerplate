@@ -101,8 +101,8 @@ export class SearchFacetsLayoutEH extends EventHandler {
     this.searchService.getState$(FACETS_REQUEST_STATE_CONTEXT, 'success')
       .pipe(
         takeUntil(this.destroyed$)
-      ).subscribe(({ inputs }) => {
-        const { facets } = inputs;
+      ).subscribe((response) => {
+        const { facets } = response;
         Object.keys(facets).forEach((id) => {
           const { total_count: totalCount } = facets[id];
           this.dataSource.updateInputValue(`header-${id}`, totalCount);
