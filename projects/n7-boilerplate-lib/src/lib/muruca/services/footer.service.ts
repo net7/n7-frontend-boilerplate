@@ -31,7 +31,7 @@ export class MrFooterService {
 
   private _handleResponse(response) {
     if (response) {
-      this.configuration.set('footer', { columns: response });
+      this.configuration.set('footer', response);
     }
   }
 }
