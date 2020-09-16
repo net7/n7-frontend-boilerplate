@@ -410,7 +410,7 @@ export class MrSearchService {
           return facetsMock(target);
         })
       ).subscribe((response) => {
-        console.log('facet req$', response);
+        this.onFacetsRequestSuccess(response);
       });
   }
 
@@ -466,17 +466,7 @@ export class MrSearchService {
         return facetsMock();
       })
     ).subscribe((response: any) => {
-      const { facets: responseFacets } = response;
-      Object.keys(responseFacets).forEach((inputKey) => {
-        // update internal filter state
-        const { total_count } = responseFacets[inputKey];
-        this.internalFilterState.facets[inputKey].total_count = total_count;
-        responseFacets[inputKey].values = responseFacets[inputKey].values.map((item) => ({
-          ...item,
-          payload: item.payload && typeof item.payload === 'string' ? encodeURIComponent(item.payload) : item.payload
-        }));
-      });
-      this.setState(FACETS_REQUEST_STATE_CONTEXT, 'success', response);
+      this.onFacetsRequestSuccess(response);
     });
 
     // update facet links
@@ -488,6 +478,20 @@ export class MrSearchService {
         });
       });
     });
+  }
+
+  private onFacetsRequestSuccess(response) {
+    const { facets: responseFacets } = response;
+    Object.keys(responseFacets).forEach((inputKey) => {
+      // update internal filter state
+      const { total_count } = responseFacets[inputKey];
+      this.internalFilterState.facets[inputKey].total_count = total_count;
+      responseFacets[inputKey].values = responseFacets[inputKey].values.map((item) => ({
+        ...item,
+        payload: item.payload && typeof item.payload === 'string' ? encodeURIComponent(item.payload) : item.payload
+      }));
+    });
+    this.setState(FACETS_REQUEST_STATE_CONTEXT, 'success', response);
   }
 
   notEquals(val1, val2) {
