@@ -1,4 +1,3 @@
-// FIXME: togliere disable
 /* eslint-disable @typescript-eslint/camelcase */
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -21,36 +20,6 @@ export const FACET_STATE_CONTEXT = 'facet';
 export const SECTION_STATE_CONTEXT = 'section';
 export const RESULTS_REQUEST_STATE_CONTEXT = 'resultsRequest';
 export const FACETS_REQUEST_STATE_CONTEXT = 'facetsRequest';
-
-// FIXME: togliere facetsMock
-function generateMockItems(key) {
-  return Array(Math.round(Math.random() * 500)).fill(null).map((_, index) => ({
-    text: `${key}-${index}`,
-    payload: `${key}-${index}`,
-    counter: Math.round(Math.random() * 100)
-  }));
-}
-const facetsMock = (inputKey?) => {
-  const facets = {};
-  (inputKey ? [inputKey] : [
-    'date',
-    'toponyms',
-    'keywords',
-    'place',
-    'continents',
-    'authors'
-  ]).forEach((key) => {
-    const values = generateMockItems(key);
-    facets[key] = {
-      total_count: values.length,
-      values: values.slice(0, 50)
-    };
-  });
-  return {
-    total_count: 100,
-    facets
-  };
-};
 
 @Injectable()
 export class MrSearchService {
@@ -406,18 +375,11 @@ export class MrSearchService {
       },
       method: 'POST',
       onError: (error) => {
-        console.warn('facet request error', error);
+        this.setState(FACETS_REQUEST_STATE_CONTEXT, 'error', error);
       }
-    }, facets.provider || null)
-      .pipe(
-      // FIXME: togliere questo map
-        map((response) => {
-          console.warn('FIXME: togliere mock', { response });
-          return facetsMock(target);
-        })
-      ).subscribe((response) => {
-        this.onFacetsRequestSuccess(response);
-      });
+    }, facets.provider || null).subscribe((response) => {
+      this.onFacetsRequestSuccess(response);
+    });
   }
 
   private onResultsLoading() {
@@ -468,12 +430,7 @@ export class MrSearchService {
         onError: (error) => {
           this.setState(FACETS_REQUEST_STATE_CONTEXT, 'error', error);
         }
-      }, facets.provider || null)),
-      // FIXME: togliere questo map
-      map((response) => {
-        console.warn('FIXME: togliere mock', { response });
-        return facetsMock();
-      })
+      }, facets.provider || null))
     ).subscribe((response: any) => {
       this.onFacetsRequestSuccess(response);
     });
