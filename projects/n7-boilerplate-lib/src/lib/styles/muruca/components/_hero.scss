@@ -1,0 +1,48 @@
+/**
+ * HERO
+ *
+ * Component displaying the following elements:
+ * - title
+ * - text
+ * - input (usually used for seacrh purposes)
+ * - button/call to action
+ * - image
+ * - background image
+ *
+ * This component is used for hero section at the top of the homepage or
+ *  for call to action sections (usually in homepage)
+ */
+ 
+/* ------------------------------------ *\
+   #HERO
+\* ------------------------------------ */
+.n7-hero {
+    &__text {
+        text-align: left;
+
+        p {
+            text-align: left;
+        }
+    }
+    
+    &__btn {
+        font-size: $font-size-m;
+    }
+}
+
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: $hero-content-width + $space*4) {
+}
+
+@media all and (max-width: $breakpoint-laptop) {
+}
+
+@media all and (max-width: $breakpoint-mobile) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}

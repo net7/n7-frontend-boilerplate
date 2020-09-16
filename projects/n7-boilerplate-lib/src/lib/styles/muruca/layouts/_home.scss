@@ -9,7 +9,7 @@
 \* ------------------------------------ */
 /* Hero 1 */
 .mr-home {    
-    .n7-hero-1 {
+    .n7-hero-main {
         height: $home-hero-1-height;
 
         .n7-hero__text-wrapper {
@@ -24,26 +24,27 @@
         .n7-hero__input-wrapper {
             width: 100%;
             text-align: right;
-
-            .n7-btn {
-                display: inline-block;
-            }
         }
     }
 }
 
 /* Hero 2 */
 .mr-home {
-    .n7-hero-2 {
-        height: $home-hero-2-height;
+    .n7-hero-works {
+        padding: $space*5 0;
+        // height: $home-hero-2-height;
+        height: auto;
 
         .n7-hero__text-wrapper {
-            height: $home-hero-2-height;
+            // height: $home-hero-2-height;
+            height: auto;
         }
 
-        .n7-hero__input-wrapper {
-            .n7-btn {
-                display: inline-block;
+        .n7-hero__text {
+            font-size: 18px;
+
+            p {
+                font-size: 18px;
             }
         }
     }
@@ -56,10 +57,29 @@
 @media all and (max-width: 1120px) {
 }
 
+@media all and (max-width: $page-max-width + $space*4) {
+
+    .mr-home {
+        
+    }
+
+}
+
 @media all and (max-width: $breakpoint-laptop) {
 }
 
 @media all and (max-width: $breakpoint-ipad-portrait) {
+
+    /* Hero 1 */
+    .mr-home {    
+        .n7-hero-main {
+            .n7-hero__input-wrapper {
+                margin-top: $space*2;
+                text-align: left;
+            }
+        }
+    }
+
 }
 
 @media all and (max-width: $breakpoint-smartphone-landscape) {

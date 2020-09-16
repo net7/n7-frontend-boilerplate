@@ -48,6 +48,12 @@
 
 
 // ------------------------------------ //
+// #MR ATOMS
+// ------------------------------------ //
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/muruca/atoms/button";
+
+
+// ------------------------------------ //
 // #MR COMPONENTS
 // ------------------------------------ //
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/muruca/components/breadcrumbs";
@@ -55,6 +61,7 @@
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/muruca/components/facets";
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/muruca/components/footer";
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/muruca/components/header";
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/muruca/components/hero";
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/muruca/components/inner-title";
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/muruca/components/items-preview";
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/muruca/components/tag";

@@ -54,6 +54,20 @@
     }
 }
 
+
+/* ------------------------------------ *\
+   #MURUCA-PROMO
+\* ------------------------------------ */
+.n7-footer {
+    &__muruca-promo {
+        background-color: rgba($color-background-base, .3);
+        padding: $space*2;
+        padding-right: $space*2;
+        border-radius: $border-radius;
+    }
+}
+
+
 /* ------------------------------------ *\
    #MEDIA-QUERIES
 \* ------------------------------------ */
