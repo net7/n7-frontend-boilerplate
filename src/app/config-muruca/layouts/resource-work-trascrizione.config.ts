@@ -11,13 +11,13 @@ export default {
       {
         id: 'header',
         type: 'title'
-      }
-    ],
-    content: [
+      },
       {
         id: 'tab-bar',
         type: 'tabs'
-      },
+      }
+    ],
+    content: [
       {
         id: 'header',
         type: 'text'

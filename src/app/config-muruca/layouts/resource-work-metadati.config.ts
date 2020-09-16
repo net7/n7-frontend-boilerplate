@@ -3,8 +3,7 @@ export default {
   tabs: 'work',
   type: 'work',
   sections: {
-    top: [],
-    content: [
+    top: [
       {
         id: 'breadcrumbs',
         type: 'breadcrumbs'
@@ -16,7 +15,9 @@ export default {
       {
         id: 'tab-bar',
         type: 'tabs'
-      },
+      }
+    ],
+    content: [
       {
         id: 'metadata',
         type: 'metadata'
