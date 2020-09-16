@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -7,7 +8,7 @@ import {
   map,
   debounceTime,
   delay,
-  tap,
+  tap
 } from 'rxjs/operators';
 import { isEmpty, xor } from 'lodash';
 import { CommunicationService } from '../../common/services/communication.service';
@@ -35,6 +36,16 @@ export class MrSearchService {
   private contextState: {
     [key: string]: any;
   } = {};
+
+  private internalFilterState: {
+    globalParams: any;
+    facets: {
+      [key: string]: any;
+    };
+  } = {
+    globalParams: {},
+    facets: {}
+  };
 
   private state$: {
     [key: string]: Subject<any>;
@@ -64,6 +75,7 @@ export class MrSearchService {
 
     // listeners
     this.onInputsChange();
+    this.onInternalInputsChange();
     this.onRouteChange();
     this.onResultsLoading();
   }
@@ -135,9 +147,11 @@ export class MrSearchService {
 
   public reset() {
     // clear input states
-    Object.keys(this.contextState[INPUT_STATE_CONTEXT]).forEach((id) => {
-      this.setState(INPUT_STATE_CONTEXT, id, null);
-    });
+    Object.keys(this.contextState[INPUT_STATE_CONTEXT])
+      .filter((id) => !this.internalFilterState.facets[id])
+      .forEach((id) => {
+        this.setState(INPUT_STATE_CONTEXT, id, null);
+      });
   }
 
   private clear() {
@@ -166,7 +180,9 @@ export class MrSearchService {
     facets.sections.forEach(({ header, inputs }) => {
       [header, ...inputs]
         .filter((input) => input)
-        .forEach(({ id, queryParam, schema }) => {
+        .forEach(({
+          id, queryParam, schema, limit, type
+        }) => {
           if (!id) {
             return;
           }
@@ -180,6 +196,15 @@ export class MrSearchService {
           // schemas
           if (schema) {
             this.inputSchemas[id] = schema;
+          }
+
+          // links internal state
+          if (type === 'link') {
+            this.internalFilterState.facets[id] = {
+              id,
+              limit,
+              offset: 0,
+            };
           }
         });
     });
@@ -252,11 +277,13 @@ export class MrSearchService {
           const inputContext = this.contextState[INPUT_STATE_CONTEXT];
           if (isEmpty(inputContext)) {
             Object.keys(params)
+              .filter((inputId) => this.queryParamKeys[inputId])
               .forEach((inputId) => {
                 this.setState(INPUT_STATE_CONTEXT, inputId, params[inputId]);
               });
           } else {
             Object.keys(inputContext)
+              .filter((inputId) => this.queryParamKeys[inputId])
               .filter((inputId) => this.notEquals(inputContext[inputId], params[inputId]))
               .forEach((inputId) => {
                 this.setState(INPUT_STATE_CONTEXT, inputId, params[inputId] || null);
@@ -302,6 +329,59 @@ export class MrSearchService {
     });
   }
 
+  private onInternalInputsChange() {
+    this.getState$(INPUT_STATE_CONTEXT).pipe(
+      filter(({ lastUpdated }) => this.queryParamKeys.indexOf(lastUpdated) === -1),
+      map(({ lastUpdated, state }) => {
+        const { sections } = this.config.facets;
+        let inputConfig;
+        sections.forEach((section) => {
+          section.inputs.forEach((input) => {
+            if (input.id === lastUpdated) {
+              inputConfig = input;
+            }
+          });
+        });
+        if (inputConfig && inputConfig.target) {
+          return {
+            inputConfig,
+            value: state[lastUpdated]
+          };
+        }
+        return null;
+      }),
+      filter((data) => data !== null),
+    ).subscribe(({ inputConfig, value }) => {
+      const { target } = inputConfig;
+      // update internal filters
+      this.internalFilterState.facets[target].query = value;
+      this.doSingleFacetRequest(target);
+    });
+  }
+
+  private doSingleFacetRequest(target) {
+    const { facets } = this.config.request;
+    const { globalParams } = this.internalFilterState;
+    const {
+      id, limit, offset, query
+    } = this.internalFilterState.facets[target];
+    this.communication.request$(facets.id, {
+      params: {
+        ...globalParams,
+        facets: [{
+          id, limit, offset, query
+        }],
+        searchId: this.searchId
+      },
+      method: 'POST',
+      onError: (error) => {
+        this.setState(FACETS_REQUEST_STATE_CONTEXT, 'error', error);
+      }
+    }, facets.provider || null).subscribe((response) => {
+      this.onFacetsRequestSuccess(response);
+    });
+  }
+
   private onResultsLoading() {
     const { facets } = this.config.request;
 
@@ -319,8 +399,11 @@ export class MrSearchService {
 
     this.getState$(RESULTS_REQUEST_STATE_CONTEXT, 'loading').pipe(
       map((params) => {
-        this.setState(FACETS_REQUEST_STATE_CONTEXT, 'loading', params);
-        return params;
+        const facetsParams = { ...params };
+        this.setState(FACETS_REQUEST_STATE_CONTEXT, 'loading', facetsParams);
+        // updated internal filter state
+        this.internalFilterState.globalParams = { ...facetsParams };
+        return facetsParams;
       }),
       debounceTime(facets.delay || 1),
       map((params) => {
@@ -328,7 +411,11 @@ export class MrSearchService {
         this.config.facets.sections.forEach(({ inputs }) => {
           inputs.filter(({ type }) => type === 'link')
             .forEach(({ id }) => {
-              params.facets.push(id);
+              const offset = 0;
+              params.facets.push({
+                ...this.internalFilterState.facets[id],
+                offset
+              });
             });
         });
         this.setState(FACETS_REQUEST_STATE_CONTEXT, 'request', params);
@@ -345,25 +432,32 @@ export class MrSearchService {
         }
       }, facets.provider || null))
     ).subscribe((response: any) => {
-      // clean up
-      const { inputs } = response;
-      Object.keys(inputs).forEach((inputKey) => {
-        inputs[inputKey] = inputs[inputKey].map((item) => ({
-          ...item,
-          payload: item.payload && typeof item.payload === 'string' ? encodeURIComponent(item.payload) : item.payload
-        }));
-      });
-      this.setState(FACETS_REQUEST_STATE_CONTEXT, 'success', response);
+      this.onFacetsRequestSuccess(response);
     });
 
     // update facet links
-    this.getState$(FACETS_REQUEST_STATE_CONTEXT, 'success').subscribe(({ inputs }) => {
-      Object.keys(inputs).forEach((id) => {
+    this.getState$(FACETS_REQUEST_STATE_CONTEXT, 'success').subscribe((response) => {
+      const { facets: responseFacets } = response;
+      Object.keys(responseFacets).forEach((id) => {
         this.setState(FACET_STATE_CONTEXT, id, {
-          links: inputs[id]
+          links: responseFacets[id].values
         });
       });
     });
+  }
+
+  private onFacetsRequestSuccess(response) {
+    const { facets: responseFacets } = response;
+    Object.keys(responseFacets).forEach((inputKey) => {
+      // update internal filter state
+      const { total_count } = responseFacets[inputKey];
+      this.internalFilterState.facets[inputKey].total_count = total_count;
+      responseFacets[inputKey].values = responseFacets[inputKey].values.map((item) => ({
+        ...item,
+        payload: item.payload && typeof item.payload === 'string' ? encodeURIComponent(item.payload) : item.payload
+      }));
+    });
+    this.setState(FACETS_REQUEST_STATE_CONTEXT, 'success', response);
   }
 
   notEquals(val1, val2) {

@@ -8,6 +8,7 @@ export default {
   'search#works_total_1': '{ total } Opera',
   'search#works_total_0': 'Nessuna Opera',
   'search#placeholder_query': 'Cerca nei titoli',
+  'search#placeholder_toponyms': 'Cerca nei toponimi',
   'search#header_toponyms': 'Toponimi',
   'search#header_continents': 'Continenti',
   'search#header_authors': 'Autori',

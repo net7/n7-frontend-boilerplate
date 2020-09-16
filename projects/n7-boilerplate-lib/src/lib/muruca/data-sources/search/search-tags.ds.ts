@@ -6,7 +6,7 @@ export class MrSearchTagsDS extends DataSource {
 
   protected transform(data): TagData[] {
     const { state, linksResponse, facetsConfig } = data;
-    const { inputs: linkInputs } = linksResponse;
+    const { facets } = linksResponse;
     const tags = [];
 
     // inputs config
@@ -19,8 +19,8 @@ export class MrSearchTagsDS extends DataSource {
             values
               .forEach((value) => {
                 let text = value;
-                if (linkInputs[id]) {
-                  text = linkInputs[id].find(({ payload }) => payload === value)?.text;
+                if (facets[id]) {
+                  text = facets[id].values.find(({ payload }) => payload === value)?.text;
                 }
                 tags.push({
                   text,
