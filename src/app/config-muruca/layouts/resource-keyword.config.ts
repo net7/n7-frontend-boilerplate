@@ -1,6 +1,6 @@
 export default {
   title: 'Termini',
-  type: 'keywords',
+  type: 'keyterm',
   sections: {
     top: [],
     content: [

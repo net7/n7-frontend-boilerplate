@@ -75,7 +75,7 @@ export default {
         title: 'Keywords',
         type: 'collection',
         grid: null,
-      },
+      }
     ]
   }
 };
