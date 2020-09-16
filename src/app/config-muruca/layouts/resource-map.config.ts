@@ -5,7 +5,16 @@ export default {
     top: [
       {
         id: 'breadcrumbs',
-        type: 'breadcrumbs'
+        type: 'breadcrumbs',
+        options: {
+          base: [{
+            title: 'global#home',
+            link: '/'
+          }, {
+            title: 'global#maps',
+            link: '/maps'
+          }]
+        }
       },
       {
         id: 'header',

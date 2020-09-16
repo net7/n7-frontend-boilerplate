@@ -53,7 +53,7 @@ export default {
     },
     {
       classes: 'n7-footer__muruca-promo',
-      text: "<strong>Unus</strong> is powered by Muruca, a platform designed and developed by Net7, Pisa Italy.<br><a href='http://www.muruca.org/' target='_blank'>www.muruca.org</a>, <a href='http://www.netseven.it' target='_blank'>www.netseven.it</a>",
+      text: "This project is powered by Muruca, a platform designed and developed by Net7, Pisa, Italy.<br><a href='http://www.muruca.org/' target='_blank'>www.muruca.org</a>, <a href='http://www.netseven.it' target='_blank'>www.netseven.it</a>",
       images: [
         {
           url: '/assets/logo-muruca-footer.png',

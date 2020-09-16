@@ -1,4 +1,4 @@
-import { LayoutDataSource } from '@n7-frontend/core/dist/layout-data-source';
+import { LayoutDataSource, _t } from '@n7-frontend/core';
 import { isEmpty } from 'lodash';
 import { ConfigurationService } from '../../../common/services/configuration.service';
 import { CommunicationService } from '../../../common/services/communication.service';
@@ -17,6 +17,10 @@ export class MrHomeLayoutDS extends LayoutDataSource {
   private configId: string;
 
   private pageConfig;
+
+  public errorTitle = _t('global#layout_error_title');
+
+  public errorDescription = _t('global#layout_error_description');
 
   onInit(payload) {
     this.configuration = payload.configuration;

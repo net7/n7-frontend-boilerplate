@@ -1,14 +1,24 @@
-<div class="mr-home mr-layout" *ngIf="lb.dataSource">
+<div class="mr-home mr-layout"
+     *ngIf="lb.dataSource"
+     [ngClass]="{
+        'is-loading': ( layoutState.get$('content') | async ) == 'LOADING',
+        'is-error': ( layoutState.get$('content') | async ) == 'ERROR'
+      }">
     <!-- HOME CONTENT -->
     <ng-container [ngSwitch]="layoutState.get$('content') | async">
         <!-- loading -->
         <ng-container *ngSwitchCase="'LOADING'">
-            loading...
+            <div class="mr-layout__loader">
+                <n7-loader></n7-loader>
+            </div>
         </ng-container>
 
         <!-- error -->
         <ng-container *ngSwitchCase="'ERROR'">
-            error!
+            <div class="mr-layout__error">
+                <h2>{{ lb.dataSource.errorTitle }}</h2>
+                <p>{{ lb.dataSource.errorDescription }}</p>
+            </div>
         </ng-container>
 
         <!-- success -->
