@@ -1,4 +1,4 @@
-import { LayoutDataSource } from '@n7-frontend/core';
+import { LayoutDataSource, _t } from '@n7-frontend/core';
 import { Observable } from 'rxjs';
 import { ConfigurationService } from '../../../common/services/configuration.service';
 import { CommunicationService } from '../../../common/services/communication.service';
@@ -14,6 +14,10 @@ export class MrStaticLayoutDS extends LayoutDataSource {
   public content: string | null;
 
   public title: string | null;
+
+  public errorTitle = _t('global#layout_error_title');
+
+  public errorDescription = _t('global#layout_error_description');
 
   onInit(payload) {
     this.communication = payload.communication;
