@@ -39,11 +39,17 @@
         &-title,
         &-text {
             color: $color-text-inverse;
+
+            p {
+                margin: 0;
+                color: $color-text-inverse;
+                font-size: $font-size-xs;
+            }
         }
 
         &-images {
             a {
-                margin-right: $space;
+                margin-right: $space*2;
                 border-bottom: 0;
 
                 &:hover {
@@ -59,11 +65,12 @@
    #MURUCA-PROMO
 \* ------------------------------------ */
 .n7-footer {
-    &__muruca-promo {
-        background-color: rgba($color-background-base, .3);
+    .n7-footer__column.n7-footer__muruca-promo {
+        margin: 0 $space*1.5;
         padding: $space*2;
-        padding-right: $space*2;
+        background-color: rgba($color-background-base, .1);
         border-radius: $border-radius;
+        box-shadow: 0 0 15px inset rgba(0,0,0,.15);
     }
 }
 
