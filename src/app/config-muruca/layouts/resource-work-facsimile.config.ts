@@ -24,7 +24,8 @@ export default {
       },
       {
         id: 'metadata',
-        type: 'metadata'
+        type: 'metadata',
+        title: 'resource#metadata'
       }
     ]
   }

@@ -3,16 +3,21 @@ export default {
   tabs: 'work',
   type: 'work',
   sections: {
-    top: [],
-    content: [
+    top: [
       {
-        id: 'tab-bar',
-        type: 'tabs'
+        id: 'breadcrumbs',
+        type: 'breadcrumbs'
       },
       {
         id: 'header',
         type: 'title'
       },
+      {
+        id: 'tab-bar',
+        type: 'tabs'
+      }
+    ],
+    content: [
       {
         id: 'metadata',
         type: 'metadata'
