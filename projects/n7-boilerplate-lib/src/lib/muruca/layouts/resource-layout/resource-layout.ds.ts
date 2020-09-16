@@ -23,8 +23,12 @@ export class MrResourceLayoutDS extends LayoutDataSource {
 
   public slug: string;
 
-  public readMoreConfig = {
-    limit: 130,
+  /** Stores "max height" for the read-more-wrapper from configuration */
+  public readMoreConfig: {
+    limit: number;
+    label: string;
+  } = {
+    limit: 130, // default limit
     label: _t('readmore#label')
   }
 
@@ -35,6 +39,7 @@ export class MrResourceLayoutDS extends LayoutDataSource {
     this.configId = payload.configId;
     this.pageConfig = this.configuration.get(this.configId);
     this.tabConfig = this.configuration.get('tabs')[this.pageConfig.tabs];
+    this.readMoreConfig.limit = this.configuration.get(this.configId).maxHeight;
 
     // add translations
     ['top', 'content'].forEach((type) => {

@@ -1,4 +1,5 @@
 export default {
+  maxHeight: 100, // Threshold where the "read-more" button appears
   title: 'Opera',
   type: 'work',
   sections: {
