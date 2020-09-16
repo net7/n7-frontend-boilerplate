@@ -95,6 +95,10 @@
         /* Sections */
         .mr-resource__section {
             // display: flex;
+
+            &:last-child {
+                border-bottom: 0;  
+            }
         }
         
         .mr-resource__section-title {
