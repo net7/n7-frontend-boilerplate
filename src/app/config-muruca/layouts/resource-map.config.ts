@@ -70,6 +70,12 @@ export default {
         type: 'collection',
         grid: null,
       },
+      {
+        id: 'collection-keywords',
+        title: 'Keywords',
+        type: 'collection',
+        grid: null,
+      },
     ]
   }
 };
