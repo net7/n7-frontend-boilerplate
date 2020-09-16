@@ -38,8 +38,8 @@ const facets = {
         valueType: 'string'
       },
       data: {
-        id: 'text-01',
-        placeholder: 'Search',
+        id: 'toponyms-filter',
+        placeholder: 'search#placeholder_toponyms',
         icon: 'n7-icon-search',
         inputPayload: 'search-input',
         enterPayload: 'search-enter',
