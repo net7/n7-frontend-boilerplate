@@ -32,6 +32,10 @@ export class MrResourceLayoutDS extends LayoutDataSource {
     label: _t('readmore#label')
   }
 
+  public errorTitle = _t('global#layout_error_title');
+
+  public errorDescription = _t('global#layout_error_description');
+
   onInit(payload) {
     this.configuration = payload.configuration;
     this.communication = payload.communication;
