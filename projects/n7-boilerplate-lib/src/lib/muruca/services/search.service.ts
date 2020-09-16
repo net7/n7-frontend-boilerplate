@@ -204,6 +204,7 @@ export class MrSearchService {
               id,
               limit,
               offset: 0,
+              query: ''
             };
           }
         });
@@ -412,9 +413,9 @@ export class MrSearchService {
           inputs.filter(({ type }) => type === 'link')
             .forEach(({ id }) => {
               const offset = 0;
+              const { limit, query } = this.internalFilterState.facets[id];
               params.facets.push({
-                ...this.internalFilterState.facets[id],
-                offset
+                id, limit, offset, query
               });
             });
         });
