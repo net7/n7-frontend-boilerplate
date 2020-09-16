@@ -178,9 +178,11 @@ export class MrSearchService {
 
   public reset() {
     // clear input states
-    Object.keys(this.contextState[INPUT_STATE_CONTEXT]).forEach((id) => {
-      this.setState(INPUT_STATE_CONTEXT, id, null);
-    });
+    Object.keys(this.contextState[INPUT_STATE_CONTEXT])
+      .filter((id) => !this.internalFilterState.facets[id])
+      .forEach((id) => {
+        this.setState(INPUT_STATE_CONTEXT, id, null);
+      });
   }
 
   private clear() {
@@ -210,7 +212,7 @@ export class MrSearchService {
       [header, ...inputs]
         .filter((input) => input)
         .forEach(({
-          id, queryParam, schema, limit
+          id, queryParam, schema, limit, type
         }) => {
           if (!id) {
             return;
@@ -228,11 +230,13 @@ export class MrSearchService {
           }
 
           // links internal state
-          this.internalFilterState.facets[id] = {
-            id,
-            limit,
-            offset: 0,
-          };
+          if (type === 'link') {
+            this.internalFilterState.facets[id] = {
+              id,
+              limit,
+              offset: 0,
+            };
+          }
         });
     });
 
@@ -304,11 +308,13 @@ export class MrSearchService {
           const inputContext = this.contextState[INPUT_STATE_CONTEXT];
           if (isEmpty(inputContext)) {
             Object.keys(params)
+              .filter((inputId) => this.queryParamKeys[inputId])
               .forEach((inputId) => {
                 this.setState(INPUT_STATE_CONTEXT, inputId, params[inputId]);
               });
           } else {
             Object.keys(inputContext)
+              .filter((inputId) => this.queryParamKeys[inputId])
               .filter((inputId) => this.notEquals(inputContext[inputId], params[inputId]))
               .forEach((inputId) => {
                 this.setState(INPUT_STATE_CONTEXT, inputId, params[inputId] || null);
@@ -380,11 +386,11 @@ export class MrSearchService {
       const { target } = inputConfig;
       // update internal filters
       this.internalFilterState.facets[target].query = value;
-      this.doFacetRequest(target);
+      this.doSingleFacetRequest(target);
     });
   }
 
-  private doFacetRequest(target) {
+  private doSingleFacetRequest(target) {
     const { facets } = this.config.request;
     const { globalParams } = this.internalFilterState;
     const {
@@ -442,9 +448,12 @@ export class MrSearchService {
         params.facets = [];
         this.config.facets.sections.forEach(({ inputs }) => {
           inputs.filter(({ type }) => type === 'link')
-            .forEach(({ id, limit }) => {
+            .forEach(({ id }) => {
               const offset = 0;
-              params.facets.push({ id, limit, offset });
+              params.facets.push({
+                ...this.internalFilterState.facets[id],
+                offset
+              });
             });
         });
         this.setState(FACETS_REQUEST_STATE_CONTEXT, 'request', params);
