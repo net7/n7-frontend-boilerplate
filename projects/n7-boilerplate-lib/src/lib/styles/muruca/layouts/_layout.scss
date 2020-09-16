@@ -40,6 +40,23 @@
 
 
 /* ------------------------------------ *\
+    ERROR
+\* ------------------------------------ */
+.mr-layout.is-error {
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    .mr-layout__error {
+        padding-top: $space*5;
+    }
+}
+
+
+/* ------------------------------------ *\
    #MEDIA-QUERIES
 \* ------------------------------------ */
 @media all and (max-width: $page-max-width + $space*4) {
