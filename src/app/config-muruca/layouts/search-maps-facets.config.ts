@@ -125,7 +125,7 @@ const facets = {
         links: []
       }
     }],
-  }, {
+  }/* , {
     id: 'section-date',
     header: {
       id: 'header-date',
@@ -171,7 +171,7 @@ const facets = {
         links: []
       }
     }],
-  }],
+  } */],
   classes: 'facets-wrapper'
 };
 
