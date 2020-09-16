@@ -1,9 +1,16 @@
-<div class="mr-resource mr-layout" *ngIf="lb.dataSource && lb.dataSource.pageConfig">
+<div class="mr-resource mr-layout" 
+     *ngIf="lb.dataSource && lb.dataSource.pageConfig"
+     [ngClass]="{
+            'is-loading': ( layoutState.get$('content') | async ) == 'LOADING',
+            'is-error': ( layoutState.get$('content') | async ) == 'ERROR'
+      }">
     <!-- RESOURCE LAYOUT CONTENT -->
     <ng-container [ngSwitch]="layoutState.get$('content') | async">
         <!-- loading -->
         <ng-container *ngSwitchCase="'LOADING'">
-            loading...
+            <div class="mr-layout__loader">
+                <n7-loader></n7-loader>
+            </div>
         </ng-container>
 
         <!-- error -->
