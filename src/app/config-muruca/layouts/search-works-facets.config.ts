@@ -33,12 +33,13 @@ const facets = {
       id: 'toponyms-filter',
       type: 'text',
       delay: 500,
+      target: 'toponyms',
       schema: {
         valueType: 'string'
       },
       data: {
-        id: 'text-01',
-        placeholder: 'Search',
+        id: 'toponyms-filter',
+        placeholder: 'search#placeholder_toponyms',
         icon: 'n7-icon-search',
         inputPayload: 'search-input',
         enterPayload: 'search-enter',
@@ -47,6 +48,7 @@ const facets = {
     }, {
       id: 'toponyms',
       type: 'link',
+      limit: 50,
       queryParam: true,
       schema: {
         valueType: 'string',
@@ -68,6 +70,7 @@ const facets = {
     inputs: [{
       id: 'continents',
       type: 'link',
+      limit: 50,
       queryParam: true,
       schema: {
         valueType: 'string',
@@ -89,6 +92,7 @@ const facets = {
     inputs: [{
       id: 'authors',
       type: 'link',
+      limit: 50,
       queryParam: true,
       schema: {
         valueType: 'string',
@@ -111,6 +115,7 @@ const facets = {
     inputs: [{
       id: 'keywords',
       type: 'link',
+      limit: 50,
       queryParam: true,
       schema: {
         valueType: 'string',
@@ -133,6 +138,7 @@ const facets = {
     inputs: [{
       id: 'date',
       type: 'link',
+      limit: 50,
       queryParam: true,
       schema: {
         valueType: 'string',
@@ -155,6 +161,7 @@ const facets = {
     inputs: [{
       id: 'place',
       type: 'link',
+      limit: 50,
       queryParam: true,
       schema: {
         valueType: 'string',
