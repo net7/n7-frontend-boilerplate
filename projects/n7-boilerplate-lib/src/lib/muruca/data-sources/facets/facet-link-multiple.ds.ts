@@ -1,4 +1,4 @@
-import { DataSource } from '@n7-frontend/core';
+import { DataSource, _t } from '@n7-frontend/core';
 import { InputLink, InputLinkData } from '@n7-frontend/components';
 import { FacetDataSource } from './facet-datasource';
 
@@ -9,12 +9,26 @@ export class FacetLinkMultipleDS extends DataSource implements FacetDataSource {
 
   value = [];
 
+  private isUpdate = false;
+
   protected transform(data: InputLinkData): InputLinkData {
+    const { links } = data;
+    // empty state check
+    if (this.isUpdate && !links.length) {
+      return {
+        links: [{
+          text: _t('global#facet_empty_text'),
+          classes: 'empty-text-link',
+          payload: null,
+        }]
+      };
+    }
     return data;
   }
 
   setValue(value, update = false) {
     this.value = value;
+    this.isUpdate = update;
 
     if (update) {
       const { links } = this.input;
