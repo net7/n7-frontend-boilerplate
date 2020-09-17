@@ -18,6 +18,11 @@ export class MrBreadcrumbsDS extends DataSource {
         }))
       ];
     }
+
+    // remove last link
+    if (items.length) {
+      items[items.length - 1].anchor = null;
+    }
     return { items };
   }
 }
