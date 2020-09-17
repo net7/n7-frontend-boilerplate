@@ -37,6 +37,8 @@ export class MrSearchService {
     [key: string]: any;
   } = {};
 
+  private internalFilterKeys: string[] = [];
+
   private internalFilterState: {
     globalParams: any;
     facets: {
@@ -148,7 +150,7 @@ export class MrSearchService {
   public reset() {
     // clear input states
     Object.keys(this.contextState[INPUT_STATE_CONTEXT])
-      .filter((id) => !this.internalFilterState.facets[id])
+      .filter((id) => !this.internalFilterKeys.includes(id))
       .forEach((id) => {
         this.setState(INPUT_STATE_CONTEXT, id, null);
       });
@@ -181,7 +183,7 @@ export class MrSearchService {
       [header, ...inputs]
         .filter((input) => input)
         .forEach(({
-          id, queryParam, schema, limit, type
+          id, queryParam, schema, limit, type, target
         }) => {
           if (!id) {
             return;
@@ -206,6 +208,11 @@ export class MrSearchService {
               offset: 0,
               query: ''
             };
+          }
+
+          // internal filters
+          if (target) {
+            this.internalFilterKeys.push(id);
           }
         });
     });
