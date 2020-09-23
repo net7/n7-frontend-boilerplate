@@ -37,6 +37,40 @@
             }
         }
 
+        /* Metadata under title */
+        .mr-resource__metadata-content {
+            max-width: $page-max-width;
+            margin: -$space*3 auto $space*6 auto;
+        }
+
+        .n7-metadata-viewer__item {
+            display: inline;
+            
+            &:not(:last-child):after {
+                content: "-";
+                margin-left: $space;
+                margin-right: $space;
+                color: $color-text-light;
+            }
+        }
+
+        .n7-metadata-viewer__item-label {
+            display: inline;
+            margin-right: $space/2;
+            font-size: $font-size-s;
+        }
+
+        .n7-metadata-viewer__item-value {
+            display: inline;
+            font-size: $font-size-s;
+        }
+
+        .n7-metadata-viewer__item-value p {
+                display: inline;
+                font-size: $font-size-s;
+                margin: 0;
+        }
+
         /* Tabs */
         .mr-resource__tabs {
             position: relative;
