@@ -9,11 +9,38 @@
    #STATIC
 \* ------------------------------------ */
 .mr-static {
-    &__title {
+    &__top {
         max-width: $page-readable-width;
         margin: 0 auto $space*6 auto;
-        padding: $space*6 0;
+        padding: $space*6 0 $space*4 0;
         border-bottom: 1px solid $color-border-normal;
+    }
+
+    &__title {
+        margin: 0;
+        font-size: $font-size-xxl;
+        line-height: 1.4;
+    }
+
+    &__metadata {
+        margin-top: $space*3;
+
+        .n7-metadata-viewer__item {
+            display: inline-block;
+
+            &:not(:last-child):after {
+                content: ", ";
+                margin-right: $space;
+            }
+        }
+
+        .n7-metadata-viewer__item-label {
+            font-weight: $font-weight-normal;
+        }
+
+        .n7-metadata-viewer__item-value {
+            font-weight: $font-weight-bold;
+        }
     }
 
     &__content {
