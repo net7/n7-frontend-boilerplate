@@ -1,5 +1,12 @@
 import { DataSource } from '@n7-frontend/core';
+import { merge } from 'lodash';
+import helpers from '../../common/helpers';
 import linksHelper from '../helpers/links-helper';
+
+const ITEM_PREVIEW_DEFAULTS = {
+  limit: 100,
+  striptags: true
+};
 
 export class MrCollectionDS extends DataSource {
   id: string;
@@ -8,7 +15,8 @@ export class MrCollectionDS extends DataSource {
     if (data === undefined) { return null; }
 
     const { header, items } = data;
-    const { classes } = this.options;
+    const { classes, itemPreview } = this.options;
+    const itemPreviewOptions = merge(ITEM_PREVIEW_DEFAULTS, (itemPreview || {}));
 
     if ((header || {}).button) {
       const { link, text } = header.button;
@@ -36,14 +44,24 @@ export class MrCollectionDS extends DataSource {
           buttons: header.button
         }
       },
-      items: items.map((item) => ({
-        ...item,
-        anchor: {
-          href: linksHelper.getRouterLink(item.link),
-          queryParams: linksHelper.getQueryParams(item.link)
-        },
-        classes: classes || ''
-      }))
+      items: items.map((item) => {
+        // striptags
+        if (itemPreviewOptions.striptags) {
+          item.text = helpers.striptags(item.text);
+        }
+        // limit
+        if (itemPreviewOptions.limit && (item.text.length > itemPreviewOptions.limit)) {
+          item.text = `${item.text.substring(0, itemPreviewOptions.limit)}...`;
+        }
+        return {
+          ...item,
+          anchor: {
+            href: linksHelper.getRouterLink(item.link),
+            queryParams: linksHelper.getQueryParams(item.link)
+          },
+          classes: classes || ''
+        };
+      })
     };
   }
 }

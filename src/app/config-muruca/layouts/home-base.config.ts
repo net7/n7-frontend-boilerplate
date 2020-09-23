@@ -32,7 +32,10 @@ export default {
       type: 'collection',
       grid: 4,
       options: {
-        classes: 'is-vertical'
+        classes: 'is-vertical',
+        itemPreview: {
+          limit: 100
+        }
       }
     }
   ]
