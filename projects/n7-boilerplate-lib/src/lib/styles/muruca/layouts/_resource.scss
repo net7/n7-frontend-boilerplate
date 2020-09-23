@@ -105,6 +105,10 @@
             width: 220px;
             flex-shrink: 0;
             flex-grow: 0;
+            font-family: $font-family-main;
+            color: $color-text-light;
+            font-size: $font-size-xl;
+            font-weight: $font-weight-bold;
         }
 
         /* Metadata */
@@ -115,6 +119,23 @@
 
             .mr-resource__metadata-content {
                 display: flex;
+            }
+
+            .n7-metadata-viewer__item {
+                display: flex;
+                margin-bottom: $space*2;
+            }
+
+            .n7-metadata-viewer__item-label {
+                width: 170px;
+                margin-right: $space;
+                flex-shrink: 0;
+            }
+
+            .n7-metadata-viewer__item-value,
+            .n7-metadata-viewer__item-value p {
+                    margin: 0;
+                    line-height: 1.6;
             }
 
             .n7-metadata-viewer__group:last-child,
