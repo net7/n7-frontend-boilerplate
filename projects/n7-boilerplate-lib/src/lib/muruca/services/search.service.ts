@@ -285,13 +285,13 @@ export class MrSearchService {
           const inputContext = this.contextState[INPUT_STATE_CONTEXT];
           if (isEmpty(inputContext)) {
             Object.keys(params)
-              .filter((inputId) => this.queryParamKeys[inputId])
+              .filter((inputId) => this.queryParamKeys.includes(inputId))
               .forEach((inputId) => {
                 this.setState(INPUT_STATE_CONTEXT, inputId, params[inputId]);
               });
           } else {
             Object.keys(inputContext)
-              .filter((inputId) => this.queryParamKeys[inputId])
+              .filter((inputId) => this.queryParamKeys.includes(inputId))
               .filter((inputId) => this.notEquals(inputContext[inputId], params[inputId]))
               .forEach((inputId) => {
                 this.setState(INPUT_STATE_CONTEXT, inputId, params[inputId] || null);
