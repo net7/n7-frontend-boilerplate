@@ -11,9 +11,8 @@ const ITEM_PREVIEW_DEFAULTS = {
 export class MrSearchResultsDS extends DataSource {
   protected transform(data) {
     const { results } = data;
-    let { itemPreview } = this.options.config;
-    itemPreview = itemPreview || {};
-    const itemPreviewOptions = merge(ITEM_PREVIEW_DEFAULTS, itemPreview);
+    const { itemPreview } = this.options.config;
+    const itemPreviewOptions = merge(ITEM_PREVIEW_DEFAULTS, (itemPreview || {}));
 
     return results.map((item) => {
       // striptags
