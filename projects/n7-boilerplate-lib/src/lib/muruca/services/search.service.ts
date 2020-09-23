@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject } from 'rxjs';
+import { fromEvent, Subject } from 'rxjs';
 import {
   filter,
   switchMap,
@@ -11,6 +11,7 @@ import {
   tap
 } from 'rxjs/operators';
 import { isEmpty, xor } from 'lodash';
+import { _t } from '@n7-frontend/core';
 import { CommunicationService } from '../../common/services/communication.service';
 import searchHelper from '../helpers/search-helper';
 import { MrInputSchema } from '../interfaces/search.interface';
@@ -80,6 +81,7 @@ export class MrSearchService {
     this.onInternalInputsChange();
     this.onRouteChange();
     this.onResultsLoading();
+    this.onFacetsScroll();
   }
 
   public getConfig = () => this.config;
@@ -206,7 +208,9 @@ export class MrSearchService {
               id,
               limit,
               offset: 0,
-              query: ''
+              query: '',
+              loading: false,
+              values: []
             };
           }
 
@@ -285,13 +289,13 @@ export class MrSearchService {
           const inputContext = this.contextState[INPUT_STATE_CONTEXT];
           if (isEmpty(inputContext)) {
             Object.keys(params)
-              .filter((inputId) => this.queryParamKeys[inputId])
+              .filter((inputId) => this.queryParamKeys.includes(inputId))
               .forEach((inputId) => {
                 this.setState(INPUT_STATE_CONTEXT, inputId, params[inputId]);
               });
           } else {
             Object.keys(inputContext)
-              .filter((inputId) => this.queryParamKeys[inputId])
+              .filter((inputId) => this.queryParamKeys.includes(inputId))
               .filter((inputId) => this.notEquals(inputContext[inputId], params[inputId]))
               .forEach((inputId) => {
                 this.setState(INPUT_STATE_CONTEXT, inputId, params[inputId] || null);
@@ -363,6 +367,7 @@ export class MrSearchService {
       const { target } = inputConfig;
       // update internal filters
       this.internalFilterState.facets[target].query = value;
+      this.internalFilterState.facets[target].offset = 0;
       this.doSingleFacetRequest(target);
     });
   }
@@ -387,6 +392,9 @@ export class MrSearchService {
       }
     }, facets.provider || null).subscribe((response) => {
       this.onFacetsRequestSuccess(response);
+
+      // reset loading
+      this.internalFilterState.facets[target].loading = false;
     });
   }
 
@@ -447,8 +455,30 @@ export class MrSearchService {
     this.getState$(FACETS_REQUEST_STATE_CONTEXT, 'success').subscribe((response) => {
       const { facets: responseFacets } = response;
       Object.keys(responseFacets).forEach((id) => {
+        const { values, total_count } = responseFacets[id];
+        const { limit, offset, values: stateValues } = this.internalFilterState.facets[id];
+        if (offset > 0) {
+          // delete loading element
+          stateValues.values.pop();
+          // merge new results
+          stateValues.values = [
+            ...stateValues,
+            ...values
+          ];
+        } else {
+          stateValues.values = [
+            ...values
+          ];
+        }
+        if ((offset + limit) < total_count) {
+          stateValues.values.push({
+            text: _t('global#facet_loading_text'),
+            classes: 'loading-text-link',
+            payload: null,
+          });
+        }
         this.setState(FACET_STATE_CONTEXT, id, {
-          links: responseFacets[id].values
+          links: stateValues.values
         });
       });
     });
@@ -466,6 +496,41 @@ export class MrSearchService {
       }));
     });
     this.setState(FACETS_REQUEST_STATE_CONTEXT, 'success', response);
+  }
+
+  private onFacetsScroll() {
+    setTimeout(() => {
+      const { facets } = this.config;
+      facets.sections.forEach(({ inputs }) => {
+        inputs
+          .filter((input) => input)
+          .filter((input) => input.type === 'link')
+          .forEach(({ id }) => {
+            const scrollEl = document.querySelector(`#${id} .n7-input-link`);
+            const scroll$ = fromEvent(scrollEl, 'scroll');
+            scroll$.pipe(
+              debounceTime(300)
+            ).subscribe(({ target }) => {
+              const {
+                limit,
+                offset,
+                total_count,
+                loading
+              } = this.internalFilterState.facets[id];
+              const { scrollTop, clientHeight, scrollHeight } = target as HTMLElement;
+              if (
+                (scrollTop + clientHeight >= scrollHeight)
+                && (offset + limit < total_count)
+                && loading === false
+              ) {
+                this.internalFilterState.facets[id].loading = true;
+                this.internalFilterState.facets[id].offset = offset + limit;
+                this.doSingleFacetRequest(id);
+              }
+            });
+          });
+      });
+    });
   }
 
   notEquals(val1, val2) {

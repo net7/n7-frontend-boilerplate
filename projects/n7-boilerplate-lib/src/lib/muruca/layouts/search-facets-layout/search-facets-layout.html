@@ -9,7 +9,9 @@
         ></n7-facet-header>
 
         <div [hidden]="section.header && !lb.widgets[section.header.id].ds.isOpen()" class="mr-facets__single-facet-content">
-            <div *ngFor="let input of section.inputs" class="mr-facets__single-facet-inner-content {{ input.classes || '' }}">
+            <div *ngFor="let input of section.inputs" 
+            [attr.id]="input.id"
+            class="mr-facets__single-facet-inner-content {{ input.classes || '' }}">
                 <ng-container [ngSwitch]="input.type">
     
                     <!-- INPUT TEXT -->
