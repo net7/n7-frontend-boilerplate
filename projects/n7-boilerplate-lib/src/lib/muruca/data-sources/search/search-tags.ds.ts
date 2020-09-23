@@ -20,7 +20,10 @@ export class MrSearchTagsDS extends DataSource {
               .forEach((value) => {
                 let text = value;
                 if (facets[id]) {
-                  text = facets[id].values.find(({ payload }) => payload === value)?.text;
+                  const selectedFacet = facets[id].values.find(({ payload }) => payload === value);
+                  if (selectedFacet) {
+                    text = selectedFacet.text;
+                  }
                 }
                 tags.push({
                   text,
