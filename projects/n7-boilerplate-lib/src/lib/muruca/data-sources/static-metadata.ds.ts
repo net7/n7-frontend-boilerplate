@@ -7,17 +7,9 @@ export class MrStaticMetadataDS extends DataSource {
       .filter((metakey) => data[metakey])
       .map((metakey) => {
         const itemValue = metakey === 'date' ? dateHelper.format(data[metakey], _t('global#date_human')) : data[metakey];
-        if (metakey === 'time_to_read') {
-          return {
-            value: _t(
-              `resource#${metakey}`,
-              { value: itemValue },
-              (key, placeholders) => (placeholders.value === 1 ? `${key}_1` : key)
-            )
-          };
-        }
         return {
-          value: _t(`resource#${metakey}`, { value: itemValue })
+          label: _t(`resource#${metakey}`),
+          value: itemValue
         };
       });
 
