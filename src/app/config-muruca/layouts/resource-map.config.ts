@@ -19,6 +19,10 @@ export default {
       {
         id: 'header',
         type: 'title'
+      },
+      {
+        id: 'metadata',
+        type: 'metadata'
       }
     ],
     content: [
