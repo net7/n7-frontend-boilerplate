@@ -367,6 +367,7 @@ export class MrSearchService {
       const { target } = inputConfig;
       // update internal filters
       this.internalFilterState.facets[target].query = value;
+      this.internalFilterState.facets[target].offset = 0;
       this.doSingleFacetRequest(target);
     });
   }
@@ -458,26 +459,26 @@ export class MrSearchService {
         const { limit, offset, values: stateValues } = this.internalFilterState.facets[id];
         if (offset > 0) {
           // delete loading element
-          this.internalFilterState.facets[id].values.pop();
+          stateValues.values.pop();
           // merge new results
-          this.internalFilterState.facets[id].values = [
+          stateValues.values = [
             ...stateValues,
             ...values
           ];
         } else {
-          this.internalFilterState.facets[id].values = [
+          stateValues.values = [
             ...values
           ];
         }
         if ((offset + limit) < total_count) {
-          values.push({
+          stateValues.values.push({
             text: _t('global#facet_loading_text'),
             classes: 'loading-text-link',
             payload: null,
           });
         }
         this.setState(FACET_STATE_CONTEXT, id, {
-          links: this.internalFilterState.facets[id].values
+          links: stateValues.values
         });
       });
     });
@@ -529,7 +530,7 @@ export class MrSearchService {
             });
           });
       });
-    }, 1000);
+    });
   }
 
   notEquals(val1, val2) {
