@@ -6,6 +6,7 @@ export default {
   'global#layout_error_title': 'Spiacenti, si è verificato un errore',
   'global#layout_error_description': 'Prova a ricaricare la pagina tra qualche istante e se il problema persiste contatta l\'amministratore della piattaforma.',
   'global#facet_empty_text': 'Non ci sono risultati',
+  'global#facet_loading_text': 'Loading...',
   'readmore#label': 'Mostra tutto',
   'search#maps_total': '{ total } Mappe',
   'search#maps_total_1': '{ total } Mappa',

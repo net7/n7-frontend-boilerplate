@@ -48,7 +48,7 @@ const facets = {
     }, {
       id: 'toponyms',
       type: 'link',
-      limit: 50,
+      limit: 5,
       queryParam: true,
       schema: {
         valueType: 'string',
@@ -70,7 +70,7 @@ const facets = {
     inputs: [{
       id: 'continents',
       type: 'link',
-      limit: 50,
+      limit: 5,
       queryParam: true,
       schema: {
         valueType: 'string',
@@ -92,7 +92,7 @@ const facets = {
     inputs: [{
       id: 'authors',
       type: 'link',
-      limit: 50,
+      limit: 5,
       queryParam: true,
       schema: {
         valueType: 'string',
@@ -115,7 +115,7 @@ const facets = {
     inputs: [{
       id: 'keywords',
       type: 'link',
-      limit: 50,
+      limit: 5,
       queryParam: true,
       schema: {
         valueType: 'string',
@@ -138,7 +138,7 @@ const facets = {
     inputs: [{
       id: 'date',
       type: 'link',
-      limit: 50,
+      limit: 5,
       queryParam: true,
       schema: {
         valueType: 'string',
@@ -161,7 +161,7 @@ const facets = {
     inputs: [{
       id: 'place',
       type: 'link',
-      limit: 50,
+      limit: 5,
       queryParam: true,
       schema: {
         valueType: 'string',
