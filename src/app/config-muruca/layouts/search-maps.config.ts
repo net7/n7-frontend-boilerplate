@@ -38,7 +38,9 @@ export default {
     ]
   },
   itemPreview: {
-    classes: 'is-vertical'
+    classes: 'is-vertical',
+    limit: 200,
+    striptags: true,
   },
   fallback: {
     text: 'search#fallback_text',
