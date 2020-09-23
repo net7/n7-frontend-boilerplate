@@ -23,8 +23,14 @@ export default {
     ],
     content: [
       {
+        id: 'image-viewer',
+        type: 'viewer',
+        grid: null
+      },
+      {
         id: 'metadata-description',
         type: 'metadata',
+        // title: 'Descrizione',
         grid: null,
         options: {
           hideLabels: true
@@ -32,11 +38,13 @@ export default {
       },
       {
         id: 'metadata',
+        title: 'Metadati',
         type: 'metadata',
         grid: null
       },
       {
         id: 'metadata-size',
+        title: 'Dimensioni',
         type: 'metadata',
         grid: null
       },
@@ -49,6 +57,24 @@ export default {
         id: 'collection-continents',
         type: 'collection',
         grid: 3
+      },
+      {
+        id: 'collection-maps',
+        type: 'collection',
+        grid: 3,
+        title: 'Second level maps'
+      },
+      {
+        id: 'collection-toponyms',
+        title: 'Toponimi',
+        type: 'collection',
+        grid: null,
+      },
+      {
+        id: 'collection-keywords',
+        title: 'Keywords',
+        type: 'collection',
+        grid: null,
       }
     ]
   }

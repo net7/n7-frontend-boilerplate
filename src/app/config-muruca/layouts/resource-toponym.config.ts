@@ -2,12 +2,21 @@ export default {
   title: 'Toponimi',
   type: 'toponym',
   sections: {
-    top: [],
-    content: [
+    top: [
       {
         id: 'header',
         type: 'title',
         grid: null
+      }
+    ],
+    content: [
+      {
+        id: 'metadata-description',
+        type: 'metadata',
+        grid: null,
+        options: {
+          hideLabels: true
+        }
       },
       {
         id: 'metadata',
@@ -17,7 +26,8 @@ export default {
       {
         id: 'collection-toponyms',
         type: 'collection',
-        grid: 3
+        grid: 3,
+        title: 'Related something'
       }
     ]
   }
