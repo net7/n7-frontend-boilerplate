@@ -10,6 +10,14 @@ export default {
         grid: null
       },
       {
+        id: 'metadata-description',
+        type: 'metadata',
+        grid: null,
+        options: {
+          hideLabels: true
+        }
+      },
+      {
         id: 'metadata',
         type: 'metadata',
         grid: null

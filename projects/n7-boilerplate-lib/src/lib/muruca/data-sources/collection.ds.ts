@@ -1,10 +1,23 @@
 import { DataSource } from '@n7-frontend/core';
 import linksHelper from '../helpers/links-helper';
 
+type collectionResponse = {
+  header: {
+    title?: string;
+    subtitle?: string;
+    button?: any;
+  };
+  items: {
+    link?: string;
+    title?: string;
+    type?: string;
+  }[];
+}
+
 export class MrCollectionDS extends DataSource {
   id: string;
 
-  protected transform(data: any): any {
+  protected transform(data: collectionResponse): any {
     if (data === undefined) { return null; }
 
     const { header, items } = data;

@@ -4,6 +4,9 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "arianna": "ng serve -c arianna",
+    "muruca": "ng serve -c muruca",
+    "dataviz": "ng serve -c dataviz",
     "build": "ng build n7-boilerplate-lib --prod",
     "postbuild": "node scripts/build-after",
     "test": "ng test",
