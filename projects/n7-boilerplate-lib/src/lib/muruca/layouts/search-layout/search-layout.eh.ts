@@ -143,6 +143,11 @@ export class MrSearchLayoutEH extends EventHandler {
         results.sort = params.sort;
       }
 
+      // limit check
+      if (params.limit) {
+        results.limit = params.limit;
+      }
+
       // offset check
       if (params.page && params.page > 1) {
         results.offset = results.limit * (params.page - 1);
@@ -152,7 +157,7 @@ export class MrSearchLayoutEH extends EventHandler {
 
       // cleanup
       Object.keys(params)
-        .filter((key) => ['sort', 'page'].includes(key))
+        .filter((key) => ['sort', 'page', 'limit'].includes(key))
         .forEach((key) => {
           delete params[key];
         });
