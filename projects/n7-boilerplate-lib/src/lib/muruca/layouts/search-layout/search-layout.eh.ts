@@ -145,7 +145,7 @@ export class MrSearchLayoutEH extends EventHandler {
 
       // offset check
       if (params.page && params.page > 1) {
-        results.offset = results.limit * params.page;
+        results.offset = results.limit * (params.page - 1);
       }
 
       params.results = results;
