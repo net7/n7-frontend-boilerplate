@@ -506,7 +506,7 @@ export class MrSearchService {
           .filter((input) => input)
           .filter((input) => input.type === 'link')
           .forEach(({ id }) => {
-            const scrollEl = document.querySelector(`#${id} .n7-input-link`);
+            const scrollEl = document.querySelector(`#facet-container-${id} .n7-input-link`);
             const scroll$ = fromEvent(scrollEl, 'scroll');
             scroll$.pipe(
               debounceTime(300)
