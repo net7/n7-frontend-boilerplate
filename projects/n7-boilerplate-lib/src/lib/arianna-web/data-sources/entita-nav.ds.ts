@@ -47,9 +47,9 @@ export class AwEntitaNavDS extends DataSource {
     }
     if (data.relatedLa) {
       navigation.items.push({
-        text: 'AGGREGAZIONI COLLEGATE',
-        anchor: { href: `${param.basePath}/aggregazioni-collegate` },
-        classes: selected === 'aggregazioni-collegate' ? 'is-selected' : '',
+        text: 'FONDI COLLEGATI',
+        anchor: { href: `${param.basePath}/fondi-collegati` },
+        classes: selected === 'fondi-collegati' ? 'is-selected' : '',
       });
     }
     if (data.extraTab) {
