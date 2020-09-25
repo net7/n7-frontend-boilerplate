@@ -117,6 +117,28 @@
                 }
               ]
             },
+            "sandbox": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/assets/app-config.json",
+                  "with": "src/assets/app-config.sandbox.json"
+                }, 
+                {
+                  "replace": "src/app/app.module.ts",
+                  "with": "src/app/app.module.sandbox.ts"
+                }, 
+                {
+                  "replace": "src/styles/styles.scss",
+                  "with": "src/styles/styles.sandbox.scss"
+                }
+              ]
+            },
             "muruca": {
               "budgets": [
                 {
@@ -155,6 +177,9 @@
             }, 
             "dataviz": {
               "browserTarget": "n7-boilerplate:build:dataviz"
+            }, 
+            "sandbox": {
+              "browserTarget": "n7-boilerplate:build:sandbox"
             }, 
             "muruca": {
               "browserTarget": "n7-boilerplate:build:muruca"
