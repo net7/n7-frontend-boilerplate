@@ -1,0 +1,60 @@
+//
+// N7 Boilerplate
+//
+// All SASS and CSS Import for the N7 Boilerplate example project
+//
+
+// fix missing vars
+$page-max-width: 1350px;
+$page-min-width: 960px;
+
+// ------------------------------------ //
+// #TIPPY
+// ------------------------------------ //
+@import '../../node_modules/tippy.js/dist/tippy.css';
+@import '../../node_modules/tippy.js/themes/light-border.css';
+
+
+// ------------------------------------ //
+// #N7-ICON-FONT
+// ------------------------------------ //
+@import "../../node_modules/@n7-frontend/icon-font/Font/n7-icon/style.css";
+
+
+// ------------------------------------ //
+// #N7 COLOR SCHEME
+// ------------------------------------ //
+@import "../../node_modules/@n7-frontend/components/src/lib/styles/generic/color_scheme";
+
+
+// ------------------------------------ //
+// #N7 COMPONENTS VARIABLES
+// ------------------------------------ //
+@import "../../node_modules/@n7-frontend/components/src/lib/styles/generic/variables";
+
+$color-background-layout: $color-background-base;
+$gradient-item-preview-list: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, $color-background-layout 100%);
+
+
+// ------------------------------------ //
+// #N7 COMPONENTS STYLES
+// ------------------------------------ //
+@import '../../node_modules/@n7-frontend/components/src/lib/styles/imports';
+
+
+// ------------------------------------ //
+// #COMMON COMPONENTS
+// ------------------------------------ //
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/common/components/facets-wrapper";
+
+
+// ------------------------------------ //
+// #COMMON LAYOUTS
+// ------------------------------------ //
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/common/layouts/main-layout";
+
+
+// ------------------------------------ //
+// #COMMON UTILITIES
+// ------------------------------------ //
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/common/utilities/_utilities";
