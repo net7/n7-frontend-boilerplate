@@ -45,6 +45,13 @@ export class AwEntitaNavDS extends DataSource {
         classes: selected === 'entita-collegate' ? 'is-selected' : '',
       });
     }
+    if (data.relatedLa) {
+      navigation.items.push({
+        text: 'AGGREGAZIONI COLLEGATE',
+        anchor: { href: `${param.basePath}/aggregazioni-collegate` },
+        classes: selected === 'aggregazioni-collegate' ? 'is-selected' : '',
+      });
+    }
     if (data.extraTab) {
       navigation.items.push({
         text: 'MAXXI',
