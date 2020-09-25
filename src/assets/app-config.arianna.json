@@ -556,7 +556,7 @@
       },
       "icon": "n7-icon-archive",
       "label": "Fondi",
-      "singular-label": "Aggregazione logica",
+      "singular-label": "Fondo",
       "input-placeholder": "",
       "class-name": "aggregazione-logica"
     },
