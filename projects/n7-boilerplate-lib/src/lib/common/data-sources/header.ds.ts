@@ -31,6 +31,9 @@ export class HeaderDS extends DataSource {
   }
 
   public onRouterChange() {
+    if (!this.output) {
+      return;
+    }
     let { classes } = this.output;
     classes = classes || '';
     classes = classes.split(' ');
