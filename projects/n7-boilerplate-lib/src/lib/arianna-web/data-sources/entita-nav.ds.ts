@@ -47,7 +47,7 @@ export class AwEntitaNavDS extends DataSource {
     }
     if (data.relatedLa) {
       navigation.items.push({
-        text: labels['fondi-collegati'],
+        text: labels['aggregazioni-logiche-collegate'],
         anchor: { href: `${param.basePath}/fondi-collegati` },
         classes: selected === 'fondi-collegati' ? 'is-selected' : '',
       });

@@ -144,7 +144,7 @@
                  *ngIf="(lb.widgets['aw-linked-objects'].ds.out$ | async)?.previews && lb.dataSource.myResponse.relatedLa"
                  [hidden]="lb.dataSource.selectedTab != 'overview' && lb.dataSource.selectedTab != 'fondi-collegati'">
                 <div class="aw-entity__content-section-header">
-                    <h2 class="aw-entity__content-section-title">{{ lb.dataSource.configuration.get('labels')['fondi-collegati'] }}</h2>
+                    <h2 class="aw-entity__content-section-title">{{ lb.dataSource.configuration.get('labels')['aggregazioni-logiche-collegate'] }}</h2>
 
                     <a *ngIf="lb.dataSource.selectedTab === 'overview' "
                        [routerLink]="[lb.dataSource.getNavBasePath() + '/fondi-collegati/']"
