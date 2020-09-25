@@ -29,6 +29,22 @@ export default {
   browserIsIE() {
     return window.navigator.userAgent.match(/(MSIE|Trident)/);
   },
+  escapeQuotes(str) {
+    if (typeof str !== 'string') {
+      return '';
+    }
+    return str
+      .replace(/"/g, '\\\\\\"')
+      .replace(/'/g, '\\\\\'');
+  },
+  unescapeQuotes(str) {
+    if (typeof str !== 'string') {
+      return '';
+    }
+    return str
+      .replace(/\\\\\\"/g, '"')
+      .replace(/\\\\'/g, '\'');
+  },
   escapeDoubleQuotes(str) {
     if (str.search(/\\?(")([\w\s]+)\\?(")/g) >= 0) {
       // match piece of string between double quotes

@@ -132,7 +132,7 @@ export class AwSearchModel {
       ) {
         filter.value.push(value);
       } else {
-        filter.value = !remove ? helpers.escapeDoubleQuotes(value) : null;
+        filter.value = !remove ? helpers.escapeQuotes(value) : null;
       }
     });
   }

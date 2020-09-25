@@ -33,6 +33,6 @@ export class AwFacetInputText extends AwFacetInput {
   }
 
   public setActive(facetValue) {
-    this.output.value = helpers.unescapeDoubleQuotes(facetValue) || null;
+    this.output.value = helpers.unescapeQuotes(facetValue) || null;
   }
 }

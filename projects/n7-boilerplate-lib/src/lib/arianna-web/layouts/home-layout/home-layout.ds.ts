@@ -216,7 +216,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
 
   onHeroChange(value) {
     if (value) {
-      const escapedValue = helpers.escapeDoubleQuotes(value);
+      const escapedValue = helpers.escapeQuotes(value);
       this.autocompleteChanged$.next(escapedValue);
       this.homeAutocompleteIsLoading = true;
       this.homeAutocompleteQuery = escapedValue;
