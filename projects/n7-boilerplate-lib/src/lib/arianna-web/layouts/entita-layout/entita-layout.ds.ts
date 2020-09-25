@@ -209,7 +209,8 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     this.one('aw-entita-nav').updateOptions({
       bubblesEnabled: this.bubblesEnabled,
       config: this.configuration.get('entita-layout'),
-      hasMetadataFields: this.hasMetadataFields
+      hasMetadataFields: this.hasMetadataFields,
+      labels: this.configuration.get('labels')
     });
     this.one('aw-entita-metadata-viewer').update(this.getFields(res));
     this.one('aw-linked-objects').updateOptions({

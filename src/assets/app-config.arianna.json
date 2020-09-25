@@ -824,6 +824,7 @@
     "evento.data_inizio": "Data di inizio",
     "evento.data_fine": "Data di fine",
     "evento.ricorrenza": "Ricorrenza",
-    "evento.descrizione": "Descrizione"
+    "evento.descrizione": "Descrizione",
+    "fondi-collegati": "Fondi collegati"
   }
 }

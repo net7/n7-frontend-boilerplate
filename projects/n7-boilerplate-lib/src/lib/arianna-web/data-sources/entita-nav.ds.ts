@@ -7,7 +7,7 @@ export class AwEntitaNavDS extends DataSource {
     }
     const { data, selected } = param;
     const navigation = { items: [], payload: 'entita-nav' };
-    const { hasMetadataFields } = this.options;
+    const { hasMetadataFields, labels } = this.options;
 
     /* navigation.items.push({
       text: 'OVERVIEW',
@@ -47,7 +47,7 @@ export class AwEntitaNavDS extends DataSource {
     }
     if (data.relatedLa) {
       navigation.items.push({
-        text: 'FONDI COLLEGATI',
+        text: labels['fondi-collegati'],
         anchor: { href: `${param.basePath}/fondi-collegati` },
         classes: selected === 'fondi-collegati' ? 'is-selected' : '',
       });
