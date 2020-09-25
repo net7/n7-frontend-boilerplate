@@ -132,6 +132,21 @@ export default {
           label
           id
           typeOfEntity
+          relatedLa: relatedAl {
+            thumbnail
+            relation          
+            item {
+              label
+              id
+              fields {
+                ...
+                on KeyValueField {
+                  key
+                  value
+                }
+              }
+            }
+          }
           fields {
             ...
             on KeyValueField {

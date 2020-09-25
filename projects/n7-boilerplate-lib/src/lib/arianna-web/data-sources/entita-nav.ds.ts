@@ -7,7 +7,7 @@ export class AwEntitaNavDS extends DataSource {
     }
     const { data, selected } = param;
     const navigation = { items: [], payload: 'entita-nav' };
-    const { hasMetadataFields } = this.options;
+    const { hasMetadataFields, labels } = this.options;
 
     /* navigation.items.push({
       text: 'OVERVIEW',
@@ -43,6 +43,13 @@ export class AwEntitaNavDS extends DataSource {
         text: 'ENTITÀ COLLEGATE',
         anchor: { href: `${param.basePath}/entita-collegate` },
         classes: selected === 'entita-collegate' ? 'is-selected' : '',
+      });
+    }
+    if (data.relatedLa) {
+      navigation.items.push({
+        text: labels['aggregazioni-logiche-collegate'],
+        anchor: { href: `${param.basePath}/fondi-collegati` },
+        classes: selected === 'fondi-collegati' ? 'is-selected' : '',
       });
     }
     if (data.extraTab) {
