@@ -294,7 +294,7 @@ export class MrSearchService {
                 this.setState(INPUT_STATE_CONTEXT, inputId, params[inputId]);
               });
           } else {
-            Object.keys(inputContext)
+            Object.keys(params)
               .filter((inputId) => this.queryParamKeys.includes(inputId))
               .filter((inputId) => this.notEquals(inputContext[inputId], params[inputId]))
               .forEach((inputId) => {

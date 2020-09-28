@@ -94,8 +94,12 @@ export class MrSearchLayoutEH extends EventHandler {
     // inputs listener
     this.searchService.getState$(INPUT_STATE_CONTEXT).pipe(
       takeUntil(this.destroyed$)
-    ).subscribe(({ state }) => {
+    ).subscribe(({ lastUpdated, state }) => {
       this.searchState = state;
+
+      if (lastUpdated !== 'page') {
+        this.searchService.setState(INPUT_STATE_CONTEXT, 'page', 1);
+      }
     });
     this.searchService.getState$(INPUT_STATE_CONTEXT, 'query').pipe(
       takeUntil(this.destroyed$)
