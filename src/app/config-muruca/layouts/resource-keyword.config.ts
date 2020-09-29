@@ -7,7 +7,7 @@ export default {
         id: 'header',
         type: 'title',
         grid: null
-      }
+      },
     ],
     content: [
       {
@@ -19,7 +19,7 @@ export default {
         id: 'collection-keywords',
         type: 'collection',
         grid: 3,
-        title: 'Related something'
+        title: 'Keywords'
       }
     ]
   }
