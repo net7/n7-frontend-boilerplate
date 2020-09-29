@@ -27,7 +27,7 @@ export default {
         id: 'collection-toponyms',
         type: 'collection',
         grid: 3,
-        title: 'Related something'
+        title: 'Toponimi'
       }
     ]
   }
