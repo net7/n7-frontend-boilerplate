@@ -43,8 +43,6 @@ export class MrCollectionDS extends DataSource {
       }];
     }
 
-    console.log(this.id);
-
     return {
       header: {
         title: {
