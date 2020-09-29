@@ -58,3 +58,8 @@ $gradient-item-preview-list: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, 
 // #COMMON UTILITIES
 // ------------------------------------ //
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/common/utilities/_utilities";
+
+// ------------------------------------ //
+// #SB LAYOUTS
+// ------------------------------------ //
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/sandbox/layouts/image-viewer";
