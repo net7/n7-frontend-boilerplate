@@ -456,7 +456,7 @@ export class MrSearchService {
     this.getState$(FACETS_REQUEST_STATE_CONTEXT, 'success').subscribe((response) => {
       const { facets: responseFacets } = response;
       Object.keys(responseFacets).forEach((id) => {
-        const { values: responseValues, total_count } = responseFacets[id];
+        const { values: responseValues, filtered_total_count } = responseFacets[id];
         const { limit, offset, values: stateValues } = this.internalFilterState.facets[id];
         const filterState = this.internalFilterState.facets[id];
         if (offset > 0) {
@@ -472,7 +472,7 @@ export class MrSearchService {
             ...responseValues
           ];
         }
-        if ((offset + limit) < total_count) {
+        if ((offset + limit) < filtered_total_count) {
           filterState.values.push({
             text: _t('global#facet_loading_text'),
             classes: 'loading-text-link',
@@ -490,8 +490,8 @@ export class MrSearchService {
     const { facets: responseFacets } = response;
     Object.keys(responseFacets).forEach((inputKey) => {
       // update internal filter state
-      const { total_count } = responseFacets[inputKey];
-      this.internalFilterState.facets[inputKey].total_count = total_count;
+      const { filtered_total_count } = responseFacets[inputKey];
+      this.internalFilterState.facets[inputKey].filtered_total_count = filtered_total_count;
       responseFacets[inputKey].values = responseFacets[inputKey].values.map((item) => ({
         ...item,
         payload: item.payload && typeof item.payload === 'string' ? encodeURIComponent(item.payload) : item.payload
@@ -516,13 +516,13 @@ export class MrSearchService {
               const {
                 limit,
                 offset,
-                total_count,
-                loading
+                loading,
+                filtered_total_count,
               } = this.internalFilterState.facets[id];
               const { scrollTop, clientHeight, scrollHeight } = target as HTMLElement;
               if (
                 (scrollTop + clientHeight >= scrollHeight)
-                && (offset + limit < total_count)
+                && (offset + limit < filtered_total_count)
                 && loading === false
               ) {
                 this.internalFilterState.facets[id].loading = true;
