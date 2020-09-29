@@ -16,10 +16,11 @@
 
 .sb-image-viewer-layout {
     position: relative;
+    height: 600px;
 }
 
 .n7-image-viewer {
-    height: 100vh;
+    height: 100%;
     &__viewer {
         height: 100%;
     }
@@ -32,9 +33,9 @@
     position: absolute;
     bottom: 0px;
     z-index: 9999;
-}
-
-.n7-image-viewer-tools__test {
-    height: auto;
-    background: unset;
+    
+    &__test {
+        height: auto;
+        background: unset;
+    }
 }

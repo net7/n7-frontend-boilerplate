@@ -4,23 +4,22 @@ export class SbImageViewerEH extends EventHandler {
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
-        case 'whatever.click':
-          console.log('widget-inner', type, payload);
-          // this.emitOuter('click', payload);
+        case 'sb-image-viewer.click':
+          this.emitOuter('click', payload);
           break;
         default:
-          console.warn('unhandled event of type', type);
+          // console.warn('unhandled event of type', type);
           break;
       }
     });
 
     this.outerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
-        case 'whatever.init':
-          console.log('widget-outer', type, payload);
+        case 'sb-image-viewer-layout.thumbclick':
+          this.dataSource.changePage(payload);
           break;
         default:
-          console.warn('unhandled event of type', type);
+          // console.warn('unhandled event of type', type);
           break;
       }
     });
