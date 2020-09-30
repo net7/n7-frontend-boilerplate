@@ -56,6 +56,9 @@ export default {
     return (str && str !== '') ? str.replace(/\\*(")/g, '$1') : str; // thanks @slevithan!
   },
   striptags(str) {
+    if (typeof str !== 'string') {
+      return '';
+    }
     return str.replace(/(<([^>]+)>)/gi, '');
   }
 };

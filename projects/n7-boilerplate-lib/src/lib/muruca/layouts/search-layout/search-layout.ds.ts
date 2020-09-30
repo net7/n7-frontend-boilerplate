@@ -76,7 +76,7 @@ export class MrSearchLayoutDS extends LayoutDataSource {
   private updateHeadTitle() {
     const appName = this.configuration.get('name');
     const pageTitle = this.pageConfig.title;
-    this.mainState.update('headTitle', [appName, pageTitle].join(' > '));
+    this.mainState.update('headTitle', [appName, _t(pageTitle)].join(' > '));
   }
 
   private addTranslations(config) {

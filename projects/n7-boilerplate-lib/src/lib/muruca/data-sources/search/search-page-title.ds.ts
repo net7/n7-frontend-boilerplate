@@ -1,4 +1,4 @@
-import { DataSource } from '@n7-frontend/core';
+import { DataSource, _t } from '@n7-frontend/core';
 
 export class MrSearchPageTitleDS extends DataSource {
   protected transform() {
@@ -7,7 +7,7 @@ export class MrSearchPageTitleDS extends DataSource {
     return {
       title: {
         main: {
-          text: title
+          text: _t(title)
         }
       }
     };

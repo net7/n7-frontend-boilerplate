@@ -106,6 +106,6 @@ export class MrResourceLayoutDS extends LayoutDataSource {
   private updateHeadTitle({ title: resourceTitle }) {
     const appName = this.configuration.get('name');
     const pageTitle = this.pageConfig.title;
-    this.mainState.update('headTitle', [appName, pageTitle, resourceTitle].join(' > '));
+    this.mainState.update('headTitle', [appName, _t(pageTitle), resourceTitle].join(' > '));
   }
 }
