@@ -30,14 +30,8 @@ export class SbImageViewerToolsDS extends DataSource {
     this.updateDescription();
   }
 
-  public handleImageViewer(payload) {
-    if (payload === 'move-right') {
-      this.output.initial += 1;
-    }
-    if (payload === 'move-left') {
-      this.output.initial -= 1;
-    }
-    this.updateDescription();
+  public handlePageChange(payload) {
+    this.handleThumbs(payload.page);
   }
 
   public updateDescription() {

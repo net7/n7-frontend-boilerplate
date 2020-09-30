@@ -7,6 +7,9 @@ export class SbImageViewerEH extends EventHandler {
         case 'sb-image-viewer.click':
           this.emitOuter('click', payload);
           break;
+        case 'sb-image-viewer.pagechange':
+          this.emitOuter('pagechange', payload);
+          break;
         default:
           // console.warn('unhandled event of type', type);
           break;
@@ -17,6 +20,9 @@ export class SbImageViewerEH extends EventHandler {
       switch (type) {
         case 'sb-image-viewer-layout.thumbclick':
           this.dataSource.changePage(payload);
+          break;
+        case 'sb-image-viewer-layout.pagechange':
+          // Silent
           break;
         default:
           // console.warn('unhandled event of type', type);

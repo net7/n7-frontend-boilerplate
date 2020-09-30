@@ -13,6 +13,7 @@ export class SbImageViewerDS extends DataSource {
     ];
     data.libOptions.showReferenceStrip = false;
     data._setViewer = (viewer) => { this.viewer = viewer; };
+    data._pageCallback = (eventData) => eventData;
     return data;
   }
 

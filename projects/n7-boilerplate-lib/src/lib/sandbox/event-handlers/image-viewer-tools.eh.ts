@@ -32,11 +32,11 @@ export class SbImageViewerToolsEH extends EventHandler {
 
     this.outerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
-        case 'sb-image-viewer-layout.viewerclick':
-          this.dataSource.handleImageViewer(payload);
-          break;
         case 'sb-image-viewer-layout.thumbclick':
           // Silent
+          break;
+        case 'sb-image-viewer-layout.pagechange':
+          this.dataSource.handlePageChange(payload);
           break;
         default:
           // console.warn('unhandled event of type', type);

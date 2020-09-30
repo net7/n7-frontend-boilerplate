@@ -16,6 +16,9 @@ export class SbImageViewerLayoutEH extends EventHandler {
         case 'sb-image-viewer-tools.click':
           // Silent
           break;
+        case 'sb-image-viewer.pagechange':
+          this.emitOuter('pagechange', payload);
+          break;
         case 'sb-image-viewer-tools.thumbclick':
           this.emitOuter('thumbclick', payload);
           break;
