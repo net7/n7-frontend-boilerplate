@@ -1,4 +1,5 @@
 import { EventHandler } from '@n7-frontend/core';
+import { first } from 'rxjs/operators';
 
 export class SbImageViewerEH extends EventHandler {
   public listen() {
@@ -18,6 +19,9 @@ export class SbImageViewerEH extends EventHandler {
 
     this.outerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
+        case 'sb-image-viewer-layout.init':
+          this.listenToViewer();
+          break;
         case 'sb-image-viewer-layout.thumbclick':
           this.dataSource.changePage(payload);
           break;
@@ -28,6 +32,17 @@ export class SbImageViewerEH extends EventHandler {
           // console.warn('unhandled event of type', type);
           break;
       }
+    });
+  }
+
+  listenToViewer() {
+    this.dataSource.viewerLoaded$.pipe(
+      first()
+    ).subscribe(() => {
+      const { viewer } = this.dataSource;
+      viewer.addHandler('page', (eventData) => {
+        this.emitOuter('pagechanged', eventData);
+      });
     });
   }
 }
