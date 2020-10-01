@@ -1,5 +1,10 @@
 {
   "compileOnSave": false,
+  "angularCompilerOptions": { 
+    "fullTemplateTypeCheck": true, 
+    "strictInjectionParameters": true, 
+    "enableIvy": false 
+  },
   "compilerOptions": {
     "baseUrl": "./",
     "downlevelIteration": true,
