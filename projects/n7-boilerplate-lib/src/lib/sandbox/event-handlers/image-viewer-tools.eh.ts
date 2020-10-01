@@ -32,6 +32,7 @@ export class SbImageViewerToolsEH extends EventHandler {
 
     this.outerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
+        case 'sb-image-viewer-layout.init':
         case 'sb-image-viewer-layout.thumbclick':
           // Silent
           break;

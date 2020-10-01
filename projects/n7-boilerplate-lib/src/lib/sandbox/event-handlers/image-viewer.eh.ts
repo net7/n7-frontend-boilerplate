@@ -41,7 +41,7 @@ export class SbImageViewerEH extends EventHandler {
     ).subscribe(() => {
       const { viewer } = this.dataSource;
       viewer.addHandler('page', (eventData) => {
-        this.emitOuter('pagechanged', eventData);
+        this.emitOuter('pagechange', eventData);
       });
     });
   }

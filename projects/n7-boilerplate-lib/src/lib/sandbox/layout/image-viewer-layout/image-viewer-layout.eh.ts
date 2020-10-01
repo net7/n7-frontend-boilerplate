@@ -6,7 +6,7 @@ export class SbImageViewerLayoutEH extends EventHandler {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
         case 'sb-image-viewer-layout.init':
-          // this.emitOuter('init');
+          this.emitOuter('init');
           break;
         default:
           // console.warn('unhandled event of type', type);
