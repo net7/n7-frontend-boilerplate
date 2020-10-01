@@ -556,7 +556,7 @@
       },
       "icon": "n7-icon-archive",
       "label": "Fondi",
-      "singular-label": "Aggregazione logica",
+      "singular-label": "Fondo",
       "input-placeholder": "",
       "class-name": "aggregazione-logica"
     },
@@ -824,6 +824,7 @@
     "evento.data_inizio": "Data di inizio",
     "evento.data_fine": "Data di fine",
     "evento.ricorrenza": "Ricorrenza",
-    "evento.descrizione": "Descrizione"
+    "evento.descrizione": "Descrizione",
+    "aggregazioni-logiche-collegate": "Fondi collegati"
   }
 }

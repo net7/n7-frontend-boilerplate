@@ -54,7 +54,7 @@ export class AwHomeLayoutEH extends EventHandler {
           this.emitOuter('select', payload);
           break;
         case 'aw-hero.enter': {
-          const query = payload.value;
+          const query = helpers.escapeQuotes(payload.value);
           this.emitGlobal('navigate', {
             handler: 'router',
             path: [this.configuration.get('paths').searchBasePath],

@@ -59,12 +59,12 @@ export class MrSearchLayoutDS extends LayoutDataSource {
   }
 
   private getPaginationParams(response) {
-    const { total_count: totalCount, page, limit } = response;
+    const { total_count: totalCount, offset, limit } = response;
     const { pagination: paginationConfig } = this.pageConfig;
 
     return {
       totalPages: Math.ceil(totalCount / limit),
-      currentPage: page,
+      currentPage: (offset + limit) / limit,
       pageLimit: paginationConfig.limit,
       sizes: {
         list: paginationConfig.options,
@@ -76,7 +76,7 @@ export class MrSearchLayoutDS extends LayoutDataSource {
   private updateHeadTitle() {
     const appName = this.configuration.get('name');
     const pageTitle = this.pageConfig.title;
-    this.mainState.update('headTitle', [appName, pageTitle].join(' > '));
+    this.mainState.update('headTitle', [appName, _t(pageTitle)].join(' > '));
   }
 
   private addTranslations(config) {

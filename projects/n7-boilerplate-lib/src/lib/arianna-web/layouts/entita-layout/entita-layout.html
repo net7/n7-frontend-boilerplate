@@ -140,6 +140,44 @@
                 </n7-smart-pagination>
             </div>
 
+            <div class="aw-entity__content-section aw-entity__content-section-overview"
+                 *ngIf="(lb.widgets['aw-linked-objects'].ds.out$ | async)?.previews && lb.dataSource.myResponse.relatedLa"
+                 [hidden]="lb.dataSource.selectedTab != 'overview' && lb.dataSource.selectedTab != 'fondi-collegati'">
+                <div class="aw-entity__content-section-header">
+                    <h2 class="aw-entity__content-section-title">{{ lb.dataSource.configuration.get('labels')['aggregazioni-logiche-collegate'] }}</h2>
+
+                    <a *ngIf="lb.dataSource.selectedTab === 'overview' "
+                       [routerLink]="[lb.dataSource.getNavBasePath() + '/fondi-collegati/']"
+                       [queryParams]="{ page: 1 }"
+                       class="n7-btn n7-btn-light">
+                        TUTTE LE FONDI COLLEGATI <i class="n7-icon-angle-right"></i>
+                    </a>
+                </div>
+                <div class="aw-entity__content-item-previews aw-item-preview-list">
+                    <ng-container *ngFor="let preview of (lb.widgets['aw-linked-objects'].ds.out$ | async)?.previews">
+                        <div class="aw-item-preview-wrapper">
+                            <n7-smart-breadcrumbs [data]="preview.breadcrumbs">
+                            </n7-smart-breadcrumbs>
+                            <n7-item-preview [data]="preview"
+                                             [emit]="lb.widgets['aw-linked-objects'].emit">
+                            </n7-item-preview>
+                            <!-- Relation -->
+                            <div class="aw-item-preview-relation"
+                                 *ngIf="preview.relation.value">
+                                <p class="aw-item-preview-relation__description">Relazione con
+                                    <span class="aw-item-preview-relation__key">{{preview.relation.key}}</span>:
+                                    <span class="aw-item-preview-relation__value"> {{preview.relation.value}}</span>
+                                </p>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+                <n7-smart-pagination *ngIf="lb.dataSource.selectedTab === 'fondi-collegati'"
+                                     [data]="lb.widgets['n7-smart-pagination'].ds.out$ | async"
+                                     [emit]="lb.widgets['n7-smart-pagination'].emit">
+                </n7-smart-pagination>
+            </div>
+
             <div class="aw-entity__content-section aw-entity__content-section-overview aw-related-entities__{{lb.dataSource.selectedTab}}"
                  *ngIf="lb.dataSource.myResponse.relatedEntities"
                  [hidden]="lb.dataSource.selectedTab != 'overview' && lb.dataSource.selectedTab != 'entita-collegate'">

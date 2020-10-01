@@ -59,13 +59,15 @@ export class MrCollectionDS extends DataSource {
         }
       },
       items: items.map((item) => {
-        // striptags
-        if (itemPreviewOptions.striptags) {
-          item.text = helpers.striptags(item.text);
-        }
-        // limit
-        if (itemPreviewOptions.limit && (item.text.length > itemPreviewOptions.limit)) {
-          item.text = `${item.text.substring(0, itemPreviewOptions.limit)}...`;
+        if (item.text) {
+          // Sanitize HTML tags from the text content
+          if (itemPreviewOptions.striptags) {
+            item.text = helpers.striptags(item.text);
+          }
+          // Limit the length of the item preview text content
+          if (itemPreviewOptions.limit && (item.text.length > itemPreviewOptions.limit)) {
+            item.text = `${item.text.substring(0, itemPreviewOptions.limit)}...`;
+          }
         }
         return {
           ...item,

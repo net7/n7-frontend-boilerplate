@@ -97,7 +97,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
   }
 
   drawPagination = () => {
-    if (!this.myResponse.relatedItems) return;
+    if (!this.getLinkedObjectItems()) return;
     const { href, queryParams } = this._getPaginationParams();
     this.one('n7-smart-pagination').updateOptions({
       mode: 'href',
@@ -105,7 +105,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       queryParams,
     });
     this.one('n7-smart-pagination').update({
-      totalPages: Math.ceil(this.myResponse.relatedItems.length / this.pageSize),
+      totalPages: Math.ceil(this.getLinkedObjectItems().length / this.pageSize),
       currentPage: this.currentPage,
       pageLimit: 5,
       sizes: {
@@ -132,30 +132,21 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       pagination: true,
       size: this.pageSize,
     });
-    this.one('aw-linked-objects').update({ items: this.myResponse.relatedItems });
+    this.one('aw-linked-objects').update({ items: this.getLinkedObjectItems() });
   }
 
   handleNavUpdate = (tab) => {
     this.selectedTab = tab;
     this.updateWidgets(this.myResponse);
-    if (tab === 'oggetti-collegati') {
-      this.one('aw-linked-objects').updateOptions({
-        context: this.selectedTab,
-        config: this.configuration,
-        page: this.currentPage,
-        pagination: true,
-        paginationParams: this._getPaginationParams(),
-        size: this.pageSize,
-      });
-      this.one('aw-linked-objects').update({ items: this.myResponse.relatedItems });
-    } else if (tab === 'overview' && this.myResponse.relatedItems) {
-      this.one('aw-linked-objects').updateOptions({
-        size: 3,
-        config: this.configuration,
-        context: 'entita',
-      });
-      this.one('aw-linked-objects').update({ items: this.myResponse.relatedItems });
-    }
+    this.one('aw-linked-objects').updateOptions({
+      context: this.selectedTab,
+      config: this.configuration,
+      page: this.currentPage,
+      pagination: true,
+      paginationParams: this._getPaginationParams(),
+      size: this.pageSize,
+    });
+    this.one('aw-linked-objects').update({ items: this.getLinkedObjectItems() });
   }
 
   updateWidgets(data) {
@@ -218,26 +209,19 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     this.one('aw-entita-nav').updateOptions({
       bubblesEnabled: this.bubblesEnabled,
       config: this.configuration.get('entita-layout'),
-      hasMetadataFields: this.hasMetadataFields
+      hasMetadataFields: this.hasMetadataFields,
+      labels: this.configuration.get('labels')
     });
     this.one('aw-entita-metadata-viewer').update(this.getFields(res));
-    if (this.selectedTab === 'oggetti-collegati') {
-      this.one('aw-linked-objects').updateOptions({
-        context: this.selectedTab,
-        config: this.configuration,
-        page: this.currentPage,
-        pagination: true,
-        paginationParams: this._getPaginationParams(),
-        size: this.pageSize,
-      });
-    } else {
-      this.one('aw-linked-objects').updateOptions({
-        size: 3,
-        config: this.configuration,
-        context: 'entita',
-      });
-    }
-    res.relatedItems.forEach((el) => {
+    this.one('aw-linked-objects').updateOptions({
+      context: this.selectedTab,
+      config: this.configuration,
+      page: this.currentPage,
+      pagination: true,
+      paginationParams: this._getPaginationParams(),
+      size: this.pageSize,
+    });
+    this.getLinkedObjectItems().forEach((el) => {
       el.relationName = res.label.length > 30
         ? `${res.label.substr(0, 30)}... `
         : res.label;
@@ -247,7 +231,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
         ? `${res.label.substr(0, 30)}... `
         : res.label;
     });
-    this.one('aw-linked-objects').update({ items: res.relatedItems });
+    this.one('aw-linked-objects').update({ items: this.getLinkedObjectItems() });
     this.one('aw-related-entities').update(res.relatedEntities);
     this.drawPagination();
     // fallback text
@@ -264,7 +248,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
         this.configuration.get('paths').entitaBasePath,
         `${this.currentId}/`,
         this.currentSlug,
-        '/oggetti-collegati/',
+        `/${this.selectedTab}/`,
       ].join(''),
       queryParams: {
         page: this.currentPage,
@@ -296,5 +280,11 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       metadataToShow,
       type: typeOfEntity
     });
+  }
+
+  private getLinkedObjectItems() {
+    return this.selectedTab === 'fondi-collegati'
+      ? this.myResponse.relatedLa
+      : this.myResponse.relatedItems;
   }
 }
