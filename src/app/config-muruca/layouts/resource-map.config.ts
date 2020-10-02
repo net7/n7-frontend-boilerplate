@@ -34,7 +34,6 @@ export default {
       {
         id: 'metadata-description',
         type: 'metadata',
-        // title: 'Descrizione',
         grid: null,
         options: {
           hideLabels: true
