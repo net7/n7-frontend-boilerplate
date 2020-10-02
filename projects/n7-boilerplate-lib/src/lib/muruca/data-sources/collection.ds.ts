@@ -29,6 +29,12 @@ export class MrCollectionDS extends DataSource {
     if (data === undefined) { return null; }
 
     const { header, items } = data;
+
+    // items check
+    if (Array.isArray(items) && !items.length) {
+      return null;
+    }
+
     const { classes, itemPreview } = this.options;
     const itemPreviewOptions = merge(ITEM_PREVIEW_DEFAULTS, (itemPreview || {}));
 
