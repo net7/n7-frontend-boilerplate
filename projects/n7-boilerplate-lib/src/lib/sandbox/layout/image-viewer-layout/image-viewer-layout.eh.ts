@@ -6,6 +6,7 @@ export class SbImageViewerLayoutEH extends EventHandler {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
         case 'sb-image-viewer-layout.init':
+          this.dataSource.onInit(payload);
           this.emitOuter('init');
           break;
         default:
