@@ -155,6 +155,13 @@
             display: flex;
         }
 
+        .n7-metadata-viewer__wrapper:last-child {
+            .n7-metadata-viewer__group:last-child,
+            .n7-metadata-viewer__item:last-child {
+                margin-bottom:  0;
+            }
+        }
+
         .n7-metadata-viewer__item {
             display: flex;
             margin-bottom: $space*2;
@@ -164,6 +171,7 @@
             width: 170px;
             margin-right: $space;
             flex-shrink: 0;
+            @include first-letter-capital();
         }
 
         .n7-metadata-viewer__item-value,
@@ -172,9 +180,22 @@
                 line-height: 1.6;
         }
 
-        .n7-metadata-viewer__group:last-child,
-        .n7-metadata-viewer__item:last-child {
-            margin-bottom:  0;
+        /* Metadata-second level */
+        .mr-resource__metadata {
+            .n7-metadata-viewer__group-title {
+                color: $color-text-light;
+                font-size: $font-size-m;
+                font-weight: $font-weight-bold;
+            }
+
+            .n7-metadata-viewer__group-title + .n7-metadata-viewer__group-content {
+                padding-left: $space*2;
+
+                .n7-metadata-viewer__item-label,
+                .n7-metadata-viewer__item-value {
+                    // font-size: $font-size-s;
+                }
+            }
         }
 
         /* Collection */

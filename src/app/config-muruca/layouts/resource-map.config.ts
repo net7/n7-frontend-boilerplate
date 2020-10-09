@@ -65,7 +65,10 @@ export default {
         id: 'collection-maps',
         type: 'collection',
         grid: 3,
-        title: 'Second level maps'
+        title: 'Second level maps',
+        options: {
+          classes: 'is-vertical'
+        }
       },
       {
         id: 'collection-toponyms',
