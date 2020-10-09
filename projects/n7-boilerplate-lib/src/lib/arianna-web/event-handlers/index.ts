@@ -20,6 +20,9 @@ export * from './aw-facets-wrapper.eh';
 // Gallery layout
 export * from './gallery-results.eh';
 
+// Map layout
+export * from './map.eh';
+
 // Any
 export * from './linked-objects.eh';
 export * from './autocomplete-wrapper.eh';

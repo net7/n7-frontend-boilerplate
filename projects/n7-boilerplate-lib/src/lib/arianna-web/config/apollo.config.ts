@@ -579,4 +579,23 @@ export default {
         }
       }`,
   },
+  getMapObjects: {
+    queryName: 'getMapObjects',
+    queryBody: `{
+      getMapObjects(__PARAMS__){
+        lat
+        lon
+        item {
+          ...on Item {
+              id
+              label
+          }
+          ...on Entity {
+              id
+              label
+          }
+        }
+      }
+    }`,
+  },
 };

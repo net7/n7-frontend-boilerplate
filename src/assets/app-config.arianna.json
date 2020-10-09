@@ -51,6 +51,16 @@
           }
         },
         {
+          "text": "Mappa",
+          "anchor": {
+            "href": "aw/mappa"
+          },
+          "icon": "n7-icon-map1",
+          "_meta": {
+            "id": "mappa"
+          }
+        },
+        {
           "text": "Ricerca",
           "anchor": {
             "href": "aw/ricerca"

@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
-import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { AbstractLayout } from '../../../common/models/abstract-layout';
 import { ConfigurationService } from '../../../common/services/configuration.service';
@@ -15,8 +14,6 @@ import { CommunicationService } from '../../../common/services/communication.ser
 })
 export class AwMapLayoutComponent extends AbstractLayout implements OnInit, OnDestroy {
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
     private location: Location,
     private configuration: ConfigurationService,
     private layoutsConfiguration: LayoutsConfigurationService,
@@ -36,8 +33,6 @@ export class AwMapLayoutComponent extends AbstractLayout implements OnInit, OnDe
     return {
       configuration: this.configuration,
       mainState: this.mainState,
-      router: this.router,
-      route: this.route,
       titleService: this.titleService,
       communication: this.communication,
       options: this.config.options || {},
