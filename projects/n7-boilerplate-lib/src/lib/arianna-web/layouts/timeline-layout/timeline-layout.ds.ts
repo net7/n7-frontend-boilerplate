@@ -57,6 +57,9 @@ export class AwTimelineLayoutDS extends LayoutDataSource {
     this.titleService = titleService;
     this.mainState.update('headTitle', 'Arianna4View - Timeline');
 
+    // navigation update
+    this.mainState.updateCustom('currentNav', 'timeline');
+
     this.communication.request$('getEventObjects', {
       params: {},
       onError: (err) => {

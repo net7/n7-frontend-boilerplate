@@ -36,6 +36,9 @@ export class AwMapLayoutDS extends LayoutDataSource {
     this.titleService = titleService;
     this.mainState.update('headTitle', 'Arianna4View - Mappa');
 
+    // navigation update
+    this.mainState.updateCustom('currentNav', 'mappa');
+
     this.communication.request$('getMapObjects', {
       params: {
         field: 'fields.note_storiche'
