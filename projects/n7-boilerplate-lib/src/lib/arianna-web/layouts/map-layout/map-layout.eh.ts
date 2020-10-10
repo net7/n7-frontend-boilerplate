@@ -24,10 +24,16 @@ export class AwMapLayoutEH extends EventHandler {
     this.outerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
         case 'aw-map.markeropen':
-          console.log(type, payload);
+          this.dataSource.onMarkerOpen(payload);
           break;
         case 'aw-map.markerclose':
-          console.log(type, payload);
+          this.dataSource.onMarkerClose();
+          break;
+        case 'n7-smart-pagination.change':
+          this.dataSource.onPaginationChange(payload);
+          break;
+        case 'n7-smart-pagination.click':
+          this.dataSource.onPaginationClick(payload);
           break;
         default:
           break;
