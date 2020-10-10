@@ -1,5 +1,7 @@
 import { LayoutDataSource } from '@n7-frontend/core/dist/layout-data-source';
-import { Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
+
+type LayoutState = 'LOADING' | 'EMPTY' | 'SUCCESS';
 
 export class AwMapLayoutDS extends LayoutDataSource {
   protected configuration: any;
@@ -22,7 +24,7 @@ export class AwMapLayoutDS extends LayoutDataSource {
 
   private pageSize = 10;
 
-  public loading$: Subject<boolean> = new Subject();
+  public state$: BehaviorSubject<LayoutState> = new BehaviorSubject('EMPTY');
 
   private currentPage = 1;
 
@@ -54,14 +56,14 @@ export class AwMapLayoutDS extends LayoutDataSource {
 
   onMarkerOpen({ id, label }) {
     // loading results
-    this.loading$.next(true);
+    this.state$.next('LOADING');
     this.communication.request$('getEntityDetails', {
       params: {
         entityId: id,
       }
     }).subscribe(({ relatedItems }) => {
       // clear loading
-      this.loading$.next(false);
+      this.state$.next('SUCCESS');
 
       this.relatedItems = relatedItems;
       this.total = relatedItems.length;
@@ -86,6 +88,7 @@ export class AwMapLayoutDS extends LayoutDataSource {
 
   onMarkerClose() {
     // reset
+    this.state$.next('EMPTY');
     this.pageSize = 10;
     this.currentPage = 1;
     this.relatedItems = [];

@@ -12,11 +12,15 @@
 
     <!-- RESULT LIST -->
     <div class="map-layout-results">
-        <ng-container *ngIf="lb.dataSource.loading$ | async">
+        <ng-container *ngIf="(lb.dataSource.state$ | async) === 'LOADING'">
             <n7-loader></n7-loader>
         </ng-container>
 
-        <ng-container *ngIf="!(lb.dataSource.loading$ | async)">
+        <ng-container *ngIf="(lb.dataSource.state$ | async) === 'EMPTY'">
+            <p>Clicca su un luogo della mappa per vedere tutti gli oggetti culturali collegati.</p>
+        </ng-container>
+
+        <ng-container *ngIf="(lb.dataSource.state$ | async) === 'SUCCESS'">
             <n7-inner-title 
                 [data]="lb.widgets['aw-scheda-inner-title'].ds.out$ | async">
             </n7-inner-title>
