@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Location } from '@angular/common';
 import { Title } from '@angular/platform-browser';
 import { AbstractLayout } from '../../../common/models/abstract-layout';
 import { ConfigurationService } from '../../../common/services/configuration.service';
@@ -14,7 +13,6 @@ import { CommunicationService } from '../../../common/services/communication.ser
 })
 export class AwMapLayoutComponent extends AbstractLayout implements OnInit, OnDestroy {
   constructor(
-    private location: Location,
     private configuration: ConfigurationService,
     private layoutsConfiguration: LayoutsConfigurationService,
     private communication: CommunicationService,

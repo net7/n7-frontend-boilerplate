@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { AbstractLayout } from '../../../common/models/abstract-layout';
@@ -17,7 +16,6 @@ export class AwEntitaLayoutComponent extends AbstractLayout implements OnInit, O
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private location: Location,
     private configuration: ConfigurationService,
     private layoutsConfiguration: LayoutsConfigurationService,
     private communication: CommunicationService,
@@ -38,7 +36,6 @@ export class AwEntitaLayoutComponent extends AbstractLayout implements OnInit, O
       mainState: this.mainState,
       router: this.router,
       route: this.route,
-      location: this.location,
       titleService: this.titleService,
       communication: this.communication,
       options: this.config.options || {},
