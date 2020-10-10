@@ -24,7 +24,7 @@ export const APP_ROUTES: Routes = [
   { path: 'aw/ricerca', component: AwSearchLayoutComponent },
   { path: 'aw/galleria', component: AwGalleryLayoutComponent },
   { path: 'aw/mappa', component: AwMapLayoutComponent },
-  { path: 'aw/timeline/:id/:slug', component: AwTimelineLayoutComponent },
+  { path: 'aw/timeline', component: AwTimelineLayoutComponent },
   {
     path: '',
     redirectTo: '/aw/home',

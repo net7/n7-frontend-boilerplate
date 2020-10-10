@@ -598,4 +598,15 @@ export default {
       }
     }`,
   },
+  getEventObjects: {
+    queryName: 'getEventObjects',
+    queryBody: `{
+      getEventObjects{
+        start
+        end
+        id
+        content
+      }
+    }`,
+  },
 };

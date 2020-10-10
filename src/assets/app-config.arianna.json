@@ -51,6 +51,16 @@
           }
         },
         {
+          "text": "Ricerca",
+          "anchor": {
+            "href": "aw/ricerca"
+          },
+          "icon": "n7-icon-search",
+          "_meta": {
+            "id": "ricerca"
+          }
+        },
+        {
           "text": "Mappa",
           "anchor": {
             "href": "aw/mappa"
@@ -61,13 +71,13 @@
           }
         },
         {
-          "text": "Ricerca",
+          "text": "Timeline",
           "anchor": {
-            "href": "aw/ricerca"
+            "href": "aw/timeline"
           },
-          "icon": "n7-icon-search",
+          "icon": "n7-icon-calendar-alt",
           "_meta": {
-            "id": "ricerca"
+            "id": "timeline"
           }
         }
       ]

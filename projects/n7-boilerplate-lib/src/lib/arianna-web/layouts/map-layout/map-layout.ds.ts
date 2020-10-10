@@ -8,11 +8,7 @@ export class AwMapLayoutDS extends LayoutDataSource {
 
   protected mainState: any;
 
-  protected router: any;
-
   protected titleService: any;
-
-  protected route: any;
 
   public options: any;
 
@@ -31,14 +27,12 @@ export class AwMapLayoutDS extends LayoutDataSource {
   public total: number;
 
   onInit({
-    configuration, mainState, router, route, options, titleService, communication,
+    configuration, mainState, options, titleService, communication,
   }) {
-    this.route = route;
     this.communication = communication;
     this.configuration = configuration;
     this.mainState = mainState;
     this.options = options;
-    this.router = router;
     this.titleService = titleService;
     this.mainState.update('headTitle', 'Arianna4View - Mappa');
 
