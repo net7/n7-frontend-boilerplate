@@ -10,7 +10,7 @@
     <n7-map [data]="lb.widgets['aw-map'].ds.out$ | async">
     </n7-map>
 
-    <!-- RESULT LIST -->
+    <!-- RESULTS -->
     <div class="map-layout-results">
         <ng-container *ngIf="(lb.dataSource.state$ | async) === 'LOADING'">
             <n7-loader></n7-loader>
