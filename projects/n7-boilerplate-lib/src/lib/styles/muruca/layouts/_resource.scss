@@ -178,6 +178,12 @@
         .n7-metadata-viewer__item-value p {
                 margin: 0;
                 line-height: 1.6;
+                word-break: break-all;
+        }
+
+        .n7-metadata-viewer__item-value img {
+            max-width: 100%;
+            height: auto;
         }
 
         /* Metadata-second level */
