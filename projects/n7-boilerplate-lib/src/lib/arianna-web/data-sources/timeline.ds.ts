@@ -10,7 +10,15 @@ export class AwTimelineDS extends DataSource {
   public dataSet;
 
   protected transform = (data) => {
-    this.dataSet = data;
+    this.dataSet = data.map(({
+      id, label, start, end, item
+    }) => ({
+      id,
+      item,
+      start: start ? moment(start).format('YYYY-MM-DD') : null,
+      end: end && end !== start ? moment(end).format('YYYY-MM-DD') : null,
+      content: label
+    }));
     return {
       containerID: 'timeline-component',
       libOptions: {
@@ -26,7 +34,7 @@ export class AwTimelineDS extends DataSource {
           followMouse: false,
           template: (d: any, element: { title: string }) => `<div class="tooltip">${element.title}</div>`
         },
-        template: (d: any) => {
+        /* template: (d: any) => {
           const start = moment(d.start).format('DDMM') === '0101'
             ? moment(d.start).format('YYYY') : moment(d.start).format('DD MMMM YYYY');
           let end: string;
@@ -35,8 +43,13 @@ export class AwTimelineDS extends DataSource {
               ? moment(d.end).format('YYYY') : moment(d.end).format('DD MMMM YYYY');
           }
           const endHTML = d.end ? `- ${end}` : '';
-          return (`<div class="dates"><em>${start}${endHTML}</em></div><div class="content">${d.content}</div>`);
-        },
+          return (`
+            <div class="dates">
+              <em>${start}${endHTML}</em>
+            </div>
+            <div class="content">${d.content}</div>
+          `);
+        } */
         width: '100%',
         minHeight: '350px',
         maxHeight: '800px',

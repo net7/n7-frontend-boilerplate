@@ -602,10 +602,16 @@ export default {
     queryName: 'getEventObjects',
     queryBody: `{
       getEventObjects{
+        id
         start
         end
-        id
-        content
+        label
+        item {
+          ... on Entity {
+            id
+            label
+          }
+        }
       }
     }`,
   },
