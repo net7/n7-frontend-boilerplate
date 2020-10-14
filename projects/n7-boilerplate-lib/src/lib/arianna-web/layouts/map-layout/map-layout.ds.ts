@@ -39,11 +39,7 @@ export class AwMapLayoutDS extends LayoutDataSource {
     // navigation update
     this.mainState.updateCustom('currentNav', 'mappa');
 
-    this.communication.request$('getMapObjects', {
-      params: {
-        field: 'fields.note_storiche'
-      }
-    }).subscribe((response) => {
+    this.communication.request$('getMapObjects').subscribe((response) => {
       this.one('aw-map').update(response);
     });
   }

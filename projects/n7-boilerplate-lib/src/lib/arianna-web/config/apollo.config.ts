@@ -582,7 +582,7 @@ export default {
   getMapObjects: {
     queryName: 'getMapObjects',
     queryBody: `{
-      getMapObjects(__PARAMS__){
+      getMapObjects{
         lat
         lon
         item {
