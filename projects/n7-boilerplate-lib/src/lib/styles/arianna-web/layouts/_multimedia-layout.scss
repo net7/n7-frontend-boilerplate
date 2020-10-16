@@ -19,6 +19,9 @@
 
     /* Map */
     &__map {
+        .n7-map__container {
+            height: 300px;
+        }
     }
 
     /* Results area */
@@ -39,7 +42,7 @@
             padding: $space*2 $space*3;
         }
 
-        .n7-inner-title__title  {
+        .n7-inner-title__title {
             font-weight: $font-weight-normal;
             font-size: $font-size-l;
 
