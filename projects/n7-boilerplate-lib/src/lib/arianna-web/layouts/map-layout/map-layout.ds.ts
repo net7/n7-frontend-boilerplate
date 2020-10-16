@@ -57,9 +57,9 @@ export class AwMapLayoutDS extends LayoutDataSource {
 
       this.relatedItems = relatedItems;
       this.total = relatedItems.length;
-      let text = `${this.total} Oggetti culturali collegati a ${label}`;
+      let text = `<strong>${this.total}</strong> Oggetti culturali collegati a<br><span class="aw-multimedia__results-title-big">${label}</span>`;
       if (this.total === 1) {
-        text = `${this.total} Oggetto culturale collegato a ${label}`;
+        text = `<strong>${this.total}</strong> Oggetto culturale collegato a<br><span class="aw-multimedia__results-title-big">${label}</span>`;
       }
 
       this.one('aw-scheda-inner-title').update({

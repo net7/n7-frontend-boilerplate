@@ -22,7 +22,7 @@ export class AwTimelineDS extends DataSource {
     return {
       containerID: 'timeline-component',
       libOptions: {
-        height: '500px',
+        height: '100px',
         locale: 'it_IT',
         cluster: {
           // titleTemplate: '{count}',
