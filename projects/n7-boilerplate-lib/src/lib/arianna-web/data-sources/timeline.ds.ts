@@ -1,6 +1,10 @@
 import { DataSource } from '@n7-frontend/core';
 import * as moment from 'moment';
+import { max as _max, min as _min } from 'lodash';
 import { Subject } from 'rxjs';
+
+const ONE_YEAR = 31557600000;
+const YEARS_MARGIN = 100;
 
 export class AwTimelineDS extends DataSource {
   public timeline;
@@ -11,49 +15,37 @@ export class AwTimelineDS extends DataSource {
 
   protected transform = (data) => {
     this.dataSet = data.map(({
-      id, label, start, end, item
+      id, start, end, item
     }) => ({
       id,
       item,
       start: start ? moment(start).format('YYYY-MM-DD') : null,
       end: end && end !== start ? moment(end).format('YYYY-MM-DD') : null,
-      content: label
+      content: this.getItemTemplate(start, end, item.label)
     }));
+
     return {
       containerID: 'timeline-component',
       libOptions: {
-        height: '100px',
+        max: this.getMax(),
+        min: this.getMin(),
+        // height: '100px',
         locale: 'it_IT',
         cluster: {
-          // titleTemplate: '{count}',
           // fitOnDoubleClick: true,
-          clusterCriteria: (f, s) => f.content.charAt(0) === s.content.charAt(0)
+          clusterCriteria: (f, s) => f.content.charAt(0) === s.content.charAt(0),
+          titleTemplate: '{count} eventi'
         },
         showTooltips: false,
         tooltip: {
           followMouse: false,
           template: (d: any, element: { title: string }) => `<div class="tooltip">${element.title}</div>`
         },
-        /* template: (d: any) => {
-          const start = moment(d.start).format('DDMM') === '0101'
-            ? moment(d.start).format('YYYY') : moment(d.start).format('DD MMMM YYYY');
-          let end: string;
-          if (d.end) {
-            end = moment(d.end).format('DDMM') === '0101'
-              ? moment(d.end).format('YYYY') : moment(d.end).format('DD MMMM YYYY');
-          }
-          const endHTML = d.end ? `- ${end}` : '';
-          return (`
-            <div class="dates">
-              <em>${start}${endHTML}</em>
-            </div>
-            <div class="content">${d.content}</div>
-          `);
-        } */
         width: '100%',
-        minHeight: '350px',
-        maxHeight: '800px',
-        // zoomMax: 31557600000, // one year
+        // minHeight: '350px',
+        // maxHeight: '800px',
+        zoomMax: ONE_YEAR * 2000, // one year
+        // zoomMin: ONE_YEAR,
         zoomFriction: 8
       },
       dataSet: this.dataSet,
@@ -62,5 +54,53 @@ export class AwTimelineDS extends DataSource {
         this.timelineLoaded$.next();
       }
     };
-  };
+  }
+
+  getItemTemplate(start, end, label) {
+    const fStart = moment(start).format('DDMM') === '0101'
+      ? moment(start).format('YYYY') : moment(start).format('DD MMMM YYYY');
+
+    let fEnd = '';
+    if (end) {
+      fEnd = '- ';
+      fEnd += moment(end).format('DDMM') === '0101'
+        ? moment(end).format('YYYY') : moment(end).format('DD MMMM YYYY');
+    }
+
+    return (`
+      <div class="dates">
+        <em>${fStart}${fEnd}</em>
+      </div>
+      <div class="content">${label}</div>
+    `);
+  }
+
+  getMax() {
+    const maxDate = new Date(_max(this.getAllDates()));
+
+    const year = maxDate.getFullYear();
+    const month = maxDate.getMonth();
+    const day = maxDate.getDate();
+    return new Date(year + YEARS_MARGIN, month, day);
+  }
+
+  getMin() {
+    const minDate = new Date(_min(this.getAllDates()));
+
+    const year = minDate.getFullYear();
+    const month = minDate.getMonth();
+    const day = minDate.getDate();
+    return new Date(year - YEARS_MARGIN, month, day);
+  }
+
+  getAllDates() {
+    return [
+      ...this.dataSet
+        .filter(({ start }) => start)
+        .map(({ start }) => start),
+      ...this.dataSet
+        .filter(({ end }) => end)
+        .map(({ end }) => end)
+    ];
+  }
 }

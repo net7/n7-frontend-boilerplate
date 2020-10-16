@@ -111,6 +111,9 @@ export class AwTimelineLayoutDS extends LayoutDataSource {
   }
 
   private clearResults() {
+    if (!this.relatedItems) {
+      return;
+    }
     // reset
     this.state$.next('EMPTY');
     this.pageSize = 10;
