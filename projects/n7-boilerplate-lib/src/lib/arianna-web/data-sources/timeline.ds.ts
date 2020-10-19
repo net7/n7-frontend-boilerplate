@@ -27,8 +27,10 @@ export class AwTimelineDS extends DataSource {
     return {
       containerID: 'timeline-component',
       libOptions: {
+        align: 'left',
         max: this.getMax(),
         min: this.getMin(),
+        minHeight: '100px',
         // height: '100px',
         locale: 'it_IT',
         cluster: {
@@ -36,6 +38,7 @@ export class AwTimelineDS extends DataSource {
           clusterCriteria: (f, s) => f.content.charAt(0) === s.content.charAt(0),
           titleTemplate: '{count} eventi'
         },
+        showCurrentTime: false,
         showTooltips: false,
         tooltip: {
           followMouse: false,
