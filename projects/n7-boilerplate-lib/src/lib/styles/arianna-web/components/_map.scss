@@ -1,0 +1,45 @@
+/**
+ * MAP
+ *
+ * Style for map component
+ */
+
+/* ------------------------------------ *\
+    MAP
+\* ------------------------------------ */
+.n7-map {
+    .leaflet-popup-content {
+        font-family: $font-family-main;
+    }
+
+    .leaflet-popup-content-wrapper {
+        border-radius: $border-radius;
+    }
+
+    .leaflet-popup-content-wrapper, .leaflet-popup-tip {
+        box-shadow: 0 2px 10px rgba(0,0,0,.2);
+    }
+}
+
+.marker-cluster-small, .marker-cluster-medium {
+    background-color: rgba($color-main, 0.6);
+    div {
+        background-color: rgba($color-main, 1);
+        font-family: $font-family-main;
+        color: $color-text-inverse;
+        font-weight: $font-weight-bold;
+    }
+}
+
+
+
+
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: $header-breakpoint-mobile) {
+}
+
+@media all and (max-width: $header-breakpoint-mobile-small) {
+}

@@ -40,7 +40,9 @@ export class AwMapDS extends DataSource {
       this.map.fitBounds(bounds);
 
       // adding markers
-      const markers = Leaflet.markerClusterGroup();
+      const markers = Leaflet.markerClusterGroup({
+        showCoverageOnHover: false, 
+    });
       data.forEach(({ lat, lon, item }) => {
         const { label } = item;
         const marker = Leaflet.marker([lat, lon], { icon: MARKER_ICON })

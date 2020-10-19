@@ -43,6 +43,7 @@
         }
 
         .n7-inner-title__title {
+            margin-bottom: 0;
             font-weight: $font-weight-normal;
             font-size: $font-size-l;
 
@@ -80,6 +81,14 @@
         margin: 0;
         padding: 0;
         font-size: $font-size-l;
+    }
+
+    /* Loader */
+    &__loader {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: $space*5;
     }
 }
 
