@@ -49,15 +49,19 @@ export class AwMapDS extends DataSource {
           .on('click', ({ target }) => {
             const { icon } = target.options;
             const { className } = icon.options;
-            target.setIcon(className === 'marker-icon' ? MARKER_ICON_SELECTED : MARKER_ICON);
-            this.markerOpen$.next(item);
+
+            if (className === 'marker-icon-selected') {
+              this.markerOpen$.next(item);
+            }
           });
 
         marker.getPopup().on('remove', ({ target }) => {
-          const { icon } = target._source.options;
-          const { className } = icon.options;
-          target._source.setIcon(className === 'marker-icon' ? MARKER_ICON_SELECTED : MARKER_ICON);
+          target._source.setIcon(MARKER_ICON);
           this.markerClose$.next();
+        });
+
+        marker.getPopup().on('add', ({ target }) => {
+          target._source.setIcon(MARKER_ICON_SELECTED);
         });
       });
       this.map.addLayer(markers);
