@@ -65,7 +65,7 @@ export class AwTimelineDS extends DataSource {
 
     let fEnd = '';
     if (end) {
-      fEnd = '- ';
+      fEnd = ' - ';
       fEnd += moment(end).format('DDMM') === '0101'
         ? moment(end).format('YYYY') : moment(end).format('DD MMMM YYYY');
     }
