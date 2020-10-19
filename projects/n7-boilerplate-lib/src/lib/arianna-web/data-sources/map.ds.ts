@@ -3,6 +3,20 @@ import { DataSource } from '@n7-frontend/core';
 import * as Leaflet from 'leaflet';
 import { Subject } from 'rxjs';
 
+const MARKER_ICON = Leaflet.icon({
+  iconUrl: '/assets/pin.png',
+  iconSize: [30, 45.5],
+  popupAnchor: [0, -25],
+  className: 'marker-icon'
+});
+
+const MARKER_ICON_SELECTED = Leaflet.icon({
+  iconUrl: '/assets/pin-selected.png',
+  iconSize: [30, 45.5],
+  popupAnchor: [0, -25],
+  className: 'marker-icon-selected'
+});
+
 export class AwMapDS extends DataSource {
   public map;
 
@@ -29,14 +43,20 @@ export class AwMapDS extends DataSource {
       const markers = Leaflet.markerClusterGroup();
       data.forEach(({ lat, lon, item }) => {
         const { label } = item;
-        const marker = Leaflet.marker([lat, lon])
+        const marker = Leaflet.marker([lat, lon], { icon: MARKER_ICON })
           .addTo(markers)
           .bindPopup(label)
-          .on('click', () => {
+          .on('click', ({ target }) => {
+            const { icon } = target.options;
+            const { className } = icon.options;
+            target.setIcon(className === 'marker-icon' ? MARKER_ICON_SELECTED : MARKER_ICON);
             this.markerOpen$.next(item);
           });
 
-        marker.getPopup().on('remove', () => {
+        marker.getPopup().on('remove', ({ target }) => {
+          const { icon } = target._source.options;
+          const { className } = icon.options;
+          target._source.setIcon(className === 'marker-icon' ? MARKER_ICON_SELECTED : MARKER_ICON);
           this.markerClose$.next();
         });
       });
