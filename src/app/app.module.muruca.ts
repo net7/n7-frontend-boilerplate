@@ -10,6 +10,7 @@ import {
   MrMenuService,
   MrFooterService,
   MainStateService,
+  MrTranslationsLoaderService,
 } from 'n7-boilerplate-lib';
 import globalConfig from './config/global';
 import layoutsConfig from './config/layouts';
@@ -56,6 +57,11 @@ translate.init({
     provide: APP_INITIALIZER,
     useFactory: (footerService: MrFooterService) => () => footerService.load(),
     deps: [MrFooterService],
+    multi: true
+  }, {
+    provide: APP_INITIALIZER,
+    useFactory: (translationsLoader: MrTranslationsLoaderService) => () => translationsLoader.load('it'),
+    deps: [MrTranslationsLoaderService],
     multi: true
   }],
   bootstrap: [AppComponent]
