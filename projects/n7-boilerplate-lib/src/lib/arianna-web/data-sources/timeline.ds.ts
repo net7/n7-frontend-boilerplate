@@ -15,28 +15,33 @@ export class AwTimelineDS extends DataSource {
 
   protected transform = (data) => {
     this.dataSet = data.map(({
-      id, start, end, item
+      id, start, end, item, label
     }) => ({
       id,
       item,
       start: start ? moment(start).format('YYYY-MM-DD') : null,
       end: end && end !== start ? moment(end).format('YYYY-MM-DD') : null,
-      content: this.getItemTemplate(start, end, item.label)
+      content: this.getItemTemplate(label, item.label)
     }));
+
+    const max = this.getMax();
+    const min = this.getMin();
 
     return {
       containerID: 'timeline-component',
       libOptions: {
+        max,
+        min,
+        start: min,
+        end: max,
         align: 'left',
-        max: this.getMax(),
-        min: this.getMin(),
         minHeight: '100px',
         // height: '100px',
         locale: 'it_IT',
         cluster: {
           // fitOnDoubleClick: true,
-          clusterCriteria: (f, s) => f.content.charAt(0) === s.content.charAt(0),
-          titleTemplate: '{count} eventi'
+          // clusterCriteria: (f, s) => f.content.charAt(0) === s.content.charAt(0),
+          titleTemplate: '{count} eventi',
         },
         showCurrentTime: false,
         showTooltips: false,
@@ -47,32 +52,27 @@ export class AwTimelineDS extends DataSource {
         width: '100%',
         // minHeight: '350px',
         // maxHeight: '800px',
-        zoomMax: ONE_YEAR * 2000, // one year
-        // zoomMin: ONE_YEAR,
-        zoomFriction: 8
+        zoomMax: ONE_YEAR * 2000, // 2000 years
+        zoomMin: ONE_YEAR / 12, // a month
+        // zoomFriction: 8
       },
       dataSet: this.dataSet,
       _setInstance: (timeline) => {
         this.timeline = timeline;
         this.timelineLoaded$.next();
+
+        // fix cluster visualization
+        setTimeout(() => {
+          this.timeline.fit();
+        });
       }
     };
   }
 
-  getItemTemplate(start, end, label) {
-    const fStart = moment(start).format('DDMM') === '0101'
-      ? moment(start).format('YYYY') : moment(start).format('DD MMMM YYYY');
-
-    let fEnd = '';
-    if (end) {
-      fEnd = ' - ';
-      fEnd += moment(end).format('DDMM') === '0101'
-        ? moment(end).format('YYYY') : moment(end).format('DD MMMM YYYY');
-    }
-
+  getItemTemplate(datesLabel, label) {
     return (`
       <div class="dates">
-        <em>${fStart}${fEnd}</em>
+        <em>${datesLabel}</em>
       </div>
       <div class="content">${label}</div>
     `);
