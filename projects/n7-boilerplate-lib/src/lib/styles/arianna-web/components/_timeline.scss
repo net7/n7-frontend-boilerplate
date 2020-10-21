@@ -26,7 +26,6 @@
 
     /* Single item */
     .vis-box {
-        // border: 0;
         border-top: 0;
         border-bottom: 0;
         border-right: 0;
@@ -63,9 +62,24 @@
         cursor: pointer;
     }
 
-    /* Selected item */
-    .vis-box.vis-selected {
+    /* Clusters */
+    .vis-cluster {
+        width: auto !important;
+        background-color: $color-third;
+        color: $color-text-inverse;
+        font-weight: $font-weight-bold;
+    }
 
+    /* Selected items */
+    .vis-box.vis-selected,
+    .vis-range.vis-selected:not(.vis-cluster) {
+        border-color: $color-main;
+        background-color: $color-background-base;
+    }
+
+    .vis-dot.vis-selected,
+    .vis-line.vis-selected {
+        border-color: $color-main;
     }
 
     /* Line */
@@ -83,7 +97,6 @@
     .vis-time-axis {
         .vis-text {
             font-family: $font-family-main;
-            font-weight: $font-weight-bold;
         }
     }
 }
