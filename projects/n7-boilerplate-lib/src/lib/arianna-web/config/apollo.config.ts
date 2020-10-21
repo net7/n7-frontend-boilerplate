@@ -579,4 +579,40 @@ export default {
         }
       }`,
   },
+  getMapObjects: {
+    queryName: 'getMapObjects',
+    queryBody: `{
+      getMapObjects{
+        lat
+        lon
+        item {
+          ...on Item {
+              id
+              label
+          }
+          ...on Entity {
+              id
+              label
+          }
+        }
+      }
+    }`,
+  },
+  getEventObjects: {
+    queryName: 'getEventObjects',
+    queryBody: `{
+      getEventObjects{
+        id
+        start
+        end
+        label
+        item {
+          ... on Entity {
+            id
+            label
+          }
+        }
+      }
+    }`,
+  },
 };

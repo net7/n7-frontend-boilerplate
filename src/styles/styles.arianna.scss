@@ -70,8 +70,10 @@
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/footer";
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/header";
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/item-preview";
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/map";
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/metadata-viewer";
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/simple-autocomplete";
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/timeline";
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/tippy-tooltip";
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/tree";
 
@@ -79,10 +81,11 @@
 // ------------------------------------ //
 // #ARIANNA WEB LAYOUTS
 // ------------------------------------ //
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/layouts/home-layout";
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/layouts/scheda-layout";
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/layouts/entita-layout";
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/layouts/home-layout";
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/layouts/multimedia-layout";
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/layouts/search-layout";
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/layouts/scheda-layout";
 
 
 // ------------------------------------ //
