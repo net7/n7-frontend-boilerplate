@@ -10,6 +10,7 @@ import {
   MrMenuService,
   MrFooterService,
   MainStateService,
+  MrTranslationsLoaderService,
 } from 'n7-boilerplate-lib';
 import globalConfig from './config/global';
 import layoutsConfig from './config/layouts';
@@ -19,9 +20,11 @@ import { AppComponent } from './app.component';
 import configMuruca from './config-muruca';
 import i18n from './config-muruca/i18n';
 
+const LANG_CODE = 'it_IT';
+
 // load translations
 translate.init({
-  defaultLang: 'it',
+  defaultLang: LANG_CODE,
   translations: i18n
 });
 
@@ -56,6 +59,13 @@ translate.init({
     provide: APP_INITIALIZER,
     useFactory: (footerService: MrFooterService) => () => footerService.load(),
     deps: [MrFooterService],
+    multi: true
+  }, {
+    provide: APP_INITIALIZER,
+    useFactory: (
+      translationsLoader: MrTranslationsLoaderService
+    ) => () => translationsLoader.load(LANG_CODE),
+    deps: [MrTranslationsLoaderService],
     multi: true
   }],
   bootstrap: [AppComponent]
