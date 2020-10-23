@@ -61,7 +61,7 @@
         
                     <!-- CONTENT -->
                     <ng-container *ngSwitchCase="'content'">
-                        {{ lb.widgets[section.id].ds.out$ | async }}
+                        <div [innerHTML]="lb.widgets[section.id].ds.out$ | async"></div>
                     </ng-container>
                 
                 </ng-container>
