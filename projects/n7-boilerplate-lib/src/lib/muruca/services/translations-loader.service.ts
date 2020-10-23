@@ -18,10 +18,10 @@ export class MrTranslationsLoaderService {
     const { defaultProvider, providers } = this.configuration.get('communication');
     const currentProvider = providers[defaultProvider] || {};
     const { baseUrl } = currentProvider;
-    const menuPath = currentProvider?.config?.translations;
+    const translationsPath = currentProvider?.config?.translation;
 
-    if (baseUrl && menuPath) {
-      const url = baseUrl + menuPath + langCode;
+    if (baseUrl && translationsPath) {
+      const url = baseUrl + translationsPath + langCode;
       return this.http.get(url).pipe(
         catchError(() => of(null)),
         tap((response) => this._handleResponse(response, langCode)),

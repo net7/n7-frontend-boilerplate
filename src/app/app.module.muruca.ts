@@ -20,9 +20,11 @@ import { AppComponent } from './app.component';
 import configMuruca from './config-muruca';
 import i18n from './config-muruca/i18n';
 
+const LANG_CODE = 'it_IT';
+
 // load translations
 translate.init({
-  defaultLang: 'it',
+  defaultLang: LANG_CODE,
   translations: i18n
 });
 
@@ -60,7 +62,9 @@ translate.init({
     multi: true
   }, {
     provide: APP_INITIALIZER,
-    useFactory: (translationsLoader: MrTranslationsLoaderService) => () => translationsLoader.load('it'),
+    useFactory: (
+      translationsLoader: MrTranslationsLoaderService
+    ) => () => translationsLoader.load(LANG_CODE),
     deps: [MrTranslationsLoaderService],
     multi: true
   }],
