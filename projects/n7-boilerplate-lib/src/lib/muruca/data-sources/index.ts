@@ -11,6 +11,7 @@ export * from './metadata.ds';
 export * from './nav.ds';
 export * from './text-viewer.ds';
 export * from './resource-tabs.ds';
+export * from './content.ds';
 // search layout
 export * from './search/search-page-title.ds';
 export * from './search/search-results-title.ds';
