@@ -3,7 +3,7 @@ import { Subject, ReplaySubject } from 'rxjs';
 import { MrInputTextDS } from '../data-sources/form/input-text.ds';
 import { MrInputTextEH } from '../event-handlers/form/input-text.eh';
 import {
-  MrFormInputState,
+  MrChangedParams,
   MrInputDataSource,
   MrFormConfig,
   MrInputEventHandler,
@@ -35,10 +35,7 @@ export class MrFormService {
     }
   };
 
-  changed$: Subject<{
-    id: string;
-    state: MrFormInputState<any>;
-  }> = new Subject();
+  changed$: Subject<MrChangedParams> = new Subject();
 
   load(config: MrFormConfig) {
     this.config = config;
@@ -50,7 +47,7 @@ export class MrFormService {
     this.loaded$.next(true);
   }
 
-  input = (id: string) => this.inputs[id];
+  input = (id: string) => this.inputs[id].ds;
 
   getFormState() {
     const formState = {};
@@ -80,8 +77,12 @@ export class MrFormService {
         if (state) {
           DSInstance.setState(state);
         }
+        // set eventhandler hostid
+        EHInstance.hostId = id;
         // attach datasource to eventhandler
         EHInstance.dataSource = DSInstance;
+        // attach changed$ to eventhandler
+        EHInstance.changed$ = this.changed$;
         // listen to input events
         EHInstance.listen();
         // save it to input

@@ -27,26 +27,27 @@ export class MrInputTextDS extends DataSource implements MrInputDataSource<MrInp
       ...this.state,
       ...newState
     };
+    this.refresh();
   }
 
   setValue(value: MrInputTextValue) {
-    this.state.value = value;
+    this.setState({ value });
   }
 
   hide() {
-    this.state.hidden = true;
+    this.setState({ hidden: true });
   }
 
   show() {
-    this.state.hidden = false;
+    this.setState({ hidden: false });
   }
 
   disable() {
-    this.state.disabled = true;
+    this.setState({ disabled: true });
   }
 
   enable() {
-    this.state.disabled = false;
+    this.setState({ disabled: false });
   }
 
   clear() {

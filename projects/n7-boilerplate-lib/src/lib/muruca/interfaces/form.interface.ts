@@ -1,4 +1,4 @@
-import { MrFormService } from '../services/form.service';
+import { Subject } from 'rxjs';
 
 export type MrFormInputState<T> = {
   value?: T;
@@ -21,7 +21,12 @@ export interface MrInputDataSource<T> {
 }
 
 export interface MrInputEventHandler {
-  form: MrFormService;
+  changed$: Subject<MrChangedParams>;
+}
+
+export interface MrChangedParams {
+  id: string;
+  state: MrFormInputState<any>;
 }
 
 export interface MrFormConfig {

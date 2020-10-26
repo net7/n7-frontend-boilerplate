@@ -9,18 +9,18 @@
 
                     <!-- INPUT TEXT -->
                     <n7-input-text *ngSwitchCase="'text'" 
-                        [data]="lb.dataSource.form.input(input.id).ds.out$ | async"
-                        [emit]="lb.dataSource.form.input(input.id).emit"></n7-input-text>
+                        [data]="lb.dataSource.form.inputs[input.id].ds.out$ | async"
+                        [emit]="lb.dataSource.form.inputs[input.id].emit"></n7-input-text>
 
                     <!-- INPUT CHECKBOX -->
                     <n7-input-checkbox *ngSwitchCase="'checkbox'" 
-                        [data]="lb.dataSource.form.input(input.id).ds.out$ | async"
-                        [emit]="lb.dataSource.form.input(input.id).emit"></n7-input-checkbox>
+                        [data]="lb.dataSource.form.inputs[input.id].ds.out$ | async"
+                        [emit]="lb.dataSource.form.inputs[input.id].emit"></n7-input-checkbox>
 
                     <!-- INPUT SELECT -->
                     <n7-input-select *ngSwitchCase="'select'" 
-                        [data]="lb.dataSource.form.input(input.id).ds.out$ | async"
-                        [emit]="lb.dataSource.form.input(input.id).emit"></n7-input-select>
+                        [data]="lb.dataSource.form.inputs[input.id].ds.out$ | async"
+                        [emit]="lb.dataSource.form.inputs[input.id].emit"></n7-input-select>
 
                 </ng-container>
             </div>

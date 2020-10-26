@@ -1,10 +1,10 @@
 import { EventHandler } from '@n7-frontend/core';
+import { Subject } from 'rxjs';
 import { MrInputTextDS } from '../../data-sources/form/input-text.ds';
-import { MrInputEventHandler } from '../../interfaces/form.interface';
-import { MrFormService } from '../../services/form.service';
+import { MrInputEventHandler, MrChangedParams } from '../../interfaces/form.interface';
 
 export class MrInputTextEH extends EventHandler implements MrInputEventHandler {
-  public form: MrFormService;
+  public changed$: Subject<MrChangedParams>;
 
   public dataSource: MrInputTextDS;
 
@@ -13,8 +13,10 @@ export class MrInputTextEH extends EventHandler implements MrInputEventHandler {
       switch (type) {
         case `${this.dataSource.id}.change`: {
           const { value } = payload;
+          // set new value
           this.dataSource.setValue(value);
-          this.form.changed$.next({
+          // emit changed signal
+          this.changed$.next({
             id: this.dataSource.id,
             state: this.dataSource.getState()
           });
