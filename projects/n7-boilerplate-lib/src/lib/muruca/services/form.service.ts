@@ -47,14 +47,24 @@ export class MrFormService {
     this.loaded$.next(true);
   }
 
-  input = (id: string) => this.inputs[id].ds;
+  getInput = (id: string): MrInputDataSource<any> => this.inputs[id].ds;
 
-  getFormState() {
-    const formState = {};
-    Object.keys(this.inputs).forEach((key) => {
-      formState[key] = this.inputs[key].ds.getState();
+  getInputs = (): {
+    [id: string]: MrInputDataSource<any>;
+  } => {
+    const inputs = {};
+    Object.keys(this.inputs).forEach((id) => {
+      inputs[id] = this.getInput(id);
     });
-    return formState;
+    return inputs;
+  }
+
+  getState() {
+    const state = {};
+    Object.keys(this.inputs).forEach((key) => {
+      state[key] = this.inputs[key].ds.getState();
+    });
+    return state;
   }
 
   private initInputs() {

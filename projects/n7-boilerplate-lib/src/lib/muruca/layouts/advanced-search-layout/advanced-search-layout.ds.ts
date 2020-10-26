@@ -51,8 +51,8 @@ export class MrAdvancedSearchLayoutDS extends LayoutDataSource {
 
     this.form.load(this.formConfig);
 
-    const queryInput = this.form.input('input-1');
-    const authorsInput = this.form.input('input-2');
+    const queryInput = this.form.getInput('input-1');
+    const authorsInput = this.form.getInput('input-2');
 
     this.form.changed$.subscribe(({ id, state }) => {
       if (id === 'input-1') {
@@ -64,11 +64,17 @@ export class MrAdvancedSearchLayoutDS extends LayoutDataSource {
         }
         queryInput.setValue(value.replace(/a/g, '@'));
       }
-      console.warn({
-        id,
-        state,
-        formState: this.form.getFormState()
-      });
     });
+  }
+
+  onReset() {
+    const inputs = this.form.getInputs();
+    Object.keys(inputs).forEach((id) => {
+      inputs[id].clear();
+    });
+  }
+
+  onSubmit() {
+    console.warn('form state', this.form.getState());
   }
 }

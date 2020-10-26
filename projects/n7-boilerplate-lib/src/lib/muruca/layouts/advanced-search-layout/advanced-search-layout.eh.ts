@@ -15,6 +15,14 @@ export class MrAdvancedSearchLayoutEH extends EventHandler {
           this.destroy$.next();
           break;
 
+        case 'mr-advanced-search-layout.reset':
+          this.dataSource.onReset();
+          break;
+
+        case 'mr-advanced-search-layout.submit':
+          this.dataSource.onSubmit();
+          break;
+
         default:
           console.warn('unhandled inner event of type', type);
           break;
