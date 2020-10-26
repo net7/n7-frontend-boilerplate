@@ -1,5 +1,29 @@
-<div class="mr-advanced-search-layout mr-layout">
-    <mr-input-host #inputHost [data]="{ id: 'input1' }"></mr-input-host>
-    <mr-input-host #inputHost></mr-input-host>
-    <mr-input-host #inputHost></mr-input-host>
+<div *ngIf="lb.dataSource.form.loaded$ | async" class="mr-advanced-search-layout mr-layout">
+    <div *ngFor="let section of lb.dataSource.formConfig.sections" class="mr-facets__single-facet {{ section.classes || '' }}">
+        <n7-facet-header *ngIf="section.header" [data]="section.header"></n7-facet-header>
+
+        <div class="mr-facets__single-facet-content">
+            <div *ngFor="let input of section.inputs" [attr.id]="'facet-container-' + input.id"
+                class="mr-facets__single-facet-inner-content {{ input.classes || '' }}">
+                <ng-container [ngSwitch]="input.type">
+
+                    <!-- INPUT TEXT -->
+                    <n7-input-text *ngSwitchCase="'text'" 
+                        [data]="lb.dataSource.form.input(input.id).ds.out$ | async"
+                        [emit]="lb.dataSource.form.input(input.id).emit"></n7-input-text>
+
+                    <!-- INPUT CHECKBOX -->
+                    <n7-input-checkbox *ngSwitchCase="'checkbox'" 
+                        [data]="lb.dataSource.form.input(input.id).ds.out$ | async"
+                        [emit]="lb.dataSource.form.input(input.id).emit"></n7-input-checkbox>
+
+                    <!-- INPUT SELECT -->
+                    <n7-input-select *ngSwitchCase="'select'" 
+                        [data]="lb.dataSource.form.input(input.id).ds.out$ | async"
+                        [emit]="lb.dataSource.form.input(input.id).emit"></n7-input-select>
+
+                </ng-container>
+            </div>
+        </div>
+    </div>
 </div>

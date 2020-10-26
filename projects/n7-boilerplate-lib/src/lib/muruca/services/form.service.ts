@@ -1,19 +1,25 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
-import { MrFormInputState, MrFormConfig } from '../interfaces/form.interface';
-import { MrInputDS } from '../data-sources/form/input.ds';
-import { MrInputEH } from '../event-handlers/form/input.eh';
+import { Subject, ReplaySubject } from 'rxjs';
 import { MrInputTextDS } from '../data-sources/form/input-text.ds';
 import { MrInputTextEH } from '../event-handlers/form/input-text.eh';
+import {
+  MrFormInputState,
+  MrInputDataSource,
+  MrFormConfig,
+  MrInputEventHandler,
+} from '../interfaces/form.interface';
 
 @Injectable()
 export class MrFormService {
   private config: MrFormConfig;
 
+  public loaded$: ReplaySubject<boolean> = new ReplaySubject();
+
   private inputs: {
     [id: string]: {
-      ds: any;
-      eh: any;
+      ds: MrInputDataSource<any>;
+      eh: MrInputEventHandler;
+      emit: (t: string, p: any) => Function;
     };
   } = {};
 
@@ -29,9 +35,9 @@ export class MrFormService {
     }
   };
 
-  change$: Subject<{
+  changed$: Subject<{
     id: string;
-    state: MrFormInputState;
+    state: MrFormInputState<any>;
   }> = new Subject();
 
   load(config: MrFormConfig) {
@@ -39,33 +45,12 @@ export class MrFormService {
 
     // init inputs
     this.initInputs();
+
+    // emit signal
+    this.loaded$.next(true);
   }
 
-  input(id: string): {
-    setState(state: MrFormInputState): void;
-    clear(): void;
-    refresh(): void;
-  } {
-    const input = this.inputs[id];
-    if (!input) {
-      throw Error(`Input ${id} not found`);
-    }
-
-    const { setState, clear, refresh } = input.ds;
-    return {
-      setState: setState.bind(input.ds),
-      clear: clear.bind(input.ds),
-      refresh: refresh.bind(input.ds)
-    };
-  }
-
-  addInputType(type: string, ds: MrInputDS, eh: MrInputEH) {
-    if (this.inputTypes[type]) {
-      throw Error(`Input type ${type} already exists`);
-    }
-
-    this.inputTypes[type] = { ds, eh };
-  }
+  input = (id: string) => this.inputs[id];
 
   getFormState() {
     const formState = {};
@@ -79,7 +64,7 @@ export class MrFormService {
     const { sections } = this.config;
     sections.forEach((section) => {
       section.inputs.forEach(({
-        id, type, options, state
+        id, type, options, state, data
       }) => {
         const DSClass = this.inputTypes[type].ds;
         const EHClass = this.inputTypes[type].eh;
@@ -87,16 +72,23 @@ export class MrFormService {
         const EHInstance = new EHClass();
         // set datasource id
         DSInstance.id = id;
+        // set initial data
+        if (data) {
+          DSInstance.update(data);
+        }
         // set state
         if (state) {
           DSInstance.setState(state);
         }
         // attach datasource to eventhandler
         EHInstance.dataSource = DSInstance;
+        // listen to input events
+        EHInstance.listen();
         // save it to input
         this.inputs[id] = {
           ds: DSInstance,
-          eh: EHInstance
+          eh: EHInstance,
+          emit: (t: string, p: any) => EHInstance.emitInner(t, p)
         };
       });
     });

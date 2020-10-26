@@ -19,7 +19,6 @@ import { MrStaticLayoutComponent } from './layouts/static-layout/static-layout';
 import { MrAdvancedSearchLayoutComponent } from './layouts/advanced-search-layout/advanced-search-layout';
 // COMPONENTS
 import { ReadMoreComponent } from './components/read-more/read-more';
-import { InputHostComponent } from './components/input-host/input-host';
 
 const COMPONENTS = [
   // Layout components
@@ -31,8 +30,7 @@ const COMPONENTS = [
   MrStaticLayoutComponent,
   MrAdvancedSearchLayoutComponent,
   // Custom components
-  ReadMoreComponent,
-  InputHostComponent
+  ReadMoreComponent
 ];
 
 @NgModule({

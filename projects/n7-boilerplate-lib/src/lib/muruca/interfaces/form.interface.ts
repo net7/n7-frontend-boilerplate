@@ -1,10 +1,28 @@
-export type MrFormInputState = {
-  value?: any;
+import { MrFormService } from '../services/form.service';
+
+export type MrFormInputState<T> = {
+  value?: T;
   disabled?: boolean;
   hidden?: boolean;
 }
 
-export type MrFormInputTriggerAction = 'setstate' | 'clear' | 'refresh';
+export interface MrInputDataSource<T> {
+  id: string;
+  state: MrFormInputState<T>;
+  getState(): MrFormInputState<T>;
+  setState(state: MrFormInputState<T>): void;
+  setValue(value: T): void;
+  hide(): void;
+  show(): void;
+  disable(): void;
+  enable(): void;
+  clear(): void;
+  refresh(): void;
+}
+
+export interface MrInputEventHandler {
+  form: MrFormService;
+}
 
 export interface MrFormConfig {
   sections: MrFormConfigSection[];
@@ -12,17 +30,17 @@ export interface MrFormConfig {
 
 export interface MrFormConfigSection {
   id: string;
-  inputs: MrFormConfigInput[];
+  inputs: MrFormConfigInput<any>[];
   options?: {
     classes?: string;
   };
 }
 
-export interface MrFormConfigInput {
+export interface MrFormConfigInput<T> {
   id: string;
   type: string;
   data: object;
-  state?: MrFormInputState;
+  state?: MrFormInputState<T>;
   options?: {
     classes?: string;
   };

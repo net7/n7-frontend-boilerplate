@@ -5,11 +5,10 @@ export class MrAdvancedSearchLayoutEH extends EventHandler {
   private destroy$: Subject<void> = new Subject();
 
   public listen() {
-    this.innerEvents$.subscribe(({ type }) => {
+    this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
         case 'mr-advanced-search-layout.init':
-          // TODO
-          // console.log('layout-eventhandler', payload);
+          this.dataSource.onInit(payload);
           break;
 
         case 'mr-advanced-search-layout.destroy':
