@@ -1,12 +1,12 @@
 import {
   Component, Input
 } from '@angular/core';
-import { MrForm } from '../../models/form';
+import { MrFormModel } from '../../models/form.model';
 
 @Component({
   selector: 'mr-form',
   templateUrl: './form.html',
 })
 export class MrFormComponent {
-  @Input() form: MrForm;
+  @Input() form: MrFormModel;
 }

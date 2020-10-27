@@ -7,7 +7,7 @@ import {
   MrFormConfig,
 } from '../interfaces/form.interface';
 
-export class MrForm {
+export class MrFormModel {
   public config: MrFormConfig;
 
   public loaded$: ReplaySubject<boolean> = new ReplaySubject();
