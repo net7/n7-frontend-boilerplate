@@ -34,7 +34,7 @@ export class MrFormModel {
 
   changed$: Subject<MrChangedParams> = new Subject();
 
-  constructor(config: MrFormConfig) {
+  init(config: MrFormConfig) {
     this.config = config;
 
     // init inputs
@@ -62,6 +62,14 @@ export class MrFormModel {
       state[key] = this.inputs[key].ds.getState();
     });
     return state;
+  }
+
+  addInputType(type: string, ds: any, eh: any) {
+    if (this.inputTypes[type]) {
+      throw Error(`input type ${type} already exists!`);
+    }
+
+    this.inputTypes[type] = { ds, eh };
   }
 
   private initInputs() {

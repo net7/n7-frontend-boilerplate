@@ -21,6 +21,16 @@
                         [data]="form.inputs[input.id].ds.out$ | async"
                         [emit]="form.inputs[input.id].emit"></n7-input-select>
 
+                    <!-- DEFAULT (external template) -->
+                    <ng-container *ngSwitchDefault>
+                        <ng-template *ngTemplateOutlet="
+                        templateRef; 
+                        context: { 
+                            type: input.type, 
+                            input: form.inputs[input.id] 
+                        }"></ng-template>
+                    </ng-container>
+
                 </ng-container>
             </div>
         </div>

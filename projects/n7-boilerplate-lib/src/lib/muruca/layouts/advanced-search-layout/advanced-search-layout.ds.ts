@@ -1,4 +1,6 @@
 import { LayoutDataSource } from '@n7-frontend/core';
+import { MrInputTagDS } from '../../data-sources/form/input-tag.ds';
+import { MrInputTagEH } from '../../event-handlers/form/input-tag.eh';
 import { MrFormConfig } from '../../interfaces/form.interface';
 import { MrFormModel } from '../../models/form.model';
 
@@ -42,12 +44,29 @@ export class MrAdvancedSearchLayoutDS extends LayoutDataSource {
           disabled: true,
           hidden: false
         }
+      }, {
+        id: 'input-3',
+        type: 'tag',
+        data: {
+          label: 'label: ',
+          text: 'text',
+          icon: 'n7-icon-close',
+          payload: {
+            value: 'tag value!'
+          },
+        }
       }]
     }]
   };
 
   onInit() {
-    this.form = new MrFormModel(this.formConfig);
+    this.form = new MrFormModel();
+
+    // custom input types
+    this.form.addInputType('tag', MrInputTagDS, MrInputTagEH);
+
+    // form init
+    this.form.init(this.formConfig);
 
     const queryInput = this.form.getInput('input-1');
     const authorsInput = this.form.getInput('input-2');

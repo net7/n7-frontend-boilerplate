@@ -1,5 +1,5 @@
 import {
-  Component, Input
+  Component, ContentChild, Input, TemplateRef
 } from '@angular/core';
 import { MrFormModel } from '../../models/form.model';
 
@@ -9,4 +9,7 @@ import { MrFormModel } from '../../models/form.model';
 })
 export class MrFormComponent {
   @Input() form: MrFormModel;
+
+  @ContentChild(TemplateRef)
+  public templateRef: TemplateRef<any>;
 }
