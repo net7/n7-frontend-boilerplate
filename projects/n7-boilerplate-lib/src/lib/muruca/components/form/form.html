@@ -1,0 +1,28 @@
+<div *ngIf="form.loaded$ | async" class="mr-form">
+    <div *ngFor="let section of form.config.sections" class="mr-form__section {{ section.classes || '' }}">
+        <n7-facet-header *ngIf="section.header" [data]="section.header"></n7-facet-header>
+
+        <div class="mr-form__section-content">
+            <div *ngFor="let input of section.inputs" class="mr-form__input {{ input.classes || '' }}">
+                <ng-container [ngSwitch]="input.type">
+
+                    <!-- INPUT TEXT -->
+                    <n7-input-text *ngSwitchCase="'text'" 
+                        [data]="form.inputs[input.id].ds.out$ | async"
+                        [emit]="form.inputs[input.id].emit"></n7-input-text>
+
+                    <!-- INPUT CHECKBOX -->
+                    <n7-input-checkbox *ngSwitchCase="'checkbox'" 
+                        [data]="form.inputs[input.id].ds.out$ | async"
+                        [emit]="form.inputs[input.id].emit"></n7-input-checkbox>
+
+                    <!-- INPUT SELECT -->
+                    <n7-input-select *ngSwitchCase="'select'" 
+                        [data]="form.inputs[input.id].ds.out$ | async"
+                        [emit]="form.inputs[input.id].emit"></n7-input-select>
+
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>

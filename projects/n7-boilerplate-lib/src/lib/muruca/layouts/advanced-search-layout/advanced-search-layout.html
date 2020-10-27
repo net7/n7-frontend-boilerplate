@@ -1,32 +1,6 @@
-<div *ngIf="lb.dataSource.form.loaded$ | async" class="mr-advanced-search-layout mr-layout">
-    <div *ngFor="let section of lb.dataSource.formConfig.sections" class="mr-facets__single-facet {{ section.classes || '' }}">
-        <n7-facet-header *ngIf="section.header" [data]="section.header"></n7-facet-header>
-
-        <div class="mr-facets__single-facet-content">
-            <div *ngFor="let input of section.inputs" [attr.id]="'facet-container-' + input.id"
-                class="mr-facets__single-facet-inner-content {{ input.classes || '' }}">
-                <ng-container [ngSwitch]="input.type">
-
-                    <!-- INPUT TEXT -->
-                    <n7-input-text *ngSwitchCase="'text'" 
-                        [data]="lb.dataSource.form.inputs[input.id].ds.out$ | async"
-                        [emit]="lb.dataSource.form.inputs[input.id].emit"></n7-input-text>
-
-                    <!-- INPUT CHECKBOX -->
-                    <n7-input-checkbox *ngSwitchCase="'checkbox'" 
-                        [data]="lb.dataSource.form.inputs[input.id].ds.out$ | async"
-                        [emit]="lb.dataSource.form.inputs[input.id].emit"></n7-input-checkbox>
-
-                    <!-- INPUT SELECT -->
-                    <n7-input-select *ngSwitchCase="'select'" 
-                        [data]="lb.dataSource.form.inputs[input.id].ds.out$ | async"
-                        [emit]="lb.dataSource.form.inputs[input.id].emit"></n7-input-select>
-
-                </ng-container>
-            </div>
-        </div>
-    </div>
-    <div class="mr-facets__footer">
+<div class="mr-advanced-search-layout mr-layout">
+    <mr-form [form]="lb.dataSource.form"></mr-form>
+    <div class="mr-advanced-search-layout__actions">
         <a class="n7-btn n7-btn-danger" (click)="lb.eventHandler.emitInner('reset')">RESET</a>
         <a class="n7-btn n7-btn-info" (click)="lb.eventHandler.emitInner('submit')">SUBMIT</a>
     </div>

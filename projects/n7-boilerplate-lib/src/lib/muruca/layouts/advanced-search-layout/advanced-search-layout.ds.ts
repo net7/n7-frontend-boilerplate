@@ -1,9 +1,9 @@
 import { LayoutDataSource } from '@n7-frontend/core';
 import { MrFormConfig } from '../../interfaces/form.interface';
-import { MrFormService } from '../../services/form.service';
+import { MrForm } from '../../models/form';
 
 export class MrAdvancedSearchLayoutDS extends LayoutDataSource {
-  public form: MrFormService;
+  public form: MrForm;
 
   public formConfig: MrFormConfig = {
     sections: [{
@@ -46,10 +46,8 @@ export class MrAdvancedSearchLayoutDS extends LayoutDataSource {
     }]
   };
 
-  onInit(payload) {
-    this.form = payload.form;
-
-    this.form.load(this.formConfig);
+  onInit() {
+    this.form = new MrForm(this.formConfig);
 
     const queryInput = this.form.getInput('input-1');
     const authorsInput = this.form.getInput('input-2');

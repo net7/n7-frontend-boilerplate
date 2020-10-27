@@ -5,7 +5,6 @@ import { DvComponentsLibModule } from '@n7-frontend/components';
 import { N7BoilerplateCommonModule } from '../common/n7-boilerplate-common.module';
 // SERVICES
 import { MrSearchService } from './services/search.service';
-import { MrFormService } from './services/form.service';
 import { MrLayoutStateService } from './services/layout-state.service';
 // PIPES
 import { EscapeHtmlPipe } from './pipes/keep-html.pipe';
@@ -19,6 +18,7 @@ import { MrStaticLayoutComponent } from './layouts/static-layout/static-layout';
 import { MrAdvancedSearchLayoutComponent } from './layouts/advanced-search-layout/advanced-search-layout';
 // COMPONENTS
 import { ReadMoreComponent } from './components/read-more/read-more';
+import { MrFormComponent } from './components/form/form';
 
 const COMPONENTS = [
   // Layout components
@@ -30,7 +30,8 @@ const COMPONENTS = [
   MrStaticLayoutComponent,
   MrAdvancedSearchLayoutComponent,
   // Custom components
-  ReadMoreComponent
+  ReadMoreComponent,
+  MrFormComponent,
 ];
 
 @NgModule({
@@ -45,7 +46,6 @@ const COMPONENTS = [
   ],
   providers: [
     MrSearchService,
-    MrFormService,
     MrLayoutStateService
   ],
   entryComponents: COMPONENTS,

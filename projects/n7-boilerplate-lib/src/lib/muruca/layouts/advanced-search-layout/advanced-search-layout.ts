@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AbstractLayout } from '../../../common/models/abstract-layout';
 import { LayoutsConfigurationService } from '../../../common/services/layouts-configuration.service';
-import { MrFormService } from '../../services/form.service';
 import { MrAdvancedSearchLayoutConfig as config } from './advanced-search-layout.config';
 
 @Component({
@@ -10,16 +9,13 @@ import { MrAdvancedSearchLayoutConfig as config } from './advanced-search-layout
 })
 export class MrAdvancedSearchLayoutComponent extends AbstractLayout implements OnInit, OnDestroy {
   constructor(
-    public form: MrFormService,
     layoutsConfiguration: LayoutsConfigurationService,
   ) {
     super(layoutsConfiguration.get('MrAdvancedSearchLayoutConfig') || config);
   }
 
   protected initPayload() {
-    return {
-      form: this.form
-    };
+    return {};
   }
 
   ngOnInit() {

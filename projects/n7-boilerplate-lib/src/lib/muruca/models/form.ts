@@ -1,4 +1,3 @@
-import { Injectable } from '@angular/core';
 import { Subject, ReplaySubject } from 'rxjs';
 import { MrInputTextDS } from '../data-sources/form/input-text.ds';
 import { MrInputTextEH } from '../event-handlers/form/input-text.eh';
@@ -6,19 +5,17 @@ import {
   MrChangedParams,
   MrInputDataSource,
   MrFormConfig,
-  MrInputEventHandler,
 } from '../interfaces/form.interface';
 
-@Injectable()
-export class MrFormService {
-  private config: MrFormConfig;
+export class MrForm {
+  public config: MrFormConfig;
 
   public loaded$: ReplaySubject<boolean> = new ReplaySubject();
 
-  private inputs: {
+  public inputs: {
     [id: string]: {
-      ds: MrInputDataSource<any>;
-      eh: MrInputEventHandler;
+      ds: any;
+      eh: any;
       emit: (t: string, p: any) => Function;
     };
   } = {};
@@ -37,7 +34,7 @@ export class MrFormService {
 
   changed$: Subject<MrChangedParams> = new Subject();
 
-  load(config: MrFormConfig) {
+  constructor(config: MrFormConfig) {
     this.config = config;
 
     // init inputs
