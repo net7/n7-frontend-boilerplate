@@ -14,7 +14,7 @@ export class MrInputTextEH extends EventHandler implements MrInputEventHandler {
         case `${this.dataSource.id}.change`: {
           const { value } = payload;
           // set new value
-          this.dataSource.setValue(value);
+          this.dataSource.setState({ value });
           // emit changed signal
           this.changed$.next({
             id: this.dataSource.id,

@@ -57,12 +57,10 @@ export class MrAdvancedSearchLayoutDS extends LayoutDataSource {
     this.form.changed$.subscribe(({ id, state }) => {
       if (id === 'input-1') {
         const { value } = state;
-        if (typeof value === 'string' && value.trim()) {
-          authorsInput.enable();
-        } else {
-          authorsInput.disable();
-        }
-        queryInput.setValue(value.replace(/a/g, '@'));
+        authorsInput.setState({
+          disabled: !(typeof value === 'string' && value.trim())
+        });
+        queryInput.setState({ value: value.replace(/a/g, '@') });
       }
     });
   }

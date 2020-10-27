@@ -30,34 +30,14 @@ export class MrInputTextDS extends DataSource implements MrInputDataSource<MrInp
     this.refresh();
   }
 
-  setValue(value: MrInputTextValue) {
-    this.setState({ value });
-  }
-
-  hide() {
-    this.setState({ hidden: true });
-  }
-
-  show() {
-    this.setState({ hidden: false });
-  }
-
-  disable() {
-    this.setState({ disabled: true });
-  }
-
-  enable() {
-    this.setState({ disabled: false });
-  }
-
   clear() {
-    this.setValue(null);
+    this.setState({ value: null });
   }
 
   refresh() {
     const { value, hidden, disabled } = this.state;
 
-    // handle value
+    // render value
     this.output.value = value;
     // fix element update
     const el = document.getElementById(this.id) as HTMLInputElement;
@@ -65,10 +45,10 @@ export class MrInputTextDS extends DataSource implements MrInputDataSource<MrInp
       el.value = value;
     }
 
-    // handle disabled
+    // render disabled
     this.output.disabled = disabled;
 
-    // handle hidden
+    // render hidden
     this.output.classes = hidden ? 'is-hidden' : '';
   }
 }

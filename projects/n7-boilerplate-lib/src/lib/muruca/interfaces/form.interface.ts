@@ -11,11 +11,6 @@ export interface MrInputDataSource<T> {
   state: MrFormInputState<T>;
   getState(): MrFormInputState<T>;
   setState(state: MrFormInputState<T>): void;
-  setValue(value: T): void;
-  hide(): void;
-  show(): void;
-  disable(): void;
-  enable(): void;
   clear(): void;
   refresh(): void;
 }
