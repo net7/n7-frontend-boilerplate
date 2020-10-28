@@ -1,6 +1,7 @@
 import {
   Component, ContentChild, Input, OnInit, TemplateRef
 } from '@angular/core';
+import { _t } from '@n7-frontend/core';
 import { MrFormConfigGroup, MrFormConfigSection } from '../../interfaces/form.interface';
 import { MrFormModel } from '../../models/form.model';
 
@@ -25,5 +26,12 @@ export class MrFormComponent implements OnInit {
     } else {
       this.sections = this.form.config.sections;
     }
+
+    // translations
+    this.sections = this.sections.map((section) => ({
+      ...section,
+      title: _t(section.title),
+      description: _t(section.description)
+    }));
   }
 }

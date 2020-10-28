@@ -32,6 +32,8 @@ export interface MrFormConfig {
 
 export interface MrFormConfigSection {
   id: string;
+  title?: string;
+  description?: string;
   inputs: MrFormConfigInput<any>[];
   classes?: string;
 }

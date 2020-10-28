@@ -1,6 +1,7 @@
 <div *ngIf="form.loaded$ | async" class="mr-form {{ group?.classes || '' }}">
     <div *ngFor="let section of sections" class="mr-form__section {{ section.classes || '' }}">
-        <n7-facet-header *ngIf="section.header" [data]="section.header"></n7-facet-header>
+        <h3 *ngIf="section.title" class="mr-form__section-title">{{ section.title }}</h3>
+        <p *ngIf="section.description" class="mr-form__section-description">{{ section.description }}</p>
 
         <div class="mr-form__section-content">
             <div *ngFor="let input of section.inputs" class="mr-form__input {{ input.classes || '' }}">
