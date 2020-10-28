@@ -1,6 +1,8 @@
 import { Subject, ReplaySubject } from 'rxjs';
 import { MrInputTextDS } from '../data-sources/form/input-text.ds';
 import { MrInputTextEH } from '../event-handlers/form/input-text.eh';
+import { MrInputSelectDS } from '../data-sources/form/input-select.ds';
+import { MrInputSelectEH } from '../event-handlers/form/input-select.eh';
 import {
   MrChangedParams,
   MrInputDataSource,
@@ -29,6 +31,10 @@ export class MrFormModel {
     text: {
       ds: MrInputTextDS,
       eh: MrInputTextEH
+    },
+    select: {
+      ds: MrInputSelectDS,
+      eh: MrInputSelectEH
     }
   };
 

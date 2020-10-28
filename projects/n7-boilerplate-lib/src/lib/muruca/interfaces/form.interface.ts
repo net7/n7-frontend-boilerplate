@@ -1,3 +1,4 @@
+import { IDataSource, IEventHandler } from '@n7-frontend/core';
 import { Subject } from 'rxjs';
 
 export type MrFormInputState<T> = {
@@ -6,7 +7,7 @@ export type MrFormInputState<T> = {
   hidden?: boolean;
 }
 
-export interface MrInputDataSource<T> {
+export interface MrInputDataSource<T> extends IDataSource {
   id: string;
   state: MrFormInputState<T>;
   getState(): MrFormInputState<T>;
@@ -15,7 +16,7 @@ export interface MrInputDataSource<T> {
   refresh(): void;
 }
 
-export interface MrInputEventHandler {
+export interface MrInputEventHandler extends IEventHandler {
   changed$: Subject<MrChangedParams>;
 }
 

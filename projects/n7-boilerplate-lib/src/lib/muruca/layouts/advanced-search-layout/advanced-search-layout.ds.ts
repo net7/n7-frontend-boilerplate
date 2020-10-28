@@ -42,6 +42,32 @@ export class MrAdvancedSearchLayoutDS extends LayoutDataSource {
           disabled: false,
           hidden: false
         }
+      }, {
+        id: 'select-1',
+        type: 'select',
+        data: {
+          id: 'select-1',
+          label: 'Paesi',
+          payload: 'select-1-payload',
+          options: [{
+            value: 'italia',
+            label: 'Italia',
+            disabled: false
+          }, {
+            value: 'germania',
+            label: 'Germania',
+            disabled: false
+          }, {
+            value: 'francia',
+            label: 'Francia',
+            disabled: true
+          }]
+        },
+        state: {
+          value: null,
+          disabled: true,
+          hidden: false
+        }
       }]
     }, {
       id: 'section-2',
@@ -88,14 +114,34 @@ export class MrAdvancedSearchLayoutDS extends LayoutDataSource {
 
     const queryInput = this.form.getInput('input-1');
     const authorsInput = this.form.getInput('input-2');
+    const countryInput = this.form.getInput('select-1');
 
     this.form.changed$.subscribe(({ id, state }) => {
+      const { value } = state;
       if (id === 'input-1') {
-        const { value } = state;
         authorsInput.setState({
           disabled: !(typeof value === 'string' && value.trim())
         });
+        countryInput.setState({
+          disabled: !(typeof value === 'string' && value.trim())
+        });
         queryInput.setState({ value: value.replace(/a/g, '@') });
+      }
+
+      // select conditionals
+      if (id === 'select-1') {
+        const { options } = countryInput.output;
+        const newData = {
+          ...countryInput.output,
+          options: options.map((option) => ({
+            ...option,
+            disabled: !!(
+              option.value === 'francia'
+              && value === 'germania'
+            )
+          }))
+        };
+        countryInput.run(newData);
       }
     });
   }
