@@ -26,14 +26,20 @@ export interface MrChangedParams {
 
 export interface MrFormConfig {
   sections: MrFormConfigSection[];
+  groups?: MrFormConfigGroup[];
 }
 
 export interface MrFormConfigSection {
   id: string;
   inputs: MrFormConfigInput<any>[];
-  options?: {
-    classes?: string;
-  };
+  classes?: string;
+}
+
+export interface MrFormConfigGroup {
+  id: string;
+  sections: string[];
+  classes?: string;
+  options?: any;
 }
 
 export interface MrFormConfigInput<T> {

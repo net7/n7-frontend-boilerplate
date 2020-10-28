@@ -1,5 +1,5 @@
-<div *ngIf="form.loaded$ | async" class="mr-form">
-    <div *ngFor="let section of form.config.sections" class="mr-form__section {{ section.classes || '' }}">
+<div *ngIf="form.loaded$ | async" class="mr-form {{ group?.classes || '' }}">
+    <div *ngFor="let section of sections" class="mr-form__section {{ section.classes || '' }}">
         <n7-facet-header *ngIf="section.header" [data]="section.header"></n7-facet-header>
 
         <div class="mr-form__section-content">

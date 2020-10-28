@@ -8,6 +8,21 @@ export class MrAdvancedSearchLayoutDS extends LayoutDataSource {
   public form: MrFormModel;
 
   public formConfig: MrFormConfig = {
+    groups: [{
+      id: 'group-1',
+      sections: ['section-1'],
+      classes: 'form-group-1',
+      options: {
+        label: 'Group 1'
+      }
+    }, {
+      id: 'group-2',
+      sections: ['section-2'],
+      classes: 'form-group-2',
+      options: {
+        label: 'Group 2...'
+      }
+    }],
     sections: [{
       id: 'section-1',
       inputs: [{
@@ -27,7 +42,10 @@ export class MrAdvancedSearchLayoutDS extends LayoutDataSource {
           disabled: false,
           hidden: false
         }
-      }, {
+      }]
+    }, {
+      id: 'section-2',
+      inputs: [{
         id: 'input-2',
         type: 'text',
         data: {
