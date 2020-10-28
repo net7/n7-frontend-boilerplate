@@ -3,6 +3,8 @@ import { MrInputTextDS } from '../data-sources/form/input-text.ds';
 import { MrInputTextEH } from '../event-handlers/form/input-text.eh';
 import { MrInputSelectDS } from '../data-sources/form/input-select.ds';
 import { MrInputSelectEH } from '../event-handlers/form/input-select.eh';
+import { MrInputCheckboxDS } from '../data-sources/form/input-checkbox.ds';
+import { MrInputCheckboxEH } from '../event-handlers/form/input-checkbox.eh';
 import {
   MrChangedParams,
   MrInputDataSource,
@@ -35,6 +37,10 @@ export class MrFormModel {
     select: {
       ds: MrInputSelectDS,
       eh: MrInputSelectEH
+    },
+    checkbox: {
+      ds: MrInputCheckboxDS,
+      eh: MrInputCheckboxEH
     }
   };
 

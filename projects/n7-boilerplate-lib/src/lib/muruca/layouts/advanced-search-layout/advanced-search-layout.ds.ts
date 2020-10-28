@@ -43,6 +43,21 @@ export class MrAdvancedSearchLayoutDS extends LayoutDataSource {
           hidden: false
         }
       }, {
+        id: 'checkbox-1',
+        type: 'checkbox',
+        data: {
+          id: 'checkbox-1',
+          checkboxes: [1, 2, 3, 4].map((number) => ({
+            label: `check ${number}`,
+            payload: number,
+          }))
+        },
+        state: {
+          value: [3, 4],
+          disabled: false,
+          hidden: false
+        }
+      }, {
         id: 'select-1',
         type: 'select',
         data: {
@@ -115,6 +130,11 @@ export class MrAdvancedSearchLayoutDS extends LayoutDataSource {
     const queryInput = this.form.getInput('input-1');
     const authorsInput = this.form.getInput('input-2');
     const countryInput = this.form.getInput('select-1');
+    const checkboxInput = this.form.getInput('checkbox-1');
+
+    setTimeout(() => {
+      checkboxInput.setState({ value: [1] });
+    }, 5000);
 
     this.form.changed$.subscribe(({ id, state }) => {
       const { value } = state;
