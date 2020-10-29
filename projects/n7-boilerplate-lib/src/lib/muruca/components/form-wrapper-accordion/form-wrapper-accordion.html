@@ -8,7 +8,7 @@
             ></n7-facet-header>
         </div>
 
-        <div class="mr-form-wrapper__content" [attr.id]="group.id">
+        <div *ngIf="group.options.isOpen" class="mr-form-wrapper__content" [attr.id]="group.id">
             <mr-form [form]="data.form" [group]="group">
                 <!-- CUSTOM INPUTS -->
                 <!-- <ng-template let-type="type" let-input="input">

@@ -1,29 +1,43 @@
 import { DataSource } from '@n7-frontend/core';
 import { MrFormWrapperAccordionData } from '../components/form-wrapper-accordion/form-wrapper-accordion';
-import { MrFormModel } from '../models/form.model';
 
 const ICON_OPEN = 'n7-icon-angle-up';
-// const ICON_CLOSE = 'n7-icon-angle-down';
+const ICON_CLOSE = 'n7-icon-angle-down';
 
 export class MrFormWrapperAccordionDS extends DataSource {
   protected transform(data: MrFormWrapperAccordionData): MrFormWrapperAccordionData {
-    const { config, form } = data;
-    if (!form) {
-      data.form = new MrFormModel();
-      // form init
-      data.form.init(config);
-    }
+    const { form } = data;
+    const { groups } = form.config;
 
-    // headers
-    data.config.groups = config.groups.map((group) => ({
+    // set accordion headers
+    data.form.config.groups = groups.map((group) => ({
       ...group,
       options: {
         ...group.options,
         text: group.options.label,
         payload: group.id,
-        iconRight: group.options.iconOpen || ICON_OPEN
+        iconRight: group.options.isOpen ? ICON_OPEN : ICON_CLOSE,
+        isOpen: group.options.isOpen
       }
     }));
     return data;
+  }
+
+  onReset() {
+    const { form } = this.output;
+    const inputs = form.getInputs();
+    Object.keys(inputs).forEach((id) => {
+      inputs[id].clear();
+    });
+  }
+
+  toggleGroup(groupId) {
+    this.output.form.config.groups.forEach((group) => {
+      if (group.id === groupId) {
+        const { isOpen } = group.options;
+        group.options.iconRight = isOpen ? ICON_CLOSE : ICON_OPEN;
+        group.options.isOpen = !group.options.isOpen;
+      }
+    });
   }
 }
