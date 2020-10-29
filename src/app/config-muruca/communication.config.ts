@@ -21,7 +21,8 @@ export default {
         search: 'search/results',
         facets: 'search/facets',
         resource: 'get_resource',
-        footer: 'get_footer'
+        footer: 'get_footer',
+        translation: 'get_translation/'
       }
     }
   }
