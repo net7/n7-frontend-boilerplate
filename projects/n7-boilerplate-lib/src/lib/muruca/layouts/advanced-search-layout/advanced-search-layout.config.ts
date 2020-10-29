@@ -5,7 +5,9 @@ import * as EH from '../../event-handlers';
 
 export const MrAdvancedSearchLayoutConfig = {
   layoutId: 'mr-advanced-search-layout',
-  widgets: [],
+  widgets: [{
+    id: 'mr-form-wrapper-accordion'
+  }],
   layoutDS: MrAdvancedSearchLayoutDS,
   layoutEH: MrAdvancedSearchLayoutEH,
   widgetsDataSources: DS,

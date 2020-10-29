@@ -12,6 +12,7 @@ import resourceMapConfig from './resource-map.config';
 import resourceToponymConfig from './resource-toponym.config';
 import resourceKeywordConfig from './resource-keyword.config';
 import resourceWorkConfig from './resource-work.config';
+import advancedSearchConfig from './advanced-search.config';
 
 export default {
   tabs: tabsConfig,
@@ -28,4 +29,5 @@ export default {
   'resource-map': resourceMapConfig,
   'resource-toponym': resourceToponymConfig,
   'resource-keyword': resourceKeywordConfig,
+  'advanced-search': advancedSearchConfig,
 };
