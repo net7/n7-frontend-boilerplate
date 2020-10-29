@@ -1,4 +1,4 @@
-import { DataSource } from '@n7-frontend/core';
+import { DataSource, _t } from '@n7-frontend/core';
 
 export class MrMetadataDS extends DataSource {
   /** Test if a string is a valid URL */
@@ -17,18 +17,15 @@ export class MrMetadataDS extends DataSource {
         if (Array.isArray(value)) {
           result.group.push({
             group: [{
-              title: itemLabel,
-              items: value.map((childItem) => ({
-                label: childItem.label,
-                value: this.getItemValue(childItem.value)
-              }))
+              title: _t(itemLabel),
+              ...this.getItemGroup(value)
             }]
           });
         } else {
           result.group.push({
             group: [{
               items: [{
-                label: itemLabel,
+                label: _t(itemLabel),
                 value: this.getItemValue(value)
               }]
             }]
@@ -37,6 +34,22 @@ export class MrMetadataDS extends DataSource {
       });
     });
     return result;
+  }
+
+  private getItemGroup(value) {
+    if (Array.isArray(value) && Array.isArray(value[0])) {
+      return {
+        group: value.map((val) => ({
+          ...this.getItemGroup(val)
+        }))
+      };
+    }
+    return {
+      items: value.map((childItem) => ({
+        label: _t(childItem.label),
+        value: this.getItemValue(childItem.value)
+      }))
+    };
   }
 
   private getItemValue(value) {
