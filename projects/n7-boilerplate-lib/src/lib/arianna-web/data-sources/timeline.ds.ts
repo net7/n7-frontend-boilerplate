@@ -4,7 +4,7 @@ import { max as _max, min as _min } from 'lodash';
 import { Subject } from 'rxjs';
 
 const ONE_YEAR = 31557600000;
-const YEARS_MARGIN = 100;
+const YEARS_MARGIN = 30;
 
 export class AwTimelineDS extends DataSource {
   public timeline;
@@ -38,11 +38,11 @@ export class AwTimelineDS extends DataSource {
         minHeight: '100px',
         // height: '100px',
         locale: 'it_IT',
-        cluster: {
+        // cluster: {
           // fitOnDoubleClick: true,
           // clusterCriteria: (f, s) => f.content.charAt(0) === s.content.charAt(0),
-          titleTemplate: '{count} eventi',
-        },
+        //   titleTemplate: '{count} eventi',
+        // },
         showCurrentTime: false,
         showTooltips: false,
         tooltip: {
