@@ -45,6 +45,7 @@ export class MrAdvancedSearchLayoutDS extends LayoutDataSource {
   }
 
   onReset() {
-    // TODO
+    // eslint-disable-next-line no-console
+    console.log('reset');
   }
 }
