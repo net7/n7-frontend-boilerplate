@@ -190,6 +190,10 @@
             .n7-metadata-viewer__group-title + .n7-metadata-viewer__group-content {
                 padding-left: $space*2;
 
+                .n7-metadata-viewer__item-label {
+                    @include first-letter-capital();
+                }
+
                 .n7-metadata-viewer__item-label,
                 .n7-metadata-viewer__item-value {
                     // font-size: $font-size-s;
