@@ -7,8 +7,23 @@
 /* ------------------------------------ *\
    #ITEM-PREVIEW
 \* ------------------------------------ */
+/* Grid */
 .n7-item-preview {
     &__metadata-item {
         display: block;
     }
 }
+
+/* No grid */
+.n7-grid-1 {
+    .n7-item-preview {
+        border-bottom: 1px solid $color-border-normal;
+        padding-bottom: $space*1;
+
+        &__metadata-item {
+            display: inline-block;
+        }
+    }
+}
+
+
