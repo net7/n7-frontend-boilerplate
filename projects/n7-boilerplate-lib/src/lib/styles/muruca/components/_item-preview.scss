@@ -26,4 +26,18 @@
     }
 }
 
+/* ------------------------------------ *\
+   #BIBLIOGRAPHY-ITEM-PREVIEW
+\* ------------------------------------ */
+.mr-item-preview-bibliography {
+    .n7-item-preview__content {
+        padding: $space*2;
+        border: 1px solid $color-border-normal;
+        border-radius: $border-radius*2;
+        font-size: $font-size-m;
+    }
 
+    .n7-item-preview__text {
+        font-size: $font-size-m;
+    }
+}
