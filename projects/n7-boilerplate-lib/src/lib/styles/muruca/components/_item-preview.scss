@@ -1,0 +1,43 @@
+/**
+ * ITEM-PREVIEW
+ *
+ * Component used to preview any kind of element with image, title, text, metadata and icons.
+ */
+ 
+/* ------------------------------------ *\
+   #ITEM-PREVIEW
+\* ------------------------------------ */
+/* Grid */
+.n7-item-preview {
+    &__metadata-item {
+        display: block;
+    }
+}
+
+/* No grid */
+.n7-grid-1 {
+    .n7-item-preview {
+        border-bottom: 1px solid $color-border-normal;
+        padding-bottom: $space*1;
+
+        &__metadata-item {
+            display: inline-block;
+        }
+    }
+}
+
+/* ------------------------------------ *\
+   #BIBLIOGRAPHY-ITEM-PREVIEW
+\* ------------------------------------ */
+.mr-item-preview-bibliography {
+    .n7-item-preview__content {
+        padding: $space*2;
+        border: 1px solid $color-border-normal;
+        border-radius: $border-radius*2;
+        font-size: $font-size-m;
+    }
+
+    .n7-item-preview__text {
+        font-size: $font-size-m;
+    }
+}
