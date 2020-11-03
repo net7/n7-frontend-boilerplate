@@ -1,0 +1,50 @@
+/**
+ * READ MORE
+ *
+ * Component that handles the rear more functionality.
+ */
+
+/* ------------------------------------ *\
+    READ-MORE
+\* ------------------------------------ */
+.mr-read-more {
+    &__btn {
+        position: relative;
+        z-index: 10;
+        margin-top: $space*1.5;
+        color: $color-text-link;
+        cursor: pointer;
+        font-size: $font-size-s;
+    }
+
+    /* Collapsed content */
+    &.is-collapsed {
+        position: relative;
+
+        &:after {
+            position: absolute;
+            z-index: 5;
+            bottom: 0;
+            content: " ";
+            height: 100px;
+            width: 100%;
+            background: linear-gradient(0deg, rgba(255,255,255,1) 20%, rgba(255,255,255,0) 100%);
+        }
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: $breakpoint-laptop) {
+}
+
+@media all and (max-width: $breakpoint-ipad-portrait) {
+}
+
+@media all and (max-width: $breakpoint-smartphone-landscape) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}
