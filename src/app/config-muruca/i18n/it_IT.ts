@@ -32,6 +32,7 @@ export default {
   'search#fallback_button': 'Resetta la ricerca',
   'search#ko_text': 'Oops, abbiamo riscontrato un errore nella ricerca. Prova a cambiare i parametri oppure a resettare la ricerca cliccando sul pulsante sottostante.',
   'search#ko_button': 'Resetta la ricerca',
+  'search#pagination_select_label': 'Numero di risultati',
   'resource#authors': 'di',
   'resource#date': 'pubblicato il',
   'resource#time_to_read': 'lettura di',

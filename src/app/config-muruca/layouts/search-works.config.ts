@@ -31,6 +31,7 @@ export default {
     ]
   },
   pagination: {
+    selectLabel: 'search#pagination_select_label',
     limit: 5,
     options: [
       12,
