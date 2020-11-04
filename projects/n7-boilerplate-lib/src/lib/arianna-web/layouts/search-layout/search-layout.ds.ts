@@ -1,5 +1,5 @@
 import { cloneDeep } from 'lodash';
-import { LayoutDataSource } from '@n7-frontend/core/dist/layout-data-source';
+import { LayoutDataSource } from '@n7-frontend/core';
 import {
   tap, takeUntil
 } from 'rxjs/operators';
