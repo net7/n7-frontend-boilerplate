@@ -10,6 +10,11 @@ export class MrMetadataDS extends DataSource {
   protected transform(data: any): any {
     const { hideLabels } = this.options;
     const { group } = data;
+
+    if (!(group || []).length) {
+      return null;
+    }
+
     const result = { group: [] };
     group.forEach(({ items }) => {
       items.forEach(({ label, value }) => {
