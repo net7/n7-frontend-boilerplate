@@ -40,12 +40,11 @@ export class MrAdvancedSearchLayoutDS extends LayoutDataSource {
   }
 
   onSubmit({ state }) {
-    // eslint-disable-next-line no-console
-    console.log('submit state', state);
+    // do nothing
+    console.warn('onSubmit: to be implemented on project', state);
   }
 
   onReset() {
-    // eslint-disable-next-line no-console
-    console.log('reset');
+    // do nothing
   }
 }
