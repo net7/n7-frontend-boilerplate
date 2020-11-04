@@ -8,10 +8,10 @@ import {
   MrSearchLayoutComponent,
   MrStaticLayoutComponent,
   MrResourceLayoutComponent,
+  MrAdvancedSearchLayoutComponent,
   // OTHER
   DynamicPathGuard
 } from 'n7-boilerplate-lib';
-import { MrAdvancedSearchLayoutComponent } from 'n7-boilerplate-lib/lib/muruca/layouts/advanced-search-layout/advanced-search-layout';
 
 const NOT_FOUND_PATH = 'page-404';
 

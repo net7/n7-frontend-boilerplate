@@ -1,4 +1,4 @@
-import { LayoutDataSource } from '@n7-frontend/core/dist/layout-data-source';
+import { LayoutDataSource } from '@n7-frontend/core';
 import { isNull } from 'lodash';
 import { BehaviorSubject } from 'rxjs';
 

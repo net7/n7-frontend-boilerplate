@@ -3,7 +3,7 @@ import { DataSource } from '@n7-frontend/core';
 export class SmartPaginationDS extends DataSource {
   protected transform(data) {
     const {
-      totalPages, currentPage, pageLimit, sizes,
+      totalPages, currentPage, pageLimit, sizes
     } = data;
     const { mode, href, queryParams } = this.options;
     // ===== WARNINGS =====
@@ -24,7 +24,7 @@ export class SmartPaginationDS extends DataSource {
       last,
       links,
       select: sizes ? {
-        label: 'Numero di risultati',
+        label: sizes.label || 'Numero di risultati',
         options: sizes.list.map((s) => ({
           text: s,
           selected: s === sizes.active,

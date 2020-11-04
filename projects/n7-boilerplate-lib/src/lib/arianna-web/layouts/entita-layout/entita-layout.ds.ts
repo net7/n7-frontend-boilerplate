@@ -1,4 +1,4 @@
-import { LayoutDataSource } from '@n7-frontend/core/dist/layout-data-source';
+import { LayoutDataSource } from '@n7-frontend/core';
 import { Observable, of } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
 import { get as _get } from 'lodash';

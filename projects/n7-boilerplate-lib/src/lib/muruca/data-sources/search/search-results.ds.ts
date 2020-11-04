@@ -1,4 +1,4 @@
-import { DataSource } from '@n7-frontend/core';
+import { DataSource, _t } from '@n7-frontend/core';
 import { merge } from 'lodash';
 import helpers from '../../../common/helpers';
 import linksHelper from '../../helpers/links-helper';
@@ -23,8 +23,23 @@ export class MrSearchResultsDS extends DataSource {
       if (itemPreviewOptions.limit && (item.text.length > itemPreviewOptions.limit)) {
         item.text = `${item.text.substring(0, itemPreviewOptions.limit)}...`;
       }
+      // metadata
+      const metadata = [];
+      if (Array.isArray(item.metadata)) {
+        item.metadata.forEach((group) => {
+          const items = [];
+          (group.items || []).forEach((metadataItem) => {
+            items.push({
+              ...metadataItem,
+              label: _t(metadataItem.label)
+            });
+          });
+          metadata.push({ items });
+        });
+      }
       return {
         ...item,
+        metadata,
         classes: itemPreviewOptions.classes,
         anchor: {
           href: linksHelper.getRouterLink(item.link),
