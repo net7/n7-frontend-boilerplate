@@ -16,11 +16,11 @@
 
 /* No grid */
 .n7-grid-1 {
-    .n7-item-preview {
+    .n7-item-preview:not(.mr-item-preview-bibliography) {
         border-bottom: 1px solid $color-border-normal;
         padding-bottom: $space*1;
 
-        &__metadata-item {
+        .n7-item-preview___metadata-item {
             display: inline-block;
         }
     }
