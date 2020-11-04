@@ -19,3 +19,5 @@ export * from './search/search-results.ds';
 export * from './search/search-tags.ds';
 // static layout
 export * from './static-metadata.ds';
+// form wrapper
+export * from './form-wrapper-accordion.ds';
