@@ -73,7 +73,7 @@
                         <h3 *ngIf="section.title" class="mr-resource__section-title mr-resource__metadata-title">
                             {{ section.title }}
                         </h3>
-                        <mr-read-more [data]="lb.dataSource.readMoreConfig">
+                        <mr-read-more [data]="section.readmore">
                             <n7-metadata-viewer [data]="lb.widgets[section.id].ds.out$ | async"
                                 [emit]="lb.widgets[section.id].emit">
                             </n7-metadata-viewer>

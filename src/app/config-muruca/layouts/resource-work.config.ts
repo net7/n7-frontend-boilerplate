@@ -1,5 +1,4 @@
 export default {
-  maxHeight: 100, // Threshold where the "read-more" button appears
   title: 'Opera',
   type: 'work',
   sections: {
@@ -19,7 +18,14 @@ export default {
       {
         id: 'metadata',
         type: 'metadata',
-        title: 'resource#metadata'
+        title: 'resource#metadata',
+        readmore: {
+          height: 100,
+          labels: {
+            more: 'resource#readmore',
+            less: 'resource#readless'
+          }
+        }
       },
       {
         id: 'metadata-size',

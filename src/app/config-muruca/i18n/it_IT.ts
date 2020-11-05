@@ -40,6 +40,8 @@ export default {
   'resource#metadata': 'Metadati',
   'resource#metadata_size': 'Dimensioni',
   'resource#collection_continents': 'Collezione di appartenenza',
+  'resource#readmore': 'Vedi più',
+  'resource#readless': 'Vedi meno',
   'tabs#work_facsimile': 'Facsimile',
   'tabs#work_metadati': 'Metadati',
   'tabs#work_trascrizione': 'Trascrizione',
