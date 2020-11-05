@@ -12,6 +12,6 @@
         </div>
         <div *ngIf="hasReadmore" class="mr-read-more__btn" (click)="handleToggle()">
             <span class="n7-icon-{{ collapsed ? 'plus' : 'minus' }}"></span>
-            {{ collapsed ? data.labels.more : data.labels.less }}
+            <span class="mr-read-more__btn-text">{{ collapsed ? data.labels.more : data.labels.less }}</span>
         </div>
 </div>
