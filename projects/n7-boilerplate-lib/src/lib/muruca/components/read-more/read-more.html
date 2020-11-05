@@ -1,12 +1,17 @@
-<div class="mr-read-more {{this.state}}"
-     *ngIf="data"
-     #root>
-     <!-- Child component -->
-     <ng-content class="content"></ng-content>
-     <div [hidden]="!collapsed.value"
-          (click)="handleToggle()"
-          class="mr-read-more__btn">
-          <span class="n7-icon-plus"></span>
-          {{ data.label }}
-     </div>
+<div #root *ngIf="data" class="mr-read-more"
+    [ngClass]="{
+        'is-collapsed': !!(hasReadmore && collapsed),
+        'is-expanded': !!(hasReadmore && !collapsed)
+    }">
+        <div class="mr-read-more__content"
+        [ngStyle]="{
+            height: hasReadmore ? wrapperHeight + 'px' : false
+        }">
+            <!-- Child component -->
+            <ng-content class="content"></ng-content>
+        </div>
+        <div *ngIf="hasReadmore" class="mr-read-more__btn" (click)="handleToggle()">
+            <span class="n7-icon-{{ collapsed ? 'plus' : 'minus' }}"></span>
+            {{ collapsed ? data.labels.more : data.labels.less }}
+        </div>
 </div>

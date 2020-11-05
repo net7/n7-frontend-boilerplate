@@ -17,6 +17,11 @@
         font-size: $font-size-s;
     }
 
+    &__content {
+        overflow: hidden;
+        transition: all 0.5s;
+    }
+
     /* Collapsed content */
     &.is-collapsed {
         position: relative;
