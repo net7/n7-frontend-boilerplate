@@ -126,13 +126,6 @@
         box-shadow: 0 2px 2px 0 rgba(0,0,0,0.08), 0 13px 30px 0 rgba(0,0,0,0.05);
         border-radius: $border-radius;
 
-        /* Sections */
-        .mr-resource__section {
-            &:last-child {
-                border-bottom: 0;  
-            }
-        }
-        
         .mr-resource__section-title {
             width: 220px;
             flex-shrink: 0;
@@ -142,17 +135,24 @@
             color: $color-text-light;
             font-size: $font-size-xl;
             font-weight: $font-weight-bold;
+            overflow-wrap: break-word
         }
 
         /* Metadata */
         .mr-resource__metadata {
             padding: $space*6 0;
             margin: 0 $space*10;
-            border-bottom: 2px solid $color-border-normal;
         }
 
         .mr-resource__metadata-content {
             display: flex;
+        }
+
+        .n7-metadata-viewer__wrapper:last-child {
+            .n7-metadata-viewer__group:last-child,
+            .n7-metadata-viewer__item:last-child {
+                margin-bottom:  0;
+            }
         }
 
         .n7-metadata-viewer__item {
@@ -164,24 +164,47 @@
             width: 170px;
             margin-right: $space;
             flex-shrink: 0;
+            @include first-letter-capital();
         }
 
         .n7-metadata-viewer__item-value,
         .n7-metadata-viewer__item-value p {
                 margin: 0;
                 line-height: 1.6;
+                word-break: break-all;
         }
 
-        .n7-metadata-viewer__group:last-child,
-        .n7-metadata-viewer__item:last-child {
-            margin-bottom:  0;
+        .n7-metadata-viewer__item-value img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Metadata-second level */
+        .mr-resource__metadata {
+            .n7-metadata-viewer__group-title {
+                color: $color-text-light;
+                font-size: $font-size-m;
+                font-weight: $font-weight-bold;
+            }
+
+            .n7-metadata-viewer__group-title + .n7-metadata-viewer__group-content {
+                padding-left: $space*2;
+
+                .n7-metadata-viewer__item-label {
+                    @include first-letter-capital();
+                }
+
+                .n7-metadata-viewer__item-label,
+                .n7-metadata-viewer__item-value {
+                    // font-size: $font-size-s;
+                }
+            }
         }
 
         /* Collection */
         .mr-resource__collection {
             padding: $space*6 0;
             margin: 0 $space*10;
-            border-bottom: 2px solid $color-border-normal;
         }
 
         .mr-resource__collection-content {
@@ -190,6 +213,15 @@
 
         .mr-resource__collection-grid {
             flex-grow: 1;
+        }
+
+        /* Sections border */
+        .mr-resource__metadata + .mr-resource__metadata,
+        .mr-resource__collection + .mr-resource__metadata,
+        .mr-resource__metadata + .mr-resource__collection,
+        .mr-resource__collection + .mr-resource__collection
+        {
+            border-top: 2px solid $color-border-normal !important;
         }
     }
 }

@@ -1,79 +1,109 @@
 import { DataSource } from '@n7-frontend/core';
 import * as moment from 'moment';
+import { max as _max, min as _min } from 'lodash';
+import { Subject } from 'rxjs';
+
+const ONE_YEAR = 31557600000;
+const YEARS_MARGIN = 30;
 
 export class AwTimelineDS extends DataSource {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  protected transform = (data) => ({
-    containerID: 'timeline-component',
-    libOptions: {
-      height: '500px',
-      locale: 'it_IT',
-      cluster: {
-        // titleTemplate: '{count}',
-        // fitOnDoubleClick: true,
-        clusterCriteria: (f, s) => f.content.charAt(0) === s.content.charAt(0)
+  public timeline;
+
+  public timelineLoaded$: Subject<void> = new Subject();
+
+  public dataSet;
+
+  protected transform = (data) => {
+    this.dataSet = data.map(({
+      id, start, end, item, label
+    }) => ({
+      id,
+      item,
+      start: start ? moment(start).format('YYYY-MM-DD') : null,
+      end: end && end !== start ? moment(end).format('YYYY-MM-DD') : null,
+      content: this.getItemTemplate(label, item.label)
+    }));
+
+    const max = this.getMax();
+    const min = this.getMin();
+
+    return {
+      containerID: 'timeline-component',
+      libOptions: {
+        max,
+        min,
+        start: min,
+        end: max,
+        align: 'left',
+        minHeight: '100px',
+        // height: '100px',
+        locale: 'it_IT',
+        // cluster: {
+          // fitOnDoubleClick: true,
+          // clusterCriteria: (f, s) => f.content.charAt(0) === s.content.charAt(0),
+        //   titleTemplate: '{count} eventi',
+        // },
+        showCurrentTime: false,
+        showTooltips: false,
+        tooltip: {
+          followMouse: false,
+          template: (d: any, element: { title: string }) => `<div class="tooltip">${element.title}</div>`
+        },
+        width: '100%',
+        // minHeight: '350px',
+        // maxHeight: '800px',
+        zoomMax: ONE_YEAR * 2000, // 2000 years
+        zoomMin: ONE_YEAR / 12, // a month
+        // zoomFriction: 8
       },
-      showTooltips: false,
-      tooltip: {
-        followMouse: false,
-        template: (d: any, element: { title: string }) => `<div class="tooltip">${element.title}</div>`
-      },
-      template: (d: any) => {
-        const start = moment(d.start).format('DDMM') === '0101'
-          ? moment(d.start).format('YYYY') : moment(d.start).format('DD MMMM YYYY');
-        let end: string;
-        if (d.end) {
-          end = moment(d.end).format('DDMM') === '0101'
-            ? moment(d.end).format('YYYY') : moment(d.end).format('DD MMMM YYYY');
-        }
-        const endHTML = d.end ? `- ${end}` : '';
-        return (`<div class="dates"><em>${start}${endHTML}</em></div><div class="content">${d.content}</div>`);
-      },
-      width: '100%',
-      minHeight: '350px',
-      maxHeight: '800px',
-      // zoomMax: 31557600000, // one year
-      zoomFriction: 8
-    },
-    dataSet: [
-      {
-        id: 1,
-        content: 'Mostra internazionale di edilizia ospedaliera, Roma (1935)',
-        start: '1935'
-      },
-      {
-        id: 2,
-        content: 'Mostra di edilizia ospedaliera, Fiuggi',
-        start: '1942'
-      },
-      {
-        id: 3,
-        content: 'I Congresso mondiale di sociologia',
-        start: '1951'
-      },
-      {
-        id: 4,
-        content: 'V Congresso mondiale di sociologia, Washington D.C. (1962)',
-        start: '1962',
-      },
-      {
-        id: 5,
-        content: 'Mostra di edilizia pubblica, Pisa',
-        start: '1967-06-16',
-        end: '1967-06-21'
-      },
-      {
-        id: 6,
-        content: 'Strategia della tensione',
-        start: '1975',
-        end: '1984'
-      },
-      {
-        id: 7,
-        content: 'XX Congresso mondiale di sociologia, Roma',
-        start: '1995'
+      dataSet: this.dataSet,
+      _setInstance: (timeline) => {
+        this.timeline = timeline;
+        this.timelineLoaded$.next();
+
+        // fix cluster visualization
+        setTimeout(() => {
+          this.timeline.fit();
+        });
       }
-    ],
-    _setInstance: (timeline) => timeline
-  });
+    };
+  }
+
+  getItemTemplate(datesLabel, label) {
+    return (`
+      <div class="dates">
+        <em>${datesLabel}</em>
+      </div>
+      <div class="content">${label}</div>
+    `);
+  }
+
+  getMax() {
+    const maxDate = new Date(_max(this.getAllDates()));
+
+    const year = maxDate.getFullYear();
+    const month = maxDate.getMonth();
+    const day = maxDate.getDate();
+    return new Date(year + YEARS_MARGIN, month, day);
+  }
+
+  getMin() {
+    const minDate = new Date(_min(this.getAllDates()));
+
+    const year = minDate.getFullYear();
+    const month = minDate.getMonth();
+    const day = minDate.getDate();
+    return new Date(year - YEARS_MARGIN, month, day);
+  }
+
+  getAllDates() {
+    return [
+      ...this.dataSet
+        .filter(({ start }) => start)
+        .map(({ start }) => start),
+      ...this.dataSet
+        .filter(({ end }) => end)
+        .map(({ end }) => end)
+    ];
+  }
 }

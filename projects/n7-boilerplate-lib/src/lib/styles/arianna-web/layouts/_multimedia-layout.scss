@@ -1,0 +1,113 @@
+/**
+ * MULTIMEDIA
+ *
+ * Layout for timeline and map pages
+ */
+
+/* ------------------------------------ *\
+    MULTIMEDIA
+\* ------------------------------------ */
+.aw-multimedia {
+    background-color: $color-background-light;
+
+    /* Timeline */
+    &__timeline {
+        position: relative;
+        z-index: 10;
+        box-shadow: 0 5px 15px rgba(0,0,0,.07);
+    }
+
+    /* Map */
+    &__map {
+        .n7-map__container {
+            height: 300px;
+        }
+    }
+
+    /* Results area */
+    &__results {
+        background-color: $color-background-base;
+        box-shadow: 0 5px 15px rgba(0,0,0,.07);
+        max-width: $page-max-width;
+        padding: 0;
+        margin: 0 auto $space*10 auto;
+    }
+
+    /* Title */
+    &__results-title {
+        background-color: $color-background-light;
+        border-bottom: 1px solid $color-border-light;
+
+        .n7-inner-title {
+            padding: $space*2 $space*3;
+        }
+
+        .n7-inner-title__title {
+            margin-bottom: 0;
+            font-weight: $font-weight-normal;
+            font-size: $font-size-l;
+
+            strong {
+                font-weight: $font-weight-bold;
+            }
+        }
+
+        .aw-multimedia__results-title-big {
+            font-weight: $font-weight-bold;
+            font-size: $font-size-xl;
+        }
+    }
+
+    /* Wraps the results and pagination */
+    &__results-wrapper {
+        padding: $space*2 $space*3;
+        
+        .aw-item-preview-wrapper:last-child {
+            border-bottom: 0;
+            margin-bottom: 0;
+        }
+
+        .n7-smart-pagination {
+            margin-top: $space*2;
+        }
+    }
+
+    /* Empty state */
+    &__empty {
+        padding: $space*8;
+    }
+
+    &__empty-text {
+        margin: 0;
+        padding: 0;
+        font-size: $font-size-l;
+    }
+
+    /* Loader */
+    &__loader {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: $space*5;
+    }
+}
+
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: 1120px) {
+}
+
+@media all and (max-width: $breakpoint-laptop) {
+}
+
+@media all and (max-width: $breakpoint-ipad-portrait) {
+}
+
+@media all and (max-width: $breakpoint-smartphone-landscape) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}

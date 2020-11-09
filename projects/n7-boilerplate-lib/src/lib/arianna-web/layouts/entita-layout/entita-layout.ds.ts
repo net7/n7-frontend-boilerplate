@@ -1,4 +1,4 @@
-import { LayoutDataSource } from '@n7-frontend/core/dist/layout-data-source';
+import { LayoutDataSource } from '@n7-frontend/core';
 import { Observable, of } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
 import { get as _get } from 'lodash';
@@ -10,8 +10,6 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
   protected mainState: any;
 
   protected router: any;
-
-  protected location: any;
 
   protected titleService: any;
 
@@ -50,7 +48,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
   public loading = true;
 
   onInit({
-    configuration, mainState, router, route, location, options, titleService, communication,
+    configuration, mainState, router, route, options, titleService, communication,
   }) {
     this.route = route;
     this.communication = communication;
@@ -58,7 +56,6 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     this.mainState = mainState;
     this.options = options;
     this.router = router;
-    this.location = location;
     this.titleService = titleService;
     this.currentId = '';
     this.currentPage = +this.route.snapshot.queryParams.page;

@@ -13,11 +13,13 @@ import { MrHeroDS } from '../../data-sources/hero.ds';
 import { MrSliderEH } from '../../event-handlers/slider.eh';
 import { MrCollectionEH } from '../../event-handlers/collection.eh';
 import { MrHeroEH } from '../../event-handlers/hero.eh';
+import { MrContentDS } from '../../data-sources/content.ds';
 
 const DATASOURCE_MAP = {
   slider: MrSliderDS,
   collection: MrCollectionDS,
   hero: MrHeroDS,
+  content: MrContentDS,
 };
 
 const EVENTHANDLER_MAP = {

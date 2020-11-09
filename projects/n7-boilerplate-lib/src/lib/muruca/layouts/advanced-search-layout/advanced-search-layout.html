@@ -1,0 +1,6 @@
+<div *ngIf="lb.dataSource" class="mr-advanced-search-layout mr-layout">
+    <mr-form-wrapper-accordion 
+        [data]="lb.widgets['mr-form-wrapper-accordion'].ds.out$ | async"
+        [emit]="lb.widgets['mr-form-wrapper-accordion'].emit">
+    </mr-form-wrapper-accordion>
+</div>

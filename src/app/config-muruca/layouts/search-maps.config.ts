@@ -8,6 +8,7 @@ export default {
   resourcePath: '/map',
   totalResultsText: 'search#maps_total',
   filtersTitle: 'search#filters_title',
+  grid: 3,
   sort: {
     label: 'search#sort_title',
     options: [

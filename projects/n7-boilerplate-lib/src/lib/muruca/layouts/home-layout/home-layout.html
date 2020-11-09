@@ -58,6 +58,11 @@
                         [emit]="lb.widgets[section.id].emit">
                         </n7-hero> 
                     </ng-container>
+        
+                    <!-- CONTENT -->
+                    <ng-container *ngSwitchCase="'content'">
+                        <div [innerHTML]="lb.widgets[section.id].ds.out$ | async"></div>
+                    </ng-container>
                 
                 </ng-container>
             </section>

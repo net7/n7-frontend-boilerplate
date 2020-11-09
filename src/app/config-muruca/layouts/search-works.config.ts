@@ -8,6 +8,7 @@ export default {
   facetsTitle: 'search#facets_title',
   totalResultsText: 'search#works_total',
   filtersTitle: 'search#filters_title',
+  // grid: 1,
   sort: {
     label: 'search#sort_title',
     options: [
@@ -30,6 +31,7 @@ export default {
     ]
   },
   pagination: {
+    selectLabel: 'search#pagination_select_label',
     limit: 5,
     options: [
       12,

@@ -5,7 +5,9 @@
 import {
   Component, Input, AfterViewChecked, ViewChild, ElementRef
 } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { _t } from '@n7-frontend/core';
+
+const HEIGHT_MARGIN = 50;
 
 @Component({
   selector: 'mr-read-more',
@@ -19,10 +21,13 @@ export class ReadMoreComponent implements AfterViewChecked {
   // Root div
   @ViewChild('root', { read: ElementRef }) root: ElementRef;
 
-  // CSS Classes
-  state: 'is-expanded' | 'is-collapsed' = 'is-expanded'
+  collapsed = true;
 
-  collapsed = new BehaviorSubject(false);
+  hasReadmore = false;
+
+  wrapperHeight: number;
+
+  clientHeight: number;
 
   _loaded = false;
 
@@ -34,30 +39,31 @@ export class ReadMoreComponent implements AfterViewChecked {
     if (this._loaded) return;
     if (this.root && this.root.nativeElement.clientHeight > 0) {
       this._loaded = true;
-      const height = (this.root.nativeElement as HTMLElement).clientHeight;
-      const { limit } = this.data;
-      this.data.height = height;
-      if (height > limit) {
+      this.clientHeight = (this.root.nativeElement as HTMLElement).clientHeight;
+      const { height, labels } = this.data;
+
+      // translate labels
+      Object.keys(labels).forEach((key) => {
+        this.data.labels[key] = _t(labels[key]);
+      });
+
+      if (this.clientHeight > (height + HEIGHT_MARGIN)) {
         setTimeout(() => {
-          this.toggleClass();
-          this.collapsed.next(true);
+          this.hasReadmore = true;
+          this.updateWrapperHeight();
         });
       }
     }
   }
 
-  toggleClass() {
-    if (this.state === 'is-collapsed') this.state = 'is-expanded';
-    if (this.state === 'is-expanded') this.state = 'is-collapsed';
-  }
-
   handleToggle() {
-    const v = this.collapsed.value;
-    this.collapsed.next(!v);
+    this.collapsed = !this.collapsed;
+    this.updateWrapperHeight();
   }
 
-  // onClick(type, payload) {
-  //   if (!this.emit) return;
-  //   this.emit(type, payload);
-  // }
+  updateWrapperHeight() {
+    this.wrapperHeight = this.collapsed
+      ? this.data.height
+      : this.clientHeight;
+  }
 }

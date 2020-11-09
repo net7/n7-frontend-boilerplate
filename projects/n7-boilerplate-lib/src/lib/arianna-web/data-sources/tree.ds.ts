@@ -1,4 +1,4 @@
-import { DataSource } from '@n7-frontend/core/dist/data-source';
+import { DataSource } from '@n7-frontend/core';
 import helpers from '../../common/helpers';
 
 export class AwTreeDS extends DataSource {

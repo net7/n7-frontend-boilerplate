@@ -1,4 +1,4 @@
-import { DataSource } from '@n7-frontend/core';
+import { DataSource, _t } from '@n7-frontend/core';
 
 export class MrMetadataDS extends DataSource {
   /** Test if a string is a valid URL */
@@ -9,19 +9,55 @@ export class MrMetadataDS extends DataSource {
 
   protected transform(data: any): any {
     const { hideLabels } = this.options;
-    const group = data.group.map((d) => {
-      let { items } = d;
-      // Convert URLs to anchor elements and remove labels if necessary
-      items = d.items.map(({ label, value }) => {
-        if (this.isUrl.test(value)) {
-          return ({ label: hideLabels ? '' : label, value: this.toUrl(value) });
+    const { group } = data;
+
+    if (!(group || []).length) {
+      return null;
+    }
+
+    const result = { group: [] };
+    group.forEach(({ items }) => {
+      items.forEach(({ label, value }) => {
+        const itemLabel = label && !hideLabels ? label : null;
+        if (Array.isArray(value)) {
+          result.group.push({
+            group: [{
+              title: _t(itemLabel),
+              ...this.getItemGroup(value)
+            }]
+          });
+        } else {
+          result.group.push({
+            group: [{
+              items: [{
+                label: _t(itemLabel),
+                value: this.getItemValue(value)
+              }]
+            }]
+          });
         }
-        return ({ label: hideLabels ? '' : label, value });
       });
-      return { items };
     });
-    // Overwrite the metadata group
-    data.group = group;
-    return data;
+    return result;
+  }
+
+  private getItemGroup(value) {
+    if (Array.isArray(value) && Array.isArray(value[0])) {
+      return {
+        group: value.map((val) => ({
+          ...this.getItemGroup(val)
+        }))
+      };
+    }
+    return {
+      items: value.map((childItem) => ({
+        label: _t(childItem.label),
+        value: this.getItemValue(childItem.value)
+      }))
+    };
+  }
+
+  private getItemValue(value) {
+    return this.isUrl.test(value) ? this.toUrl(value) : value;
   }
 }

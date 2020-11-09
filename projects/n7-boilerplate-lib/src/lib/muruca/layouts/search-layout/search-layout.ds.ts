@@ -67,6 +67,7 @@ export class MrSearchLayoutDS extends LayoutDataSource {
       currentPage: (offset + limit) / limit,
       pageLimit: paginationConfig.limit,
       sizes: {
+        label: paginationConfig.selectLabel ? _t(paginationConfig.selectLabel) : null,
         list: paginationConfig.options,
         active: limit,
       },

@@ -34,7 +34,6 @@ export default {
       {
         id: 'metadata-description',
         type: 'metadata',
-        // title: 'Descrizione',
         grid: null,
         options: {
           hideLabels: true
@@ -66,7 +65,10 @@ export default {
         id: 'collection-maps',
         type: 'collection',
         grid: 3,
-        title: 'Second level maps'
+        title: 'Second level maps',
+        options: {
+          classes: 'is-vertical'
+        }
       },
       {
         id: 'collection-toponyms',

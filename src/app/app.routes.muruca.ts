@@ -8,6 +8,7 @@ import {
   MrSearchLayoutComponent,
   MrStaticLayoutComponent,
   MrResourceLayoutComponent,
+  MrAdvancedSearchLayoutComponent,
   // OTHER
   DynamicPathGuard
 } from 'n7-boilerplate-lib';
@@ -33,6 +34,7 @@ export const APP_ROUTES: Routes = [
   { path: 'work/:id/:slug/trascrizione', component: MrResourceLayoutComponent, data: { configId: 'resource-work-trascrizione' } },
   { path: 'work/:id/:slug/bibliografia', component: MrResourceLayoutComponent, data: { configId: 'resource-work-bibliografia' } },
   { path: 'work/:id/:slug/sandbox', component: MrResourceLayoutComponent, data: { configId: 'resource-work-sandbox' } },
+  { path: 'advanced-search', component: MrAdvancedSearchLayoutComponent, data: { configId: 'advanced-search' } },
   { path: NOT_FOUND_PATH, component: Page404LayoutComponent },
   {
     path: '**',

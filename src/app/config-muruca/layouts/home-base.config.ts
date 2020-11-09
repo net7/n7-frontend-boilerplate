@@ -11,6 +11,10 @@ export default {
       }
     },
     {
+      id: 'content-main',
+      type: 'content',
+    },
+    {
       id: 'collection-continents',
       type: 'collection',
       grid: 4,
