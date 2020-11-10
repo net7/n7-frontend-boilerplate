@@ -36,7 +36,7 @@ export class ReadMoreComponent implements AfterViewChecked {
    * if it is, render the "Read-more" button.
    */
   ngAfterViewChecked(): void {
-    if (this._loaded) return;
+    if (this._loaded || !this.data) return;
     if (this.root && this.root.nativeElement.clientHeight > 0) {
       this._loaded = true;
       this.clientHeight = (this.root.nativeElement as HTMLElement).clientHeight;
