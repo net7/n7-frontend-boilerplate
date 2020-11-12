@@ -29,10 +29,10 @@ export class MrMetadataDS extends DataSource {
         } else {
           result.group.push({
             group: [{
-              items: [{
+              items: value ? [{
                 label: _t(itemLabel),
                 value: this.getItemValue(value)
-              }]
+              }] : []
             }]
           });
         }
@@ -50,10 +50,12 @@ export class MrMetadataDS extends DataSource {
       };
     }
     return {
-      items: value.map((childItem) => ({
-        label: _t(childItem.label),
-        value: this.getItemValue(childItem.value)
-      }))
+      items: value
+        .filter((childItem) => !!childItem.value)
+        .map((childItem) => ({
+          label: _t(childItem.label),
+          value: this.getItemValue(childItem.value)
+        }))
     };
   }
 
