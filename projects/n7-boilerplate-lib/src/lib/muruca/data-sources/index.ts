@@ -3,6 +3,7 @@ export * from './collection.ds';
 export * from './filters.ds';
 export * from './hero.ds';
 export * from './image-viewer.ds';
+export * from './image-viewer-tools.ds';
 export * from './info-box.ds';
 export * from './inner-title.ds';
 export * from './item-preview.ds';

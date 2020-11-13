@@ -8,10 +8,12 @@ import { MainStateService } from '../../../common/services/main-state.service';
 import { MrLayoutStateService } from '../../services/layout-state.service';
 import { MrResourceLayoutConfig as config } from './resource-layout.config';
 import { MrImageViewerEH } from '../../event-handlers/image-viewer.eh';
+import { MrImageViewerToolsEH } from '../../event-handlers/image-viewer-tools.eh';
 import {
   MrBreadcrumbsDS,
   MrCollectionDS,
   MrImageViewerDS,
+  MrImageViewerToolsDS,
   MrInfoBoxDS,
   MrInnerTitleDS,
   MrItemPreviewDS,
@@ -29,11 +31,13 @@ const DATASOURCE_MAP = {
   text: MrTextViewerDS,
   title: MrInnerTitleDS,
   viewer: MrImageViewerDS,
+  'viewer-tools': MrImageViewerToolsDS,
   tabs: MrResourceTabsDS
 };
 
 const EVENTHANDLER_MAP = {
   viewer: MrImageViewerEH,
+  'viewer-tools': MrImageViewerToolsEH
 };
 
 @Component({
@@ -86,12 +90,22 @@ export class MrResourceLayoutComponent extends AbstractLayout implements OnInit,
     this.widgets = [];
     if (sections) {
       sections.forEach(({ id, type, options }) => {
-        this.widgets.push({
-          id,
-          options,
-          dataSource: DATASOURCE_MAP[type],
-          eventHandler: EVENTHANDLER_MAP[type]
-        });
+        // [TBR] Backend workaround to get data for image view tools
+        if (id === 'image-viewer-tools') {
+          this.widgets.push({
+            id: 'image-viewer-tools',
+            options,
+            dataSource: DATASOURCE_MAP['viewer-tools'],
+            eventHandler: EVENTHANDLER_MAP['viewer-tools']
+          });
+        } else {
+          this.widgets.push({
+            id,
+            options,
+            dataSource: DATASOURCE_MAP[type],
+            eventHandler: EVENTHANDLER_MAP[type]
+          });
+        }
       });
     }
   }

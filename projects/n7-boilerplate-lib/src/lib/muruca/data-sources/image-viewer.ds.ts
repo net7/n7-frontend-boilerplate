@@ -1,9 +1,12 @@
 import { DataSource } from '@n7-frontend/core';
+import { Subject } from 'rxjs';
 
 export class MrImageViewerDS extends DataSource {
   id: string;
 
   viewer: any;
+
+  viewerLoaded$: Subject<void> = new Subject();
 
   protected transform(data: any): any {
     const { images, thumbs } = data;
@@ -23,14 +26,18 @@ export class MrImageViewerDS extends DataSource {
         showZoomControl: true,
 
         /* SEQUENCE */
-        sequenceMode: true, // allows having multiple images (as in array of images + zoomed image)
-        showReferenceStrip: true, // shows the images array (default: horizontally)
+        sequenceMode: true,
 
         navigationControlAnchor: 'TOP_RIGHT',
       },
-      _setViewer(viewer) {
+      _setViewer: (viewer) => {
         this.viewer = viewer;
+        this.viewerLoaded$.next();
       }
     };
+  }
+
+  public handleThumbClick({ thumbindex }) {
+    this.viewer.goToPage(thumbindex);
   }
 }

@@ -68,6 +68,11 @@ export class MrResourceLayoutDS extends LayoutDataSource {
   private initSections(response) {
     const { top, content } = this.pageConfig.sections;
     const sections = top.concat(content);
+    // [TBR] Backend workaround for image view tools data
+    if (response.sections['image-viewer'] !== undefined) {
+      response.sections['image-viewer-tools'] = response.sections['image-viewer'];
+    }
+
     sections.forEach(({ id }) => {
       const widgetDataSource = this.getWidgetDataSource(id);
       if (!widgetDataSource) return;

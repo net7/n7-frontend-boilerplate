@@ -63,8 +63,10 @@
     
                 <!-- IMAGE VIEWER -->
                 <ng-container *ngSwitchCase="'viewer'">
-                    <n7-image-viewer [data]="lb.widgets[section.id].ds.out$ | async" [emit]="lb.widgets[section.id].emit">
+                    <n7-image-viewer *ngIf="section.id === 'image-viewer'" [data]="lb.widgets[section.id].ds.out$ | async" [emit]="lb.widgets[section.id].emit">
                     </n7-image-viewer>
+                    <n7-image-viewer-tools *ngIf="section.id === 'image-viewer-tools'" [data]="lb.widgets[section.id].ds.out$ | async" [emit]="lb.widgets[section.id].emit">
+                    </n7-image-viewer-tools>
                 </ng-container>
     
                 <!-- METADATA VIEWER -->

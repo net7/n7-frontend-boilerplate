@@ -14,6 +14,19 @@ export class MrResourceLayoutEH extends EventHandler {
   private destroy$: Subject<void> = new Subject();
 
   public listen() {
+    this.outerEvents$.subscribe(({ type, payload }) => {
+      switch (type) {
+        case 'image-viewer.pagechange':
+          this.emitOuter('pagechange', payload);
+          break;
+        case 'image-viewer-tools.thumbclick':
+          this.emitOuter('thumbclick', payload);
+          break;
+        default:
+          // console.warn(type, payload);
+          break;
+      }
+    });
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
         case 'mr-resource-layout.init': {
@@ -26,12 +39,13 @@ export class MrResourceLayoutEH extends EventHandler {
           this.layoutState = payload.layoutState;
           this.dataSource.onInit(payload);
           this.listenRoute();
+          this.emitOuter('init', payload);
         } break;
         case 'mr-resource-layout.destroy':
           this.destroy$.next();
           break;
         default:
-          console.warn('unhandled inner event of type', type);
+          // console.warn('unhandled inner event of type', type);
           break;
       }
     });

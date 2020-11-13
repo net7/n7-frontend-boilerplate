@@ -32,6 +32,11 @@ export default {
         grid: null
       },
       {
+        id: 'image-viewer-tools',
+        type: 'viewer',
+        grid: null
+      },
+      {
         id: 'metadata-description',
         type: 'metadata',
         grid: null,
