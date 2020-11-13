@@ -135,7 +135,7 @@
             color: $color-text-light;
             font-size: $font-size-xl;
             font-weight: $font-weight-bold;
-            overflow-wrap: break-word
+            word-break: break-word;
         }
 
         /* Metadata */
@@ -171,7 +171,7 @@
         .n7-metadata-viewer__item-value p {
                 margin: 0;
                 line-height: 1.6;
-                word-break: break-all;
+                word-break: break-word;
         }
 
         .n7-metadata-viewer__item-value img {
