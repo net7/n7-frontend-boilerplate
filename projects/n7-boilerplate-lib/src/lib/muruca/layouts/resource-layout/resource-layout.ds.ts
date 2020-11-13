@@ -33,7 +33,13 @@ export class MrResourceLayoutDS extends LayoutDataSource {
     this.mainState = payload.mainState;
     this.configId = payload.configId;
     this.pageConfig = this.configuration.get(this.configId);
-    this.tabConfig = this.configuration.get('tabs')[this.pageConfig.tabs];
+
+    // tabs config
+    const tabs = this.configuration.get('tabs');
+    const pageTabs = this.pageConfig.tabs;
+    if (tabs && pageTabs) {
+      this.tabConfig = tabs[pageTabs];
+    }
 
     // add translations
     ['top', 'content'].forEach((type) => {
