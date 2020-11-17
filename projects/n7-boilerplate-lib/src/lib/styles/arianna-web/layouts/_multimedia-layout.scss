@@ -17,6 +17,20 @@
         box-shadow: 0 5px 15px rgba(0,0,0,.07);
     }
 
+    &__timeline-controls {
+        position: absolute;
+        top: $space*2;
+        right: $space*2;
+    }
+
+    &__timeline-control {
+        margin-left: $space;
+        padding: $space/2 $space;
+        font-size: $font-size-xl;
+        color: $color-text;
+        height: auto !important;
+    }
+
     /* Map */
     &__map {
         .n7-map__container {

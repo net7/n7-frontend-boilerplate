@@ -11,11 +11,20 @@
     <!-- Timeline -->
     <div class="aw-multimedia__timeline">
         <n7-timeline [data]="lb.widgets['aw-timeline'].ds.out$ | async"></n7-timeline>
+        <div class="aw-multimedia__timeline-controls">
+            <button class="n7-btn aw-multimedia__timeline-control" (click)="lb.eventHandler.emitInner('zoomin', {})">
+                <span class="n7-icon-search-plus"></span>
+            </button>
+            <button class="n7-btn aw-multimedia__timeline-control" (click)="lb.eventHandler.emitOuter('zoomout', {})">
+                <span class="n7-icon-search-minus"></span>
+            </button>
+        </div>
     </div>
     <!-- END // Timeline -->
     
     <!-- RESULTS -->
     <div class="aw-multimedia__results">
+
         <div class="aw-multimedia__loader" *ngIf="(lb.dataSource.state$ | async) === 'LOADING'">
             <ng-container>
                 <n7-loader></n7-loader>
