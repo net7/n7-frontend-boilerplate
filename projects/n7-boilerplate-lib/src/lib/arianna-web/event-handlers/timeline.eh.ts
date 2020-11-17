@@ -8,13 +8,15 @@ export class AwTimelineEH extends EventHandler {
         case 'aw-timeline-layout.init':
           this.listenToTimeline();
           break;
-        case 'aw-timeline-layout.zoomin':
-          this.dataSource.timeline.zoomIn(0.2);
-          break;
 
         case 'aw-timeline-layout.zoomout':
-          this.dataSource.timeline.zoomOut(0.2);
+          this.dataSource.timeline.zoomOut(0.7);
           break;
+
+        case 'aw-timeline-layout.zoomin':
+          this.dataSource.timeline.zoomIn(0.7);
+          break;
+
         default:
           break;
       }
