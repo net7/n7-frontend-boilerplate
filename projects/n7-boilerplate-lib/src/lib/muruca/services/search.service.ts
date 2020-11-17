@@ -535,6 +535,8 @@ export class MrSearchService {
     });
   }
 
+  isQueryParamKey = (input) => this.queryParamKeys.includes(input);
+
   notEquals(val1, val2) {
     if (Array.isArray(val1) && Array.isArray(val2)) {
       return !!xor(val1, val2).length;

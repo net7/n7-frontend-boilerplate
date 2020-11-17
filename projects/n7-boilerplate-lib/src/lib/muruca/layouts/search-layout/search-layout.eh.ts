@@ -1,7 +1,7 @@
 import { EventHandler } from '@n7-frontend/core';
 import { Subject } from 'rxjs';
 import { isEmpty } from 'lodash';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, filter } from 'rxjs/operators';
 import { MrSearchLayoutDS } from './search-layout.ds';
 import {
   MrSearchService,
@@ -93,6 +93,7 @@ export class MrSearchLayoutEH extends EventHandler {
 
     // inputs listener
     this.searchService.getState$(INPUT_STATE_CONTEXT).pipe(
+      filter(({ lastUpdated }) => this.searchService.isQueryParamKey(lastUpdated)),
       takeUntil(this.destroyed$)
     ).subscribe(({ lastUpdated, state }) => {
       this.searchState = state;
