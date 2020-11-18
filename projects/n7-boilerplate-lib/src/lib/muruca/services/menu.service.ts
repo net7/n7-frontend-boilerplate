@@ -34,19 +34,39 @@ export class MrMenuService {
   private _handleResponse(response) {
     if (response) {
       const headerConfig = this.configuration.get('header');
-      headerConfig.nav.items = response.map(({ label, slug, isStatic }) => {
+      headerConfig.nav.items = response.map(({
+        label, slug, isStatic, subpages
+      }) => {
         const href = `/${slug}`;
         // dynamic path control
         if (!isStatic) {
           this.dynamicPaths.push(href);
         }
-        return {
+        const item = {
           text: label,
           anchor: { href },
           _meta: {
             id: href
           }
         };
+
+        if (subpages !== undefined) {
+          item.subnav = [];
+          subpages.forEach((el) => {
+            if (!el.isStatic) {
+              const subHref = `/${el.slug}`;
+              this.dynamicPaths.push(subHref);
+            }
+            item.subnav.push({
+              text: el.label,
+              anchor: { subHref },
+              _meta: {
+                id: subHref
+              }
+            });
+          });
+        }
+        return item;
       });
       this.configuration.set('header', headerConfig);
     }
