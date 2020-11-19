@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommunicationProvider } from './communication-provider.interface';
 
-
 @Injectable({
   providedIn: 'root',
 })
@@ -31,7 +30,7 @@ export class RestProvider implements CommunicationProvider {
     }
     if (method === 'POST' || method === 'PUT') {
       return this.http[method.toLowerCase()](
-        providerConfig.baseUrl + point, params, httpOptions,
+        providerConfig.baseUrl + point + urlParams, params, httpOptions,
       );
     } if (method === 'GET' || method === 'DELETE') {
       return this.http[method.toLowerCase()](
