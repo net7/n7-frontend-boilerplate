@@ -11,7 +11,7 @@ export default {
   grid: 3,
   description: {
     buttonText: 'search#description_button',
-    linkText: 'search#link_button',
+    linkText: 'search#description_link',
   },
   sort: {
     label: 'search#sort_title',

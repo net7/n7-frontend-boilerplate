@@ -75,7 +75,7 @@ export class MrSearchLayoutDS extends LayoutDataSource {
 
   toggleDescription() {
     localStorageHelper.toggle(this.hideDescriptionKey, true);
-    this.showDescription = !!localStorageHelper.get(this.hideDescriptionKey);
+    this.showDescription = !(localStorageHelper.get(this.hideDescriptionKey));
 
     if (this.showDescription && !this.descriptionLoaded) {
       this.getPageDescription();
@@ -135,6 +135,7 @@ export class MrSearchLayoutDS extends LayoutDataSource {
       }).subscribe((response) => {
         this.one('mr-search-page-description').update(response);
         this.descriptionLoaded = true;
+        this.showDescription = true;
       });
     }
   }
