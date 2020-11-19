@@ -9,6 +9,10 @@ export default {
   totalResultsText: 'search#maps_total',
   filtersTitle: 'search#filters_title',
   grid: 3,
+  description: {
+    buttonText: 'search#description_button',
+    linkText: 'search#link_button',
+  },
   sort: {
     label: 'search#sort_title',
     options: [

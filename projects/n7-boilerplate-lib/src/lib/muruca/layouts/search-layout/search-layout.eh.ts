@@ -66,6 +66,11 @@ export class MrSearchLayoutEH extends EventHandler {
           this.searchService.setState('input', 'sort', payload.value);
           break;
 
+        case 'mr-search-page-description.click':
+        case 'mr-search-page-title.click':
+          this.dataSource.toggleDescription();
+          break;
+
         case 'mr-search-tags.click': {
           const stateValue = this.searchState[payload.id];
           let newValue = null;

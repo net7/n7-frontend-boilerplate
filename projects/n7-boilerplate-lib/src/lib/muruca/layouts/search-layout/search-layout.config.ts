@@ -10,6 +10,8 @@ export const MrSearchLayoutConfig = {
   widgets: [{
     id: 'mr-search-page-title'
   }, {
+    id: 'mr-search-page-description'
+  }, {
     id: 'mr-search-results-title'
   }, {
     id: 'mr-search-results'
