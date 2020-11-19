@@ -4,7 +4,7 @@ import { CommunicationService } from '../../../common/services/communication.ser
 import { MainStateService } from '../../../common/services/main-state.service';
 import { MrLayoutStateService } from '../../services/layout-state.service';
 
-export class MrHomeLayoutDS extends LayoutDataSource {
+export class MrTimelineLayoutDS extends LayoutDataSource {
   private configuration: ConfigurationService;
 
   private communication: CommunicationService;
