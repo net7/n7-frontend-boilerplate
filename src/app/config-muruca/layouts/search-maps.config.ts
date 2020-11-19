@@ -10,6 +10,7 @@ export default {
   filtersTitle: 'search#filters_title',
   grid: 3,
   description: {
+    id: 'library',
     buttonText: 'search#description_button',
     linkText: 'search#description_link',
   },

@@ -130,8 +130,9 @@ export class MrSearchLayoutDS extends LayoutDataSource {
 
   getPageDescription() {
     if (this.pageConfig.description && !localStorageHelper.get(this.hideDescriptionKey)) {
+      const { description } = this.pageConfig;
       this.communication.request$('searchDescription', {
-        urlParams: this.configId,
+        urlParams: description.id,
       }).subscribe((response) => {
         this.one('mr-search-page-description').update(response);
         this.descriptionLoaded = true;
