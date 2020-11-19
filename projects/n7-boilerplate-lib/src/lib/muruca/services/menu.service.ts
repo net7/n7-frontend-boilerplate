@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { tap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { Anchor } from '@n7-frontend/components';
 import { ConfigurationService } from '../../common/services/configuration.service';
 
 @Injectable({
@@ -42,7 +43,15 @@ export class MrMenuService {
         if (!isStatic) {
           this.dynamicPaths.push(href);
         }
-        const item = {
+
+        type menuItem = {
+          text: string;
+          anchor: Anchor;
+          _meta: any;
+          subnav?: menuItem[];
+        }
+
+        const item: menuItem = {
           text: label,
           anchor: { href },
           _meta: {
@@ -53,13 +62,14 @@ export class MrMenuService {
         if (subpages !== undefined) {
           item.subnav = [];
           subpages.forEach((el) => {
+            let subHref = '';
             if (!el.isStatic) {
-              const subHref = `/${el.slug}`;
+              subHref = `/${el.slug}`;
               this.dynamicPaths.push(subHref);
             }
             item.subnav.push({
               text: el.label,
-              anchor: { subHref },
+              anchor: { href: subHref },
               _meta: {
                 id: subHref
               }
