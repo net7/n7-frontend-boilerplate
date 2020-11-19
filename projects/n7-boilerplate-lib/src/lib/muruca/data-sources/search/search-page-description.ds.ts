@@ -10,9 +10,10 @@ export class MrSearchPageDescriptionDS extends DataSource {
     }
 
     const { linkText } = description;
+    const { text } = data;
 
     return {
-      text: data,
+      text,
       link: {
         text: _t(linkText),
         payload: true
