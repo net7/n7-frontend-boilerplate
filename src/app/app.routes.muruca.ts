@@ -12,6 +12,7 @@ import {
   // OTHER
   DynamicPathGuard
 } from 'n7-boilerplate-lib';
+import { MrTimelineLayoutComponent } from 'n7-boilerplate-lib/lib/muruca/layouts/timeline-layout/timeline-layout';
 
 const NOT_FOUND_PATH = 'page-404';
 
@@ -30,6 +31,7 @@ export const APP_ROUTES: Routes = [
   { path: 'keyword/:id/:slug', component: MrResourceLayoutComponent, data: { configId: 'resource-keyword' } },
   { path: 'testimone/:id/:slug', component: MrResourceLayoutComponent, data: { configId: 'resource-witness' } },
   { path: 'testimoni', component: MrSearchLayoutComponent, data: { configId: 'search-witnesses' } },
+  { path: 'timeline', component: MrTimelineLayoutComponent, data: { configId: 'timeline' } },
   { path: NOT_FOUND_PATH, component: Page404LayoutComponent },
   {
     path: '**',
