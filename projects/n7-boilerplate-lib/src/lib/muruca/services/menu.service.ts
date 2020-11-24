@@ -62,9 +62,8 @@ export class MrMenuService {
         if (subpages !== undefined) {
           item.subnav = [];
           subpages.forEach((el) => {
-            let subHref = '';
+            const subHref = `/${el.slug}`;
             if (!el.isStatic) {
-              subHref = `/${el.slug}`;
               this.dynamicPaths.push(subHref);
             }
             item.subnav.push({
