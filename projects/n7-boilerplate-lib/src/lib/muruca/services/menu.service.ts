@@ -60,7 +60,7 @@ export class MrMenuService {
         };
 
         if (subpages !== undefined) {
-          item.subnav = [];
+          item['subnav'] = [];
           subpages.forEach((el) => {
             const subHref = `/${el.slug}`;
             if (!el.isStatic) {
