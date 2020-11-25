@@ -5,6 +5,13 @@ import { of } from 'rxjs';
 import { Anchor } from '@n7-frontend/components';
 import { ConfigurationService } from '../../common/services/configuration.service';
 
+type MenuItem = {
+  text: string;
+  anchor: Anchor;
+  _meta: any;
+  subnav?: MenuItem[];
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -44,23 +51,16 @@ export class MrMenuService {
           this.dynamicPaths.push(href);
         }
 
-        type menuItem = {
-          text: string;
-          anchor: Anchor;
-          _meta: any;
-          subnav?: menuItem[];
-        }
-
-        const item: menuItem = {
+        const item = {
           text: label,
           anchor: { href },
           _meta: {
             id: href
           }
-        };
+        } as MenuItem;
 
         if (subpages !== undefined) {
-          item['subnav'] = [];
+          item.subnav = [];
           subpages.forEach((el) => {
             const subHref = `/${el.slug}`;
             if (!el.isStatic) {
