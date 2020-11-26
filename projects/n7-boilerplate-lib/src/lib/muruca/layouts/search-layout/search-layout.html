@@ -4,8 +4,16 @@
 
         <div class="mr-search__title">
             <n7-inner-title
-            [data]="lb.widgets['mr-search-page-title'].ds.out$ | async">
+            [data]="lb.widgets['mr-search-page-title'].ds.out$ | async"
+            [emit]="lb.widgets['mr-search-page-title'].emit">
             </n7-inner-title>
+        </div>
+
+        <div *ngIf="lb.dataSource.showDescription" class="mr-search__description">
+            <mr-search-page-description
+            [data]="lb.widgets['mr-search-page-description'].ds.out$ | async"
+            [emit]="lb.widgets['mr-search-page-description'].emit">
+            </mr-search-page-description>
         </div>
         
         <div class="mr-search__results-content">

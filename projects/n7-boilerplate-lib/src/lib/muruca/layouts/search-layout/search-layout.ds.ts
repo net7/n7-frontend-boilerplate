@@ -1,10 +1,14 @@
 import { LayoutDataSource, _t } from '@n7-frontend/core';
 import { ConfigurationService } from '../../../common/services/configuration.service';
+import { CommunicationService } from '../../../common/services/communication.service';
 import { MainStateService } from '../../../common/services/main-state.service';
+import localStorageHelper from '../../helpers/local-storage-helper';
 import { MrSearchService } from '../../services/search.service';
 
 export class MrSearchLayoutDS extends LayoutDataSource {
   private configuration: ConfigurationService;
+
+  private communication: CommunicationService;
 
   private mainState: MainStateService;
 
@@ -18,12 +22,20 @@ export class MrSearchLayoutDS extends LayoutDataSource {
 
   public totalResultsText: string | null = null;
 
+  private hideDescriptionKey: string;
+
+  private descriptionLoaded = false;
+
+  public showDescription = false;
+
   onInit(payload) {
     this.configuration = payload.configuration;
+    this.communication = payload.communication;
     this.mainState = payload.mainState;
     this.searchService = payload.searchService;
     this.configId = payload.configId;
     this.pageConfig = this.configuration.get(this.configId);
+    this.hideDescriptionKey = `hide-description-${this.configId}`;
 
     // config
     this.all().updateOptions({ config: this.pageConfig });
@@ -36,6 +48,9 @@ export class MrSearchLayoutDS extends LayoutDataSource {
 
     // update translations
     this.addTranslations(this.pageConfig);
+
+    // description
+    this.getPageDescription();
   }
 
   handleResponse(response) {
@@ -56,6 +71,15 @@ export class MrSearchLayoutDS extends LayoutDataSource {
       linksResponse,
       facetsConfig: this.searchService.getConfig().facets
     });
+  }
+
+  toggleDescription() {
+    localStorageHelper.toggle(this.hideDescriptionKey, true);
+    this.showDescription = !(localStorageHelper.get(this.hideDescriptionKey));
+
+    if (this.showDescription && !this.descriptionLoaded) {
+      this.getPageDescription();
+    }
   }
 
   private getPaginationParams(response) {
@@ -102,5 +126,18 @@ export class MrSearchLayoutDS extends LayoutDataSource {
         config.ko[key] = _t(config.ko[key]);
       }
     });
+  }
+
+  getPageDescription() {
+    if (this.pageConfig.description && !localStorageHelper.get(this.hideDescriptionKey)) {
+      const { description } = this.pageConfig;
+      this.communication.request$('searchDescription', {
+        urlParams: description.id,
+      }).subscribe((response) => {
+        this.one('mr-search-page-description').update(response);
+        this.descriptionLoaded = true;
+        this.showDescription = true;
+      });
+    }
   }
 }

@@ -20,6 +20,7 @@ import { MrAdvancedSearchLayoutComponent } from './layouts/advanced-search-layou
 import { ReadMoreComponent } from './components/read-more/read-more';
 import { MrFormComponent } from './components/form/form';
 import { MrFormWrapperAccordionComponent } from './components/form-wrapper-accordion/form-wrapper-accordion';
+import { MrSearchPageDescriptionComponent } from './components/search-page-description/search-page-description';
 
 const COMPONENTS = [
   // Layout components
@@ -33,7 +34,8 @@ const COMPONENTS = [
   // Custom components
   ReadMoreComponent,
   MrFormComponent,
-  MrFormWrapperAccordionComponent
+  MrFormWrapperAccordionComponent,
+  MrSearchPageDescriptionComponent
 ];
 
 @NgModule({

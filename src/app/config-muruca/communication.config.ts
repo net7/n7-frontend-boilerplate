@@ -20,6 +20,7 @@ export default {
         static: 'get_static/',
         search: 'search/results',
         facets: 'search/facets',
+        searchDescription: 'get_search_description/',
         resource: 'get_resource',
         footer: 'get_footer'
       }
