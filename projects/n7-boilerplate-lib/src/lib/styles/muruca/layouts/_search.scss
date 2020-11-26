@@ -28,6 +28,16 @@
     &__results-wrapper {
         flex-grow: 1;
     }
+
+    &__description {
+        margin: 0 $space*25 $space*10;
+    }
+
+    .mr-search-page-description__link {
+        font-size: $font-size-xs;
+        font-weight: $font-weight-bold;
+        cursor: pointer;
+    }
 }
 
 
