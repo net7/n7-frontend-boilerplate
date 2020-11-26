@@ -19,15 +19,22 @@
 
     &__timeline-controls {
         position: absolute;
-        top: $space*2;
-        right: $space*2;
+        z-index: 10000;
+        top: $space;
+        right: $space;
+        display: flex;
     }
 
     &__timeline-control {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         margin-left: $space;
-        padding: $space/2 $space;
+        padding: $space $space;
         font-size: $font-size-xl;
-        color: $color-text;
+        background-color: $color-gray-05;
+        border: 0;
+        color: $color-text-inverse;
         height: auto !important;
     }
 
