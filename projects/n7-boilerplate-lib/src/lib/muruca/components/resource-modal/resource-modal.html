@@ -1,1 +1,100 @@
-// TODO
+<div class="mr-resource mr-layout" *ngIf="config" [ngClass]="{
+        'is-loading': status == 'LOADING',
+        'is-error': status == 'ERROR',
+        'is-idle': status == 'IDLE',
+      }">
+
+    <!-- RESOURCE MODAL CLOSE BTN -->
+    <div class="mr-resource__close">
+        <a (click)="onClose()"><span class="n7-icon-close"></span></a>
+    </div>
+
+    <!-- RESOURCE MODAL CONTENT -->
+    <ng-container [ngSwitch]="layoutState.get$('content') | async">
+        <!-- loading -->
+        <ng-container *ngSwitchCase="'LOADING'">
+            <div class="mr-layout__loader">
+                <n7-loader></n7-loader>
+            </div>
+        </ng-container>
+
+        <!-- error -->
+        <ng-container *ngSwitchCase="'ERROR'">
+            <div class="mr-layout__error">
+                <h2>{{ errorTitle }}</h2>
+                <p>{{ errorDescription }}</p>
+            </div>
+        </ng-container>
+
+        <!-- success -->
+        <ng-container *ngSwitchCase="'SUCCESS'">
+            <ng-container *ngIf="config.sections as sections">
+                <!-- Pass the list of blocks to render to the block template -->
+                <div class="mr-resource__top">
+                    <ng-container *ngTemplateOutlet="blocks; context: { $implicit: sections.top }"></ng-container>
+                </div>
+                <div class="mr-resource__content mr-side-margin">
+                    <ng-container *ngTemplateOutlet="blocks; context: { $implicit: sections.content }"></ng-container>
+                </div>
+            </ng-container>
+        </ng-container>
+
+    </ng-container>
+</div>
+
+<ng-template #blocks let-list>
+    <ng-container *ngFor="let section of list">
+        <section *ngIf="widgets[section.id].ds.out$ | async"
+            class="{{ 'mr-resource__section mr-resource__' + section.type }}">
+            <ng-container [ngSwitch]="section.type">
+
+                <!-- INNER TITLE -->
+                <ng-container *ngSwitchCase="'title'">
+                    <div class="mr-resource__title-content mr-side-margin">
+                        <n7-inner-title [data]="widgets[section.id].ds.out$ | async">
+                        </n7-inner-title>
+                    </div>
+                </ng-container>
+
+                <!-- METADATA VIEWER -->
+                <ng-container *ngSwitchCase="'metadata'">
+                    <div class="mr-resource__metadata-content">
+                        <h3 *ngIf="section.title" class="mr-resource__section-title mr-resource__metadata-title">
+                            {{ section.title }}
+                        </h3>
+                        <mr-read-more [data]="section.readmore">
+                            <n7-metadata-viewer [data]="widgets[section.id].ds.out$ | async">
+                            </n7-metadata-viewer>
+                        </mr-read-more>
+                    </div>
+                </ng-container>
+
+                <!-- COLLECTION -->
+                <ng-container *ngSwitchCase="'collection'">
+                    <ng-container *ngIf="widgets[section.id].ds.out$ | async as collection$">
+                        <div *ngIf="collection$.items?.length > 0" class="mr-resource__collection-content">
+                            <h3 *ngIf="section.title" class="mr-resource__section-title">
+                                {{ section.title }}
+                            </h3>
+                            <div
+                                class="mr-resource__collection-grid {{ section.grid ? 'n7-grid-' + section.grid : '' }}">
+                                <n7-item-preview *ngFor="let item of collection$?.items" [data]="item">
+                                </n7-item-preview>
+                            </div>
+                        </div>
+                    </ng-container>
+                </ng-container>
+
+                <!-- ITEM PREVIEW -->
+                <ng-container *ngSwitchCase="'preview'">
+                    <h3 *ngIf="section.title" class="mr-resource__section-title mr-resource__preview-title">
+                        {{ section.title }}
+                    </h3>
+                    <n7-item-preview [data]="widgets[section.id].ds.out$ | async">
+                    </n7-item-preview>
+                </ng-container>
+
+            </ng-container>
+        </section>
+    </ng-container>
+</ng-template>
