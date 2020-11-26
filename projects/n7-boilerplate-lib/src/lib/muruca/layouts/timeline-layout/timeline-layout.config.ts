@@ -5,7 +5,9 @@ import * as EH from '../../event-handlers';
 
 export const MrTimelineLayoutConfig = {
   layoutId: 'mr-timeline-layout',
-  widgets: [],
+  widgets: [
+    { id: 'mr-timeline' }
+  ],
   layoutDS: MrTimelineLayoutDS,
   layoutEH: MrTimelineLayoutEH,
   widgetsDataSources: DS,
