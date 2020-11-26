@@ -5,7 +5,7 @@ import footerConfig from './footer.config';
 import labelsConfig from './labels.config';
 
 export default {
-  name: 'Totus Mundus',
+  name: 'Petrarca',
   communication: communicationConfig,
   header: headerConfig,
   footer: footerConfig,

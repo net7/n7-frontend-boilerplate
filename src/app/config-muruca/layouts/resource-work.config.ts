@@ -1,4 +1,5 @@
 export default {
+  maxHeight: 100, // Threshold where the "read-more" button appears
   title: 'Opera',
   type: 'work',
   sections: {
@@ -11,33 +12,21 @@ export default {
     ],
     content: [
       {
-        id: 'image-viewer',
-        type: 'viewer',
-        grid: null
-      },
-      {
         id: 'metadata',
         type: 'metadata',
-        title: 'resource#metadata',
-        readmore: {
-          height: 100,
-          labels: {
-            more: 'resource#readmore',
-            less: 'resource#readless'
-          }
-        }
+        title: 'resource#metadata'
       },
       {
-        id: 'metadata-size',
-        type: 'metadata',
-        grid: null,
-        title: 'resource#metadata_size'
-      },
-      {
-        id: 'collection-continents',
+        id: 'collection-witnesses',
         type: 'collection',
         grid: 3,
-        title: 'resource#collection_continents'
+        title: 'Testimoni collegati'
+      },
+      {
+        id: 'collection-taxonomies',
+        type: 'collection',
+        grid: 3,
+        title: 'Tassonomie collegate'
       }
     ]
   }

@@ -1,6 +1,6 @@
 export default {
-  title: 'Mappa',
-  type: 'map',
+  title: 'Libro',
+  type: 'book',
   sections: {
     top: [
       {
@@ -19,18 +19,9 @@ export default {
       {
         id: 'header',
         type: 'title'
-      },
-      {
-        id: 'metadata',
-        type: 'metadata'
       }
     ],
     content: [
-      {
-        id: 'image-viewer',
-        type: 'viewer',
-        grid: null
-      },
       {
         id: 'metadata-description',
         type: 'metadata',
@@ -41,15 +32,27 @@ export default {
       },
       {
         id: 'metadata',
-        title: 'Metadati',
         type: 'metadata',
+        // title: 'Metadati',
         grid: null
       },
       {
         id: 'metadata-size',
-        title: 'Dimensioni',
         type: 'metadata',
         grid: null
+      },
+      {
+        id: 'collection-bibliography',
+        type: 'collection',
+        grid: 1,
+        title: 'Bibliografia',
+        options: {
+          classes: 'mr-item-preview-bibliography',
+          itemPreview: {
+            limit: 9999,
+            striptags: false
+          }
+        }
       },
       {
         id: 'collection-works',
@@ -60,27 +63,6 @@ export default {
         id: 'collection-continents',
         type: 'collection',
         grid: 3
-      },
-      {
-        id: 'collection-maps',
-        type: 'collection',
-        grid: 3,
-        title: 'Second level maps',
-        options: {
-          classes: 'is-vertical'
-        }
-      },
-      {
-        id: 'collection-toponyms',
-        title: 'Toponimi',
-        type: 'collection',
-        grid: null,
-      },
-      {
-        id: 'collection-keywords',
-        title: 'Keywords',
-        type: 'collection',
-        grid: null,
       }
     ]
   }
