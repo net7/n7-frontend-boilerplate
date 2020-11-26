@@ -1,15 +1,14 @@
 export default {
   title: 'Termini',
-  type: 'keyterm',
+  type: 'keywords',
   sections: {
-    top: [
+    top: [],
+    content: [
       {
         id: 'header',
         type: 'title',
         grid: null
       },
-    ],
-    content: [
       {
         id: 'metadata',
         type: 'metadata',
@@ -18,8 +17,7 @@ export default {
       {
         id: 'collection-keywords',
         type: 'collection',
-        grid: 3,
-        title: 'Keywords'
+        grid: 3
       }
     ]
   }

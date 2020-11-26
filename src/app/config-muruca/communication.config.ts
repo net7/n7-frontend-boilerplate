@@ -12,8 +12,8 @@ export default {
     },
     'rest-local': {
       type: 'rest',
-      baseUrl: 'http://unus-sls.netseven.it/',
-      // baseUrl: 'http://localhost:3125/',
+      baseUrl: 'http://petrarca-sls.netseven.it/',
+      // baseUrl: 'http://localhost:3126/',
       config: {
         home: 'get_home',
         menu: 'get_menu',
@@ -21,8 +21,7 @@ export default {
         search: 'search/results',
         facets: 'search/facets',
         resource: 'get_resource',
-        footer: 'get_footer',
-        translation: 'get_translation/'
+        footer: 'get_footer'
       }
     }
   }

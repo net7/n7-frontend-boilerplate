@@ -1,6 +1,6 @@
 export default {
   logo: {
-    image: '/assets/logo-muruca.png',
+    image: '/assets/logo-petrarca-3.png',
     anchor: {
       href: '/'
     }

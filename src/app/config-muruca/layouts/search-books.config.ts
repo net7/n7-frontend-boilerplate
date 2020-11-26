@@ -1,14 +1,18 @@
-import searchMapsFacetsConfig from './search-maps-facets.config';
+import searchBooksFacetsConfig from './search-books-facets.config';
 
 export default {
-  title: 'Mappe',
-  searchId: 'map',
-  searchConfig: searchMapsFacetsConfig,
+  title: 'Biblioteca',
+  searchId: 'book',
+  searchConfig: searchBooksFacetsConfig,
   facetsTitle: 'search#facets_title',
-  resourcePath: '/map',
-  totalResultsText: 'search#maps_total',
+  resourcePath: '/book',
+  totalResultsText: 'search#books_total',
   filtersTitle: 'search#filters_title',
-  grid: 3,
+  description: {
+    id: 'library',
+    buttonText: 'search#description_button',
+    linkText: 'search#description_link',
+  },
   sort: {
     label: 'search#sort_title',
     options: [
@@ -39,9 +43,7 @@ export default {
     ]
   },
   itemPreview: {
-    classes: 'is-vertical',
-    limit: 200,
-    striptags: true,
+    classes: 'is-vertical'
   },
   fallback: {
     text: 'search#fallback_text',
