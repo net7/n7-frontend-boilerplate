@@ -21,6 +21,7 @@ import { ReadMoreComponent } from './components/read-more/read-more';
 import { MrFormComponent } from './components/form/form';
 import { MrFormWrapperAccordionComponent } from './components/form-wrapper-accordion/form-wrapper-accordion';
 import { MrSearchPageDescriptionComponent } from './components/search-page-description/search-page-description';
+import { MrResourceModalComponent } from './components/resource-modal/resource-modal';
 
 const COMPONENTS = [
   // Layout components
@@ -35,7 +36,8 @@ const COMPONENTS = [
   ReadMoreComponent,
   MrFormComponent,
   MrFormWrapperAccordionComponent,
-  MrSearchPageDescriptionComponent
+  MrSearchPageDescriptionComponent,
+  MrResourceModalComponent
 ];
 
 @NgModule({
