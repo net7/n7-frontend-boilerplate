@@ -13,6 +13,7 @@ import {
   MrFooterService,
   MainStateService,
   MrTranslationsLoaderService,
+  ConfigurationService,
 } from 'n7-boilerplate-lib';
 import globalConfig from './config/global';
 import layoutsConfig from './config/layouts';
@@ -75,7 +76,8 @@ translate.init({
 export class AppModule {
   constructor(
     private router: Router,
-    private mainState: MainStateService
+    private mainState: MainStateService,
+    private config: ConfigurationService
   ) {
     // update nav active
     this.router.events.pipe(
@@ -90,8 +92,13 @@ export class AppModule {
       filter((event) => event instanceof RoutesRecognized),
       map((event: RoutesRecognized) => event.state.root.firstChild.data)
     ).subscribe((routeData: any) => {
-      const bodyClasses = (routeData || {}).classes;
-      document.body.className = bodyClasses || '';
+      const { configId } = (routeData || {});
+      let bodyClasses = '';
+      if (configId) {
+        const pageConfig = this.config.get(configId) || {};
+        bodyClasses = pageConfig.bodyClasses || '';
+      }
+      document.body.className = bodyClasses;
     });
   }
 }

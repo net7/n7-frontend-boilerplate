@@ -1,5 +1,6 @@
 export default {
   title: 'Home',
+  bodyClasses: 'has-transparent-header petrarca-app',
   sections: [
     {
       id: 'slider-main',
