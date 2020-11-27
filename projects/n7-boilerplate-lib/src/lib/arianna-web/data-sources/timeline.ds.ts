@@ -12,6 +12,8 @@ export class AwTimelineDS extends DataSource {
   public timelineLoaded$: Subject<void> = new Subject();
 
   public dataSet;
+  
+  public timelineControlsVisible = false;
 
   protected transform = (data) => {
     this.dataSet = data.map(({
@@ -65,6 +67,11 @@ export class AwTimelineDS extends DataSource {
         setTimeout(() => {
           this.timeline.fit();
         });
+
+        // timeout for zoom controls
+        setTimeout(() => {
+          this.timelineControlsVisible = true;
+        }, 1000);
       }
     };
   }
