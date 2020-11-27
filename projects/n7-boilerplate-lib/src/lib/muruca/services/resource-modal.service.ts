@@ -24,7 +24,7 @@ export class MrResourceModalService {
     this.state$.next({ status: 'IDLE' });
   }
 
-  open(resourceId, configId) {
+  open(resourceId: string | number, configId: string) {
     this.state$.next({ status: 'LOADING' });
     const config = this.configuration.get(configId);
     // add translations

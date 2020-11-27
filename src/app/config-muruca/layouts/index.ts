@@ -5,6 +5,7 @@ import resourceBookConfig from './resource-book.config';
 import resourceToponymConfig from './resource-toponym.config';
 import resourceKeywordConfig from './resource-keyword.config';
 import resourceWorkConfig from './resource-work.config';
+import resourceBibliographyConfig from './resource-bibliography.config';
 
 export default {
   home: homeConfig,
@@ -14,4 +15,5 @@ export default {
   'resource-book': resourceBookConfig,
   'resource-toponym': resourceToponymConfig,
   'resource-keyword': resourceKeywordConfig,
+  'resource-bibliography': resourceBibliographyConfig
 };
