@@ -7,9 +7,6 @@ import labelsConfig from './labels.config';
 export default {
   name: 'Petrarca',
   communication: communicationConfig,
-  body: {
-    classes: 'has-transparent-header petrarca-app'
-  },
   header: headerConfig,
   footer: footerConfig,
   labels: labelsConfig,

@@ -19,16 +19,63 @@ export const APP_ROUTES: Routes = [
   {
     path: '',
     redirectTo: '/home',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
-  { path: 'home', component: MrHomeLayoutComponent, data: { configId: 'home' } },
-  { path: 'opere', component: MrSearchLayoutComponent, data: { configId: 'search-works' } },
-  { path: 'biblioteca', component: MrSearchLayoutComponent, data: { configId: 'search-books' } },
-  { path: 'libro/:id/:slug', component: MrResourceLayoutComponent, data: { configId: 'resource-book' } },
-  { path: 'opera/:id/:slug', component: MrResourceLayoutComponent, data: { configId: 'resource-work' } },
-  { path: 'toponym/:id/:slug', component: MrResourceLayoutComponent, data: { configId: 'resource-toponym' } },
-  { path: 'keyword/:id/:slug', component: MrResourceLayoutComponent, data: { configId: 'resource-keyword' } },
-  { path: NOT_FOUND_PATH, component: Page404LayoutComponent },
+  {
+    path: 'home',
+    component: MrHomeLayoutComponent,
+    data: {
+      configId: 'home',
+      classes: 'has-transparent-header petrarca-app'
+    }
+  },
+  {
+    path: 'opere',
+    component: MrSearchLayoutComponent,
+    data: {
+      configId: 'search-works'
+    }
+  },
+  {
+    path: 'biblioteca',
+    component: MrSearchLayoutComponent,
+    data: {
+      configId: 'search-books'
+    }
+  },
+  {
+    path: 'libro/:id/:slug',
+    component: MrResourceLayoutComponent,
+    data: {
+      configId: 'resource-book',
+      classes: 'petrarca-app resource-layout'
+    }
+  },
+  {
+    path: 'opera/:id/:slug',
+    component: MrResourceLayoutComponent,
+    data: {
+      configId: 'resource-work'
+    }
+  },
+  {
+    path: 'toponym/:id/:slug',
+    component: MrResourceLayoutComponent,
+    data: {
+      configId: 'resource-toponym'
+    }
+  },
+  {
+    path: 'keyword/:id/:slug',
+    component: MrResourceLayoutComponent,
+    data: {
+      configId: 'resource-keyword'
+    }
+  },
+  {
+    path: NOT_FOUND_PATH,
+    component: Page404LayoutComponent
+  },
   {
     path: '**',
     component: MrStaticLayoutComponent,
