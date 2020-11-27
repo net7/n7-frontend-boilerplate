@@ -27,9 +27,7 @@ const DATASOURCE_MAP = {
 export class MrResourceModalComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject();
 
-  private loaded$: Subject<boolean> = new Subject();
-
-  public status: ModalStatus;
+  public status: ModalStatus = 'IDLE';
 
   public config: any;
 
@@ -71,7 +69,6 @@ export class MrResourceModalComponent implements OnInit, OnDestroy {
   onClose() {
     this.widgets = {};
     this.modalService.close();
-    this.loaded$.next(false);
   }
 
   private loadWidgets(config, response) {
@@ -95,7 +92,5 @@ export class MrResourceModalComponent implements OnInit, OnDestroy {
         }
       });
     }
-
-    this.loaded$.next(true);
   }
 }
