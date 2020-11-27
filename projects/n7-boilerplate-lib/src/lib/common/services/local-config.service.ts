@@ -16,6 +16,12 @@ export class LocalConfigService {
       tap(() => {
         if (config) {
           Object.keys(config).forEach((key) => this.config.set(key, config[key]));
+
+          // body classes
+          const bodyClasses = (this.config.get('body') || {}).classes;
+          if (bodyClasses) {
+            document.body.className = bodyClasses;
+          }
         }
       }),
     ).toPromise();
