@@ -17,6 +17,33 @@
         box-shadow: 0 5px 15px rgba(0,0,0,.07);
     }
 
+    &__timeline-controls {
+        position: absolute;
+        z-index: 10000;
+        top: $space;
+        left: $space;
+        display: flex;
+    }
+
+    &__timeline-control {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: $space;
+        padding: $space $space;
+        font-size: $font-size-l;
+        background-color: rgba( $color-gray-05, 0.75);
+        border: 0;
+        color: rgba( $color-text-inverse, 0.65 );
+        height: auto !important;
+        cursor: pointer;
+
+        &:hover {
+            background-color: rgba( $color-gray-05, 1);
+            color: rgba( $color-text-inverse, 1 );
+        }
+    }
+
     /* Map */
     &__map {
         .n7-map__container {
