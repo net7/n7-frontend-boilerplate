@@ -27,6 +27,8 @@ const DATASOURCE_MAP = {
 export class MrResourceModalComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject();
 
+  private loaded$: Subject<boolean> = new Subject();
+
   public status: ModalStatus;
 
   public config: any;
@@ -69,6 +71,7 @@ export class MrResourceModalComponent implements OnInit, OnDestroy {
   onClose() {
     this.widgets = {};
     this.modalService.close();
+    this.loaded$.next(false);
   }
 
   private loadWidgets(config, response) {
@@ -76,11 +79,23 @@ export class MrResourceModalComponent implements OnInit, OnDestroy {
     const sections = top.concat(content);
     if (sections) {
       sections.forEach(({ id, type, options }) => {
-        const data = response[id];
+        const data = response.sections[id];
         this.widgets[id] = {
-          ds: new DATASOURCE_MAP[type](data, options)
+          ds: new DATASOURCE_MAP[type]()
         };
+
+        // update options
+        if (options) {
+          this.widgets[id].ds.options = options;
+        }
+
+        // update data
+        if (data) {
+          this.widgets[id].ds.update(data);
+        }
       });
     }
+
+    this.loaded$.next(true);
   }
 }
