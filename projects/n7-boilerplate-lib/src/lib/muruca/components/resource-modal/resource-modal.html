@@ -1,7 +1,7 @@
 <div class="mr-resource mr-layout" *ngIf="config" [ngClass]="{
-        'is-loading': status == 'LOADING',
-        'is-error': status == 'ERROR',
-        'is-idle': status == 'IDLE',
+        'is-loading': status === 'LOADING',
+        'is-error': status === 'ERROR',
+        'is-idle': status === 'IDLE'
       }">
 
     <!-- RESOURCE MODAL CLOSE BTN -->
@@ -10,7 +10,7 @@
     </div>
 
     <!-- RESOURCE MODAL CONTENT -->
-    <ng-container [ngSwitch]="layoutState.get$('content') | async">
+    <ng-container [ngSwitch]="status">
         <!-- loading -->
         <ng-container *ngSwitchCase="'LOADING'">
             <div class="mr-layout__loader">
