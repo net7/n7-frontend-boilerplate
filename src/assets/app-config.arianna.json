@@ -590,7 +590,7 @@
         ]
       },
       "icon": "n7-icon-users",
-      "label": "Famiglia",
+      "label": "Famiglie",
       "singular-label": "Famiglia",
       "input-placeholder": "Cerca una famiglia",
       "class-name": "famiglia"
@@ -605,7 +605,7 @@
         ]
       },
       "icon": "n7-icon-calendar-alt",
-      "label": "Evento",
+      "label": "Eventi",
       "singular-label": "Evento",
       "input-placeholder": "Cerca un evento",
       "class-name": "evento"
