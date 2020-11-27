@@ -1,7 +1,6 @@
-<div *ngIf="loaded$ | async" class="mr-resource mr-resource-modal mr-layout" [ngClass]="{
+<div *ngIf="status !== 'IDLE'" class="mr-resource mr-resource-modal mr-layout" [ngClass]="{
         'is-loading': status === 'LOADING',
-        'is-error': status === 'ERROR',
-        'is-idle': status === 'IDLE'
+        'is-error': status === 'ERROR'
       }">
 
     <div class="mr-resource-modal__container">
@@ -46,7 +45,7 @@
 
 <ng-template #blocks let-list>
     <ng-container *ngFor="let section of list">
-        <section *ngIf="widgets[section.id].ds.out$ | async"
+        <section *ngIf="widgets[section.id].ds && (widgets[section.id].ds.out$ | async)"
             class="{{ 'mr-resource__section mr-resource__' + section.type }}">
             <ng-container [ngSwitch]="section.type">
 
