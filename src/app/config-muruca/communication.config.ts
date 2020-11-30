@@ -13,7 +13,7 @@ export default {
     'rest-local': {
       type: 'rest',
       baseUrl: 'http://petrarca-sls.netseven.it/',
-      // baseUrl: 'http://localhost:3126/',
+      // baseUrl: 'http://localhost:3125/',
       config: {
         home: 'get_home',
         menu: 'get_menu',
