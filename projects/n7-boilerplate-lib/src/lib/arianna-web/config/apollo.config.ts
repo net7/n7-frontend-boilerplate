@@ -277,18 +277,25 @@ export default {
             text
             document_type
             fields {
-              ...
-              on KeyValueField {
+              ... on KeyValueField {
                 key
                 value
               }
               ... on KeyValueFieldGroup {
                 label
                 fields {
-                  ...
-                  on KeyValueField {
+                  ... on KeyValueField {
                     key
                     value
+                  }
+                  ... on KeyValueFieldGroup {
+                    label
+                    fields {
+                      ... on KeyValueField {
+                        key
+                        value
+                      }
+                    }
                   }
                 }
               }
