@@ -38,6 +38,11 @@
     }
 
     .vis-item-content {
+        max-width: 300px;
+        white-space: pre-wrap;
+        font-size: $font-size-s;
+        text-align: left;
+
         .dates {
             font-size: $font-size-s;
             text-align: left;
@@ -73,13 +78,13 @@
     /* Selected items */
     .vis-box.vis-selected,
     .vis-range.vis-selected:not(.vis-cluster) {
-        border-color: $color-main;
+        border-color: $color-second;
         background-color: $color-background-base;
     }
 
     .vis-dot.vis-selected,
     .vis-line.vis-selected {
-        border-color: $color-main;
+        border-color: $color-second;
     }
 
     /* Line */

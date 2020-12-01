@@ -16,6 +16,7 @@ export class MrTimelineDS extends DataSource {
       libOptions: {
         height: '500px',
         locale: 'it_IT',
+        align: 'left',
         cluster: {
           clusterCriteria: (f, s) => f.content.charAt(0) === s.content.charAt(0)
         },
