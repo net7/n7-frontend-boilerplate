@@ -23,7 +23,7 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
     actions: {
       buttons: [{
         text: '',
-        icon: 'n7-icon-cross',
+        icon: 'n7-icon-close',
         anchor: {
           payload: 'close-event'
         }
