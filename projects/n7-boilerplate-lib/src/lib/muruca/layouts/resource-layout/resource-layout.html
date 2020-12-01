@@ -111,7 +111,8 @@
                     <h3 *ngIf="section.title" class="mr-resource__section-title mr-resource__text-viewer-title">
                         {{ section.title }}
                     </h3>
-                    <div class="text-viewer__mock">n7-text-viewer</div>
+                    <n7-text-viewer [data]="lb.widgets[section.id].ds.out$ | async" [emit]="lb.widgets[section.id].emit">
+                    </n7-text-viewer>
                 </ng-container>
     
                 <!-- INFO BOX -->

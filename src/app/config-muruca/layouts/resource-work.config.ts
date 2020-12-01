@@ -12,6 +12,10 @@ export default {
     ],
     content: [
       {
+        id: 'text-viewer',
+        type: 'text-viewer'
+      },
+      {
         id: 'metadata',
         type: 'metadata',
         title: 'resource#metadata'
