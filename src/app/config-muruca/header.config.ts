@@ -1,6 +1,7 @@
 export default {
+  classes: '',
   logo: {
-    image: '/assets/logo-petrarca-3.png',
+    title: 'Petrarca Online',
     anchor: {
       href: '/'
     }

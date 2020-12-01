@@ -16,7 +16,7 @@ $page-readable-width: 700px;
 // #GRIDS
 // ------------------------------------ //
 // $grid-gutter-h: $space*3;
-// $grid-gutter-v: $space*2;
+$grid-gutter-v: $space*2;
 
 
 // //////////////////////////////////// //
@@ -69,7 +69,7 @@ $font-family-text: 'EB Garamond', serif;
 $font-size-xxxl: 44px;
 $font-size-xxl: 32px;
 $font-size-xl: 24px;
-$font-size-l: 20px;
+$font-size-l: 18px;
 $font-size-m: 16px;
 $font-size-s: 14px;
 $font-size-xs: 12px;
@@ -316,3 +316,10 @@ $mr-search-result-filter-height: 26px;
 // #BREADCRUMBS
 // ------------------------------------ //
 $breadcrumbs-arrow: '\e90a';
+
+
+// ------------------------------------ //
+// #CAROUSEL
+// ------------------------------------ //
+// $carousel-content-width:960px;
+// $carousel-height: 400px;

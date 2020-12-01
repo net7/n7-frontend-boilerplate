@@ -1,0 +1,44 @@
+/**
+ * SEARCH PAGE DESCRIPTION
+ *
+ * Muruca component that displayes a text description in the search page.
+ */
+
+/* ------------------------------------ *\
+    SEARCH PAGE DESCRIPTION
+\* ------------------------------------ */
+.mr-search-page-description {
+    max-width: $page-readable-width;
+    margin: 0 auto $space*10;
+
+    &__text {
+        // font-size: $font-size-;
+        p, li {
+            margin-bottom: $space*2;
+        }
+    }
+
+    &__link {
+        display: block;
+        margin-top: $space*2;
+        font-size: $font-size-s;
+        font-weight: $font-weight-bold;
+        cursor: pointer;
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: $breakpoint-laptop) {
+}
+
+@media all and (max-width: $breakpoint-ipad-portrait) {
+}
+
+@media all and (max-width: $breakpoint-smartphone-landscape) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}

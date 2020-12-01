@@ -1,0 +1,48 @@
+/**
+ * CAROUSEL
+ *
+ * Brief description of the component here.
+ */
+
+/* ------------------------------------ *\
+   #CAROUSEL
+\* ------------------------------------ */
+.n7-carousel {
+    &__slide-text {
+        h1, h2, h3, h4, h5, h6, p {
+            color: $color-text-inverse;
+        }
+    }
+}
+
+
+/* ------------------------------------ *\
+   #TRANSPARENT-HEADER
+\* ------------------------------------ */
+.has-transparent-header {
+    .n7-carousel {
+        height: $carousel-height + $header-height;
+        &__slide {
+            box-sizing: border-box;
+            height: $carousel-height + $header-height;
+            padding-top: $header-height;
+        }
+    }
+}
+
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: $breakpoint-laptop) {
+}
+
+@media all and (max-width: $breakpoint-ipad-portrait) {
+}
+
+@media all and (max-width: $breakpoint-smartphone-landscape) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}
