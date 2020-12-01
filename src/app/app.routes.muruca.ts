@@ -32,6 +32,7 @@ export const APP_ROUTES: Routes = [
   { path: 'testimone/:id/:slug', component: MrResourceLayoutComponent, data: { configId: 'resource-witness' } },
   { path: 'testimoni', component: MrSearchLayoutComponent, data: { configId: 'search-witnesses' } },
   { path: 'timeline', component: MrTimelineLayoutComponent, data: { configId: 'timeline' } },
+  { path: 'timeline/:id/:slug', component: MrTimelineLayoutComponent },
   { path: NOT_FOUND_PATH, component: Page404LayoutComponent },
   {
     path: '**',

@@ -1,5 +1,6 @@
 import { LayoutDataSource } from '@n7-frontend/core';
 import { InnerTitleData, ItemPreviewData } from '@n7-frontend/components';
+import { ActivatedRoute } from '@angular/router';
 import { ConfigurationService } from '../../../common/services/configuration.service';
 import { CommunicationService } from '../../../common/services/communication.service';
 import { MainStateService } from '../../../common/services/main-state.service';
@@ -14,9 +15,7 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
 
   private layoutState: MrLayoutStateService;
 
-  private configId: string;
-
-  private pageConfig;
+  private route: ActivatedRoute;
 
   public yearHeader: InnerTitleData = {
     title: { main: { text: '1316' } },
@@ -60,6 +59,7 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
   onInit(payload) {
     this.configuration = payload.configuration;
     this.communication = payload.communication;
+    this.route = payload.route;
     this.one('mr-map').update({});
     this.communication.request$('timeline', {
       method: 'GET',
@@ -67,9 +67,5 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
     }).subscribe((d) => {
       this.one('mr-timeline').update(d);
     });
-    // this.mainState = payload.mainState;
-    // this.layoutState = payload.layoutState;
-    // this.configId = payload.configId;
-    // this.pageConfig = this.configuration.get(this.configId) || {};
   }
 }

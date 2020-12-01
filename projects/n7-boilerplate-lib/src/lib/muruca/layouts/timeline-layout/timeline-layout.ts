@@ -17,7 +17,7 @@ export class MrTimelineLayoutComponent extends AbstractLayout implements OnInit,
 
   constructor(
     layoutsConfiguration: LayoutsConfigurationService,
-    private activatedRoute: ActivatedRoute,
+    private route: ActivatedRoute,
     private configuration: ConfigurationService,
     private communication: CommunicationService,
     private mainState: MainStateService,
@@ -33,15 +33,14 @@ export class MrTimelineLayoutComponent extends AbstractLayout implements OnInit,
       configuration: this.configuration,
       communication: this.communication,
       layoutState: this.layoutState,
+      route: this.route,
       options: this.config.options || {}
     };
   }
 
   ngOnInit() {
-    this.activatedRoute.data.subscribe((data) => {
-      this.configId = data.configId;
+    this.route.data.subscribe(() => {
       this.layoutState.add('content');
-      // this.loadWidgets();
       this.onInit();
     });
   }

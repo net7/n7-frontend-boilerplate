@@ -1,4 +1,4 @@
-import { TimelineData } from '@n7-frontend/components';
+import { TimelineData, TIMELINE_MOCK } from '@n7-frontend/components';
 import { DataSource } from '@n7-frontend/core';
 
 // vis-timeline dataset type lookup
@@ -11,6 +11,7 @@ export class MrTimelineDS extends DataSource {
   timeline;
 
   protected transform(data: { dataSet: DataSet }): TimelineData {
+    return TIMELINE_MOCK; // temporarily enable mockup to avoid errors
     return {
       containerID: 'mr-timeline',
       libOptions: {
@@ -30,7 +31,7 @@ export class MrTimelineDS extends DataSource {
         maxHeight: '800px',
         zoomFriction: 8
       },
-      dataSet: data.dataSet,
+      dataSet: data.dataSet.filter((d) => d.start),
       _setInstance: (timeline) => { this.timeline = timeline; }
     };
   }

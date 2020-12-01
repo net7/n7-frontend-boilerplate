@@ -1,11 +1,15 @@
 import { EventHandler } from '@n7-frontend/core';
 
 export class MrTimelineLayoutEH extends EventHandler {
+  private route: any;
+
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
         case 'mr-timeline-layout.init':
           this.dataSource.onInit(payload);
+          this.route = payload.route;
+          this.listenRoute();
           break;
         default:
           console.warn('unhandled inner event of type', type);
@@ -16,6 +20,23 @@ export class MrTimelineLayoutEH extends EventHandler {
       switch (type) {
         default:
           break;
+      }
+    });
+  }
+
+  private listenRoute() {
+    this.route.paramMap.subscribe((params) => {
+      const paramId = params.get('id');
+      if (paramId) {
+        if (paramId) {
+          this.dataSource.currentId = paramId;
+          this.emitOuter('routechanged', paramId);
+        }
+        this.dataSource.contentIsLoading = true;
+        this.dataSource.loadItem(paramId).subscribe((response) => {
+          this.dataSource.contentIsLoading = false;
+          if (response) this.dataSource.loadContent(response);
+        });
       }
     });
   }
