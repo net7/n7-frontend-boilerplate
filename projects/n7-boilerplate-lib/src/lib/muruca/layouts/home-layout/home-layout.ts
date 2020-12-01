@@ -6,7 +6,6 @@ import { LayoutsConfigurationService } from '../../../common/services/layouts-co
 import { ConfigurationService } from '../../../common/services/configuration.service';
 import { MainStateService } from '../../../common/services/main-state.service';
 import { MrLayoutStateService } from '../../services/layout-state.service';
-import { MrResourceModalService } from '../../services/resource-modal.service';
 import { MrHomeLayoutConfig as config } from './home-layout.config';
 import { MrSliderDS } from '../../data-sources/slider.ds';
 import { MrCollectionDS } from '../../data-sources/collection.ds';
@@ -43,7 +42,6 @@ export class MrHomeLayoutComponent extends AbstractLayout implements OnInit, OnD
     private communication: CommunicationService,
     private mainState: MainStateService,
     public layoutState: MrLayoutStateService,
-    public modalService: MrResourceModalService,
   ) {
     super(layoutsConfiguration.get('MrHomeLayoutConfig') || config);
   }
@@ -66,10 +64,6 @@ export class MrHomeLayoutComponent extends AbstractLayout implements OnInit, OnD
       this.loadWidgets();
       this.onInit();
     });
-
-    setTimeout(() => {
-      this.modalService.open(321, 'resource-bibliography');
-    }, 3000);
   }
 
   ngOnDestroy() {
