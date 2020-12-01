@@ -10,6 +10,7 @@ type MenuItem = {
   anchor: Anchor;
   _meta: any;
   subnav?: MenuItem[];
+  classes?: string;
 }
 
 @Injectable({
@@ -43,7 +44,7 @@ export class MrMenuService {
     if (response) {
       const headerConfig = this.configuration.get('header');
       headerConfig.nav.items = response.map(({
-        label, slug, isStatic, subpages
+        label, slug, isStatic, subpages, classes
       }) => {
         const href = `/${slug}`;
         // dynamic path control
@@ -52,6 +53,7 @@ export class MrMenuService {
         }
 
         const item = {
+          classes,
           text: label,
           anchor: { href },
           _meta: {
@@ -67,6 +69,7 @@ export class MrMenuService {
               this.dynamicPaths.push(subHref);
             }
             item.subnav.push({
+              classes: el.classes || null,
               text: el.label,
               anchor: { href: subHref },
               _meta: {
