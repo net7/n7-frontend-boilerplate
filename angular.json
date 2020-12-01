@@ -148,10 +148,6 @@
               ],
               "fileReplacements": [
                 {
-                  "replace": "src/assets/app-config.json",
-                  "with": "src/assets/app-config.muruca.json"
-                }, 
-                {
                   "replace": "src/app/app.module.ts",
                   "with": "src/app/app.module.muruca.ts"
                 }, 
@@ -171,7 +167,7 @@
           "configurations": {
             "production": {
               "browserTarget": "n7-boilerplate:build:production"
-            }, 
+            },
             "arianna": {
               "browserTarget": "n7-boilerplate:build:arianna"
             }, 

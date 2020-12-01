@@ -8,6 +8,7 @@ export * from './info-box.ds';
 export * from './inner-title.ds';
 export * from './item-preview.ds';
 export * from './item-previews.ds';
+export * from './map.ds';
 export * from './metadata.ds';
 export * from './nav.ds';
 export * from './resource-tabs.ds';

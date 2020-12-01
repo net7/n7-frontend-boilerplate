@@ -31,12 +31,30 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
     }
   };
 
+  public images: string[] = [
+    'https://i.imgur.com/WM3EG9d.png',
+    'https://i.imgur.com/ZDQmlnX.png',
+    'https://i.imgur.com/HhKxoZb.png',
+    'https://i.imgur.com/c3tonAj.png',
+    'https://i.imgur.com/Ef7izGP.png',
+    'https://i.imgur.com/8Xpzoig.png',
+    'https://i.imgur.com/yhF0LCt.png',
+    'https://i.imgur.com/bMfHfEh.png',
+  ]
+
   public eventTitle: string;
 
   onInit(payload) {
     this.configuration = payload.configuration;
     this.communication = payload.communication;
     this.one('mr-timeline').update({});
+    this.one('mr-map').update({});
+    this.communication.request$('timeline', {
+      method: 'GET',
+      onError: (e) => console.error(e)
+    }).subscribe((d) => {
+      console.log(d);
+    });
     // this.mainState = payload.mainState;
     // this.layoutState = payload.layoutState;
     // this.configId = payload.configId;
