@@ -1,26 +1,52 @@
 <div class="mr-timeline mr-layout"
      *ngIf="lb.dataSource">
-  <n7-timeline [data]="lb.widgets['mr-timeline'].ds.out$ | async"></n7-timeline>
-  <n7-inner-title [data]="lb.dataSource.yearHeader"></n7-inner-title>
-  <h1>A Montpellier a studiare diritto civile insieme a Guido Sette</h1>
-  <p>A Montpellier a studiare diritto civile insieme a Guido Sette (Fam. 20, 4, 3: comincia questo studio «vix
-    duodecimum
-    etatis annum supergressus»; Sen. 10, 2, 40; Post. 30: Foresti, Aneddoti 18-19). Vi rimarrà quattro anni.
-  </p>
-  <div>Fonti:
-    <ul>
-      <li>Canzoniere</li>
-      <li>I Trionfi</li>
-      <li>Epistole</li>
-    </ul>
-  </div>
-  <div *ngFor="let image of lb.dataSource.images" class="image-list">
-    <img [src]="image">
-  </div>
-  
-  <n7-map [data]="lb.widgets['mr-map'].ds.out$ | async"></n7-map>
-  <hr>
-  <h3>Biografia</h3>
-  <hr>
-  <h3>Mappe collegate</h3>
+    <n7-timeline [data]="lb.widgets['mr-timeline'].ds.out$ | async"></n7-timeline>
+    <n7-inner-title [data]="lb.dataSource.yearHeader"></n7-inner-title>
+    <h1>A Montpellier a studiare diritto civile insieme a Guido Sette</h1>
+    <p>A Montpellier a studiare diritto civile insieme a Guido Sette (Fam. 20, 4, 3: comincia questo studio «vix
+        duodecimum
+        etatis annum supergressus»; Sen. 10, 2, 40; Post. 30: Foresti, Aneddoti 18-19). Vi rimarrà quattro anni.
+    </p>
+    <div>Fonti:
+        <ul>
+            <li>Canzoniere</li>
+            <li>I Trionfi</li>
+            <li>Epistole</li>
+        </ul>
+    </div>
+    <div *ngFor="let image of lb.dataSource.images"
+         class="image-list">
+        <img [src]="image">
+    </div>
+
+    <n7-map [data]="lb.widgets['mr-map'].ds.out$ | async"></n7-map>
+    <hr>
+    <ng-container *ngIf="lb.dataSource.bibliographyMock">
+        <h3>Bibliografia</h3>
+        <ng-container *ngFor="let item of lb.dataSource.bibliographyMock">
+            <ng-container *ngTemplateOutlet="biblio; context: { $implicit: item }">
+            </ng-container>
+        </ng-container>
+    </ng-container>
+
+    <hr>
+    <h3>Mappe collegate</h3>
+    <!-- lista mappe -->
+    <ng-container *ngFor="let item of lb.dataSource.connectedMapsMock">
+            <ng-container *ngTemplateOutlet="maps; context: { $implicit: item }">
+            </ng-container>
+    </ng-container>
 </div>
+
+
+<ng-template #biblio let-item>
+    <div class="mr-timeline__collection-content">
+        <n7-item-preview [data]="item"></n7-item-preview>
+    </div>
+</ng-template>
+
+<ng-template #maps let-item>
+    <div class="mr-timeline__collection-content">
+        <n7-item-preview [data]="item"></n7-item-preview>
+    </div>
+</ng-template>
