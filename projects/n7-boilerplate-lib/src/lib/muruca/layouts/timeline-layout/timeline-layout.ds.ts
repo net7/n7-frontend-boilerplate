@@ -6,6 +6,8 @@ import { CommunicationService } from '../../../common/services/communication.ser
 import { MainStateService } from '../../../common/services/main-state.service';
 import { MrLayoutStateService } from '../../services/layout-state.service';
 
+// demo page: http://localhost:4200/timeline/2992/missione-venezia
+
 export class MrTimelineLayoutDS extends LayoutDataSource {
   private configuration: ConfigurationService;
 
@@ -17,18 +19,13 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
 
   private route: ActivatedRoute;
 
-  public yearHeader: InnerTitleData = {
-    title: { main: { text: '1316' } },
-    actions: {
-      buttons: [{
-        text: '',
-        icon: 'n7-icon-close',
-        anchor: {
-          payload: 'close-event'
-        }
-      }]
-    }
-  };
+  private loadedResourceDetails = false;
+
+  public yearHeader: InnerTitleData;
+
+  public eventHeader: string;
+
+  public eventDescription: string;
 
   public bibliographyMock: ItemPreviewData[] = [
     { title: 'M.J.L. Hocker, Bibliotheca Heilsbronnensis sive Catalogus librorum omnium..., Nkirnberg 1731, 56 n. 68 ' },
@@ -66,6 +63,32 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
       onError: (e) => console.error(e)
     }).subscribe((d) => {
       this.one('mr-timeline').update(d);
+    });
+  }
+
+  updatePageDetails(id) {
+    this.communication.request$('resource', {
+      onError: (e) => console.error(e),
+      method: 'POST',
+      params: {
+        id, type: 'views/time-events'
+      }
+    }).subscribe((res) => {
+      this.eventHeader = res.sections.header.title;
+      this.eventDescription = res.sections.header.content;
+      this.yearHeader = {
+        title: { main: { text: res.title } },
+        actions: {
+          buttons: [{
+            text: '',
+            icon: 'n7-icon-close',
+            anchor: {
+              payload: 'close-event'
+            }
+          }]
+        }
+      };
+      this.loadedResourceDetails = true;
     });
   }
 }

@@ -4,17 +4,14 @@
     </div>
     
     <div class="mr-timeline__page mr-side-margin">
-        <div class="mr-timeline__date">
+        <div class="mr-timeline__date" *ngIf="lb.dataSource.loadedResourceDetails">
             <n7-inner-title [data]="lb.dataSource.yearHeader"></n7-inner-title>
         </div>
-        <h1 class="mr-timeline__title">
-            A Montpellier a studiare diritto civile insieme a Guido Sette
+        <h1 class="mr-timeline__title" *ngIf="lb.dataSource.loadedResourceDetails">
+            {{lb.dataSource.eventHeader}}
         </h1>
         <div class="mr-timeline__content">
-            <p>A Montpellier a studiare diritto civile insieme a Guido Sette (Fam. 20, 4, 3: comincia questo studio «vix
-                duodecimum
-                etatis annum supergressus»; Sen. 10, 2, 40; Post. 30: Foresti, Aneddoti 18-19). Vi rimarrà quattro anni.
-            </p>
+            <p [innerHTML]="lb.dataSource.eventDescription" *ngIf="lb.dataSource.loadedResourceDetails"><p>
             <div>Fonti:
                 <ul>
                     <li><a href="#">Canzoniere</a></li>

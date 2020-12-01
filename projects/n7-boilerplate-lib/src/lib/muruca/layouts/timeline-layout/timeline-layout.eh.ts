@@ -31,12 +31,8 @@ export class MrTimelineLayoutEH extends EventHandler {
         if (paramId) {
           this.dataSource.currentId = paramId;
           this.emitOuter('routechanged', paramId);
+          this.dataSource.updatePageDetails(paramId);
         }
-        this.dataSource.contentIsLoading = true;
-        this.dataSource.loadItem(paramId).subscribe((response) => {
-          this.dataSource.contentIsLoading = false;
-          if (response) this.dataSource.loadContent(response);
-        });
       }
     });
   }

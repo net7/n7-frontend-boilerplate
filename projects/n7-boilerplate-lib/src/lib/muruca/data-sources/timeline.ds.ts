@@ -31,7 +31,7 @@ export class MrTimelineDS extends DataSource {
         maxHeight: '800px',
         zoomFriction: 8
       },
-      dataSet: data.dataSet.filter((d) => d.start),
+      dataSet: data.dataSet.filter((d) => d.start && `${d.start}`.length === 4),
       _setInstance: (timeline) => { this.timeline = timeline; }
     };
   }
