@@ -19,6 +19,7 @@ type collectionResponse = {
     link?: string;
     title?: string;
     type?: string;
+    payload?: any;
   }[];
 }
 
@@ -65,6 +66,7 @@ export class MrCollectionDS extends DataSource {
         }
       },
       items: items.map((item) => {
+        let anchor = null;
         if (item.text) {
           // Sanitize HTML tags from the text content
           if (itemPreviewOptions.striptags) {
@@ -75,12 +77,22 @@ export class MrCollectionDS extends DataSource {
             item.text = `${item.text.substring(0, itemPreviewOptions.limit)}...`;
           }
         }
-        return {
-          ...item,
-          anchor: {
+        if (item.link) {
+          anchor = {
             href: linksHelper.getRouterLink(item.link),
             queryParams: linksHelper.getQueryParams(item.link)
-          },
+          };
+        }
+        if (item.payload) {
+          anchor = {
+            payload: {
+              ...item.payload
+            }
+          };
+        }
+        return {
+          ...item,
+          anchor,
           classes: classes || ''
         };
       })

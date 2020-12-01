@@ -4,7 +4,7 @@
 
 .mr-resource-modal {
     position: fixed;
-    z-index: 1;
+    z-index: 999;
     background: white;
     top: $space*10;
     bottom: 0;

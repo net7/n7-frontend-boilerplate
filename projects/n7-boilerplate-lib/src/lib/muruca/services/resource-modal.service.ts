@@ -26,7 +26,7 @@ export class MrResourceModalService {
 
   open(resourceId: string | number, configId: string) {
     this.state$.next({ status: 'LOADING' });
-    const config = this.configuration.get(configId);
+    const config = this.configuration.get(`resource-modal-${configId}`);
     // add translations
     ['top', 'content'].forEach((type) => {
       config.sections[type] = config.sections[type].map((section) => ({
