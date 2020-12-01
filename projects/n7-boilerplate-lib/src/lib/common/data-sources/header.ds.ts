@@ -26,7 +26,12 @@ export class HeaderDS extends DataSource {
 
   public onCurrentNavChange(payload) {
     this.output.nav.items.forEach((item) => {
-      item.classes = item._meta.id === payload ? ACTIVE_CLASS : '';
+      this.updateItemClass(item, payload);
+      if (item.subnav) {
+        item.subnav.forEach((subNavItem) => {
+          this.updateItemClass(subNavItem, payload);
+        });
+      }
     });
   }
 
@@ -58,5 +63,18 @@ export class HeaderDS extends DataSource {
       }
       this.output.classes = classes.join(' ');
     }
+  }
+
+  private updateItemClass(item, payload) {
+    let itemClasses = [];
+    if (item.classes) {
+      itemClasses = itemClasses.concat(item.classes.split(' '));
+    }
+    if (item._meta.id === payload && !itemClasses.includes(ACTIVE_CLASS)) {
+      itemClasses.push(ACTIVE_CLASS);
+    } else if (itemClasses.includes(ACTIVE_CLASS)) {
+      itemClasses.splice(itemClasses.indexOf(ACTIVE_CLASS, 1));
+    }
+    item.classes = itemClasses.join(' ');
   }
 }
