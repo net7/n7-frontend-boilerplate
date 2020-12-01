@@ -56,6 +56,14 @@
     }
 }
 
+.has-transparent-header {
+    .mr-layout.is-error {
+        .mr-layout__error {
+            padding-top: $space*5 + $header-height;
+        }
+    }   
+}
+
 
 /* ------------------------------------ *\
    #MEDIA-QUERIES

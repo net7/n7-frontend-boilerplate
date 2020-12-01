@@ -56,6 +56,41 @@
         font-size: $font-size-s;
         font-weight: $font-weight-bold;
         text-transform: uppercase;
+        transition: all $transition-durations;
+    }
+}
+
+
+/* ------------------------------------ *\
+    SECOND LEVEL NAV
+\* ------------------------------------ */
+.n7-header {
+    /* Sublevel (dropdown) menu */
+    &__subnav-list {
+        left: 0;
+        border: 1px solid $color-border-normal;
+    }
+
+    &__subnav-item {
+        &:last-child {
+            .n7-header__subnav-link {
+            }
+        }
+    }
+
+    &__subnav-link {
+        font-family: $font-family-headings;
+        font-size: $font-size-s;
+        font-weight: $font-weight-bold;
+        text-transform: uppercase;
+        transition: all $transition-durations;
+    }
+
+    /* Current page */
+    &__subnav-item.is-current {
+        .n7-header__subnav-label {
+            // font-weight: $font-weight-bold;
+        }
     }
 }
 
@@ -88,6 +123,10 @@
 
         &__nav-label {
             color: $color-text-inverse;
+
+            &:hover {
+                color: $color-text-link;
+            }
         }
 
         &:after {

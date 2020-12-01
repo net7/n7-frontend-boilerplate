@@ -12,6 +12,19 @@
     &__metadata-item {
         display: block;
     }
+
+    &__title {
+        font-family: $font-family-main;
+        line-height: 1.4;
+        font-size: $font-size-l;
+    }
+}
+
+.n7-item-preview:not(.mr-item-preview-bibliography) {
+    border-bottom: 1px solid $color-border-normal;
+    padding-bottom: $space;
+    height: 100%;
+    box-sizing: border-box;
 }
 
 /* No grid */
@@ -35,6 +48,13 @@
         border: 1px solid $color-border-normal;
         border-radius: $border-radius*2;
         font-size: $font-size-m;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+        transition: all $transition-durations;
+
+        &:hover {
+            box-shadow: 0 3px 14px rgba(0,0,0,0.08);
+            border: 1px solid $color-gray-03;
+        }
     }
 
     .n7-item-preview__text {
