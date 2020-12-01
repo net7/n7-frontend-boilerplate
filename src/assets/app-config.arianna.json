@@ -309,13 +309,15 @@
         "produzione.causeAcquisizione",
         "descrizione_interna",
         "storia_ordinamenti",
-        "statoAttualeConservazione.statoConservazione",
+        "stato_conservazione",
         "altra_documentazione",
         "descrizione_esterna",
-        "storiaUbicazioni.storiaUbicazioni",
+        "storia_ubicazioni",
         "corredoRicerca.tipologia",
         "corredoRicerca.riferimento",
-        "corredoRicerca.descrizione"
+        "corredoRicerca.descrizione",
+        "condizioni_consultazione_modalita",
+        "condizioni_consultazione_tempi"
       ],
       "oggetto-culturale": [
         "estremo_remoto",
@@ -741,6 +743,8 @@
     "aggregazione-logica.corredoRicerca.tipologia": "Strumento di corredo e ricerca",
     "aggregazione-logica.corredoRicerca.riferimento": "Strumento di corredo e ricerca - riferimento",
     "aggregazione-logica.corredoRicerca.descrizione": "Strumento di corredo e ricerca - descrizione",
+    "aggregazione-logica.condizioni_consultazione_modalita": "Modalità di consultazione",
+    "aggregazione-logica.condizioni_consultazione_tempi": "Tempi per la consultazione",
     "oggetto-culturale.estremo_remoto": "Estremo remoto",
     "oggetto-culturale.estremo_recente": "Estremo recente",
     "oggetto-culturale.numerazione_index": "Segnatura principale",
