@@ -1,0 +1,184 @@
+/**
+ * CAROUSEL
+ *
+ * Brief description of the component here.
+ */
+
+/* ------------------------------------ *\
+   #CAROUSEL
+\* ------------------------------------ */
+.n7-carousel {
+    position: relative;
+    height: $carousel-height;
+
+    &__slide {
+        position: relative;
+        width: 100%;
+        height: $carousel-height;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+    }
+
+    &__slide-content-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+        height: 100%;
+        max-width: $carousel-content-width;
+        margin: 0 auto;
+        z-index: 2;
+    }
+
+    &__slide-content {
+        display: flex;
+        width: 100%;
+        padding: 3px;
+    }
+
+    &__slide-content-left {
+        max-width: 60%;
+        padding: 3px;
+    }
+
+    &__slide-content-right {
+        flex-grow: 1;
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+        padding: 3px;
+    }
+
+    &__slide-title {
+        display: block;
+        margin-bottom: $space*2;
+        font-family: $font-family-headings;
+        font-size: $font-size-xxxl;
+        color: $color-text-inverse;
+    }
+
+    &__slide-text {
+        display: block;
+        margin-bottom: $space*2;
+        font-family: $font-family-main;
+        font-size: $font-size-l;
+        color: $color-text-inverse;
+    }
+
+    &__slide-metadata-wrapper {
+    }
+
+    &__slide-metadata {
+        color: $color-text-inverse;
+    }
+
+    &__slide-metadata-label {
+        margin-right: $space/2;
+    }
+}
+
+
+/* ------------------------------------ *\
+   #SLIDE-WITH-IMAGE
+\* ------------------------------------ */
+.n7-carousel {
+    &__slide.has-image {
+        /* Overlay */
+        &:after {
+            content: " ";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,.4);
+            z-index: 1;
+        }
+    }
+}
+
+
+/* ------------------------------------ *\
+   #SLIDE-WITH-VIDEO
+\* ------------------------------------ */
+.n7-carousel {
+    /* Video bg */
+    &__slide-video {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        z-index: 0;
+        -ms-transform: translateX(-50%) translateY(-50%);
+        -moz-transform: translateX(-50%) translateY(-50%);
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        transform: translateX(-50%) translateY(-50%);
+    }
+    
+    /* Video overlay */
+    &__slide-video-overlay {
+        position: absolute;
+        background-color: rgba(0,0,0,.6);
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+    }
+}
+
+
+/* ------------------------------------ *\
+   #LATTE-CAROUSEL
+\* ------------------------------------ */
+.n7-carousel {
+    .latte-dots {
+        bottom: $space*2;
+
+        .latte-dot {
+            background-color: $color-background-base;
+            
+            &.active {
+                background-color: $color-main;
+            }
+        }
+    }
+
+    .latte-next, .latte-previous {
+        border-color: $color-gray-00;
+        opacity: .7;
+        transition: all $transition-durations;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    .latte-previous {
+        left: 16px;
+    }
+
+    .latte-next {
+        right: 16px;
+    }
+}
+
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: $breakpoint-laptop) {
+}
+
+@media all and (max-width: $breakpoint-ipad-portrait) {
+}
+
+@media all and (max-width: $breakpoint-smartphone-landscape) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}

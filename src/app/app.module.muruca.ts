@@ -1,7 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
-import { RouterModule, Router, NavigationStart } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import {
+  RouterModule, Router, NavigationStart, RoutesRecognized
+} from '@angular/router';
+import { filter, map } from 'rxjs/operators';
 import { translate } from '@n7-frontend/core';
 import {
   N7BoilerplateCommonModule,
@@ -11,6 +13,7 @@ import {
   MrFooterService,
   MainStateService,
   MrTranslationsLoaderService,
+  ConfigurationService,
 } from 'n7-boilerplate-lib';
 import globalConfig from './config/global';
 import layoutsConfig from './config/layouts';
@@ -73,13 +76,29 @@ translate.init({
 export class AppModule {
   constructor(
     private router: Router,
-    private mainState: MainStateService
+    private mainState: MainStateService,
+    private config: ConfigurationService
   ) {
+    // update nav active
     this.router.events.pipe(
       filter((event) => event instanceof NavigationStart),
     ).subscribe((event: any) => {
       const { url } = event;
       this.mainState.updateCustom('currentNav', url);
+    });
+
+    // body classes
+    this.router.events.pipe(
+      filter((event) => event instanceof RoutesRecognized),
+      map((event: RoutesRecognized) => event.state.root.firstChild.data)
+    ).subscribe((routeData: any) => {
+      const { configId } = (routeData || {});
+      let bodyClasses = '';
+      if (configId) {
+        const pageConfig = this.config.get(configId) || {};
+        bodyClasses = pageConfig.bodyClasses || '';
+      }
+      document.body.className = bodyClasses;
     });
   }
 }

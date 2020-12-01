@@ -1,6 +1,7 @@
 export default {
   title: 'Libro',
   type: 'book',
+  bodyClasses: 'resource-layout',
   sections: {
     top: [
       {
