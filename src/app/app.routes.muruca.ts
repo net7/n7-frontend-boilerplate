@@ -28,6 +28,8 @@ export const APP_ROUTES: Routes = [
   { path: 'opera/:id/:slug', component: MrResourceLayoutComponent, data: { configId: 'resource-work' } },
   { path: 'toponym/:id/:slug', component: MrResourceLayoutComponent, data: { configId: 'resource-toponym' } },
   { path: 'keyword/:id/:slug', component: MrResourceLayoutComponent, data: { configId: 'resource-keyword' } },
+  { path: 'testimone/:id/:slug', component: MrResourceLayoutComponent, data: { configId: 'resource-witness' } },
+  { path: 'testimoni', component: MrSearchLayoutComponent, data: { configId: 'search-witnesses' } },
   { path: NOT_FOUND_PATH, component: Page404LayoutComponent },
   {
     path: '**',

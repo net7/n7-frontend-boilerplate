@@ -6,6 +6,7 @@ import { N7BoilerplateCommonModule } from '../common/n7-boilerplate-common.modul
 // SERVICES
 import { MrSearchService } from './services/search.service';
 import { MrLayoutStateService } from './services/layout-state.service';
+import { MrResourceModalService } from './services/resource-modal.service';
 // PIPES
 import { EscapeHtmlPipe } from './pipes/keep-html.pipe';
 // LAYOUTS
@@ -21,6 +22,7 @@ import { ReadMoreComponent } from './components/read-more/read-more';
 import { MrFormComponent } from './components/form/form';
 import { MrFormWrapperAccordionComponent } from './components/form-wrapper-accordion/form-wrapper-accordion';
 import { MrSearchPageDescriptionComponent } from './components/search-page-description/search-page-description';
+import { MrResourceModalComponent } from './components/resource-modal/resource-modal';
 
 const COMPONENTS = [
   // Layout components
@@ -35,7 +37,8 @@ const COMPONENTS = [
   ReadMoreComponent,
   MrFormComponent,
   MrFormWrapperAccordionComponent,
-  MrSearchPageDescriptionComponent
+  MrSearchPageDescriptionComponent,
+  MrResourceModalComponent
 ];
 
 @NgModule({
@@ -50,7 +53,8 @@ const COMPONENTS = [
   ],
   providers: [
     MrSearchService,
-    MrLayoutStateService
+    MrLayoutStateService,
+    MrResourceModalService
   ],
   entryComponents: COMPONENTS,
   exports: COMPONENTS,

@@ -5,11 +5,14 @@ import {
   takeUntil, switchMap, map, tap
 } from 'rxjs/operators';
 import { MrLayoutStateService, LayoutState } from '../../services/layout-state.service';
+import { MrResourceModalService } from '../../services/resource-modal.service';
 
 export class MrResourceLayoutEH extends EventHandler {
   private route: ActivatedRoute;
 
   private layoutState: MrLayoutStateService;
+
+  private modalService: MrResourceModalService;
 
   private destroy$: Subject<void> = new Subject();
 
@@ -18,6 +21,7 @@ export class MrResourceLayoutEH extends EventHandler {
       switch (type) {
         case 'mr-resource-layout.init': {
           this.route = payload.route;
+          this.modalService = payload.modalService;
           const { slug, id } = this.route.snapshot.params;
           const { url } = this.route.snapshot;
           this.dataSource.tab = url[url.length - 1].path;
@@ -33,6 +37,13 @@ export class MrResourceLayoutEH extends EventHandler {
         default:
           console.warn('unhandled inner event of type', type);
           break;
+      }
+    });
+
+    this.outerEvents$.subscribe(({ type, payload }) => {
+      if (type.indexOf('openresourcemodal') !== -1) {
+        const { id, type: resourceType } = payload;
+        this.modalService.open(id, resourceType);
       }
     });
   }

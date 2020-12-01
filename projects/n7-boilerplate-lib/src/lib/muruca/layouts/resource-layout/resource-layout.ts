@@ -6,8 +6,10 @@ import { LayoutsConfigurationService } from '../../../common/services/layouts-co
 import { ConfigurationService } from '../../../common/services/configuration.service';
 import { MainStateService } from '../../../common/services/main-state.service';
 import { MrLayoutStateService } from '../../services/layout-state.service';
+import { MrResourceModalService } from '../../services/resource-modal.service';
 import { MrResourceLayoutConfig as config } from './resource-layout.config';
 import { MrImageViewerEH } from '../../event-handlers/image-viewer.eh';
+import { MrCollectionEH } from '../../event-handlers/collection.eh';
 import {
   MrBreadcrumbsDS,
   MrCollectionDS,
@@ -34,6 +36,7 @@ const DATASOURCE_MAP = {
 
 const EVENTHANDLER_MAP = {
   viewer: MrImageViewerEH,
+  collection: MrCollectionEH,
 };
 
 @Component({
@@ -51,6 +54,7 @@ export class MrResourceLayoutComponent extends AbstractLayout implements OnInit,
     private mainState: MainStateService,
     private route: ActivatedRoute,
     public layoutState: MrLayoutStateService,
+    public modalService: MrResourceModalService
   ) {
     super(layoutsConfiguration.get('MrResourceLayoutConfig') || config);
   }
@@ -62,6 +66,7 @@ export class MrResourceLayoutComponent extends AbstractLayout implements OnInit,
       communication: this.communication,
       mainState: this.mainState,
       layoutState: this.layoutState,
+      modalService: this.modalService,
       options: this.config.options || {},
       route: this.route
     };
