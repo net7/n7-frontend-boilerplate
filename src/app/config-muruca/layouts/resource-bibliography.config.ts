@@ -1,5 +1,5 @@
 export default {
-  type: 'book',
+  type: 'bibliography_wit',
   sections: {
     top: [
       {
@@ -9,24 +9,11 @@ export default {
     ],
     content: [
       {
-        id: 'metadata-description',
-        type: 'metadata',
-        grid: null,
-        options: {
-          hideLabels: true
-        }
-      },
-      {
-        id: 'metadata',
-        type: 'metadata',
-        // title: 'Metadati',
-        grid: null
-      },
-      {
-        id: 'collection-works',
+        id: 'collection-witnesses',
         type: 'collection',
-        grid: 3
-      }
+        grid: 3,
+        title: 'resource#collection_witnesses'
+      },
     ]
   }
 };
