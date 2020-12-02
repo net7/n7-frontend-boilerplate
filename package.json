@@ -73,7 +73,8 @@
     "stylelint-config-standard": "^19.0.0",
     "ts-node": "~5.0.1",
     "tslint": "~5.9.1",
-    "typescript": "~3.8.3"
+    "typescript": "~3.8.3",
+    "vis-timeline": "~7.4.2"
   },
   "husky": {
     "hooks": {

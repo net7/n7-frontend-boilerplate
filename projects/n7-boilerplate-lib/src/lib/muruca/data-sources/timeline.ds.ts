@@ -1,5 +1,7 @@
-import { TimelineData, TIMELINE_MOCK } from '@n7-frontend/components';
+import { TimelineData } from '@n7-frontend/components';
 import { DataSource } from '@n7-frontend/core';
+import { Subject } from 'rxjs';
+import * as vis from 'vis-timeline';
 
 // vis-timeline dataset type lookup
 type DataSet = TimelineData['dataSet']
@@ -8,19 +10,18 @@ export class MrTimelineDS extends DataSource {
   id: string;
 
   /** timeline instance */
-  timeline;
+  timeline: vis.Timeline;
 
+  public timelineLoaded$: Subject<vis.Timeline> = new Subject();
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   protected transform(data: { dataSet: DataSet }): TimelineData {
-    return TIMELINE_MOCK; // temporarily enable mockup to avoid errors
     return {
       containerID: 'mr-timeline',
       libOptions: {
         height: '500px',
         locale: 'it_IT',
         align: 'left',
-        cluster: {
-          clusterCriteria: (f, s) => f.content.charAt(0) === s.content.charAt(0)
-        },
         showTooltips: false,
         tooltip: {
           followMouse: false,
@@ -31,8 +32,15 @@ export class MrTimelineDS extends DataSource {
         maxHeight: '800px',
         zoomFriction: 8
       },
-      dataSet: data.dataSet.filter((d) => d.start && `${d.start}`.length === 4),
-      _setInstance: (timeline) => { this.timeline = timeline; }
+      // dataSet: data.dataSet.filter((d) => d.start && `${d.start}`.length === 4),
+      dataSet: [{
+        // Mock di un elemento cliccabile
+        start: '2014-04-17', id: 2992, type: 'point', content: 'Missione Venezia'
+      }],
+      _setInstance: (timeline) => {
+        this.timeline = timeline;
+        this.timelineLoaded$.next(timeline);
+      }
     };
   }
 }

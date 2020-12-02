@@ -1,7 +1,9 @@
+import { ActivatedRoute } from '@angular/router';
 import { EventHandler } from '@n7-frontend/core';
+import * as vis from 'vis-timeline';
 
 export class MrTimelineLayoutEH extends EventHandler {
-  private route: any;
+  private route: ActivatedRoute;
 
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
@@ -10,6 +12,21 @@ export class MrTimelineLayoutEH extends EventHandler {
           this.dataSource.onInit(payload);
           this.route = payload.route;
           this.listenRoute();
+
+          this.dataSource.timelineListener$.subscribe((timeline: vis.Timeline) => {
+            timeline.on('click', (props) => {
+              if (!props.item) return;
+              this.emitGlobal('navigate', {
+                handler: 'router',
+                path: [`/timeline/${props.item}/evento`]
+              });
+            });
+          });
+          // (this.dataSource.timelineInstance as vis.Timeline).on('click', (properties) => {
+          //   console.log(properties);
+          // });
+          break;
+        case 'mr-timeline-layout.destroy':
           break;
         default:
           console.warn('unhandled inner event of type', type);

@@ -12,7 +12,7 @@ export class AwTimelineDS extends DataSource {
   public timelineLoaded$: Subject<void> = new Subject();
 
   public dataSet;
-  
+
   public timelineControlsVisible = false;
 
   protected transform = (data) => {
@@ -41,8 +41,8 @@ export class AwTimelineDS extends DataSource {
         // height: '100px',
         locale: 'it_IT',
         // cluster: {
-          // fitOnDoubleClick: true,
-          // clusterCriteria: (f, s) => f.content.charAt(0) === s.content.charAt(0),
+        // fitOnDoubleClick: true,
+        // clusterCriteria: (f, s) => f.content.charAt(0) === s.content.charAt(0),
         //   titleTemplate: '{count} eventi',
         // },
         showCurrentTime: false,

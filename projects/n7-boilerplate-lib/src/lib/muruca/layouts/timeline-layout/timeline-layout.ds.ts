@@ -1,6 +1,9 @@
 import { LayoutDataSource } from '@n7-frontend/core';
 import { InnerTitleData, ItemPreviewData } from '@n7-frontend/components';
 import { ActivatedRoute } from '@angular/router';
+import * as vis from 'vis-timeline';
+import { Subject } from 'rxjs';
+import { first } from 'rxjs/operators';
 import { ConfigurationService } from '../../../common/services/configuration.service';
 import { CommunicationService } from '../../../common/services/communication.service';
 import { MainStateService } from '../../../common/services/main-state.service';
@@ -21,11 +24,15 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
 
   private loadedResourceDetails = false;
 
-  public yearHeader: InnerTitleData;
+  public yearHeader: InnerTitleData = {
+    title: { main: { text: 'La vita di Petrarca' } },
+  };;
 
   public eventHeader: string;
 
-  public eventDescription: string;
+  public eventDescription = 'Petrarca studia legge (si iscrive all\'università ma non porta a termine gli studi anche se, come vedremo fra poco, avrà comunque una "laurea") ed entra in contatto con autori latini come Cicerone e Virgilio.Per lui il latino è quasi una seconda lingua che usa anche per prendere appunti.Sono quindi tanti e diversi i fattori che influenzano la sua preparazione: un avviamento alla letteratura religiosa, una grande conoscenza della letteratura volgare(cioè stilnovo e letteratura francese), un grande amore per i classici latini: premesse che pongono le basi della sua grande poesia.'
+
+  public timelineListener$: Subject<vis.Timeline> = new Subject()
 
   public bibliographyMock: ItemPreviewData[] = [
     { title: 'M.J.L. Hocker, Bibliotheca Heilsbronnensis sive Catalogus librorum omnium..., Nkirnberg 1731, 56 n. 68 ' },
@@ -64,6 +71,9 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
     }).subscribe((d) => {
       this.one('mr-timeline').update(d);
     });
+    this.getWidgetDataSource('mr-timeline').timelineLoaded$.pipe(first()).subscribe((timeline: vis.Timeline) => {
+      this.timelineListener$.next(timeline);
+    });
   }
 
   updatePageDetails(id) {
@@ -74,6 +84,7 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
         id, type: 'views/time-events'
       }
     }).subscribe((res) => {
+      if (!res || res == null) return;
       this.eventHeader = res.sections.header.title;
       this.eventDescription = res.sections.header.content;
       this.yearHeader = {
@@ -83,7 +94,7 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
             text: '',
             icon: 'n7-icon-close',
             anchor: {
-              payload: 'close-event'
+              href: '/timeline'
             }
           }]
         }
