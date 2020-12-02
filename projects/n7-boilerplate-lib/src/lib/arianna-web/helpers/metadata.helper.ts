@@ -35,8 +35,10 @@ const getRepeater = (fields: any[], labels, metadataToShow, type, parentLabel) =
         }))
         .sort((a, b) => a.order - b.order)
         .forEach(({ label, value }) => {
+          subHtml.push(`<div>`);
           subHtml.push(`<dt>${label}</dt>`);
           subHtml.push(`<dd>${value}</dd>`);
+          subHtml.push(`</div>`);
         });
       if (subHtml.length) {
         html.push(`<dl>${subHtml.join('')}</dl>`);
