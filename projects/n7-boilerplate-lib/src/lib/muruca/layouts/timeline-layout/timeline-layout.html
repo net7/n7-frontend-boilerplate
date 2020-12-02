@@ -31,21 +31,27 @@
             </div>
             
             <ng-container *ngIf="lb.dataSource.bibliographyMock">
-                <h3>Bibliografia</h3>
-                <ng-container *ngFor="let item of lb.dataSource.bibliographyMock">
-                    <ng-container *ngTemplateOutlet="biblio; context: { $implicit: item }">
-                    </ng-container>
-                </ng-container>
+                <div class="mr-content-block mr-content-block-collection">
+                    <h3 class="mr-content-block__title">Bibliografia</h3>
+                    <div class="mr-content-block__content n7-grid-1">
+                        <ng-container *ngFor="let item of lb.dataSource.bibliographyMock">
+                            <ng-container *ngTemplateOutlet="biblio; context: { $implicit: item }">
+                            </ng-container>
+                        </ng-container>
+                    </div>
+                </div>
             </ng-container>
     
+            <div class="mr-content-block mr-content-block-collection">
+                <h3 class="mr-content-block__title">Mappe collegate</h3>
+                <div class="mr-content-block__content n7-grid-3">
+                    <ng-container *ngFor="let item of lb.dataSource.connectedMapsMock">
+                        <ng-container *ngTemplateOutlet="maps; context: { $implicit: item }">
+                        </ng-container>
+                </ng-container>
+                </div>
+            </div>
             
-            
-            <h3>Mappe collegate</h3>
-            <!-- lista mappe -->
-            <ng-container *ngFor="let item of lb.dataSource.connectedMapsMock">
-                    <ng-container *ngTemplateOutlet="maps; context: { $implicit: item }">
-                    </ng-container>
-            </ng-container>
         </div>
     </div>
 </div>
