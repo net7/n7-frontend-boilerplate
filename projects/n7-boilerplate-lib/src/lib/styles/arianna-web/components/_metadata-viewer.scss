@@ -34,6 +34,35 @@
             font-size: $font-size-m;
         }
     }
+
+    /* Recurrent fields */
+    &__item-value {
+        dl {
+            margin-left: $space*4;
+        }
+
+        dt {
+            display: block;
+            width: 160px;
+            margin-bottom: $space;
+            float: left;
+            clear: both;
+            font-size: $font-size-s;
+            font-weight: $font-weight-bold;
+        }
+
+        dd {
+            margin: 0 0 $space 160px+$space*2;
+            font-size: $font-size-s;
+
+            p {
+                display: inline;
+                margin: 0;
+                padding: 0;
+                font-size: $font-size-s;
+            }
+        }
+    }
 }
 
 
