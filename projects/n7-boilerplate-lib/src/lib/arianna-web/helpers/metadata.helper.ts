@@ -24,6 +24,7 @@ const getRepeater = (fields: any[], labels, metadataToShow, type, parentLabel) =
   fields
     .filter(({ fields: subFields }) => subFields)
     .forEach(({ fields: subFields }) => {
+      const subHtml = [];
       subFields
         .filter(({ key, value }) => metadataToShow.includes(`${parentLabel}.${key}`) && !metadataIsEmpty(value))
         .map(({ key, value }) => ({
@@ -34,13 +35,14 @@ const getRepeater = (fields: any[], labels, metadataToShow, type, parentLabel) =
         }))
         .sort((a, b) => a.order - b.order)
         .forEach(({ label, value }) => {
-          html.push(`<dt>${label}</dt>`);
-          html.push(`<dd>${value}</dd>`);
+          subHtml.push(`<dt>${label}</dt>`);
+          subHtml.push(`<dd>${value}</dd>`);
         });
+      if (subHtml.length) {
+        html.push(`<dl>${subHtml.join('')}</dl>`);
+      }
     });
-  return html.length
-    ? `<dl>${html.join('')}</dl>`
-    : null;
+  return html.length ? html.join('') : null;
 };
 
 export default {
