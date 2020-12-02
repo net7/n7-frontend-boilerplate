@@ -3,17 +3,21 @@
  */
 
 .mr-resource-modal {
-    position: fixed;
-    z-index: 999;
-    background: white;
-    top: $space*10;
-    bottom: 0;
-    right: $space*25;
-    left: $space*25;
-
-    .mr-resource-modal__container {
+    .mr-resource-modal__overlay {
+        position: fixed;
+        z-index: 999;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
         width: 100%;
         height: 100%;
+    }
+
+    .mr-resource-modal__container {
+        background: $color-gray-00;
+        margin: $space*10 auto;
+        overflow-y: auto;
     }
 
     .mr-resource__close {

@@ -66,7 +66,10 @@ export class MrResourceModalComponent implements OnInit, OnDestroy {
     this.destroy$.next();
   }
 
-  onClose() {
+  onClose(target?: { className: string }) {
+    if (target && target.className !== 'mr-resource-modal__overlay') {
+      return;
+    }
     this.widgets = {};
     this.modalService.close();
   }
