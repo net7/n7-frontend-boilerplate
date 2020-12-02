@@ -3,7 +3,9 @@ import {
 } from '@angular/core';
 import { _t } from '@n7-frontend/core';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { filter, takeUntil } from 'rxjs/operators';
+import { NavigationStart, Router } from '@angular/router';
+import { isEmpty } from 'lodash';
 import { ModalStatus, MrResourceModalService } from '../../services/resource-modal.service';
 
 import {
@@ -42,8 +44,9 @@ export class MrResourceModalComponent implements OnInit, OnDestroy {
   public errorDescription = _t('global#layout_error_description');
 
   constructor(
+    private router: Router,
     private modalService: MrResourceModalService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.modalService.state$
@@ -58,6 +61,15 @@ export class MrResourceModalComponent implements OnInit, OnDestroy {
           this.loadWidgets(config, response);
         }
       });
+
+    // on router change close
+    this.router.events.pipe(
+      takeUntil(this.destroy$),
+      filter(() => !isEmpty(this.widgets)),
+      filter((event) => event instanceof NavigationStart),
+    ).subscribe(() => {
+      this.onClose();
+    });
   }
 
   ngOnDestroy() {
@@ -66,7 +78,10 @@ export class MrResourceModalComponent implements OnInit, OnDestroy {
     this.destroy$.next();
   }
 
-  onClose() {
+  onClose(target?: { className: string }) {
+    if (target && target.className !== 'mr-resource-modal__overlay') {
+      return;
+    }
     this.widgets = {};
     this.modalService.close();
   }

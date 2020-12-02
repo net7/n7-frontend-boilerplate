@@ -2,44 +2,45 @@
         'is-loading': status === 'LOADING',
         'is-error': status === 'ERROR'
       }">
-
-    <div class="mr-resource-modal__container">
-        <!-- RESOURCE MODAL CLOSE BTN -->
-        <div class="mr-resource__close">
-            <a (click)="onClose()"><span class="n7-icon-close"></span></a>
-        </div>
-    
-        <!-- RESOURCE MODAL CONTENT -->
-        <ng-container [ngSwitch]="status">
-            <!-- loading -->
-            <ng-container *ngSwitchCase="'LOADING'">
-                <div class="mr-layout__loader">
-                    <n7-loader></n7-loader>
-                </div>
-            </ng-container>
-    
-            <!-- error -->
-            <ng-container *ngSwitchCase="'ERROR'">
-                <div class="mr-layout__error">
-                    <h2>{{ errorTitle }}</h2>
-                    <p>{{ errorDescription }}</p>
-                </div>
-            </ng-container>
-    
-            <!-- success -->
-            <ng-container *ngSwitchCase="'SUCCESS'">
-                <ng-container *ngIf="config.sections as sections">
-                    <!-- Pass the list of blocks to render to the block template -->
-                    <div class="mr-resource__top">
-                        <ng-container *ngTemplateOutlet="blocks; context: { $implicit: sections.top }"></ng-container>
-                    </div>
-                    <div class="mr-resource__content mr-side-margin">
-                        <ng-container *ngTemplateOutlet="blocks; context: { $implicit: sections.content }"></ng-container>
+    <div class="mr-resource-modal__overlay" (click)="onClose($event.target)">
+        <div class="mr-resource-modal__container">
+            <!-- RESOURCE MODAL CLOSE BTN -->
+            <div class="mr-resource__close">
+                <a (click)="onClose()"><span class="n7-icon-close"></span></a>
+            </div>
+        
+            <!-- RESOURCE MODAL CONTENT -->
+            <ng-container [ngSwitch]="status">
+                <!-- loading -->
+                <ng-container *ngSwitchCase="'LOADING'">
+                    <div class="mr-layout__loader">
+                        <n7-loader></n7-loader>
                     </div>
                 </ng-container>
+        
+                <!-- error -->
+                <ng-container *ngSwitchCase="'ERROR'">
+                    <div class="mr-layout__error">
+                        <h2>{{ errorTitle }}</h2>
+                        <p>{{ errorDescription }}</p>
+                    </div>
+                </ng-container>
+        
+                <!-- success -->
+                <ng-container *ngSwitchCase="'SUCCESS'">
+                    <ng-container *ngIf="config.sections as sections">
+                        <!-- Pass the list of blocks to render to the block template -->
+                        <div class="mr-resource__top">
+                            <ng-container *ngTemplateOutlet="blocks; context: { $implicit: sections.top }"></ng-container>
+                        </div>
+                        <div class="mr-resource__content mr-side-margin">
+                            <ng-container *ngTemplateOutlet="blocks; context: { $implicit: sections.content }"></ng-container>
+                        </div>
+                    </ng-container>
+                </ng-container>
+        
             </ng-container>
-    
-        </ng-container>
+        </div>
     </div>
 </div>
 
