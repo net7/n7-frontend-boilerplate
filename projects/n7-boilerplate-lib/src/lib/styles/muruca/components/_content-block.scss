@@ -99,7 +99,7 @@ $content-block-label-second-level-width: 120px;
         .n7-metadata-viewer__group + div { // Wrapper of alls econd level items
             width: 100%;
             max-height: 300px;
-            overflow-y: scroll;
+            overflow-y: auto;
             margin-bottom: $space;
         }
 
