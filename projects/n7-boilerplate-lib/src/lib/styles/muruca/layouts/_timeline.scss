@@ -8,12 +8,13 @@
    #TIMELINE
 \* ------------------------------------ */
 .mr-timeline {
-    &__timeline {
+    padding-bottom: $space*8;
 
+    &__timeline {
     }
 
     &__page {
-        max-width: $page-max-width;
+        max-width: $page-readable-width;
         margin: 0 auto;
     }
 
@@ -40,17 +41,20 @@
 
     &__title {
         margin-bottom: $space*4;
-        font-size: $font-size-xxl;
+        font-size: $font-size-xl;
         font-family: $font-family-main;
+        line-height: 1.5;
     }
 
     &__content {
         font-family: $font-family-text;
-        font-size: $font-size-xl;
+        font-size: $font-size-l-xl;
+        white-space: pre-wrap;
 
         p, ul, li, a {
+            white-space: pre-wrap;
             font-family: $font-family-text;
-            font-size: $font-size-xl;
+            font-size: $font-size-l-xl;
         }
     }
 

@@ -13,7 +13,7 @@
         max-width: $page-readable-width;
         margin: $space * 3 auto $space * 6;
         font-family: $font-family-text;
-        font-size: $font-size-xl;
+        font-size: $font-size-l-xl;
     }
 
     /* Headings */
@@ -23,7 +23,6 @@
         max-width: $page-readable-width;
         margin: $space * 3 auto $space * 6;
         font-family: $font-family-headings;
-        // font-size: $font-size-xl;
     }
 
     /* List */
@@ -32,7 +31,7 @@
         max-width: $page-readable-width;
         margin: $space * 3 auto $space * 6;
         font-family: $font-family-text;
-        font-size: $font-size-xl;
+        font-size: $font-size-l-xl;
     }
 
     /* Quote */
@@ -85,10 +84,8 @@
             margin: 0;
             max-width: none;
             font-family: $font-family-headings;
-            font-size: $font-size-xl;
+            font-size: $font-size-l-xl;
             line-height: 1.7;
-            // color: $color-text-light;
-            // font-style: italic;
         }
 
         cite {
