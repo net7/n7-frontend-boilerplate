@@ -1,0 +1,78 @@
+<div class="mr-timeline mr-layout"
+     *ngIf="lb.dataSource">
+    <div class="mr-timeline__timeline">
+        <n7-timeline [data]="lb.widgets['mr-timeline'].ds.out$ | async"></n7-timeline>
+    </div>
+
+    <div class="mr-timeline__page mr-side-margin">
+        <div class="mr-timeline__date">
+            <n7-inner-title [data]="lb.dataSource.yearHeader"></n7-inner-title>
+        </div>
+        <h1 class="mr-timeline__title"
+            *ngIf="lb.dataSource.loadedResourceDetails">
+            {{lb.dataSource.eventHeader}}
+        </h1>
+        <div class="mr-timeline__content">
+            <p [innerHTML]="lb.dataSource.eventDescription">
+            <p>
+                <ng-container *ngIf="lb.dataSource.loadedResourceDetails">
+                    <div>Fonti:
+                        <ul>
+                            <li><a href="#">Canzoniere</a></li>
+                            <li><a href="#">I Trionfi</a></li>
+                            <li><a href="#">Epistole</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="mr-gallery">
+                        <div class="mr-gallery__item"
+                             *ngFor="let image of lb.dataSource.images">
+                            <img class="mr-gallery__image"
+                                 [src]="image">
+                        </div>
+                    </div>
+
+                    <div class="mr-map">
+                        <n7-map [data]="lb.widgets['mr-map'].ds.out$ | async"></n7-map>
+                    </div>
+
+                    <ng-container *ngIf="lb.dataSource.bibliographyMock">
+                        <div class="mr-content-block mr-content-block-collection">
+                            <h3 class="mr-content-block__title">Bibliografia</h3>
+                            <div class="mr-content-block__content n7-grid-1">
+                                <ng-container *ngFor="let item of lb.dataSource.bibliographyMock">
+                                    <ng-container *ngTemplateOutlet="biblio; context: { $implicit: item }">
+                                    </ng-container>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <div class="mr-content-block mr-content-block-collection">
+                        <h3 class="mr-content-block__title">Mappe collegate</h3>
+                        <div class="mr-content-block__content n7-grid-3">
+                            <ng-container *ngFor="let item of lb.dataSource.connectedMapsMock">
+                                <ng-container *ngTemplateOutlet="maps; context: { $implicit: item }">
+                                </ng-container>
+                            </ng-container>
+                        </div>
+                    </div>
+                </ng-container>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #biblio
+             let-item>
+    <div class="mr-timeline__collection-content">
+        <n7-item-preview [data]="item"></n7-item-preview>
+    </div>
+</ng-template>
+
+<ng-template #maps
+             let-item>
+    <div class="mr-timeline__collection-content">
+        <n7-item-preview [data]="item"></n7-item-preview>
+    </div>
+</ng-template>

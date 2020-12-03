@@ -10,13 +10,14 @@ import { MrResourceModalService } from './services/resource-modal.service';
 // PIPES
 import { EscapeHtmlPipe } from './pipes/keep-html.pipe';
 // LAYOUTS
+import { MrAdvancedSearchLayoutComponent } from './layouts/advanced-search-layout/advanced-search-layout';
 import { MrGlossaryLayoutComponent } from './layouts/glossary-layout/glossary-layout';
 import { MrHomeLayoutComponent } from './layouts/home-layout/home-layout';
 import { MrResourceLayoutComponent } from './layouts/resource-layout/resource-layout';
 import { MrSearchFacetsLayoutComponent } from './layouts/search-facets-layout/search-facets-layout';
 import { MrSearchLayoutComponent } from './layouts/search-layout/search-layout';
 import { MrStaticLayoutComponent } from './layouts/static-layout/static-layout';
-import { MrAdvancedSearchLayoutComponent } from './layouts/advanced-search-layout/advanced-search-layout';
+import { MrTimelineLayoutComponent } from './layouts/timeline-layout/timeline-layout';
 // COMPONENTS
 import { ReadMoreComponent } from './components/read-more/read-more';
 import { MrFormComponent } from './components/form/form';
@@ -33,6 +34,7 @@ const COMPONENTS = [
   MrSearchLayoutComponent,
   MrStaticLayoutComponent,
   MrAdvancedSearchLayoutComponent,
+  MrTimelineLayoutComponent,
   // Custom components
   ReadMoreComponent,
   MrFormComponent,

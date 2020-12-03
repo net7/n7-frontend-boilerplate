@@ -1,0 +1,170 @@
+/**
+ * CONTENT BLOCK
+ *
+ * Blocks of content like metadata, collections of item-previews, text-viewer, etc.
+ * Mostly used in the resource page, but can be used also in other pages.
+ */
+
+$content-block-title-width: 170px;
+$content-block-label-width: 170px;
+$content-block-label-second-level-width: 120px;
+
+/* ------------------------------------ *\
+    CONTENT-BLOCK
+\* ------------------------------------ */
+.mr-content-block {
+    display: flex;
+    
+    &__title {
+        width: $content-block-title-width;
+        flex-shrink: 0;
+        flex-grow: 0;
+        margin-right: $space*1.5;
+        font-family: $font-family-main;
+        color: $color-text-light;
+        font-size: $font-size-xl;
+        font-weight: $font-weight-bold;
+        word-break: break-word;
+
+    }
+
+    &__content {
+        flex-grow: 1;
+    }
+}
+
+
+/* ------------------------------------ *\
+    CONTENT-BLOCK-METADATA
+\* ------------------------------------ */
+.mr-content-block-metadata {
+    
+    .n7-metadata-viewer__group-wrapper {
+        display: flex;
+    }
+
+    .n7-metadata-viewer__group {
+        margin-bottom: 0;
+    }
+
+    .n7-metadata-viewer__wrapper:last-child {
+        .n7-metadata-viewer__group:last-child,
+        .n7-metadata-viewer__item:last-child {
+            margin-bottom:  0;
+        }
+    }
+
+    .n7-metadata-viewer__item {
+        display: flex;
+        margin-bottom: $space*2;
+    }
+
+    .n7-metadata-viewer__item-label {
+        font-size: $font-size-m;
+        color: $color-text;
+        width: $content-block-label-width;
+        margin-right: $space*1.5;
+        flex-shrink: 0;
+        @include first-letter-capital();
+        word-break: break-word;
+    }
+
+    .n7-metadata-viewer__item-value,
+    .n7-metadata-viewer__item-value p {
+        font-size: $font-size-m;
+        color: $color-text;
+        margin: 0;
+        line-height: 1.6;
+        word-break: break-word;
+    }
+
+    .n7-metadata-viewer__item-value img {
+        max-width: 100%;
+        height: auto;
+    }
+    
+    /* Metadata-second level */
+    .n7-metadata-viewer__group-wrapper {
+        // Label of element that has children
+        .n7-metadata-viewer__group-title {
+            width: $content-block-label-width;
+            margin-right: $space*1.5;
+            font-size: $font-size-m;
+            color: $color-text;
+            font-weight: $font-weight-bold;
+            @include first-letter-capital();
+        }
+
+        // Actual Second level
+        .n7-metadata-viewer__group + div { // Wrapper of alls econd level items
+            width: 100%;
+            max-height: 300px;
+            overflow-y: scroll;
+            margin-bottom: $space;
+        }
+
+        .n7-metadata-viewer__group-wrapper {
+            width: 100%;
+            // margin-bottom: $space*10;
+            padding-left: 0;
+
+            .n7-metadata-viewer__group  {
+                width: 100%;
+                margin-bottom: $space;
+            }
+
+            .n7-metadata-viewer__group-content {
+                margin-bottom: $space/2;
+                padding-bottom: $space/2;
+                border-bottom: 1px solid $color-border-light;
+            }
+
+            .n7-metadata-viewer__item {
+                margin-bottom: $space/2;
+            }
+
+            .n7-metadata-viewer__item-label {
+                width: $content-block-label-second-level-width;
+                margin-right: $space*1.5;
+                @include first-letter-capital();
+                word-break: break-word;
+            }
+
+            .n7-metadata-viewer__item-label,
+            .n7-metadata-viewer__item-value,
+            .n7-metadata-viewer__item-label p,
+            .n7-metadata-viewer__item-value p {
+                font-size: $font-size-s;
+            }
+
+            /* Last child */
+            &:last-child {
+                margin-bottom: $space*2;
+
+                .n7-metadata-viewer__group-content {
+                    padding-bottom: 0;
+                    border-bottom: 0;
+                }
+            }
+        }
+    }
+
+}
+
+
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: $breakpoint-laptop) {
+}
+
+@media all and (max-width: $breakpoint-ipad-portrait) {
+}
+
+@media all and (max-width: $breakpoint-smartphone-landscape) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}

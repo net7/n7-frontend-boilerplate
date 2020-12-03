@@ -69,57 +69,75 @@
     
                 <!-- METADATA VIEWER -->
                 <ng-container *ngSwitchCase="'metadata'">
-                    <div class="mr-resource__metadata-content">
-                        <h3 *ngIf="section.title" class="mr-resource__section-title mr-resource__metadata-title">
+                    
+                    <div class="mr-content-block mr-content-block-metadata">
+                        <h3 *ngIf="section.title" class="mr-content-block__title">
                             {{ section.title }}
                         </h3>
-                        <mr-read-more [data]="section.readmore">
-                            <n7-metadata-viewer [data]="lb.widgets[section.id].ds.out$ | async"
-                                [emit]="lb.widgets[section.id].emit">
-                            </n7-metadata-viewer>
-                        </mr-read-more>
+                        <div class="mr-content-block__content">
+                            <mr-read-more [data]="section.readmore">
+                                <n7-metadata-viewer [data]="lb.widgets[section.id].ds.out$ | async"
+                                    [emit]="lb.widgets[section.id].emit">
+                                </n7-metadata-viewer>
+                            </mr-read-more>
+                        </div>
                     </div>
+
                 </ng-container>
     
                 <!-- COLLECTION -->
                 <ng-container *ngSwitchCase="'collection'">
                     <ng-container *ngIf="lb.widgets[section.id].ds.out$ | async as collection$">
-                        <div *ngIf="collection$.items?.length > 0" class="mr-resource__collection-content">
-                            <h3 *ngIf="section.title" class="mr-resource__section-title">
+                        
+                        <div *ngIf="collection$.items?.length > 0" class="mr-content-block mr-content-block-collection">
+                            <h3 *ngIf="section.title" class="mr-content-block__title">
                                 {{ section.title }}
                             </h3>
-                            <div class="mr-resource__collection-grid {{ section.grid ? 'n7-grid-' + section.grid : '' }}">
+                            <div class="mr-content-block__content {{ section.grid ? 'n7-grid-' + section.grid : '' }}">
                                 <n7-item-preview *ngFor="let item of collection$?.items"
                                     [data]="item" [emit]="lb.widgets[section.id].emit">
                                 </n7-item-preview>
                             </div>
                         </div>
+
                     </ng-container>
                 </ng-container>
     
                 <!-- ITEM PREVIEW -->
                 <ng-container *ngSwitchCase="'preview'">
-                    <h3 *ngIf="section.title" class="mr-resource__section-title mr-resource__preview-title">
-                        {{ section.title }}
-                    </h3>
-                    <n7-item-preview [data]="lb.widgets[section.id].ds.out$ | async" [emit]="lb.widgets[section.id].emit">
-                    </n7-item-preview>
+                    <div class="mr-content-block mr-content-block-item-preview">
+                        <h3 *ngIf="section.title" class="mr-content-block__title">
+                            {{ section.title }}
+                        </h3>
+                        <div class="mr-content-block__content">
+                            <n7-item-preview [data]="lb.widgets[section.id].ds.out$ | async" [emit]="lb.widgets[section.id].emit">        
+                            </n7-item-preview>
+                        </div>
+                    </div>
                 </ng-container>
     
                 <!-- TEXT VIEWER -->
                 <ng-container *ngSwitchCase="'text-viewer'">
-                    <h3 *ngIf="section.title" class="mr-resource__section-title mr-resource__text-viewer-title">
-                        {{ section.title }}
-                    </h3>
-                    <div class="text-viewer__mock">n7-text-viewer</div>
+                    <div class="mr-content-block mr-content-block-text-viewer">
+                        <h3 *ngIf="section.title" class="mr-content-block__title">
+                            {{ section.title }}
+                        </h3>
+                        <div class="mr-content-block__content">
+                            <div class="text-viewer__mock">n7-text-viewer</div>
+                        </div>
+                    </div>
                 </ng-container>
     
                 <!-- INFO BOX -->
                 <ng-container *ngSwitchCase="'info-box'">
-                    <h3 *ngIf="section.title" class="mr-resource__section-title mr-resource__info-box-title">
-                        {{ section.title }}
-                    </h3>
-                    <div class="info-box__mock">info-box</div>
+                    <div class="mr-content-block mr-content-block-info-box">
+                        <h3 *ngIf="section.title" class="mr-content-block__title">
+                            {{ section.title }}
+                        </h3>
+                        <div class="mr-content-block__content">
+                            <div class="info-box__mock">info-box</div>    
+                        </div>
+                    </div>
                 </ng-container>
     
                 <!-- BREADCRUMBS -->
@@ -127,6 +145,7 @@
                     <n7-breadcrumbs [data]="lb.widgets[section.id].ds.out$ | async">
                     </n7-breadcrumbs>
                 </ng-container>
+
             </ng-container>
         </section>
     </ng-container>

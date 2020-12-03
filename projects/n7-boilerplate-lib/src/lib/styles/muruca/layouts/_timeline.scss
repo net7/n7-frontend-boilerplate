@@ -1,0 +1,88 @@
+/**
+ * TIMELINE
+ *
+ * Specific style for the timeline page.
+ */
+
+/* ------------------------------------ *\
+   #TIMELINE
+\* ------------------------------------ */
+.mr-timeline {
+    padding-bottom: $space*8;
+
+    &__timeline {
+    }
+
+    &__page {
+        max-width: $page-readable-width;
+        margin: 0 auto;
+    }
+
+    &__date {
+        margin-bottom: $space*4;
+        border-bottom: 1px solid $color-border-normal;
+
+        .n7-inner-title__title {
+            color: $color-second;
+        }
+
+        .n7-inner-title__buttons-action {
+            background: transparent;
+            border: 0;
+            font-size: $font-size-xxl;
+            color: $color-gray-04;
+            transition: all $transition-durations;
+
+            &:hover {
+                color: $color-text-link;
+            }
+        }
+    }
+
+    &__title {
+        margin-bottom: $space*4;
+        font-size: $font-size-xl;
+        font-family: $font-family-main;
+        line-height: 1.5;
+    }
+
+    &__content {
+        font-family: $font-family-text;
+        font-size: $font-size-l-xl;
+        white-space: pre-wrap;
+
+        p, ul, li, a {
+            white-space: pre-wrap;
+            font-family: $font-family-text;
+            font-size: $font-size-l-xl;
+        }
+    }
+
+    .mr-map {
+        margin-bottom: $space*5;
+    }
+
+    .mr-content-block {
+        margin-bottom: $space*5;
+    }
+}
+
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: 1120px) {
+}
+
+@media all and (max-width: $breakpoint-laptop) {
+}
+
+@media all and (max-width: $breakpoint-ipad-portrait) {
+}
+
+@media all and (max-width: $breakpoint-smartphone-landscape) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}
