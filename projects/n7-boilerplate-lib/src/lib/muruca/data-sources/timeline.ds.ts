@@ -32,11 +32,11 @@ export class MrTimelineDS extends DataSource {
         maxHeight: '800px',
         zoomFriction: 8
       },
-      // dataSet: data.dataSet.filter((d) => d.start && `${d.start}`.length === 4),
-      dataSet: [{
-        // Mock di un elemento cliccabile
-        start: '2014-04-17', id: 2992, type: 'point', content: 'Missione Venezia'
-      }],
+      dataSet: data.dataSet,
+      // dataSet: [{
+      // Mock di un elemento cliccabile
+      //   start: '2014-04-17', id: 2992, type: 'point', content: 'Missione Venezia'
+      // }],
       _setInstance: (timeline) => {
         this.timeline = timeline;
         this.timelineLoaded$.next(timeline);
