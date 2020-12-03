@@ -36,6 +36,12 @@
 
 
 // ------------------------------------ //
+// #MR MIXINS
+// ------------------------------------ //
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/muruca/generic/mixins";
+
+
+// ------------------------------------ //
 // #N7 COMPONENTS STYLES
 // ------------------------------------ //
 @import '../../node_modules/@n7-frontend/components/src/lib/styles/imports';

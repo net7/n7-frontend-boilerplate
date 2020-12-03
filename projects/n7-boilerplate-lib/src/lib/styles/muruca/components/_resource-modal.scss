@@ -1,9 +1,67 @@
 /**
  * RESOURCE MODAL
+ *
+ * Style for the modal.
  */
-
+ 
+/* ------------------------------------ *\
+   #RESOURCE MODAL
+\* ------------------------------------ */
 .mr-resource-modal {
-    .mr-resource-modal__overlay {
+    &__window {
+        position: relative;
+        max-width: $modal-width;
+        background: $color-background-base;
+        @include cardShadow;
+        border: 1px solid $color-border-normal;
+        margin: $space*10 auto 0 auto;
+        border-radius: $border-radius*2;
+        overflow-y: auto;
+    }
+
+    /* Close */
+    &__close {
+        position: absolute;
+        top: $space*2;
+        right: $space*2;
+        cursor: pointer;
+    }
+
+    &__close-link {
+        color: $color-gray-04;
+        font-size: $font-size-xl;
+    }
+
+    /* Content */
+    &__content {
+        padding: $space*5;
+    }
+
+    /* Loader */
+    &__loader {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Error */
+    &__error-title {
+        margin-bottom: $space*2;
+        font-size: $font-size-l;
+        font-family: $font-family-main;
+    }
+
+    &__error-text {
+        font-size: $font-size-s;
+    }
+}
+
+
+/* ------------------------------------ *\
+   #OVERLAY
+\* ------------------------------------ */
+.mr-resource-modal {
+    &__overlay {
         position: fixed;
         z-index: 999;
         top: 0;
@@ -12,19 +70,10 @@
         left: 0;
         width: 100%;
         height: 100%;
-    }
-
-    .mr-resource-modal__container {
-        background: $color-gray-00;
-        margin: $space*10 auto;
-        overflow-y: auto;
-    }
-
-    .mr-resource__close {
-        text-align: right;
-        cursor: pointer;
+        background-color: rgba($color-gray-02, .8);
     }
 }
+
 
 /* ------------------------------------ *\
    #MEDIA-QUERIES
