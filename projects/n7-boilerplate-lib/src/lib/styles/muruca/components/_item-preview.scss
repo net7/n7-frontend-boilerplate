@@ -18,6 +18,18 @@
         line-height: 1.4;
         font-size: $font-size-l;
     }
+
+    &__image {
+        border-radius: $border-radius*2;
+        transition: all $transition-durations;
+        @include imageShadow;
+    }
+
+    &:hover {
+        .n7-item-preview__image {
+            @include imageShadowHover;
+        }
+    }
 }
 
 .n7-item-preview:not(.mr-item-preview-bibliography) {
@@ -36,8 +48,45 @@
         .n7-item-preview___metadata-item {
             display: inline-block;
         }
+
+        
+    }
+
+    /* Last row */
+    *:last-child {
+        .n7-item-preview {
+            border-bottom: 0;
+        }
     }
 }
+
+/* Grid 2 */
+.n7-grid-2 {
+    /* Last row */
+    >*:nth-child(2n+1):nth-last-child(-n+2) .n7-item-preview,
+    >*:nth-child(2n+1):nth-last-child(-n+2) ~ * .n7-item-preview {
+        border-bottom: 0;
+  }
+}
+
+/* Grid 3 */
+.n7-grid-3 {
+    /* Last row */
+    >*:nth-child(3n+1):nth-last-child(-n+3) .n7-item-preview,
+    >*:nth-child(3n+1):nth-last-child(-n+3) ~ * .n7-item-preview {
+        border-bottom: 0;
+  }
+}
+
+/* Grid 4 */
+.n7-grid-4 {
+    /* Last row */
+    >*:nth-child(4n+1):nth-last-child(-n+4) .n7-item-preview,
+    >*:nth-child(4n+1):nth-last-child(-n+4) ~ * .n7-item-preview {
+        border-bottom: 0;
+  }
+}
+
 
 /* ------------------------------------ *\
    #BIBLIOGRAPHY-ITEM-PREVIEW
@@ -48,11 +97,11 @@
         border: 1px solid $color-border-normal;
         border-radius: $border-radius*2;
         font-size: $font-size-m;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+        @include cardShadow;
         transition: all $transition-durations;
 
         &:hover {
-            box-shadow: 0 3px 14px rgba(0,0,0,0.08);
+            @include cardShadowHover;
             border: 1px solid $color-gray-03;
         }
     }

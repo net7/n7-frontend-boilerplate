@@ -8,6 +8,7 @@ export default {
   resourcePath: '/book',
   totalResultsText: 'search#books_total',
   filtersTitle: 'search#filters_title',
+  grid: 1,
   description: {
     id: 'library',
     buttonText: 'search#description_button',

@@ -27,6 +27,10 @@
               {
                 "replace": "src/styles/styles.scss",
                 "with": "src/styles/styles.arianna.scss"
+              }, 
+              {
+                "replace": "src/app/app.component.html",
+                "with": "src/app/app.component-arianna.html"
               }
             ],
             "outputPath": "dist/n7-boilerplate",
@@ -96,6 +100,10 @@
                 {
                   "replace": "src/styles/styles.scss",
                   "with": "src/styles/styles.arianna.scss"
+                }, 
+                {
+                  "replace": "src/app/app.component.html",
+                  "with": "src/app/app.component-arianna.html"
                 }
               ]
             },
@@ -118,6 +126,10 @@
                 {
                   "replace": "src/styles/styles.scss",
                   "with": "src/styles/styles.dataviz.scss"
+                }, 
+                {
+                  "replace": "src/app/app.component.html",
+                  "with": "src/app/app.component-dataviz.html"
                 }
               ]
             },
@@ -140,6 +152,10 @@
                 {
                   "replace": "src/styles/styles.scss",
                   "with": "src/styles/styles.sandbox.scss"
+                }, 
+                {
+                  "replace": "src/app/app.component.html",
+                  "with": "src/app/app.component-sandbox.html"
                 }
               ]
             },
@@ -152,16 +168,16 @@
               ],
               "fileReplacements": [
                 {
-                  "replace": "src/assets/app-config.json",
-                  "with": "src/assets/app-config.muruca.json"
-                }, 
-                {
                   "replace": "src/app/app.module.ts",
                   "with": "src/app/app.module.muruca.ts"
                 }, 
                 {
                   "replace": "src/styles/styles.scss",
                   "with": "src/styles/styles.muruca.scss"
+                }, 
+                {
+                  "replace": "src/app/app.component.html",
+                  "with": "src/app/app.component-muruca.html"
                 }
               ]
             }
@@ -175,7 +191,7 @@
           "configurations": {
             "production": {
               "browserTarget": "n7-boilerplate:build:production"
-            }, 
+            },
             "arianna": {
               "browserTarget": "n7-boilerplate:build:arianna"
             }, 

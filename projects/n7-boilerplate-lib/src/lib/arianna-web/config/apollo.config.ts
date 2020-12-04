@@ -148,20 +148,25 @@ export default {
             }
           }
           fields {
-            ...
-            on KeyValueField {
+            ... on KeyValueField {
               key
               value
             }
-            ... on
-            KeyValueFieldGroup {
+            ... on KeyValueFieldGroup {
               label
-              fields
-              {
-                ...
-                on KeyValueField {
+              fields {
+                ... on KeyValueField {
                   key
                   value
+                }
+                ... on KeyValueFieldGroup {
+                  label
+                  fields {
+                    ... on KeyValueField {
+                      key
+                      value
+                    }
+                  }
                 }
               }
             }
@@ -277,18 +282,25 @@ export default {
             text
             document_type
             fields {
-              ...
-              on KeyValueField {
+              ... on KeyValueField {
                 key
                 value
               }
               ... on KeyValueFieldGroup {
                 label
                 fields {
-                  ...
-                  on KeyValueField {
+                  ... on KeyValueField {
                     key
                     value
+                  }
+                  ... on KeyValueFieldGroup {
+                    label
+                    fields {
+                      ... on KeyValueField {
+                        key
+                        value
+                      }
+                    }
                   }
                 }
               }
@@ -341,18 +353,25 @@ export default {
             img
             document_type
             fields {
-              ...
-              on KeyValueField {
+              ... on KeyValueField {
                 key
                 value
               }
               ... on KeyValueFieldGroup {
                 label
                 fields {
-                  ...
-                  on KeyValueField {
+                  ... on KeyValueField {
                     key
                     value
+                  }
+                  ... on KeyValueFieldGroup {
+                    label
+                    fields {
+                      ... on KeyValueField {
+                        key
+                        value
+                      }
+                    }
                   }
                 }
               }

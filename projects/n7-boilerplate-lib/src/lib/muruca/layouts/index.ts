@@ -33,3 +33,8 @@ export * from './advanced-search-layout/advanced-search-layout';
 export * from './advanced-search-layout/advanced-search-layout.ds';
 export * from './advanced-search-layout/advanced-search-layout.eh';
 export * from './advanced-search-layout/advanced-search-layout.config';
+// timeline layout
+export * from './timeline-layout/timeline-layout';
+export * from './timeline-layout/timeline-layout.ds';
+export * from './timeline-layout/timeline-layout.eh';
+export * from './timeline-layout/timeline-layout.config';

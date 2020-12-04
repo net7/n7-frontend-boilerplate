@@ -1,0 +1,117 @@
+/**
+ * TIMELINE
+ *
+ * Style for timeline component
+ */
+
+/* ------------------------------------ *\
+    TIMELINE
+\* ------------------------------------ */
+.n7-timeline {
+    > div {
+        border: 0 !important;
+    }
+
+    .vis-timeline {
+        border: 1px solid $color-border-normal;
+    }
+
+    .vis-panel.vis-center {
+        border: 0;
+    }
+
+    .vis-panel.vis-bottom {
+        border: 1px solid $color-border-normal;
+    }
+
+    /* Single item */
+    .vis-box {
+        border-top: 0;
+        border-bottom: 0;
+        border-right: 0;
+        border-radius: 0;
+        border-width: 2px;
+        border-color: $color-third;
+        background-color: $color-background-medium;
+        box-shadow: 0 2px 8px rgba(0,0,0,.1);
+        cursor: pointer;
+    }
+
+    .vis-item-content {
+        max-width: 300px;
+        white-space: pre-wrap;
+        font-size: $font-size-s;
+        text-align: left;
+
+        .dates {
+            font-size: $font-size-s;
+            text-align: left;
+            color: $color-text-light;
+        }
+
+        .content {
+            font-size: $font-size-s;
+            text-align: left;
+        }
+    }
+    
+    /* Range */
+    .vis-range {
+        border-top: 0;
+        border-bottom: 0;
+        border-radius: 0;
+        border-width: 2px;
+        border-color: $color-third;
+        background-color: $color-background-medium;
+        box-shadow: 0 2px 8px rgba(0,0,0,.1);
+        cursor: pointer;
+    }
+
+    /* Clusters */
+    .vis-cluster {
+        width: auto !important;
+        background-color: $color-third;
+        color: $color-text-inverse;
+        font-weight: $font-weight-bold;
+    }
+
+    /* Selected items */
+    .vis-box.vis-selected,
+    .vis-range.vis-selected:not(.vis-cluster) {
+        border-color: $color-second;
+        background-color: $color-background-base;
+    }
+
+    .vis-dot.vis-selected,
+    .vis-line.vis-selected {
+        border-color: $color-second;
+    }
+
+    /* Line */
+    .vis-line {
+        border-width: 2px;
+        border-color: $color-third;
+    }
+
+    /* Dot */
+    .vis-dot {
+        border-color: $color-third;
+    }
+
+    /* Data */
+    .vis-time-axis {
+        .vis-text {
+            font-family: $font-family-main;
+        }
+    }
+}
+
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: $header-breakpoint-mobile) {
+}
+
+@media all and (max-width: $header-breakpoint-mobile-small) {
+}

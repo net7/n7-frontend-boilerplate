@@ -126,30 +126,16 @@
         box-shadow: 0 2px 2px 0 rgba(0,0,0,0.08), 0 13px 30px 0 rgba(0,0,0,0.05);
         border-radius: $border-radius;
 
-        .mr-resource__section-title {
-            width: 220px;
-            flex-shrink: 0;
-            flex-grow: 0;
-            margin-right: $space*2;
-            font-family: $font-family-main;
-            color: $color-text-light;
-            font-size: $font-size-xl;
-            font-weight: $font-weight-bold;
-            word-break: break-word;
+        /* Metadata */
+        .mr-resource__metadata {
+            padding: $space*6 0;
+            margin: 0 $space*10;
         }
 
         /* Collection */
         .mr-resource__collection {
             padding: $space*6 0;
             margin: 0 $space*10;
-        }
-
-        .mr-resource__collection-content {
-            display: flex;
-        }
-
-        .mr-resource__collection-grid {
-            flex-grow: 1;
         }
 
         /* Sections border */
@@ -182,94 +168,6 @@
         text-align: center;
     }
 
-}
-
-/* ------------------------------------ *\
-   #METADATA
-\* ------------------------------------ */
-.mr-resource {
-    &__content {
-        /* Metadata */
-        .mr-resource__metadata {
-            padding: $space*6 0;
-            margin: 0 $space*10;
-        }
-
-        .mr-resource__metadata-content {
-            display: flex;
-        }
-
-        .n7-metadata-viewer__wrapper:last-child {
-            .n7-metadata-viewer__group:last-child,
-            .n7-metadata-viewer__item:last-child {
-                margin-bottom:  0;
-            }
-        }
-
-        .n7-metadata-viewer__item {
-            display: flex;
-            margin-bottom: $space*2;
-        }
-
-        .n7-metadata-viewer__item-label {
-            width: 170px;
-            margin-right: $space;
-            flex-shrink: 0;
-            @include first-letter-capital();
-        }
-
-        .n7-metadata-viewer__item-value,
-        .n7-metadata-viewer__item-value p {
-                margin: 0;
-                line-height: 1.6;
-                word-break: break-word;
-        }
-
-        .n7-metadata-viewer__item-value img {
-            max-width: 100%;
-            height: auto;
-        }
-
-        /* Metadata-second level */
-        .mr-resource__metadata {
-            // Label of element that has children (obscure logic)
-            .n7-metadata-viewer__group-title {
-                @include first-letter-capital();
-                font-size: $font-size-m;
-                font-weight: $font-weight-bold;
-            }
-
-            // Actual Second level
-            .n7-metadata-viewer__group-wrapper .n7-metadata-viewer__group-wrapper {
-                padding-left: 170px + $space;
-
-                .n7-metadata-viewer__group {
-                    margin-bottom: $space;
-                }
-
-                &:last-child {
-                    .n7-metadata-viewer__group {
-                        margin-bottom: $space*2;
-                    }
-                }
-
-                .n7-metadata-viewer__item {
-                    margin-bottom: $space;
-                }
-
-                .n7-metadata-viewer__item-label {
-                    @include first-letter-capital();
-                }
-
-                .n7-metadata-viewer__item-label,
-                .n7-metadata-viewer__item-value,
-                .n7-metadata-viewer__item-label p,
-                .n7-metadata-viewer__item-value p {
-                    font-size: $font-size-s;
-                }
-            }
-        }
-    }
 }
 
 

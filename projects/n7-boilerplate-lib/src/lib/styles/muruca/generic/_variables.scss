@@ -9,7 +9,7 @@
 // ------------------------------------ //
 $page-max-width: 1240px;
 $page-min-width: 768px;
-$page-readable-width: 700px;
+$page-readable-width: 800px;
 
 
 // ------------------------------------ //
@@ -69,6 +69,7 @@ $font-family-text: 'EB Garamond', serif;
 $font-size-xxxl: 44px;
 $font-size-xxl: 32px;
 $font-size-xl: 24px;
+$font-size-l-xl: 21px;
 $font-size-l: 18px;
 $font-size-m: 16px;
 $font-size-s: 14px;
@@ -319,7 +320,12 @@ $breadcrumbs-arrow: '\e90a';
 
 
 // ------------------------------------ //
-// #CAROUSEL
+// #MODAL
 // ------------------------------------ //
-// $carousel-content-width:960px;
-// $carousel-height: 400px;
+$modal-width: $page-readable-width;
+
+
+// ------------------------------------ //
+// #GALLERY
+// ------------------------------------ //
+$gallery-item-width: 130px;
