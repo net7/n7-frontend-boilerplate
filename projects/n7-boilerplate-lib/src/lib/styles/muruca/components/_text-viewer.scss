@@ -1,0 +1,123 @@
+/**
+ * TEXT-VIEWER
+ *
+ * Style for the TEI-Publisher text viewer.
+ * This SCSS extends and overwrites the original CSS.
+ */
+
+/* ------------------------------------ *\
+   #PROPERTIES
+\* ------------------------------------ */
+.n7-text-viewer {
+    pb-page {
+        --pb-base-font-family: 'Open Sans', sans-serif; // TODO SASS variable should be used: $font-family-main;
+        --pb-base-font-size: $font-size-l-xl;
+        --pb-base-line-height: 1.42857143;
+        --pb-base-font-weight: $font-weight-normal;
+        --pb-base-font: var(--pb-base-font-weight) var(--pb-base-font-size)/var(--pb-base-line-height) var(--pb-base-font-family);
+        --pb-serif-font-family: #{$font-family-text}; // TODO SASS variable should be used: $font-family-text;
+        --pb-content-font-family: var(--pb-serif-font-family);
+        --pb-content-font-size: 20px;
+        --pb-heading-font-family: 'Open Sans', sans-serif; // TODO SASS variable should be used: "Oswald", Verdana, "Helvetica", sans-serif;
+        --pb-heading-font-weight: 400 !important;
+        --pb-heading-line-height: 1.2;
+        --pb-breadcrumbs-font-size: 18px;
+        --pb-color-primary: $color-gray-05; // #303030;
+        --pb-color-inverse: #f0f0f0;
+        --pb-color-lighter: #35424b;
+        --pb-color-focus: #f6a623;
+        --pb-header-background-image: none;
+        --pb-drawer-background-color: var(--pb-color-inverse);
+        --pb-menubar-background-color: #35424b;
+        --pb-menubar-background-image: none;
+        --pb-menubar-color: var(--pb-color-inverse);
+        --pb-toolbar-background-color: #d1dae0;
+        --pb-toolbar-background-image: none;
+        --pb-toolbar-color: var(--pb-color-primary);
+        --paper-tooltip-delay-in: 200;
+        --pb-footnote-font-size: 13px;
+        --pb-footnote-font-family: var(--pb-content-font-family);
+        --pb-footnote-font-weight: var(--pb-content-font-weight);
+        --pb-footnote-color: #303030;
+        --pb-footnote-padding: 0 0 0 .25em;
+        --pb-popover-theme: "material";
+        --pb-popover-max-width: 480px;
+        --pb-popover-font-size: 16px;
+        --pb-popover-line-height: 1.2;
+        --pb-popover-placement: "bottom";
+        --pb-popover-fallback-placement: "top right left";
+        --pb-lang-input-color: var(--pb-color-inverse);
+        --pb-lang-label-color: var(--pb-color-inverse);
+        --pb-link-color: black;
+        --pb-link-font-family: var(--pb-serif-font-family);
+        --pb-highlight-color: #f9e976;
+        --paper-input-container-focus-color: var(--pb-color-focus);
+        --pb-view-max-width: #{$page-readable-width};
+        font: var(--pb-base-font);
+        color: var(--pb-color-primary);
+        margin: 0;
+    }
+}
+
+/* ------------------------------------ *\
+   #TEXT-VIEWER
+\* ------------------------------------ */
+.n7-text-viewer {
+    border-bottom: 1px solid $color-border-normal;
+
+    app-header-layout {
+        overflow: hidden;
+    }
+    /* Table of contents */
+    pb-drawer {
+        position: absolute;
+        top: 64px; // 64 is the height of the header of the text viewer
+    }
+
+    pb-view {
+        padding-top: $space*5;
+        padding-bottom: $space*5;
+    }
+
+    #view0, #view1, #view2 {
+        flex: 1 1;
+        max-width: var(--pb-view-max-width);
+        margin: 0;
+        max-height: var(--pb-view-height);
+        overflow: auto;
+    }
+}
+
+pb-load {
+    ul {
+        list-style: none;
+    }
+
+    pb-collapse {
+        cursor: pointer;
+    }
+}
+
+.n7-text-viewer {
+    .place {
+        color: red;
+    }
+}
+
+
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: $breakpoint-laptop) {
+}
+
+@media all and (max-width: $breakpoint-ipad-portrait) {
+}
+
+@media all and (max-width: $breakpoint-smartphone-landscape) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}

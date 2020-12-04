@@ -31,7 +31,8 @@ const DATASOURCE_MAP = {
   text: MrTextViewerDS,
   title: MrInnerTitleDS,
   viewer: MrImageViewerDS,
-  tabs: MrResourceTabsDS
+  tabs: MrResourceTabsDS,
+  'text-viewer': MrTextViewerDS
 };
 
 const EVENTHANDLER_MAP = {

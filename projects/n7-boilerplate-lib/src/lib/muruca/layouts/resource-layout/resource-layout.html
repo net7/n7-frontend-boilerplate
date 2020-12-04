@@ -118,14 +118,16 @@
     
                 <!-- TEXT VIEWER -->
                 <ng-container *ngSwitchCase="'text-viewer'">
-                    <div class="mr-content-block mr-content-block-text-viewer">
+                  <div class="mr-content-block mr-content-block-text-viewer">
                         <h3 *ngIf="section.title" class="mr-content-block__title">
                             {{ section.title }}
                         </h3>
                         <div class="mr-content-block__content">
-                            <div class="text-viewer__mock">n7-text-viewer</div>
-                        </div>
+                          <n7-text-viewer [data]="lb.widgets[section.id].ds.out$ | async" [emit]="lb.widgets[section.id].emit">
+                          </n7-text-viewer>
                     </div>
+                  </div>
+                  
                 </ng-container>
     
                 <!-- INFO BOX -->
