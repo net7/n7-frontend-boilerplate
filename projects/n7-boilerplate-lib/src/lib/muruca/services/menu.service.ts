@@ -55,7 +55,7 @@ export class MrMenuService {
         const item = {
           classes,
           text: label,
-          anchor: { href },
+          anchor: slug ? { href } : null,
           _meta: {
             id: href
           }

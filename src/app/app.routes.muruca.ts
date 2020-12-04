@@ -18,11 +18,11 @@ const NOT_FOUND_PATH = 'page-404';
 
 export const APP_ROUTES: Routes = [
   {
-    path: '',
-    redirectTo: '/home',
+    path: 'home',
+    redirectTo: '',
     pathMatch: 'full'
   },
-  { path: 'home', component: MrHomeLayoutComponent, data: { configId: 'home' } },
+  { path: '', component: MrHomeLayoutComponent, data: { configId: 'home' } },
   { path: 'opere', component: MrSearchLayoutComponent, data: { configId: 'search-works' } },
   { path: 'biblioteca', component: MrSearchLayoutComponent, data: { configId: 'search-books' } },
   { path: 'libro/:id/:slug', component: MrResourceLayoutComponent, data: { configId: 'resource-book' } },
