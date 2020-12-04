@@ -36,7 +36,11 @@
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              { "glob": "**/*", "input": "./node_modules/@teipublisher/pb-components/dist", "output": "/assets/pb-components/dist" },
+              { "glob": "**/*", "input": "./node_modules/@teipublisher/pb-components/lib", "output": "/assets/pb-components/lib" },
+              { "glob": "**/*", "input": "./node_modules/@teipublisher/pb-components/images", "output": "/assets/pb-components/images" },
+              { "glob": "**/*", "input": "./node_modules/@teipublisher/pb-components/i18n", "output": "/assets/pb-components/i18n" }
             ],
             "styles": [
               "./node_modules/flatpickr/dist/flatpickr.min.css",
