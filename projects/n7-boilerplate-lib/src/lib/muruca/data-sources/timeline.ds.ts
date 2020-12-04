@@ -2,6 +2,7 @@ import { TimelineData } from '@n7-frontend/components';
 import { DataSource } from '@n7-frontend/core';
 import { Subject } from 'rxjs';
 import * as vis from 'vis-timeline';
+// import * as moment from 'moment';
 
 // vis-timeline dataset type lookup
 type DataSet = TimelineData['dataSet']
@@ -14,7 +15,6 @@ export class MrTimelineDS extends DataSource {
 
   public timelineLoaded$: Subject<vis.Timeline> = new Subject();
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   protected transform(data: { dataSet: DataSet }): TimelineData {
     return {
       containerID: 'mr-timeline',
@@ -33,10 +33,12 @@ export class MrTimelineDS extends DataSource {
         zoomFriction: 8
       },
       dataSet: data.dataSet,
-      // dataSet: [{
-      // Mock di un elemento cliccabile
-      //   start: '2014-04-17', id: 2992, type: 'point', content: 'Missione Venezia'
-      // }],
+      // .map((d) => ({
+      //   id: d.id,
+      //   start: moment(d.start, 'DD-MM-YYYY').toISOString(),
+      //   end: d.end ? moment(d.end, 'DD-MM-YYYY').toISOString() : undefined,
+      //   content: d.content
+      // })),
       _setInstance: (timeline) => {
         this.timeline = timeline;
         this.timelineLoaded$.next(timeline);
