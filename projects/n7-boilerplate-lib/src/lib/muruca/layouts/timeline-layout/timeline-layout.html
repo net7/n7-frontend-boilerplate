@@ -15,7 +15,7 @@
         <div class="mr-timeline__content">
             <p [innerHTML]="lb.dataSource.eventDescription">
             <p>
-                <ng-container *ngIf="lb.dataSource.loadedResourceDetails">
+                <ng-container *ngIf="lb.dataSource.loadedResourceDetails && false">
                     <div>Fonti:
                         <ul>
                             <li><a href="#">Canzoniere</a></li>
@@ -24,7 +24,7 @@
                         </ul>
                     </div>
 
-                    <div class="mr-gallery">
+                    <div class="mr-gallery" *ngIf="false">
                         <div class="mr-gallery__item"
                              *ngFor="let image of lb.dataSource.images">
                             <img class="mr-gallery__image"
@@ -32,11 +32,11 @@
                         </div>
                     </div>
 
-                    <div class="mr-map">
+                    <div class="mr-map" *ngIf="false">
                         <n7-map [data]="lb.widgets['mr-map'].ds.out$ | async"></n7-map>
                     </div>
 
-                    <ng-container *ngIf="lb.dataSource.bibliographyMock">
+                    <ng-container *ngIf="lb.dataSource.bibliographyMock && false">
                         <div class="mr-content-block mr-content-block-collection">
                             <h3 class="mr-content-block__title">Bibliografia</h3>
                             <div class="mr-content-block__content n7-grid-1">
@@ -48,7 +48,7 @@
                         </div>
                     </ng-container>
 
-                    <div class="mr-content-block mr-content-block-collection">
+                    <div class="mr-content-block mr-content-block-collection" *ngIf="false">
                         <h3 class="mr-content-block__title">Mappe collegate</h3>
                         <div class="mr-content-block__content n7-grid-3">
                             <ng-container *ngFor="let item of lb.dataSource.connectedMapsMock">
