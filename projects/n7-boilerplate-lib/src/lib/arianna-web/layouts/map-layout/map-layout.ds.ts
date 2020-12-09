@@ -47,16 +47,16 @@ export class AwMapLayoutDS extends LayoutDataSource {
   onMarkerOpen({ id, label }) {
     // loading results
     this.state$.next('LOADING');
-    this.communication.request$('getEntityDetails', {
+    this.communication.request$('getEntityRelatedItems', {
       params: {
-        entityId: id,
+        selectedEntitiesIds: [id]
       }
-    }).subscribe(({ relatedItems }) => {
+    }).subscribe(({ itemsPagination }) => {
       // clear loading
       this.state$.next('SUCCESS');
 
-      this.relatedItems = relatedItems;
-      this.total = relatedItems.length;
+      this.relatedItems = itemsPagination.items;
+      this.total = this.relatedItems.length;
       let text = `<strong>${this.total}</strong> Oggetti collegati a<br><span class="aw-multimedia__results-title-big">${label}</span>`;
       if (this.total === 1) {
         text = `<strong>${this.total}</strong> Oggetto collegato a<br><span class="aw-multimedia__results-title-big">${label}</span>`;
