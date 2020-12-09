@@ -661,7 +661,7 @@
     "consistenza.unitaMisura": "Consistenza - unità di misura",
     "produzione": "Soggetto produttore",
     "conservazione.soggettoConservatore": "Soggetto conservatore",
-    "conservazione.soggettoConservatoreAttuale": "Soggetto conservatore",
+    "soggettoConservatore.soggettoConservatoreAttuale": "Soggetto conservatore",
     "conservazione.tipoResponsabilita": "Soggetto conservatore - tipo responsabilità",
     "conservazione.parteConservata": "Parte conservata",
     "conservazione.causeAcquisizione": "Storia della custodia",
@@ -769,6 +769,14 @@
     "aggregazione-logica.consistenza.unitaMisura": "Unità di misura",
     "aggregazione-logica.produzione": "Produzione",
     "aggregazione-logica.conservazione": "Conservazione",
+
+    "aggregazione-logica.soggettoProduttore": "Soggetto produttore",
+    "aggregazione-logica.soggettoConservatore": "Soggetto conservatore",
+    "aggregazione-logica.soggettoConservatore.soggettoConservatoreAttuale": "Soggetto conservatore",
+    "aggregazione-logica.soggettoConservatore.tipoResponsabilita": "Tipo responsabilità",
+    "aggregazione-logica.soggettoConservatore.parteConservata": "Parte conservata",
+    "aggregazione-logica.soggettoConservatore.causeAcquisizione": "Storia della custodia",
+
     "aggregazione-logica.conservazione.soggettoConservatore": "Soggetto conservatore",
     "aggregazione-logica.conservazione.soggettoConservatoreAttuale": "Soggetto conservatore",
     "aggregazione-logica.conservazione.tipoResponsabilita": "Tipo di responsabilità",
