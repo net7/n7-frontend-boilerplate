@@ -124,6 +124,39 @@ export default {
         }
         }`,
   },
+  getEntityRelatedItems: {
+    queryName: 'globalFilter',
+    queryBody: `{
+        globalFilter(__PARAMS__){
+          itemsPagination {
+            totalCount
+            items {
+              thumbnail
+              item {
+                id
+                label
+                fields
+                {
+                  ...
+                  on KeyValueField {
+                    key
+                    value
+                  }
+                }
+                breadcrumbs {
+                  label
+                  link
+                }
+                relatedTypesOfEntity {
+                  type
+                  count
+                }
+              }
+            }
+          }
+        }
+        }`,
+  },
   getEntityDetails: {
     queryName: 'getEntity',
     queryBody: `{
