@@ -16,7 +16,7 @@ export class AwChartTippyDS extends DataSource {
         id,
         selectable,
         title: label,
-        text: `È collegato a ${count} oggetti culturali`,
+        text: `È collegato a ${count} risultati`,
         isSelected: selected.includes(id),
         anchorData: {
           href: `${basePath}${id}/${helpers.slugify(label)}`,
