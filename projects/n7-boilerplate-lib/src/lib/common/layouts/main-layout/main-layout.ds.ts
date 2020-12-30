@@ -36,10 +36,21 @@ export class MainLayoutDS extends LayoutDataSource {
     }
 
     // main state updates
-    this.mainState.get$('headTitle').subscribe((val) => this.titleService.setTitle(val));
-    this.mainState.get$('pageTitle').subscribe((val) => { this.pageTitle = val; });
-    this.mainState.get$('subnav').subscribe((val) => this.one('subnav').update(val));
-    this.mainState.get$('breadcrumbs').subscribe((val) => this.one('breadcrumbs').update(val));
+    this.mainState.get$('headTitle').subscribe((val) => {
+      this.titleService.setTitle(val);
+    });
+    this.mainState.get$('pageTitle').subscribe((val) => {
+      this.pageTitle = val;
+    });
+    this.mainState.get$('subnav').subscribe((val) => {
+      this.one('subnav').update(val);
+    });
+    this.mainState.get$('breadcrumbs').subscribe((val) => {
+      this.one('breadcrumbs').update(val);
+    });
+    this.mainState.get$('header').subscribe((val) => {
+      this.one('header').update(val);
+    });
 
     // mainState test
     /* this.mainState.addCustom('customNav', new Subject());
