@@ -15,12 +15,14 @@ export class MainStateService {
     subnav: ReplaySubject<any>;
     breadcrumbs: ReplaySubject<any>;
     filters: ReplaySubject<any>;
+    header: ReplaySubject<any>;
   } = {
     headTitle: new ReplaySubject(),
     pageTitle: new ReplaySubject(),
     subnav: new ReplaySubject(),
     breadcrumbs: new ReplaySubject(),
     filters: new ReplaySubject(),
+    header: new ReplaySubject(),
   };
 
   public get$ = (key: string) => this._get('default', key);
