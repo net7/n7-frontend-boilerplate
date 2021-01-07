@@ -1,0 +1,127 @@
+export default {
+  'empty-html': '<span>Non sono disponibili informazioni.<span>',
+  'empty-label': "<h2>Benvenuto nel patrimonio archivistico dell'Università di Firenze</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p><h3>Subtitle</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>",
+  'related-entities': {
+    title: 'Entità collegate'
+  },
+  'related-items': {
+    title: 'Oggetti culturali simili',
+    'max-related-items': 6
+  },
+  metadata: {
+    title: 'Informazioni'
+  },
+  tree: {
+    'icon-expand': 'n7-icon-angle-right',
+    'icon-collapse': 'n7-icon-angle-down',
+    'icon-image': 'n7-icon-image',
+    'icon-map': [
+      {
+        'oc-type-foo': 'n7-icon-building'
+      },
+      {
+        'oc-type-bar': 'n7-icon-biography'
+      }
+    ]
+  },
+  'metadata-to-show': {
+    'aggregazione-logica': [
+      'estremo_remoto',
+      'estremo_recente',
+      'tipologia',
+      'altre_denominazioni',
+      'altre_denominazioni.denominazione',
+      'altre_denominazioni.tipologia',
+      'consistenza',
+      'consistenza.quantita',
+      'consistenza.unitaMisura',
+      'soggettoProduttore',
+      'soggettoProduttore.soggettoProduttore',
+      'soggettoProduttore.label',
+      'soggettoConservatore',
+      'soggettoConservatore.label',
+      'soggettoConservatore.soggettoConservatoreAttuale',
+      'soggettoConservatore.tipoResponsabilita',
+      'soggettoConservatore.parteConservata',
+      'soggettoConservatore.causeAcquisizione',
+
+      'produzione',
+      'produzione.soggettoProduttore',
+
+      'produzione.soggettoConservatoreAttuale',
+      'produzione.soggettoConservatore',
+      'produzione.tipoResponsabilita',
+      'produzione.parteConservata',
+      'produzione.causeAcquisizione',
+      'descrizione_interna',
+      'storia_ordinamenti',
+      'stato_conservazione',
+      'altra_documentazione',
+      'descrizione_esterna',
+      'storia_ubicazioni',
+      'condizioni_consultazione_modalita',
+      'condizioni_consultazione_tempi',
+      'corredoRicerca',
+      'corredoRicerca.tipologia',
+      'corredoRicerca.riferimento',
+      'corredoRicerca.descrizione'
+    ],
+    'oggetto-culturale': [
+      'estremo_remoto',
+      'estremo_recente',
+      'altraSegnatura',
+      'altraSegnatura.numerazione',
+      'altraSegnatura.tipologia',
+      'altra_intitolazione',
+      'altra_intitolazione.intitolazione',
+      'altra_intitolazione.tipologia',
+      'definizione_tipologia',
+      'supporto',
+      'consistenza',
+      'consistenza.quantita',
+      'consistenza.unitaMisura',
+      'descrizione_interna',
+      'altezza',
+      'larghezza',
+      'spessore',
+      'stato_conservazione',
+      'legatura',
+      'legatura.tipologia',
+      'legatura.epoca',
+      'legatura.datazione',
+      'condizionamento',
+      'condizionamento.tipologia',
+      'condizionamento.materia',
+      'condizionamento.epoca',
+      'condizionamento.datazione',
+      'numerazione',
+      'numerazione.numerazione',
+      'numerazione.tipoNumerazione',
+      'numerazione.epoca',
+      'numerazione.datazione',
+      'descrizioneEsterna',
+      'descrizioneEsterna.tipologia',
+      'descrizioneEsterna.posizione',
+      'descrizioneEsterna.trascrizione',
+      'descrizione_interna_tipologia',
+      'descrizione_interna_trascrizione',
+      'documentazioneTestuale',
+      'documentazioneTestuale.tipologia',
+      'documentazioneTestuale.lingua',
+      'documentazioneGrafica',
+      'documentazioneGrafica.tipologia',
+      'documentazioneGrafica.tecnicaEsecutiva',
+      'documentazioneCopia',
+      'documentazioneCopia.tipologia',
+      'documentazioneCopia.epoca',
+      'strumentoCorredoInterno',
+      'strumentoCorredoInterno.tipologia',
+      'strumentoCorredoInterno.oggetto',
+      'strumentoCorredoInterno.epoca',
+      'corredoRicerca',
+      'corredoRicerca.tipologia',
+      'corredoRicerca.riferimento',
+      'corredoRicerca.descrizione'
+    ]
+  }
+};
