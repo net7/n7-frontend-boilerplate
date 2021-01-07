@@ -66,6 +66,11 @@ export default {
       'corredoRicerca.riferimento',
       'corredoRicerca.descrizione'
     ],
+    UA: [
+      'altraSegnatura',
+      'altraSegnatura.numerazione',
+      'altraSegnatura.tipologia',
+    ],
     'oggetto-culturale': [
       'estremo_remoto',
       'estremo_recente',

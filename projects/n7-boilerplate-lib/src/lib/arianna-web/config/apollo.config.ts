@@ -314,6 +314,7 @@ export default {
             images
             text
             document_type
+            document_classification
             fields {
               ... on KeyValueField {
                 key
@@ -385,6 +386,7 @@ export default {
             label
             img
             document_type
+            document_classification
             fields {
               ... on KeyValueField {
                 key

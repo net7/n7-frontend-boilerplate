@@ -262,18 +262,24 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   }
 
   public getFields(response) {
-    const { fields, document_type: documenType } = response;
+    const {
+      fields,
+      document_type: dt,
+      document_classification: dc
+    } = response;
     const paths = this.configuration.get('paths');
     const labels = this.configuration.get('labels');
+    const dcSegments = typeof dc === 'string' ? dc.split('.') : [];
+    const dcLastSegment = dcSegments[dcSegments.length - 1];
     let metadataToShow = _get(this.configuration.get('scheda-layout'), 'metadata-to-show', {});
-    metadataToShow = metadataToShow[documenType] || [];
+    metadataToShow = metadataToShow[dcLastSegment] || metadataToShow[dt] || [];
 
     return metadataHelper.normalize({
       fields,
       paths,
       labels,
       metadataToShow,
-      type: documenType
+      type: dt
     });
   }
 }
