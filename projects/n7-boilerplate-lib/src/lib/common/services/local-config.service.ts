@@ -16,6 +16,31 @@ export class LocalConfigService {
       tap(() => {
         if (config) {
           Object.keys(config).forEach((key) => this.config.set(key, config[key]));
+
+          // config keys colors
+          if (config['config-keys']) {
+            const headTag = document.querySelector('head');
+            const styleElement = document.createElement('style');
+
+            const styles = [];
+
+            Object.keys(config['config-keys']).forEach((key) => {
+              const configKey = config['config-keys'][key] || {};
+              const className = configKey['class-name'];
+
+              if (configKey.color && configKey.color.hex) {
+                // add css class
+                styles.push(`--color-${className}: ${configKey.color.hex};`);
+              }
+            });
+
+            if (styles.length) {
+              styles.unshift(':root {');
+              styles.push('}');
+              styleElement.appendChild(document.createTextNode(styles.join('\n')));
+              headTag.appendChild(styleElement);
+            }
+          }
         }
       }),
     ).toPromise();

@@ -5,7 +5,7 @@ import communication from './communication.config';
 import itemPreview from './item-preview.config';
 import configKeys from './config-keys.config';
 import bubbleChart from './bubble-chart.config';
-import labels from '../config-muruca/labels.config';
+import labels from './labels.config';
 
 export default {
   communication,
