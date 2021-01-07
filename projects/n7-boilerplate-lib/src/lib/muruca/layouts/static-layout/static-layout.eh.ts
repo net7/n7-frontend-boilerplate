@@ -43,8 +43,8 @@ export class MrStaticLayoutEH extends EventHandler {
       tap(() => {
         this.layoutState.set('content', LayoutState.LOADING);
       }),
-      switchMap((url: UrlSegment[]) => this.dataSource.pageRequest$(url[0].path, (err) => {
-        console.warn(`Error loading static layout for ${url[0].path}`, err.message);
+      switchMap((url: UrlSegment[]) => this.dataSource.pageRequest$(url, (err) => {
+        console.warn(`Error loading static layout for ${url}`, err.message);
         this.layoutState.set('content', LayoutState.ERROR);
       }))
     ).subscribe((response) => {
