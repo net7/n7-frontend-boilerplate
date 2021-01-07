@@ -1,5 +1,6 @@
 import { LayoutDataSource, _t } from '@n7-frontend/core';
 import { Observable } from 'rxjs';
+import { UrlSegment } from '@angular/router';
 import { ConfigurationService } from '../../../common/services/configuration.service';
 import { CommunicationService } from '../../../common/services/communication.service';
 import { MainStateService } from '../../../common/services/main-state.service';
@@ -25,10 +26,15 @@ export class MrStaticLayoutDS extends LayoutDataSource {
     this.mainState = payload.mainState;
   }
 
-  pageRequest$(slug: string, onError: (err: any) => void): Observable<any> {
-    return this.communication.request$('static', {
+  pageRequest$(slug: UrlSegment[], onError: (err: any) => void): Observable<any> {
+    if (slug.length > 1) {
+      return this.communication.request$('post', {
+        onError,
+        urlParams: slug[1],
+      });
+    } return this.communication.request$('static', {
       onError,
-      urlParams: slug,
+      urlParams: slug[0],
     });
   }
 
