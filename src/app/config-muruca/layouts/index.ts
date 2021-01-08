@@ -9,6 +9,8 @@ import resourceWorkConfig from './resource-work.config';
 import resourceWitnessConfig from './resource-witness.config';
 import searchWitnessesConfig from './search-witnesses.config';
 import resourceModalBibliography_witConfig from './resource-modal-bibliography_wit.config';
+import advancedSearchConfig from './advanced-search.config';
+import advancedResultsConfig from './advanced-results.config';
 
 export default {
   home: homeConfig,
@@ -21,4 +23,6 @@ export default {
   'resource-keyword': resourceKeywordConfig,
   'resource-witness': resourceWitnessConfig,
   'resource-modal-bibliography_wit': resourceModalBibliography_witConfig,
+  'advanced-search': advancedSearchConfig,
+  'advanced-results': advancedResultsConfig
 };

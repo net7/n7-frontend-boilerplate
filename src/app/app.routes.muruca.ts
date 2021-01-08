@@ -8,7 +8,8 @@ import {
   MrSearchLayoutComponent,
   MrStaticLayoutComponent,
   MrResourceLayoutComponent,
-  // MrAdvancedSearchLayoutComponent,
+  MrAdvancedSearchLayoutComponent,
+  MrAdvancedResultsLayoutComponent,
   // OTHER
   DynamicPathGuard
 } from 'n7-boilerplate-lib';
@@ -34,7 +35,8 @@ export const APP_ROUTES: Routes = [
   { path: 'timeline', component: MrTimelineLayoutComponent, data: { configId: 'timeline' } },
   { path: 'timeline/:id/:slug', component: MrTimelineLayoutComponent },
   { path: 'post/:slug', component: MrStaticLayoutComponent },
-  { path: ':slug', component: MrStaticLayoutComponent },
+  { path: 'advanced-search', component: MrAdvancedSearchLayoutComponent, data: { configId: 'advanced-search' } },
+  { path: 'advanced-results', component: MrAdvancedResultsLayoutComponent, data: { configId: 'advanced-results' } },
   { path: NOT_FOUND_PATH, component: Page404LayoutComponent },
   {
     path: '**',

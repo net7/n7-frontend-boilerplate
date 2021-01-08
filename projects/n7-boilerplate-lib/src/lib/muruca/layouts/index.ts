@@ -33,6 +33,11 @@ export * from './advanced-search-layout/advanced-search-layout';
 export * from './advanced-search-layout/advanced-search-layout.ds';
 export * from './advanced-search-layout/advanced-search-layout.eh';
 export * from './advanced-search-layout/advanced-search-layout.config';
+// advanced results layout
+export * from './advanced-results-layout/advanced-results-layout';
+export * from './advanced-results-layout/advanced-results-layout.ds';
+export * from './advanced-results-layout/advanced-results-layout.eh';
+export * from './advanced-results-layout/advanced-results-layout.config';
 // timeline layout
 export * from './timeline-layout/timeline-layout';
 export * from './timeline-layout/timeline-layout.ds';
