@@ -5,6 +5,7 @@ import { LayoutsConfigurationService } from '../../../common/services/layouts-co
 import { MainStateService } from '../../../common/services/main-state.service';
 import { ConfigurationService } from '../../../common/services/configuration.service';
 import { MrAdvancedResultsLayoutConfig as config } from './advanced-results-layout.config';
+import { MrLayoutStateService } from '../../services/layout-state.service';
 
 @Component({
   selector: 'mr-advanced-results-layout',
@@ -18,6 +19,7 @@ export class MrAdvancedResultsLayoutComponent extends AbstractLayout implements 
     private activatedRoute: ActivatedRoute,
     private mainState: MainStateService,
     private configuration: ConfigurationService,
+    public layoutState: MrLayoutStateService,
     layoutsConfiguration: LayoutsConfigurationService,
     ) {
       super(layoutsConfiguration.get('MrAdvancedResultsLayoutConfig') || config);
@@ -30,6 +32,7 @@ export class MrAdvancedResultsLayoutComponent extends AbstractLayout implements 
         mainState: this.mainState,
         router: this.router,
         activatedRoute: this.activatedRoute,
+        layoutState: this.layoutState,
         options: this.config.options || {},
       };
     }
@@ -37,6 +40,8 @@ export class MrAdvancedResultsLayoutComponent extends AbstractLayout implements 
     ngOnInit() {
       this.activatedRoute.data.subscribe((data) => {
         this.configId = data.configId;
+        // add layout states
+        this.layoutState.add(['results']);
         this.onInit();
       });
     }
