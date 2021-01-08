@@ -7,7 +7,8 @@ export default {
       sections: ['section-1'],
       classes: 'form-group-1',
       options: {
-        label: 'Group 1'
+        label: 'Group 1',
+        isOpen: true
       }
     }, {
       id: 'group-2',
