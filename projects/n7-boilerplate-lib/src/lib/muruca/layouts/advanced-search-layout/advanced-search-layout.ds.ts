@@ -67,7 +67,8 @@ export class MrAdvancedSearchLayoutDS extends LayoutDataSource {
 
   onReset() {
     Object.keys(this.initialState).forEach((key) => {
-      this.form.getInput(key).setState(this.initialState[key]);
+      const inputState = cloneDeep(this.initialState[key]);
+      this.form.getInput(key).setState(inputState);
     });
   }
 }
