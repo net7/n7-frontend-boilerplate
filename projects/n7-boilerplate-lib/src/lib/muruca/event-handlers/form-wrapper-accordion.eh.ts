@@ -15,7 +15,6 @@ export class MrFormWrapperAccordionEH extends EventHandler {
           break;
         }
         case 'mr-form-wrapper-accordion.reset':
-          this.dataSource.onReset();
           this.emitOuter('reset');
           break;
         case 'mr-form-wrapper-accordion.click':
