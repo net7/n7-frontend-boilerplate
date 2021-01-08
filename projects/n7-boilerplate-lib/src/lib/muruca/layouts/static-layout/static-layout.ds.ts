@@ -26,15 +26,15 @@ export class MrStaticLayoutDS extends LayoutDataSource {
     this.mainState = payload.mainState;
   }
 
-  pageRequest$(slug: UrlSegment[], onError: (err: any) => void): Observable<any> {
-    if (slug.length > 1) {
+  pageRequest$(urlSegments: UrlSegment[], onError: (err: any) => void): Observable<any> {
+    if (urlSegments.length > 1) {
       return this.communication.request$('post', {
         onError,
-        urlParams: slug[1],
+        urlParams: urlSegments[1].path,
       });
     } return this.communication.request$('static', {
       onError,
-      urlParams: slug[0],
+      urlParams: urlSegments[0].path,
     });
   }
 
