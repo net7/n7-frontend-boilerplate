@@ -34,6 +34,7 @@ export const APP_ROUTES: Routes = [
   { path: 'timeline', component: MrTimelineLayoutComponent, data: { configId: 'timeline' } },
   { path: 'timeline/:id/:slug', component: MrTimelineLayoutComponent },
   { path: 'post/:slug', component: MrStaticLayoutComponent },
+  { path: ':slug', component: MrStaticLayoutComponent },
   { path: NOT_FOUND_PATH, component: Page404LayoutComponent },
   {
     path: '**',
