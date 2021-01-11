@@ -196,9 +196,16 @@
         }
     }
 
-    /* Image viewer */
-    .aw-scheda__image-viewer {
+    /* digital objects */
+    .aw-scheda__images, .aw-scheda__pdf, .aw-scheda__external {
         margin-top: - $aw-scheda-content-padding;
+    }
+
+    .aw-scheda__external a {
+        display: block;
+        text-align: center;
+        padding: $aw-scheda-content-padding;
+        font-size: $font-size-l;
     }
 
     /* Description text */

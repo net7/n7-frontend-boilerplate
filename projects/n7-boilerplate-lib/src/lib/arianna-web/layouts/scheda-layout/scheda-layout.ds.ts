@@ -10,12 +10,12 @@ import metadataHelper from '../../helpers/metadata.helper';
 // FIXME: togliere mock
 const DIGITAL_OBJECTS_MOCK = [
   {
-    type: 'pdf',
-    url: 'https://cors-anywhere.herokuapp.com/https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'
-  },
-  {
     type: 'external',
     url: 'https://www.netseven.it/'
+  },
+  {
+    type: 'pdf',
+    url: 'https://cors-anywhere.herokuapp.com/https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'
   },
   {
     type: 'images',

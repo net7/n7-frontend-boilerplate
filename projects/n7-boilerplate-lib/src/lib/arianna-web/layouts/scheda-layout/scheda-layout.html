@@ -99,7 +99,10 @@
             <!-- EXTERNAL URL -->
             <ng-container *ngSwitchCase="'external'">
                 <div class="aw-scheda__external-url">
-                    <a href="{{ digitalObject.data.url }}" target="_blank">{{ lb.dataSource.externalUrlText }}</a>
+                    <a href="{{ digitalObject.data.url }}" target="_blank">
+                        {{ lb.dataSource.externalUrlText }}
+                        <span class="n7-icon-external-link"></span>
+                    </a>
                 </div>
             </ng-container>
         </ng-container>
