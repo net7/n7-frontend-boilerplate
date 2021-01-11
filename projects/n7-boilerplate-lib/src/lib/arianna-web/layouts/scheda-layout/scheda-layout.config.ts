@@ -14,7 +14,7 @@ export const AwPatrimonioLayoutConfig = {
     { id: 'aw-tree' },
     { id: 'aw-scheda-breadcrumbs' },
     { id: 'aw-scheda-metadata' },
-    { id: 'aw-scheda-image' },
+    { id: 'aw-scheda-digital-objects' },
     { id: 'aw-scheda-inner-title' },
     { id: 'aw-related-entities' },
     { id: 'aw-chart-tippy' },

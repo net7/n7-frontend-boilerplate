@@ -7,6 +7,56 @@ import { get as _get } from 'lodash';
 import helpers from '../../../common/helpers';
 import metadataHelper from '../../helpers/metadata.helper';
 
+// FIXME: togliere mock
+const DIGITAL_OBJECTS_MOCK = [
+  {
+    type: 'pdf',
+    url: 'https://cors-anywhere.herokuapp.com/https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'
+  },
+  {
+    type: 'external',
+    url: 'https://www.netseven.it/'
+  },
+  {
+    type: 'images',
+    items: [
+      {
+        type: 'iiif',
+        url: 'https://libimages1.princeton.edu/loris/pudl0001%2F4609321%2Fs42%2F00000001.jp2/info.json'
+      },
+      {
+        type: 'deep-zoom',
+        url: 'https://openseadragon.github.io/example-images/duomo/duomo.dzi'
+      },
+      {
+        type: 'image',
+        url: 'https://upload.wikimedia.org/wikipedia/commons/1/1a/Cole_Thomas_The_Consummation_The_Course_of_the_Empire_1836.jpg'
+      }
+    ]
+  },
+  {
+    type: 'external',
+    url: 'https://www.netseven.it/'
+  },
+  {
+    type: 'images',
+    items: [
+      {
+        type: 'iiif',
+        url: 'https://libimages1.princeton.edu/loris/pudl0001%2F4609321%2Fs42%2F00000001.jp2/info.json'
+      },
+      {
+        type: 'deep-zoom',
+        url: 'https://openseadragon.github.io/example-images/duomo/duomo.dzi'
+      },
+      {
+        type: 'image',
+        url: 'https://upload.wikimedia.org/wikipedia/commons/1/1a/Cole_Thomas_The_Consummation_The_Course_of_the_Empire_1836.jpg'
+      }
+    ]
+  }
+];
+
 export class AwSchedaLayoutDS extends LayoutDataSource {
   static tree: any = null;
 
@@ -48,7 +98,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
   public hasSimilarItems: boolean;
 
-  public hasImage: boolean;
+  public hasDigitalObjects: boolean;
 
   public imageViewerIstance: any;
 
@@ -68,6 +118,8 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   /** String to render in the loaded-empty state */
   public emptyStateString: string;
 
+  public externalUrlText: string;
+
   onInit({
     configuration, mainState, router, options, titleService, communication,
   }) {
@@ -80,6 +132,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     this.sidebarCollapsed = false;
     this.relatedEntitiesHeader = this.configuration.get('scheda-layout')['related-entities'].title;
     this.similarItemsSectionTitle = this.configuration.get('scheda-layout')['related-items'].title;
+    this.externalUrlText = this.configuration.get('scheda-layout')['external-url-text'];
     this.metadataSectionTitle = this.getMetadataSectionTitle();
     this.hasSimilarItems = false;
     this.one('aw-chart-tippy').updateOptions({
@@ -137,14 +190,27 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
   loadContent(response) {
     if (response) {
+      // FIXME: togliere mock
+      response.digitalObjects = [
+        ...DIGITAL_OBJECTS_MOCK
+      ];
       this.hasMetadata = Array.isArray(response.fields) && response.fields.length;
       this.hasSimilarItems = Array.isArray(response.relatedItems) && response.relatedItems.length;
       this.hasBreadcrumb = Array.isArray(response.breadcrumbs) && response.breadcrumbs.length;
-      this.hasRelatedEntities = Array.isArray(response.relatedEntities)
-        && response.relatedEntities.length;
-      this.hasImage = !!response.image;
-      this.hasContent = !!(this.hasMetadata || this.hasSimilarItems
-        || this.hasRelatedEntities || this.hasImage);
+      this.hasDigitalObjects = (
+        Array.isArray(response.digitalObjects)
+        && response.digitalObjects.length
+      );
+      this.hasRelatedEntities = (
+        Array.isArray(response.relatedEntities)
+        && response.relatedEntities.length
+      );
+      this.hasContent = !!(
+        this.hasMetadata
+        || this.hasSimilarItems
+        || this.hasRelatedEntities
+        || this.hasDigitalObjects
+      );
 
       this.contentParts = [];
       const content = { content: null };
@@ -153,14 +219,10 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
         content.content = response.text;
       }
       this.contentParts.push(content);
-      // image viewer
-      if (response.images) {
-        const viewerDataSource = this.getWidgetDataSource('aw-scheda-image');
-        if (!viewerDataSource.hasInstance()) {
-          this.one('aw-scheda-image').update(response);
-        } else {
-          viewerDataSource.updateImages(response);
-        }
+
+      // digital objects
+      if (this.hasDigitalObjects) {
+        this.one('aw-scheda-digital-objects').update(response.digitalObjects);
       }
 
       const titleObj = {

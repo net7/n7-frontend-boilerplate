@@ -75,11 +75,35 @@
 </ng-template>
 
 <ng-template #content>
-    <section class="aw-scheda__section aw-scheda__image-viewer"
-             [ngClass]="{ 'navigation-hidden': !lb.widgets['aw-scheda-image'].ds.hasNavigation }"
-             [hidden]="!lb.dataSource.hasImage">
-        <n7-image-viewer [data]="lb.widgets['aw-scheda-image'].ds.out$ | async">
-        </n7-image-viewer>
+    <section *ngFor="let digitalObject of (lb.widgets['aw-scheda-digital-objects'].ds.out$ | async)" 
+        class="aw-scheda__section aw-scheda__{{ digitalObject.type }}"
+        [ngClass]="{ 
+            'navigation-hidden': (
+                digitalObject.type === 'images'
+                && digitalObject.data.hasNavigation
+            ) 
+        }">
+        <ng-container [ngSwitch]="digitalObject.type">
+            <!-- IMAGE VIEWER -->
+            <ng-container *ngSwitchCase="'images'">
+                <n7-image-viewer [data]="digitalObject.data">
+                </n7-image-viewer>
+            </ng-container>
+    
+            <!-- PDF -->
+            <ng-container *ngSwitchCase="'pdf'">
+                <aw-pdf-viewer [data]="digitalObject.data">
+                </aw-pdf-viewer>
+            </ng-container>
+    
+            <!-- EXTERNAL URL -->
+            <ng-container *ngSwitchCase="'external'">
+                <div class="aw-scheda__external-url">
+                    <a href="{{ digitalObject.data.url }}" target="_blank">{{ lb.dataSource.externalUrlText }}</a>
+                </div>
+            </ng-container>
+        </ng-container>
+
     </section>
 
     <section class="aw-scheda__section aw-scheda__description"
