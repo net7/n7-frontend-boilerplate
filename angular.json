@@ -44,7 +44,8 @@
               { "glob": "**/*", "input": "./node_modules/@teipublisher/pb-components/dist", "output": "/assets/pb-components/dist" },
               { "glob": "**/*", "input": "./node_modules/@teipublisher/pb-components/lib", "output": "/assets/pb-components/lib" },
               { "glob": "**/*", "input": "./node_modules/@teipublisher/pb-components/images", "output": "/assets/pb-components/images" },
-              { "glob": "**/*", "input": "./node_modules/@teipublisher/pb-components/i18n", "output": "/assets/pb-components/i18n" }
+              { "glob": "**/*", "input": "./node_modules/@teipublisher/pb-components/i18n", "output": "/assets/pb-components/i18n" },
+              { "glob": "**/*", "input": "./node_modules/ngx-extended-pdf-viewer/assets/", "output": "/assets/" }
             ],
             "styles": [
               "./node_modules/flatpickr/dist/flatpickr.min.css",

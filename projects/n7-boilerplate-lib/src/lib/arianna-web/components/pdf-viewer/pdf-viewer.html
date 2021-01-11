@@ -1,0 +1,9 @@
+<div *ngIf="data" class="aw-pdf-viewer">
+    <ngx-extended-pdf-viewer
+        [src]="data.url"
+        [height]="'90vh'"
+        [useBrowserLocale]="true"
+        [textLayer]="true"
+        [showHandToolButton]="true">
+    </ngx-extended-pdf-viewer>
+</div>

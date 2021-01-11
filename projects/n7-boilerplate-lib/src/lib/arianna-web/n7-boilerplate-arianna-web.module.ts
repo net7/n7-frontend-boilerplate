@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { RouterModule } from '@angular/router';
 import { DvComponentsLibModule } from '@n7-frontend/components';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { N7BoilerplateCommonModule } from '../common/n7-boilerplate-common.module';
 // LAYOUTS
 import { AwEntitaLayoutComponent } from './layouts/entita-layout/entita-layout';
@@ -17,6 +18,9 @@ import { AwTimelineLayoutComponent } from './layouts/timeline-layout/timeline-la
 import { ChartTippyComponent } from './components/chart-tippy/chart-tippy';
 import { BubbleChartWrapperComponent } from './components/bubble-chart-wrapper/bubble-chart-wrapper';
 import { SmartBreadcrumbsComponent } from './components/smart-breadcrumbs/smart-breadcrumbs';
+import { PdfViewerComponent } from './components/pdf-viewer/pdf-viewer';
+// LIBS
+
 import { ConfigurationService } from '../common/services/configuration.service';
 import apolloConfig from './config/apollo.config';
 import { AwFacetsWrapperComponent } from './components';
@@ -33,6 +37,7 @@ const COMPONENTS = [
   ChartTippyComponent,
   SmartBreadcrumbsComponent,
   AwFacetsWrapperComponent,
+  PdfViewerComponent,
 ];
 
 @NgModule({
@@ -42,6 +47,7 @@ const COMPONENTS = [
     RouterModule,
     DvComponentsLibModule,
     N7BoilerplateCommonModule,
+    NgxExtendedPdfViewerModule
   ],
   entryComponents: COMPONENTS,
   exports: COMPONENTS,
