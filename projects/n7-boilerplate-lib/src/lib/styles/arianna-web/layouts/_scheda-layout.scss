@@ -169,7 +169,7 @@
     /* Inner title */
     /* Main title that describes the scheda content */
     .n7-inner-title {
-        margin-bottom: $aw-scheda-content-padding;
+        // margin-bottom: $aw-scheda-content-padding;
         border-bottom: 2px solid $color-border-normal;
 
         &__title {
@@ -177,7 +177,7 @@
         }
     }
 
-    /* Minor inner titles that descibe the various sections */
+    /* Minor inner titles that describes the various sections */
     .aw-scheda__inner-title {
         padding: 0 $aw-scheda-content-padding $aw-scheda-content-padding $aw-scheda-content-padding;
         font-size: $font-size-xxl;
@@ -187,25 +187,14 @@
     /* Sections */
     /* Sections that contains ImageViewer, Text, metadata, Buubble chart, Similar objects */
     .aw-scheda__section {
-        margin-bottom: $aw-scheda-content-padding;
+        // margin-bottom: $aw-scheda-content-padding;
+        padding-top: 24px;
         border-bottom: 2px solid $color-border-normal;
 
         &:last-child {
             margin-bottom: 0;
             border-bottom: 0;
         }
-    }
-
-    /* digital objects */
-    .aw-scheda__images, .aw-scheda__pdf, .aw-scheda__external {
-        margin-top: - $aw-scheda-content-padding;
-    }
-
-    .aw-scheda__external a {
-        display: block;
-        text-align: center;
-        padding: $aw-scheda-content-padding;
-        font-size: $font-size-l;
     }
 
     /* Description text */
@@ -265,6 +254,40 @@
     box-shadow: 0 2px 20px 0 rgba(0,0,0,0.08);
 }
 
+/* Empty state */
+.aw-scheda__empty {
+    text-align: center;
+}
+
+
+/* ------------------------------------ *\
+   #MEDIA: IMAGE VIEWER, EXTERNAL LINKS, PDF
+\* ------------------------------------ */
+.aw-scheda {
+    &__media {
+        border-bottom: 2px solid $color-border-normal;
+    }
+
+    /* External URL */
+    &__external-url-link {
+        display: block;
+        padding: $aw-scheda-content-padding;
+        text-align: center;
+        background-color: $color-background-light;
+        font-size: $font-size-l;
+    }
+
+    /* PDF viewer */
+    .aw-pdf-viewer {
+        .toolbar {
+            border-top: 0;
+        }
+
+        .toolbarField.pageNumber {
+            height: auto;
+        }
+    }
+}
 
 /* Image viewer navigation */
 .navigation-hidden .n7-image-viewer {
@@ -272,11 +295,6 @@
     .n7-image-viewer__next {
         display: none !important;
     }
-}
-
-/* Empty state */
-.aw-scheda__empty {
-    text-align: center;
 }
 
 

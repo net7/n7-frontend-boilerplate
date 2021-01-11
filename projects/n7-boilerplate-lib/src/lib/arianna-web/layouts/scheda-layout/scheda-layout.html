@@ -76,7 +76,7 @@
 
 <ng-template #content>
     <section *ngFor="let digitalObject of (lb.widgets['aw-scheda-digital-objects'].ds.out$ | async)" 
-        class="aw-scheda__section aw-scheda__{{ digitalObject.type }}"
+        class="aw-scheda__media aw-scheda__{{ digitalObject.type }}"
         [ngClass]="{ 
             'navigation-hidden': (
                 digitalObject.type === 'images'
@@ -99,7 +99,7 @@
             <!-- EXTERNAL URL -->
             <ng-container *ngSwitchCase="'external'">
                 <div class="aw-scheda__external-url">
-                    <a href="{{ digitalObject.data.url }}" target="_blank">
+                    <a class="aw-scheda__external-url-link" href="{{ digitalObject.data.url }}" target="_blank">
                         {{ lb.dataSource.externalUrlText }}
                         <span class="n7-icon-external-link"></span>
                     </a>
