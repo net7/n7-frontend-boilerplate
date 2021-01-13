@@ -31,7 +31,12 @@ export class MrTimelineDS extends DataSource {
         maxHeight: '800px',
         zoomFriction: 8
       },
-      dataSet: data.dataSet,
+      dataSet: data.dataSet.map((d) => {
+        // Show dates that have identical start and end dates as points
+        if (d.end && d.end === d.start) {
+          return { ...d, ...{ end: undefined } };
+        } return d;
+      }),
       _setInstance: (timeline) => {
         this.timeline = timeline;
         this.timelineLoaded$.next(timeline);
