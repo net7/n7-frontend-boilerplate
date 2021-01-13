@@ -2,6 +2,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { EventHandler } from '@n7-frontend/core';
 import * as vis from 'vis-timeline';
+import helpers from 'n7-boilerplate-lib/lib/common/helpers';
 
 export class MrTimelineLayoutEH extends EventHandler {
   private route: ActivatedRoute;
@@ -23,8 +24,12 @@ export class MrTimelineLayoutEH extends EventHandler {
           this.dataSource.timelineListener$.subscribe((timeline: vis.Timeline) => {
             timeline.on('click', (props) => {
               if (!props.item) return;
+              // build URL slug
+              const { content } = this.dataSource.timelineData.dataSet
+                .find((d: { id: number; content: string }) => d.id === props.item);
+              const slug = helpers.slugify(content);
               // navigate without reloading the layout
-              this.location.go(`/timeline/${props.item}/evento`);
+              this.location.go(`/timeline/${props.item}/${slug}`);
               this.dataSource.updatePageDetails(props.item);
             });
           });
@@ -39,7 +44,7 @@ export class MrTimelineLayoutEH extends EventHandler {
     this.outerEvents$.subscribe(({ type }) => {
       switch (type) {
         case 'mr-year-header.closeevent':
-          this.dataSource.loadDefaults();
+          this.dataSource.loadDefaults(true);
           break;
         default:
           break;
@@ -50,14 +55,12 @@ export class MrTimelineLayoutEH extends EventHandler {
   private listenRoute() {
     this.route.paramMap.subscribe((params) => {
       const paramId = params.get('id');
-      // setTimeout(() => {
-      //   // const url = this.router.createUrlTree([], { relativeTo: this.route }).toString();
-      //   this.location.go('/timeline/');
-      // }, 5000);
       if (paramId) {
         this.dataSource.currentId = paramId;
         this.emitOuter('routechanged', paramId);
         this.dataSource.updatePageDetails(paramId);
+      } else {
+        this.dataSource.loadDefaults(true);
       }
     });
   }

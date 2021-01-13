@@ -1,5 +1,6 @@
 import { LayoutDataSource } from '@n7-frontend/core';
-import { ItemPreviewData } from '@n7-frontend/components';
+import { ItemPreviewData, TimelineData } from '@n7-frontend/components';
+import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import * as vis from 'vis-timeline';
 import { Subject } from 'rxjs';
@@ -22,6 +23,8 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
 
   private route: ActivatedRoute;
 
+  private location: Location;
+
   private loadedResourceDetails = false;
 
   public defaultDescription = '';
@@ -29,6 +32,8 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
   public eventHeader: string;
 
   public eventDescription = ''
+
+  public timelineData: TimelineData;
 
   public timelineListener$: Subject<vis.Timeline> = new Subject()
 
@@ -62,17 +67,22 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
     this.configuration = payload.configuration;
     this.communication = payload.communication;
     this.route = payload.route;
+    this.location = payload.location;
     this.one('mr-map').update({});
+
     // update the timeline
     this.communication.request$('timeline', {
       method: 'GET',
       onError: (e) => console.error(e)
     }).subscribe((d) => {
+      this.timelineData = d;
       this.one('mr-timeline').update(d);
     });
-    this.getWidgetDataSource('mr-timeline').timelineLoaded$.pipe(first()).subscribe((timeline: vis.Timeline) => {
-      this.timelineListener$.next(timeline);
-    });
+    this.getWidgetDataSource('mr-timeline').timelineLoaded$
+      .pipe(first())
+      .subscribe((timeline: vis.Timeline) => {
+        this.timelineListener$.next(timeline);
+      });
 
     // update the description
     this.communication.request$('timelineDescription', {
@@ -80,13 +90,14 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
       onError: (e) => console.error(e),
     }).subscribe((d) => {
       this.defaultDescription = d.text;
-      this.loadDefaults();
+      this.loadDefaults(false);
     });
   }
 
-  loadDefaults() {
+  loadDefaults(navigate: boolean) {
     this.eventDescription = this.defaultDescription;
     this.eventHeader = '';
+    if (navigate) this.location.go('/timeline/');
     this.one('mr-year-header').update({
       title: { main: { text: 'La vita di Petrarca' } },
     });

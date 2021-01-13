@@ -8,7 +8,7 @@
       "url": "http://localhost:4200/#",
       "webRoot": "${workspaceFolder}",
       "outFiles": [
-        "${workspaceFolder}/**/*.js",
+        "${workspaceFolder}/dist/**/*.js",
         "!**/node_modules/**"
       ]
     },
