@@ -7,7 +7,8 @@ export const MrTimelineLayoutConfig = {
   layoutId: 'mr-timeline-layout',
   widgets: [
     { id: 'mr-timeline' },
-    { id: 'mr-map' }
+    { id: 'mr-map' },
+    { id: 'mr-year-header' }
   ],
   layoutDS: MrTimelineLayoutDS,
   layoutEH: MrTimelineLayoutEH,

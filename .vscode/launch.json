@@ -6,7 +6,11 @@
       "type": "pwa-chrome",
       "request": "launch",
       "url": "http://localhost:4200/#",
-      "webRoot": "${workspaceFolder}"
+      "webRoot": "${workspaceFolder}",
+      "outFiles": [
+        "${workspaceFolder}/dist/**/*.js",
+        "!**/node_modules/**"
+      ]
     },
     {
       "name": "Attach Chrome",
