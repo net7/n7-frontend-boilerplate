@@ -10,51 +10,44 @@ import metadataHelper from '../../helpers/metadata.helper';
 // FIXME: togliere mock
 const DIGITAL_OBJECTS_MOCK = [
   {
+    label: 'Link esterno I',
     type: 'external',
     url: 'https://www.netseven.it/'
   },
   {
+    label: 'PDF I',
     type: 'pdf',
-    url: 'https://cors-anywhere.herokuapp.com/https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'
-  },
-  {
-    type: 'images',
     items: [
-      {
-        type: 'iiif',
-        url: 'https://libimages1.princeton.edu/loris/pudl0001%2F4609321%2Fs42%2F00000001.jp2/info.json'
-      },
-      {
-        type: 'deep-zoom',
-        url: 'https://openseadragon.github.io/example-images/duomo/duomo.dzi'
-      },
-      {
-        type: 'image',
-        url: 'https://upload.wikimedia.org/wikipedia/commons/1/1a/Cole_Thomas_The_Consummation_The_Course_of_the_Empire_1836.jpg'
-      }
+      'https://cors-anywhere.herokuapp.com/https://www.adobe.com/support/products/enterprise/knowledgecenter/media/c4611_sample_explain.pdf',
+      'https://cors-anywhere.herokuapp.com/https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
     ]
   },
   {
+    label: 'Galleria I',
+    type: 'images-iiif',
+    items: [
+      'https://libimages1.princeton.edu/loris/pudl0001%2F4609321%2Fs42%2F00000001.jp2/info.json'
+    ]
+  },
+  {
+    label: 'Link esterno II',
     type: 'external',
     url: 'https://www.netseven.it/'
   },
   {
-    type: 'images',
+    label: 'Galleria II',
+    type: 'images-simple',
     items: [
-      {
-        type: 'iiif',
-        url: 'https://libimages1.princeton.edu/loris/pudl0001%2F4609321%2Fs42%2F00000001.jp2/info.json'
-      },
-      {
-        type: 'deep-zoom',
-        url: 'https://openseadragon.github.io/example-images/duomo/duomo.dzi'
-      },
-      {
-        type: 'image',
-        url: 'https://upload.wikimedia.org/wikipedia/commons/1/1a/Cole_Thomas_The_Consummation_The_Course_of_the_Empire_1836.jpg'
-      }
+      'https://upload.wikimedia.org/wikipedia/commons/1/1a/Cole_Thomas_The_Consummation_The_Course_of_the_Empire_1836.jpg'
     ]
-  }
+  },
+  {
+    label: 'PDF II',
+    type: 'pdf',
+    items: [
+      'https://cors-anywhere.herokuapp.com/https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'
+    ]
+  },
 ];
 
 export class AwSchedaLayoutDS extends LayoutDataSource {
@@ -99,6 +92,12 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   public hasSimilarItems: boolean;
 
   public hasDigitalObjects: boolean;
+
+  public digitalObjects: any;
+
+  public currentDigitalObject: any;
+
+  public currentDigitalObjectIndex: number;
 
   public imageViewerIstance: any;
 
@@ -222,7 +221,11 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
       // digital objects
       if (this.hasDigitalObjects) {
-        this.one('aw-scheda-digital-objects').update(response.digitalObjects);
+        response.digitalObjects = this.normalizeDigitalObjects(response.digitalObjects);
+        // this.one('aw-scheda-digital-objects').update(response.digitalObjects);
+        this.one('aw-scheda-dropdown').update(response);
+        this.digitalObjects = response.digitalObjects;
+        this.changeDigitalObject(0);
       }
 
       const titleObj = {
@@ -342,6 +345,36 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       labels,
       metadataToShow,
       type: dt
+    });
+  }
+
+  public changeDigitalObject(payload) {
+    if (this.currentDigitalObjectIndex !== payload) {
+      this.currentDigitalObjectIndex = payload;
+      this.currentDigitalObject = this.digitalObjects[payload];
+      if (this.currentDigitalObject.type.includes('images')) {
+        this.one('aw-scheda-image').update(this.currentDigitalObject);
+      } else if (this.currentDigitalObject.type === 'pdf') {
+        this.one('aw-scheda-pdf').update(this.currentDigitalObject);
+      }
+    }
+  }
+
+  private normalizeDigitalObjects(digitalObjects) {
+    return digitalObjects.map(($do, index) => {
+      if (['images-iiif', 'images-simple'].includes($do.type)) {
+        return {
+          id: `scheda-layout-viewer-${index}`,
+          type: $do.type,
+          label: $do.label,
+          hasNavigation: $do.items.length > 1,
+          items: $do.items.map((item) => ({
+            type: $do.type,
+            url: item
+          }))
+        };
+      }
+      return $do;
     });
   }
 }

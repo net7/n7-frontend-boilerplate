@@ -34,10 +34,13 @@ export class AwSchedaLayoutEH extends EventHandler {
       }
     });
 
-    this.outerEvents$.subscribe(({ type }) => {
+    this.outerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
         case 'aw-sidebar-header.click':
           this.dataSource.collapseSidebar();
+          break;
+        case 'aw-scheda-dropdown.click':
+          this.dataSource.changeDigitalObject(payload);
           break;
         default:
           break;

@@ -1,6 +1,6 @@
-<div *ngIf="data" class="aw-pdf-viewer">
+<div *ngIf="data$ | async" class="aw-pdf-viewer">
     <ngx-extended-pdf-viewer
-        [src]="data.url"
+        [src]="src"
         [height]="'90vh'"
         [useBrowserLocale]="true"
         [textLayer]="true"

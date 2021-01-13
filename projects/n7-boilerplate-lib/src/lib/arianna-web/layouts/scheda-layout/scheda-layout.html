@@ -75,32 +75,43 @@
 </ng-template>
 
 <ng-template #content>
-    <section *ngFor="let digitalObject of (lb.widgets['aw-scheda-digital-objects'].ds.out$ | async)" 
-        class="aw-scheda__media aw-scheda__{{ digitalObject.type }}"
+    <section class="aw-scheda__section aw-scheda__do-dropdown"
+             *ngIf="lb.dataSource.hasDigitalObjects">
+        <aw-scheda-dropdown 
+        [data]="lb.widgets['aw-scheda-dropdown'].ds.out$ | async"
+        [emit]="lb.widgets['aw-scheda-dropdown'].emit">
+        </aw-scheda-dropdown>
+    </section>
+
+    <section *ngIf="lb.dataSource.currentDigitalObject as $do" 
+        class="aw-scheda__media aw-scheda__{{ $do.type }}"
         [ngClass]="{ 
-            'navigation-hidden': (
-                digitalObject.type === 'images'
-                && digitalObject.data.hasNavigation
-            ) 
+            'navigation-hidden': $do.hasNavigation
         }">
-        <ng-container [ngSwitch]="digitalObject.type">
-            <!-- IMAGE VIEWER -->
-            <ng-container *ngSwitchCase="'images'">
-                <n7-image-viewer [data]="digitalObject.data">
+        <ng-container [ngSwitch]="$do.type">
+            <!-- IMAGE VIEWER (IIIF) -->
+            <ng-container *ngSwitchCase="'images-iiif'">
+                <n7-image-viewer [data]="lb.widgets['aw-scheda-image'].ds.out$ | async">
+                </n7-image-viewer>
+            </ng-container>
+
+            <!-- IMAGE VIEWER (Simple: jpg, png) -->
+            <ng-container *ngSwitchCase="'images-simple'">
+                <n7-image-viewer [data]="lb.widgets['aw-scheda-image'].ds.out$ | async">
                 </n7-image-viewer>
             </ng-container>
     
             <!-- PDF -->
             <ng-container *ngSwitchCase="'pdf'">
-                <aw-pdf-viewer [data]="digitalObject.data">
+                <aw-pdf-viewer [data$]="lb.widgets['aw-scheda-pdf'].ds.out$">
                 </aw-pdf-viewer>
             </ng-container>
     
             <!-- EXTERNAL URL -->
             <ng-container *ngSwitchCase="'external'">
                 <div class="aw-scheda__external-url">
-                    <a class="aw-scheda__external-url-link" href="{{ digitalObject.data.url }}" target="_blank">
-                        {{ lb.dataSource.externalUrlText }}
+                    <a class="aw-scheda__external-url-link" href="{{ $do.url }}" target="_blank">
+                        {{ $do.label || lb.dataSource.externalUrlText }}
                         <span class="n7-icon-external-link"></span>
                     </a>
                 </div>

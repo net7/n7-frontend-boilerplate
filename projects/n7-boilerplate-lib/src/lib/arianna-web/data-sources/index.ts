@@ -17,13 +17,15 @@ export * from './entita-nav.ds';
 export * from './entita-metadata-viewer.ds';
 
 // Scheda Layout
-export * from './tree.ds';
-export * from './sidebar-header.ds';
-export * from './scheda-breadcrumbs.ds';
-export * from './scheda-metadata.ds';
-export * from './scheda-digital-objects.ds';
-export * from './scheda-inner-title.ds';
 export * from './related-entities.ds';
+export * from './scheda-breadcrumbs.ds';
+export * from './scheda-dropdown.ds';
+export * from './sidebar-header.ds';
+export * from './scheda-image.ds';
+export * from './scheda-inner-title.ds';
+export * from './scheda-metadata.ds';
+export * from './scheda-pdf.ds';
+export * from './tree.ds';
 
 // Search layout
 export * from './search-layout-tabs.ds';
