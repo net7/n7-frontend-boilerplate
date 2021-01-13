@@ -24,7 +24,8 @@ export default {
         searchDescription: 'get_search_description/',
         resource: 'get_resource',
         footer: 'get_footer',
-        timeline: 'get_timeline/time-events'
+        timeline: 'get_timeline/time-events',
+        timelineDescription: 'get_search_description/timeline',
       }
     }
   }

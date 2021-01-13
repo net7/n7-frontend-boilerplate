@@ -2,7 +2,7 @@ import { TimelineData } from '@n7-frontend/components';
 import { DataSource } from '@n7-frontend/core';
 import { Subject } from 'rxjs';
 import * as vis from 'vis-timeline';
-// import * as moment from 'moment';
+import * as moment from 'moment';
 
 // vis-timeline dataset type lookup
 type DataSet = TimelineData['dataSet']
@@ -32,13 +32,14 @@ export class MrTimelineDS extends DataSource {
         maxHeight: '800px',
         zoomFriction: 8
       },
-      dataSet: data.dataSet,
-      // .map((d) => ({
-      //   id: d.id,
-      //   start: moment(d.start, 'DD-MM-YYYY').toISOString(),
-      //   end: d.end ? moment(d.end, 'DD-MM-YYYY').toISOString() : undefined,
-      //   content: d.content
-      // })),
+      dataSet: data.dataSet
+        // format all dates to ISOString
+        .map((d) => ({
+          id: d.id,
+          start: moment(d.start, 'DD-MM-YYYY').toISOString(),
+          end: d.end ? moment(d.end, 'DD-MM-YYYY').toISOString() : undefined,
+          content: d.content
+        })),
       _setInstance: (timeline) => {
         this.timeline = timeline;
         this.timelineLoaded$.next(timeline);

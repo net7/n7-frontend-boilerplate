@@ -1,9 +1,14 @@
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { EventHandler } from '@n7-frontend/core';
 import * as vis from 'vis-timeline';
 
 export class MrTimelineLayoutEH extends EventHandler {
   private route: ActivatedRoute;
+
+  private router: Router;
+
+  private location: Location;
 
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
@@ -11,20 +16,18 @@ export class MrTimelineLayoutEH extends EventHandler {
         case 'mr-timeline-layout.init':
           this.dataSource.onInit(payload);
           this.route = payload.route;
+          this.router = payload.router;
+          this.location = payload.location;
           this.listenRoute();
 
           this.dataSource.timelineListener$.subscribe((timeline: vis.Timeline) => {
             timeline.on('click', (props) => {
               if (!props.item) return;
-              this.emitGlobal('navigate', {
-                handler: 'router',
-                path: [`/timeline/${props.item}/evento`]
-              });
+              // navigate without reloading the layout
+              this.location.go(`/timeline/${props.item}/evento`);
+              this.dataSource.updatePageDetails(props.item);
             });
           });
-          // (this.dataSource.timelineInstance as vis.Timeline).on('click', (properties) => {
-          //   console.log(properties);
-          // });
           break;
         case 'mr-timeline-layout.destroy':
           break;
@@ -35,6 +38,9 @@ export class MrTimelineLayoutEH extends EventHandler {
     });
     this.outerEvents$.subscribe(({ type }) => {
       switch (type) {
+        case 'mr-year-header.closeevent':
+          this.dataSource.loadDefaults();
+          break;
         default:
           break;
       }
@@ -44,12 +50,14 @@ export class MrTimelineLayoutEH extends EventHandler {
   private listenRoute() {
     this.route.paramMap.subscribe((params) => {
       const paramId = params.get('id');
+      // setTimeout(() => {
+      //   // const url = this.router.createUrlTree([], { relativeTo: this.route }).toString();
+      //   this.location.go('/timeline/');
+      // }, 5000);
       if (paramId) {
-        if (paramId) {
-          this.dataSource.currentId = paramId;
-          this.emitOuter('routechanged', paramId);
-          this.dataSource.updatePageDetails(paramId);
-        }
+        this.dataSource.currentId = paramId;
+        this.emitOuter('routechanged', paramId);
+        this.dataSource.updatePageDetails(paramId);
       }
     });
   }

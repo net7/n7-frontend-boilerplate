@@ -1,5 +1,5 @@
 import { LayoutDataSource } from '@n7-frontend/core';
-import { InnerTitleData, ItemPreviewData } from '@n7-frontend/components';
+import { ItemPreviewData } from '@n7-frontend/components';
 import { ActivatedRoute } from '@angular/router';
 import * as vis from 'vis-timeline';
 import { Subject } from 'rxjs';
@@ -24,13 +24,11 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
 
   private loadedResourceDetails = false;
 
-  public yearHeader: InnerTitleData = {
-    title: { main: { text: 'La vita di Petrarca' } },
-  };;
+  public defaultDescription = '';
 
   public eventHeader: string;
 
-  public eventDescription = '<p>In questa sezione, curata da Silvia Rizzo, si trova la vita di Petrarca organizzata anno per anno, e, quando sia possibile, mese per mese o addirittura giorno per giorno. Il lavoro è stato condotto mediante uno spoglio delle opere di Petrarca, delle lettere dei suoi corrispondenti e della principale bibliografia relativa alla sua vita. Non possediamo purtroppo ancora un codice diplomatico petrarchesco ma si è ovviamente tenuto conto dei documenti segnalati e pubblicati. Negli studi più recenti si tende spesso a sottolineare l&#8217;attività di falsificazione di se stesso svolta da Petrarca nella sua opera letteraria e a diffidare di quanto lui stesso ci dice. Ma il punto di partenza di qualsiasi tentativo di fare la biografia di Petrarca resta &#8211; volenti o nolenti &#8211; il molto che ci dice lui stesso: come scrive E. H. Wilkins, <em>Vita del Petrarca</em>, trad. di R. Ceserani, nuova edizione a cura di L. C. Rossi, Milano 2003, p. 3, «Egli è anche grande &#8211; grazie soprattutto alle centinaia di lettere e alle note scritte sui margini delle pagine dei suoi libri, che sono state con tanta devozione studiate &#8211; per il fatto che noi conosciamo le sue esperienze di vita con molta maggiore profondità che non quelle di qualsiasi altro essere umano vissuto prima di lui». Dunque nello stendere questa cronologia ci si è attenuti il più possibile a quanto Petrarca racconta di sé, tranne quando la deviazione dalla realtà sia evidente e comprovata da altre testimonianze o deducibile con un buon grado di sicurezza. In sintesi, questa cronologia accetta il racconto di sé che lui ha voluto tramandare ai posteri.  Com&#8217;è noto, Petrarca in genere non segnava l&#8217;anno in calce alle lettere e molto spesso la data è discussa. Si è sempre cercato di prendere posizione seguendo la proposta che a me appare più convincente, talvolta accennando anche ad altre. Si è dato qualche peso al criterio della posizione di una lettera all&#8217;interno delle raccolte, considerato l&#8217;ordine quasi cronologico che Petrarca stesso dichiara di aver seguito (<em>Fam. </em>24, 13, 4 «preter has enim ultimas veteribus inscriptas illustribus, quas propter similitudinem novitatis sciens unum simul in locum contuli, ac preter primam, que dictata serius prevenit comites et locum prefationis obtinuit, cetera pene omnia quo inciderant scripta sunt ordine») e a cui in linea di massima si è realmente attenuto (quando ci sono patenti scostamenti dall&#8217;ordine cronologico non di rado se ne capisce la causa, come per esempio l&#8217;esigenza di collocare all&#8217;inizio o alla fine dei libri lettere di particolare rilievo).</p>\n<p>I titoletti nella timeline segnalano in breve gli avvenimenti salienti degli anni o dei periodi considerati. Aprendo la scheda l&#8217;utente troverà le notizie organizzate in modo che ogni capoverso corrisponde a una data diversa. Differenti avvenimenti aventi la stessa data hanno ognuno un capoverso. Quando il capoverso non comincia con una data vuol dire che è impossibile fissarla, ma la sua collocazione all&#8217;interno della cronologia indica approssimativamente anteriorità o seriorità rispetto ad altri eventi dello stesso anno o dello stesso periodo. Gli avvenimenti che possono solo essere ricondotti genericamente a un determinato anno sono di norma raggruppati in fondo. La cronologia è collegata alle opere e ai manoscritti via via menzionati e a una mappa che mostra sulla carta geografica le varie località toccate da Petrarca. All&#8217;interno delle singole schede le opere di Petrarca e la bibliografia sono citate in forma abbreviata: le abbreviazioni delle opere sono quelle utilizzate all&#8217;interno del portale; le altre sono sciolte nel campo specifico deputato alla bibliografia.</p>'
+  public eventDescription = ''
 
   public timelineListener$: Subject<vis.Timeline> = new Subject()
 
@@ -65,6 +63,7 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
     this.communication = payload.communication;
     this.route = payload.route;
     this.one('mr-map').update({});
+    // update the timeline
     this.communication.request$('timeline', {
       method: 'GET',
       onError: (e) => console.error(e)
@@ -73,6 +72,23 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
     });
     this.getWidgetDataSource('mr-timeline').timelineLoaded$.pipe(first()).subscribe((timeline: vis.Timeline) => {
       this.timelineListener$.next(timeline);
+    });
+
+    // update the description
+    this.communication.request$('timelineDescription', {
+      method: 'GET',
+      onError: (e) => console.error(e),
+    }).subscribe((d) => {
+      this.defaultDescription = d.text;
+      this.loadDefaults();
+    });
+  }
+
+  loadDefaults() {
+    this.eventDescription = this.defaultDescription;
+    this.eventHeader = '';
+    this.one('mr-year-header').update({
+      title: { main: { text: 'La vita di Petrarca' } },
     });
   }
 
@@ -87,18 +103,18 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
       if (!res || res == null) return;
       this.eventHeader = res.sections.header.title;
       this.eventDescription = res.sections.header.content;
-      this.yearHeader = {
+      this.one('mr-year-header').update({
         title: { main: { text: res.title } },
         actions: {
           buttons: [{
             text: '',
             icon: 'n7-icon-close',
             anchor: {
-              href: '/timeline'
+              payload: 'closebutton'
             }
           }]
         }
-      };
+      });
       this.loadedResourceDetails = true;
     });
   }

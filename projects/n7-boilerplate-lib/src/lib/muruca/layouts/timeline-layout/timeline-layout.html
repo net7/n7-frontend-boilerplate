@@ -6,7 +6,9 @@
 
     <div class="mr-timeline__page mr-side-margin">
         <div class="mr-timeline__date">
-            <n7-inner-title [data]="lb.dataSource.yearHeader"></n7-inner-title>
+            <n7-inner-title [data]="lb.widgets['mr-year-header'].ds.out$ | async" 
+                            [emit]="lb.widgets['mr-year-header'].emit">
+            </n7-inner-title>
         </div>
         <h1 class="mr-timeline__title"
             *ngIf="lb.dataSource.loadedResourceDetails">

@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { AbstractLayout } from '../../../common/models/abstract-layout';
 import { CommunicationService } from '../../../common/services/communication.service';
 import { LayoutsConfigurationService } from '../../../common/services/layouts-configuration.service';
@@ -18,6 +19,8 @@ export class MrTimelineLayoutComponent extends AbstractLayout implements OnInit,
   constructor(
     layoutsConfiguration: LayoutsConfigurationService,
     private route: ActivatedRoute,
+    private router: Router,
+    private location: Location,
     private configuration: ConfigurationService,
     private communication: CommunicationService,
     private mainState: MainStateService,
@@ -34,6 +37,8 @@ export class MrTimelineLayoutComponent extends AbstractLayout implements OnInit,
       communication: this.communication,
       layoutState: this.layoutState,
       route: this.route,
+      router: this.router,
+      location: this.location,
       options: this.config.options || {}
     };
   }
