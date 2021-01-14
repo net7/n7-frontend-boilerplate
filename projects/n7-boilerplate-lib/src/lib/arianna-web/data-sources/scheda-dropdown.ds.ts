@@ -11,7 +11,7 @@ export class AwSchedaDropdownDS extends DataSource {
         icon: {
           id: 'n7-icon-caret-down'
         },
-        payload: 'header-click',
+        payload: 'toggle',
       },
       items: digitalObjects.map(({ label }, index) => ({
         label,
@@ -21,6 +21,11 @@ export class AwSchedaDropdownDS extends DataSource {
     };
   }
 
+  toggle() {
+    const { classes } = this.output;
+    this.output.classes = classes ? null : 'is-open';
+  }
+
   onChange(payload) {
     this.output.items.forEach((item) => {
       item.selected = item.payload === payload;
@@ -28,5 +33,8 @@ export class AwSchedaDropdownDS extends DataSource {
         this.output.header.label = item.label;
       }
     });
+
+    // close
+    this.toggle();
   }
 }

@@ -10,17 +10,20 @@ import metadataHelper from '../../helpers/metadata.helper';
 // FIXME: togliere mock
 const DIGITAL_OBJECTS_MOCK = [
   {
+    label: 'PDF I',
+    type: 'pdf',
+    items: [{
+      label: 'PDF I: lorem',
+      url: 'https://cors-anywhere.herokuapp.com/https://www.adobe.com/support/products/enterprise/knowledgecenter/media/c4611_sample_explain.pdf',
+    }, {
+      label: 'PDF I: ipsum',
+      url: 'https://cors-anywhere.herokuapp.com/https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
+    }]
+  },
+  {
     label: 'Link esterno I',
     type: 'external',
     url: 'https://www.netseven.it/'
-  },
-  {
-    label: 'PDF I',
-    type: 'pdf',
-    items: [
-      'https://cors-anywhere.herokuapp.com/https://www.adobe.com/support/products/enterprise/knowledgecenter/media/c4611_sample_explain.pdf',
-      'https://cors-anywhere.herokuapp.com/https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
-    ]
   },
   {
     label: 'Galleria I',
@@ -44,9 +47,10 @@ const DIGITAL_OBJECTS_MOCK = [
   {
     label: 'PDF II',
     type: 'pdf',
-    items: [
-      'https://cors-anywhere.herokuapp.com/https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'
-    ]
+    items: [{
+      label: 'PDF II: factum',
+      url: 'https://cors-anywhere.herokuapp.com/https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'
+    }]
   },
 ];
 

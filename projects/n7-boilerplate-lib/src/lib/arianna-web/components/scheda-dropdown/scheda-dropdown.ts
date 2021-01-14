@@ -16,6 +16,7 @@ export type SchedaDropdownData = {
     payload: any;
     selected: false;
   }[];
+  classes?: any;
 }
 
 @Component({

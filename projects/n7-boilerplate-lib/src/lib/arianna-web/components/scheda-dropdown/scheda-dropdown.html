@@ -1,4 +1,4 @@
-<div *ngIf="data" class="aw-scheda-dropdown">
+<div *ngIf="data" class="aw-scheda-dropdown {{ data.classes || '' }}">
     <div class="aw-scheda-dropdown__header"
     (click)="onClick($event, data.header.payload)">
         <!-- header label -->

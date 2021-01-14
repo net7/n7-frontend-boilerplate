@@ -259,6 +259,17 @@
     text-align: center;
 }
 
+/* scheda dropdown */
+.aw-scheda-dropdown {
+    .aw-scheda-dropdown__items {
+        display: none;
+    }
+    
+    &.is-open .aw-scheda-dropdown__items {
+        display: block;
+    }
+}
+
 
 /* ------------------------------------ *\
    #MEDIA: IMAGE VIEWER, EXTERNAL LINKS, PDF
