@@ -4,7 +4,6 @@
 
 import { Component, Input } from '@angular/core';
 import { isNull } from 'lodash';
-import { Observable } from 'rxjs';
 
 export type PdfViewerData = {
   items: {
@@ -22,7 +21,7 @@ export type PdfViewerData = {
   templateUrl: './pdf-viewer.html',
 })
 export class PdfViewerComponent {
-  @Input() data: Observable<PdfViewerData>;
+  @Input() data: PdfViewerData;
 
   @Input() emit: (type: string, payload: any) => void;
 
