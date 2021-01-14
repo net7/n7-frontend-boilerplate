@@ -2,7 +2,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { EventHandler } from '@n7-frontend/core';
 import * as vis from 'vis-timeline';
-import helpers from 'n7-boilerplate-lib/lib/common/helpers';
+import helpers from '../../../common/helpers';
 
 export class MrTimelineLayoutEH extends EventHandler {
   private route: ActivatedRoute;
