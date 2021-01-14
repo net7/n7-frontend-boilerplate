@@ -76,7 +76,10 @@
 
 <ng-template #content>
     <section class="aw-scheda__section aw-scheda__do-dropdown"
-             *ngIf="lb.dataSource.hasDigitalObjects">
+            *ngIf="(
+                lb.dataSource.hasDigitalObjects 
+                && lb.dataSource.digitalObjects.length > 1
+            )">
         <aw-scheda-dropdown 
         [data]="lb.widgets['aw-scheda-dropdown'].ds.out$ | async"
         [emit]="lb.widgets['aw-scheda-dropdown'].emit">

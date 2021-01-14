@@ -13,10 +13,11 @@ export class AwSchedaDropdownDS extends DataSource {
         },
         payload: 'toggle',
       },
-      items: digitalObjects.map(({ label }, index) => ({
+      items: digitalObjects.map(({ label, type }, index) => ({
         label,
+        type,
         payload: index,
-        selected: index === 0
+        selected: index === 0,
       }))
     };
   }
@@ -27,13 +28,15 @@ export class AwSchedaDropdownDS extends DataSource {
   }
 
   onChange(payload) {
-    this.output.items.forEach((item) => {
-      item.selected = item.payload === payload;
-      if (item.selected) {
-        this.output.header.label = item.label;
-      }
-    });
-
+    // link check
+    if (this.output.items[payload].type !== 'external') {
+      this.output.items.forEach((item) => {
+        item.selected = item.payload === payload;
+        if (item.selected) {
+          this.output.header.label = item.label;
+        }
+      });
+    }
     // close
     this.toggle();
   }

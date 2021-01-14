@@ -15,6 +15,7 @@ export type SchedaDropdownData = {
     label: string;
     payload: any;
     selected: false;
+    type: string;
   }[];
   classes?: any;
 }

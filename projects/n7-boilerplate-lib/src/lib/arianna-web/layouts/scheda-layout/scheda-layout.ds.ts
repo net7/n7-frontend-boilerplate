@@ -10,6 +10,18 @@ import metadataHelper from '../../helpers/metadata.helper';
 // FIXME: togliere mock
 const DIGITAL_OBJECTS_MOCK = [
   {
+    label: 'Galleria I',
+    type: 'images-iiif',
+    items: [
+      'https://libimages1.princeton.edu/loris/pudl0001%2F4609321%2Fs42%2F00000001.jp2/info.json'
+    ]
+  },
+  {
+    label: 'Link esterno I',
+    type: 'external',
+    url: 'https://www.netseven.it/'
+  },
+  {
     label: 'PDF I',
     type: 'pdf',
     items: [{
@@ -19,18 +31,6 @@ const DIGITAL_OBJECTS_MOCK = [
       label: 'PDF I: ipsum',
       url: 'https://cors-anywhere.herokuapp.com/https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
     }]
-  },
-  {
-    label: 'Link esterno I',
-    type: 'external',
-    url: 'https://www.netseven.it/'
-  },
-  {
-    label: 'Galleria I',
-    type: 'images-iiif',
-    items: [
-      'https://libimages1.princeton.edu/loris/pudl0001%2F4609321%2Fs42%2F00000001.jp2/info.json'
-    ]
   },
   {
     label: 'Link esterno II',
@@ -354,12 +354,17 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
   public changeDigitalObject(payload) {
     if (this.currentDigitalObjectIndex !== payload) {
-      this.currentDigitalObjectIndex = payload;
-      this.currentDigitalObject = this.digitalObjects[payload];
-      if (this.currentDigitalObject.type.includes('images')) {
-        this.one('aw-scheda-image').update(this.currentDigitalObject);
-      } else if (this.currentDigitalObject.type === 'pdf') {
-        this.one('aw-scheda-pdf').update(this.currentDigitalObject);
+      // link check
+      if (this.digitalObjects[payload].type === 'external' && this.currentDigitalObject) {
+        window.open(this.digitalObjects[payload].url, '_blank');
+      } else {
+        this.currentDigitalObjectIndex = payload;
+        this.currentDigitalObject = this.digitalObjects[payload];
+        if (this.currentDigitalObject.type.includes('images')) {
+          this.one('aw-scheda-image').update(this.currentDigitalObject);
+        } else if (this.currentDigitalObject.type === 'pdf') {
+          this.one('aw-scheda-pdf').update(this.currentDigitalObject);
+        }
       }
     }
   }
@@ -368,7 +373,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     return digitalObjects.map(($do, index) => {
       if (['images-iiif', 'images-simple'].includes($do.type)) {
         return {
-          id: `scheda-layout-viewer-${index}`,
+          id: `scheda-layout-viewer-${this.currentId}-${index}`,
           type: $do.type,
           label: $do.label,
           hasNavigation: $do.items.length > 1,
