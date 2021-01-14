@@ -12,9 +12,11 @@ const DIGITAL_OBJECTS_MOCK = [
   {
     label: 'Galleria I',
     type: 'images-iiif',
-    items: [
-      'https://libimages1.princeton.edu/loris/pudl0001%2F4609321%2Fs42%2F00000001.jp2/info.json'
-    ]
+    items: [{
+      url: 'https://libimages1.princeton.edu/loris/pudl0001%2F4609321%2Fs42%2F00000001.jp2/info.json'
+    }, {
+      url: 'https://libimages1.princeton.edu/loris/pudl0001%2F4609321%2Fs42%2F00000001.jp2/info.json'
+    }]
   },
   {
     label: 'Link esterno I',
@@ -40,9 +42,9 @@ const DIGITAL_OBJECTS_MOCK = [
   {
     label: 'Galleria II',
     type: 'images-simple',
-    items: [
-      'https://upload.wikimedia.org/wikipedia/commons/1/1a/Cole_Thomas_The_Consummation_The_Course_of_the_Empire_1836.jpg'
-    ]
+    items: [{
+      url: 'https://upload.wikimedia.org/wikipedia/commons/1/1a/Cole_Thomas_The_Consummation_The_Course_of_the_Empire_1836.jpg'
+    }]
   },
   {
     label: 'PDF II',
@@ -371,15 +373,15 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
   private normalizeDigitalObjects(digitalObjects) {
     return digitalObjects.map(($do, index) => {
-      if (['images-iiif', 'images-simple'].includes($do.type)) {
+      if ($do.type.includes('images')) {
         return {
           id: `scheda-layout-viewer-${this.currentId}-${index}`,
           type: $do.type,
           label: $do.label,
           hasNavigation: $do.items.length > 1,
-          items: $do.items.map((item) => ({
+          items: $do.items.map(({ url }) => ({
+            url,
             type: $do.type,
-            url: item
           }))
         };
       }
