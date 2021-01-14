@@ -2,52 +2,35 @@
 // PdfViewer.ts
 //---------------------------
 
-import {
-  Component, Input, OnDestroy, OnInit
-} from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Component, Input } from '@angular/core';
+import { isNull } from 'lodash';
+import { Observable } from 'rxjs';
 
 export type PdfViewerData = {
-  items: string[];
+  items: {
+    label: string;
+    url: string;
+    selected: boolean;
+  }[];
+  next: number | null;
+  prev: number | null;
+  currentUrl: string;
 }
 
 @Component({
   selector: 'aw-pdf-viewer',
   templateUrl: './pdf-viewer.html',
 })
-export class PdfViewerComponent implements OnInit, OnDestroy {
-  @Input() data$: Observable<PdfViewerData>;
+export class PdfViewerComponent {
+  @Input() data: Observable<PdfViewerData>;
 
-  private destroy$: Subject<void> = new Subject();
+  @Input() emit: (type: string, payload: any) => void;
 
-  items: string[];
+  onClick(payload) {
+    if (!this.emit || isNull(payload)) {
+      return;
+    }
 
-  src: string;
-
-  next: number | null;
-
-  prev: number | null;
-
-  current: number;
-
-  hasNavigation: boolean;
-
-  ngOnInit() {
-    this.data$.pipe(
-      takeUntil(this.destroy$)
-    ).subscribe(({ items }: PdfViewerData) => {
-      this.items = items;
-      // defaults
-      this.current = 0;
-      this.hasNavigation = items.length > 1;
-      this.prev = null;
-      this.next = this.current + 1;
-      [this.src] = items;
-    });
-  }
-
-  ngOnDestroy() {
-    this.destroy$.next();
+    this.emit('click', payload);
   }
 }

@@ -13,6 +13,7 @@ export * from './scheda-breadcrumbs.eh';
 export * from './sidebar-header.eh';
 export * from './tree.eh';
 export * from './scheda-dropdown.eh';
+export * from './scheda-pdf.eh';
 
 // Search layout
 export * from './search-layout-tabs.eh';

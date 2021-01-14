@@ -1,9 +1,27 @@
-<div *ngIf="data$ | async" class="aw-pdf-viewer">
+<div *ngIf="data" class="aw-pdf-viewer">
     <ngx-extended-pdf-viewer
-        [src]="src"
+        [src]="data.currentUrl"
         [height]="'90vh'"
         [useBrowserLocale]="true"
         [textLayer]="true"
         [showHandToolButton]="true">
     </ngx-extended-pdf-viewer>
+    <div *ngIf="data.items.length > 1" class="aw-pdf-viewer__navigation">
+        <div class="aw-pdf-viewer__navigation-links">
+            <a class="aw-pdf-viewer__navigation-prev {{ !data.prev ? 'is-disabled' : '' }}" 
+            (click)="onClick(data.prev)">
+                <span class="n7-icon-arrow-left"></span>
+            </a>
+            <a class="aw-pdf-viewer__navigation-next {{ !data.next ? 'is-disabled' : '' }}" 
+            (click)="onClick(data.next)">
+                <span class="n7-icon-arrow-right"></span>
+            </a>
+        </div>
+        <div class="aw-pdf-viewer__navigation-select">
+            <select (change)="onClick(+$event.target.value)">
+                <option *ngFor="let item of data.items; let $i = index" [value]="$i"
+                [selected]="item.selected">{{ item.label }}</option>
+            </select>
+        </div>
+    </div>
 </div>
