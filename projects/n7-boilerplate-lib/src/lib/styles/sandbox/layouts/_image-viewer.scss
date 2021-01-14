@@ -1,0 +1,41 @@
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+::-webkit-scrollbar-track {
+    background: #d9d9d9;
+    border-radius: 20px;
+}
+::-webkit-scrollbar-thumb {
+    background: #707070;
+    border-radius: 20px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #a5a5a5;
+}
+
+.sb-image-viewer-layout {
+    position: relative;
+    height: 600px;
+}
+
+.n7-image-viewer {
+    height: 100%;
+    &__viewer {
+        height: 100%;
+    }
+    &__thumbs {
+        display: none;
+    }
+}
+
+.n7-image-viewer-tools {
+    position: absolute;
+    bottom: 0px;
+    z-index: 9999;
+    
+    &__test {
+        height: auto;
+        background: unset;
+    }
+}

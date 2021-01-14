@@ -10,6 +10,7 @@ export const SbExampleLayoutConfig = {
    * in this leyout
    */
   widgets: [
+    { id: 'sb-dummy', hasStaticData: true }
   ],
   layoutDS: SbExampleLayoutDS,
   layoutEH: SbExampleLayoutEH,

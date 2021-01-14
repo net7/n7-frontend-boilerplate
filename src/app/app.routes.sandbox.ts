@@ -4,7 +4,7 @@ import {
   // COMMON
   Page404LayoutComponent,
   // SB
-  SbExampleLayoutComponent,
+  SbImageViewerLayoutComponent,
 } from 'n7-boilerplate-lib';
 
 export const APP_ROUTES: Routes = [
@@ -13,6 +13,6 @@ export const APP_ROUTES: Routes = [
     redirectTo: '/sb/home',
     pathMatch: 'full'
   },
-  { path: 'sb/home', component: SbExampleLayoutComponent },
+  { path: 'sb/home', component: SbImageViewerLayoutComponent },
   { path: '**', component: Page404LayoutComponent }
 ];

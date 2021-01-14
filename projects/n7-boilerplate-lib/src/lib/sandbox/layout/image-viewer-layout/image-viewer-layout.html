@@ -1,0 +1,10 @@
+<div class="sb-image-viewer-layout" id="image-viewer-layout">
+    <n7-image-viewer 
+        [data]="lb.widgets['sb-image-viewer'].ds.out$ | async"
+        [emit]="lb.widgets['sb-image-viewer'].emit">
+    </n7-image-viewer> 
+    <n7-image-viewer-tools 
+        [data]="lb.widgets['sb-image-viewer-tools'].ds.out$ | async"
+        [emit]="lb.widgets['sb-image-viewer-tools'].emit">
+    </n7-image-viewer-tools>
+</div>
