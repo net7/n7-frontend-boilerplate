@@ -149,20 +149,6 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       // reset
       this.currentDigitalObject = null;
       this.currentDigitalObjectIndex = null;
-      // sort digital objects
-      response.digitalObjects = (response.digitalObjects || []).sort(
-        ({ order: aOrder }, { order: bOrder }) => aOrder - bOrder
-      );
-      if (response.digitalObjects.length) {
-        // sort digital objects items
-        response.digitalObjects
-          .filter((dObj) => Array.isArray(dObj.items))
-          .forEach((dObj) => {
-            dObj.items = dObj.items.sort(
-              ({ order: aOrder }, { order: bOrder }) => aOrder - bOrder
-            );
-          });
-      }
       this.hasMetadata = Array.isArray(response.fields) && response.fields.length;
       this.hasSimilarItems = Array.isArray(response.relatedItems) && response.relatedItems.length;
       this.hasBreadcrumb = Array.isArray(response.breadcrumbs) && response.breadcrumbs.length;
