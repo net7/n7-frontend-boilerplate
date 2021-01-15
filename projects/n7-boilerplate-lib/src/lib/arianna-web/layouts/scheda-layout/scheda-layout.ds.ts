@@ -146,6 +146,9 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
   loadContent(response) {
     if (response) {
+      // reset
+      this.currentDigitalObject = null;
+      this.currentDigitalObjectIndex = null;
       // sort digital objects
       response.digitalObjects = (response.digitalObjects || []).sort(
         ({ order: aOrder }, { order: bOrder }) => aOrder - bOrder
@@ -324,7 +327,12 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
         this.currentDigitalObjectIndex = payload;
         this.currentDigitalObject = this.digitalObjects[payload];
         if (this.currentDigitalObject.type.includes('images')) {
-          this.one('aw-scheda-image').update(this.currentDigitalObject);
+          const schedaImageDS = this.getWidgetDataSource('aw-scheda-image');
+          if (schedaImageDS.hasInstance()) {
+            schedaImageDS.updateImages(this.currentDigitalObject);
+          } else {
+            this.one('aw-scheda-image').update(this.currentDigitalObject);
+          }
         } else if (this.currentDigitalObject.type === 'pdf') {
           this.one('aw-scheda-pdf').update(this.currentDigitalObject);
         }
@@ -333,10 +341,10 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   }
 
   private normalizeDigitalObjects(digitalObjects) {
-    return digitalObjects.map(($do, index) => {
+    return digitalObjects.map(($do) => {
       if ($do.type.includes('images')) {
         return {
-          id: `scheda-layout-viewer-${this.currentId}-${index}`,
+          id: 'scheda-layout-viewer',
           type: $do.type,
           label: $do.label,
           hasNavigation: $do.items.length > 1,
