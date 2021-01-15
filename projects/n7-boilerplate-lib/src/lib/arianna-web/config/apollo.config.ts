@@ -311,7 +311,17 @@ export default {
             title
             subTitle
             image
-            images
+            digitalObjects {
+              label
+              type
+              url
+              order
+              items {      
+                order      
+                label
+                url                 
+              }
+            }
             text
             document_type
             document_classification

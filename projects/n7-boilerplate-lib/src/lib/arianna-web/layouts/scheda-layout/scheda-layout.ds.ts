@@ -7,55 +7,6 @@ import { get as _get } from 'lodash';
 import helpers from '../../../common/helpers';
 import metadataHelper from '../../helpers/metadata.helper';
 
-// FIXME: togliere mock
-const DIGITAL_OBJECTS_MOCK = [
-  {
-    label: 'Galleria I',
-    type: 'images-iiif',
-    items: [{
-      url: 'https://libimages1.princeton.edu/loris/pudl0001%2F4609321%2Fs42%2F00000001.jp2/info.json'
-    }, {
-      url: 'https://libimages1.princeton.edu/loris/pudl0001%2F4609321%2Fs42%2F00000001.jp2/info.json'
-    }]
-  },
-  {
-    label: 'Link esterno I',
-    type: 'external',
-    url: 'https://www.netseven.it/'
-  },
-  {
-    label: 'PDF I',
-    type: 'pdf',
-    items: [{
-      label: 'PDF I: lorem',
-      url: 'https://cors-anywhere.herokuapp.com/https://www.adobe.com/support/products/enterprise/knowledgecenter/media/c4611_sample_explain.pdf',
-    }, {
-      label: 'PDF I: ipsum',
-      url: 'https://cors-anywhere.herokuapp.com/https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
-    }]
-  },
-  {
-    label: 'Link esterno II',
-    type: 'external',
-    url: 'https://www.netseven.it/'
-  },
-  {
-    label: 'Galleria II',
-    type: 'images-simple',
-    items: [{
-      url: 'https://upload.wikimedia.org/wikipedia/commons/1/1a/Cole_Thomas_The_Consummation_The_Course_of_the_Empire_1836.jpg'
-    }]
-  },
-  {
-    label: 'PDF II',
-    type: 'pdf',
-    items: [{
-      label: 'PDF II: factum',
-      url: 'https://cors-anywhere.herokuapp.com/https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'
-    }]
-  },
-];
-
 export class AwSchedaLayoutDS extends LayoutDataSource {
   static tree: any = null;
 
@@ -195,10 +146,20 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
   loadContent(response) {
     if (response) {
-      // FIXME: togliere mock
-      response.digitalObjects = [
-        ...DIGITAL_OBJECTS_MOCK
-      ];
+      // sort digital objects
+      response.digitalObjects = (response.digitalObjects || []).sort(
+        ({ order: aOrder }, { order: bOrder }) => aOrder - bOrder
+      );
+      if (response.digitalObjects.length) {
+        // sort digital objects items
+        response.digitalObjects
+          .filter((dObj) => Array.isArray(dObj.items))
+          .forEach((dObj) => {
+            dObj.items = dObj.items.sort(
+              ({ order: aOrder }, { order: bOrder }) => aOrder - bOrder
+            );
+          });
+      }
       this.hasMetadata = Array.isArray(response.fields) && response.fields.length;
       this.hasSimilarItems = Array.isArray(response.relatedItems) && response.relatedItems.length;
       this.hasBreadcrumb = Array.isArray(response.breadcrumbs) && response.breadcrumbs.length;
