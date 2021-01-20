@@ -203,7 +203,7 @@ export default {
   'oggetto-culturale.corredoRicerca.riferimento': 'Riferimento',
   'oggetto-culturale.corredoRicerca.descrizione': 'Descrizione',
 
-  'UA': '---',
+  UA: '---',
   'oggetto-culturale.altreSegnature': 'Altre segnature',
   'oggetto-culturale.tipologiaMateriale': 'Tipologia',
   'oggetto-culturale.descrizioneContenuto': 'Descrizione del contenuto',
@@ -228,7 +228,7 @@ export default {
   'oggetto-culturale.coordinateOC': 'Coordinate',
   'oggetto-culturale.reticolo': 'Reticolo',
   'oggetto-culturale.scalaGrafica': 'Scale grafiche',
-  'oggetto-culturale.scalaGrafica': 'Scale grafiche',
+  // 'oggetto-culturale.scalaGrafica': 'Scale grafiche',
   'oggetto-culturale.scalaGrafica.scala': 'Scala',
   'oggetto-culturale.scalaGrafica.parteRiferita': 'Parte riferita',
   'oggetto-culturale.legende': 'Legende',
