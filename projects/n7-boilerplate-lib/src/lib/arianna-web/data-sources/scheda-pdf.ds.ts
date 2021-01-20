@@ -36,4 +36,8 @@ export class AwSchedaPdfDS extends DataSource {
       item.selected = itemIndex === index;
     });
   }
+
+  onLoaded() {
+    this.output.classes = 'is-loaded';
+  }
 }

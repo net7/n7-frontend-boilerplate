@@ -1,10 +1,15 @@
-<div *ngIf="data" class="aw-pdf-viewer">
+<div *ngIf="data" class="aw-pdf-viewer {{ data.classes || '' }}">
+    <div class="aw-pdf-viewer__loader">
+        <n7-loader></n7-loader>
+    </div>
     <ngx-extended-pdf-viewer
         [src]="data.currentUrl"
         [height]="'90vh'"
         [useBrowserLocale]="true"
         [textLayer]="true"
-        [showHandToolButton]="true">
+        [showHandToolButton]="true"
+        (pdfLoaded)="onLoaded()"
+        (pdfLoadingFailed)="onLoaded()">
     </ngx-extended-pdf-viewer>
     <div *ngIf="data.items.length > 1" class="aw-pdf-viewer__navigation">
         <div class="aw-pdf-viewer__navigation-links">
