@@ -228,7 +228,6 @@ export default {
   'oggetto-culturale.coordinateOC': 'Coordinate',
   'oggetto-culturale.reticolo': 'Reticolo',
   'oggetto-culturale.scalaGrafica': 'Scale grafiche',
-  'oggetto-culturale.scalaGrafica': 'Scale grafiche',
   'oggetto-culturale.scalaGrafica.scala': 'Scala',
   'oggetto-culturale.scalaGrafica.parteRiferita': 'Parte riferita',
   'oggetto-culturale.legende': 'Legende',
