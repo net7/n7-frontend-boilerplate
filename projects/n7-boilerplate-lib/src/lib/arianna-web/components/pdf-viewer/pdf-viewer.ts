@@ -14,6 +14,7 @@ export type PdfViewerData = {
   next: number | null;
   prev: number | null;
   currentUrl: string;
+  classes?: string;
 }
 
 @Component({
@@ -23,7 +24,7 @@ export type PdfViewerData = {
 export class PdfViewerComponent {
   @Input() data: PdfViewerData;
 
-  @Input() emit: (type: string, payload: any) => void;
+  @Input() emit: (type: string, payload?: any) => void;
 
   onClick(payload) {
     if (!this.emit || isNull(payload)) {
@@ -31,5 +32,9 @@ export class PdfViewerComponent {
     }
 
     this.emit('click', payload);
+  }
+
+  onLoaded() {
+    this.emit('loaded');
   }
 }

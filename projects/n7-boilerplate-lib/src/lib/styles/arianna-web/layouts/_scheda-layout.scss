@@ -297,6 +297,11 @@
         .toolbarField.pageNumber {
             height: auto;
         }
+        &.is-loaded {
+            .aw-pdf-viewer__loader {
+                display: none;
+            }
+        }
     }
 }
 
