@@ -4,16 +4,12 @@ import { ImageViewerData } from '@n7-frontend/components';
 export class AwSchedaImageDS extends DataSource {
   private instance;
 
-  public hasNavigation = false;
-
   protected transform(data): ImageViewerData {
-    const tileSources = this.getTileSources(data.images);
-
-    this.hasNavigation = Array.isArray(data.images) && data.images.length > 1;
+    const tileSources = this.getTileSources(data.items);
 
     return {
       images: [],
-      viewerId: 'scheda-layout-viewer',
+      viewerId: data.id,
       libOptions: {
         tileSources,
         sequenceMode: true,
@@ -23,7 +19,7 @@ export class AwSchedaImageDS extends DataSource {
       },
       _setViewer: (viewer) => {
         this.instance = viewer;
-      },
+      }
     };
   }
 
@@ -38,14 +34,21 @@ export class AwSchedaImageDS extends DataSource {
     this.instance.world.removeAll();
 
     setTimeout(() => {
-      const images = this.getTileSources(data.images);
-      this.hasNavigation = Array.isArray(data.images) && data.images.length > 1;
+      const images = this.getTileSources(data.items);
       this.instance.open(images);
     });
   }
 
   private getTileSources(images) {
-    // FIXME: togliere replace
-    return images.map((img) => img.replace('FIF', 'Deepzoom').replace('.tif', '.tif.dzi'));
+    return images.map(({ type, url }) => {
+      if (type === 'images-simple') {
+        return {
+          url,
+          type: 'image'
+        };
+      }
+      // FIXME: togliere replace
+      return url.replace('FIF', 'Deepzoom').replace('.tif', '.tif.dzi');
+    });
   }
 }

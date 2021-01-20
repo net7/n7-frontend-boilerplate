@@ -311,9 +311,20 @@ export default {
             title
             subTitle
             image
-            images
+            digitalObjects {
+              label
+              type
+              url
+              order
+              items {      
+                order      
+                label
+                url                 
+              }
+            }
             text
             document_type
+            document_classification
             fields {
               ... on KeyValueField {
                 key
@@ -385,6 +396,7 @@ export default {
             label
             img
             document_type
+            document_classification
             fields {
               ... on KeyValueField {
                 key

@@ -1,0 +1,108 @@
+/**
+ * PDF-VIEWER
+ *
+ * Style for the PDF viewer.
+ */
+
+/* ------------------------------------ *\
+    PDF-VIEWER
+\* ------------------------------------ */
+.aw-pdf-viewer {
+    position: relative;
+
+    .toolbar {
+        border-top: 0;
+    }
+
+    .toolbarField.pageNumber {
+        height: auto;
+    }
+    
+    /* Multiple PDF navigation */
+    &__navigation {
+        padding: $space*2 $space;
+        border-top: 2px solid $color-border-normal;
+    }
+    
+    &__navigation-tools {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__navigation-prev, &__navigation-next {
+        span {
+            color: $color-text-light;
+            cursor: pointer;
+            font-size: $font-size-xxxl;
+            transition: all $transition-durations;
+
+            &:hover {
+                color: $color-text-link;
+            }
+        }
+    }
+
+    /*
+    &__navigation-prev:not(.is-disabled), &__navigation-next:not(.is-disabled) {
+        span {
+            color: $color-text-light;
+            cursor: pointer;
+            font-size: $font-size-xxxl;
+            transition: all $transition-durations;
+
+            &:hover {
+                color: $color-text-link;
+            }
+        }
+    }
+    
+    &__navigation-prev.is-disabled, &__navigation-next.is-disabled {
+        span {
+            color: $color-gray-02;
+            font-size: $font-size-xxxl;
+        }
+    }
+    */
+
+    &__navigation-select {
+        text-align: center;
+
+        select {
+            max-width: 400px;
+            text-overflow: ellipsis;
+        }
+    }
+
+    /* Loader */
+    .aw-pdf-viewer__loader {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+
+        .n7-loader {
+            border-top-color: $color-gray-03;
+            border-right-color: $color-gray-03;
+            border-bottom-color: $color-gray-03;
+            border-left-color: $color-gray-04;
+        }
+    }
+
+    &.is-loaded {
+        .aw-pdf-viewer__loader {
+            display: none;
+        }
+    }
+}
+
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: $header-breakpoint-mobile) {
+}
+
+@media all and (max-width: $header-breakpoint-mobile-small) {
+}

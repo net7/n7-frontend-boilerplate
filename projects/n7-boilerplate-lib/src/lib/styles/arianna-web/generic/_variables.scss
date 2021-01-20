@@ -44,8 +44,9 @@ $grid-gutter-v: 0;
 // ------------------------------------ //
 // #Z-INDEX
 // ------------------------------------ //
-// $z-index-base: 1000;
-// $z-index-modal:         $z-index-base + 10;
+$z-index-base: 1000;
+$z-index-digital-object-modal: $z-index-base + 10;
+
 
 // ------------------------------------ //
 // #SPACING-UNIT

@@ -75,12 +75,61 @@
 </ng-template>
 
 <ng-template #content>
-    <section class="aw-scheda__section aw-scheda__image-viewer"
-             [ngClass]="{ 'navigation-hidden': !lb.widgets['aw-scheda-image'].ds.hasNavigation }"
-             [hidden]="!lb.dataSource.hasImage">
-        <n7-image-viewer [data]="lb.widgets['aw-scheda-image'].ds.out$ | async">
-        </n7-image-viewer>
+    <!-- Digital Object selection dropdown -->
+    <section class="aw-scheda__digital-object-dropdown"
+            *ngIf="(
+                lb.dataSource.hasDigitalObjects 
+                && lb.dataSource.digitalObjects.length > 1
+            )">
+        <p class="aw-scheda__digital-object-dropdown-label">
+            Seleziona l'oggetto digitale da visualizzare:
+        </p>
+        <aw-scheda-dropdown 
+        [data]="lb.widgets['aw-scheda-dropdown'].ds.out$ | async"
+        [emit]="lb.widgets['aw-scheda-dropdown'].emit">
+        </aw-scheda-dropdown>
     </section>
+    <!-- END // Digital Object selection dropdown -->
+
+    <!-- Digital Objects: images, IIP, PDFs, external links -->
+    <section *ngIf="lb.dataSource.currentDigitalObject as $do" 
+        class="aw-scheda__media aw-scheda__{{ $do.type }}"
+        [ngClass]="{ 
+            'navigation-hidden': !$do.hasNavigation
+        }">
+        <ng-container [ngSwitch]="$do.type">
+            <!-- IMAGE VIEWER (IIIF) -->
+            <ng-container *ngSwitchCase="'images-iiif'">
+                <n7-image-viewer [data]="lb.widgets['aw-scheda-image'].ds.out$ | async">
+                </n7-image-viewer>
+            </ng-container>
+
+            <!-- IMAGE VIEWER (Simple: jpg, png) -->
+            <ng-container *ngSwitchCase="'images-simple'">
+                <n7-image-viewer [data]="lb.widgets['aw-scheda-image'].ds.out$ | async">
+                </n7-image-viewer>
+            </ng-container>
+    
+            <!-- PDF -->
+            <ng-container *ngSwitchCase="'pdf'">
+                <aw-pdf-viewer 
+                [data]="lb.widgets['aw-scheda-pdf'].ds.out$ | async"
+                [emit]="lb.widgets['aw-scheda-pdf'].emit">
+                </aw-pdf-viewer>
+            </ng-container>
+    
+            <!-- EXTERNAL URL -->
+            <ng-container *ngSwitchCase="'external'">
+                <div class="aw-scheda__external-url">
+                    <a class="aw-scheda__external-url-link" href="{{ $do.url }}" target="_blank">
+                        {{ $do.label || lb.dataSource.externalUrlText }}
+                        <span class="n7-icon-external-link"></span>
+                    </a>
+                </div>
+            </ng-container>
+        </ng-container>
+    </section>
+    <!-- END // Digital Objects -->
 
     <section class="aw-scheda__section aw-scheda__description"
              *ngIf="lb.dataSource.contentParts.content">
@@ -89,6 +138,7 @@
         </div>
     </section>
 
+    <!-- Metadata -->
     <section class="aw-scheda__section aw-scheda__metadata"
              *ngIf="lb.dataSource.hasMetadata">
         <div class="aw-scheda__inner-title"
@@ -98,8 +148,9 @@
         <n7-metadata-viewer [data]="lb.widgets['aw-scheda-metadata'].ds.out$ | async">
         </n7-metadata-viewer>
     </section>
+    <!-- END // Metadata -->
 
-    <!-- ENTITA COLLEGATE -->
+    <!-- Related entities -->
     <section *ngIf="lb.dataSource.hasRelatedEntities"
              id="related-item-container"
              class="aw-scheda__section aw-scheda__related">
@@ -124,8 +175,9 @@
             </ng-container>
         </div>
     </section>
+    <!-- END // Related entities -->
 
-    <!-- OGGETTI CULTURALI SIMILI -->
+    <!-- Similar Objects -->
     <section *ngIf="lb.dataSource.hasSimilarItems"
              id="related-item-container"
              class="aw-scheda__section aw-scheda__related">
@@ -142,4 +194,5 @@
             </ng-container>
         </div>
     </section>
+    <!-- END // Similar Objects -->
 </ng-template>

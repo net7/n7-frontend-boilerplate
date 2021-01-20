@@ -1,0 +1,24 @@
+<div *ngIf="data" class="aw-scheda-dropdown {{ data.classes || '' }}">
+    <div class="aw-scheda-dropdown__header"
+    (click)="onClick($event, data.header.payload)">
+        <!-- header label -->
+        <span class="aw-scheda-dropdown__header-label">
+            {{ data.header.label }}
+        </span>
+        <!-- header icon -->
+        <span class="aw-scheda-dropdown__header-icon"
+        [ngClass]="data.header.icon['id']">
+        </span>
+    </div>
+    <div class="aw-scheda-dropdown__items">
+        <ul>
+            <li *ngFor="let item of data.items"
+            [ngClass]="{
+                'is-selected': item.selected 
+            }"
+            (click)="onClick($event, item.payload)">
+                {{ item.label }}
+            </li>
+        </ul>
+    </div>
+</div>

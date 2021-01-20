@@ -48,7 +48,13 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
   public hasSimilarItems: boolean;
 
-  public hasImage: boolean;
+  public hasDigitalObjects: boolean;
+
+  public digitalObjects: any;
+
+  public currentDigitalObject: any;
+
+  public currentDigitalObjectIndex: number;
 
   public imageViewerIstance: any;
 
@@ -68,6 +74,8 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   /** String to render in the loaded-empty state */
   public emptyStateString: string;
 
+  public externalUrlText: string;
+
   onInit({
     configuration, mainState, router, options, titleService, communication,
   }) {
@@ -80,6 +88,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     this.sidebarCollapsed = false;
     this.relatedEntitiesHeader = this.configuration.get('scheda-layout')['related-entities'].title;
     this.similarItemsSectionTitle = this.configuration.get('scheda-layout')['related-items'].title;
+    this.externalUrlText = this.configuration.get('scheda-layout')['external-url-text'];
     this.metadataSectionTitle = this.getMetadataSectionTitle();
     this.hasSimilarItems = false;
     this.one('aw-chart-tippy').updateOptions({
@@ -137,14 +146,26 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
   loadContent(response) {
     if (response) {
+      // reset
+      this.currentDigitalObject = null;
+      this.currentDigitalObjectIndex = null;
       this.hasMetadata = Array.isArray(response.fields) && response.fields.length;
       this.hasSimilarItems = Array.isArray(response.relatedItems) && response.relatedItems.length;
       this.hasBreadcrumb = Array.isArray(response.breadcrumbs) && response.breadcrumbs.length;
-      this.hasRelatedEntities = Array.isArray(response.relatedEntities)
-        && response.relatedEntities.length;
-      this.hasImage = !!response.image;
-      this.hasContent = !!(this.hasMetadata || this.hasSimilarItems
-        || this.hasRelatedEntities || this.hasImage);
+      this.hasDigitalObjects = (
+        Array.isArray(response.digitalObjects)
+        && response.digitalObjects.length
+      );
+      this.hasRelatedEntities = (
+        Array.isArray(response.relatedEntities)
+        && response.relatedEntities.length
+      );
+      this.hasContent = !!(
+        this.hasMetadata
+        || this.hasSimilarItems
+        || this.hasRelatedEntities
+        || this.hasDigitalObjects
+      );
 
       this.contentParts = [];
       const content = { content: null };
@@ -153,14 +174,14 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
         content.content = response.text;
       }
       this.contentParts.push(content);
-      // image viewer
-      if (response.images) {
-        const viewerDataSource = this.getWidgetDataSource('aw-scheda-image');
-        if (!viewerDataSource.hasInstance()) {
-          this.one('aw-scheda-image').update(response);
-        } else {
-          viewerDataSource.updateImages(response);
-        }
+
+      // digital objects
+      if (this.hasDigitalObjects) {
+        response.digitalObjects = this.normalizeDigitalObjects(response.digitalObjects);
+        // this.one('aw-scheda-digital-objects').update(response.digitalObjects);
+        this.one('aw-scheda-dropdown').update(response);
+        this.digitalObjects = response.digitalObjects;
+        this.changeDigitalObject(0);
       }
 
       const titleObj = {
@@ -262,18 +283,64 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   }
 
   public getFields(response) {
-    const { fields, document_type: documenType } = response;
+    const {
+      fields,
+      document_type: dt,
+      document_classification: dc
+    } = response;
     const paths = this.configuration.get('paths');
     const labels = this.configuration.get('labels');
+    const dcSegments = typeof dc === 'string' ? dc.split('.') : [];
+    const dcLastSegment = dcSegments[dcSegments.length - 1];
     let metadataToShow = _get(this.configuration.get('scheda-layout'), 'metadata-to-show', {});
-    metadataToShow = metadataToShow[documenType] || [];
+    metadataToShow = metadataToShow[dcLastSegment] || metadataToShow[dt] || [];
 
     return metadataHelper.normalize({
       fields,
       paths,
       labels,
       metadataToShow,
-      type: documenType
+      type: dt
+    });
+  }
+
+  public changeDigitalObject(payload) {
+    if (this.currentDigitalObjectIndex !== payload) {
+      // link check
+      if (this.digitalObjects[payload].type === 'external' && this.currentDigitalObject) {
+        window.open(this.digitalObjects[payload].url, '_blank');
+      } else {
+        this.currentDigitalObjectIndex = payload;
+        this.currentDigitalObject = this.digitalObjects[payload];
+        if (this.currentDigitalObject.type.includes('images')) {
+          const schedaImageDS = this.getWidgetDataSource('aw-scheda-image');
+          if (schedaImageDS.hasInstance()) {
+            schedaImageDS.updateImages(this.currentDigitalObject);
+          } else {
+            this.one('aw-scheda-image').update(this.currentDigitalObject);
+          }
+        } else if (this.currentDigitalObject.type === 'pdf') {
+          this.one('aw-scheda-pdf').update(this.currentDigitalObject);
+        }
+      }
+    }
+  }
+
+  private normalizeDigitalObjects(digitalObjects) {
+    return digitalObjects.map(($do) => {
+      if ($do.type.includes('images')) {
+        return {
+          id: 'scheda-layout-viewer',
+          type: $do.type,
+          label: $do.label,
+          hasNavigation: $do.items.length > 1,
+          items: $do.items.map(({ url }) => ({
+            url,
+            type: $do.type,
+          }))
+        };
+      }
+      return $do;
     });
   }
 }
