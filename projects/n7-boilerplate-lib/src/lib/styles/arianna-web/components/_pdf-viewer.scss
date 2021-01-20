@@ -1,0 +1,51 @@
+/**
+ * PDF-VIEWER
+ *
+ * Style for the PDF viewer.
+ */
+
+/* ------------------------------------ *\
+    PDF-VIEWER
+\* ------------------------------------ */
+.aw-pdf-viewer {
+    position: relative;
+
+    .toolbar {
+        border-top: 0;
+    }
+
+    .toolbarField.pageNumber {
+        height: auto;
+    }
+    
+    /* Loader */
+    .aw-pdf-viewer__loader {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+
+        .n7-loader {
+            border-top-color: $color-gray-03;
+            border-right-color: $color-gray-03;
+            border-bottom-color: $color-gray-03;
+            border-left-color: $color-gray-04;
+        }
+    }
+
+    &.is-loaded {
+        .aw-pdf-viewer__loader {
+            display: none;
+        }
+    }
+}
+
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: $header-breakpoint-mobile) {
+}
+
+@media all and (max-width: $header-breakpoint-mobile-small) {
+}

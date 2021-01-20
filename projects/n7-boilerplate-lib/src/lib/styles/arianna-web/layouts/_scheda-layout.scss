@@ -350,22 +350,6 @@
         background-color: $color-background-light;
         font-size: $font-size-l;
     }
-
-    /* PDF viewer */
-    .aw-pdf-viewer {
-        .toolbar {
-            border-top: 0;
-        }
-
-        .toolbarField.pageNumber {
-            height: auto;
-        }
-        &.is-loaded {
-            .aw-pdf-viewer__loader {
-                display: none;
-            }
-        }
-    }
 }
 
 /* Image viewer navigation */

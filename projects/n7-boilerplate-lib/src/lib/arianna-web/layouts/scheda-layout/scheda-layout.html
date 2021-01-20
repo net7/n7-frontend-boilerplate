@@ -75,6 +75,7 @@
 </ng-template>
 
 <ng-template #content>
+    <!-- Digital Object selection dropdown -->
     <section class="aw-scheda__digital-object-dropdown"
             *ngIf="(
                 lb.dataSource.hasDigitalObjects 
@@ -88,7 +89,9 @@
         [emit]="lb.widgets['aw-scheda-dropdown'].emit">
         </aw-scheda-dropdown>
     </section>
+    <!-- END // Digital Object selection dropdown -->
 
+    <!-- Digital Objects: images, IIP, PDFs, external links -->
     <section *ngIf="lb.dataSource.currentDigitalObject as $do" 
         class="aw-scheda__media aw-scheda__{{ $do.type }}"
         [ngClass]="{ 
@@ -125,8 +128,8 @@
                 </div>
             </ng-container>
         </ng-container>
-
     </section>
+    <!-- END // Digital Objects -->
 
     <section class="aw-scheda__section aw-scheda__description"
              *ngIf="lb.dataSource.contentParts.content">
@@ -135,6 +138,7 @@
         </div>
     </section>
 
+    <!-- Metadata -->
     <section class="aw-scheda__section aw-scheda__metadata"
              *ngIf="lb.dataSource.hasMetadata">
         <div class="aw-scheda__inner-title"
@@ -144,8 +148,9 @@
         <n7-metadata-viewer [data]="lb.widgets['aw-scheda-metadata'].ds.out$ | async">
         </n7-metadata-viewer>
     </section>
+    <!-- END // Metadata -->
 
-    <!-- ENTITA COLLEGATE -->
+    <!-- Related entities -->
     <section *ngIf="lb.dataSource.hasRelatedEntities"
              id="related-item-container"
              class="aw-scheda__section aw-scheda__related">
@@ -170,8 +175,9 @@
             </ng-container>
         </div>
     </section>
+    <!-- END // Related entities -->
 
-    <!-- OGGETTI CULTURALI SIMILI -->
+    <!-- Similar Objects -->
     <section *ngIf="lb.dataSource.hasSimilarItems"
              id="related-item-container"
              class="aw-scheda__section aw-scheda__related">
@@ -188,4 +194,5 @@
             </ng-container>
         </div>
     </section>
+    <!-- END // Similar Objects -->
 </ng-template>
