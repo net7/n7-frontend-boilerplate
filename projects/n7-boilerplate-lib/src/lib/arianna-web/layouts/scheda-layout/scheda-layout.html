@@ -75,11 +75,14 @@
 </ng-template>
 
 <ng-template #content>
-    <section class="aw-scheda__section aw-scheda__do-dropdown"
+    <section class="aw-scheda__digital-object-dropdown"
             *ngIf="(
                 lb.dataSource.hasDigitalObjects 
                 && lb.dataSource.digitalObjects.length > 1
             )">
+        <p class="aw-scheda__digital-object-dropdown-label">
+            Seleziona l'oggetto digitale da visualizzare:
+        </p>
         <aw-scheda-dropdown 
         [data]="lb.widgets['aw-scheda-dropdown'].ds.out$ | async"
         [emit]="lb.widgets['aw-scheda-dropdown'].emit">
