@@ -15,7 +15,7 @@
     
     <div *ngIf="data.items.length > 1" class="aw-pdf-viewer__navigation">
         <div class="aw-pdf-viewer__navigation-tools">
-            <a class="aw-pdf-viewer__navigation-prev {{ !data.prev ? 'is-disabled' : '' }}" 
+            <a class="aw-pdf-viewer__navigation-prev {{ (!data.prev && data.prev !== 0) ? 'is-disabled' : '' }}" 
             (click)="onClick(data.prev)">
                 <span class="n7-icon-angle-left"></span>
             </a>
