@@ -76,7 +76,7 @@ export default {
         if (fields && Array.isArray(fields)) {
           if (isLink(fields)) {
             result.push({ key: label, value: getLink(fields, paths) });
-          } else if (isRepeater(fields)) {
+          } else if (isRepeater(fields) && metadataToShow.includes(label)) {
             result.push({
               key: label,
               value: getRepeater(fields, labels, metadataToShow, type, label, paths)
