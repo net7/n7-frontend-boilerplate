@@ -31,20 +31,6 @@
         align-items: center;
     }
 
-    &__navigation-prev, &__navigation-next {
-        span {
-            color: $color-text-light;
-            cursor: pointer;
-            font-size: $font-size-xxxl;
-            transition: all $transition-durations;
-
-            &:hover {
-                color: $color-text-link;
-            }
-        }
-    }
-
-    /*
     &__navigation-prev:not(.is-disabled), &__navigation-next:not(.is-disabled) {
         span {
             color: $color-text-light;
@@ -64,8 +50,7 @@
             font-size: $font-size-xxxl;
         }
     }
-    */
-
+    
     &__navigation-select {
         text-align: center;
 

@@ -8,14 +8,29 @@
         [height]="'90vh'"
         [useBrowserLocale]="true"
         [textLayer]="true"
+        [showToolbar]="true"
+        [showSidebarButton]="true"
+        [showFindButton]="true"
+        [showPagingButtons]="true"
+        [showZoomButtons]="true"
+        [showPresentationModeButton]="true"
         [showHandToolButton]="true"
+        [showOpenFileButton]="false"
+        [showPrintButton]="false"
+        [showDownloadButton]="false"
+        [showBookmarkButton]="false"
+        [showSecondaryToolbarButton]="true"
+        [showRotateButton]="false"
+        [showScrollingButton]="false"
+        [showSpreadButton]="false"
+        [showPropertiesButton]="false"
         (pdfLoaded)="onLoaded()"
         (pdfLoadingFailed)="onLoaded()">
     </ngx-extended-pdf-viewer>
     
     <div *ngIf="data.items.length > 1" class="aw-pdf-viewer__navigation">
         <div class="aw-pdf-viewer__navigation-tools">
-            <a class="aw-pdf-viewer__navigation-prev {{ !data.prev ? 'is-disabled' : '' }}" 
+            <a class="aw-pdf-viewer__navigation-prev {{ (!data.prev && data.prev !== 0) ? 'is-disabled' : '' }}" 
             (click)="onClick(data.prev)">
                 <span class="n7-icon-angle-left"></span>
             </a>
