@@ -233,7 +233,7 @@ export default {
   'oggetto-culturale.legende': 'Legende',
   'oggetto-culturale.statoConservazione': 'Stato di conservazione',
   'oggetto-culturale.riproduzioneEsistente': 'Riproduzioni esistenti',
-  'oggetto-culturale.riproduzioneEsistente.tipologia': 'Riproduzione esistente',
+  'oggetto-culturale.riproduzioneEsistente.tipologia': 'Tipologia',
   // 'oggetto-culturale.corredoRicerca.tipologia': 'Strumento di corredo e ricerca',
   // 'oggetto-culturale.corredoRicerca.riferimento': 'Strumento di corredo e ricerca - riferimento',
   // 'oggetto-culturale.corredoRicerca.descrizione': 'Strumento di corredo e ricerca - descrizione',
