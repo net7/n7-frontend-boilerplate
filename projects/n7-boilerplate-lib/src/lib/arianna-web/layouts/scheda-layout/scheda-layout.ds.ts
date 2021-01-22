@@ -312,10 +312,13 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       if (this.digitalObjects[payload].type === 'external' && this.currentDigitalObject) {
         window.open(this.digitalObjects[payload].url, '_blank');
       } else {
+        // always reset image viewer
+        const schedaImageDS = this.getWidgetDataSource('aw-scheda-image');
+        schedaImageDS.reset();
+
         this.currentDigitalObjectIndex = payload;
         this.currentDigitalObject = this.digitalObjects[payload];
         if (this.currentDigitalObject.type.includes('images')) {
-          const schedaImageDS = this.getWidgetDataSource('aw-scheda-image');
           if (schedaImageDS.hasInstance()) {
             schedaImageDS.updateImages(this.currentDigitalObject);
           } else {
