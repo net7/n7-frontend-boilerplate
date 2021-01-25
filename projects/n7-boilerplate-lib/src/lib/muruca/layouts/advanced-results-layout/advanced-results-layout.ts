@@ -4,6 +4,7 @@ import { AbstractLayout } from '../../../common/models/abstract-layout';
 import { LayoutsConfigurationService } from '../../../common/services/layouts-configuration.service';
 import { MainStateService } from '../../../common/services/main-state.service';
 import { ConfigurationService } from '../../../common/services/configuration.service';
+import { CommunicationService } from '../../../common/services/communication.service';
 import { MrAdvancedResultsLayoutConfig as config } from './advanced-results-layout.config';
 import { MrLayoutStateService } from '../../services/layout-state.service';
 
@@ -19,6 +20,7 @@ export class MrAdvancedResultsLayoutComponent extends AbstractLayout implements 
     private activatedRoute: ActivatedRoute,
     private mainState: MainStateService,
     private configuration: ConfigurationService,
+    private communication: CommunicationService,
     public layoutState: MrLayoutStateService,
     layoutsConfiguration: LayoutsConfigurationService,
     ) {
@@ -29,6 +31,7 @@ export class MrAdvancedResultsLayoutComponent extends AbstractLayout implements 
       return {
         configId: this.configId,
         configuration: this.configuration,
+        communication: this.communication,
         mainState: this.mainState,
         router: this.router,
         activatedRoute: this.activatedRoute,

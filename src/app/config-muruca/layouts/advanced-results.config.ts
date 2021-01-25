@@ -1,4 +1,5 @@
 export default {
+  searchId: 'advanced_search',
   title: 'Ricerca avanzata',
   resourcePath: '/work',
   totalResultsText: 'search#works_total',

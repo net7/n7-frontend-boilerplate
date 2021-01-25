@@ -10,23 +10,23 @@ export default {
         label: 'Group 1',
         isOpen: true
       }
-    }, {
+    }, /* {
       id: 'group-2',
       sections: ['section-2'],
       classes: 'form-group-2',
       options: {
         label: 'Group 2...'
       }
-    }],
+    } */],
     sections: [{
       id: 'section-1',
       title: '__Section 1__',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
       inputs: [{
-        id: 'input-1',
+        id: 'query',
         type: 'text',
         data: {
-          id: 'input-1',
+          id: 'query',
           label: 'QUERY',
           placeholder: 'Cerca in tutti i campi...',
           icon: 'n7-icon-search',
@@ -40,6 +40,23 @@ export default {
           hidden: false
         }
       }, {
+        id: 'author',
+        type: 'text',
+        data: {
+          id: 'author',
+          label: 'AUTHOR',
+          placeholder: 'Cerca tra gli autori...',
+          icon: 'n7-icon-search',
+          inputPayload: 'search-input',
+          enterPayload: 'search-enter',
+          iconPayload: 'search-icon',
+        },
+        state: {
+          value: '',
+          disabled: false,
+          hidden: false
+        }
+      }/* , {
         id: 'checkbox-1',
         type: 'checkbox',
         data: {
@@ -100,7 +117,7 @@ export default {
           disabled: false,
           hidden: false
         }
-      }, /* {
+      }, {
         id: 'input-3',
         type: 'tag',
         data: {

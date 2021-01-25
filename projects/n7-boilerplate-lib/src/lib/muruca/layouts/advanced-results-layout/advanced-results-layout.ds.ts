@@ -1,21 +1,8 @@
 import { LayoutDataSource, _t } from '@n7-frontend/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ConfigurationService } from '../../../common/services/configuration.service';
 import { CommunicationService } from '../../../common/services/communication.service';
 import { MainStateService } from '../../../common/services/main-state.service';
-
-const RESPONSE_MOCK = {
-  limit: 12,
-  offset: 0,
-  sort: 'sort_ASC',
-  // eslint-disable-next-line @typescript-eslint/camelcase
-  total_count: 2,
-  results: [{
-    title: 'Città del Vaticano, Biblioteca Apostolica Vaticana, Vat. lat. 2193', text: null, metadata: [{ items: [{ label: 'data', value: '1330-1340' }, { label: 'origine', value: 'Italia (Verona)\n' }, { label: null }] }], image: null, id: 180, link: '/libro/180/citta-del-vaticano-biblioteca-apostolica-vaticana-lat-2193'
-  }, {
-    title: 'Città del Vaticano, Biblioteca Apostolica Vaticana, Lat. 3199', text: null, metadata: [{ items: [{ label: 'data', value: '1340 ca.' }, { label: 'origine', value: 'Italia (Firenze?)\n' }, { label: null }] }], image: null, id: 563, link: '/libro/563/citta-del-vaticano-biblioteca-apostolica-vaticana-lat-3199'
-  }]
-};
 
 export class MrAdvancedResultsLayoutDS extends LayoutDataSource {
   protected configuration: ConfigurationService;
@@ -32,6 +19,7 @@ export class MrAdvancedResultsLayoutDS extends LayoutDataSource {
     this.configuration = payload.configuration;
     this.mainState = payload.mainState;
     this.configId = payload.configId;
+    this.communication = payload.communication;
     this.pageConfig = this.configuration.get(this.configId);
 
     // config
@@ -48,11 +36,27 @@ export class MrAdvancedResultsLayoutDS extends LayoutDataSource {
   }
 
   request$(params, onError): Observable<any> {
-    // FIXME: connect API
-    // return this.communication.request$('advancedSearch', { params, onError });
-    console.warn('FIXME: connect API', params, onError);
-
-    return of(RESPONSE_MOCK);
+    const { searchId } = this.pageConfig;
+    Object.keys(params)
+      .filter((key) => ['page', 'limit', 'sort'].includes(key))
+      .forEach((key) => {
+        params.results = params.results || {};
+        params.results[key] = params[key];
+        delete params[key];
+      });
+    return this.communication.request$('advancedSearch', {
+      method: 'POST',
+      params: {
+        ...params,
+        searchId,
+        results: {
+          sort: 'sort_ASC',
+          offset: 0,
+          limit: 12
+        }
+      },
+      onError
+    });
   }
 
   handleResponse(response) {
