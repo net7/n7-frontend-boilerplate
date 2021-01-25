@@ -23,14 +23,6 @@ export class MrFormWrapperAccordionDS extends DataSource {
     return data;
   }
 
-  onReset() {
-    const { form } = this.output;
-    const inputs = form.getInputs();
-    Object.keys(inputs).forEach((id) => {
-      inputs[id].clear();
-    });
-  }
-
   toggleGroup(groupId) {
     this.output.form.config.groups.forEach((group) => {
       if (group.id === groupId) {

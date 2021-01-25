@@ -1,20 +1,27 @@
+import { Router } from '@angular/router';
 import { LayoutDataSource, _t } from '@n7-frontend/core';
+import { cloneDeep, isEmpty } from 'lodash';
 import { ConfigurationService } from '../../../common/services/configuration.service';
 import { MainStateService } from '../../../common/services/main-state.service';
 import { MrFormModel } from '../../models/form.model';
 
 export class MrAdvancedSearchLayoutDS extends LayoutDataSource {
-  private configuration: ConfigurationService;
+  protected router: Router;
 
-  private mainState: MainStateService;
+  protected configuration: ConfigurationService;
 
-  private configId: string;
+  protected mainState: MainStateService;
+
+  protected configId: string;
+
+  protected initialState = {};
 
   public pageConfig;
 
   public form: MrFormModel;
 
   onInit(payload) {
+    this.router = payload.router;
     this.configuration = payload.configuration;
     this.mainState = payload.mainState;
     this.configId = payload.configId;
@@ -24,6 +31,8 @@ export class MrAdvancedSearchLayoutDS extends LayoutDataSource {
     this.form = new MrFormModel();
     // form init
     this.form.init(this.pageConfig.formConfig);
+    // set initial state
+    this.initialState = cloneDeep(this.form.getState());
 
     this.one('mr-form-wrapper-accordion').update({
       form: this.form
@@ -33,18 +42,33 @@ export class MrAdvancedSearchLayoutDS extends LayoutDataSource {
     this.updateHeadTitle();
   }
 
-  private updateHeadTitle() {
+  protected updateHeadTitle() {
     const appName = this.configuration.get('name');
     const pageTitle = this.pageConfig.title;
     this.mainState.update('headTitle', [appName, _t(pageTitle)].join(' > '));
   }
 
   onSubmit({ state }) {
-    // do nothing
-    console.warn('onSubmit: to be implemented on project', state);
+    if (!isEmpty(state)) {
+      const { resultsUrl } = this.pageConfig;
+      const params = Object.keys(state)
+        .filter((key) => !(state[key].disabled || isEmpty(state[key].value)))
+        .map((key) => ({
+          key,
+          value: Array.isArray(state[key].value)
+            ? state[key].value.join(',')
+            : state[key].value
+        }))
+        .map(({ key, value }) => `${key}=${encodeURIComponent(value)}`);
+      const url = `${resultsUrl}?${params.join('&')}`;
+      window.open(url, '_blank');
+    }
   }
 
   onReset() {
-    // do nothing
+    Object.keys(this.initialState).forEach((key) => {
+      const inputState = cloneDeep(this.initialState[key]);
+      this.form.getInput(key).setState(inputState);
+    });
   }
 }

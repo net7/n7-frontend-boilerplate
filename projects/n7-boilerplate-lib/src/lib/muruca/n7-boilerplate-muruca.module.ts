@@ -11,6 +11,7 @@ import { MrResourceModalService } from './services/resource-modal.service';
 import { EscapeHtmlPipe } from './pipes/keep-html.pipe';
 // LAYOUTS
 import { MrAdvancedSearchLayoutComponent } from './layouts/advanced-search-layout/advanced-search-layout';
+import { MrAdvancedResultsLayoutComponent } from './layouts/advanced-results-layout/advanced-results-layout';
 import { MrGlossaryLayoutComponent } from './layouts/glossary-layout/glossary-layout';
 import { MrHomeLayoutComponent } from './layouts/home-layout/home-layout';
 import { MrResourceLayoutComponent } from './layouts/resource-layout/resource-layout';
@@ -34,6 +35,7 @@ const COMPONENTS = [
   MrSearchLayoutComponent,
   MrStaticLayoutComponent,
   MrAdvancedSearchLayoutComponent,
+  MrAdvancedResultsLayoutComponent,
   MrTimelineLayoutComponent,
   // Custom components
   ReadMoreComponent,

@@ -5,7 +5,7 @@ import { MrAdvancedSearchLayoutDS } from './advanced-search-layout.ds';
 export class MrAdvancedSearchLayoutEH extends EventHandler {
   dataSource: MrAdvancedSearchLayoutDS;
 
-  private destroy$: Subject<void> = new Subject();
+  protected destroy$: Subject<void> = new Subject();
 
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
@@ -41,7 +41,7 @@ export class MrAdvancedSearchLayoutEH extends EventHandler {
     });
   }
 
-  private listenFormChanges() {
+  protected listenFormChanges() {
     this.dataSource.form.changed$.subscribe(({ id, state }) => {
       // eslint-disable-next-line no-console
       console.log('changed$', { id, state });
