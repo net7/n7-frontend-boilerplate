@@ -149,7 +149,9 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       // reset
       this.currentDigitalObject = null;
       this.currentDigitalObjectIndex = null;
-      this.hasMetadata = Array.isArray(response.fields) && response.fields.length;
+
+      const metadataFields = this.getFields(response);
+      this.hasMetadata = !!(Array.isArray(metadataFields) && metadataFields.length);
       this.hasSimilarItems = Array.isArray(response.relatedItems) && response.relatedItems.length;
       this.hasBreadcrumb = Array.isArray(response.breadcrumbs) && response.breadcrumbs.length;
       this.hasDigitalObjects = (
@@ -197,7 +199,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       };
 
       this.one('aw-scheda-inner-title').update(titleObj);
-      this.one('aw-scheda-metadata').update(this.getFields(response));
+      this.one('aw-scheda-metadata').update(metadataFields);
 
       // Breadcrumb section
       const breadcrumbs = {
@@ -310,10 +312,13 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       if (this.digitalObjects[payload].type === 'external' && this.currentDigitalObject) {
         window.open(this.digitalObjects[payload].url, '_blank');
       } else {
+        // always reset image viewer
+        const schedaImageDS = this.getWidgetDataSource('aw-scheda-image');
+        schedaImageDS.reset();
+
         this.currentDigitalObjectIndex = payload;
         this.currentDigitalObject = this.digitalObjects[payload];
         if (this.currentDigitalObject.type.includes('images')) {
-          const schedaImageDS = this.getWidgetDataSource('aw-scheda-image');
           if (schedaImageDS.hasInstance()) {
             schedaImageDS.updateImages(this.currentDigitalObject);
           } else {

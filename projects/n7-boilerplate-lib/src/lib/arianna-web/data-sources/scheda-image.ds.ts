@@ -1,5 +1,7 @@
 import { DataSource } from '@n7-frontend/core';
 import { ImageViewerData } from '@n7-frontend/components';
+import { interval } from 'rxjs';
+import { filter, first } from 'rxjs/operators';
 
 export class AwSchedaImageDS extends DataSource {
   private instance;
@@ -30,13 +32,23 @@ export class AwSchedaImageDS extends DataSource {
   public updateImages(data) {
     if (!this.instance) return;
 
-    // reset
-    this.instance.world.removeAll();
-
-    setTimeout(() => {
-      const images = this.getTileSources(data.items);
-      this.instance.open(images);
+    // container exists check
+    interval(10).pipe(
+      filter(() => !!document.getElementById(this.output.viewerId)),
+      first()
+    ).subscribe(() => {
+      // reset
+      this.instance.world.removeAll();
+      setTimeout(() => {
+        const images = this.getTileSources(data.items);
+        this.instance.open(images);
+      });
     });
+  }
+
+  public reset() {
+    if (!this.instance) return;
+    this.instance.world.removeAll();
   }
 
   private getTileSources(images) {
