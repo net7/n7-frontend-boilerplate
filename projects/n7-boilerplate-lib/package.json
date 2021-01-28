@@ -9,6 +9,7 @@
     "lodash": "^4.17.15",
     "moment": "^2.26.0",
     "slugify": "^1.4.0",
-    "tippy.js": "^5.1.2"
+    "tippy.js": "^5.1.2",
+    "ngx-extended-pdf-viewer": "^7.3.2"
   }
 }
