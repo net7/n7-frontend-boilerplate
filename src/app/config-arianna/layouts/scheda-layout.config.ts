@@ -25,6 +25,9 @@ export default {
       }
     ]
   },
+  'image-viewer': {
+    'context-menu': false
+  },
   'metadata-to-show': {
     'aggregazione-logica': [
       'estremo_remoto',
