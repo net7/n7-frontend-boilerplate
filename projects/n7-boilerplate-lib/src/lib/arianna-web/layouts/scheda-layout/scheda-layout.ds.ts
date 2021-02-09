@@ -108,6 +108,9 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     const imageViewerConfig = this.configuration.get('scheda-layout')['image-viewer'] || {};
     this.hasContextMenu = () => !!imageViewerConfig['context-menu'];
 
+    // pdf viewer options
+    this.one('aw-scheda-pdf').updateOptions(this.configuration.get('scheda-layout')['pdf-viewer'] || {});
+
     // sidebar sticky control
     this._sidebarStickyControl();
   }

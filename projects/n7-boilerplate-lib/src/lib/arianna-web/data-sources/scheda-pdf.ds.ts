@@ -1,5 +1,25 @@
 import { DataSource } from '@n7-frontend/core';
+import { merge } from 'lodash';
 import { PdfViewerData } from '../components';
+
+const DEFAULT_OPTIONS = {
+  showToolbar: true,
+  showSidebarButton: true,
+  showFindButton: true,
+  showPagingButtons: true,
+  showZoomButtons: true,
+  showPresentationModeButton: true,
+  showOpenFileButton: false,
+  showPrintButton: false,
+  showDownloadButton: false,
+  showBookmarkButton: false,
+  showSecondaryToolbarButton: true,
+  showRotateButton: false,
+  showHandToolButton: true,
+  showScrollingButton: false,
+  showSpreadButton: false,
+  showPropertiesButton: false
+};
 
 export class AwSchedaPdfDS extends DataSource {
   private items: {
@@ -10,6 +30,10 @@ export class AwSchedaPdfDS extends DataSource {
 
   protected transform(data): PdfViewerData {
     const { items } = data;
+    const libOptions = merge(
+      DEFAULT_OPTIONS,
+      this.options.libOptions || {}
+    );
     if (!(Array.isArray(items) && items.length)) {
       return null;
     }
@@ -19,12 +43,15 @@ export class AwSchedaPdfDS extends DataSource {
       selected: index === 0
     }));
 
+    console.log('libOptions----------------------------->', libOptions);
+
     // defaults
     return {
+      libOptions,
       items: this.items,
       next: 1,
       prev: null,
-      currentUrl: items[0].url
+      currentUrl: items[0].url,
     };
   }
 
