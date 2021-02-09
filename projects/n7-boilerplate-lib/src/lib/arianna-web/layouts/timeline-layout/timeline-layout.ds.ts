@@ -4,24 +4,6 @@ import { BehaviorSubject } from 'rxjs';
 
 type LayoutState = 'LOADING' | 'EMPTY' | 'SUCCESS';
 
-const timelineMock = [
-  {
-    id: 'c67b3a8b-5ec9-4c82-b77c-6142e49cfad4',
-    content: 'Mostra internazionale di edilizia ospedaliera, Roma (1935)',
-    start: '1935'
-  },
-  {
-    id: 'b788bca1-ce11-4618-b283-a654d16b4a10',
-    content: 'Mostra di edilizia ospedaliera, Fiuggi',
-    start: '1942'
-  },
-  {
-    id: '5dae76e3-7bde-46e5-8371-a689e38378a4',
-    content: 'I Congresso mondiale di sociologia',
-    start: '1951'
-  }
-];
-
 export class AwTimelineLayoutDS extends LayoutDataSource {
   protected configuration: any;
 
@@ -64,16 +46,13 @@ export class AwTimelineLayoutDS extends LayoutDataSource {
       params: {},
       onError: (err) => {
         console.warn(err);
-
-        // FIXME: togliere
-        this.one('aw-timeline').update(timelineMock);
       }
     }).subscribe((response) => {
       this.one('aw-timeline').update(response);
     });
   }
 
-  onTimelineClick({ id, label }) {
+  onTimelineClick({ id, label, dateText }) {
     if (isNull(id)) {
       this.currentId = null;
       this.clearResults();
@@ -97,7 +76,10 @@ export class AwTimelineLayoutDS extends LayoutDataSource {
 
         this.one('aw-scheda-inner-title').update({
           title: {
-            main: { text }
+            main: { text },
+            secondary: dateText ? {
+              text: dateText
+            } : null
           }
         });
 

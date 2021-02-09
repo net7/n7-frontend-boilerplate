@@ -33,9 +33,12 @@ export class AwTimelineEH extends EventHandler {
         timeline.on('click', ({ item }) => {
           const clicked = dataSet.find(({ id }) => item === id);
           if (clicked) {
+            const { dateText } = clicked._meta;
+            const { id, label } = clicked.item;
             this.emitOuter('click', {
-              id: clicked.item.id,
-              label: clicked.item.label
+              id,
+              label,
+              dateText,
             });
           } else {
             this.emitOuter('click', {
