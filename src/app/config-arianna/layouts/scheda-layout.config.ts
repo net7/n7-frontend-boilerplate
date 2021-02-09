@@ -28,6 +28,26 @@ export default {
   'image-viewer': {
     'context-menu': false
   },
+  'pdf-viewer': {
+    libOptions: {
+      // showToolbar: true,
+      // showSidebarButton: true,
+      // showFindButton: true,
+      // showPagingButtons: true,
+      // showZoomButtons: true,
+      // showPresentationModeButton: true,
+      // showOpenFileButton: false,
+      // showPrintButton: false,
+      // showDownloadButton: false,
+      // showBookmarkButton: false,
+      // showSecondaryToolbarButton: true,
+      // showRotateButton: false,
+      // showHandToolButton: true,
+      // showScrollingButton: false,
+      // showSpreadButton: false,
+      // showPropertiesButton: false
+    }
+  },
   'metadata-to-show': {
     'aggregazione-logica': [
       'estremo_remoto',
