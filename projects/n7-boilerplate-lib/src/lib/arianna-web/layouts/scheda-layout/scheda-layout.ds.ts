@@ -76,6 +76,8 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
   public externalUrlText: string;
 
+  public hasContextMenu: () => boolean;
+
   onInit({
     configuration, mainState, router, options, titleService, communication,
   }) {
@@ -101,6 +103,10 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     this.mainState.update('headTitle', 'Arianna4View - Patrimonio');
     this.mainState.update('pageTitle', 'Arianna4View - Patrimonio');
     this.mainState.updateCustom('currentNav', 'patrimonio');
+
+    // image viewer context-menu check
+    const imageViewerConfig = this.configuration.get('scheda-layout')['image-viewer'] || {};
+    this.hasContextMenu = () => !!imageViewerConfig['context-menu'];
 
     // sidebar sticky control
     this._sidebarStickyControl();

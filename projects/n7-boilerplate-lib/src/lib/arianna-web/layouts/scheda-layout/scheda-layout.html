@@ -100,13 +100,17 @@
         <ng-container [ngSwitch]="$do.type">
             <!-- IMAGE VIEWER (IIIF) -->
             <ng-container *ngSwitchCase="'images-iiif'">
-                <n7-image-viewer [data]="lb.widgets['aw-scheda-image'].ds.out$ | async">
+                <n7-image-viewer 
+                (contextmenu)="lb.dataSource.hasContextMenu()" 
+                [data]="lb.widgets['aw-scheda-image'].ds.out$ | async">
                 </n7-image-viewer>
             </ng-container>
 
             <!-- IMAGE VIEWER (Simple: jpg, png) -->
             <ng-container *ngSwitchCase="'images-simple'">
-                <n7-image-viewer [data]="lb.widgets['aw-scheda-image'].ds.out$ | async">
+                <n7-image-viewer 
+                (contextmenu)="lb.dataSource.hasContextMenu()"
+                [data]="lb.widgets['aw-scheda-image'].ds.out$ | async">
                 </n7-image-viewer>
             </ng-container>
     
