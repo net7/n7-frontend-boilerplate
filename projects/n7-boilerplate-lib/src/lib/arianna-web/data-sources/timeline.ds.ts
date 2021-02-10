@@ -23,7 +23,10 @@ export class AwTimelineDS extends DataSource {
       item,
       start: start ? moment(start).format('YYYY-MM-DD') : null,
       end: end && end !== start ? moment(end).format('YYYY-MM-DD') : null,
-      content: this.getItemTemplate(label, item.label)
+      content: this.getItemTemplate(label, item.label),
+      _meta: {
+        dateText: label
+      }
     }));
 
     const max = this.getMax();
