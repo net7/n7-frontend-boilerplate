@@ -8,7 +8,6 @@
 /* ------------------------------------ *\
     MULTIMEDIA
 \* ------------------------------------ */
-
 .aw-multimedia {
     background-color: $color-background-light;
     /* Timeline */
@@ -71,10 +70,10 @@
             }
         }
         .n7-inner-title__subtitle {
+            padding-top: $space/4;
             font-size: $font-size-l;
             font-style: italic;
             color: $color-gray-04;
-            padding-top: $space/4;
         }
         .aw-multimedia__results-title-big {
             font-weight: $font-weight-bold;
@@ -125,6 +124,5 @@
 
 
 /* Retina */
-
 @media (-webkit-min-device-pixel-ratio: 2),
     (min-resolution: 192dpi) {}
