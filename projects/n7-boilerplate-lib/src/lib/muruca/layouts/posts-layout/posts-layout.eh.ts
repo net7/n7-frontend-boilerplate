@@ -20,7 +20,7 @@ export class MrPostsLayoutEH extends EventHandler {
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
-        case 'mr-advanced-results-layout.init':
+        case 'mr-posts-layout.init':
           this.activatedRoute = payload.activatedRoute;
           this.router = payload.router;
           this.layoutState = payload.layoutState;
@@ -30,7 +30,7 @@ export class MrPostsLayoutEH extends EventHandler {
           this.listenToRouterChanges();
           break;
 
-        case 'mr-advanced-results-layout.destroy':
+        case 'mr-posts-layout.destroy':
           this.destroy$.next();
           break;
 

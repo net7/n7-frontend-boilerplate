@@ -6,7 +6,7 @@ import * as DS from '../../data-sources';
 import * as EH from '../../event-handlers';
 
 export const MrPostsLayoutConfig = {
-  layoutId: 'mr-advanced-results-layout',
+  layoutId: 'mr-posts-layout',
   widgets: [
     {
       id: 'mr-search-page-title'
