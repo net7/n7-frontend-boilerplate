@@ -12,7 +12,8 @@ export class MrAdvancedSearchLayoutEH extends EventHandler {
       switch (type) {
         case 'mr-advanced-search-layout.init':
           this.dataSource.onInit(payload);
-          this.listenFormChanges();
+          // init hook
+          this.onInit();
           break;
 
         case 'mr-advanced-search-layout.destroy':
@@ -43,13 +44,13 @@ export class MrAdvancedSearchLayoutEH extends EventHandler {
 
   /**
    * @example
-   * protected listenFormChanges() {
+   * protected onInit() {
    *   this.dataSource.form.changed$.subscribe(({ id, state }) => {
    *     console.log('changed$', { id, state });
    *   });
    * }
    */
-  protected listenFormChanges() {
+  protected onInit() {
     // to be extended on project
   }
 }
