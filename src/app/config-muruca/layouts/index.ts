@@ -10,6 +10,7 @@ import resourceWitnessConfig from './resource-witness.config';
 import searchWitnessesConfig from './search-witnesses.config';
 import resourceModalBibliography_witConfig from './resource-modal-bibliography_wit.config';
 import advancedSearchConfig from './advanced-search.config';
+import advancedSearchFullConfig from './advanced-search-full.config';
 import advancedResultsConfig from './advanced-results.config';
 
 export default {
@@ -24,5 +25,6 @@ export default {
   'resource-witness': resourceWitnessConfig,
   'resource-modal-bibliography_wit': resourceModalBibliography_witConfig,
   'advanced-search': advancedSearchConfig,
+  'advanced-search-full': advancedSearchFullConfig,
   'advanced-results': advancedResultsConfig
 };
