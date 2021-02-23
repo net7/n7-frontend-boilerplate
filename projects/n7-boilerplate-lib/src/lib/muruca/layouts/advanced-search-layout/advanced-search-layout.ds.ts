@@ -27,6 +27,9 @@ export class MrAdvancedSearchLayoutDS extends LayoutDataSource {
     this.configId = payload.configId;
     this.pageConfig = this.configuration.get(this.configId);
 
+    // add translations
+    this.addTranslations(this.pageConfig.formConfig);
+
     // init form
     this.form = new MrFormModel();
     // form init
@@ -69,6 +72,50 @@ export class MrAdvancedSearchLayoutDS extends LayoutDataSource {
     Object.keys(this.initialState).forEach((key) => {
       const inputState = cloneDeep(this.initialState[key]);
       this.form.getInput(key).setState(inputState);
+    });
+  }
+
+  protected addTranslations(formConfig) {
+    // submit
+    if (formConfig.submitButton) {
+      formConfig.submitButton.label = _t(formConfig.submitButton.label);
+    }
+    // reset
+    if (formConfig.resetButton) {
+      formConfig.resetButton.label = _t(formConfig.resetButton.label);
+    }
+
+    formConfig.sections.forEach((section) => {
+      if (section.title) {
+        section.title = _t(section.title);
+      }
+      if (section.description) {
+        section.description = _t(section.description);
+      }
+      section.inputs.forEach((input) => {
+        if (input.data.label) {
+          input.data.label = _t(input.data.label);
+        }
+
+        // input text
+        if (input.type === 'text') {
+          if (input.data.placeholder) {
+            input.data.placeholder = _t(input.data.placeholder);
+          }
+        }
+        // input checkbox
+        if (input.type === 'checkbox') {
+          input.data.checkboxes.forEach((checkbox) => {
+            checkbox.label = _t(checkbox.label);
+          });
+        }
+        // input select
+        if (input.type === 'select') {
+          input.data.options.forEach((option) => {
+            option.label = _t(option.label);
+          });
+        }
+      });
     });
   }
 }

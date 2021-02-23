@@ -2,6 +2,12 @@ export default {
   title: 'Ricerca avanzata',
   resultsUrl: '/advanced-results',
   formConfig: {
+    submitButton: {
+      label: 'advancedsearch#submit',
+    },
+    resetButton: {
+      label: 'advancedsearch#reset',
+    },
     groups: [{
       id: 'group-1',
       sections: ['section-1'],
@@ -10,25 +16,18 @@ export default {
         label: 'Group 1',
         isOpen: true
       }
-    }, /* {
-      id: 'group-2',
-      sections: ['section-2'],
-      classes: 'form-group-2',
-      options: {
-        label: 'Group 2...'
-      }
-    } */],
+    }],
     sections: [{
       id: 'section-1',
-      title: '__Section 1__',
+      title: 'advancedsearch#section1_title',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
       inputs: [{
         id: 'query',
         type: 'text',
         data: {
           id: 'query',
-          label: 'QUERY',
-          placeholder: 'Cerca in tutti i campi...',
+          label: 'advancedsearch#query_label',
+          placeholder: 'advancedsearch#query_placeholder',
           icon: 'n7-icon-search',
           inputPayload: 'search-input',
           enterPayload: 'search-enter',
@@ -44,8 +43,8 @@ export default {
         type: 'text',
         data: {
           id: 'author',
-          label: 'AUTHOR',
-          placeholder: 'Cerca tra gli autori...',
+          label: 'advancedsearch#author_label',
+          placeholder: 'advancedsearch#author_placeholder',
           icon: 'n7-icon-search',
           inputPayload: 'search-input',
           enterPayload: 'search-enter',
@@ -56,18 +55,21 @@ export default {
           disabled: false,
           hidden: false
         }
-      }/* , {
+      }, {
         id: 'checkbox-1',
         type: 'checkbox',
         data: {
           id: 'checkbox-1',
-          checkboxes: [1, 2, 3, 4].map((number) => ({
-            label: `check ${number}`,
-            payload: number,
-          }))
+          checkboxes: [{
+            label: 'advancedsearch#test_checkbox_1',
+            payload: 1,
+          }, {
+            label: 'advancedsearch#test_checkbox_2',
+            payload: 2,
+          }]
         },
         state: {
-          value: [3, 4],
+          value: [1],
           disabled: false,
           hidden: false
         }
@@ -80,15 +82,15 @@ export default {
           payload: 'select-1-payload',
           options: [{
             value: 'italia',
-            label: 'Italia',
+            label: 'advancedsearch#test_select_italia',
             disabled: false
           }, {
             value: 'germania',
-            label: 'Germania',
+            label: 'advancedsearch#test_select_germania',
             disabled: false
           }, {
             value: 'francia',
-            label: 'Francia',
+            label: 'advancedsearch#test_select_francia',
             disabled: true
           }]
         },
@@ -98,37 +100,6 @@ export default {
           hidden: false
         }
       }]
-    }, {
-      id: 'section-2',
-      inputs: [{
-        id: 'input-2',
-        type: 'text',
-        data: {
-          id: 'input-2',
-          label: 'AUTHORS',
-          placeholder: 'Cerca tra gli autori...',
-          icon: 'n7-icon-search',
-          inputPayload: 'search-input',
-          enterPayload: 'search-enter',
-          iconPayload: 'search-icon',
-        },
-        state: {
-          value: 'in attesa del campo padre',
-          disabled: false,
-          hidden: false
-        }
-      }, {
-        id: 'input-3',
-        type: 'tag',
-        data: {
-          label: 'label: ',
-          text: 'text',
-          icon: 'n7-icon-close',
-          payload: {
-            value: 'tag value!'
-          },
-        }
-      } */]
     }]
   }
 };
