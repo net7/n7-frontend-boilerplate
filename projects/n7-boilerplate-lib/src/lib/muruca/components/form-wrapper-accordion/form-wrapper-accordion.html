@@ -25,7 +25,11 @@
     </ng-container>
     
     <div class="mr-form-wrapper__actions">
-        <a class="n7-btn n7-btn-danger" (click)="onReset()">RESET</a>
-        <a class="n7-btn n7-btn-info" (click)="onSubmit()">SUBMIT</a>
+        <a *ngIf="data.form.config.resetButton" 
+            class="n7-btn n7-btn-danger" 
+            (click)="onReset()">{{ data.form.config.resetButton.label }}</a>
+        <a *ngIf="data.form.config.submitButton" 
+            class="n7-btn n7-btn-info" 
+            (click)="onSubmit()">{{ data.form.config.submitButton.label }}</a>
     </div>
 </div>
