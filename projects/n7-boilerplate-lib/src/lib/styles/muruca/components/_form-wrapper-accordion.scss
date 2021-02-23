@@ -8,23 +8,59 @@
    #FORM-WRAPPER-ACCORDION
 \* ------------------------------------ */
 .mr-form-wrapper-accordion {
+    margin-bottom: 32px;
+
     &__header {
-        background-color: $color-background-base;
-        border-radius: $border-radius;
+        margin-bottom: $space*2;
+        background-color: $color-background-light;
+        // background-color: $color-third;
+        // background-color: $color-second;
+        // background-color: $color-gray-04;
+        border: 1px solid $color-border-light;
+        border-radius: $border-radius*2;
+        @include cardShadow;
+        transition: all $transition-durations;
+
+        &:hover {
+            @include cardShadowHover;
+            // background-color: darken( $color-third, 10 );
+            // background-color: darken( $color-background-light, 5 );
+            
+            .n7-facet-header__icon-right {
+                // color: $color-text-inverse;
+            }
+        }
 
         .n7-facet-header  {
+            height: 50px;
+            border-top: 0;
+        }
 
+        .n7-facet-header__text-wrapper {
+            padding: 0 $space*2;
         }
 
         .n7-facet-header__text {
             font-family: $font-family-main;
             font-weight: $font-weight-bold;
-            font-size: $font-size-xl;
+            font-size: $font-size-l;
+            line-height: 50px;
+            // color: $color-text-inverse;
+            color: $color-text;
+        }
+
+        .n7-facet-header__icon-right {
+            width: 50px;
+            line-height: 50px;
+            // color: $color-text-inverse;
+            color: $color-text;
+            font-size: $font-size-xxl;
         }
     }
 
     &__content {
-
+        padding: 0 $space*2;
+        margin-bottom: $space*4;
     }
 }
 
