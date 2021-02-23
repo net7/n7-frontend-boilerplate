@@ -3,15 +3,6 @@ export default {
   title: 'Lista Articoli',
   resourcePath: '/list/posts',
   totalResultsText: 'search#works_total',
-  filters: {
-    title: 'posts#filters_title',
-    labels: {
-      query: 'posts#query_label',
-      author: 'posts#author_label',
-      'checkbox-1': 'posts#checkbox_1',
-      'select-1': 'posts#select_1'
-    }
-  },
   grid: 1,
   sort: {
     label: 'search#sort_title',
