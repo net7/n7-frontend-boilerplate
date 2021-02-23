@@ -26,6 +26,13 @@ export default {
         options: {
           label: 'Contenuto'
         }
+      },
+      {
+        id: 'group-4',
+        sections: ['section-4'],
+        options: {
+          label: 'Contenuto'
+        }
       }
     ],
     sections: [
@@ -155,6 +162,7 @@ export default {
       },
       {
         id: 'section-2',
+        advancedSection: true,
         inputs: [
           {
             id: 'input-2',
@@ -249,6 +257,92 @@ export default {
               }
             }
           } */
+        ]
+      },
+      {
+        id: 'section-4',
+        inputs: [
+          {
+            id: 'input-31',
+            type: 'text',
+            data: {
+              id: 'input-31',
+              label: 'Trascrizione',
+              placeholder: 'Cerca nel testo...',
+              icon: 'n7-icon-search',
+              inputPayload: 'search-input',
+              enterPayload: 'search-enter',
+              iconPayload: 'search-icon',
+            },
+            state: {
+              value: '',
+              disabled: false,
+              hidden: false
+            }
+          },
+          {
+            id: 'input-31',
+            type: 'text',
+            data: {
+              id: 'input-31',
+              label: 'Trascrizione',
+              placeholder: 'Cerca nel testo...',
+              icon: 'n7-icon-search',
+              inputPayload: 'search-input',
+              enterPayload: 'search-enter',
+              iconPayload: 'search-icon',
+            },
+            state: {
+              value: '',
+              disabled: false,
+              hidden: false
+            }
+          },
+          {
+            id: 'input-31',
+            type: 'text',
+            data: {
+              id: 'input-31',
+              label: 'Trascrizione',
+              placeholder: 'Cerca nel testo...',
+              icon: 'n7-icon-search',
+              inputPayload: 'search-input',
+              enterPayload: 'search-enter',
+              iconPayload: 'search-icon',
+            },
+            state: {
+              value: '',
+              disabled: false,
+              hidden: false
+            }
+          },
+          {
+            id: 'select-31',
+            type: 'select',
+            data: {
+              id: 'select-31',
+              label: 'Dove cercare',
+              payload: 'select-1-payload',
+              options: [{
+                value: 'note',
+                label: 'note',
+                disabled: false
+              }, {
+                value: 'apparato',
+                label: 'apparato',
+                disabled: false
+              }, {
+                value: 'tutto',
+                label: 'tutto',
+                disabled: false
+              }]
+            },
+            state: {
+              value: null,
+              disabled: false,
+              hidden: false
+            }
+          }
         ]
       }
     ]

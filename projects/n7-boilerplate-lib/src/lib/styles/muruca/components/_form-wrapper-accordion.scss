@@ -1,0 +1,76 @@
+/**
+ * FORM WRAPPER ACCORDION
+ *
+ * Accordion for the advanced search form.
+ */
+
+/* ------------------------------------ *\
+   #FORM-WRAPPER-ACCORDION
+\* ------------------------------------ */
+.mr-form-wrapper-accordion {
+    margin-bottom: 32px;
+
+    &__header {
+        margin-bottom: $space*3;
+        background-color: $color-background-base;
+        border: 1px solid $color-border-light;
+        border-radius: $border-radius*2;
+        @include cardShadow;
+        transition: all $transition-durations;
+
+        &:hover {
+            @include cardShadowHover;
+            background-color: $color-background-light;
+            
+            .n7-facet-header__icon-right {
+                // color: $color-text-inverse;
+            }
+        }
+
+        .n7-facet-header  {
+            height: $form-wrapper-accordion-header-height;
+            border-top: 0;
+        }
+
+        .n7-facet-header__text-wrapper {
+            padding: 0 $space*2;
+        }
+
+        .n7-facet-header__text {
+            font-family: $font-family-main;
+            font-weight: $font-weight-bold;
+            font-size: $font-size-l;
+            line-height: $form-wrapper-accordion-header-height;
+            color: $color-text;
+        }
+
+        .n7-facet-header__icon-right {
+            width: $form-wrapper-accordion-header-height;
+            line-height: $form-wrapper-accordion-header-height;
+            color: $color-text;
+            font-size: $font-size-xxl;
+        }
+    }
+
+    &__content {
+        padding: 0 $space*2;
+        margin-bottom: $space*4;
+    }
+}
+
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: $footer-breakpoint-desktop) {
+}
+
+@media all and (max-width: $breakpoint-ipad-portrait) {
+}
+
+@media all and (max-width: $footer-breakpoint-mobile) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}
