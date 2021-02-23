@@ -1,0 +1,46 @@
+/**
+ * FORM WRAPPER ACCORDION
+ *
+ * Accordion for the advanced search form.
+ */
+
+/* ------------------------------------ *\
+   #FORM-WRAPPER-ACCORDION
+\* ------------------------------------ */
+.mr-form-wrapper-accordion {
+    &__header {
+        background-color: $color-background-base;
+        border-radius: $border-radius;
+
+        .n7-facet-header  {
+
+        }
+
+        .n7-facet-header__text {
+            font-family: $font-family-main;
+            font-weight: $font-weight-bold;
+            font-size: $font-size-xl;
+        }
+    }
+
+    &__content {
+
+    }
+}
+
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: $footer-breakpoint-desktop) {
+}
+
+@media all and (max-width: $breakpoint-ipad-portrait) {
+}
+
+@media all and (max-width: $footer-breakpoint-mobile) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}
