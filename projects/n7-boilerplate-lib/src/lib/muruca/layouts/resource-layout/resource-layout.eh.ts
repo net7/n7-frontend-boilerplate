@@ -1,5 +1,5 @@
 import { EventHandler } from '@n7-frontend/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import {
   takeUntil, switchMap, map, tap
@@ -9,6 +9,8 @@ import { MrResourceModalService } from '../../services/resource-modal.service';
 
 export class MrResourceLayoutEH extends EventHandler {
   private route: ActivatedRoute;
+
+  private router: Router;
 
   private layoutState: MrLayoutStateService;
 
@@ -21,6 +23,7 @@ export class MrResourceLayoutEH extends EventHandler {
       switch (type) {
         case 'mr-resource-layout.init': {
           this.route = payload.route;
+          this.router = payload.router;
           this.modalService = payload.modalService;
           const { slug, id } = this.route.snapshot.params;
           const { url } = this.route.snapshot;
@@ -56,6 +59,13 @@ export class MrResourceLayoutEH extends EventHandler {
       }),
       map((params: ParamMap) => params.get('id')),
       switchMap((id) => this.dataSource.pageRequest$(id, (err) => {
+        if (err.status === 404) {
+          // getting not found path
+          const { config } = this.router;
+          const route404 = config.find(({ data }) => data?.id === 'page-404');
+          const path404 = route404?.path || 'page-404';
+          this.router.navigate([path404]);
+        }
         console.warn(`Error loading resource layout for ${id}`, err.message);
         this.dataSource.id = id;
         this.layoutState.set('content', LayoutState.ERROR);

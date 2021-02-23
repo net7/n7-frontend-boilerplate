@@ -51,7 +51,10 @@ export class MrStaticLayoutEH extends EventHandler {
         urlSegments,
         (err: HttpErrorResponse) => {
           if (err.status === 404) {
-            const path404 = this.route.snapshot?.data?.notFoundPath || 'page-404';
+            // getting not found path
+            const { config } = this.router;
+            const route404 = config.find(({ data }) => data?.id === 'page-404');
+            const path404 = route404?.path || 'page-404';
             this.router.navigate([path404]);
           }
           console.warn(`Error loading static layout for ${urlSegments}`, err.message);

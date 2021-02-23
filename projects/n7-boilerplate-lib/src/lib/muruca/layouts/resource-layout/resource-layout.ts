@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AbstractLayout } from '../../../common/models/abstract-layout';
 import { CommunicationService } from '../../../common/services/communication.service';
 import { LayoutsConfigurationService } from '../../../common/services/layouts-configuration.service';
@@ -54,6 +54,7 @@ export class MrResourceLayoutComponent extends AbstractLayout implements OnInit,
     private communication: CommunicationService,
     private mainState: MainStateService,
     private route: ActivatedRoute,
+    private router: Router,
     public layoutState: MrLayoutStateService,
     public modalService: MrResourceModalService
   ) {
@@ -69,7 +70,8 @@ export class MrResourceLayoutComponent extends AbstractLayout implements OnInit,
       layoutState: this.layoutState,
       modalService: this.modalService,
       options: this.config.options || {},
-      route: this.route
+      route: this.route,
+      router: this.router
     };
   }
 
