@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AbstractLayout } from '../../../common/models/abstract-layout';
 import { CommunicationService } from '../../../common/services/communication.service';
 import { ConfigurationService } from '../../../common/services/configuration.service';
@@ -18,6 +18,7 @@ export class MrStaticLayoutComponent extends AbstractLayout implements OnInit, O
     private configuration: ConfigurationService,
     private mainState: MainStateService,
     private route: ActivatedRoute,
+    private router: Router,
     public layoutState: MrLayoutStateService,
     layoutsConfiguration: LayoutsConfigurationService,
   ) {
@@ -31,6 +32,7 @@ export class MrStaticLayoutComponent extends AbstractLayout implements OnInit, O
       mainState: this.mainState,
       layoutState: this.layoutState,
       route: this.route,
+      router: this.router,
       options: this.config.options || {}
     };
   }
