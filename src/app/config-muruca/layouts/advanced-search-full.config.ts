@@ -5,7 +5,7 @@ export default {
     groups: [
       {
         id: 'group-1',
-        sections: ['section-1'],
+        sections: ['section-1', 'section-1-2'],
         classes: 'form-group-1',
         options: {
           label: 'Dati bibliografici (gruppo di campi)',
@@ -109,6 +109,47 @@ export default {
             hidden: false
           }
         }
+        ]
+      },
+      {
+        id: 'section-1-2',
+        inputs: [
+          {
+            id: 'query',
+            type: 'text',
+            data: {
+              id: 'query',
+              label: 'QUERY',
+              placeholder: 'Cerca in tutti i campi...',
+              icon: 'n7-icon-search',
+              inputPayload: 'search-input',
+              enterPayload: 'search-enter',
+              iconPayload: 'search-icon',
+            },
+            state: {
+              value: '',
+              disabled: false,
+              hidden: false
+            }
+          }, {
+            id: 'author',
+            type: 'text',
+            data: {
+              id: 'author',
+              label: 'AUTHOR',
+              placeholder: 'Cerca tra gli autori...',
+              icon: 'n7-icon-search',
+              inputPayload: 'search-input',
+              enterPayload: 'search-enter',
+              iconPayload: 'search-icon',
+            },
+            state: {
+              value: '',
+              disabled: false,
+              hidden: false
+            }
+          }
+
         ]
       },
       {
