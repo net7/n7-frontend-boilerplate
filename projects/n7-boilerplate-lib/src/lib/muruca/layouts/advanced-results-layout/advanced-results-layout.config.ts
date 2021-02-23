@@ -18,6 +18,8 @@ export const MrAdvancedResultsLayoutConfig = {
       id: 'n7-smart-pagination',
       dataSource: SmartPaginationDS,
       eventHandler: SmartPaginationEH,
+    }, {
+      id: 'mr-advanced-search-tags'
     }
   ],
   layoutDS: MrAdvancedResultsLayoutDS,

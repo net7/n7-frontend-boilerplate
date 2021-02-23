@@ -17,6 +17,15 @@
                     [emit]="lb.widgets['mr-search-results-title'].emit">
                     </n7-inner-title>
                 </div>
+                <div *ngIf="lb.dataSource.pageConfig['filters']" class="mr-search__results-filters">
+                    <span *ngIf="lb.dataSource.pageConfig['filters'].title" 
+                    class="mr-search__results-filters-title">{{ lb.dataSource.pageConfig['filters'].title }}</span>
+                    <div class="mr-search__results-filters-wrapper">
+                        <n7-tag *ngFor="let tag of (lb.widgets['mr-advanced-search-tags'].ds.out$ | async)"
+                            [data]="tag">
+                        </n7-tag>
+                    </div>
+                </div>
                 <main class="mr-search__results">
                     <!-- SEARCH RESULTS -->
                     <ng-container [ngSwitch]="layoutState.get$('results') | async">

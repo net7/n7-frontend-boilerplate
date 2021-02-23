@@ -68,10 +68,13 @@ export class MrAdvancedResultsLayoutEH extends EventHandler {
       tap(() => {
         this.layoutState.set('results', LayoutState.LOADING);
       }),
-      switchMap((params) => this.dataSource.request$(params, (error) => {
-        console.warn('Advanced search error', error);
-        this.layoutState.set('results', LayoutState.ERROR);
-      }))
+      switchMap((params) => {
+        this.dataSource.updateSearchTags(params);
+        return this.dataSource.request$(params, (error) => {
+          console.warn('Advanced search error', error);
+          this.layoutState.set('results', LayoutState.ERROR);
+        });
+      })
     ).subscribe((response) => {
       this.dataSource.handleResponse(response);
       this.layoutState.set('results', isEmpty(response.results) ? LayoutState.EMPTY : LayoutState.SUCCESS);
