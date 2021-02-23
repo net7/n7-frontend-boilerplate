@@ -10,8 +10,8 @@ import {
   MrResourceLayoutComponent,
   MrAdvancedSearchLayoutComponent,
   MrAdvancedResultsLayoutComponent,
-  // OTHER
-  // DynamicPathGuard
+  // DynamicPathGuard,
+  MrPostsLayoutComponent
 } from 'n7-boilerplate-lib';
 import { MrTimelineLayoutComponent } from 'n7-boilerplate-lib/lib/muruca/layouts/timeline-layout/timeline-layout';
 
@@ -35,6 +35,7 @@ export const APP_ROUTES: Routes = [
   { path: 'timeline/:id/:slug', component: MrTimelineLayoutComponent, data: { configId: 'timeline' } },
   { path: 'timeline/:id', component: MrTimelineLayoutComponent, data: { configId: 'timeline' } },
   { path: 'timeline', redirectTo: 'timeline/' },
+  { path: 'posts', component: MrPostsLayoutComponent, data: { configId: 'posts' } },
   { path: 'post/:slug', component: MrStaticLayoutComponent },
   { path: 'advanced-search', component: MrAdvancedSearchLayoutComponent, data: { configId: 'advanced-search' } },
   { path: 'advanced-search-full', component: MrAdvancedSearchLayoutComponent, data: { configId: 'advanced-search-full' } },

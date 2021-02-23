@@ -1,0 +1,133 @@
+/**
+ * FORM
+ *
+ * Form used in advanced search.
+ */
+
+/* ------------------------------------ *\
+   #FORM
+\* ------------------------------------ */
+.mr-form {
+    &__section {
+
+    }
+
+    &__section-header {
+        margin-bottom: $space*4;
+    }
+
+    &__section-title {
+        margin-bottom: $space;        
+        font-size: $font-size-xl;
+        font-family: $font-family-main;
+        font-family: $font-family-headings;
+        font-weight: $font-weight-black;
+        // color: $color-second;
+        // color: $color-third;
+        color: $color-text;
+    }
+
+    &__section-description {
+        font-weight: $font-weight-normal;
+        font-size: $font-size-s;
+    }
+
+    &__element {
+        margin-bottom: $space*3;
+    }
+
+    .n7-input-text {
+
+    }
+
+    .n7-input-text__label {
+        font-weight: $font-weight-bold;
+    }
+
+    .n7-input-text__wrapper {
+
+    }
+
+    .n7-input-text__text {
+
+    }
+
+    .n7-input-select {
+        display: flex;
+        align-items: center;
+
+        label {
+            margin-bottom: 0;
+            margin-right: $space;    
+        }
+    }
+
+    .n7-input-checkbox {
+        display: flex;
+        align-items: center;
+    }
+
+    .n7-input-checkbox__input {
+        margin-right: $space;
+    }
+
+    .n7-input-checkbox__label {
+        margin-bottom: 0;
+        margin-right: $space;
+    }
+}
+
+
+/* ------------------------------------ *\
+   #NOT:ADVANCED-SECTION
+\* ------------------------------------ */
+.mr-form {
+    &__section:not( .mr-form__section-advanced ) {    
+        .n7-input-text__label {
+            font-size: $font-size-l;
+            font-family: $font-family-main;
+            font-weight: $font-weight-black;
+            // color: $color-second;
+            color: $color-third;
+        }
+    }
+}
+
+
+/* ------------------------------------ *\
+   #ADVANCED-SECTION
+\* ------------------------------------ */
+/*  */
+.mr-form {
+    &__section-advanced {
+        .mr-form__section-title {
+            margin-bottom: $space;
+            font-size: $font-size-l;
+            font-family: $font-family-main;
+            font-weight: $font-weight-black;
+            // color: $color-second;
+            color: $color-third;
+        }
+
+        .mr-form__section-description {
+
+        }
+    }
+}
+
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: $footer-breakpoint-desktop) {
+}
+
+@media all and (max-width: $breakpoint-ipad-portrait) {
+}
+
+@media all and (max-width: $footer-breakpoint-mobile) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}

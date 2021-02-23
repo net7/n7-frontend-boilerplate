@@ -1,6 +1,18 @@
 <div *ngIf="lb.dataSource" class="mr-advanced-search-layout mr-layout">
-    <mr-form-wrapper-accordion 
-        [data]="lb.widgets['mr-form-wrapper-accordion'].ds.out$ | async"
-        [emit]="lb.widgets['mr-form-wrapper-accordion'].emit">
-    </mr-form-wrapper-accordion>
+    <div class="mr-layout__maxwidth mr-side-margin">
+
+        <!-- ! TODO Replace with actual inner title component -->
+        <div class="n7-inner-title">
+            <div class="n7-inner-title__left-wrapper">
+                <div class="n7-inner-title__wrapper-texts">
+                    <div class="n7-inner-title__title ">Ricerca avanzata</div>
+                </div>
+            </div>            
+        </div>
+
+        <mr-form-wrapper-accordion 
+            [data]="lb.widgets['mr-form-wrapper-accordion'].ds.out$ | async"
+            [emit]="lb.widgets['mr-form-wrapper-accordion'].emit">
+        </mr-form-wrapper-accordion>
+    </div>
 </div>

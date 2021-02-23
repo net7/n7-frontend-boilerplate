@@ -1,6 +1,6 @@
-<div *ngIf="data" class="mr-form-wrapper mr-form-wrapper-accordion">
+<div *ngIf="data" class="mr-form-wrapper-accordion">
     <ng-container *ngFor="let group of data.form.config.groups; index as $i">
-        <div class="mr-form-wrapper__header">
+        <div class="mr-form-wrapper-accordion__header">
             <n7-facet-header
             *ngIf="group.options"
             [data]="group.options"
@@ -8,7 +8,7 @@
             ></n7-facet-header>
         </div>
 
-        <div *ngIf="group.options.isOpen" class="mr-form-wrapper__content" [attr.id]="group.id">
+        <div *ngIf="group.options.isOpen" class="mr-form-wrapper-accordion__content" [attr.id]="group.id">
             <mr-form [form]="data.form" [group]="group">
                 <!-- CUSTOM INPUTS -->
                 <!-- <ng-template let-type="type" let-input="input">
@@ -24,7 +24,7 @@
         </div>
     </ng-container>
     
-    <div class="mr-form-wrapper__actions">
+    <div class="mr-form-wrapper-accordion__actions">
         <a *ngIf="data.form.config.resetButton" 
             class="n7-btn n7-btn-danger" 
             (click)="onReset()">{{ data.form.config.resetButton.label }}</a>

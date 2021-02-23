@@ -68,6 +68,8 @@
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/muruca/components/facet-header";
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/muruca/components/facets";
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/muruca/components/footer";
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/muruca/components/form";
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/muruca/components/form-wrapper-accordion";
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/muruca/components/gallery";
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/muruca/components/header";
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/muruca/components/hero";
@@ -93,6 +95,7 @@
 // ------------------------------------ //
 // #MR LAYOUTS
 // ------------------------------------ //
+@import "../../projects/n7-boilerplate-lib/src/lib/styles/muruca/layouts/advanced-search";
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/muruca/layouts/home";
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/muruca/layouts/layout";
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/muruca/layouts/resource";
