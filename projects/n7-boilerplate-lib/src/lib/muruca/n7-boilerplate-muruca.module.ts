@@ -19,13 +19,13 @@ import { MrSearchFacetsLayoutComponent } from './layouts/search-facets-layout/se
 import { MrSearchLayoutComponent } from './layouts/search-layout/search-layout';
 import { MrStaticLayoutComponent } from './layouts/static-layout/static-layout';
 import { MrTimelineLayoutComponent } from './layouts/timeline-layout/timeline-layout';
+import { MrPostsLayoutComponent } from './layouts/posts-layout/posts-layout';
 // COMPONENTS
 import { ReadMoreComponent } from './components/read-more/read-more';
 import { MrFormComponent } from './components/form/form';
 import { MrFormWrapperAccordionComponent } from './components/form-wrapper-accordion/form-wrapper-accordion';
 import { MrSearchPageDescriptionComponent } from './components/search-page-description/search-page-description';
 import { MrResourceModalComponent } from './components/resource-modal/resource-modal';
-import { MrPostsLayoutComponent } from './layouts';
 
 const COMPONENTS = [
   // Layout components
