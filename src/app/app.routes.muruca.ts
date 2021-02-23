@@ -11,7 +11,7 @@ import {
   MrAdvancedSearchLayoutComponent,
   MrAdvancedResultsLayoutComponent,
   // OTHER
-  DynamicPathGuard
+  // DynamicPathGuard
 } from 'n7-boilerplate-lib';
 import { MrTimelineLayoutComponent } from 'n7-boilerplate-lib/lib/muruca/layouts/timeline-layout/timeline-layout';
 
@@ -43,7 +43,7 @@ export const APP_ROUTES: Routes = [
   {
     path: '**',
     component: MrStaticLayoutComponent,
-    canActivate: [DynamicPathGuard],
+    canActivate: [],
     data: {
       notFoundPath: NOT_FOUND_PATH
     }
