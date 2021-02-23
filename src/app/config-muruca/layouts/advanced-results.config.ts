@@ -12,6 +12,7 @@ export default {
       'select-1': 'advancedsearch#select_1'
     }
   },
+  grid: 1,
   sort: {
     label: 'search#sort_title',
     options: [
@@ -42,7 +43,7 @@ export default {
     ]
   },
   itemPreview: {
-    classes: 'is-vertical'
+    // classes: 'is-vertical'
   },
   fallback: {
     text: 'search#fallback_text',
