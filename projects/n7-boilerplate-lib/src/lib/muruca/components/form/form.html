@@ -1,5 +1,5 @@
 <div *ngIf="form.loaded$ | async" class="mr-form {{ group?.classes || '' }}">
-    <div *ngFor="let section of sections" class="mr-form__section {{ section.classes || '' }}">
+    <div *ngFor="let section of sections" class="mr-form__section {{ section.classes || '' }}" [ngClass]="{ 'advanced-section' : section.advancedSection  }" >
         <h3 *ngIf="section.title" class="mr-form__section-title">{{ section.title }}</h3>
         <p *ngIf="section.description" class="mr-form__section-description">{{ section.description }}</p>
 
