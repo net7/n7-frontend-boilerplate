@@ -37,6 +37,7 @@ export const APP_ROUTES: Routes = [
   { path: 'timeline', redirectTo: 'timeline/' },
   { path: 'post/:slug', component: MrStaticLayoutComponent },
   { path: 'advanced-search', component: MrAdvancedSearchLayoutComponent, data: { configId: 'advanced-search' } },
+  { path: 'advanced-search-full', component: MrAdvancedSearchLayoutComponent, data: { configId: 'advanced-search-full' } },
   { path: 'advanced-results', component: MrAdvancedResultsLayoutComponent, data: { configId: 'advanced-results' } },
   { path: NOT_FOUND_PATH, component: Page404LayoutComponent },
   {
