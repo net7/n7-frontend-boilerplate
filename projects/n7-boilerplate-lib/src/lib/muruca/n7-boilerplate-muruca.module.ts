@@ -25,6 +25,7 @@ import { MrFormComponent } from './components/form/form';
 import { MrFormWrapperAccordionComponent } from './components/form-wrapper-accordion/form-wrapper-accordion';
 import { MrSearchPageDescriptionComponent } from './components/search-page-description/search-page-description';
 import { MrResourceModalComponent } from './components/resource-modal/resource-modal';
+import { MrPostsLayoutComponent } from './layouts';
 
 const COMPONENTS = [
   // Layout components
@@ -37,6 +38,7 @@ const COMPONENTS = [
   MrAdvancedSearchLayoutComponent,
   MrAdvancedResultsLayoutComponent,
   MrTimelineLayoutComponent,
+  MrPostsLayoutComponent,
   // Custom components
   ReadMoreComponent,
   MrFormComponent,
