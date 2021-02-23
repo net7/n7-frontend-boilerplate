@@ -3,12 +3,19 @@
  *
  * Component used to preview any kind of element with image, title, text, metadata and icons.
  */
- 
+
 /* ------------------------------------ *\
    #ITEM-PREVIEW
 \* ------------------------------------ */
 /* Grid */
 .n7-item-preview {
+    &__highlights {
+        em {
+            font-style: normal;
+            background-color: $color-highlight;
+        }
+    }
+
     &__metadata-item {
         display: block;
     }
@@ -20,7 +27,7 @@
     }
 
     &__image {
-        border-radius: $border-radius*2;
+        border-radius: $border-radius * 2;
         transition: all $transition-durations;
         @include imageShadow;
     }
@@ -43,13 +50,11 @@
 .n7-grid-1 {
     .n7-item-preview:not(.mr-item-preview-bibliography) {
         border-bottom: 1px solid $color-border-normal;
-        padding-bottom: $space*1;
+        padding-bottom: $space * 1;
 
         .n7-item-preview___metadata-item {
             display: inline-block;
         }
-
-        
     }
 
     /* Last row */
@@ -63,39 +68,38 @@
 /* Grid 2 */
 .n7-grid-2 {
     /* Last row */
-    >*:nth-child(2n+1):nth-last-child(-n+2) .n7-item-preview,
-    >*:nth-child(2n+1):nth-last-child(-n+2) ~ * .n7-item-preview {
+    > *:nth-child(2n + 1):nth-last-child(-n + 2) .n7-item-preview,
+    > *:nth-child(2n + 1):nth-last-child(-n + 2) ~ * .n7-item-preview {
         border-bottom: 0;
-  }
+    }
 }
 
 /* Grid 3 */
 .n7-grid-3 {
     /* Last row */
-    >*:nth-child(3n+1):nth-last-child(-n+3) .n7-item-preview,
-    >*:nth-child(3n+1):nth-last-child(-n+3) ~ * .n7-item-preview {
+    > *:nth-child(3n + 1):nth-last-child(-n + 3) .n7-item-preview,
+    > *:nth-child(3n + 1):nth-last-child(-n + 3) ~ * .n7-item-preview {
         border-bottom: 0;
-  }
+    }
 }
 
 /* Grid 4 */
 .n7-grid-4 {
     /* Last row */
-    >*:nth-child(4n+1):nth-last-child(-n+4) .n7-item-preview,
-    >*:nth-child(4n+1):nth-last-child(-n+4) ~ * .n7-item-preview {
+    > *:nth-child(4n + 1):nth-last-child(-n + 4) .n7-item-preview,
+    > *:nth-child(4n + 1):nth-last-child(-n + 4) ~ * .n7-item-preview {
         border-bottom: 0;
-  }
+    }
 }
-
 
 /* ------------------------------------ *\
    #BIBLIOGRAPHY-ITEM-PREVIEW
 \* ------------------------------------ */
 .mr-item-preview-bibliography {
     .n7-item-preview__content {
-        padding: $space*2;
+        padding: $space * 2;
         border: 1px solid $color-border-normal;
-        border-radius: $border-radius*2;
+        border-radius: $border-radius * 2;
         font-size: $font-size-m;
         @include cardShadow;
         transition: all $transition-durations;

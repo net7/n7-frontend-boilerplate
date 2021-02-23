@@ -13,7 +13,7 @@ export default {
       sections: ['section-1'],
       classes: 'form-group-1',
       options: {
-        label: 'Group 1',
+        label: '',
         isOpen: true
       }
     }],
