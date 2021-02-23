@@ -35,6 +35,23 @@ export class MrAdvancedResultsLayoutDS extends LayoutDataSource {
     this.addTranslations(this.pageConfig);
   }
 
+  updateSearchTags(params) {
+    if (!this.pageConfig.filters) {
+      return;
+    }
+
+    const { labels } = this.pageConfig.filters;
+    const tags = [];
+    Object.keys(labels)
+      .filter((key) => !!params[key])
+      .forEach((key) => {
+        tags[key] = params[key];
+      });
+
+    this.one('mr-advanced-search-tags').updateOptions({ labels });
+    this.one('mr-advanced-search-tags').update(tags);
+  }
+
   request$(params, onError): Observable<any> {
     const { searchId } = this.pageConfig;
     Object.keys(params)
@@ -92,6 +109,15 @@ export class MrAdvancedResultsLayoutDS extends LayoutDataSource {
         config.ko[key] = _t(config.ko[key]);
       }
     });
+
+    // filters
+    const { filters } = this.pageConfig;
+    if (filters) {
+      filters.title = _t(filters.title);
+      Object.keys(filters.labels).forEach((key) => {
+        filters.labels[key] = _t(filters.labels[key]);
+      });
+    }
   }
 
   protected getPaginationParams(response) {

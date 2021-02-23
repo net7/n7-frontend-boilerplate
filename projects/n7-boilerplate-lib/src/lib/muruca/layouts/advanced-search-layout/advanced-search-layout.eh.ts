@@ -41,10 +41,15 @@ export class MrAdvancedSearchLayoutEH extends EventHandler {
     });
   }
 
+  /**
+   * @example
+   * protected listenFormChanges() {
+   *   this.dataSource.form.changed$.subscribe(({ id, state }) => {
+   *     console.log('changed$', { id, state });
+   *   });
+   * }
+   */
   protected listenFormChanges() {
-    this.dataSource.form.changed$.subscribe(({ id, state }) => {
-      // eslint-disable-next-line no-console
-      console.log('changed$', { id, state });
-    });
+    // to be extended on project
   }
 }

@@ -3,6 +3,15 @@ export default {
   title: 'Ricerca avanzata',
   resourcePath: '/work',
   totalResultsText: 'search#works_total',
+  filters: {
+    title: 'advancedsearch#filters_title',
+    labels: {
+      query: 'advancedsearch#query_label',
+      author: 'advancedsearch#author_label',
+      'checkbox-1': 'advancedsearch#checkbox_1',
+      'select-1': 'advancedsearch#select_1'
+    }
+  },
   sort: {
     label: 'search#sort_title',
     options: [

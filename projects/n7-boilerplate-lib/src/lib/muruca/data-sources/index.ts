@@ -25,3 +25,5 @@ export * from './search/search-page-description.ds';
 export * from './static-metadata.ds';
 // form wrapper
 export * from './form-wrapper-accordion.ds';
+// advanced search layout
+export * from './search/advanced-search-tags.ds';
