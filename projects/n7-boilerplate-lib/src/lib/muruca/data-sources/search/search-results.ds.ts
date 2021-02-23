@@ -84,11 +84,11 @@ export class MrSearchResultsDS extends DataSource {
         ...item,
         metadata,
         classes: itemPreviewOptions.classes,
-        anchor: {
+        anchor: item.link ? {
           href: linksHelper.getRouterLink(item.link),
           queryParams: linksHelper.getQueryParams(item.link),
           target: '_blank'
-        }
+        } : undefined
       };
     });
   }

@@ -22,6 +22,7 @@ export default {
         post: 'get_static_post/',
         search: 'search/results',
         advancedSearch: 'advanced_search',
+        posts: 'list/posts',
         facets: 'search/facets',
         searchDescription: 'get_search_description/',
         resource: 'get_resource',

@@ -38,6 +38,11 @@ export * from './advanced-results-layout/advanced-results-layout';
 export * from './advanced-results-layout/advanced-results-layout.ds';
 export * from './advanced-results-layout/advanced-results-layout.eh';
 export * from './advanced-results-layout/advanced-results-layout.config';
+// posts layout
+export * from './posts-layout/posts-layout';
+export * from './posts-layout/posts-layout.ds';
+export * from './posts-layout/posts-layout.eh';
+export * from './posts-layout/posts-layout.config';
 // timeline layout
 export * from './timeline-layout/timeline-layout';
 export * from './timeline-layout/timeline-layout.ds';
