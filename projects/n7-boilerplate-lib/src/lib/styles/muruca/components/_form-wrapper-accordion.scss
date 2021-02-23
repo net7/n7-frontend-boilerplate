@@ -11,11 +11,8 @@
     margin-bottom: 32px;
 
     &__header {
-        margin-bottom: $space*2;
-        background-color: $color-background-light;
-        // background-color: $color-third;
-        // background-color: $color-second;
-        // background-color: $color-gray-04;
+        margin-bottom: $space*3;
+        background-color: $color-background-base;
         border: 1px solid $color-border-light;
         border-radius: $border-radius*2;
         @include cardShadow;
@@ -23,8 +20,7 @@
 
         &:hover {
             @include cardShadowHover;
-            // background-color: darken( $color-third, 10 );
-            // background-color: darken( $color-background-light, 5 );
+            background-color: $color-background-light;
             
             .n7-facet-header__icon-right {
                 // color: $color-text-inverse;
@@ -32,7 +28,7 @@
         }
 
         .n7-facet-header  {
-            height: 50px;
+            height: $form-wrapper-accordion-header-height;
             border-top: 0;
         }
 
@@ -44,15 +40,13 @@
             font-family: $font-family-main;
             font-weight: $font-weight-bold;
             font-size: $font-size-l;
-            line-height: 50px;
-            // color: $color-text-inverse;
+            line-height: $form-wrapper-accordion-header-height;
             color: $color-text;
         }
 
         .n7-facet-header__icon-right {
-            width: 50px;
-            line-height: 50px;
-            // color: $color-text-inverse;
+            width: $form-wrapper-accordion-header-height;
+            line-height: $form-wrapper-accordion-header-height;
             color: $color-text;
             font-size: $font-size-xxl;
         }
