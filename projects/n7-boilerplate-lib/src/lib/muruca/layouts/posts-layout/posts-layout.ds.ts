@@ -61,13 +61,12 @@ export class MrPostsLayoutDS extends LayoutDataSource {
         params.results[key] = params[key];
         delete params[key];
       });
-    return this.communication.request$('advancedSearch', {
+    return this.communication.request$('posts', {
       method: 'POST',
       params: {
         ...params,
         searchId,
         results: {
-          sort: 'sort_ASC',
           offset: 0,
           limit: 12
         }
