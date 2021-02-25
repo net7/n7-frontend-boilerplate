@@ -8,8 +8,6 @@
    #FORM-WRAPPER-ACCORDION
 \* ------------------------------------ */
 .mr-form-wrapper-accordion {
-    margin-bottom: 32px;
-
     &__header {
         margin-bottom: $space*3;
         background-color: $color-background-base;
@@ -55,6 +53,14 @@
     &__content {
         padding: 0 $space*2;
         margin-bottom: $space*4;
+    }
+
+    /* Buttons */
+    &__actions {
+        text-align: center;
+        .n7-btn:not(:last-child) {
+            margin-right: $space*2;
+        }
     }
 }
 

@@ -35,19 +35,21 @@
                     [emit]="lb.widgets['mr-search-results-title'].emit">
                     </n7-inner-title>
                 </div>
+                
                 <div *ngIf="(
                     lb.dataSource.pageConfig['filtersTitle'] && 
                     lb.widgets['mr-search-tags'].ds.hasFilters
                 )" 
-                class="mr-search__results-filters">
-                    <span class="mr-search__results-filters-title">{{ lb.dataSource.pageConfig['filtersTitle'] }}</span>
-                    <div class="mr-search__results-filters-wrapper">
+                class="mr-active-filters">
+                    <span class="mr-active-filters__label">{{ lb.dataSource.pageConfig['filtersTitle'] }}</span>
+                    <div class="mr-active-filters__tags-wrapper">
                         <n7-tag *ngFor="let tag of (lb.widgets['mr-search-tags'].ds.out$ | async)"
                         [data]="tag"
                         [emit]="lb.widgets['mr-search-tags'].emit">
                         </n7-tag>
                     </div>
                 </div>
+
                 <main class="mr-search__results">
                     <!-- SEARCH RESULTS -->
                     <ng-container [ngSwitch]="layoutState.get$('results') | async">

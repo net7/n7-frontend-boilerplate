@@ -64,37 +64,6 @@
 
 
 /* ------------------------------------ *\
-    RESULTS-ACTIVE-FILTERS
-\* ------------------------------------ */
-.mr-search {
-    &__results-filters {
-        display: flex;
-        padding: $space*2 $space*2 $space $space*2;
-        background-color: $color-background-base;
-        border: 1px solid $color-border-normal;
-        border-radius: $border-radius;
-        margin-bottom: $space*3;
-
-        .mr-search__results-filters-title {
-            flex-shrink: 0;
-            margin-right: $space;
-            padding-top: $space/4;
-        }
-
-        .mr-search__results-filters-wrapper {
-            margin-right: $space;
-        }
-
-        .n7-tag {
-            display: inline-block;
-            margin-right: $space;
-            margin-bottom: $space;
-        }
-    }
-}
-
-
-/* ------------------------------------ *\
     INNER TITLE
 \* ------------------------------------ */
 .mr-search {
@@ -112,7 +81,6 @@
         margin-bottom: $space*2;
     }
 }
-
 
 
 /* ------------------------------------ *\
