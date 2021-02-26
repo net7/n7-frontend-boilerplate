@@ -13,8 +13,18 @@ export default {
       sections: ['section-1'],
       classes: 'form-group-1',
       options: {
-        label: '',
-        isOpen: true
+        label: 'GROUP 1',
+        isOpen: true,
+        showHeader: false
+      }
+    }, {
+      id: 'group-2',
+      sections: ['section-2'],
+      classes: 'form-group-2',
+      options: {
+        label: 'GROUP 2',
+        isOpen: true,
+        // showHeader: false
       }
     }],
     sections: [{
@@ -96,6 +106,28 @@ export default {
         },
         state: {
           value: null,
+          disabled: false,
+          hidden: false
+        }
+      }]
+    }, {
+      id: 'section-2',
+      title: '--- section 2 ---',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+      inputs: [{
+        id: 'query-2',
+        type: 'text',
+        data: {
+          id: 'query-2',
+          label: 'advancedsearch#query_label',
+          placeholder: 'advancedsearch#query_placeholder',
+          icon: 'n7-icon-search',
+          inputPayload: 'search-input',
+          enterPayload: 'search-enter',
+          iconPayload: 'search-icon',
+        },
+        state: {
+          value: 'hola...',
           disabled: false,
           hidden: false
         }
