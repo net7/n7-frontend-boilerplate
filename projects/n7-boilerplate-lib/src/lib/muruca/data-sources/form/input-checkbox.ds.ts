@@ -58,8 +58,9 @@ export class MrInputCheckboxDS extends DataSource implements MrInputDataSource<M
 
   private getCheckboxes(checkboxes) {
     const { value, disabled } = this.state;
-    return checkboxes.map((checkbox) => ({
+    return checkboxes.map((checkbox, index) => ({
       ...checkbox,
+      id: `${this.id}-${index}`,
       disabled,
       label: _t(checkbox.label),
       checked: !!(value.includes(checkbox.payload))
