@@ -37,10 +37,15 @@
             }
         }
 
-        /* Metadata under title */
-        .mr-resource__metadata-content {
+        /* Metadata under the title */
+        .mr-resource__metadata {
             max-width: $page-max-width;
-            margin: -$space*3 auto $space*6 auto;
+            margin: 0 auto;
+            margin: -$space*3 auto $space*4 auto;
+
+            .n7-metadata-viewer__group {
+                margin-bottom: $space/2;            
+            }
         }
 
         .n7-metadata-viewer__item {
