@@ -1,10 +1,10 @@
 <div *ngIf="data" class="mr-form-wrapper-accordion">
     <ng-container *ngFor="let group of data.form.config.groups; index as $i">
-        <div class="mr-form-wrapper-accordion__header">
+        <div *ngIf="group.options && (group.options.showHeader !== false)" 
+            class="mr-form-wrapper-accordion__header">
             <n7-facet-header
-            *ngIf="group.options"
-            [data]="group.options"
-            [emit]="fakeEmit"
+                [data]="group.options"
+                [emit]="fakeEmit"
             ></n7-facet-header>
         </div>
 
