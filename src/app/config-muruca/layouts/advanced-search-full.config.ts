@@ -2,6 +2,12 @@ export default {
   title: 'Ricerca avanzata',
   resultsUrl: '/advanced-results',
   formConfig: {
+    submitButton: {
+      label: 'advancedsearch#submit',
+    },
+    resetButton: {
+      label: 'advancedsearch#reset',
+    },
     groups: [
       {
         id: 'group-1',

@@ -1,17 +1,25 @@
 /**
- * ADVANCED SEARCH LAYOUT
+ * ADVANCED RESULTS LAYOUT
  *
- * Style for the advanced search page.
+ * Style for the advanced search results page.
  */
 
 /* ------------------------------------ *\
-    ADVANCED-SEARCH-LAYOUT
+    ADVANCED-RESULTS-LAYOUT
 \* ------------------------------------ */
-.mr-advanced-search {
+.mr-advanced-results {
     padding-bottom: $space*4;
 
     .mr-layout__maxwidth {
         max-width: $page-readable-width;
+    }
+
+    &__feedback-text {
+        margin-bottom: $space*2;
+    }
+
+    &__buttons {
+        text-align: center;
     }
 }
 
