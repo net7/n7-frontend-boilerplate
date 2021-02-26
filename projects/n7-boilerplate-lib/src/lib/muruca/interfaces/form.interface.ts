@@ -42,6 +42,7 @@ export interface MrFormConfigSection {
   description?: string;
   inputs: MrFormConfigInput<any>[];
   classes?: string;
+  advancedSection?: boolean;
 }
 
 export interface MrFormConfigGroup {
