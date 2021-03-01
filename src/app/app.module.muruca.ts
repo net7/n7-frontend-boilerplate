@@ -60,9 +60,11 @@ translate.init({
     ) => () => (
       localConfigService.load(configMuruca)
         .then(() => jsonConfigService.load(JSON_PATH))
-        .then(() => menuService.load())
-        .then(() => footerService.load())
-        .then(() => translationsLoader.load(LANG_CODE))
+        .then(() => Promise.all([
+          menuService.load(),
+          footerService.load(),
+          translationsLoader.load(LANG_CODE)
+        ]))
     ),
     deps: [
       LocalConfigService,
