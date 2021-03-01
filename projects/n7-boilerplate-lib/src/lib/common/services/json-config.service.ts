@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { tap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { merge } from 'lodash';
 import { ConfigurationService } from './configuration.service';
 
 @Injectable({
@@ -13,22 +14,21 @@ export class JsonConfigService {
     private config: ConfigurationService,
   ) {}
 
-  load(path, staticConfig?): Promise<any> {
+  load(path): Promise<any> {
     return this.http.get(path).pipe(
       catchError(() => of({})),
-      tap((response) => this._handleResponse(response, staticConfig)),
+      tap((response) => this._handleResponse(response)),
     ).toPromise();
   }
 
-  private _handleResponse(response, staticConfig) {
-    // set config defaults
-    if (staticConfig) {
-      Object.keys(staticConfig).forEach((key) => this.config.set(key, staticConfig[key]));
-    }
-
+  private _handleResponse(response) {
     // set loaded json config
     if (response) {
-      Object.keys(response).forEach((key) => this.config.set(key, response[key]));
+      Object.keys(response).forEach((key) => {
+        const oldValue = this.config.get(key);
+        const newValue = response[key];
+        this.config.set(key, merge(oldValue, newValue));
+      });
 
       // config keys colors
       if (response['config-keys']) {
