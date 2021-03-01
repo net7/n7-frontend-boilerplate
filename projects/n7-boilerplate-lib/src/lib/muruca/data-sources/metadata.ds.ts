@@ -1,4 +1,5 @@
 import { DataSource, _t } from '@n7-frontend/core';
+import { isObject } from 'lodash';
 
 export class MrMetadataDS extends DataSource {
   /** Test if a string is a valid URL */
@@ -16,28 +17,32 @@ export class MrMetadataDS extends DataSource {
     }
 
     const result = { group: [] };
-    group.forEach(({ items }) => {
-      items.forEach(({ label, value }) => {
-        const itemLabel = label && !hideLabels ? label : null;
-        if (Array.isArray(value)) {
-          result.group.push({
-            group: [{
-              title: _t(itemLabel),
-              ...this.getItemGroup(value)
-            }]
+    group
+      .filter(({ items }) => Array.isArray(items))
+      .forEach(({ items }) => {
+        items
+          .filter((item) => isObject(item))
+          .forEach(({ label, value }) => {
+            const itemLabel = label && !hideLabels ? label : null;
+            if (Array.isArray(value)) {
+              result.group.push({
+                group: [{
+                  title: _t(itemLabel),
+                  ...this.getItemGroup(value)
+                }]
+              });
+            } else {
+              result.group.push({
+                group: [{
+                  items: value ? [{
+                    label: _t(itemLabel),
+                    value: this.getItemValue(value)
+                  }] : []
+                }]
+              });
+            }
           });
-        } else {
-          result.group.push({
-            group: [{
-              items: value ? [{
-                label: _t(itemLabel),
-                value: this.getItemValue(value)
-              }] : []
-            }]
-          });
-        }
       });
-    });
     return result;
   }
 

@@ -1,4 +1,4 @@
-import { LayoutDataSource } from '@n7-frontend/core/dist/layout-data-source';
+import { LayoutDataSource } from '@n7-frontend/core';
 import { CommunicationService } from '../../../common/services/communication.service';
 import { ConfigurationService } from '../../../common/services/configuration.service';
 
@@ -22,7 +22,7 @@ export class SbImageViewerLayoutDS extends LayoutDataSource {
         console.warn('err', err);
       }
     }).subscribe((response) => {
-      console.log('response------------_>', response);
+      console.log('response------------>', response);
     });
   }
 }
