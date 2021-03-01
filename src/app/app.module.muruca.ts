@@ -14,6 +14,7 @@ import {
   MainStateService,
   MrTranslationsLoaderService,
   ConfigurationService,
+  JsonConfigService,
 } from 'n7-boilerplate-lib';
 import globalConfig from './config/global';
 import layoutsConfig from './config/layouts';
@@ -24,6 +25,8 @@ import configMuruca from './config-muruca';
 import i18n from './config-muruca/i18n';
 
 const LANG_CODE = 'it_IT';
+
+const JSON_PATH = './assets/app-config.local.json';
 
 // load translations
 translate.init({
@@ -49,26 +52,27 @@ translate.init({
   providers: [{
     provide: APP_INITIALIZER,
     useFactory: (
-      localConfigService: LocalConfigService
-    ) => () => localConfigService.load(configMuruca),
-    deps: [LocalConfigService],
-    multi: true
-  }, {
-    provide: APP_INITIALIZER,
-    useFactory: (menuService: MrMenuService) => () => menuService.load(),
-    deps: [MrMenuService],
-    multi: true
-  }, {
-    provide: APP_INITIALIZER,
-    useFactory: (footerService: MrFooterService) => () => footerService.load(),
-    deps: [MrFooterService],
-    multi: true
-  }, {
-    provide: APP_INITIALIZER,
-    useFactory: (
+      localConfigService: LocalConfigService,
+      jsonConfigService: JsonConfigService,
+      menuService: MrMenuService,
+      footerService: MrFooterService,
       translationsLoader: MrTranslationsLoaderService
-    ) => () => translationsLoader.load(LANG_CODE),
-    deps: [MrTranslationsLoaderService],
+    ) => () => (
+      localConfigService.load(configMuruca)
+        .then(() => jsonConfigService.load(JSON_PATH))
+        .then(() => Promise.all([
+          menuService.load(),
+          footerService.load(),
+          translationsLoader.load(LANG_CODE)
+        ]))
+    ),
+    deps: [
+      LocalConfigService,
+      JsonConfigService,
+      MrMenuService,
+      MrFooterService,
+      MrTranslationsLoaderService
+    ],
     multi: true
   }],
   bootstrap: [AppComponent]
