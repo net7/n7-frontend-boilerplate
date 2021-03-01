@@ -5,6 +5,7 @@ import {
   N7BoilerplateCommonModule,
   N7BoilerplateSandboxModule,
   LocalConfigService,
+  JsonConfigService,
 } from 'n7-boilerplate-lib';
 import globalConfig from './config/global';
 import layoutsConfig from './config/layouts';
@@ -13,6 +14,8 @@ import { APP_ROUTES } from './app.routes.sandbox';
 import { AppComponent } from './app.component';
 
 import configSandbox from './config-sandbox';
+
+const JSON_PATH = './assets/app-config.local.json';
 
 @NgModule({
   declarations: [
@@ -32,9 +35,13 @@ import configSandbox from './config-sandbox';
   providers: [{
     provide: APP_INITIALIZER,
     useFactory: (
-      localConfigService: LocalConfigService
-    ) => () => localConfigService.load(configSandbox),
-    deps: [LocalConfigService],
+      localConfigService: LocalConfigService,
+      jsonConfigService: JsonConfigService
+    ) => () => (
+      localConfigService.load(configSandbox)
+        .then(() => jsonConfigService.load(JSON_PATH))
+    ),
+    deps: [LocalConfigService, JsonConfigService],
     multi: true
   }],
   bootstrap: [AppComponent]

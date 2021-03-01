@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import {
   N7BoilerplateCommonModule,
   N7BoilerplateDataVizModule,
+  LocalConfigService,
   JsonConfigService,
 } from 'n7-boilerplate-lib';
 import globalConfig from './config/global';
@@ -12,7 +13,9 @@ import { APP_ROUTES } from './app.routes.dataviz';
 
 import { AppComponent } from './app.component';
 
-const JSON_PATH = './assets/app-config.json';
+import configDataviz from './config-dataviz';
+
+const JSON_PATH = './assets/app-config.local.json';
 
 @NgModule({
   declarations: [
@@ -31,8 +34,14 @@ const JSON_PATH = './assets/app-config.json';
   ],
   providers: [{
     provide: APP_INITIALIZER,
-    useFactory: (jsonConfigService: JsonConfigService) => () => jsonConfigService.load(JSON_PATH),
-    deps: [JsonConfigService],
+    useFactory: (
+      localConfigService: LocalConfigService,
+      jsonConfigService: JsonConfigService
+    ) => () => (
+      localConfigService.load(configDataviz)
+        .then(() => jsonConfigService.load(JSON_PATH))
+    ),
+    deps: [LocalConfigService, JsonConfigService],
     multi: true
   }],
   bootstrap: [AppComponent]

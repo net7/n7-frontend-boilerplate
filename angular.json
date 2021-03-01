@@ -17,10 +17,6 @@
             "preserveSymlinks": true,
             "fileReplacements": [
               {
-                "replace": "src/assets/app-config.json",
-                "with": "src/assets/app-config.arianna.json"
-              }, 
-              {
                 "replace": "src/app/app.module.ts",
                 "with": "src/app/app.module.arianna.ts"
               }, 
@@ -91,10 +87,6 @@
               ],
               "fileReplacements": [
                 {
-                  "replace": "src/assets/app-config.json",
-                  "with": "src/assets/app-config.arianna.json"
-                }, 
-                {
                   "replace": "src/app/app.module.ts",
                   "with": "src/app/app.module.arianna.ts"
                 }, 
@@ -117,10 +109,6 @@
               ],
               "fileReplacements": [
                 {
-                  "replace": "src/assets/app-config.json",
-                  "with": "src/assets/app-config.dataviz.json"
-                }, 
-                {
                   "replace": "src/app/app.module.ts",
                   "with": "src/app/app.module.dataviz.ts"
                 }, 
@@ -142,10 +130,6 @@
                 }
               ],
               "fileReplacements": [
-                {
-                  "replace": "src/assets/app-config.json",
-                  "with": "src/assets/app-config.sandbox.json"
-                }, 
                 {
                   "replace": "src/app/app.module.ts",
                   "with": "src/app/app.module.sandbox.ts"
