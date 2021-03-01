@@ -7,6 +7,7 @@ import { DvComponentsLibModule } from '@n7-frontend/components';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { N7BoilerplateCommonModule } from '../common/n7-boilerplate-common.module';
 // LAYOUTS
+import { AwCollectionLayoutComponent } from './layouts/collection-layout/collection-layout';
 import { AwEntitaLayoutComponent } from './layouts/entita-layout/entita-layout';
 import { AwGalleryLayoutComponent } from './layouts/gallery-layout/gallery-layout';
 import { AwHomeLayoutComponent } from './layouts/home-layout/home-layout';
@@ -27,7 +28,9 @@ import { ConfigurationService } from '../common/services/configuration.service';
 import apolloConfig from './config/apollo.config';
 
 const COMPONENTS = [
+  AwCollectionLayoutComponent,
   AwEntitaLayoutComponent,
+  AwFacetsWrapperComponent,
   AwGalleryLayoutComponent,
   AwHomeLayoutComponent,
   AwMapLayoutComponent,
@@ -36,10 +39,9 @@ const COMPONENTS = [
   AwTimelineLayoutComponent,
   BubbleChartWrapperComponent,
   ChartTippyComponent,
-  SmartBreadcrumbsComponent,
-  AwFacetsWrapperComponent,
   PdfViewerComponent,
   SchedaDropdownComponent,
+  SmartBreadcrumbsComponent,
 ];
 
 @NgModule({

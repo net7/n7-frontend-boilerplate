@@ -39,3 +39,9 @@ export * from './timeline-layout/timeline-layout';
 export * from './timeline-layout/timeline-layout.ds';
 export * from './timeline-layout/timeline-layout.eh';
 export * from './timeline-layout/timeline-layout.config';
+
+// collection layout
+export * from './collection-layout/collection-layout';
+export * from './collection-layout/collection-layout.ds';
+export * from './collection-layout/collection-layout.eh';
+export * from './collection-layout/collection-layout.config';
