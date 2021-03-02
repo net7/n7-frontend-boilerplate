@@ -1,3 +1,16 @@
-<div class="collection-layout" *ngIf="lb.dataSource">
-    Hello, from Collection layout!
+<div class="collection-layout"
+     *ngIf="lb.dataSource as dataSource">
+    <n7-inner-title [data]="dataSource.innerTitleData">
+    </n7-inner-title>
+
+    <section class="n7-grid-3">
+        <ng-container *ngFor="let item of dataSource.collectionData">
+            <n7-item-preview [data]="item">
+            </n7-item-preview>
+        </ng-container>
+    </section>
+    
+    <section>
+        <button class="n7-btn">Vedi altri</button>
+    </section>
 </div>
