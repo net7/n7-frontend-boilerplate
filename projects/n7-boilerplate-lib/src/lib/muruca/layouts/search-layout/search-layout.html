@@ -18,6 +18,7 @@
         
         <div class="mr-search__results-content">
             <aside class="mr-facets">
+                <div [attr.id]="'scroll-ref'" [ngStyle]="{ width: 0, height: 0 }">&nbsp;</div>
                 <div class="mr-facets__contents">
                     <h2 class="mr-facets__title" 
                         *ngIf="lb.dataSource.pageConfig['facetsTitle']">

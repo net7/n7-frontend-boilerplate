@@ -28,6 +28,8 @@ export class MrAdvancedResultsLayoutEH extends EventHandler {
 
           // listen route changes
           this.listenToRouterChanges();
+          // scroll top
+          window.scrollTo(0, 0);
           break;
 
         case 'mr-advanced-results-layout.destroy':

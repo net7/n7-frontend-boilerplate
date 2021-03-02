@@ -28,6 +28,8 @@ export class MrPostsLayoutEH extends EventHandler {
 
           // listen route changes
           this.listenToRouterChanges();
+          // scroll top
+          window.scrollTo(0, 0);
           break;
 
         case 'mr-posts-layout.destroy':
@@ -71,7 +73,7 @@ export class MrPostsLayoutEH extends EventHandler {
       switchMap((params) => {
         this.dataSource.updateSearchTags(params);
         return this.dataSource.request$(params, (error) => {
-          console.warn('Advanced search error', error);
+          console.warn('Posts search error', error);
           this.layoutState.set('results', LayoutState.ERROR);
         });
       })

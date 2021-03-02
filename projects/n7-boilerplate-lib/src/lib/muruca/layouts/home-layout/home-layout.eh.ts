@@ -6,6 +6,8 @@ export class MrHomeLayoutEH extends EventHandler {
       switch (type) {
         case 'mr-home-layout.init':
           this.dataSource.onInit(payload);
+          // scroll top
+          window.scrollTo(0, 0);
           break;
         default:
           break;

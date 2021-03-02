@@ -2,6 +2,7 @@ import { EventHandler } from '@n7-frontend/core';
 import { Subject } from 'rxjs';
 import { isEmpty } from 'lodash';
 import { takeUntil, filter } from 'rxjs/operators';
+import helpers from 'n7-boilerplate-lib/lib/common/helpers';
 import { MrSearchLayoutDS } from './search-layout.ds';
 import {
   MrSearchService,
@@ -27,6 +28,8 @@ export class MrSearchLayoutEH extends EventHandler {
 
   private linksResponse: any;
 
+  private scrollRefElement: HTMLElement;
+
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
@@ -36,9 +39,14 @@ export class MrSearchLayoutEH extends EventHandler {
           this.dataSource.onInit(payload);
           // listeners
           this.initStateListener();
+          // scroll top
+          window.scrollTo(0, 0);
+          // reset scroll ref
+          this.scrollRefElement = null;
           break;
 
         case 'mr-search-layout.destroy':
+          this.searchService.destroy();
           this.destroyed$.next(true);
           break;
 
@@ -184,9 +192,16 @@ export class MrSearchLayoutEH extends EventHandler {
 
     this.searchService.getState$(RESULTS_REQUEST_STATE_CONTEXT, 'success')
       .subscribe((response) => {
+        console.count('response');
         this.dataSource.handleResponse(response);
         // update layout state
         this.layoutState.set('results', isEmpty(response.results) ? LayoutState.EMPTY : LayoutState.SUCCESS);
+        // scroll top
+        if (!this.scrollRefElement) {
+          this.scrollRefElement = document.getElementById('scroll-ref');
+        } else if (!helpers.isElementInViewport(this.scrollRefElement)) {
+          this.scrollRefElement.scrollIntoView();
+        }
       });
 
     this.searchService.getState$(RESULTS_REQUEST_STATE_CONTEXT, 'error')
