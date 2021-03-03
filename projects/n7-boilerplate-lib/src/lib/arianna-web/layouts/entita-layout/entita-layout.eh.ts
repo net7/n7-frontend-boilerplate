@@ -21,6 +21,8 @@ export class AwEntitaLayoutEH extends EventHandler {
           this.entityId = this.route.snapshot.params.id || '';
           this.dataSource.currentPage = this.route.snapshot.params.page || 1;
           this.listenRoute(this.entityId);
+          // scroll top
+          window.scrollTo(0, 0);
           break;
 
         case 'aw-entita-layout.destroy':
@@ -114,6 +116,8 @@ export class AwEntitaLayoutEH extends EventHandler {
       } else {
         this.dataSource.loadItem();
       }
+      // scroll top
+      window.scrollTo(0, 0);
     });
   }
 }
