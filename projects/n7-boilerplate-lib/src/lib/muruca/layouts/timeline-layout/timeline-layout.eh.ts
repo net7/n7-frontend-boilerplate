@@ -20,6 +20,8 @@ export class MrTimelineLayoutEH extends EventHandler {
           this.router = payload.router;
           this.location = payload.location;
           this.listenRoute();
+          // scroll top
+          window.scrollTo(0, 0);
 
           this.dataSource.timelineListener$.subscribe((timeline: vis.Timeline) => {
             timeline.on('click', (props) => {

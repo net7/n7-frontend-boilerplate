@@ -22,6 +22,8 @@ export class AwSchedaLayoutEH extends EventHandler {
           this.listenRoute();
           this.loadNavigation(paramId);
           this.emitOuter('viewleaf');
+          // scroll top
+          window.scrollTo(0, 0);
         } break;
 
         case 'aw-scheda-layout.destroy':
@@ -62,6 +64,8 @@ export class AwSchedaLayoutEH extends EventHandler {
           if (response) this.dataSource.loadContent(response);
         });
       }
+      // scroll top
+      window.scrollTo(0, 0);
     });
   }
 

@@ -65,7 +65,6 @@ export class MainLayoutEH extends EventHandler {
     this.router.events.pipe(
       filter((event) => event instanceof NavigationStart),
     ).subscribe(() => {
-      window.scrollTo(0, 0);
       this.emitOuter('routerchange');
       this.dataSource.onRouterChanged();
     });

@@ -28,6 +28,8 @@ export class MrStaticLayoutEH extends EventHandler {
 
           // listen route
           this.listenRoute();
+          // scroll top
+          window.scrollTo(0, 0);
           break;
 
         case 'mr-static-layout.destroy':

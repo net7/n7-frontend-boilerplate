@@ -8,7 +8,8 @@ import {
   map,
   debounceTime,
   delay,
-  tap
+  tap,
+  takeUntil
 } from 'rxjs/operators';
 import { isEmpty, xor } from 'lodash';
 import { _t } from '@n7-frontend/core';
@@ -24,6 +25,8 @@ export const FACETS_REQUEST_STATE_CONTEXT = 'facetsRequest';
 
 @Injectable()
 export class MrSearchService {
+  private destroyed$: Subject<void> = new Subject();
+
   private searchId: string | number;
 
   private config;
@@ -158,6 +161,10 @@ export class MrSearchService {
       });
   }
 
+  public destroy() {
+    this.destroyed$.next();
+  }
+
   private clear() {
     this.contextState = {};
     this.state$ = {};
@@ -274,6 +281,7 @@ export class MrSearchService {
     });
 
     this.activatedRoute.queryParams.pipe(
+      takeUntil(this.destroyed$),
       // fix initial listeners (symbolic timeout)
       delay(1),
       // query params to state

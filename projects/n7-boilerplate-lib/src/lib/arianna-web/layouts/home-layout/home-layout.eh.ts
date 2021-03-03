@@ -16,6 +16,8 @@ export class AwHomeLayoutEH extends EventHandler {
           this.dataSource.onInit(payload);
           this.loadFilters();
           this.configuration = payload.configuration;
+          // scroll top
+          window.scrollTo(0, 0);
           break;
         case 'aw-home-layout.outerlinkclick':
           this.emitGlobal('navigate', {

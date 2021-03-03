@@ -10,6 +10,8 @@ export class AwTimelineLayoutEH extends EventHandler {
         case 'aw-timeline-layout.init':
           this.dataSource.onInit(payload);
           this.emitOuter('init', payload);
+          // scroll top
+          window.scrollTo(0, 0);
           break;
 
         case 'aw-timeline-layout.destroy':

@@ -6,6 +6,8 @@ export class MrGlossaryLayoutEH extends EventHandler {
       switch (type) {
         case 'mr-glossary-layout.init':
           this.dataSource.onInit(payload);
+          // scroll top
+          window.scrollTo(0, 0);
           break;
 
         default:
@@ -13,10 +15,5 @@ export class MrGlossaryLayoutEH extends EventHandler {
           break;
       }
     });
-
-    /*
-      this.outerEvents$.subscribe(({ type, payload }) => {
-      });
-    */
   }
 }

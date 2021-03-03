@@ -3,6 +3,7 @@ import { Subject } from 'rxjs';
 import {
   debounceTime, takeUntil
 } from 'rxjs/operators';
+import helpers from '../../../common/helpers';
 import entityLinksHelper from '../../search/entity-links.helper';
 
 export class AwSearchLayoutEH extends EventHandler {
@@ -25,6 +26,8 @@ export class AwSearchLayoutEH extends EventHandler {
   /** Is true when the search is triggered with a new text-string */
   private textHasChanged = false;
 
+  private scrollRefElement: HTMLElement;
+
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
@@ -43,6 +46,8 @@ export class AwSearchLayoutEH extends EventHandler {
               this.additionalParamsChange$.next(); // emit from observable stream
             }, 100);
           }
+          // scroll top
+          window.scrollTo(0, 0);
         } break;
 
         case `${this.layoutId}.destroy`:
@@ -181,7 +186,12 @@ export class AwSearchLayoutEH extends EventHandler {
       if (params.limit) {
         this.dataSource.setLimit(+params.limit);
       }
-      this.facetsChange$.next();
+      this.facetsChange$.next();// scroll to ref element
+      if (!this.scrollRefElement) {
+        this.scrollRefElement = document.querySelector('.scroll-ref');
+      } else if (!helpers.isElementInViewport(this.scrollRefElement)) {
+        this.scrollRefElement.scrollIntoView();
+      }
     });
   }
 }

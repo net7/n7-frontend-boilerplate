@@ -33,6 +33,8 @@ export class MrResourceLayoutEH extends EventHandler {
           this.layoutState = payload.layoutState;
           this.dataSource.onInit(payload);
           this.listenRoute();
+          // scroll top
+          window.scrollTo(0, 0);
         } break;
         case 'mr-resource-layout.destroy':
           this.destroy$.next();
@@ -73,6 +75,8 @@ export class MrResourceLayoutEH extends EventHandler {
     ).subscribe((response) => {
       this.layoutState.set('content', LayoutState.SUCCESS);
       this.dataSource.handleResponse(response);
+      // scroll top
+      window.scrollTo(0, 0);
     });
   }
 }
