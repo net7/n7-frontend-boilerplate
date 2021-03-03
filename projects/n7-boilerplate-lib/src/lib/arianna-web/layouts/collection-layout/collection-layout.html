@@ -3,14 +3,14 @@
     <n7-inner-title [data]="dataSource.innerTitleData">
     </n7-inner-title>
 
-    <section class="n7-grid-3">
-        <ng-container *ngFor="let item of dataSource.collectionData">
+    <section class="n7-grid-3" *ngIf="dataSource.loadedCollections">
+        <ng-container *ngFor="let item of dataSource.loadedCollections.value">
             <n7-item-preview [data]="item">
             </n7-item-preview>
         </ng-container>
     </section>
     
     <section>
-        <button class="n7-btn">Vedi altri</button>
+        <button class="n7-btn" (click)="dataSource.loadMore()">Vedi altri</button>
     </section>
 </div>
