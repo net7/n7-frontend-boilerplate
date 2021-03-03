@@ -70,13 +70,11 @@ export class MrAdvancedResultsLayoutDS extends LayoutDataSource {
       offset: number;
       sort: string;
     };
-    if (searchParams.results) {
-      const { results } = searchParams;
-      const page = results.page ? +results.page : 1;
-      resultsParams.limit = results.limit ? +results.limit : 12;
-      resultsParams.offset = page === 1 ? 0 : resultsParams.limit * (page - 1);
-      resultsParams.sort = results.sort || 'sort_ASC';
-    }
+    const results = searchParams.results || {};
+    const page = results.page ? +results.page : 1;
+    resultsParams.limit = results.limit ? +results.limit : 12;
+    resultsParams.offset = page === 1 ? 0 : resultsParams.limit * (page - 1);
+    resultsParams.sort = results.sort || 'sort_ASC';
     return this.communication.request$('advancedSearch', {
       method: 'POST',
       params: {
