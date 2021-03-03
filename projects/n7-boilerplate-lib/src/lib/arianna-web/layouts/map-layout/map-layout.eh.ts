@@ -10,6 +10,8 @@ export class AwMapLayoutEH extends EventHandler {
         case 'aw-map-layout.init':
           this.dataSource.onInit(payload);
           this.emitOuter('init', payload);
+          // scroll top
+          window.scrollTo(0, 0);
           break;
 
         case 'aw-map-layout.destroy':
