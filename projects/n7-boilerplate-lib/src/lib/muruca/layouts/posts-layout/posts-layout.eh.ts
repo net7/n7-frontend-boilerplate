@@ -3,6 +3,7 @@ import { EventHandler } from '@n7-frontend/core';
 import { Subject } from 'rxjs';
 import { switchMap, takeUntil, tap } from 'rxjs/operators';
 import { isEmpty } from 'lodash';
+import helpers from '../../../common/helpers';
 import { MrPostsLayoutDS } from './posts-layout.ds';
 import { MrLayoutStateService, LayoutState } from '../../services/layout-state.service';
 
@@ -14,6 +15,8 @@ export class MrPostsLayoutEH extends EventHandler {
   private layoutState: MrLayoutStateService;
 
   protected destroy$: Subject<void> = new Subject();
+
+  protected scrollRefElement: HTMLElement;
 
   dataSource: MrPostsLayoutDS;
 
@@ -49,11 +52,11 @@ export class MrPostsLayoutEH extends EventHandler {
           break;
 
         case 'n7-smart-pagination.change':
-          this.updateRouter({ limit: payload.value });
+          this.updateRouter({ limit: payload.value, page: 1 });
           break;
 
         case 'mr-search-results-title.change':
-          this.updateRouter({ sort: payload.value });
+          this.updateRouter({ sort: payload.value, page: 1 });
           break;
 
         default:
@@ -80,6 +83,12 @@ export class MrPostsLayoutEH extends EventHandler {
     ).subscribe((response) => {
       this.dataSource.handleResponse(response);
       this.layoutState.set('results', isEmpty(response.results) ? LayoutState.EMPTY : LayoutState.SUCCESS);
+      // scroll to ref element
+      if (!this.scrollRefElement) {
+        this.scrollRefElement = document.querySelector('.scroll-ref');
+      } else if (!helpers.isElementInViewport(this.scrollRefElement)) {
+        this.scrollRefElement.scrollIntoView();
+      }
     });
   }
 

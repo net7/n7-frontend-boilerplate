@@ -54,21 +54,34 @@ export class MrPostsLayoutDS extends LayoutDataSource {
 
   request$(params, onError): Observable<any> {
     const { searchId } = this.pageConfig;
-    Object.keys(params)
+    const searchParams = {
+      ...params
+    };
+    Object.keys(searchParams)
       .filter((key) => ['page', 'limit', 'sort'].includes(key))
       .forEach((key) => {
-        params.results = params.results || {};
-        params.results[key] = params[key];
-        delete params[key];
+        searchParams.results = searchParams.results || {};
+        searchParams.results[key] = searchParams[key];
+        delete searchParams[key];
       });
+    // normalize results filters
+    const resultsParams = {} as {
+      limit: number;
+      offset: number;
+      sort: string;
+    };
+    const results = searchParams.results || {};
+    const page = results.page ? +results.page : 1;
+    resultsParams.limit = results.limit ? +results.limit : 12;
+    resultsParams.offset = page === 1 ? 0 : resultsParams.limit * (page - 1);
+    resultsParams.sort = results.sort || 'sort_ASC';
     return this.communication.request$('posts', {
       method: 'POST',
       params: {
-        ...params,
+        ...searchParams,
         searchId,
         results: {
-          offset: 0,
-          limit: 12
+          ...resultsParams
         }
       },
       onError
