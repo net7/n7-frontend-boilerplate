@@ -19,13 +19,12 @@ export default {
       {
         value: '_score',
         label: 'search#sort_score',
-        selected: false,
-        disabled: true
+        selected: false
       },
       {
         value: 'sort_ASC',
         label: 'search#sort_asc',
-        selected: true
+        selected: false
       },
       {
         value: 'sort_DESC',

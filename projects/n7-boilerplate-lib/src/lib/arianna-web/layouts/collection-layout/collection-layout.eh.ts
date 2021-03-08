@@ -1,13 +1,11 @@
 import { EventHandler } from '@n7-frontend/core';
 
-export class MrGlossaryLayoutEH extends EventHandler {
+export class AwCollectionLayoutEH extends EventHandler {
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
-        case 'mr-glossary-layout.init':
+        case 'aw-collection-layout.init':
           this.dataSource.onInit(payload);
-          // scroll top
-          window.scrollTo(0, 0);
           break;
 
         default:
@@ -15,5 +13,10 @@ export class MrGlossaryLayoutEH extends EventHandler {
           break;
       }
     });
+
+    /*
+      this.outerEvents$.subscribe(({ type, payload }) => {
+      });
+    */
   }
 }

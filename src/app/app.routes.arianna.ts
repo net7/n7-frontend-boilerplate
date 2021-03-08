@@ -4,13 +4,14 @@ import {
   // COMMON
   Page404LayoutComponent,
   // AW
+  AwCollectionLayoutComponent,
   AwEntitaLayoutComponent,
   AwGalleryLayoutComponent,
   AwHomeLayoutComponent,
+  AwMapLayoutComponent,
   AwSchedaLayoutComponent,
   AwSearchLayoutComponent,
   AwTimelineLayoutComponent,
-  AwMapLayoutComponent
 } from 'n7-boilerplate-lib';
 
 export const APP_ROUTES: Routes = [
@@ -25,6 +26,7 @@ export const APP_ROUTES: Routes = [
   { path: 'aw/galleria', component: AwGalleryLayoutComponent },
   { path: 'aw/mappa', component: AwMapLayoutComponent },
   { path: 'aw/timeline', component: AwTimelineLayoutComponent },
+  { path: 'aw/collection', component: AwCollectionLayoutComponent },
   {
     path: '',
     redirectTo: '/aw/home',

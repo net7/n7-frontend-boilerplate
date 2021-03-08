@@ -14,6 +14,8 @@ export class MrAdvancedSearchLayoutEH extends EventHandler {
           this.dataSource.onInit(payload);
           // init hook
           this.onInit();
+          // scroll top
+          window.scrollTo(0, 0);
           break;
 
         case 'mr-advanced-search-layout.destroy':
