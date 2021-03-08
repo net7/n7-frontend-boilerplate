@@ -1,0 +1,9 @@
+{
+  "communication": {
+    "providers": {
+      "rest-local": {
+        "baseUrl": "http://example-sls.netseven.it/"
+      }
+    }
+  }
+}
