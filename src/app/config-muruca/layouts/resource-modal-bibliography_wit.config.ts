@@ -11,7 +11,7 @@ export default {
       {
         id: 'collection-witnesses',
         type: 'collection',
-        grid: 3,
+        grid: 1,
         title: 'resource#collection_witnesses'
       },
     ]

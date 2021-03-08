@@ -1,49 +1,55 @@
-<div *ngIf="status !== 'IDLE'" class="mr-resource mr-resource-modal mr-layout" [ngClass]="{
+<div *ngIf="status !== 'IDLE'" class="mr-modal mr-resource-modal" [ngClass]="{
         'is-loading': status === 'LOADING',
         'is-error': status === 'ERROR'
       }">
-    <div class="mr-resource-modal__overlay" (click)="onClose($event.target)">
-        <div class="mr-resource-modal__window">
-            <!-- Modal header -->
-            <div class="mr-resource-modal__header">
-                <div class="mr-resource-modal__close">
-                    <a class="mr-resource-modal__close-link" (click)="onClose()"><span class="n7-icon-close"></span></a>
-                </div>
-            </div>
-            
-            <!-- Modal content -->
-            <div class="mr-resource-modal__content">
-                <ng-container [ngSwitch]="status">
-                    <!-- loading -->
-                    <ng-container *ngSwitchCase="'LOADING'">
-                        <div class="mr-resource-modal__loader">
-                            <n7-loader></n7-loader>
-                        </div>
-                    </ng-container>
-            
-                    <!-- error -->
-                    <ng-container *ngSwitchCase="'ERROR'">
-                        <div class="mr-resource-modal__error">
-                            <h2>{{ errorTitle }}</h2>
-                            <p>{{ errorDescription }}</p>
-                        </div>
-                    </ng-container>
-            
-                    <!-- success -->
-                    <ng-container *ngSwitchCase="'SUCCESS'">
-                        <ng-container *ngIf="config.sections as sections">
-                            <!-- Pass the list of blocks to render to the block template -->
-                            <div class="mr-resource__top">
-                                <ng-container *ngTemplateOutlet="blocks; context: { $implicit: sections.top }"></ng-container>
-                            </div>
-                            <div class="mr-resource__content mr-side-margin">
-                                <ng-container *ngTemplateOutlet="blocks; context: { $implicit: sections.content }"></ng-container>
-                            </div>
-                        </ng-container>
-                    </ng-container>
-            
+    <div class="mr-modal__overlay" (click)="onClose($event.target)">
+        <div class="mr-modal__window mr-resource-modal__window">
+            <ng-container [ngSwitch]="status">
+
+                <!-- Loading -->
+                <ng-container *ngSwitchCase="'LOADING'">
+                    <div class="mr-modal__loader">
+                        <n7-loader></n7-loader>
+                    </div>
                 </ng-container>
-            </div>
+
+                <!-- Error -->
+                <ng-container *ngSwitchCase="'ERROR'">
+
+                    <div class="mr-modal__header mr-resource-modal__header">
+                        <h2 class="mr-modal__header-title">
+                            {{ errorTitle }}
+                        </h2>
+                        <div class="mr-modal__close">
+                            <a class="mr-modal__close-link" (click)="onClose()"><span class="n7-icon-close"></span></a>
+                        </div>
+                    </div>
+                    <div class="mr-modal__content">
+                        <p class="mr-modal__error-text">{{ errorDescription }}</p>
+                    </div>
+
+                </ng-container>
+
+                <!-- Success -->
+                <ng-container *ngSwitchCase="'SUCCESS'">
+                    
+                    <div class="mr-modal__header mr-resource-modal__header">
+                        <ng-container *ngIf="config.sections as sections">
+                            <ng-container *ngTemplateOutlet="blocks; context: { $implicit: sections.top }"></ng-container>
+                        </ng-container>
+                        <div class="mr-modal__close">
+                            <a class="mr-modal__close-link" (click)="onClose()"><span class="n7-icon-close"></span></a>
+                        </div>
+                    </div>
+                    <div class="mr-modal__content mr-resource-modal__content">
+                        <ng-container *ngIf="config.sections as sections">
+                            <ng-container *ngTemplateOutlet="blocks; context: { $implicit: sections.content }"></ng-container>                            
+                        </ng-container>
+                    </div>
+                </ng-container>
+
+            </ng-container>
+
         </div>
     </div>
 </div>
@@ -56,16 +62,14 @@
 
                 <!-- INNER TITLE -->
                 <ng-container *ngSwitchCase="'title'">
-                    <div class="mr-resource__title-content mr-side-margin">
-                        <n7-inner-title [data]="widgets[section.id].ds.out$ | async">
-                        </n7-inner-title>
-                    </div>
+                    <n7-inner-title [data]="widgets[section.id].ds.out$ | async">
+                    </n7-inner-title>
                 </ng-container>
 
                 <!-- METADATA VIEWER -->
                 <ng-container *ngSwitchCase="'metadata'">
-                    <div class="mr-resource__metadata-content">
-                        <h3 *ngIf="section.title" class="mr-resource__section-title mr-resource__metadata-title">
+                    <div class="mr-resource-modal__metadata-content">
+                        <h3 *ngIf="section.title" class="mr-resource-modal__section-title mr-resource__metadata-title">
                             {{ section.title }}
                         </h3>
                         <mr-read-more [data]="section.readmore">
@@ -79,7 +83,7 @@
                 <ng-container *ngSwitchCase="'collection'">
                     <ng-container *ngIf="widgets[section.id].ds.out$ | async as collection$">
                         <div *ngIf="collection$.items?.length > 0" class="mr-resource__collection-content">
-                            <h3 *ngIf="section.title" class="mr-resource__section-title">
+                            <h3 *ngIf="section.title" class="mr-resource-modal__section-title">
                                 {{ section.title }}
                             </h3>
                             <div
@@ -93,7 +97,7 @@
 
                 <!-- ITEM PREVIEW -->
                 <ng-container *ngSwitchCase="'preview'">
-                    <h3 *ngIf="section.title" class="mr-resource__section-title mr-resource__preview-title">
+                    <h3 *ngIf="section.title" class="mr-resource-modal__section-title">
                         {{ section.title }}
                     </h3>
                     <n7-item-preview [data]="widgets[section.id].ds.out$ | async">
