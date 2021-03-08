@@ -3,7 +3,7 @@ import { isObject } from 'lodash';
 
 export class MrMetadataDS extends DataSource {
   /** Test if a string is a valid URL */
-  isUrl = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/
+  isUrl = /^(?:http(s)?:\/\/)[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/
 
   /** Turn a string into an anchor element */
   toUrl = (string: string) => `<a href="${string}" target="_blank">${string}<a>`
