@@ -66,6 +66,16 @@ export default {
         _meta: {
           id: 'timeline'
         }
+      },
+      {
+        text: 'La mia collezione',
+        anchor: {
+          href: 'aw/collection'
+        },
+        icon: 'n7-icon-calendar-alt',
+        _meta: {
+          id: 'collection'
+        }
       }
     ]
   },
