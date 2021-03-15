@@ -175,7 +175,11 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       this.selectedTab = tab; // store selected tab from url
       return this.communication.request$('getEntityDetails', {
         onError: (error) => console.error(error),
-        params: { entityId: id, entitiesListSize: this.bubblesSize },
+        params: {
+          entityId: id,
+          itemsPagination: { offset: 0, limit: 10 },
+          entitiesListSize: this.bubblesSize
+        },
       }).pipe(
         // global metadata tab control
         tap(({ fields, typeOfEntity }) => {
