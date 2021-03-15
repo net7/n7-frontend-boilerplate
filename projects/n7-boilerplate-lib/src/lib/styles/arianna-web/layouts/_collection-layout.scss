@@ -1,0 +1,64 @@
+/**
+ * LA MIA COLLEZIONE
+ *
+ * 
+ */
+
+
+/* ------------------------------------ *\
+    LAYOUT
+\* ------------------------------------ */
+
+.aw-collection-layout {
+    margin: $space*3 auto $space*6 auto;
+    max-width: $page-max-width;
+    box-shadow: $search-box-shadow;
+    background-color: $color-gray-00;
+    &__content-wrapper {
+        display: flex;
+        position: relative;
+        padding: $space*3;
+    }
+    &--header {
+        display: flex;
+        align-items: center;
+        background-color: $color-background-base;
+        border-bottom: 1px solid $color-border-light;
+        .n7-inner-title {
+            padding: $space*3;
+        }
+    }
+    &--grid {
+        padding: $space*3;
+        background-color: $color-gray-00;
+    }
+    .n7-item-preview {
+        margin-bottom: $space*3;
+        &.is-overlay {
+            &.has-image {
+                .n7-item-preview__inner {
+                    height: 300px;
+                    border-radius: 6px;
+                }
+                .n7-item-preview__image {
+                    border-radius: 6px;
+                    &::after {
+                        border-radius: 6px;
+                    }
+                }
+                .n7-item-preview__content {
+                    justify-content: flex-end;
+                }
+                .n7-item-preview__title {
+                    text-align: left;
+                }
+            }
+        }
+        &__title {
+            font-size: 24px;
+        }
+    }
+    &--btn-more {
+        margin: 0 auto;
+    }
+}

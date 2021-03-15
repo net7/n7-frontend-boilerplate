@@ -1,17 +1,16 @@
-<div class="collection-layout"
-     *ngIf="lb.dataSource as dataSource">
-    <n7-inner-title [data]="dataSource.innerTitleData">
+<div class="collection-layout aw-collection-layout" *ngIf="lb.dataSource as dataSource">
+    <n7-inner-title [data]="dataSource.innerTitleData" class="aw-collection-layout--header">
     </n7-inner-title>
 
-    <section class="n7-grid-3" *ngIf="dataSource.loadedCollections">
+    <section class="n7-grid-3 aw-collection-layout--grid" *ngIf="dataSource.loadedCollections">
         <ng-container *ngFor="let item of dataSource.loadedCollections.value">
             <n7-item-preview [data]="item">
             </n7-item-preview>
         </ng-container>
     </section>
-    
+
     <section>
-        <button class="n7-btn n7-btn-cta n7-btn-xl" (click)="dataSource.loadMore()">
+        <button class="n7-btn n7-btn-cta n7-btn-xl aw-collection-layout--btn-more" (click)="dataSource.loadMore()">
             MOSTRA ALTRI
         </button>
     </section>
