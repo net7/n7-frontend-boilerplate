@@ -14,6 +14,7 @@
     max-width: $page-max-width;
     box-shadow: $search-box-shadow;
     background-color: $color-gray-00;
+    padding-bottom: $space*4;
     &__content-wrapper {
         display: flex;
         position: relative;
@@ -29,7 +30,7 @@
         }
     }
     &--grid {
-        padding: $space*3;
+        padding: $space*3 $space*3 0 $space*3;
         background-color: $color-gray-00;
     }
     .n7-item-preview {
@@ -60,5 +61,6 @@
     }
     &--btn-more {
         margin: 0 auto;
+        display: block;
     }
 }
