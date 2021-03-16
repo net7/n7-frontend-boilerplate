@@ -52,6 +52,15 @@
         &__input-wrapper {
             display: flex;
             min-width: 100%;
+
+            .n7-hero__input {
+                flex-shrink: 3;
+            }
+
+            /* The button */
+            *:nth-child(2) {
+                flex-shrink: 0;
+            }
         }
 
         /* Advanced autocomplete */
@@ -644,10 +653,17 @@
 \* ------------------------------------ */
 .aw-home {
     &__bottom-hero {
-        .n7-hero {
+        .n7-hero {            
+            height: auto;
+            padding: $space*6 0;
+
             &.has-image {
                 .n7-hero__content {
                     grid-column-gap: 44px;
+                }
+
+                .n7-hero__text-wrapper {
+                    height: auto;
                 }
 
                 .n7-hero__title {
@@ -660,8 +676,8 @@
                     margin-bottom: $space*3;
                 }
 
-                .n7-hero__input-wrapper {
-                    // margin-top: $space*3;
+                .n7-hero__image-wrapper {
+                    padding: 0;
                 }
 
                 .n7-hero__image {

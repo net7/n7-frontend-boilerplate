@@ -1,5 +1,5 @@
 export default {
-  title: 'Ricerca avanzata',
+  title: 'advancedsearch#page_title',
   resultsUrl: '/advanced-results',
   formConfig: {
     submitButton: {

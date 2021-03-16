@@ -1,6 +1,6 @@
 export default {
   searchId: 'advanced_search',
-  title: 'Ricerca avanzata',
+  title: 'advancedsearch#page_title',
   resourcePath: '/work',
   totalResultsText: 'search#works_total',
   filters: {
