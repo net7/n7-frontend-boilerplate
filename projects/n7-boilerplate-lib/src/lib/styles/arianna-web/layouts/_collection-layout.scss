@@ -79,6 +79,10 @@
                 }
             }
         }
+        &__title-text {
+            max-height: 200px;
+            overflow: hidden;
+        }
         &__title {
             font-size: 24px;
         }
