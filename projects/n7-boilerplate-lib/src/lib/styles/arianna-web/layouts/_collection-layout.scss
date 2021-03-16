@@ -53,6 +53,30 @@
                 .n7-item-preview__title {
                     text-align: left;
                 }
+                .n7-item-preview__text {
+                    text-align: left;
+                }
+            }
+            &.has-color {
+                .n7-item-preview__image {
+                    border-radius: 6px;
+                    background-image: url(/assets/images/arianna/logo_MAXXI_w_alpha.svg);
+                    background-size: 140px;
+                    background-repeat: no-repeat;
+                    background-position: top 30px right 30px;
+                }
+                .n7-item-preview__inner {
+                    height: 300px;
+                }
+                .n7-item-preview__content {
+                    justify-content: flex-end;
+                }
+                .n7-item-preview__title {
+                    text-align: left;
+                }
+                .n7-item-preview__text {
+                    text-align: left;
+                }
             }
         }
         &__title {
