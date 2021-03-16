@@ -43,6 +43,8 @@
                 }
                 .n7-item-preview__image {
                     border-radius: 6px;
+                    //background-size: cover;
+                    //background-position: center;
                     &::after {
                         border-radius: 6px;
                     }
