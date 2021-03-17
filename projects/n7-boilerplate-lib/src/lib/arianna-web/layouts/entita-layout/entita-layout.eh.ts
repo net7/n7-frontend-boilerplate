@@ -54,9 +54,12 @@ export class AwEntitaLayoutEH extends EventHandler {
           const options = {
             context: this.dataSource.selectedTab,
             config: this.dataSource.configuration,
+            dynamicPagination: {
+              total: this.dataSource.myResponse.totalCount,
+            },
             page: this.dataSource.currentPage,
-            pagination: true,
             size: this.dataSource.pageSize,
+            pagination: true,
           };
           this.dataSource.updateComponent(
             'aw-linked-objects',
@@ -82,7 +85,7 @@ export class AwEntitaLayoutEH extends EventHandler {
    * Listens to routing events of this layout.
    */
   private listenRoute(selectedItem = '', forceReload = false) {
-    // listen for "page" query param changes
+    // listen for "page" query param changes-
     this.route.queryParams.pipe(
       map((params: any) => params.page),
     ).subscribe((page) => {
