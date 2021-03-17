@@ -3,43 +3,62 @@
 //
 // All SASS and CSS Import for the N7 Boilerplate example project
 //
+
 // ------------------------------------ //
 // #TIPPY
 // ------------------------------------ //
 @import '../../node_modules/tippy.js/dist/tippy.css';
 @import '../../node_modules/tippy.js/themes/light-border.css';
+
+
 // ------------------------------------ //
 // #N7-ICON-FONT
 // ------------------------------------ //
 @import "../../node_modules/@n7-frontend/icon-font/Font/n7-icon/style.css";
+
+
 // ------------------------------------ //
 // #N7 COLOR SCHEME
 // ------------------------------------ //
 @import "../../node_modules/@n7-frontend/components/src/lib/styles/generic/color_scheme";
+
+
 // ------------------------------------ //
 // #AW COLOR SCHEME
 // ------------------------------------ //
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/generic/color_scheme";
+
+
 // ------------------------------------ //
 // #N7 COMPONENTS VARIABLES
 // ------------------------------------ //
 @import "../../node_modules/@n7-frontend/components/src/lib/styles/generic/variables";
+
+
 // ------------------------------------ //
 // #AW VARIABLES
 // ------------------------------------ //
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/generic/variables";
+
+
 // ------------------------------------ //
 // #N7 COMPONENTS STYLES
 // ------------------------------------ //
 @import '../../node_modules/@n7-frontend/components/src/lib/styles/imports';
+
+
 // ------------------------------------ //
 // #COMMON COMPONENTS
 // ------------------------------------ //
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/common/components/facets-wrapper";
+
+
 // ------------------------------------ //
 // #COMMON LAYOUTS
 // ------------------------------------ //
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/common/layouts/main-layout";
+
+
 // ------------------------------------ //
 // #ARIANNA COMPONENTS
 // ------------------------------------ //
@@ -58,6 +77,8 @@
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/timeline";
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/tippy-tooltip";
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/tree";
+
+
 // ------------------------------------ //
 // #ARIANNA WEB LAYOUTS
 // ------------------------------------ //
@@ -67,11 +88,16 @@
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/layouts/search-layout";
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/layouts/scheda-layout";
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/layouts/collection-layout";
+
+
 // ------------------------------------ //
 // #COMMON UTILITIES
 // ------------------------------------ //
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/common/utilities/_utilities";
+
+
 // ------------------------------------ //
 // #ARIANNA UTILITIES
 // ------------------------------------ //
 @import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/utilities/item-preview-list";
+

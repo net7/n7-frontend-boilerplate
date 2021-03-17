@@ -20,7 +20,7 @@
         position: relative;
         padding: $space*3;
     }
-    &--header {
+    &__header {
         display: flex;
         align-items: center;
         background-color: $color-background-base;
@@ -29,7 +29,7 @@
             padding: $space*3;
         }
     }
-    &--grid {
+    &__grid {
         padding: $space*3 $space*3 0 $space*3;
         background-color: $color-gray-00;
     }
@@ -38,19 +38,19 @@
         &.is-overlay {
             &.has-image {
                 .n7-item-preview__inner {
-                    height: 300px;
+                    height: 285px;
                     border-radius: 6px;
                 }
                 .n7-item-preview__image {
                     border-radius: 6px;
-                    //background-size: cover;
-                    //background-position: center;
                     &::after {
                         border-radius: 6px;
                     }
                 }
                 .n7-item-preview__content {
                     justify-content: flex-end;
+                    align-items: flex-start;
+                    padding: $space*3;
                 }
                 .n7-item-preview__title {
                     text-align: left;
@@ -68,10 +68,12 @@
                     background-position: top 30px right 30px;
                 }
                 .n7-item-preview__inner {
-                    height: 300px;
+                    height: 285px;
                 }
                 .n7-item-preview__content {
                     justify-content: flex-end;
+                    align-items: flex-start;
+                    padding: $space*3;
                 }
                 .n7-item-preview__title {
                     text-align: left;
@@ -81,10 +83,7 @@
                 }
             }
         }
-        &__title-text {
-            max-height: 200px;
-            overflow: hidden;
-        }
+        &__title-text {}
         &__title {
             font-size: 24px;
         }
@@ -92,7 +91,7 @@
             font-size: 16px;
         }
     }
-    &--btn-more {
+    &__btn-more {
         margin: 0 auto;
         display: block;
     }
