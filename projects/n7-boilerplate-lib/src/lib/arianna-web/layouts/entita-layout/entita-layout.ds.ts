@@ -4,6 +4,7 @@ import {
   catchError, filter, first, tap
 } from 'rxjs/operators';
 import { get as _get } from 'lodash';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import metadataHelper from '../../helpers/metadata.helper';
 import { EntitaLayoutResponse } from './entita-layout.types';
 
@@ -12,11 +13,11 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
 
   protected mainState: any;
 
-  protected router: any;
+  protected router: Router;
 
   protected titleService: any;
 
-  protected route: any;
+  protected route: ActivatedRoute;
 
   public options: any;
 
@@ -61,7 +62,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     this.router = router;
     this.titleService = titleService;
     this.currentId = '';
-    this.currentPage = +this.route.snapshot.queryParams.page;
+    this.currentPage = +this.route.snapshot.queryParams.page || 1;
     this.one('aw-related-entities').updateOptions({
       config: this.configuration,
     });
@@ -73,10 +74,10 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     this.mainState.update('headTitle', 'Arianna4View - Entità');
 
     // one tab control
-    this.oneTabControl();
+    this.onVerticalNavClick();
   }
 
-  oneTabControl() {
+  onVerticalNavClick() {
     const navDS = this.getWidgetDataSource('aw-entita-nav');
     navDS.out$
       .pipe(
@@ -101,20 +102,19 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
    */
   drawPagination = (totalItems, pageSize) => {
     if (!this.getLinkedObjectItems()) return;
-    const { href, queryParams } = this._getPaginationParams();
+    const { href, queryParams } = this._getPaginationURL();
     this.one('n7-smart-pagination').updateOptions({
       mode: 'href',
       href,
       queryParams,
     });
     this.one('n7-smart-pagination').update({
-      // totalPages: Math.ceil(this.getLinkedObjectItems().length / this.pageSize),
       totalPages: this.getPageCount(totalItems, pageSize),
-      currentPage: this.currentPage,
+      currentPage: +this.currentPage || 1,
       pageLimit: 5,
       sizes: {
         list: [10, 25, 50],
-        active: this.pageSize,
+        active: +this.pageSize,
       },
     });
   }
@@ -132,7 +132,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
         // Await for network response
         next: (data) => {
           this.myResponse = data;
-          const { href, queryParams } = this._getPaginationParams();
+          const { href, queryParams } = this._getPaginationURL();
           // update layout state
           this.pageSize = queryParams.size;
           this.currentPage = queryParams.page;
@@ -167,9 +167,20 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       page: this.currentPage,
       size: this.pageSize,
       pagination: true,
-      paginationParams: this._getPaginationParams(),
+      paginationParams: this._getPaginationURL(),
     });
     this.one('aw-linked-objects').update({ items: this.getLinkedObjectItems() });
+    // update the url with the correct page and size
+    const queryParams: Params = {
+      page: this.currentPage, size: this.pageSize,
+    };
+    this.router.navigate(
+      [], {
+        relativeTo: this.route,
+        queryParams,
+        queryParamsHandling: 'merge'
+      }
+    );
   }
 
   updateWidgets(data) {
@@ -202,7 +213,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       onError: (error) => console.error(error),
       params: {
         entityId: id,
-        itemsPagination: { offset: (pageNumber || 1) * pageSize, limit: pageSize },
+        itemsPagination: { offset: (pageNumber || 1) * pageSize, limit: +pageSize },
         entitiesListSize: this.bubblesSize
       },
     }).pipe(
@@ -258,7 +269,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       dynamicPagination: {
         total: this.myResponse.totalCount,
       },
-      paginationParams: this._getPaginationParams(),
+      paginationParams: this._getPaginationURL(),
       size: this.pageSize,
     });
     this.getLinkedObjectItems().forEach((el) => {
@@ -281,7 +292,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     this.mainState.update('headTitle', `Arianna4View - Entità - ${this.myResponse.label}`);
   }
 
-  private _getPaginationParams() {
+  private _getPaginationURL() {
     return {
       href: [
         this.configuration.get('paths').entitaBasePath,
@@ -290,7 +301,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
         `/${this.selectedTab}/`,
       ].join(''),
       queryParams: {
-        page: this.currentPage,
+        page: this.currentPage || 1,
         size: this.pageSize,
       },
     };
