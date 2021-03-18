@@ -1,26 +1,29 @@
 export interface GetCollectionResponse {
-  title: string;
   items: CollectionItem[];
+  title: string;
 }
 
 export interface GetCollectionParams {
-  id: number;
-  itemPagination: {
+  id: string;
+  itemPagination?: {
     limit: number;
     offset: number;
   };
 }
 
-type CollectionItem = {
-  title: nullString; // use title for slug in url
+export type CollectionItem = {
+  /** title for the url slug section */
+  title: nullString;
   content: nullString;
-  background: nullString; // codice colore
-  image: nullString; // url dell'immagine
-  url: nullString; // se url è null bisogna costruire la stringa
+  /** color code for the background color */
+  background: nullString;
+  /** background-image url */
+  image: nullString;
+  /** link url; when null the url should be constructed from type, id, title */
+  url: nullString;
   a4vId: nullString;
-  type: nullString; // la url del click si basa sul type
+  /** type of resource that the item-preview refers to (useful for building the url) */
+  type: nullString;
 }
-
-// url = type / id / title
 
 type nullString = string | null;
