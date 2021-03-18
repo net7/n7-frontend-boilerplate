@@ -679,4 +679,21 @@ export default {
       }
     }`,
   },
+  getCollection: {
+    queryName: 'getCollection',
+    queryBody: `{
+      getCollection(__PARAMS__) {
+        title
+        items {
+          title
+          content
+          background
+          image
+          url
+          a4vId
+          type
+        }
+      }
+    }`
+  }
 };
