@@ -684,6 +684,7 @@ export default {
     queryBody: `{
       getCollection(__PARAMS__) {
         title
+        total
         items {
           title
           content

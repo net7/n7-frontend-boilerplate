@@ -1,6 +1,7 @@
 export interface GetCollectionResponse {
   items: CollectionItem[];
   title: string;
+  total: number;
 }
 
 export interface GetCollectionParams {

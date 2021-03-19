@@ -23,6 +23,8 @@ export class AwCollectionLayoutDS extends LayoutDataSource {
 
   loadedCollections: BehaviorSubject<ItemPreviewData[] | []>;
 
+  loadMoreButton = new BehaviorSubject(true)
+
   onInit(payload) {
     this.communication = payload.communication;
     this.route = payload.route;
@@ -59,11 +61,20 @@ export class AwCollectionLayoutDS extends LayoutDataSource {
           image: item.image,
           color: item.background,
         })),
-        totalCount: d.items.length,
+        total: d.total,
       }))
-    ).subscribe((data: { response: ItemPreviewData[] }) => {
-      this.currentOffset += this.pageSize;
-      this.loadedCollections.next([...collection, ...data.response]);
+    ).subscribe({
+      next: (data) => {
+        this.currentOffset += this.pageSize;
+        this.loadedCollections.next([...collection, ...data.response]);
+        this.loadMoreButton.next(
+          data.total > this.loadedCollections.getValue().length
+        );
+      },
+      error: (e) => {
+        console.error(e);
+        this.loadMoreButton.next(false);
+      },
     });
   }
 }
