@@ -68,11 +68,11 @@ export default {
         }
       },
       {
-        text: 'La mia collezione',
+        text: 'Collezione',
         anchor: {
           href: 'aw/collection/5'
         },
-        icon: 'n7-icon-calendar-alt',
+        icon: 'n7-icon-th',
         _meta: {
           id: 'collection'
         }
