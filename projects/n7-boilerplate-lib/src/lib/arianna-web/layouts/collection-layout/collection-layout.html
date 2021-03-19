@@ -18,7 +18,7 @@
         </ng-container>
     </section>
 
-    <section>
+    <section *ngIf="dataSource.loadMoreButton.getValue()">
         <button class="n7-btn n7-btn-cta n7-btn-xl aw-collection-layout__btn-more" (click)="dataSource.loadMore()">
             MOSTRA ALTRI
         </button>
