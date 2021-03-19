@@ -70,7 +70,7 @@ export default {
       {
         text: 'La mia collezione',
         anchor: {
-          href: 'aw/collection'
+          href: 'aw/collection/5'
         },
         icon: 'n7-icon-calendar-alt',
         _meta: {

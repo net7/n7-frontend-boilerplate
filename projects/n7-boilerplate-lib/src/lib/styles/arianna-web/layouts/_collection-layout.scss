@@ -1,98 +1,164 @@
 /**
  * LA MIA COLLEZIONE
  *
- * 
  */
-
 
 /* ------------------------------------ *\
     LAYOUT
 \* ------------------------------------ */
-
 .aw-collection-layout {
     margin: $space*3 auto $space*6 auto;
     max-width: $page-max-width;
     box-shadow: $search-box-shadow;
-    background-color: $color-gray-00;
+    background-color: $color-background-base;
     padding-bottom: $space*4;
-    &__content-wrapper {
-        display: flex;
-        position: relative;
-        padding: $space*3;
-    }
+    
     &__header {
-        display: flex;
-        align-items: center;
-        background-color: $color-background-base;
         border-bottom: 1px solid $color-border-light;
+        
         .n7-inner-title {
             padding: $space*3;
         }
+
+        .n7-inner-title__title {
+            margin-bottom: 0;
+            font-size: $font-size-xl;
+        }
     }
+
+    &__description {
+        padding: $space*3;
+        background-color: $color-background-light;
+        border-bottom: 1px solid $color-border-light;
+    }
+
+    &__description-text {
+        
+    }
+    
     &__grid {
         padding: $space*3 $space*3 0 $space*3;
-        background-color: $color-gray-00;
     }
-    .n7-item-preview {
-        margin-bottom: $space*3;
-        &.is-overlay {
-            &.has-image {
-                .n7-item-preview__inner {
-                    height: 285px;
-                    border-radius: 6px;
-                }
-                .n7-item-preview__image {
-                    border-radius: 6px;
-                    &::after {
-                        border-radius: 6px;
-                    }
-                }
-                .n7-item-preview__content {
-                    justify-content: flex-end;
-                    align-items: flex-start;
-                    padding: $space*3;
-                }
-                .n7-item-preview__title {
-                    text-align: left;
-                }
-                .n7-item-preview__text {
-                    text-align: left;
-                }
-            }
-            &.has-color {
-                .n7-item-preview__image {
-                    border-radius: 6px;
-                    background-image: url(/assets/images/arianna/logo_MAXXI_w_alpha.svg);
-                    background-size: 140px;
-                    background-repeat: no-repeat;
-                    background-position: top 30px right 30px;
-                }
-                .n7-item-preview__inner {
-                    height: 285px;
-                }
-                .n7-item-preview__content {
-                    justify-content: flex-end;
-                    align-items: flex-start;
-                    padding: $space*3;
-                }
-                .n7-item-preview__title {
-                    text-align: left;
-                }
-                .n7-item-preview__text {
-                    text-align: left;
-                }
-            }
-        }
-        &__title-text {}
-        &__title {
-            font-size: 24px;
-        }
-        &__text {
-            font-size: 16px;
-        }
-    }
+    
+    
     &__btn-more {
         margin: 0 auto;
         display: block;
+    }
+}
+
+
+/* ------------------------------------ *\
+    ITEM-PREVIEW
+\* ------------------------------------ */
+.aw-collection-layout {
+    
+    .n7-item-preview {
+        margin-bottom: $space*3;
+        background-color: $collection-item-preview-default-color;
+        border-radius: $border-radius*2;
+
+        .n7-item-preview__inner,
+        &.is-overlay.has-color .n7-item-preview__inner,
+        &.is-overlay.has-image .n7-item-preview__inner,
+        &.is-overlay.has-color.has-image .n7-item-preview__inner {
+            height: $collection-item-preview-height;
+        }
+
+        .n7-item-preview__content {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            box-sizing: border-box;
+            height: $collection-item-preview-height;
+            padding: $space*3;
+            border-radius: $border-radius*2;
+        }
+
+        .n7-item-preview__title {
+            margin: 0;
+            color: $color-text-inverse;
+            text-align: left;
+            font-size: $font-size-xl;
+            text-align: left;
+        }
+        
+        .n7-item-preview__text {
+            margin: $space 0 0 0;
+            color: $color-text-inverse;
+            text-align: left;
+            font-size: $font-size-m;
+            text-align: left;
+        }
+
+        .n7-item-preview__image {
+            // background-image: url(/assets/images/arianna/logo_MAXXI_w_alpha.svg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            border-radius: $border-radius*2;
+
+            &:after {
+                border-radius: $border-radius*2;
+            }
+        }
+
+        &.is-overlay {
+            &.has-image {
+                .n7-item-preview__inner {
+                    // height: 285px;
+                    // border-radius: 6px;
+                }
+
+                .n7-item-preview__image {
+                    // border-radius: 6px;
+                    &::after {
+                        // border-radius: 6px;
+                    }
+                }
+                
+                .n7-item-preview__content {
+                    
+                }
+                
+                .n7-item-preview__title {
+                    // text-align: left;
+                }
+                
+                .n7-item-preview__text {
+                    // text-align: left;
+                }
+            }
+            
+            &.has-color {
+                
+                
+                .n7-item-preview__inner {
+                    // height: 285px;
+                }
+                
+                .n7-item-preview__content {
+                    // justify-content: flex-end;
+                    // align-items: flex-start;
+                    // padding: $space*3;
+                }
+                
+                .n7-item-preview__title {
+                    // text-align: left;
+                }
+                
+                .n7-item-preview__text {
+                    // text-align: left;
+                }
+            }
+        }
+        
+        &__title {
+            // font-size: $font-size-xl;
+        }
+        
+        &__text {
+            // font-size: $font-size-m;
+        }
     }
 }
