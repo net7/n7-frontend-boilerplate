@@ -48,15 +48,16 @@ export class AwEntitaLayoutEH extends EventHandler {
             this.dataSource.handleNavUpdate(payload);
           }
           break;
-        case 'aw-linked-objects.change': { // changed page size value (pagination)
-          this.dataSource.pageSize = payload;
-          this.dataSource.currentPage = 1; // reset page
+        case 'aw-linked-objects.change': {
           const options = {
             context: this.dataSource.selectedTab,
             config: this.dataSource.configuration,
+            dynamicPagination: {
+              total: this.dataSource.myResponse.totalCount,
+            },
             page: this.dataSource.currentPage,
-            pagination: true,
             size: this.dataSource.pageSize,
+            pagination: true,
           };
           this.dataSource.updateComponent(
             'aw-linked-objects',
@@ -64,7 +65,7 @@ export class AwEntitaLayoutEH extends EventHandler {
             options,
           );
         } break;
-        case 'n7-smart-pagination.change':
+        case 'n7-smart-pagination.change': // changed page size value (pagination)
           this.handlePageSizeChange(payload.value);
           break;
         default:
@@ -73,19 +74,27 @@ export class AwEntitaLayoutEH extends EventHandler {
     });
   }
 
-  private handlePageSizeChange = (v) => {
-    this.dataSource.pageSize = v;
+  private handlePageSizeChange = (size) => {
+    this.dataSource.pageSize = size;
+    this.dataSource.currentPage = 1;
     this.dataSource.handleNavUpdate('oggetti-collegati');
+    // this.dataSource.handlePageNavigation();
   }
 
   /**
    * Listens to routing events of this layout.
    */
   private listenRoute(selectedItem = '', forceReload = false) {
-    // listen for "page" query param changes
+    // listen for "page" query param changes-
     this.route.queryParams.pipe(
-      map((params: any) => params.page),
-    ).subscribe((page) => {
+      map((params: any) => ({
+        page: params.page,
+        size: params.size
+      })),
+    ).subscribe(({ page, size }) => {
+      if (size) {
+        this.dataSource.pageSize = size;
+      }
       if (this.dataSource.currentPage !== page) {
         this.dataSource.currentPage = page;
         this.dataSource.handlePageNavigation();
