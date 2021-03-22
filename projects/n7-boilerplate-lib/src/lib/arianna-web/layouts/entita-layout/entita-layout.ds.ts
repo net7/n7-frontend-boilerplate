@@ -73,18 +73,21 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     // update head title
     this.mainState.update('headTitle', 'Arianna4View - Entità');
 
-    // one tab control
-    this.onVerticalNavClick();
+    // check if there is only one tab
+    this.singleTabCheck();
   }
 
-  onVerticalNavClick() {
+  singleTabCheck() {
     const navDS = this.getWidgetDataSource('aw-entita-nav');
     navDS.out$
       .pipe(
         filter((output) => !!output)
       )
       .subscribe(({ items }) => {
-        if (items.length === 1) {
+        // if there is only one tab
+        // and there are no query params
+        // navigate to the tab.
+        if (items.length === 1 && !this.currentPage) {
           this.router.navigate([items[0].anchor.href], { replaceUrl: true });
         }
       });
