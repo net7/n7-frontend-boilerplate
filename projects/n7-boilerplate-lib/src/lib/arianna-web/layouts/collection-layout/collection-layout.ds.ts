@@ -2,9 +2,9 @@ import { InnerTitleData, ItemPreviewData } from '@n7-frontend/components';
 import { LayoutDataSource } from '@n7-frontend/core';
 import { BehaviorSubject } from 'rxjs';
 import { first, map } from 'rxjs/operators';
+import slugify from 'slugify';
 import { CommunicationService } from '../../../common/services/communication.service';
 import { CollectionItem, GetCollectionParams, GetCollectionResponse } from './collection-layout.types';
-// import getCollection from './collection-mocks';
 
 export class AwCollectionLayoutDS extends LayoutDataSource {
   private communication: CommunicationService;
@@ -60,6 +60,9 @@ export class AwCollectionLayoutDS extends LayoutDataSource {
           classes: 'is-overlay has-image',
           image: item.image,
           color: item.background,
+          anchor: {
+            href: item.url || this.urlBuilder(item.type, item.a4vId, item.title)
+          }
         })),
         total: d.total,
       }))
@@ -76,5 +79,19 @@ export class AwCollectionLayoutDS extends LayoutDataSource {
         this.loadMoreButton.next(false);
       },
     });
+  }
+
+  /**
+   * Builds a URL from entity type,
+   * entity id, and a slug string.
+   *
+   * @param type entity type
+   * @param id entity ID
+   * @param title human-readable title
+   * @returns URL string including a slug
+   */
+  urlBuilder(type, id, title): string {
+    const titleSlug = slugify(title);
+    return `/${type}/${id}/${titleSlug}`;
   }
 }

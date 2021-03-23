@@ -1,3 +1,4 @@
+import { ItemPreviewData } from '@n7-frontend/components';
 import { DataSource } from '@n7-frontend/core';
 import { merge } from 'lodash';
 import helpers from '../../common/helpers';
@@ -11,7 +12,7 @@ const ITEM_PREVIEW_DEFAULTS = {
 export class MrItemPreviewDS extends DataSource {
   id: string;
 
-  protected transform(data: any): any {
+  protected transform(data: any): ItemPreviewData {
     const { classes, itemPreview } = this.options;
     const itemPreviewOptions = merge(ITEM_PREVIEW_DEFAULTS, (itemPreview || {}));
 
