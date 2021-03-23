@@ -72,7 +72,7 @@ export class AwCollectionLayoutDS extends LayoutDataSource {
             maxLength: this.layoutOptions.item.description.maxLength,
             char: this.layoutOptions.item.description.char
           }),
-          classes: item.image ? 'is-overlay has-image' : 'is-overlay has-image has-watermark',
+          classes: `${item.image ? 'is-overlay has-image' : 'is-overlay has-image has-watermark'} ${item.classification ? `is-${item.classification}` : ''}`,
           image: item.image || this.layoutOptions.watermark,
           color: item.background,
           anchor: {
@@ -130,7 +130,7 @@ export class AwCollectionLayoutDS extends LayoutDataSource {
 
   stringLimiter(content: string, options: { maxLength: number; char: string }): string {
     let res = content;
-    if (options.maxLength) {
+    if (content && options.maxLength) {
       res = content.slice(0, options.maxLength);
       if (options.char && res !== content) {
         res += options.char;
