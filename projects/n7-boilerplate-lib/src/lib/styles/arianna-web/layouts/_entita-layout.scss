@@ -89,6 +89,7 @@
         font-weight: $font-weight-black;
     }
 
+    /* Sidebar nav */
     &__sidebar {
         flex: 0 0 $aw-scheda-tree-width;
         width: $aw-scheda-tree-width;
@@ -99,10 +100,12 @@
         }
 
         .n7-nav__item {
-            /* Current item */
             position: relative;
+            padding: $space*2;
+            
+            /* Current item */
             &.is-selected {
-                .n7-nav__link {
+                .n7-nav__label {
                     color: $color-text;
                     font-weight: $font-weight-bold;
 
@@ -130,7 +133,7 @@
 
         .n7-nav__link {
             display: block;
-            padding: $space*2;
+            padding: 0;
             border-bottom: 1px solid $color-border-light;
             color: $color-text-light;
             text-transform: uppercase;
