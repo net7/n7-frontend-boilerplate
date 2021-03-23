@@ -74,7 +74,7 @@ export class AwCollectionLayoutDS extends LayoutDataSource {
           image: item.image,
           color: item.background,
           anchor: {
-            href: item.url || this.urlBuilder(item.type, item.a4vId, item.title)
+            href: item.url || this.urlBuilder(item.a4vId, item.title)
           }
         })),
         total: d.total,
@@ -103,9 +103,12 @@ export class AwCollectionLayoutDS extends LayoutDataSource {
    * @param title human-readable title
    * @returns URL string including a slug
    */
-  urlBuilder(type, id, title): string {
-    const titleSlug = slugify(title);
-    return `/${type}/${id}/${titleSlug}`;
+  urlBuilder(id, title): string | undefined {
+    if (id && title) {
+      const titleSlug = slugify(title);
+      const basePath = this.configuration.get('paths').schedaBasePath;
+      return `/${basePath}/${id}/${titleSlug}`;
+    } return undefined;
   }
 
   stringLimiter(content: string, options: { maxLength: number; char: string }): string {
