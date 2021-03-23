@@ -3,11 +3,16 @@ import { LayoutDataSource } from '@n7-frontend/core';
 import { BehaviorSubject } from 'rxjs';
 import { first, map } from 'rxjs/operators';
 import slugify from 'slugify';
+import { ConfigurationService } from '../../../common/services/configuration.service';
 import { CommunicationService } from '../../../common/services/communication.service';
 import { CollectionItem, GetCollectionParams, GetCollectionResponse } from './collection-layout.types';
 
 export class AwCollectionLayoutDS extends LayoutDataSource {
   private communication: CommunicationService;
+
+  private configuration: ConfigurationService;
+
+  private layoutOptions;
 
   private route;
 
@@ -28,7 +33,9 @@ export class AwCollectionLayoutDS extends LayoutDataSource {
   onInit(payload) {
     this.communication = payload.communication;
     this.route = payload.route;
+    this.configuration = payload.configuration;
     this.loadedCollections = new BehaviorSubject([]);
+    this.layoutOptions = this.configuration.get('collection-layout');
   }
 
   /**
@@ -55,8 +62,14 @@ export class AwCollectionLayoutDS extends LayoutDataSource {
       map((d: GetCollectionResponse) => ({
         // map the backend response to the format used by ItemPreviewComponent
         response: d.items.map((item: CollectionItem) => ({
-          title: item.title,
-          text: item.content,
+          title: this.stringLimiter(item.title, {
+            maxLength: this.layoutOptions.item.title.maxLength,
+            char: this.layoutOptions.item.title.char,
+          }),
+          text: this.stringLimiter(item.content, {
+            maxLength: this.layoutOptions.item.description.maxLength,
+            char: this.layoutOptions.item.description.char
+          }),
           classes: 'is-overlay has-image',
           image: item.image,
           color: item.background,
@@ -93,5 +106,16 @@ export class AwCollectionLayoutDS extends LayoutDataSource {
   urlBuilder(type, id, title): string {
     const titleSlug = slugify(title);
     return `/${type}/${id}/${titleSlug}`;
+  }
+
+  stringLimiter(content: string, options: { maxLength: number; char: string }): string {
+    let res = content;
+    if (options.maxLength) {
+      res = content.slice(0, options.maxLength);
+      if (options.char && res !== content) {
+        res += options.char;
+      }
+    }
+    return res;
   }
 }
