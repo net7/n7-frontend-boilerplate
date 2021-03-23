@@ -22,6 +22,8 @@ export class AwCollectionLayoutDS extends LayoutDataSource {
     title: { main: { text: '' } },
   })
 
+  collectionDescription = new BehaviorSubject<string>('');
+
   pageSize = 6;
 
   currentOffset = 0;
@@ -75,15 +77,26 @@ export class AwCollectionLayoutDS extends LayoutDataSource {
           color: item.background,
           anchor: {
             href: item.url || this.urlBuilder(item.a4vId, item.title)
-          }
+          },
+          classification: item.classification
         })),
+        text: d.text,
         title: d.title,
         total: d.total,
       }))
     ).subscribe({
       next: (data) => {
         if (data.title) {
-          this.setTitle(data.title);
+          this.setTitle(this.stringLimiter(data.title, {
+            maxLength: this.layoutOptions.header.maxLength,
+            char: this.layoutOptions.header.char
+          }));
+        }
+        if (data.text) {
+          this.collectionDescription.next(this.stringLimiter(data.text, {
+            maxLength: this.layoutOptions.description.maxLength,
+            char: this.layoutOptions.description.char
+          }));
         }
         this.currentOffset += this.pageSize;
         this.loadedCollections.next([...collection, ...data.response]);

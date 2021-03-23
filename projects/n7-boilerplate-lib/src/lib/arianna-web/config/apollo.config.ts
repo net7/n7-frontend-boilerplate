@@ -684,6 +684,7 @@ export default {
     queryBody: `{
       getCollection(__PARAMS__) {
         title
+        text
         total
         items {
           title
@@ -693,6 +694,7 @@ export default {
           url
           a4vId
           type
+          classification
         }
       }
     }`

@@ -2,6 +2,7 @@ export interface GetCollectionResponse {
   items: CollectionItem[];
   title: string;
   total: number;
+  text: string;
 }
 
 export interface GetCollectionParams {
@@ -25,6 +26,7 @@ export type CollectionItem = {
   a4vId: nullString;
   /** type of resource that the item-preview refers to (useful for building the url) */
   type: nullString;
+  classification: nullString;
 }
 
 type nullString = string | null;

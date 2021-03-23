@@ -4,7 +4,7 @@ export default {
     char: '…',
   },
   description: {
-    maxLength: 20,
+    // maxLength: 20,
     char: '…',
   },
   watermark: 'https://i.imgur.com/gQVmeiZ.png',
