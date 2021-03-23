@@ -70,7 +70,7 @@ export default {
       {
         text: 'Collezione',
         anchor: {
-          href: 'aw/collection/5'
+          href: 'aw/collection/44'
         },
         icon: 'n7-icon-th',
         _meta: {

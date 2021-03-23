@@ -1,20 +1,20 @@
 export default {
   header: {
-    maxLength: 20,
+    maxLength: 100,
     char: '…',
   },
   description: {
     // maxLength: 20,
     char: '…',
   },
-  watermark: 'https://i.imgur.com/gQVmeiZ.png',
+  watermark: 'assets/collection-watermark.png',
   item: {
     title: {
-      maxLength: 20,
+      maxLength: 80,
       char: '…'
     },
     description: {
-      maxLength: 20,
+      maxLength: 100,
       char: '…'
     }
   }

@@ -126,3 +126,51 @@
         }
     }
 }
+
+/* Types colors */
+.aw-collection-layout {
+    
+    .n7-item-preview.is-overlay.is-persona {
+        background-color: $color-people;
+    }
+    .n7-item-preview.is-overlay.is-luogo {
+        background-color: $color-places;
+    }
+    .n7-item-preview.is-overlay.is-concetto {
+        background-color: $color-concepts;
+    }
+    .n7-item-preview.is-overlay.is-cosa-notevole {
+        background-color: $color-things;
+    }
+    .n7-item-preview.is-overlay.is-organizzazione {
+        background-color: $color-organizations;
+    }
+    .n7-item-preview.is-overlay.is-famiglia {
+        background-color: $color-families;
+    }
+    .n7-item-preview.is-overlay.is-evento {
+        background-color: $color-events;
+    }
+
+    .n7-item-preview.is-overlay.is-a4.oc.ua.UA {
+        background-color: $color-oggetto-culturale;
+    }
+    .n7-item-preview.is-overlay.is-persona {
+        background-color: $color-aggregazione-logica;
+    }
+
+}
+
+/* Watermark */
+.aw-collection-layout {
+    .n7-item-preview.is-overlay.has-image.has-watermark {
+        .n7-item-preview__image {
+            background-size: auto 40px;
+            background-position: right 24px top 24px;
+
+            &:after {
+                display: none;
+            }
+        }
+    }
+}

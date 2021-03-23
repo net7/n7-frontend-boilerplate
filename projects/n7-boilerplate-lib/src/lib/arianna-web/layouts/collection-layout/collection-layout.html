@@ -5,7 +5,7 @@
         </n7-inner-title>
     </div>
 
-    <div class="aw-collection-layout__description">
+    <div class="aw-collection-layout__description" *ngIf="dataSource.collectionDescription.getValue()">
         <div class="aw-collection-layout__description-text">
             {{ dataSource.collectionDescription.getValue() }}
         </div>
