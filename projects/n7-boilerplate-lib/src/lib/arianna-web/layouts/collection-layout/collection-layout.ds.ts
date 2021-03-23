@@ -18,9 +18,9 @@ export class AwCollectionLayoutDS extends LayoutDataSource {
 
   public collectionID: string;
 
-  innerTitleData: InnerTitleData = {
-    title: { main: { text: 'Articoli recenti' } },
-  }
+  innerTitleData = new BehaviorSubject<InnerTitleData>({
+    title: { main: { text: '' } },
+  })
 
   pageSize = 6;
 
@@ -70,17 +70,21 @@ export class AwCollectionLayoutDS extends LayoutDataSource {
             maxLength: this.layoutOptions.item.description.maxLength,
             char: this.layoutOptions.item.description.char
           }),
-          classes: 'is-overlay has-image',
-          image: item.image,
+          classes: item.image ? 'is-overlay has-image' : 'is-overlay has-image has-watermark',
+          image: item.image || this.layoutOptions.watermark,
           color: item.background,
           anchor: {
             href: item.url || this.urlBuilder(item.a4vId, item.title)
           }
         })),
+        title: d.title,
         total: d.total,
       }))
     ).subscribe({
       next: (data) => {
+        if (data.title) {
+          this.setTitle(data.title);
+        }
         this.currentOffset += this.pageSize;
         this.loadedCollections.next([...collection, ...data.response]);
         this.loadMoreButton.next(
@@ -120,5 +124,11 @@ export class AwCollectionLayoutDS extends LayoutDataSource {
       }
     }
     return res;
+  }
+
+  setTitle(title: string): void {
+    this.innerTitleData.next({
+      title: { main: { text: title } }
+    });
   }
 }
