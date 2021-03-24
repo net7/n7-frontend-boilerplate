@@ -100,8 +100,8 @@ export class AwLinkedObjectsDS extends DataSource {
         resultsLimit = config.get(`${context}-layout`)['results-limit'];
       }
     }
-    // resize data
-    if (!dynamicPagination && size && page) {
+    // resize data if necessary
+    if (!dynamicPagination && size && page && d.length > size) {
       d = d.slice(page * size - size, page * size);
     } else if (size) {
       d = d.slice(0, size);
