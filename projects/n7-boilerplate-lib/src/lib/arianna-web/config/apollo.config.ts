@@ -161,7 +161,8 @@ export default {
     queryName: 'getEntity',
     queryBody: `{
         getEntity(__PARAMS__){
-          totalCount: relatedItemsTotalCount
+          relatedItemsTotalCount,
+          relatedLaTotalCount: relatedAlTotalCount,
           overviewTab
           label
           id

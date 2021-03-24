@@ -140,13 +140,13 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
           this.pageSize = queryParams.size;
           this.currentPage = queryParams.page;
           // update components
-          this.drawPagination(this.myResponse.totalCount, this.pageSize);
+          this.drawPagination(this.getItemCount(), this.pageSize);
           this.one('aw-linked-objects').updateOptions({
             paginationParams: { href, queryParams },
             context: this.selectedTab,
             config: this.configuration,
             dynamicPagination: {
-              total: this.myResponse.totalCount,
+              total: this.getItemCount(),
             },
             page: queryParams.page,
             size: queryParams.size,
@@ -165,7 +165,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       context: this.selectedTab,
       config: this.configuration,
       dynamicPagination: {
-        total: this.myResponse.totalCount,
+        total: this.getItemCount(),
       },
       page: this.currentPage,
       size: this.pageSize,
@@ -201,7 +201,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     });
     this.updateComponent('aw-entita-metadata-viewer', this.getFields(this.myResponse));
     this.one('aw-related-entities').update(this.myResponse.relatedEntities);
-    this.drawPagination(this.myResponse.totalCount, this.pageSize);
+    this.drawPagination(this.getItemCount(), this.pageSize);
   }
 
   /**
@@ -270,7 +270,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       page: this.currentPage,
       pagination: true,
       dynamicPagination: {
-        total: this.myResponse.totalCount,
+        total: this.getItemCount(),
       },
       paginationParams: this._getPaginationURL(),
       size: this.pageSize,
@@ -316,6 +316,17 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       `${this.currentId}/`,
       this.currentSlug,
     ].join('');
+  }
+
+  public getItemCount(): number {
+    switch (this.selectedTab) {
+      case 'fondi-collegati':
+        return this.myResponse.relatedLaTotalCount;
+      case 'oggetti-collegati':
+        return this.myResponse.relatedItemsTotalCount;
+      default:
+        return 0;
+    }
   }
 
   public getFields(response) {

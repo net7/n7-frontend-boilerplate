@@ -9,7 +9,8 @@ export interface EntitaLayoutResponse {
   relatedEntities: emptyOrAnyList;
   relatedItems: emptyOrAnyList;
   relatedLa: emptyOrAnyList;
-  totalCount: number;
+  relatedItemsTotalCount: number;
+  relatedLaTotalCount: number;
 }
 
 type missingType = null;
