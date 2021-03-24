@@ -4,6 +4,7 @@ import homeLayoutConfig from './home-layout.config';
 import mapLayoutConfig from './map-layout.config';
 import schedaLayoutConfig from './scheda-layout.config';
 import searchLayoutConfig from './search-layout.config';
+import collectionLayoutConfig from './collection-layout.config';
 
 export default {
   'home-layout': homeLayoutConfig,
@@ -11,5 +12,6 @@ export default {
   'search-layout': searchLayoutConfig,
   'gallery-layout': galleryLayoutConfig,
   'entita-layout': entitaLayoutConfig,
-  'map-layout': mapLayoutConfig
+  'map-layout': mapLayoutConfig,
+  'collection-layout': collectionLayoutConfig,
 };

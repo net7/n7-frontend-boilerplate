@@ -1,16 +1,26 @@
-<div class="collection-layout"
-     *ngIf="lb.dataSource as dataSource">
-    <n7-inner-title [data]="dataSource.innerTitleData">
-    </n7-inner-title>
+<div class="aw-collection-layout" *ngIf="lb.dataSource as dataSource">
 
-    <section class="n7-grid-3" *ngIf="dataSource.loadedCollections">
+    <div class="aw-collection-layout__header">
+        <n7-inner-title [data]="dataSource.innerTitleData.getValue()">
+        </n7-inner-title>
+    </div>
+
+    <div class="aw-collection-layout__description" *ngIf="dataSource.collectionDescription.getValue()">
+        <div class="aw-collection-layout__description-text">
+            {{ dataSource.collectionDescription.getValue() }}
+        </div>
+    </div>
+
+    <section class="n7-grid-3 aw-collection-layout__grid" *ngIf="dataSource.loadedCollections">
         <ng-container *ngFor="let item of dataSource.loadedCollections.value">
             <n7-item-preview [data]="item">
             </n7-item-preview>
         </ng-container>
     </section>
-    
-    <section>
-        <button class="n7-btn" (click)="dataSource.loadMore()">Vedi altri</button>
+
+    <section *ngIf="dataSource.loadMoreButton.getValue()">
+        <button class="n7-btn n7-btn-cta n7-btn-xl aw-collection-layout__btn-more" (click)="dataSource.loadMore()">
+            MOSTRA ALTRI
+        </button>
     </section>
 </div>

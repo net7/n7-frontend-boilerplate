@@ -1,0 +1,177 @@
+/**
+ * LA MIA COLLEZIONE
+ *
+ */
+
+/* ------------------------------------ *\
+    LAYOUT
+\* ------------------------------------ */
+.aw-collection-layout {
+    margin: $space*3 auto $space*6 auto;
+    max-width: $page-max-width;
+    box-shadow: $search-box-shadow;
+    background-color: $color-background-base;
+    padding-bottom: $space*4;
+    
+    &__header {
+        border-bottom: 1px solid $color-border-light;
+        
+        .n7-inner-title {
+            padding: $space*3;
+        }
+
+        .n7-inner-title__title {
+            margin-bottom: 0;
+            font-size: $font-size-xl;
+        }
+    }
+
+    &__description {
+        padding: $space*3;
+        background-color: $color-background-light;
+        border-bottom: 1px solid $color-border-light;
+    }
+
+    &__description-text {
+        
+    }
+    
+    &__grid {
+        padding: $space*3 $space*3 0 $space*3;
+    }
+    
+    
+    &__btn-more {
+        margin: 0 auto;
+        display: block;
+    }
+}
+
+
+/* ------------------------------------ *\
+    ITEM-PREVIEW
+\* ------------------------------------ */
+.aw-collection-layout {
+    
+    .n7-item-preview,
+    .n7-item-preview.is-overlay.has-color,
+    .n7-item-preview.is-overlay.has-image,
+    .n7-item-preview.is-overlay.has-color.has-image {
+        margin-bottom: $space*3;
+        background-color: $collection-item-preview-default-color;
+        border-radius: $border-radius*2;
+        @include card-box-shadow;
+
+        .n7-item-preview__inner {
+            height: $collection-item-preview-height;
+        }
+
+        .n7-item-preview__content {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: flex-start;
+            box-sizing: border-box;
+            height: $collection-item-preview-height;
+            padding: $space*3;
+            border-radius: $border-radius*2;
+        }
+
+        .n7-item-preview__title {
+            margin: 0;
+            color: $color-text-inverse;
+            text-align: left;
+            font-size: $font-size-xl;
+            text-align: left;
+            text-shadow: 0 1px 2px rgba( 0,0,0,.05 );
+        }
+        
+        .n7-item-preview__text {
+            margin: $space 0 0 0;
+            color: $color-text-inverse;
+            text-align: left;
+            font-size: $font-size-m;
+            text-align: left;
+            text-shadow: 0 1px 2px rgba( 0,0,0,.05 );
+        }
+
+        .n7-item-preview__image {
+            // background-image: url(/assets/images/arianna/logo_MAXXI_w_alpha.svg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            border-radius: $border-radius*2;
+
+            &:after {
+                border-radius: $border-radius*2;
+            }
+        }
+    }
+
+    .n7-item-preview.has-color {
+        .n7-item-preview__image {
+            &:after {
+                display: none;
+            }
+        }
+    }
+
+    /* Hover */
+    .n7-item-preview,
+    .n7-item-preview.is-overlay.has-color,
+    .n7-item-preview.is-overlay.has-image,
+    .n7-item-preview.is-overlay.has-color.has-image {
+        &:hover {
+            @include card-box-shadow-hover;
+        }
+    }
+}
+
+/* Types colors */
+.aw-collection-layout {
+    
+    .n7-item-preview.is-overlay.is-persona {
+        background-color: $color-people;
+    }
+    .n7-item-preview.is-overlay.is-luogo {
+        background-color: $color-places;
+    }
+    .n7-item-preview.is-overlay.is-concetto {
+        background-color: $color-concepts;
+    }
+    .n7-item-preview.is-overlay.is-cosa-notevole {
+        background-color: $color-things;
+    }
+    .n7-item-preview.is-overlay.is-organizzazione {
+        background-color: $color-organizations;
+    }
+    .n7-item-preview.is-overlay.is-famiglia {
+        background-color: $color-families;
+    }
+    .n7-item-preview.is-overlay.is-evento {
+        background-color: $color-events;
+    }
+
+    /*
+    .n7-item-preview.is-overlay.is-a4.oc.ua.UA {
+        background-color: $color-oggetto-culturale;
+    }
+    .n7-item-preview.is-overlay.is-persona {
+        background-color: $color-aggregazione-logica;
+    }
+    */
+}
+
+/* Watermark */
+.aw-collection-layout {
+    .n7-item-preview.is-overlay.has-image.has-watermark {
+        .n7-item-preview__image {
+            background-size: auto 40px;
+            background-position: right 24px top 24px;
+
+            &:after {
+                display: none;
+            }
+        }
+    }
+}
