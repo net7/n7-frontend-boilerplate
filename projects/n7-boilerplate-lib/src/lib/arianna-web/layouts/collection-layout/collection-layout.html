@@ -11,8 +11,8 @@
         </div>
     </div>
 
-    <section class="n7-grid-3 aw-collection-layout__grid" *ngIf="dataSource.loadedCollections">
-        <ng-container *ngFor="let item of dataSource.loadedCollections.value">
+    <section class="n7-grid-3 aw-collection-layout__grid" *ngIf="dataSource.loadedCollections | async">
+        <ng-container *ngFor="let item of (dataSource.loadedCollections | async)">
             <n7-item-preview [data]="item">
             </n7-item-preview>
         </ng-container>

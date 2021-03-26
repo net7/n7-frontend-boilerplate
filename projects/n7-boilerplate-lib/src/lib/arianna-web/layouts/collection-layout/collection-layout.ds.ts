@@ -44,10 +44,14 @@ export class AwCollectionLayoutDS extends LayoutDataSource {
    * After the collection ID has been loaded
    */
   onCollectionID() {
-    this.loadMore();
+    // reset pagination params
+    this.pageSize = 6;
+    this.currentOffset = 0;
+    // load
+    this.loadMore(true);
   }
 
-  loadMore() {
+  loadMore(reload = false) {
     const collection = this.loadedCollections.getValue();
     const params: GetCollectionParams = {
       id: this.collectionID,
@@ -76,7 +80,7 @@ export class AwCollectionLayoutDS extends LayoutDataSource {
           image: item.image || this.layoutOptions.watermark,
           color: item.background,
           anchor: {
-            href: item.url || this.urlBuilder(item.a4vId, item.title)
+            href: item.url || this.urlBuilder(item.a4vId, item.title, item.type)
           },
           classification: item.classification
         })),
@@ -92,14 +96,15 @@ export class AwCollectionLayoutDS extends LayoutDataSource {
             char: this.layoutOptions.header.char
           }));
         }
-        if (data.text) {
-          this.collectionDescription.next(this.stringLimiter(data.text, {
-            maxLength: this.layoutOptions.description.maxLength,
-            char: this.layoutOptions.description.char
-          }));
-        }
+        this.collectionDescription.next(data.text ? this.stringLimiter(data.text, {
+          maxLength: this.layoutOptions.description.maxLength,
+          char: this.layoutOptions.description.char
+        }) : '');
         this.currentOffset += this.pageSize;
-        this.loadedCollections.next([...collection, ...data.response]);
+        const collectionData = !reload
+          ? [...collection, ...data.response]
+          : [...data.response];
+        this.loadedCollections.next(collectionData);
         this.loadMoreButton.next(
           data.total > this.loadedCollections.getValue().length
         );
@@ -120,10 +125,11 @@ export class AwCollectionLayoutDS extends LayoutDataSource {
    * @param title human-readable title
    * @returns URL string including a slug
    */
-  urlBuilder(id, title): string | undefined {
+  urlBuilder(id, title, type: string): string | undefined {
     if (id && title) {
       const titleSlug = slugify(title);
-      const basePath = this.configuration.get('paths').schedaBasePath;
+      const { schedaBasePath, entitaBasePath } = this.configuration.get('paths');
+      const basePath = type === 'entity' ? entitaBasePath : schedaBasePath;
       return `/${basePath}/${id}/${titleSlug}`;
     } return undefined;
   }
