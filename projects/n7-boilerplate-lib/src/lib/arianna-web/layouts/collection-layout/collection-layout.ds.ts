@@ -26,11 +26,18 @@ export class AwCollectionLayoutDS extends LayoutDataSource {
 
   pageSize = 6;
 
+  /** Necessary to iterate with the loading item placeholder HTML */
+  pageSizeList = [];
+
   currentOffset = 0;
 
   loadedCollections: BehaviorSubject<ItemPreviewData[] | []>;
 
+  /** Button that loads more content into the layout */
   loadMoreButton = new BehaviorSubject(true)
+
+  /** Controls the loading state of the layout */
+  loading = true;
 
   onInit(payload) {
     this.communication = payload.communication;
@@ -38,6 +45,7 @@ export class AwCollectionLayoutDS extends LayoutDataSource {
     this.configuration = payload.configuration;
     this.loadedCollections = new BehaviorSubject([]);
     this.layoutOptions = this.configuration.get('collection-layout');
+    this.pageSizeList = new Array(this.pageSize);
   }
 
   /**
@@ -52,6 +60,7 @@ export class AwCollectionLayoutDS extends LayoutDataSource {
   }
 
   loadMore(reload = false) {
+    this.loading = true;
     const collection = this.loadedCollections.getValue();
     const params: GetCollectionParams = {
       id: this.collectionID,
@@ -90,6 +99,7 @@ export class AwCollectionLayoutDS extends LayoutDataSource {
       }))
     ).subscribe({
       next: (data) => {
+        this.loading = false;
         if (data.title) {
           this.setTitle(this.stringLimiter(data.title, {
             maxLength: this.layoutOptions.header.maxLength,
