@@ -29,7 +29,7 @@ export class AwCollectionLayoutDS extends LayoutDataSource {
     oa300: 'scheda-oa',
     rmmus: 'materiale-musicale',
     ua: 'unita-archivistica',
-    oac300: 'opera-darte-contemporanea',
+    oac300: 'opera-arte-contemporanea',
   }
 
   innerTitleData = new BehaviorSubject<InnerTitleData>({
