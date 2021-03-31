@@ -153,14 +153,24 @@
         background-color: $color-events;
     }
 
-    /*
-    .n7-item-preview.is-overlay.is-a4.oc.ua.UA {
+    /* Oggetti culturali */
+    .n7-item-preview.is-overlay.is-unita-archivistica,
+    .n7-item-preview.is-overlay.is-vestimento,
+    .n7-item-preview.is-overlay.is-fotografia,
+    .n7-item-preview.is-overlay.is-cartografica,
+    .n7-item-preview.is-overlay.is-scheda-dublin-core,
+    .n7-item-preview.is-overlay.is-scheda-oa,
+    .n7-item-preview.is-overlay.is-materiale-musicale,
+    .n7-item-preview.is-overlay.is-opera-arte-contemporanea,
+    .n7-item-preview.is-overlay.is-libro-antico {
         background-color: $color-oggetto-culturale;
     }
-    .n7-item-preview.is-overlay.is-persona {
+
+    /* Aggregazioni logiche */
+    .n7-item-preview.is-overlay.is-fondo-fotografico,
+    .n7-item-preview.is-overlay.is-aggregazione-logica {
         background-color: $color-aggregazione-logica;
     }
-    */
 }
 
 /* Watermark */

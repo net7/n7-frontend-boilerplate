@@ -62,7 +62,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     this.router = router;
     this.titleService = titleService;
     this.currentId = '';
-    this.currentPage = +this.route.snapshot.queryParams.page || 1;
+    this.currentPage = +this.route.snapshot.queryParams.page ?? 1;
     this.one('aw-related-entities').updateOptions({
       config: this.configuration,
     });
@@ -208,6 +208,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
    * Given a page number and a list size, returns the data
    * for a single page of content.
    *
+   * @param id Entity ID
    * @param pageNumber Page number to load
    * @param pageSize How many items need to be loaded
    */
@@ -216,7 +217,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       onError: (error) => console.error(error),
       params: {
         entityId: id,
-        itemsPagination: { offset: (pageNumber || 1) * pageSize, limit: +pageSize },
+        itemsPagination: { offset: ((pageNumber || 1) - 1) * pageSize, limit: +pageSize },
         entitiesListSize: this.bubblesSize
       },
     }).pipe(
@@ -242,7 +243,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       this.currentId = id; // store selected item from url
       this.currentSlug = slug; // store selected item from url
       this.selectedTab = tab; // store selected tab from url
-      return this.getEntityDetailsPage(id, 1, this.pageSize);
+      return this.getEntityDetailsPage(id, this.currentPage, this.pageSize);
     }
     this.pageTitle = 'Entità Test';
     return of(null);
