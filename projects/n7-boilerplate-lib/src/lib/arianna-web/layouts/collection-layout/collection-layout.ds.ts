@@ -18,6 +18,20 @@ export class AwCollectionLayoutDS extends LayoutDataSource {
 
   public collectionID: string;
 
+  private classificationsMap = {
+    ff400: 'fondo-fotografico',
+    al: 'aggregazione-logica',
+    la: 'libro-antico',
+    veac301: 'vestimento',
+    f400: 'fotografia',
+    uasc: 'cartografica',
+    dc: 'scheda-dublin-core',
+    oa300: 'scheda-oa',
+    rmmus: 'materiale-musicale',
+    ua: 'unita-archivistica',
+    oac300: 'opera-darte-contemporanea',
+  }
+
   innerTitleData = new BehaviorSubject<InnerTitleData>({
     title: { main: { text: '' } },
   })
@@ -161,14 +175,13 @@ export class AwCollectionLayoutDS extends LayoutDataSource {
     if (!classification || classification.length < 1) {
       return '';
     }
-    if (/\.oc\.?/gm.test(classification)) { // a4.oc.ua
-      return 'is-oggetto-culturale';
-    }
-    if (/\.cn\.?/gm.test(classification)) { // a4.cn
-      return 'is-cosa-notevole';
-    }
-    if (/\.al\.?/gm.test(classification)) { // a4.al
-      return 'is-aggregazione-logica';
+    const codeMatch = /\.(\w+)$/gi.exec(classification);
+    if (codeMatch) {
+      const parsedCode = codeMatch[1]?.toLocaleLowerCase();
+      const className = this.classificationsMap[parsedCode];
+      if (className) {
+        return `is-${className}`;
+      }
     }
     return `is-${classification.replace('.', '-')}`;
   }
