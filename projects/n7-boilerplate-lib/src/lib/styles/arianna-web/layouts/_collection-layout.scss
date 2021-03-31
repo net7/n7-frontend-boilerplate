@@ -1,10 +1,11 @@
 /**
- * LA MIA COLLEZIONE
+ * COLLECTION
  *
+ * Style for the collection page.
  */
 
 /* ------------------------------------ *\
-    LAYOUT
+    COLLECTION
 \* ------------------------------------ */
 .aw-collection-layout {
     margin: $space*3 auto $space*6 auto;
@@ -172,6 +173,18 @@
             &:after {
                 display: none;
             }
+        }
+    }
+}
+
+/* ------------------------------------ *\
+    LOADING
+\* ------------------------------------ */
+.aw-collection-layout {
+    .is-loading {
+        .n7-content-placeholder__item {
+            height: $collection-item-preview-height;
+            margin-bottom: $space*3;
         }
     }
 }
