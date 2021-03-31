@@ -18,6 +18,20 @@ export class AwCollectionLayoutDS extends LayoutDataSource {
 
   public collectionID: string;
 
+  private classificationsMap = {
+    ff400: 'fondo-fotografico',
+    al: 'aggregazione-logica',
+    la: 'libro-antico',
+    veac301: 'vestimento',
+    f400: 'fotografia',
+    uasc: 'cartografica',
+    dc: 'scheda-dublin-core',
+    oa300: 'scheda-oa',
+    rmmus: 'materiale-musicale',
+    ua: 'unita-archivistica',
+    oac300: 'opera-arte-contemporanea',
+  }
+
   innerTitleData = new BehaviorSubject<InnerTitleData>({
     title: { main: { text: '' } },
   })
@@ -30,7 +44,7 @@ export class AwCollectionLayoutDS extends LayoutDataSource {
 
   loadedCollections: BehaviorSubject<ItemPreviewData[] | []>;
 
-  loadMoreButton = new BehaviorSubject(true)
+  loadMoreButton = new BehaviorSubject(true);
 
   onInit(payload) {
     this.communication = payload.communication;
@@ -76,7 +90,7 @@ export class AwCollectionLayoutDS extends LayoutDataSource {
             maxLength: this.layoutOptions.item.description.maxLength,
             char: this.layoutOptions.item.description.char
           }),
-          classes: `${item.image ? 'is-overlay has-image' : 'is-overlay has-image has-watermark'} ${item.classification ? `is-${item.classification}` : ''}`,
+          classes: `${item.image ? 'is-overlay has-image' : 'is-overlay has-image has-watermark'} ${this.classMap(item.classification)}`,
           image: item.image || this.layoutOptions.watermark,
           color: item.background,
           anchor: {
@@ -149,5 +163,26 @@ export class AwCollectionLayoutDS extends LayoutDataSource {
     this.innerTitleData.next({
       title: { main: { text: title } }
     });
+  }
+
+  /**
+   * Convert classification strings to css classes.
+   *
+   * @param classification a classification string like "a4.oc.ua"
+   * @returns a CSS class
+   */
+  classMap(classification: string): string {
+    if (!classification || classification.length < 1) {
+      return '';
+    }
+    const codeMatch = /\.(\w+)$/gi.exec(classification);
+    if (codeMatch) {
+      const parsedCode = codeMatch[1]?.toLocaleLowerCase();
+      const className = this.classificationsMap[parsedCode];
+      if (className) {
+        return `is-${className}`;
+      }
+    }
+    return `is-${classification.replace('.', '-')}`;
   }
 }
