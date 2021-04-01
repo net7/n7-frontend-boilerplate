@@ -5,7 +5,7 @@ export class AwHeroDS extends DataSource {
 
   protected transform(data) {
     const {
-      title, text, button, backgroundImage, input,
+      title, text, button, backgroundImage, input, classes
     } = data;
     return {
       title,
@@ -21,6 +21,7 @@ export class AwHeroDS extends DataSource {
         placeholder: input.placeholder,
         payload: 'cerca-in-maxxi',
       },
+      classes,
     };
   }
 }
