@@ -1,4 +1,10 @@
 <div class="aw-home" *ngIf="lb.dataSource">
+    <!-- Carousel -->
+    <div class="aw-home__carousel" *ngIf="lb.dataSource.carouselEnabled">
+        <n7-carousel [data]="lb.widgets['aw-carousel'].ds.out$ | async">
+        </n7-carousel>
+    </div>
+
     <!-- Hero section at the top of the page -->
     <div class="aw-home__top-hero">
         <n7-hero [data]="lb.widgets['aw-hero'].ds.out$ | async" [emit]="lb.widgets['aw-hero'].emit">

@@ -9,7 +9,8 @@ export default {
     input: {
       placeholder: 'Cerca nei titoli delle schede'
     },
-    fallback: 'La ricerca nel titolo non ha dato nessun risultato,<br>prova a cercare in tutti i campi.'
+    fallback: 'La ricerca nel titolo non ha dato nessun risultato,<br>prova a cercare in tutti i campi.',
+    classes: 'custom-hero-class',
   },
   'bottom-hero': {
     title: 'IL MAXXI',

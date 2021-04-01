@@ -33,11 +33,14 @@ export class AwAutocompleteWrapperDS extends DataSource {
     return { suggestion };
   }
 
+  /**
+   * Given a string, it trims it to the specified length.
+   *
+   * @param string an input string
+   * @param limit character limit
+   * @returns the resulting trimmed string
+   */
   private stringTrim = (string, limit) => {
-    /*
-      Slices the string and adds trailing ellipsis
-      TODO: Do not cut the string in the middle of an HTML tag!
-    */
     if (string.length > limit) {
       return `${string.slice(0, limit)}…`;
     } return string;
