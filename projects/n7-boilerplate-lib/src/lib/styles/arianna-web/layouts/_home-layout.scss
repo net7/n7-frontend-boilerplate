@@ -93,6 +93,30 @@
     }
 }
 
+/* Slim version to be used when there's the carousel above */
+/* Add "classes: 'has-carousel'," inside 'top-hero'
+/* in file: src/app/config-arianna/layouts/home-layout.config.ts */
+.aw-home__top-hero {
+    .n7-hero.has-carousel {
+        height: $top-hero-has-carousel-height;
+
+        .n7-hero__title {
+            font-size: $font-size-l;
+            font-weight: $font-weight-normal;
+        }
+
+        .n7-hero__text {
+            display: none;
+        }
+
+        .n7-hero__text-wrapper {
+            height: $top-hero-has-carousel-height;
+            max-width: $top-hero-text-max-width;
+            margin: 0 auto;
+        }
+    }
+}
+
 
 /* ------------------------------------ *\
     BUBBLE-CHART

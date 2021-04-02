@@ -10,6 +10,26 @@ export default {
         }
       `,
   },
+  getSlider: {
+    queryName: 'getSlider',
+    queryBody: ` {
+      getSlider {
+        pretext
+        title
+        text
+        background {
+            type
+            value
+        }
+        ctaLabel
+        ctaPayload
+        metadata {
+            key
+            value
+        }
+      }
+    }`
+  },
   getTree: {
     queryName: 'getTreeOfItems',
     queryBody: `

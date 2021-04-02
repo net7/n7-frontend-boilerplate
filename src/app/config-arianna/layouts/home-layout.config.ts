@@ -5,11 +5,12 @@ export default {
     button: {
       text: 'CERCA NEI TITOLI DELL\'ARCHIVIO'
     },
-    backgroundImage: 'https://i.imgur.com/FgsxSYR.png',
+    // backgroundImage: 'https://i.imgur.com/FgsxSYR.png',
     input: {
       placeholder: 'Cerca nei titoli delle schede'
     },
-    fallback: 'La ricerca nel titolo non ha dato nessun risultato,<br>prova a cercare in tutti i campi.'
+    fallback: 'La ricerca nel titolo non ha dato nessun risultato,<br>prova a cercare in tutti i campi.',
+    classes: 'has-carousel',
   },
   'bottom-hero': {
     title: 'IL MAXXI',
