@@ -25,7 +25,7 @@ export class AwCarouselDS extends DataSource {
         buttons: true,
         dots: true,
         rewind: true,
-        autoplay: 0,
+        autoplay: 4000,
         animation: 500,
         // responsive: {
         //   0: { count: 1.5, buttons: false },

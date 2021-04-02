@@ -1,0 +1,32 @@
+/**
+ * CAROUSEL
+ *
+ * Few custom styles for the A4V carousel.
+ */
+
+/* ------------------------------------ *\
+   #CAROUSEL
+\* ------------------------------------ */
+.n7-carousel {
+    .n7-btn {
+        font-size: $font-size-l;
+        text-transform: uppercase;
+    }
+}
+
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: $breakpoint-laptop) {
+}
+
+@media all and (max-width: $breakpoint-ipad-portrait) {
+}
+
+@media all and (max-width: $breakpoint-smartphone-landscape) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}
