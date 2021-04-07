@@ -20,6 +20,16 @@
         display: block;
     }
 
+    &__metadata-item-label {
+        font-weight: $font-weight-bold;
+        color: $color-text-light;
+    }
+
+    &__metadata-item-value {
+        font-weight: $font-weight-normal;
+        color: $color-text-light;
+    }
+
     &__title {
         font-family: $font-family-main;
         line-height: 1.4;
@@ -37,6 +47,7 @@
             @include imageShadowHover;
         }
     }
+    
 }
 
 .n7-item-preview:not(.mr-item-preview-bibliography) {

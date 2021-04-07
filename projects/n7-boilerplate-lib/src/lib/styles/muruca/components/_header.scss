@@ -9,6 +9,7 @@
 \* ------------------------------------ */
 .n7-header {
     position: relative;
+    box-sizing: border-box;
     z-index: 100;
     box-shadow: 0 15px 30px 0 rgba(0,0,0,0.05), 0 1px 2px 0 rgba(0,0,0,0.05);
 
@@ -20,7 +21,9 @@
     &__title-subtitle {
         padding: 0;
         margin: 0;
-        background: url("/assets/logo-petrarca.png");
+        @if variable-exists( header-logo-url ) {
+            background: $header-logo-url;
+        }
         height: 65px;
         width: 260px;
         background-repeat: none;
@@ -64,6 +67,26 @@
         font-weight: $font-weight-bold;
         text-transform: uppercase;
         transition: color $transition-durations;
+    }
+
+    /* Tools, hidden */
+    .n7-header__tools {
+        display: none;
+    }
+
+    /* Mobile menu toggle */
+    .n7-header__mobile-menu-toggle {
+    }
+
+    .n7-header__mobile-menu-icon {
+        color: $color-text;
+        font-size: 32px;
+        opacity: .7;
+        transform: opacity $transition-durations;
+
+        &:hover {
+            opacity: 1;
+        }
     }
 }
 
@@ -142,7 +165,9 @@
         }
 
         &__title-subtitle {
-            background: url("/assets/logo-petrarca-transparent.png");
+            @if variable-exists( header-transparent-logo-url ) {
+                background: $header-transparent-logo-url;
+            }
             height: 65px;
             width: 260px;
             background-repeat: none;
@@ -180,6 +205,15 @@
             background: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.45) 100%);
             pointer-events: none;
         }
+
+        /* Mobile menu toggle */
+        .n7-header__mobile-menu-toggle {
+            margin-right: $space*2;
+        }
+
+        .n7-header__mobile-menu-icon {
+            color: $color-text-inverse;
+        }
     }
 }
 
@@ -199,7 +233,53 @@
 }
 
 @media all and (max-width: $header-breakpoint-mobile) {
-}
 
-@media all and (max-width: $header-breakpoint-mobile-small) {
+    /* Style for fullscreen responsive navigation */
+    .n7-header,
+    .has-transparent-header .n7-header {
+
+        .n7-header__nav-item {
+            padding: $space*1 0;
+        }
+
+        .n7-header__subnav-link,
+        .n7-header__subnav-item:last-child .n7-header__subnav-link {
+            padding: $space*1 0;
+        }
+
+        .n7-header__nav-item.has-children .n7-header__nav-link:after {
+            color: rgba( $color-text, 0.5 );
+        }
+
+        .n7-header__nav-link {
+            display: flex;
+            text-align: center;
+            justify-content: center;
+        }
+
+        .n7-header__nav-label {
+            font-family: $font-family-main;
+            font-size: $font-size-l;
+            font-weight: $font-weight-bold;
+            color: $color-text;
+            text-transform: none;
+            text-shadow: none;
+        }
+        
+        .n7-header__subnav-label {
+            font-family: $font-family-main;
+            font-size: $font-size-m;
+            font-weight: $font-weight-normal;
+            color: $color-text;
+            text-transform: none;
+            text-shadow: none;
+        }
+
+        /* Sublevel (dropdown) menu */
+        .n7-header__subnav-list {   
+            padding: $space*1 0; 
+            background-color: $color-background-light;
+        }
+    }
+
 }
