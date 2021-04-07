@@ -126,10 +126,38 @@ export default {
         }
       ]
     },
-    gallery: [
+    gallery1: [
       {
         id: 1086,
-        title: 'la vetta del Monte Ventoso oggi',
+        title: 'la vetta del Monte Ventoso oggi I',
+        thumbnail: 'https://petrarca.netseven.it/wp-content/uploads/2020/07/100_5001-150x150.jpg',
+        image: 'https://petrarca.netseven.it/wp-content/uploads/2020/07/100_5001-scaled.jpg'
+      }, {
+        id: 1087,
+        title: 'la vetta del Monte Ventoso oggi II',
+        thumbnail: 'https://petrarca.netseven.it/wp-content/uploads/2020/07/100_5001-150x150.jpg',
+        image: 'https://petrarca.netseven.it/wp-content/uploads/2020/07/100_5001-scaled.jpg'
+      }, {
+        id: 1088,
+        title: 'la vetta del Monte Ventoso oggi III',
+        thumbnail: 'https://petrarca.netseven.it/wp-content/uploads/2020/07/100_5001-150x150.jpg',
+        image: 'https://petrarca.netseven.it/wp-content/uploads/2020/07/100_5001-scaled.jpg'
+      }
+    ],
+    gallery2: [
+      {
+        id: 1086,
+        title: 'la vetta del Monte Ventoso oggi I',
+        thumbnail: 'https://petrarca.netseven.it/wp-content/uploads/2020/07/100_5001-150x150.jpg',
+        image: 'https://petrarca.netseven.it/wp-content/uploads/2020/07/100_5001-scaled.jpg'
+      }, {
+        id: 1087,
+        title: 'la vetta del Monte Ventoso oggi II',
+        thumbnail: 'https://petrarca.netseven.it/wp-content/uploads/2020/07/100_5001-150x150.jpg',
+        image: 'https://petrarca.netseven.it/wp-content/uploads/2020/07/100_5001-scaled.jpg'
+      }, {
+        id: 1088,
+        title: 'la vetta del Monte Ventoso oggi III',
         thumbnail: 'https://petrarca.netseven.it/wp-content/uploads/2020/07/100_5001-150x150.jpg',
         image: 'https://petrarca.netseven.it/wp-content/uploads/2020/07/100_5001-scaled.jpg'
       }

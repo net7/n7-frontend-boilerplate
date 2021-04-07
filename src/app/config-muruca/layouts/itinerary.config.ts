@@ -29,6 +29,16 @@ export default {
       id: 'collection-witnesses',
       type: 'collection',
       grid: 3
+    },
+    {
+      id: 'gallery1',
+      type: 'gallery',
+      grid: 5
+    },
+    {
+      id: 'gallery2',
+      type: 'gallery',
+      grid: 5
     }
   ]
 };

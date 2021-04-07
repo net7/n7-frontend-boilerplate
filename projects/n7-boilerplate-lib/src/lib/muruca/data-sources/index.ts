@@ -15,6 +15,7 @@ export * from './resource-tabs.ds';
 export * from './text-viewer.ds';
 export * from './timeline.ds';
 export * from './year-header.ds';
+export * from './gallery.ds';
 // search layout
 export * from './search/search-page-title.ds';
 export * from './search/search-results-title.ds';

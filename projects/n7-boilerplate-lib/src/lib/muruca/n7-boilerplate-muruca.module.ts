@@ -27,6 +27,7 @@ import { MrFormComponent } from './components/form/form';
 import { MrFormWrapperAccordionComponent } from './components/form-wrapper-accordion/form-wrapper-accordion';
 import { MrSearchPageDescriptionComponent } from './components/search-page-description/search-page-description';
 import { MrResourceModalComponent } from './components/resource-modal/resource-modal';
+import { MrGalleryComponent } from './components/gallery/gallery';
 
 const COMPONENTS = [
   // Layout components
@@ -46,7 +47,8 @@ const COMPONENTS = [
   MrFormComponent,
   MrFormWrapperAccordionComponent,
   MrSearchPageDescriptionComponent,
-  MrResourceModalComponent
+  MrResourceModalComponent,
+  MrGalleryComponent,
 ];
 
 @NgModule({

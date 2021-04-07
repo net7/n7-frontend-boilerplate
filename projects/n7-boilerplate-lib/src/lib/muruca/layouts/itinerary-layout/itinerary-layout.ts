@@ -8,19 +8,25 @@ import { MainStateService } from '../../../common/services/main-state.service';
 import { MrLayoutStateService } from '../../services/layout-state.service';
 import { MrResourceModalService } from '../../services/resource-modal.service';
 import { MrItineraryLayoutConfig as config } from './itinerary-layout.config';
-import { MrCollectionEH } from '../../event-handlers/collection.eh';
 import {
   MrCollectionDS,
+  MrGalleryDS,
   MrMetadataDS,
 } from '../../data-sources';
+import {
+  MrCollectionEH,
+  MrGalleryEH
+} from '../../event-handlers';
 
 const DATASOURCE_MAP = {
   collection: MrCollectionDS,
   metadata: MrMetadataDS,
+  gallery: MrGalleryDS,
 };
 
 const EVENTHANDLER_MAP = {
   collection: MrCollectionEH,
+  gallery: MrGalleryEH,
 };
 
 @Component({

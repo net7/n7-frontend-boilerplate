@@ -86,15 +86,15 @@
                     </ng-container>
                 </ng-container>
     
-                <!-- ITEM PREVIEW -->
-                <ng-container *ngSwitchCase="'preview'">
-                    <div class="mr-content-block mr-content-block-item-preview">
+                <!-- GALLERY -->
+                <ng-container *ngSwitchCase="'gallery'">
+                    <div class="mr-content-block mr-content-block-gallery">
                         <h3 *ngIf="section.title" class="mr-content-block__title">
                             {{ section.title }}
                         </h3>
                         <div class="mr-content-block__content">
-                            <n7-item-preview [data]="lb.widgets[section.id].ds.out$ | async" [emit]="lb.widgets[section.id].emit">        
-                            </n7-item-preview>
+                            <mr-gallery [grid]="section.grid" [data]="lb.widgets[section.id].ds.out$ | async" [emit]="lb.widgets[section.id].emit">        
+                            </mr-gallery>
                         </div>
                     </div>
                 </ng-container>
