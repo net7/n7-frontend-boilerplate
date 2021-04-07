@@ -48,3 +48,8 @@ export * from './timeline-layout/timeline-layout';
 export * from './timeline-layout/timeline-layout.ds';
 export * from './timeline-layout/timeline-layout.eh';
 export * from './timeline-layout/timeline-layout.config';
+// itinerary layout
+export * from './itinerary-layout/itinerary-layout';
+export * from './itinerary-layout/itinerary-layout.ds';
+export * from './itinerary-layout/itinerary-layout.eh';
+export * from './itinerary-layout/itinerary-layout.config';

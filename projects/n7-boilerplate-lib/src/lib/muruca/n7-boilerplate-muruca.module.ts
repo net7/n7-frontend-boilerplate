@@ -20,6 +20,7 @@ import { MrSearchLayoutComponent } from './layouts/search-layout/search-layout';
 import { MrStaticLayoutComponent } from './layouts/static-layout/static-layout';
 import { MrTimelineLayoutComponent } from './layouts/timeline-layout/timeline-layout';
 import { MrPostsLayoutComponent } from './layouts/posts-layout/posts-layout';
+import { MrItineraryLayoutComponent } from './layouts/itinerary-layout/itinerary-layout';
 // COMPONENTS
 import { ReadMoreComponent } from './components/read-more/read-more';
 import { MrFormComponent } from './components/form/form';
@@ -39,6 +40,7 @@ const COMPONENTS = [
   MrAdvancedResultsLayoutComponent,
   MrTimelineLayoutComponent,
   MrPostsLayoutComponent,
+  MrItineraryLayoutComponent,
   // Custom components
   ReadMoreComponent,
   MrFormComponent,

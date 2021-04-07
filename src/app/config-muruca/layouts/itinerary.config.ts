@@ -1,0 +1,34 @@
+export default {
+  title: 'global#itinerary_page_title',
+  bodyClasses: 'resource-layout',
+  sections: [
+    {
+      id: 'collection-bibliography',
+      type: 'collection',
+      grid: 1,
+      title: 'Bibliografia',
+      options: {
+        classes: 'mr-item-preview-bibliography',
+        itemPreview: {
+          limit: 9999,
+          striptags: false
+        }
+      }
+    },
+    {
+      id: 'collection-works',
+      type: 'collection',
+      grid: 3
+    },
+    {
+      id: 'collection-places',
+      type: 'collection',
+      grid: 3
+    },
+    {
+      id: 'collection-witnesses',
+      type: 'collection',
+      grid: 3
+    }
+  ]
+};
