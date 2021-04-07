@@ -1,11 +1,9 @@
 <div *ngIf="data" class="mr-gallery">
     <ul class="mr-gallery__items {{ grid ? 'n7-grid-' + grid : '' }}">
         <li *ngFor="let item of data.items" class="mr-gallery__item">
-            <figure>
-                <a (click)="onClick(item.payload)" class="mr-gallery__link">
-                    <img [src]="item.thumbSrc" [alt]="item.title" class="mr-gallery__image">
-                </a>
-            </figure>
+            <a (click)="onClick(item.payload)" class="mr-gallery__link">
+                <img [src]="item.thumbSrc" [alt]="item.title" class="mr-gallery__image">
+            </a>
         </li>
     </ul>
     <div *ngIf="data.selected" class="mr-gallery__zoom-wrapper">

@@ -3,6 +3,16 @@ export default {
   bodyClasses: 'resource-layout',
   sections: [
     {
+      id: 'gallery1',
+      type: 'gallery',
+      grid: 5
+    },
+    {
+      id: 'gallery2',
+      type: 'gallery',
+      grid: 5
+    },
+    {
       id: 'collection-bibliography',
       type: 'collection',
       grid: 1,
@@ -29,16 +39,6 @@ export default {
       id: 'collection-witnesses',
       type: 'collection',
       grid: 3
-    },
-    {
-      id: 'gallery1',
-      type: 'gallery',
-      grid: 5
-    },
-    {
-      id: 'gallery2',
-      type: 'gallery',
-      grid: 5
     }
   ]
 };
