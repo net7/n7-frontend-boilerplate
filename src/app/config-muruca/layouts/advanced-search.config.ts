@@ -13,7 +13,7 @@ export default {
       sections: ['section-1'],
       classes: 'form-group-1',
       options: {
-        label: 'GROUP 1',
+        label: 'advancedsearch#groupone',
         isOpen: true,
         showHeader: false
       }
@@ -22,7 +22,7 @@ export default {
       sections: ['section-2'],
       classes: 'form-group-2',
       options: {
-        label: 'GROUP 2',
+        label: 'advancedsearch#grouptwo',
         isOpen: true,
         // showHeader: false
       }

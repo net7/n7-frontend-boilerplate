@@ -87,7 +87,13 @@ export class MrAdvancedSearchLayoutDS extends LayoutDataSource {
     if (formConfig.resetButton) {
       formConfig.resetButton.label = _t(formConfig.resetButton.label);
     }
-
+    // groups
+    formConfig.groups.forEach((group) => {
+      if (group.options?.label) {
+        group.options.label = _t(group.options.label);
+      }
+    });
+    // sections
     formConfig.sections.forEach((section) => {
       if (section.title) {
         section.title = _t(section.title);
