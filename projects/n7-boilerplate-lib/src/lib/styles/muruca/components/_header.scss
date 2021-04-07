@@ -20,7 +20,9 @@
     &__title-subtitle {
         padding: 0;
         margin: 0;
-        background: url("/assets/logo-petrarca.png");
+        @if variable-exists( header-logo-url ) {
+            background: $header-logo-url;
+        }
         height: 65px;
         width: 260px;
         background-repeat: none;
@@ -142,7 +144,9 @@
         }
 
         &__title-subtitle {
-            background: url("/assets/logo-petrarca-transparent.png");
+            @if variable-exists( header-transparent-logo-url ) {
+                background: $header-transparent-logo-url;
+            }
             height: 65px;
             width: 260px;
             background-repeat: none;
