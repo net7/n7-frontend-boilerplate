@@ -1,5 +1,5 @@
 export default {
-  title: 'global#itinerary_page_title',
+  title: 'global#itinerary',
   bodyClasses: 'resource-layout',
   sections: [
     {
