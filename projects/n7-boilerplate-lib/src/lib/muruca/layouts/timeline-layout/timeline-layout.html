@@ -17,8 +17,8 @@
         <div class="mr-timeline__content">
             <p [innerHTML]="lb.dataSource.eventDescription">
             <p>
-                <ng-container *ngIf="lb.dataSource.loadedResourceDetails && false">
-                    <div>Fonti:
+                <ng-container *ngIf="lb.dataSource.loadedResourceDetails">
+                    <div *ngIf="false">Fonti:
                         <ul>
                             <li><a href="#">Canzoniere</a></li>
                             <li><a href="#">I Trionfi</a></li>
@@ -34,7 +34,7 @@
                         </div>
                     </div>
 
-                    <div class="mr-map" *ngIf="false">
+                    <div class="mr-map" *ngIf="lb.dataSource.hasMap">
                         <n7-map [data]="lb.widgets['mr-map'].ds.out$ | async"></n7-map>
                     </div>
 
