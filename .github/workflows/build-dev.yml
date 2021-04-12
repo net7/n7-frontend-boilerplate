@@ -9,5 +9,5 @@ jobs:
     steps:
     - name: npm run build
       run: |
-        npm run build
         working-directory: /mnt/c/Projects/n7-frontent-framework/n7-frontend-boilerplate
+        npm run build        
