@@ -27,6 +27,7 @@ jobs:
         npm run build
     - name: build dist
       run: |
+        cd ../n7-frontend-boilerplate-dist
         git add .
         git commit -m 'dist updated to version '
         git push
