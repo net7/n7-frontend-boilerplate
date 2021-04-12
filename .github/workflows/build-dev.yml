@@ -30,8 +30,9 @@ jobs:
         npm run build
     - name: build dist
       run: |
+        echo ${SOURCE_TAG}
         git add .
-        git commit -m'dist updated to version ${{ SOURCE_TAG }}'
+        git commit -m'dist updated to version ${SOURCE_TAG}'
         git push
-        git tag -a ${{ SOURCE_TAG }} -m'version ${{ SOURCE_TAG }}'
+        git tag -a ${{ SOURCE_TAG }} -m'version ${SOURCE_TAG}'
         git push --tags --force
