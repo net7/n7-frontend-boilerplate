@@ -3,9 +3,7 @@ defaults:
   run:
     working-directory: /mnt/c/Projects/n7-frontent-framework/n7-frontend-boilerplate
 on: 
-  push:
-    branches:
-      - master   
+  push: 
     tags:        
       - v*
 jobs:
@@ -14,7 +12,12 @@ jobs:
     steps:
     - name: npm install
       run: |
-        npm i     
+        npm i  
+    - name: Branch name
+      run: |
+        echo ::set-output name=SOURCE_NAME::${GITHUB_REF#refs/*/}
+        echo ::set-output name=SOURCE_BRANCH::${GITHUB_REF#refs/heads/}
+        echo ::set-output name=SOURCE_TAG::${GITHUB_REF#refs/tags/}
     - name: Update dist
       run: |
         cd ../n7-frontend-boilerplate-dist
@@ -27,5 +30,5 @@ jobs:
         git add .
         git commit -m'dist updated to version '
         git push
-        git tag -a -m'version'
+        git tag -a $SOURCE_TAG -m 'version $SOURCE_TAG'
         git push --tags --force
