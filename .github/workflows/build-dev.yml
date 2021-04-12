@@ -4,7 +4,9 @@ on:
     branches:
       - master
 jobs:
-  check-bats-version:
+  run-build:
     runs-on: [self-hosted]
     steps:
-      - run: npm run build
+      - run:  |
+        npm run build
+        working-directory: /mnt/c/Projects/n7-frontent-framework/n7-frontend-boilerplate
