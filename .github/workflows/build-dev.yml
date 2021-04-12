@@ -1,0 +1,10 @@
+name: build-dev
+on: 
+  push:
+    branches:
+      - master
+jobs:
+  check-bats-version:
+    runs-on: [self-hosted]
+    steps:
+      - run: npm run build
