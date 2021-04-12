@@ -30,3 +30,4 @@ jobs:
           git push
           git tag -a ${{ steps.get_version.outputs.VERSION }} -m'version ${{ steps.get_version.outputs.VERSION }}'
           git push --tags --force
+          
