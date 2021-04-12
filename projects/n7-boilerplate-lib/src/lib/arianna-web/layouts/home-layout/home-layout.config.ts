@@ -6,6 +6,8 @@ import * as EH from '../../event-handlers';
 export const AwHomeLayoutConfig = {
   layoutId: 'aw-home-layout',
   widgets: [{
+    id: 'aw-carousel',
+  }, {
     id: 'aw-hero',
   }, {
     id: 'aw-home-hero-patrimonio',

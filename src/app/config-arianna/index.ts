@@ -25,6 +25,7 @@ export default {
     galleryBasePath: '/aw/galleria/'
   },
   'features-enabled': {
-    bubblechart: true
+    bubblechart: true,
+    carousel: true,
   },
 };

@@ -66,6 +66,16 @@ export default {
         _meta: {
           id: 'timeline'
         }
+      },
+      {
+        text: 'Collezione',
+        anchor: {
+          href: 'aw/collection/44'
+        },
+        icon: 'n7-icon-th',
+        _meta: {
+          id: 'collection'
+        }
       }
     ]
   },

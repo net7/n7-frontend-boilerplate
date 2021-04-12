@@ -1,10 +1,11 @@
 import { LayoutDataSource } from '@n7-frontend/core';
 import { Subject, forkJoin, fromEvent } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
+import { CommunicationService } from '../../../../public-api';
 import helpers from '../../../common/helpers';
 
 export class AwHomeLayoutDS extends LayoutDataSource {
-  private communication: any;
+  private communication: CommunicationService;
 
   private mainState: any;
 
@@ -42,6 +43,9 @@ export class AwHomeLayoutDS extends LayoutDataSource {
 
   public resultsListIsLoading = false;
 
+  /** Enabled from: arianna-config/features-enabled/carousel */
+  public carouselEnabled = false;
+
   // ===== BUBBLE CHART =====
   public bubblesEnabled = false; // true if this Arianna Web project has the bubble chart module
 
@@ -63,7 +67,11 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     this.mainState = mainState;
     this.tippy = tippy;
     this.resultsLimit = this.configuration.get('home-layout')['results-limit'];
-    this.bubblesEnabled = this.configuration.get('features-enabled') ? this.configuration.get('features-enabled').bubblechart : false;
+    this.bubblesEnabled = this.configuration.get('features-enabled')?.bubblechart;
+    this.carouselEnabled = this.configuration.get('features-enabled')?.carousel;
+    if (this.carouselEnabled) {
+      this.loadCarousel();
+    }
     this.one('aw-hero').update(this.configuration.get('home-layout')['top-hero']);
     this.one('aw-home-hero-patrimonio').update(this.configuration.get('home-layout')['bottom-hero']);
     // update streams
@@ -212,6 +220,23 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     } else {
       this.one('aw-home-item-tags-wrapper').update(tagsData);
     }
+  }
+
+  /**
+   * Loads data for the carousel component
+   */
+  loadCarousel() {
+    this.communication.request$('getSlider').subscribe({
+      next: (res) => {
+        if (res) {
+          this.one('aw-carousel').update(res);
+        }
+      },
+      error: (err) => {
+        console.error(err);
+        this.carouselEnabled = false;
+      },
+    });
   }
 
   onHeroChange(value) {

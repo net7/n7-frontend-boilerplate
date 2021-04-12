@@ -71,14 +71,14 @@ export class AwLinkedObjectsDS extends DataSource {
     this.loadedData.isLoading = false;
   }
 
+  /**
+   * Dynamically returns the data object for each HTML component
+   *  data: {
+   *     previews: [ breadcrumbs: { items[] }, classes, image, metadata, payload, title ],
+   *     pagination: { first, last, links, next, prev, select }
+   *   }
+   */
   private unpackData = (data) => {
-    /*
-      Dynamically returns the data object for each HTML component
-      data: {
-        previews: [ breadcrumbs: { items[] }, classes, image, metadata, payload, title ],
-        pagination: { first, last, links, next, prev, select }
-      }
-    */
     const
       { config } = this.options; // app-config.json
     const paths = config.get('item-preview'); // item preview dynamic paths
@@ -100,8 +100,8 @@ export class AwLinkedObjectsDS extends DataSource {
         resultsLimit = config.get(`${context}-layout`)['results-limit'];
       }
     }
-    // resize data
-    if (!dynamicPagination && size && page) {
+    // resize data if necessary
+    if (!dynamicPagination && size && page && d.length > size) {
       d = d.slice(page * size - size, page * size);
     } else if (size) {
       d = d.slice(0, size);

@@ -1,19 +1,23 @@
 import { LayoutDataSource } from '@n7-frontend/core';
 import { Observable, of } from 'rxjs';
-import { filter, tap } from 'rxjs/operators';
+import {
+  catchError, filter, first, tap
+} from 'rxjs/operators';
 import { get as _get } from 'lodash';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import metadataHelper from '../../helpers/metadata.helper';
+import { EntitaLayoutResponse } from './entita-layout.types';
 
 export class AwEntitaLayoutDS extends LayoutDataSource {
   protected configuration: any;
 
   protected mainState: any;
 
-  protected router: any;
+  protected router: Router;
 
   protected titleService: any;
 
-  protected route: any;
+  protected route: ActivatedRoute;
 
   public options: any;
 
@@ -21,7 +25,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
 
   public hasMetadataFields = false;
 
-  public myResponse: any; // backend response object
+  public myResponse: EntitaLayoutResponse; // backend response object
 
   public selectedTab: string; // selected nav item
 
@@ -31,7 +35,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
 
   public currentSlug: string; // selected entity (url param)
 
-  public currentPage: any; // pagination value (url param)
+  public currentPage = 1; // pagination value (url param)
 
   public pageSize = 10; // linked objects page size
 
@@ -58,7 +62,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     this.router = router;
     this.titleService = titleService;
     this.currentId = '';
-    this.currentPage = +this.route.snapshot.queryParams.page;
+    this.currentPage = +this.route.snapshot.queryParams.page ?? 1;
     this.one('aw-related-entities').updateOptions({
       config: this.configuration,
     });
@@ -69,18 +73,21 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     // update head title
     this.mainState.update('headTitle', 'Arianna4View - Entità');
 
-    // one tab control
-    this.oneTabControl();
+    // check if there is only one tab
+    this.singleTabCheck();
   }
 
-  oneTabControl() {
+  singleTabCheck() {
     const navDS = this.getWidgetDataSource('aw-entita-nav');
     navDS.out$
       .pipe(
         filter((output) => !!output)
       )
       .subscribe(({ items }) => {
-        if (items.length === 1) {
+        // if there is only one tab
+        // and there are no query params
+        // navigate to the tab.
+        if (items.length === 1 && !this.currentPage) {
           this.router.navigate([items[0].anchor.href], { replaceUrl: true });
         }
       });
@@ -93,43 +100,62 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     this.one(id).update(data);
   }
 
-  drawPagination = () => {
+  /**
+   * Updates the pagination component
+   */
+  drawPagination = (totalItems, pageSize) => {
     if (!this.getLinkedObjectItems()) return;
-    const { href, queryParams } = this._getPaginationParams();
+    const { href, queryParams } = this._getPaginationURL();
     this.one('n7-smart-pagination').updateOptions({
       mode: 'href',
       href,
       queryParams,
     });
     this.one('n7-smart-pagination').update({
-      totalPages: Math.ceil(this.getLinkedObjectItems().length / this.pageSize),
-      currentPage: this.currentPage,
+      totalPages: this.getPageCount(totalItems, pageSize),
+      currentPage: +this.currentPage || 1,
       pageLimit: 5,
       sizes: {
         list: [10, 25, 50],
-        active: this.pageSize,
+        active: +this.pageSize,
       },
     });
   }
 
+  /**
+   * Updates the selected tab on tab change
+   */
   handlePageNavigation = () => {
-    /*
-      Updates selected tab on tab change
-    */
     if (!this.myResponse) {
       return;
     }
-    const { href, queryParams } = this._getPaginationParams();
-    this.drawPagination();
-    this.one('aw-linked-objects').updateOptions({
-      paginationParams: { href, queryParams },
-      context: this.selectedTab,
-      config: this.configuration,
-      page: this.currentPage,
-      pagination: true,
-      size: this.pageSize,
-    });
-    this.one('aw-linked-objects').update({ items: this.getLinkedObjectItems() });
+    this.getEntityDetailsPage(this.myResponse.id, +this.currentPage, +this.pageSize)
+      .pipe(first())
+      .subscribe({
+        // Await for network response
+        next: (data) => {
+          this.myResponse = data;
+          const { href, queryParams } = this._getPaginationURL();
+          // update layout state
+          this.pageSize = queryParams.size;
+          this.currentPage = queryParams.page;
+          // update components
+          this.drawPagination(this.getItemCount(), this.pageSize);
+          this.one('aw-linked-objects').updateOptions({
+            paginationParams: { href, queryParams },
+            context: this.selectedTab,
+            config: this.configuration,
+            dynamicPagination: {
+              total: this.getItemCount(),
+            },
+            page: queryParams.page,
+            size: queryParams.size,
+            pagination: true,
+          });
+          this.one('aw-linked-objects').update({ items: this.getLinkedObjectItems() });
+        },
+        error: (e) => catchError(e),
+      });
   }
 
   handleNavUpdate = (tab) => {
@@ -138,12 +164,26 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     this.one('aw-linked-objects').updateOptions({
       context: this.selectedTab,
       config: this.configuration,
+      dynamicPagination: {
+        total: this.getItemCount(),
+      },
       page: this.currentPage,
-      pagination: true,
-      paginationParams: this._getPaginationParams(),
       size: this.pageSize,
+      pagination: true,
+      paginationParams: this._getPaginationURL(),
     });
     this.one('aw-linked-objects').update({ items: this.getLinkedObjectItems() });
+    // update the url with the correct page and size
+    const queryParams: Params = {
+      page: this.currentPage, size: this.pageSize,
+    };
+    this.router.navigate(
+      [], {
+        relativeTo: this.route,
+        queryParams,
+        queryParamsHandling: 'merge'
+      }
+    );
   }
 
   updateWidgets(data) {
@@ -161,33 +201,49 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     });
     this.updateComponent('aw-entita-metadata-viewer', this.getFields(this.myResponse));
     this.one('aw-related-entities').update(this.myResponse.relatedEntities);
-    this.drawPagination();
+    this.drawPagination(this.getItemCount(), this.pageSize);
   }
 
+  /**
+   * Given a page number and a list size, returns the data
+   * for a single page of content.
+   *
+   * @param id Entity ID
+   * @param pageNumber Page number to load
+   * @param pageSize How many items need to be loaded
+   */
+  getEntityDetailsPage(id, pageNumber: number, pageSize: number): Observable<any> {
+    return this.communication.request$('getEntityDetails', {
+      onError: (error) => console.error(error),
+      params: {
+        entityId: id,
+        itemsPagination: { offset: ((pageNumber || 1) - 1) * pageSize, limit: +pageSize },
+        entitiesListSize: this.bubblesSize
+      },
+    }).pipe(
+      // global metadata tab control
+      tap(({ fields, typeOfEntity }) => {
+        this.hasMetadataFields = !!metadataHelper.normalize({
+          fields,
+          paths: this.configuration.get('paths'),
+          labels: this.configuration.get('labels'),
+          metadataToShow: _get(this.configuration.get('entita-layout'), 'metadata-to-show', []),
+          type: typeOfEntity
+        }).length;
+      })
+    );
+  }
+
+  /*
+   * Loads the data for the selected nav item, into the adjacent text block.
+   */
   loadItem(id, slug, tab): Observable<any> {
-    /*
-      Loads the data for the selected nav item, into the adjacent text block.
-    */
     this.loading = true;
     if (id && tab) {
       this.currentId = id; // store selected item from url
       this.currentSlug = slug; // store selected item from url
       this.selectedTab = tab; // store selected tab from url
-      return this.communication.request$('getEntityDetails', {
-        onError: (error) => console.error(error),
-        params: { entityId: id, entitiesListSize: this.bubblesSize },
-      }).pipe(
-        // global metadata tab control
-        tap(({ fields, typeOfEntity }) => {
-          this.hasMetadataFields = !!metadataHelper.normalize({
-            fields,
-            paths: this.configuration.get('paths'),
-            labels: this.configuration.get('labels'),
-            metadataToShow: _get(this.configuration.get('entita-layout'), 'metadata-to-show', []),
-            type: typeOfEntity
-          }).length;
-        })
-      );
+      return this.getEntityDetailsPage(id, this.currentPage, this.pageSize);
     }
     this.pageTitle = 'Entità Test';
     return of(null);
@@ -196,7 +252,6 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
   loadContent(res) {
     this.loading = false;
     const config = this.configuration.get('config-keys')[res.typeOfEntity];
-    // console.log('(entita) Apollo responded with: ', { res })
     this.myResponse = res;
     this.navHeader = { // always render nav header
       icon: config ? config.icon : '',
@@ -215,7 +270,10 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       config: this.configuration,
       page: this.currentPage,
       pagination: true,
-      paginationParams: this._getPaginationParams(),
+      dynamicPagination: {
+        total: this.getItemCount(),
+      },
+      paginationParams: this._getPaginationURL(),
       size: this.pageSize,
     });
     this.getLinkedObjectItems().forEach((el) => {
@@ -230,7 +288,6 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     });
     this.one('aw-linked-objects').update({ items: this.getLinkedObjectItems() });
     this.one('aw-related-entities').update(res.relatedEntities);
-    this.drawPagination();
     // fallback text
     if (!this.hasMetadataFields) {
       this.fallbackText = this.configuration.get('entita-layout').fallback;
@@ -239,7 +296,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     this.mainState.update('headTitle', `Arianna4View - Entità - ${this.myResponse.label}`);
   }
 
-  private _getPaginationParams() {
+  private _getPaginationURL() {
     return {
       href: [
         this.configuration.get('paths').entitaBasePath,
@@ -248,7 +305,8 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
         `/${this.selectedTab}/`,
       ].join(''),
       queryParams: {
-        page: this.currentPage,
+        page: this.currentPage || 1,
+        size: this.pageSize,
       },
     };
   }
@@ -259,6 +317,17 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       `${this.currentId}/`,
       this.currentSlug,
     ].join('');
+  }
+
+  public getItemCount(): number {
+    switch (this.selectedTab) {
+      case 'fondi-collegati':
+        return this.myResponse.relatedLaTotalCount;
+      case 'oggetti-collegati':
+        return this.myResponse.relatedItemsTotalCount;
+      default:
+        return 0;
+    }
   }
 
   public getFields(response) {
@@ -283,5 +352,16 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     return this.selectedTab === 'fondi-collegati'
       ? this.myResponse.relatedLa
       : this.myResponse.relatedItems;
+  }
+
+  /**
+   * Calculates the total amount of pages
+   *
+   * @param items the number of records in the database
+   * @param size the number of items shown on a page
+   * @returns the total number of pages
+   */
+  private getPageCount(items: number, size: number) {
+    return Math.floor(items / size);
   }
 }

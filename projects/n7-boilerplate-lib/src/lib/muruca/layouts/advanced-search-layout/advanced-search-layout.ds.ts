@@ -28,7 +28,7 @@ export class MrAdvancedSearchLayoutDS extends LayoutDataSource {
     this.pageConfig = this.configuration.get(this.configId);
 
     // add translations
-    this.addTranslations(this.pageConfig.formConfig);
+    this.addTranslations(this.pageConfig);
 
     // init form
     this.form = new MrFormModel();
@@ -75,7 +75,10 @@ export class MrAdvancedSearchLayoutDS extends LayoutDataSource {
     });
   }
 
-  protected addTranslations(formConfig) {
+  protected addTranslations(pageConfig) {
+    const { formConfig } = pageConfig;
+    // page title
+    pageConfig.title = _t(pageConfig.title);
     // submit
     if (formConfig.submitButton) {
       formConfig.submitButton.label = _t(formConfig.submitButton.label);

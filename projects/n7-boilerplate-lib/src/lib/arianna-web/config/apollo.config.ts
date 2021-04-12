@@ -10,6 +10,26 @@ export default {
         }
       `,
   },
+  getSlider: {
+    queryName: 'getSlider',
+    queryBody: ` {
+      getSlider {
+        pretext
+        title
+        text
+        background {
+            type
+            value
+        }
+        ctaLabel
+        ctaPayload
+        metadata {
+            key
+            value
+        }
+      }
+    }`
+  },
   getTree: {
     queryName: 'getTreeOfItems',
     queryBody: `
@@ -161,6 +181,8 @@ export default {
     queryName: 'getEntity',
     queryBody: `{
         getEntity(__PARAMS__){
+          relatedItemsTotalCount,
+          relatedLaTotalCount: relatedAlTotalCount,
           overviewTab
           label
           id
@@ -679,4 +701,24 @@ export default {
       }
     }`,
   },
+  getCollection: {
+    queryName: 'getCollection',
+    queryBody: `{
+      getCollection(__PARAMS__) {
+        title
+        text
+        total
+        items {
+          title
+          content
+          background
+          image
+          url
+          a4vId
+          type
+          classification
+        }
+      }
+    }`
+  }
 };

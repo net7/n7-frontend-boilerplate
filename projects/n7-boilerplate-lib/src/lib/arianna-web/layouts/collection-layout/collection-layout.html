@@ -1,16 +1,41 @@
-<div class="collection-layout"
+<div class="aw-collection-layout"
      *ngIf="lb.dataSource as dataSource">
-    <n7-inner-title [data]="dataSource.innerTitleData">
-    </n7-inner-title>
 
-    <section class="n7-grid-3" *ngIf="dataSource.loadedCollections">
-        <ng-container *ngFor="let item of dataSource.loadedCollections.value">
+    <div class="aw-collection-layout__header">
+        <n7-inner-title [data]="dataSource.innerTitleData.getValue()">
+        </n7-inner-title>
+    </div>
+
+    <div class="aw-collection-layout__description"
+         *ngIf="dataSource.collectionDescription.getValue()">
+        <div class="aw-collection-layout__description-text">
+            {{ dataSource.collectionDescription.getValue() }}
+        </div>
+    </div>
+
+    <section class="n7-grid-3 aw-collection-layout__grid"
+            [ngClass]="{ 'is-loading': dataSource.loading }"
+             *ngIf="dataSource.loadedCollections | async">
+        
+        <ng-container *ngFor="let item of (dataSource.loadedCollections | async)">
             <n7-item-preview [data]="item">
             </n7-item-preview>
         </ng-container>
+        
+        <ng-container *ngIf="dataSource.loading">
+            <n7-content-placeholder *ngFor="let n of dataSource.pageSizeList"
+                                    [data]="{
+                blocks: [{ classes: 'collection-placeholder-item-preview' }]
+            }"></n7-content-placeholder>
+        </ng-container>
+        
     </section>
-    
-    <section>
-        <button class="n7-btn" (click)="dataSource.loadMore()">Vedi altri</button>
+
+    <section *ngIf="dataSource.loadMoreButton.getValue()">
+        <button class="n7-btn n7-btn-cta n7-btn-xl aw-collection-layout__btn-more"
+                (click)="dataSource.loadMore()"
+                [disabled]="dataSource.loading">
+            MOSTRA ALTRI
+        </button>
     </section>
 </div>
