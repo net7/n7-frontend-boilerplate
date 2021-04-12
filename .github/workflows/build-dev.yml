@@ -5,7 +5,7 @@ defaults:
 on: 
   push:
     tags:        
-      - v*     
+      - v*
 jobs:
   run-build:
     runs-on: [self-hosted]
