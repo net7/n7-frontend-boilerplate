@@ -10,13 +10,13 @@ jobs:
   run-build:
     runs-on: [self-hosted]
     steps:
+    - uses: actions/checkout@v2
     - name: npm install
       run: |
         npm i  
     - name: Branch name
+      id: vars
       run: |
-        echo ::set-output name=SOURCE_NAME::${GITHUB_REF#refs/*/}
-        echo ::set-output name=SOURCE_BRANCH::${GITHUB_REF#refs/heads/}
         echo ::set-output name=SOURCE_TAG::${GITHUB_REF#refs/tags/}
     - name: Update dist
       run: |
@@ -30,5 +30,5 @@ jobs:
         git add .
         git commit -m'dist updated to version '
         git push
-        git tag -a $SOURCE_TAG -m 'version $SOURCE_TAG'
+        git tag -a  ${{ steps.vars.outputs.SOURCE_TAG }} -m 'version  ${{ steps.vars.outputs.SOURCE_TAG }}'
         git push --tags --force
