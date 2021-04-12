@@ -27,5 +27,5 @@ jobs:
         git add .
         git commit -m'dist updated to version '
         git push
-        git tag -a ${{ SOURCE_TAG }} -m'version'
+        git tag -a -m'version'
         git push --tags --force
