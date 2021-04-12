@@ -37,4 +37,3 @@ jobs:
         git push
         git tag -a ${{ SOURCE_TAG }} -m'version ${{ SOURCE_TAG }}'
         git push --tags --force
-          
