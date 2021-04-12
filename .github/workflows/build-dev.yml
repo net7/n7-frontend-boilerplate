@@ -14,20 +14,20 @@ jobs:
       run: |
         npm i 
     - name: Get the version
-        id: get_version
-        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
+      id: get_version
+      run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
     - name: Update dist
-        run: |
-          cd ../n7-frontend-boilerplate-dist
-          git pull origin master
+      run: |
+        cd ../n7-frontend-boilerplate-dist
+        git pull origin master
     - name: npm run build
       run: |
         npm run build
     - name: build dist
-        run: |
-          git add .
-          git commit -m'dist updated to version ${{ steps.get_version.outputs.VERSION }}'
-          git push
-          git tag -a ${{ steps.get_version.outputs.VERSION }} -m'version ${{ steps.get_version.outputs.VERSION }}'
-          git push --tags --force
+      run: |
+        git add .
+        git commit -m'dist updated to version ${{ steps.get_version.outputs.VERSION }}'
+        git push
+        git tag -a ${{ steps.get_version.outputs.VERSION }} -m'version ${{ steps.get_version.outputs.VERSION }}'
+        git push --tags --force
           
