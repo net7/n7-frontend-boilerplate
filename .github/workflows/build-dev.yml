@@ -4,8 +4,10 @@ defaults:
     working-directory: /mnt/c/Projects/n7-frontent-framework/n7-frontend-boilerplate
 on: 
   push:
+    branches:
+      - master   
     tags:        
-      - v*     
+      - v*
 jobs:
   run-build:
     runs-on: [self-hosted]
