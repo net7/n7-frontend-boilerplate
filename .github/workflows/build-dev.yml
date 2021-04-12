@@ -13,9 +13,16 @@ jobs:
     - name: npm install
       run: |
         npm i 
-    - name: Get the version
-      id: get_version
-      run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
+    - name: Branch name
+      id: branch_name
+      run: |
+        echo ::set-output name=SOURCE_NAME::${GITHUB_REF#refs/*/}
+        echo ::set-output name=SOURCE_BRANCH::${GITHUB_REF#refs/heads/}
+        echo ::set-output name=SOURCE_TAG::${GITHUB_REF#refs/tags/}
+      env:
+          SOURCE_NAME: ${{ steps.branch_name.outputs.SOURCE_NAME }}
+          SOURCE_BRANCH: ${{ steps.branch_name.outputs.SOURCE_BRANCH }}
+          SOURCE_TAG: ${{ steps.branch_name.outputs.SOURCE_TAG }
     - name: Update dist
       run: |
         cd ../n7-frontend-boilerplate-dist
@@ -26,8 +33,8 @@ jobs:
     - name: build dist
       run: |
         git add .
-        git commit -m'dist updated to version ${{ steps.get_version.outputs.VERSION }}'
+        git commit -m'dist updated to version ${{ SOURCE_TAG }}'
         git push
-        git tag -a ${{ steps.get_version.outputs.VERSION }} -m'version ${{ steps.get_version.outputs.VERSION }}'
+        git tag -a ${{ SOURCE_TAG }} -m'version ${{ SOURCE_TAG }}'
         git push --tags --force
           
