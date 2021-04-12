@@ -10,6 +10,9 @@ jobs:
   run-build:
     runs-on: [self-hosted]
     steps:
+    - name: npm install
+      run: |
+        npm i 
     - name: npm run build
       run: |
         npm run build        
