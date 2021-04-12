@@ -25,7 +25,7 @@ jobs:
     - name: build dist
       run: |
         git add .
-        git commit -m'dist updated to version ${SOURCE_TAG}'
+        git commit -m'dist updated to version '
         git push
-        git tag -a ${{ SOURCE_TAG }} -m'version ${SOURCE_TAG}'
+        git tag -a ${{ SOURCE_TAG }} -m'version'
         git push --tags --force
