@@ -29,8 +29,7 @@ jobs:
       run: |
         cd ../n7-frontend-boilerplate-dist
         git add .
-        git commit -m 'dist updated to version '
+        git commit -m 'dist updated to version ${{ steps.vars.outputs.SOURCE_TAG }}'
         git push
-        echo 
         git tag -a  ${{ steps.vars.outputs.SOURCE_TAG }} -m 'version  ${{ steps.vars.outputs.SOURCE_TAG }}'
         git push --tags --force
