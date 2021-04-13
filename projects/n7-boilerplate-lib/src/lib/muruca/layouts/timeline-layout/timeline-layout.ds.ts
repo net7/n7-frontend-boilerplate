@@ -2,7 +2,6 @@ import { LayoutDataSource } from '@n7-frontend/core';
 import { ItemPreviewData, TimelineData } from '@n7-frontend/components';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import * as vis from 'vis-timeline';
 import { Subject } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { ConfigurationService } from '../../../common/services/configuration.service';
@@ -38,7 +37,7 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
 
   public hasMap = false;
 
-  public timelineListener$: Subject<vis.Timeline> = new Subject()
+  public timelineListener$: Subject<any> = new Subject()
 
   public bibliographyMock: ItemPreviewData[] = [
     { title: 'M.J.L. Hocker, Bibliotheca Heilsbronnensis sive Catalogus librorum omnium..., Nkirnberg 1731, 56 n. 68 ' },
@@ -82,7 +81,7 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
     });
     this.getWidgetDataSource('mr-timeline').timelineLoaded$
       .pipe(first())
-      .subscribe((timeline: vis.Timeline) => {
+      .subscribe((timeline: any) => {
         this.timelineListener$.next(timeline);
       });
 
