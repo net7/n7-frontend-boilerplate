@@ -1,6 +1,7 @@
 import { TimelineData } from '@n7-frontend/components';
 import { DataSource } from '@n7-frontend/core';
 import { Subject } from 'rxjs';
+import * as vis from 'vis-timeline/declarations';
 
 // vis-timeline dataset type lookup
 type DataSet = TimelineData['dataSet']
@@ -9,9 +10,9 @@ export class MrTimelineDS extends DataSource {
   id: string;
 
   /** timeline instance */
-  timeline: any;
+  timeline: vis.Timeline;
 
-  public timelineLoaded$: Subject<any> = new Subject();
+  public timelineLoaded$: Subject<vis.Timeline> = new Subject();
 
   protected transform(data: { dataSet: DataSet }): TimelineData {
     return {
