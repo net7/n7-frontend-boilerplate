@@ -13,6 +13,7 @@ export default {
     title: 'Informazioni'
   },
   tree: {
+    lite: true,
     'icon-expand': 'n7-icon-angle-right',
     'icon-collapse': 'n7-icon-angle-down',
     'icon-image': 'n7-icon-image',

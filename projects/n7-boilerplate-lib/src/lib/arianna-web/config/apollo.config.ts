@@ -30,6 +30,67 @@ export default {
       }
     }`
   },
+  getTreeLite: {
+    queryName: 'getTreeOfItems',
+    queryBody: `
+      {
+        getTreeOfItems{
+          label
+          id
+          document_type
+          document_classification
+          branches {
+            label
+            id
+            document_type
+            document_classification
+            branches {
+              label
+              id
+              document_type
+              document_classification
+              branches {
+                label
+                id
+                document_type
+                document_classification
+                branches {
+                  label
+                  id
+                  document_type
+                  document_classification
+                  branches {
+                    label
+                    id
+                    document_type
+                    document_classification
+                    branches {
+                      label
+                      id
+                      document_type
+                      document_classification
+                      branches {
+                        label
+                        id
+                        document_type
+                        document_classification
+                        branches {
+                          label
+                          id
+                          document_type
+                          document_classification
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      `,
+  },
   getTree: {
     queryName: 'getTreeOfItems',
     queryBody: `
