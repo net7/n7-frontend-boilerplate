@@ -1,7 +1,7 @@
 import { TimelineData } from '@n7-frontend/components';
 import { DataSource } from '@n7-frontend/core';
 import { Subject } from 'rxjs';
-import * as vis from 'vis-timeline';
+import * as vis from 'vis-timeline/declarations';
 
 // vis-timeline dataset type lookup
 type DataSet = TimelineData['dataSet']
