@@ -23,7 +23,7 @@
         .n7-breadcrumbs {
             max-width: $page-max-width;
             margin: 0 auto;
-            background-color: transparent;      
+            background-color: transparent;
         }
 
         /* Page title */
@@ -44,7 +44,7 @@
             margin: -$space*3 auto $space*4 auto;
 
             .n7-metadata-viewer__group {
-                margin-bottom: $space/2;            
+                margin-bottom: $space/2;
             }
         }
 
@@ -71,9 +71,9 @@
         }
 
         .n7-metadata-viewer__item-value p {
-                display: inline;
-                font-size: $font-size-s;
-                margin: 0;
+            display: inline;
+            font-size: $font-size-s;
+            margin: 0;
         }
 
         /* Tabs */
@@ -97,7 +97,7 @@
                         color: $color-text;
                         transition: all $transition-durations;
                     }
-                }        
+                }
             }
         }
 
@@ -143,12 +143,17 @@
             margin: 0 $space*10;
         }
 
+        /* Gallery */
+        .mr-resource__gallery {
+            padding: $space*6 0;
+            margin: 0 $space*10;
+        }
+
         /* Sections border */
         .mr-resource__metadata + .mr-resource__metadata,
         .mr-resource__collection + .mr-resource__metadata,
         .mr-resource__metadata + .mr-resource__collection,
-        .mr-resource__collection + .mr-resource__collection
-        {
+        .mr-resource__collection + .mr-resource__collection {
             border-top: 2px solid $color-border-normal !important;
         }
     }

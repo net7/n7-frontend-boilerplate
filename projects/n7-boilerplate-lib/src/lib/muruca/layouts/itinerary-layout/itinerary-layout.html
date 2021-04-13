@@ -23,20 +23,20 @@
 
         <!-- success -->
         <ng-container *ngSwitchCase="'SUCCESS'">
-            <div class="mr-itinerary__top">
-                <h1 class="mr-itinerary__title mr-generated-title-WP">{{lb.dataSource.title}}</h1>
-                <div class="mr-itinerary__metadata">
+            <div class="mr-static__top">
+                <h1 class="mr-static__title mr-generated-title-WP">{{lb.dataSource.title}}</h1>
+                <div class="mr-static__metadata">
                     <n7-metadata-viewer 
                     [data]="lb.widgets['mr-static-metadata'].ds.out$ | async">
                     </n7-metadata-viewer>
                 </div>
             </div>
 
-            <!-- Page content html -->
-            <div class="mr-itinerary__content mr-wp-content" [innerHTML]="lb.dataSource.content | keepHtml"></div>
-
-            <!-- Pass the list of blocks to render to the block template -->
-            <div class="mr-itinerary__sections mr-side-margin">
+            <div class="mr-resource__content mr-side-margin">
+                <!-- Page content html -->
+                <div class="mr-wp-content" [innerHTML]="lb.dataSource.content | keepHtml"></div>
+    
+                <!-- Pass the list of blocks to render to the block template -->
                 <ng-container *ngTemplateOutlet="blocks; context: { $implicit: lb.dataSource.pageConfig.sections }"></ng-container>
             </div>
         </ng-container>
