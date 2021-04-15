@@ -41,8 +41,8 @@ export class AwMapDS extends DataSource {
 
       // adding markers
       const markers = Leaflet.markerClusterGroup({
-        showCoverageOnHover: false, 
-    });
+        showCoverageOnHover: false,
+      });
       data.forEach(({ lat, lon, item }) => {
         const { label } = item;
         const marker = Leaflet.marker([lat, lon], { icon: MARKER_ICON })
