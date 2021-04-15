@@ -26,7 +26,10 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
 
   private location: Location;
 
-  private loadedResourceDetails = false;
+  public loading = {
+    resourceDetails: true,
+    timeline: true,
+  }
 
   public defaultDescription = '';
 
@@ -78,6 +81,7 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
       onError: (e) => console.error(e)
     }).subscribe((d) => {
       this.timelineData = d;
+      this.loading.timeline = false;
       this.one('mr-timeline').update(d);
     });
     this.getWidgetDataSource('mr-timeline').timelineLoaded$
@@ -144,7 +148,7 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
           }]
         }
       });
-      this.loadedResourceDetails = true;
+      this.loading.resourceDetails = false;
     });
   }
 }
