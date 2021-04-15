@@ -1,7 +1,6 @@
-import { NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { ModuleWithProviders } from '@angular/compiler/src/core';
 import { DvComponentsLibModule } from '@n7-frontend/components';
 
 // services

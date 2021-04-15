@@ -1,7 +1,7 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { EventHandler } from '@n7-frontend/core';
-import * as vis from 'vis-timeline/declarations';
+import { Timeline } from 'vis-timeline';
 import helpers from '../../../common/helpers';
 
 export class MrTimelineLayoutEH extends EventHandler {
@@ -23,7 +23,7 @@ export class MrTimelineLayoutEH extends EventHandler {
           // scroll top
           window.scrollTo(0, 0);
 
-          this.dataSource.timelineListener$.subscribe((timeline: vis.Timeline) => {
+          this.dataSource.timelineListener$.subscribe((timeline: Timeline) => {
             timeline.on('click', (props) => {
               if (!props.item) return;
               // build URL slug
