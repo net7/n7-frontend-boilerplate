@@ -1,9 +1,8 @@
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { LayoutDataSource, _t } from '@n7-frontend/core';
 import { ConfigurationService } from '../../../common/services/configuration.service';
 import { CommunicationService } from '../../../common/services/communication.service';
 import { MainStateService } from '../../../common/services/main-state.service';
-import itineraryLayoutMock from './itinerary-layout.mock';
 
 export class MrItineraryLayoutDS extends LayoutDataSource {
   private configuration: ConfigurationService;
@@ -39,17 +38,11 @@ export class MrItineraryLayoutDS extends LayoutDataSource {
   }
 
   pageRequest$(id, onError: (err: any) => void): Observable<any> {
-    console.warn('FIXME: aggiungere chiamata "itinerary"', { id, onError });
-    return of(itineraryLayoutMock);
-    // const { sections } = this.pageConfig;
-    // return this.communication.request$('itinerary', {
-    //   onError,
-    //   method: 'POST',
-    //   params: {
-    //     id,
-    //     sections: sections.map((s) => s.id),
-    //   }
-    // });
+    return this.communication.request$('itinerary', {
+      onError,
+      method: 'GET',
+      urlParams: id
+    });
   }
 
   handleResponse(response) {
