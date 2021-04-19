@@ -45,17 +45,18 @@
                         <n7-map [data]="lb.widgets['mr-map'].ds.out$ | async"></n7-map>
                     </div>
 
-                    <!-- <ng-container *ngIf="lb.dataSource.bibliographyMock && false">
+                    <ng-container *ngIf="lb.dataSource.bibliographyData as biblio">
                         <div class="mr-content-block mr-content-block-collection">
-                            <h3 class="mr-content-block__title">Bibliografia</h3>
+                            <h3 class="mr-content-block__title">{{ biblio.header.title }}</h3>
                             <div class="mr-content-block__content n7-grid-1">
-                                <ng-container *ngFor="let item of lb.dataSource.bibliographyMock">
-                                    <ng-container *ngTemplateOutlet="biblio; context: { $implicit: item }">
-                                    </ng-container>
+                                <ng-container *ngFor="let item of biblio.items">
+                                    <div class="mr-timeline__collection-content">
+                                        <n7-item-preview [data]="item"></n7-item-preview>
+                                    </div>
                                 </ng-container>
                             </div>
                         </div>
-                    </ng-container> -->
+                    </ng-container>
 
                     <div class="mr-content-block mr-content-block-collection"
                          *ngIf="false">
@@ -71,14 +72,6 @@
         </div>
     </div>
 </div>
-
-
-<ng-template #biblio
-             let-item>
-    <div class="mr-timeline__collection-content">
-        <n7-item-preview [data]="item"></n7-item-preview>
-    </div>
-</ng-template>
 
 <ng-template #maps
              let-item>

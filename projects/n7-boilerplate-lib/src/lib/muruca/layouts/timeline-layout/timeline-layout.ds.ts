@@ -43,14 +43,17 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
 
   public timelineListener$: Subject<Timeline> = new Subject()
 
-  public bibliographyMock: ItemPreviewData[] = [
-    { title: 'M.J.L. Hocker, Bibliotheca Heilsbronnensis sive Catalogus librorum omnium..., Nkirnberg 1731, 56 n. 68 ' },
-    { title: 'J.C. Irmischer, Handschriften-Katalog der Kgl. Universitàtsbibliothek Erlangen, Frankfurt a. M.-Erlangen 1852, 191-192 n. 686 ' },
-    { title: 'H. Flischer, Die lateinischen Papierhandschriften der Universitàtsbibliothek Erlangen, Erlangen 1936, 371 ' },
-    { title: 'A. Sottili, I codici del Petrarca nella Germania Occidentale, in «IMU», X (1967), pp. 486-487 ' },
-    { title: 'F. Petrarca, Senile V 2, a cura di M. Berté, Firenze 1998, pp. 38-39 ' },
-    { title: 'H. Fischer, Die lateinischen Papierhandschriften der Universitàtsbibliothek Erlangen, Erlangen 1936, 371 ' },
-  ];
+  public bibliographyData: {
+    header: { title: string };
+    items: {
+      payload: {
+        action: string;
+        id: number;
+        type: string;
+      };
+      text: string;
+    }[];
+  }
 
   public connectedMapsMock: ItemPreviewData[] = [
     { title: 'Kunyu Wanguo Quantu', text: 'Complete Map of all mountains and seas', image: '/assets/mocks/paper.png' }
@@ -120,13 +123,12 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
       if (!res || res == null) return;
       const {
         /* eslint-disable */
-        'collection-bibliography': bibliographyData,
+        'collection-bibliography': bibData,
         'collection-places': placesData,
         'collection-witnesses': witnessData,
         'collection-works': worksData,
-        /* eslint-enable */
         header,
-        title,
+        /* eslint-enable */
       } = res.sections;
       if (placesData) {
         this.hasMap = true;
@@ -134,20 +136,25 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
       } else {
         this.hasMap = false;
       }
-      this.eventHeader = header.title;
-      this.eventDescription = header.content;
-      this.one('mr-year-header').update({
-        title: { main: { text: title } },
-        actions: {
-          buttons: [{
-            text: '',
-            icon: 'n7-icon-close',
-            anchor: {
-              payload: 'closebutton'
-            }
-          }]
-        }
-      });
+      if (bibData) {
+        this.bibliographyData = bibData;
+      }
+      if (header) {
+        this.eventDescription = header.content;
+        this.eventHeader = res.title;
+        this.one('mr-year-header').update({
+          title: { main: { text: header.title } },
+          actions: {
+            buttons: [{
+              text: '',
+              icon: 'n7-icon-close',
+              anchor: {
+                payload: 'closebutton'
+              }
+            }]
+          }
+        });
+      }
       this.loading.resourceDetails = false;
     });
   }
