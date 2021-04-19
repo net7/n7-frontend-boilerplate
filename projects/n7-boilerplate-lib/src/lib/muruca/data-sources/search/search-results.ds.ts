@@ -9,6 +9,11 @@ const ITEM_PREVIEW_DEFAULTS = {
   striptags: true
 };
 
+type TextMatch = {
+  link: string;
+  text: string;
+}
+
 type MrSearchResponse = {
   limit: number;
   offset: number;
@@ -21,12 +26,16 @@ interface MrSearchResult extends ItemPreviewData {
   /** relative path */
   link: string;
   /** items that matched the search input */
-  highlights?: {
-    [x: string]: [string];
-  };
+  highlights?: [string, string][] | { text_matches: TextMatch[]};
   /** unique id for the search result entry */
   id: number;
 }
+
+/**
+ * Highlights can be simple strings or have an associated link
+ * the link is useful when each highlight points to a different page of a resource.
+ */
+type ResultHighlight = string | { link?: string; text: string };
 
 export class MrSearchResultsDS extends DataSource {
   protected transform(data: MrSearchResponse) {
@@ -66,17 +75,26 @@ export class MrSearchResultsDS extends DataSource {
           items: [],
           classes: 'n7-item-preview__highlights'
         };
-        Object.entries(item.highlights).forEach(([label, value]) => {
-          value.forEach((_, i) => {
-            highlightGroup.items.push(
-              {
-                // add a label only to the first entry
-                label: i === 0 ? _t(label) : undefined,
-                value: _t(value[i]),
-              },
-            );
-          });
-        });
+        if (Array.isArray(item.highlights)) {
+          Object.entries(item.highlights)
+            .forEach(([label, value]) => {
+              value.forEach((_, i) => {
+                highlightGroup.items.push(
+                  {
+                  // add a label only to the first entry
+                    label: i === 0 ? _t(label) : undefined,
+                    value: _t(value[i]),
+                  },
+                );
+              });
+            });
+        } else {
+          highlightGroup.items = item.highlights.text_matches
+            .map((highlight) => ({
+              label: '',
+              value: highlight.text
+            }));
+        }
         metadata.push(highlightGroup);
       }
 
