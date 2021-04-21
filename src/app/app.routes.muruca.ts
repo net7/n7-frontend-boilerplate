@@ -26,6 +26,7 @@ export const APP_ROUTES: Routes = [
   { path: '', component: MrHomeLayoutComponent, data: { configId: 'home' } },
   { path: 'opere', component: MrSearchLayoutComponent, data: { configId: 'search-works' } },
   { path: 'biblioteca', component: MrSearchLayoutComponent, data: { configId: 'search-books' } },
+  { path: 'work/:id/:slug', redirectTo: 'opera/:id/:slug' },
   { path: 'libro/:id/:slug', component: MrResourceLayoutComponent, data: { configId: 'resource-book' } },
   { path: 'opera/:id/:slug', component: MrResourceLayoutComponent, data: { configId: 'resource-work' } },
   { path: 'toponym/:id/:slug', component: MrResourceLayoutComponent, data: { configId: 'resource-toponym' } },
