@@ -36,6 +36,7 @@ export default {
   'resource#metadata': 'Metadati',
   'resource#metadata_size': 'Dimensioni',
   'advancedsearch#page_title': 'Ricerca avanzata',
+  'advancedsearch#highlights_title': 'Risultati',
   'advancedsearch#section1_title': '__Section 1__',
   'advancedsearch#section1_description': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
   'advancedsearch#groupone': 'Group 1',

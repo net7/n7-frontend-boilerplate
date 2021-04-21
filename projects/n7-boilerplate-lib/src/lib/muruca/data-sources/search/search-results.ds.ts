@@ -65,7 +65,7 @@ export class MrSearchResultsDS extends DataSource {
       */
       if (item.highlights) {
         const highlightGroup = {
-          title: _t('Text Matches'),
+          title: _t('advancedsearch#highlights_title'),
           items: [],
           classes: 'n7-item-preview__highlights'
         };
