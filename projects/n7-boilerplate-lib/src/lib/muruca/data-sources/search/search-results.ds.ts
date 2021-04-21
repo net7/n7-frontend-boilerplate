@@ -9,11 +9,6 @@ const ITEM_PREVIEW_DEFAULTS = {
   striptags: true
 };
 
-type TextMatch = {
-  link: string;
-  text: string;
-}
-
 type MrSearchResponse = {
   limit: number;
   offset: number;
@@ -22,20 +17,16 @@ type MrSearchResponse = {
   total_count: number;
 }
 
+type HighlightItem = [string, [string]] | { link?: string; text?: string; label?: string }
+
 interface MrSearchResult extends ItemPreviewData {
   /** relative path */
   link: string;
   /** items that matched the search input */
-  highlights?: [string, string][] | { text_matches: TextMatch[]};
+  highlights?: HighlightItem[];
   /** unique id for the search result entry */
   id: number;
 }
-
-/**
- * Highlights can be simple strings or have an associated link
- * the link is useful when each highlight points to a different page of a resource.
- */
-type ResultHighlight = string | { link?: string; text: string };
 
 export class MrSearchResultsDS extends DataSource {
   protected transform(data: MrSearchResponse) {
@@ -69,32 +60,31 @@ export class MrSearchResultsDS extends DataSource {
         });
       }
 
-      // add the highlights to the item's metadata
+      /*
+        Add the highlights to the item's metadata with a custom group
+      */
       if (item.highlights) {
-        const highlightGroup: MetadataGroup = {
+        const highlightGroup = {
+          title: _t('Text Matches'),
           items: [],
           classes: 'n7-item-preview__highlights'
         };
-        if (Array.isArray(item.highlights)) {
-          Object.entries(item.highlights)
-            .forEach(([label, value]) => {
-              value.forEach((_, i) => {
-                highlightGroup.items.push(
-                  {
-                  // add a label only to the first entry
-                    label: i === 0 ? _t(label) : undefined,
-                    value: _t(value[i]),
-                  },
-                );
-              });
+        item.highlights.forEach((highlight: HighlightItem) => {
+          // if the item is an array interpret it as [label, [value]]
+          if (Array.isArray(highlight)) {
+            highlightGroup.items.push({
+              label: _t(highlight[0]),
+              value: _t(highlight[1][0])
             });
-        } else {
-          highlightGroup.items = item.highlights.text_matches
-            .map((highlight) => ({
-              label: '',
-              value: highlight.text
-            }));
-        }
+          // if it's an object then it should have a custom hyperlink
+          } else {
+            highlightGroup.items.push({
+              label: highlight.label ? _t(highlight.label) : undefined,
+              value: highlight.text ?? '',
+              href: `${item.link}${highlight.link}` ?? undefined, // custom hyperlink
+            });
+          }
+        });
         metadata.push(highlightGroup);
       }
 

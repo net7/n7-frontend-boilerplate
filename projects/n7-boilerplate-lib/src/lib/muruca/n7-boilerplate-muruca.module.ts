@@ -22,6 +22,7 @@ import { MrTimelineLayoutComponent } from './layouts/timeline-layout/timeline-la
 import { MrPostsLayoutComponent } from './layouts/posts-layout/posts-layout';
 // COMPONENTS
 import { ReadMoreComponent } from './components/read-more/read-more';
+import { MrAdvancedResultComponent } from './components/advanced-result/advanced-result';
 import { MrFormComponent } from './components/form/form';
 import { MrFormWrapperAccordionComponent } from './components/form-wrapper-accordion/form-wrapper-accordion';
 import { MrSearchPageDescriptionComponent } from './components/search-page-description/search-page-description';
@@ -44,7 +45,8 @@ const COMPONENTS = [
   MrFormComponent,
   MrFormWrapperAccordionComponent,
   MrSearchPageDescriptionComponent,
-  MrResourceModalComponent
+  MrResourceModalComponent,
+  MrAdvancedResultComponent,
 ];
 
 @NgModule({

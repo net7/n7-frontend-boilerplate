@@ -52,9 +52,12 @@
                         <!-- success: items > 0 -->
                         <ng-container *ngSwitchCase="'SUCCESS'">
                             <div class="n7-grid-{{ lb.dataSource.pageConfig.grid || 3 }}">
-                                <n7-item-preview *ngFor="let item of (lb.widgets['mr-search-results'].ds.out$ | async)"
-                                [data]="item">
-                                </n7-item-preview>
+                                <!-- Use a custom item preview with clickable metadata items -->
+                                <mr-advanced-result
+                                    *ngFor="let item of (lb.widgets['mr-search-results'].ds.out$ | async)"
+                                    [data]="item">
+                                </mr-advanced-result>
+                                <!-- ../../components/advanced-result/advanced-result.html -->
                             </div>
                         </ng-container>
 
