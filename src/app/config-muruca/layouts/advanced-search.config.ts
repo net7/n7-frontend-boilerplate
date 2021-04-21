@@ -112,26 +112,27 @@ export default {
       }]
     }, {
       id: 'section-2',
-      title: '--- section 2 ---',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-      inputs: [{
-        id: 'query-2',
-        type: 'text',
-        data: {
-          id: 'query-2',
-          label: 'advancedsearch#query_label',
-          placeholder: 'advancedsearch#query_placeholder',
-          icon: 'n7-icon-search',
-          inputPayload: 'search-input',
-          enterPayload: 'search-enter',
-          iconPayload: 'search-icon',
-        },
-        state: {
-          value: 'hola...',
-          disabled: false,
-          hidden: false
+      advancedSection: true,
+      inputs: [
+        {
+          id: 'query-text',
+          type: 'text',
+          data: {
+            id: 'query-text',
+            label: 'advancedsearch#label_text',
+            placeholder: '',
+            icon: 'n7-icon-search',
+            inputPayload: 'search-input',
+            enterPayload: 'search-enter',
+            iconPayload: 'search-icon',
+          },
+          state: {
+            value: '',
+            disabled: false,
+            hidden: false,
+          },
         }
-      }]
+      ],
     }]
   }
 };
