@@ -1,4 +1,4 @@
-import { LayoutDataSource } from '@n7-frontend/core';
+import { LayoutDataSource, _t } from '@n7-frontend/core';
 import { ItemPreviewData, TimelineData } from '@n7-frontend/components';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
@@ -40,6 +40,8 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
   public timelineData: TimelineData;
 
   public hasMap = false;
+
+  public mapHeader = _t('timeline#mapheader');
 
   public timelineListener$: Subject<Timeline> = new Subject()
 
@@ -106,6 +108,8 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
   loadDefaults(navigate: boolean) {
     this.eventDescription = this.defaultDescription;
     this.eventHeader = '';
+    this.hasMap = false;
+    this.bibliographyData = undefined;
     if (navigate) this.location.go('/timeline/');
     this.one('mr-year-header').update({
       title: { main: { text: 'La vita di Petrarca' } },

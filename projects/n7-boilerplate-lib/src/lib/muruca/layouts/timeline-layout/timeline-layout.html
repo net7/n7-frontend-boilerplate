@@ -20,45 +20,33 @@
             {{lb.dataSource.eventHeader}}
         </h1>
         <div class="mr-timeline__content">
-            <p [innerHTML]="lb.dataSource.eventDescription">
-            <p>
-                <ng-container *ngIf="!lb.dataSource.loading.resourceDetails">
-                    <!-- <div *ngIf="false">Fonti:
-                        <ul>
-                            <li><a href="#">Canzoniere</a></li>
-                            <li><a href="#">I Trionfi</a></li>
-                            <li><a href="#">Epistole</a></li>
-                        </ul>
-                    </div> -->
+            <div class="mr-content-block mr-content-block-description">
+                <p [innerHTML]="lb.dataSource.eventDescription">
+                <p>
+            </div>
+            <ng-container *ngIf="!lb.dataSource.loading.resourceDetails">
 
-                    <!-- <div class="mr-gallery"
-                         *ngIf="false">
-                        <div class="mr-gallery__item"
-                             *ngFor="let image of lb.dataSource.images">
-                            <img class="mr-gallery__image"
-                                 [src]="image">
+                <div class="mr-map"
+                     *ngIf="lb.dataSource.hasMap">
+                    <h3 class="mr-content-block__title"
+                        *ngIf="lb.dataSource.mapHeader">{{ lb.dataSource.mapHeader }}</h3>
+                    <n7-map [data]="lb.widgets['mr-map'].ds.out$ | async"></n7-map>
+                </div>
+
+                <ng-container *ngIf="lb.dataSource.bibliographyData as biblio">
+                    <div class="mr-content-block mr-content-block-collection">
+                        <h3 class="mr-content-block__title">{{ biblio.header.title }}</h3>
+                        <div class="mr-content-block__content n7-grid-1">
+                            <ng-container *ngFor="let item of biblio.items">
+                                <div class="mr-timeline__collection-content">
+                                    <n7-item-preview [data]="item"></n7-item-preview>
+                                </div>
+                            </ng-container>
                         </div>
-                    </div> -->
-
-                    <div class="mr-map"
-                         *ngIf="lb.dataSource.hasMap">
-                        <n7-map [data]="lb.widgets['mr-map'].ds.out$ | async"></n7-map>
                     </div>
+                </ng-container>
 
-                    <ng-container *ngIf="lb.dataSource.bibliographyData as biblio">
-                        <div class="mr-content-block mr-content-block-collection">
-                            <h3 class="mr-content-block__title">{{ biblio.header.title }}</h3>
-                            <div class="mr-content-block__content n7-grid-1">
-                                <ng-container *ngFor="let item of biblio.items">
-                                    <div class="mr-timeline__collection-content">
-                                        <n7-item-preview [data]="item"></n7-item-preview>
-                                    </div>
-                                </ng-container>
-                            </div>
-                        </div>
-                    </ng-container>
-
-                    <div class="mr-content-block mr-content-block-collection"
+                <!-- <div class="mr-content-block mr-content-block-collection"
                          *ngIf="false">
                         <h3 class="mr-content-block__title">Mappe collegate</h3>
                         <div class="mr-content-block__content n7-grid-3">
@@ -67,15 +55,15 @@
                                 </ng-container>
                             </ng-container>
                         </div>
-                    </div>
-                </ng-container>
+                    </div> -->
+            </ng-container>
         </div>
     </div>
 </div>
 
-<ng-template #maps
+<!-- <ng-template #maps
              let-item>
     <div class="mr-timeline__collection-content">
         <n7-item-preview [data]="item"></n7-item-preview>
     </div>
-</ng-template>
+</ng-template> -->
