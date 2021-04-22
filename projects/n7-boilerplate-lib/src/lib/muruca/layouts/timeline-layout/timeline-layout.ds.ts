@@ -57,22 +57,12 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
     }[];
   }
 
-  public connectedMapsMock: ItemPreviewData[] = [
-    { title: 'Kunyu Wanguo Quantu', text: 'Complete Map of all mountains and seas', image: '/assets/mocks/paper.png' }
-  ]
-
-  public images: string[] = [
-    'https://i.imgur.com/WM3EG9d.png',
-    'https://i.imgur.com/ZDQmlnX.png',
-    'https://i.imgur.com/HhKxoZb.png',
-    'https://i.imgur.com/c3tonAj.png',
-    'https://i.imgur.com/Ef7izGP.png',
-    'https://i.imgur.com/8Xpzoig.png',
-    'https://i.imgur.com/yhF0LCt.png',
-    'https://i.imgur.com/bMfHfEh.png',
-  ]
-
   public eventTitle: string;
+
+  public collectionWitnessData: {
+    header: { title: string };
+    items: ItemPreviewData[];
+  };
 
   onInit(payload) {
     this.configuration = payload.configuration;
@@ -110,6 +100,7 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
     this.eventHeader = '';
     this.hasMap = false;
     this.bibliographyData = undefined;
+    this.collectionWitnessData = undefined;
     if (navigate) this.location.go('/timeline/');
     this.one('mr-year-header').update({
       title: { main: { text: 'La vita di Petrarca' } },
@@ -142,6 +133,19 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
       }
       if (bibData) {
         this.bibliographyData = bibData;
+      }
+      if (witnessData) {
+        this.collectionWitnessData = {
+          items: witnessData.items.map((witness: {
+            link: string; title: string; type: string;
+          }): ItemPreviewData => ({
+            title: witness.title,
+            anchor: {
+              href: witness.link,
+            }
+          })),
+          header: witnessData.header
+        };
       }
       if (header) {
         this.eventDescription = header.content;
