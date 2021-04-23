@@ -9,6 +9,7 @@ import { CommunicationService } from '../../../common/services/communication.ser
 import { MainStateService } from '../../../common/services/main-state.service';
 import { MrLayoutStateService } from '../../services/layout-state.service';
 import 'leaflet.markercluster';
+import { CollectionItem, GetResourceResponse } from './timeline-layout.types';
 
 // demo page: http://localhost:4200/timeline/2992/missione-venezia
 
@@ -27,7 +28,10 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
 
   private location: Location;
 
-  private loadedResourceDetails = false;
+  public loading = {
+    resourceDetails: true,
+    timeline: true,
+  }
 
   public defaultDescription = '';
 
@@ -39,31 +43,33 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
 
   public hasMap = false;
 
+  public mapHeader = _t('timeline#mapheader');
+
   public timelineListener$: Subject<Timeline> = new Subject()
 
-  public bibliographyMock: ItemPreviewData[] = [
-    { title: 'M.J.L. Hocker, Bibliotheca Heilsbronnensis sive Catalogus librorum omnium..., Nkirnberg 1731, 56 n. 68 ' },
-    { title: 'J.C. Irmischer, Handschriften-Katalog der Kgl. Universitàtsbibliothek Erlangen, Frankfurt a. M.-Erlangen 1852, 191-192 n. 686 ' },
-    { title: 'H. Flischer, Die lateinischen Papierhandschriften der Universitàtsbibliothek Erlangen, Erlangen 1936, 371 ' },
-    { title: 'A. Sottili, I codici del Petrarca nella Germania Occidentale, in «IMU», X (1967), pp. 486-487 ' },
-    { title: 'F. Petrarca, Senile V 2, a cura di M. Berté, Firenze 1998, pp. 38-39 ' },
-    { title: 'H. Fischer, Die lateinischen Papierhandschriften der Universitàtsbibliothek Erlangen, Erlangen 1936, 371 ' },
-  ];
+  public bibliographyData: {
+    header: { title: string };
+    items: {
+      payload?: {
+        action: string;
+        id: number;
+        type: string;
+      };
+      text?: string;
+    }[];
+  }
 
-  public connectedMapsMock: ItemPreviewData[] = [
-    { title: 'Kunyu Wanguo Quantu', text: 'Complete Map of all mountains and seas', image: '/assets/mocks/paper.png' }
-  ]
+  public collectionWorksData: {
+    header: { title: string };
+    items: ItemPreviewData[];
+  }
 
-  public images: string[] = [
-    'https://i.imgur.com/WM3EG9d.png',
-    'https://i.imgur.com/ZDQmlnX.png',
-    'https://i.imgur.com/HhKxoZb.png',
-    'https://i.imgur.com/c3tonAj.png',
-    'https://i.imgur.com/Ef7izGP.png',
-    'https://i.imgur.com/8Xpzoig.png',
-    'https://i.imgur.com/yhF0LCt.png',
-    'https://i.imgur.com/bMfHfEh.png',
-  ]
+  public collectionWitnessData: {
+    header: { title: string };
+    items: ItemPreviewData[];
+  };
+
+  public collectionGalleryData;
 
   public eventTitle: string;
 
@@ -82,6 +88,7 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
       onError: (e) => console.error(e)
     }).subscribe((d) => {
       this.timelineData = d;
+      this.loading.timeline = false;
       this.one('mr-timeline').update(d);
     });
     this.getWidgetDataSource('mr-timeline').timelineLoaded$
@@ -103,6 +110,11 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
   loadDefaults(navigate: boolean) {
     this.eventDescription = this.defaultDescription;
     this.eventHeader = '';
+    this.hasMap = false;
+    this.bibliographyData = undefined;
+    this.collectionWitnessData = undefined;
+    this.collectionWorksData = undefined;
+    this.collectionGalleryData = undefined;
     if (navigate) this.location.go('/timeline/');
     this.one('mr-year-header').update({
       title: { main: { text: _t(this.pageConfig.title) } },
@@ -116,17 +128,17 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
       params: {
         id, type: 'views/time-events'
       }
-    }).subscribe((res) => {
+    }).subscribe((res: GetResourceResponse) => {
       if (!res || res == null) return;
       const {
         /* eslint-disable */
-        'collection-bibliography': bibliographyData,
+        'collection-bibliography': bibData,
         'collection-places': placesData,
         'collection-witnesses': witnessData,
         'collection-works': worksData,
-        /* eslint-enable */
+        gallery,
         header,
-        title,
+        /* eslint-enable */
       } = res.sections;
       if (placesData) {
         this.hasMap = true;
@@ -134,21 +146,55 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
       } else {
         this.hasMap = false;
       }
-      this.eventHeader = header.title;
-      this.eventDescription = header.content;
-      this.one('mr-year-header').update({
-        title: { main: { text: title } },
-        actions: {
-          buttons: [{
-            text: '',
-            icon: 'n7-icon-close',
+      if (bibData) {
+        this.bibliographyData = bibData;
+      }
+      if (witnessData) {
+        this.collectionWitnessData = {
+          items: witnessData.items.map((witness: {
+            link: string; title: string; type: string;
+          }): ItemPreviewData => ({
+            title: witness.title,
             anchor: {
-              payload: 'closebutton'
+              href: witness.link,
             }
-          }]
-        }
-      });
-      this.loadedResourceDetails = true;
+          })),
+          header: witnessData.header
+        };
+      }
+      if (worksData?.items) {
+        this.collectionWorksData = {
+          header: worksData.header,
+          items: worksData.items.map((item: CollectionItem) => ({
+            image: item.image,
+            title: item.title,
+            anchor: item.link ? {
+              href: item.link,
+            } : undefined,
+            text: item.text,
+          }))
+        };
+      }
+      if (gallery) {
+        this.collectionGalleryData = gallery;
+      }
+      if (header) {
+        this.eventDescription = header.content;
+        this.eventHeader = res.title;
+        this.one('mr-year-header').update({
+          title: { main: { text: header.title } },
+          actions: {
+            buttons: [{
+              text: '',
+              icon: 'n7-icon-close',
+              anchor: {
+                payload: 'closebutton'
+              }
+            }]
+          }
+        });
+      }
+      this.loading.resourceDetails = false;
     });
   }
 }

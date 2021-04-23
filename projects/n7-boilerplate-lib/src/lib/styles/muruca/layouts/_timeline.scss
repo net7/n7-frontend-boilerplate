@@ -11,7 +11,12 @@
     padding-bottom: $space*8;
 
     &__timeline {
+        min-height: 500px;
+        width: 100%;
     }
+
+    // &__timeline-loading {
+    // }
 
     &__page {
         max-width: $page-readable-width;

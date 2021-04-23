@@ -55,7 +55,6 @@ export class AwMapDS extends DataSource {
             .on('click', ({ target }) => {
               const { icon } = target.options;
               const { className } = icon.options;
-
               if (className === 'marker-icon-selected') {
                 this.markerOpen$.next(item);
               }
