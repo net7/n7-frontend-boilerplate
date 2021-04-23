@@ -41,31 +41,35 @@ export class AwMapDS extends DataSource {
 
       // adding markers
       const markers = Leaflet.markerClusterGroup({
-        showCoverageOnHover: false, 
-    });
-      data.forEach(({ lat, lon, item }) => {
-        const { label } = item;
-        const marker = Leaflet.marker([lat, lon], { icon: MARKER_ICON })
-          .addTo(markers)
-          .bindPopup(label)
-          .on('click', ({ target }) => {
-            const { icon } = target.options;
-            const { className } = icon.options;
+        showCoverageOnHover: false,
+      });
+      data
+        // skip broken markers
+        .filter((d) => (d.lat && d.lon))
+        // draw markers on the map
+        .forEach(({ lat, lon, item }) => {
+          const { label } = item;
+          const marker = Leaflet.marker([lat, lon], { icon: MARKER_ICON })
+            .addTo(markers)
+            .bindPopup(label)
+            .on('click', ({ target }) => {
+              const { icon } = target.options;
+              const { className } = icon.options;
 
-            if (className === 'marker-icon-selected') {
-              this.markerOpen$.next(item);
-            }
+              if (className === 'marker-icon-selected') {
+                this.markerOpen$.next(item);
+              }
+            });
+
+          marker.getPopup().on('remove', ({ target }) => {
+            target._source.setIcon(MARKER_ICON);
+            this.markerClose$.next();
           });
 
-        marker.getPopup().on('remove', ({ target }) => {
-          target._source.setIcon(MARKER_ICON);
-          this.markerClose$.next();
+          marker.getPopup().on('add', ({ target }) => {
+            target._source.setIcon(MARKER_ICON_SELECTED);
+          });
         });
-
-        marker.getPopup().on('add', ({ target }) => {
-          target._source.setIcon(MARKER_ICON_SELECTED);
-        });
-      });
       this.map.addLayer(markers);
     }
   });
