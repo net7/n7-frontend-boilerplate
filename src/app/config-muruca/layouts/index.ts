@@ -13,10 +13,12 @@ import resourceWorkConfig from './resource-work.config';
 import searchBooksConfig from './search-books.config';
 import searchWitnessesConfig from './search-witnesses.config';
 import searchWorksConfig from './search-works.config';
+import itineraryConfig from './itinerary.config';
 
 export default {
   home: homeConfig,
   posts: postsConfig,
+  itinerary: itineraryConfig,
   'advanced-results': advancedResultsConfig,
   'advanced-search-full': advancedSearchFullConfig,
   'advanced-search': advancedSearchConfig,

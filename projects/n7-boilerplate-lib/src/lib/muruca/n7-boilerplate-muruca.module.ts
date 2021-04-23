@@ -20,6 +20,7 @@ import { MrSearchLayoutComponent } from './layouts/search-layout/search-layout';
 import { MrStaticLayoutComponent } from './layouts/static-layout/static-layout';
 import { MrTimelineLayoutComponent } from './layouts/timeline-layout/timeline-layout';
 import { MrPostsLayoutComponent } from './layouts/posts-layout/posts-layout';
+import { MrItineraryLayoutComponent } from './layouts/itinerary-layout/itinerary-layout';
 // COMPONENTS
 import { ReadMoreComponent } from './components/read-more/read-more';
 import { MrAdvancedResultComponent } from './components/advanced-result/advanced-result';
@@ -27,6 +28,7 @@ import { MrFormComponent } from './components/form/form';
 import { MrFormWrapperAccordionComponent } from './components/form-wrapper-accordion/form-wrapper-accordion';
 import { MrSearchPageDescriptionComponent } from './components/search-page-description/search-page-description';
 import { MrResourceModalComponent } from './components/resource-modal/resource-modal';
+import { MrGalleryComponent } from './components/gallery/gallery';
 
 const COMPONENTS = [
   // Layout components
@@ -40,12 +42,14 @@ const COMPONENTS = [
   MrAdvancedResultsLayoutComponent,
   MrTimelineLayoutComponent,
   MrPostsLayoutComponent,
+  MrItineraryLayoutComponent,
   // Custom components
   ReadMoreComponent,
   MrFormComponent,
   MrFormWrapperAccordionComponent,
   MrSearchPageDescriptionComponent,
   MrResourceModalComponent,
+  MrGalleryComponent,
   MrAdvancedResultComponent,
 ];
 
