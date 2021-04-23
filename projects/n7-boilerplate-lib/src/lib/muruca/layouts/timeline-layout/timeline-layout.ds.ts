@@ -10,6 +10,7 @@ import { CommunicationService } from '../../../common/services/communication.ser
 import { MainStateService } from '../../../common/services/main-state.service';
 import { MrLayoutStateService } from '../../services/layout-state.service';
 import 'leaflet.markercluster';
+import { CollectionItem, GetResourceResponse } from './timeline-layout.types';
 
 // demo page: http://localhost:4200/timeline/2992/missione-venezia
 
@@ -48,21 +49,28 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
   public bibliographyData: {
     header: { title: string };
     items: {
-      payload: {
+      payload?: {
         action: string;
         id: number;
         type: string;
       };
-      text: string;
+      text?: string;
     }[];
   }
 
-  public eventTitle: string;
+  public collectionWorksData: {
+    header: { title: string };
+    items: ItemPreviewData[];
+  }
 
   public collectionWitnessData: {
     header: { title: string };
     items: ItemPreviewData[];
   };
+
+  public collectionGalleryData;
+
+  public eventTitle: string;
 
   onInit(payload) {
     this.configuration = payload.configuration;
@@ -101,6 +109,8 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
     this.hasMap = false;
     this.bibliographyData = undefined;
     this.collectionWitnessData = undefined;
+    this.collectionWorksData = undefined;
+    this.collectionGalleryData = undefined;
     if (navigate) this.location.go('/timeline/');
     this.one('mr-year-header').update({
       title: { main: { text: 'La vita di Petrarca' } },
@@ -114,7 +124,7 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
       params: {
         id, type: 'views/time-events'
       }
-    }).subscribe((res) => {
+    }).subscribe((res: GetResourceResponse) => {
       if (!res || res == null) return;
       const {
         /* eslint-disable */
@@ -122,6 +132,7 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
         'collection-places': placesData,
         'collection-witnesses': witnessData,
         'collection-works': worksData,
+        gallery,
         header,
         /* eslint-enable */
       } = res.sections;
@@ -146,6 +157,22 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
           })),
           header: witnessData.header
         };
+      }
+      if (worksData?.items) {
+        this.collectionWorksData = {
+          header: worksData.header,
+          items: worksData.items.map((item: CollectionItem) => ({
+            image: item.image,
+            title: item.title,
+            anchor: item.link ? {
+              href: item.link,
+            } : undefined,
+            text: item.text,
+          }))
+        };
+      }
+      if (gallery) {
+        this.collectionGalleryData = gallery;
       }
       if (header) {
         this.eventDescription = header.content;

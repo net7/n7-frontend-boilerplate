@@ -27,6 +27,16 @@
             </div>
             <ng-container *ngIf="!lb.dataSource.loading.resourceDetails">
 
+                <!-- GALLERIA -->
+                <div class="mr-content-block n7-grid-6">
+                    <ng-container *ngFor="let image of lb.dataSource.collectionGalleryData">
+                        <a [href]="image.image" class="mr-gallery__image">
+                            <img [src]="image.thumbnail" alt="image.title">
+                        </a>
+                    </ng-container>
+                </div>
+                
+
                 <!-- MAPPA -->
                 <div class="mr-map"
                      *ngIf="lb.dataSource.hasMap">
@@ -54,14 +64,31 @@
                 <!-- TESTIMONI -->
                 <ng-container *ngIf="lb.dataSource.collectionWitnessData as wit">
                     <ng-container *ngIf="wit.items && wit.items.length > 0">
-                        <h3 class="mr-content-block__title">{{ wit.header.title }}</h3>
-                        <div class="mr-content-block__content 'n7-grid-3">
-                            <n7-item-preview *ngFor="let item of wit.items"
-                                             [data]="item">
-                            </n7-item-preview>
+                        <div class="mr-content-block-collection mr-content-block">
+                            <h3 class="mr-content-block__title">{{ wit.header.title }}</h3>
+                            <div class="mr-content-block__content n7-grid-3">
+                                <n7-item-preview *ngFor="let item of wit.items"
+                                                 [data]="item">
+                                </n7-item-preview>
+                            </div>
                         </div>
                     </ng-container>
                 </ng-container>
+
+                <!-- OPERE -->
+                <ng-container *ngIf="lb.dataSource.collectionWorksData as works">
+                    <ng-container *ngIf="works.items && works.items.length > 0">
+                        <div class="mr-content-block-collection mr-content-block">
+                            <h3 class="mr-content-block__title">{{ works.header.title }}</h3>
+                            <div class="mr-content-block__content n7-grid-3">
+                                <n7-item-preview *ngFor="let item of works.items"
+                                                 [data]="item">
+                                </n7-item-preview>
+                            </div>
+                        </div>
+                    </ng-container>
+                </ng-container>
+
             </ng-container>
         </div>
     </div>
