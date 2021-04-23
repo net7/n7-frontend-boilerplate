@@ -78,6 +78,9 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
   public hasContextMenu: () => boolean;
 
+  /** Name of query that should be used (chosen in config) */
+  private getTreeQuery: 'getTree' | 'getTreeLite' = 'getTree';
+
   onInit({
     configuration, mainState, router, options, titleService, communication,
   }) {
@@ -99,6 +102,11 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     this.emptyLabel = this.configuration.get('scheda-layout')['empty-label'];
     this.emptyStateString = this.configuration.get('scheda-layout')['empty-html'];
     this.one('aw-tree').updateOptions({ config: this.configuration.get('config-keys') });
+
+    // switch the tree query to the slim version
+    if (this.configuration.get('scheda-layout')?.tree?.lite) {
+      this.getTreeQuery = 'getTreeLite';
+    }
 
     this.mainState.update('headTitle', 'Arianna4View - Patrimonio');
     this.mainState.update('pageTitle', 'Arianna4View - Patrimonio');
@@ -129,7 +137,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     if (AwSchedaLayoutDS.tree) {
       return of(AwSchedaLayoutDS.tree);
     }
-    return this.communication.request$('getTree', {
+    return this.communication.request$(this.getTreeQuery, {
       onError: (error) => console.error(error),
       params: { treeId: id },
     });

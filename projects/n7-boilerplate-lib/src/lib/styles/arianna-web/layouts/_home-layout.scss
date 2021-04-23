@@ -571,7 +571,7 @@
 
         /* Only last item of the  breadcrumbs is displayed */
         .n7-breadcrumbs__list {
-            >*:not(:last-child)   {
+            >*:not(:last-child) {
                 display: none;
             }
         }
@@ -677,7 +677,7 @@
 \* ------------------------------------ */
 .aw-home {
     &__bottom-hero {
-        .n7-hero {            
+        .n7-hero {
             height: auto;
             padding: $space*6 0;
 

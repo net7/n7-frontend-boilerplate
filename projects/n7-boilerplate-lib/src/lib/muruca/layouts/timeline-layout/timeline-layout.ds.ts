@@ -2,13 +2,14 @@ import { LayoutDataSource } from '@n7-frontend/core';
 import { ItemPreviewData, TimelineData } from '@n7-frontend/components';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import * as vis from 'vis-timeline';
+import { Timeline } from 'vis-timeline';
 import { Subject } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { ConfigurationService } from '../../../common/services/configuration.service';
 import { CommunicationService } from '../../../common/services/communication.service';
 import { MainStateService } from '../../../common/services/main-state.service';
 import { MrLayoutStateService } from '../../services/layout-state.service';
+import 'leaflet.markercluster';
 
 // demo page: http://localhost:4200/timeline/2992/missione-venezia
 
@@ -35,7 +36,9 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
 
   public timelineData: TimelineData;
 
-  public timelineListener$: Subject<vis.Timeline> = new Subject()
+  public hasMap = false;
+
+  public timelineListener$: Subject<Timeline> = new Subject()
 
   public bibliographyMock: ItemPreviewData[] = [
     { title: 'M.J.L. Hocker, Bibliotheca Heilsbronnensis sive Catalogus librorum omnium..., Nkirnberg 1731, 56 n. 68 ' },
@@ -68,7 +71,6 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
     this.communication = payload.communication;
     this.route = payload.route;
     this.location = payload.location;
-    this.one('mr-map').update({});
 
     // update the timeline
     this.communication.request$('timeline', {
@@ -80,7 +82,7 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
     });
     this.getWidgetDataSource('mr-timeline').timelineLoaded$
       .pipe(first())
-      .subscribe((timeline: vis.Timeline) => {
+      .subscribe((timeline: Timeline) => {
         this.timelineListener$.next(timeline);
       });
 
@@ -112,10 +114,26 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
       }
     }).subscribe((res) => {
       if (!res || res == null) return;
-      this.eventHeader = res.sections.header.title;
-      this.eventDescription = res.sections.header.content;
+      const {
+        /* eslint-disable */
+        'collection-bibliography': bibliographyData,
+        'collection-places': placesData,
+        'collection-witnesses': witnessData,
+        'collection-works': worksData,
+        /* eslint-enable */
+        header,
+        title,
+      } = res.sections;
+      if (placesData) {
+        this.hasMap = true;
+        this.one('mr-map').update(placesData);
+      } else {
+        this.hasMap = false;
+      }
+      this.eventHeader = header.title;
+      this.eventDescription = header.content;
       this.one('mr-year-header').update({
-        title: { main: { text: res.title } },
+        title: { main: { text: title } },
         actions: {
           buttons: [{
             text: '',
