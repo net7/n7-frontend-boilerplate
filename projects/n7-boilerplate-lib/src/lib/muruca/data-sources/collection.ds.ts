@@ -51,7 +51,7 @@ export class MrCollectionDS extends DataSource {
     }
 
     return {
-      header: {
+      header: header ? {
         title: {
           main: {
             text: header.title,
@@ -64,7 +64,7 @@ export class MrCollectionDS extends DataSource {
         actions: {
           buttons: header.button
         }
-      },
+      } : null,
       items: items.map((item) => {
         let anchor = null;
         if (item.text) {
