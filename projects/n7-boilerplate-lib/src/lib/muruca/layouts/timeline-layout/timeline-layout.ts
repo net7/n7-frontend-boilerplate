@@ -44,7 +44,8 @@ export class MrTimelineLayoutComponent extends AbstractLayout implements OnInit,
   }
 
   ngOnInit() {
-    this.route.data.subscribe(() => {
+    this.route.data.subscribe((data) => {
+      this.configId = data.configId;
       this.layoutState.add('content');
       this.onInit();
     });
