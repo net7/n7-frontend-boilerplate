@@ -1,7 +1,6 @@
 import { LayoutDataSource, _t } from '@n7-frontend/core';
 import { ItemPreviewData, TimelineData } from '@n7-frontend/components';
 import { Location } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
 import { Timeline } from 'vis-timeline';
 import { Subject } from 'rxjs';
 import { first } from 'rxjs/operators';
@@ -23,7 +22,9 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
 
   private layoutState: MrLayoutStateService;
 
-  private route: ActivatedRoute;
+  private configId: string;
+
+  private pageConfig;
 
   private location: Location;
 
@@ -78,6 +79,9 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
     this.route = payload.route;
     this.location = payload.location;
 
+    this.configId = payload.configId;
+    this.pageConfig = this.configuration.get(this.configId) || {};
+
     // update the timeline
     this.communication.request$('timeline', {
       method: 'GET',
@@ -113,7 +117,7 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
     this.collectionGalleryData = undefined;
     if (navigate) this.location.go('/timeline/');
     this.one('mr-year-header').update({
-      title: { main: { text: 'La vita di Petrarca' } },
+      title: { main: { text: _t(this.pageConfig.title) } },
     });
   }
 
