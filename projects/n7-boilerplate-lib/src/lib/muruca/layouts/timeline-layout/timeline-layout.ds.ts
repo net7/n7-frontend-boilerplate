@@ -43,6 +43,8 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
 
   public hasMap = false;
 
+  public route;
+
   public mapHeader = _t('timeline#mapheader');
 
   public timelineListener$: Subject<Timeline> = new Subject()
