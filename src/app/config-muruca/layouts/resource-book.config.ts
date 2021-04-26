@@ -50,7 +50,7 @@ export default {
         options: {
           classes: 'mr-item-preview-bibliography',
           itemPreview: {
-            limit: 9999,
+            limit: false,
             striptags: false
           }
         }

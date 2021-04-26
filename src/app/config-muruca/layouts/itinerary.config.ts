@@ -10,7 +10,7 @@ export default {
       options: {
         classes: 'mr-item-preview-itinerary',
         itemPreview: {
-          limit: 9999,
+          limit: false,
           striptags: false
         }
       }
