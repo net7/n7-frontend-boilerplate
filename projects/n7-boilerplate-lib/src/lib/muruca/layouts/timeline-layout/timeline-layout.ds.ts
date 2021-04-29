@@ -110,7 +110,10 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
   }
 
   loadDefaults(navigate: boolean) {
-    (this.getWidgetDataSource('mr-timeline').timeline as Timeline).setSelection([]);
+    const timelineInstance = this.getWidgetDataSource('mr-timeline').timeline as Timeline;
+    if (timelineInstance) {
+      timelineInstance.setSelection([]);
+    }
     this.eventDescription = this.defaultDescription;
     this.eventHeader = '';
     this.hasMap = false;
