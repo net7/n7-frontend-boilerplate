@@ -38,11 +38,11 @@
                 
 
                 <!-- MAPPA -->
-                <div class="mr-map"
-                     *ngIf="lb.dataSource.hasMap">
-                    <h3 class="mr-content-block__title"
-                        *ngIf="lb.dataSource.mapHeader">{{ lb.dataSource.mapHeader }}</h3>
-                    <n7-map [data]="lb.widgets['mr-map'].ds.out$ | async"></n7-map>
+                <div class="mr-content-block mr-content-block-map" *ngIf="lb.dataSource.hasMap">
+                    <h3 class="mr-content-block__title" *ngIf="lb.dataSource.mapHeader">{{ lb.dataSource.mapHeader }}</h3>
+                    <div class="mr-content-block__content">
+                        <n7-map [data]="lb.widgets['mr-map'].ds.out$ | async"></n7-map>
+                    </div>
                 </div>
 
                 <!-- BIBLIOGRAFIA -->

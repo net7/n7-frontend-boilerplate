@@ -62,13 +62,27 @@
             font-size: $font-size-l-xl;
         }
     }
+}
 
-    .mr-map {
-        margin-bottom: $space*5;
+
+/* ------------------------------------ *\
+   #CONTENT-BLOCKS
+\* ------------------------------------ */
+.mr-timeline {
+    .mr-content-block {
+        margin-bottom: $space*4;
+        padding-bottom: $space*4;
+        border-bottom: 1px solid $color-border-normal;
+
+        &:last-child {
+            padding-bottom: 0;
+            border-bottom: 0;
+        }
     }
 
-    .mr-content-block {
-        margin-bottom: $space*5;
+    .mr-content-block-map {
+        padding-bottom: 0;
+        border-bottom: 0;
     }
 }
 

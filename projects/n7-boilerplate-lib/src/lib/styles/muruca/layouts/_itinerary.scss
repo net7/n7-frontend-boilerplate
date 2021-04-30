@@ -1,33 +1,5 @@
 /**
  * ITINERARY
  *
- * Specific style for itinerary pages.
- * Inner content HTML is produced by WP text editor (formerly Gutenberg).
+ * No specific style for itinerary pages: this layout are the same as the static page.
  */
-
-/* ------------------------------------ *\
-   #ITINERARY
-\* ------------------------------------ */
-.mr-itinerary {
-    // TODO
-}
-
-
-/* ------------------------------------ *\
-   #MEDIA-QUERIES
-\* ------------------------------------ */
-@media all and (max-width: 1120px) {
-}
-
-@media all and (max-width: $breakpoint-laptop) {
-}
-
-@media all and (max-width: $breakpoint-ipad-portrait) {
-}
-
-@media all and (max-width: $breakpoint-smartphone-landscape) {
-}
-
-/* Retina */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-}
