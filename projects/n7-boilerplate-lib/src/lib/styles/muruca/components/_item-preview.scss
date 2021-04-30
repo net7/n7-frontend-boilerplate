@@ -10,10 +10,17 @@
 /* Grid */
 .n7-item-preview {
     &__highlights {
-        em {
+        .mrc__text-emph {
             font-style: normal;
             background-color: $color-highlight;
         }
+    }
+
+    &__metadata-group-title {
+        font-family: $font-family-main;
+        font-weight: $font-weight-normal;
+        color: $color-text-light;
+        font-size: $font-size-m;
     }
 
     &__metadata-item {
