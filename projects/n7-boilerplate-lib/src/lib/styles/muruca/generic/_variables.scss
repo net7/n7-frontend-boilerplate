@@ -66,7 +66,7 @@ $font-family-main: 'Open Sans', sans-serif;
 $font-family-headings: 'Montserrat', sans-serif;
 $font-family-text: 'EB Garamond', serif;
 
-$font-size-xxxl: 44px;
+$font-size-xxxl: 38px;
 $font-size-xxl: 32px;
 $font-size-xl: 24px;
 $font-size-l-xl: 21px;
@@ -210,6 +210,14 @@ $header-transparent-logo-url: url("/assets/logo-petrarca-transparent.png");
 // $loader-thickness: 5px;
 $loader-color-front: $color-gray-03;
 $loader-color-back: $color-gray-02;
+
+
+// ------------------------------------ //
+// #CONTENT-BLOCK
+// ------------------------------------ //
+$content-block-title-width: 170px;
+$content-block-label-width: 170px;
+$content-block-label-second-level-width: 120px;
 
 
 // ------------------------------------ //
