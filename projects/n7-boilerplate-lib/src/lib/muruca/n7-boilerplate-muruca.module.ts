@@ -10,17 +10,18 @@ import { MrResourceModalService } from './services/resource-modal.service';
 // PIPES
 import { EscapeHtmlPipe } from './pipes/keep-html.pipe';
 // LAYOUTS
-import { MrAdvancedSearchLayoutComponent } from './layouts/advanced-search-layout/advanced-search-layout';
 import { MrAdvancedResultsLayoutComponent } from './layouts/advanced-results-layout/advanced-results-layout';
+import { MrAdvancedSearchLayoutComponent } from './layouts/advanced-search-layout/advanced-search-layout';
 import { MrGlossaryLayoutComponent } from './layouts/glossary-layout/glossary-layout';
 import { MrHomeLayoutComponent } from './layouts/home-layout/home-layout';
+import { MrItineraryLayoutComponent } from './layouts/itinerary-layout/itinerary-layout';
+import { MrMapLayoutComponent } from './layouts/map-layout/map-layout';
+import { MrPostsLayoutComponent } from './layouts/posts-layout/posts-layout';
 import { MrResourceLayoutComponent } from './layouts/resource-layout/resource-layout';
 import { MrSearchFacetsLayoutComponent } from './layouts/search-facets-layout/search-facets-layout';
 import { MrSearchLayoutComponent } from './layouts/search-layout/search-layout';
 import { MrStaticLayoutComponent } from './layouts/static-layout/static-layout';
 import { MrTimelineLayoutComponent } from './layouts/timeline-layout/timeline-layout';
-import { MrPostsLayoutComponent } from './layouts/posts-layout/posts-layout';
-import { MrItineraryLayoutComponent } from './layouts/itinerary-layout/itinerary-layout';
 // COMPONENTS
 import { ReadMoreComponent } from './components/read-more/read-more';
 import { MrAdvancedResultComponent } from './components/advanced-result/advanced-result';
@@ -32,17 +33,18 @@ import { MrGalleryComponent } from './components/gallery/gallery';
 
 const COMPONENTS = [
   // Layout components
+  MrAdvancedResultsLayoutComponent,
+  MrAdvancedSearchLayoutComponent,
   MrGlossaryLayoutComponent,
   MrHomeLayoutComponent,
+  MrItineraryLayoutComponent,
+  MrMapLayoutComponent,
+  MrPostsLayoutComponent,
   MrResourceLayoutComponent,
   MrSearchFacetsLayoutComponent,
   MrSearchLayoutComponent,
   MrStaticLayoutComponent,
-  MrAdvancedSearchLayoutComponent,
-  MrAdvancedResultsLayoutComponent,
   MrTimelineLayoutComponent,
-  MrPostsLayoutComponent,
-  MrItineraryLayoutComponent,
   // Custom components
   ReadMoreComponent,
   MrFormComponent,
