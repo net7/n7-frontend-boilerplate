@@ -13,7 +13,7 @@ export interface LinkedMetadataData extends MetadataData {
  * Data for Muruca's AdvancedResult component.
  */
 interface AdvancedResultsData extends ItemPreviewData {
-  metadata: LinkedMetadataData[];
+  highlights: LinkedMetadataData[];
 }
 
 @Component({
