@@ -10,5 +10,6 @@ export * from './search/search-tags.eh';
 export * from './search/search-results-title.eh';
 export * from './search/search-page-title.eh';
 export * from './search/search-page-description.eh';
+export * from './search/search-results.eh';
 // form wrapper
 export * from './form-wrapper-accordion.eh';

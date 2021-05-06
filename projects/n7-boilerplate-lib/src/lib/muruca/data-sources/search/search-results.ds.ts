@@ -20,12 +20,18 @@ type MrSearchResponse = {
 type HighlightItem = [string, [string]] | { link?: string; text?: string; label?: string }
 
 interface MrSearchResult extends ItemPreviewData {
-  /** relative path */
-  link: string;
-  /** items that matched the search input */
-  highlights?: HighlightItem[];
   /** unique id for the search result entry */
   id: number;
+  /** relative path */
+  link?: string;
+  /** items that matched the search input */
+  highlights?: HighlightItem[];
+  /** payload for item anchor */
+  payload?: {
+    action: string;
+    id: string | number;
+    type: string;
+  };
 }
 
 export class MrSearchResultsDS extends DataSource {
@@ -88,15 +94,27 @@ export class MrSearchResultsDS extends DataSource {
         metadata.push(highlightGroup);
       }
 
-      return {
-        ...item,
-        metadata,
-        classes: itemPreviewOptions.classes,
-        anchor: item.link ? {
+      let anchor = null;
+      if (item.link) {
+        anchor = {
           href: linksHelper.getRouterLink(item.link),
           queryParams: linksHelper.getQueryParams(item.link),
           target: '_blank'
-        } : undefined
+        };
+      }
+      if (item.payload) {
+        anchor = {
+          payload: {
+            ...item.payload
+          }
+        };
+      }
+
+      return {
+        ...item,
+        metadata,
+        anchor,
+        classes: itemPreviewOptions.classes,
       };
     });
   }

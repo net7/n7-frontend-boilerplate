@@ -8,6 +8,7 @@ import { ConfigurationService } from '../../../common/services/configuration.ser
 import { MainStateService } from '../../../common/services/main-state.service';
 import { MrSearchService } from '../../services/search.service';
 import { MrLayoutStateService } from '../../services/layout-state.service';
+import { MrResourceModalService } from '../../services/resource-modal.service';
 
 @Component({
   selector: 'mr-search-layout',
@@ -25,6 +26,7 @@ export class MrSearchLayoutComponent extends AbstractLayout implements OnInit, O
     private searchService: MrSearchService,
     public layoutState: MrLayoutStateService,
     private mainState: MainStateService,
+    public modalService: MrResourceModalService
 
   ) {
     super(layoutsConfiguration.get('MrSearchLayoutConfig') || config);
@@ -40,6 +42,7 @@ export class MrSearchLayoutComponent extends AbstractLayout implements OnInit, O
       communication: this.communication,
       searchService: this.searchService,
       layoutState: this.layoutState,
+      modalService: this.modalService,
       options: this.config.options || {},
     };
   }

@@ -12,6 +12,7 @@ import {
   SECTION_STATE_CONTEXT
 } from '../../services/search.service';
 import { MrLayoutStateService, LayoutState } from '../../services/layout-state.service';
+import { MrResourceModalService } from '../../services/resource-modal.service';
 
 export class MrSearchLayoutEH extends EventHandler {
   public dataSource: MrSearchLayoutDS;
@@ -21,6 +22,8 @@ export class MrSearchLayoutEH extends EventHandler {
   private searchService: MrSearchService;
 
   private layoutState: MrLayoutStateService;
+
+  private modalService: MrResourceModalService;
 
   private searchState: {
     [key: string]: any;
@@ -36,6 +39,7 @@ export class MrSearchLayoutEH extends EventHandler {
         case 'mr-search-layout.init':
           this.searchService = payload.searchService;
           this.layoutState = payload.layoutState;
+          this.modalService = payload.modalService;
           this.dataSource.onInit(payload);
           // listeners
           this.initStateListener();
@@ -86,6 +90,12 @@ export class MrSearchLayoutEH extends EventHandler {
             newValue = stateValue.filter((value) => value !== payload.value);
           }
           this.searchService.setState('input', payload.id, newValue);
+          break;
+        }
+
+        case 'mr-search-results.openresourcemodal': {
+          const { id, type: resourceType } = payload;
+          this.modalService.open(id, resourceType);
           break;
         }
 

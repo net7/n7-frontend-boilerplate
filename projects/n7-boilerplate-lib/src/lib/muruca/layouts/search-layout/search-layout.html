@@ -73,7 +73,7 @@
                         <ng-container *ngSwitchCase="'SUCCESS'">
                             <div class="n7-grid-{{ lb.dataSource.pageConfig.grid || 3 }}">
                                 <n7-item-preview *ngFor="let item of (lb.widgets['mr-search-results'].ds.out$ | async)"
-                                [data]="item">
+                                [data]="item" [emit]="lb.widgets['mr-search-results'].emit">
                                 </n7-item-preview>
                             </div>
                         </ng-container>
