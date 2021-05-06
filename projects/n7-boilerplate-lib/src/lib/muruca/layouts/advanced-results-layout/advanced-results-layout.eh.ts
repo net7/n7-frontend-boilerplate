@@ -6,6 +6,7 @@ import { isEmpty } from 'lodash';
 import helpers from '../../../common/helpers';
 import { MrAdvancedResultsLayoutDS } from './advanced-results-layout.ds';
 import { MrLayoutStateService, LayoutState } from '../../services/layout-state.service';
+import { MrResourceModalService } from '../../services/resource-modal.service';
 
 export class MrAdvancedResultsLayoutEH extends EventHandler {
   protected activatedRoute: ActivatedRoute;
@@ -13,6 +14,8 @@ export class MrAdvancedResultsLayoutEH extends EventHandler {
   protected router: Router;
 
   private layoutState: MrLayoutStateService;
+
+  private modalService: MrResourceModalService;
 
   protected destroy$: Subject<void> = new Subject();
 
@@ -27,6 +30,7 @@ export class MrAdvancedResultsLayoutEH extends EventHandler {
           this.activatedRoute = payload.activatedRoute;
           this.router = payload.router;
           this.layoutState = payload.layoutState;
+          this.modalService = payload.modalService;
           this.dataSource.onInit(payload);
 
           // listen route changes
@@ -58,6 +62,12 @@ export class MrAdvancedResultsLayoutEH extends EventHandler {
         case 'mr-search-results-title.change':
           this.updateRouter({ sort: payload.value, page: 1 });
           break;
+
+        case 'mr-search-results.openresourcemodal': {
+          const { id, type: resourceType } = payload;
+          this.modalService.open(id, resourceType);
+          break;
+        }
 
         default:
           console.warn('unhandled inner event of type', type);
