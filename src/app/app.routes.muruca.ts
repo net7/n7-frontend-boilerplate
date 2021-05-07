@@ -12,10 +12,10 @@ import {
   MrAdvancedResultsLayoutComponent,
   MrItineraryLayoutComponent,
   MrPostsLayoutComponent,
+  MrTimelineLayoutComponent,
+  MrMapLayoutComponent,
   // DynamicPathGuard,
-} from 'n7-boilerplate-lib';
-import { MrTimelineLayoutComponent } from 'n7-boilerplate-lib/lib/muruca/layouts/timeline-layout/timeline-layout';
-import { MrMapLayoutComponent } from 'n7-boilerplate-lib/lib/muruca/layouts/map-layout/map-layout';
+} from '@n7-frontend/boilerplate';
 
 const NOT_FOUND_PATH = 'page-404';
 

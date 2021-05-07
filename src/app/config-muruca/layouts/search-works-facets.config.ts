@@ -1,4 +1,4 @@
-import { MrSearchConfig } from 'n7-boilerplate-lib';
+import { MrSearchConfig } from '@n7-frontend/boilerplate';
 
 const facets = {
   sections: [{

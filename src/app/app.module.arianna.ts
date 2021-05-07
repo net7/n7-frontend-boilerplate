@@ -6,14 +6,13 @@ import {
   N7BoilerplateAriannaWebModule,
   JsonConfigService,
   LocalConfigService,
-} from 'n7-boilerplate-lib';
-import globalConfig from './config/global';
-import layoutsConfig from './config/layouts';
-import { APP_ROUTES } from './app.routes.arianna';
+} from '@n7-frontend/boilerplate';
+
+import { APP_ROUTES } from '@aw-routes';
+import configArianna from '@aw-config';
+import layoutsConfig from '@aw-config/layouts';
 
 import { AppComponent } from './app.component';
-
-import configArianna from './config-arianna';
 
 const JSON_PATH = './assets/app-config.local.json';
 
@@ -27,7 +26,6 @@ const JSON_PATH = './assets/app-config.local.json';
       APP_ROUTES
     ),
     N7BoilerplateCommonModule.forRoot({
-      global: globalConfig,
       layouts: layoutsConfig
     }),
     N7BoilerplateAriannaWebModule
