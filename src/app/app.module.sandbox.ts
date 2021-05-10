@@ -6,7 +6,7 @@ import {
   N7BoilerplateSandboxModule,
   LocalConfigService,
   JsonConfigService,
-} from 'n7-boilerplate-lib';
+} from '@n7-frontend/boilerplate';
 import globalConfig from './config/global';
 import layoutsConfig from './config/layouts';
 import { APP_ROUTES } from './app.routes.sandbox';

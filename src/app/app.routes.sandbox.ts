@@ -5,7 +5,7 @@ import {
   Page404LayoutComponent,
   // SB
   SbImageViewerLayoutComponent,
-} from 'n7-boilerplate-lib';
+} from '@n7-frontend/boilerplate';
 
 export const APP_ROUTES: Routes = [
   {

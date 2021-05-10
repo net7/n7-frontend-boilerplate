@@ -15,14 +15,14 @@ import {
   MrTranslationsLoaderService,
   ConfigurationService,
   JsonConfigService,
-} from 'n7-boilerplate-lib';
-import globalConfig from './config/global';
-import layoutsConfig from './config/layouts';
-import { APP_ROUTES } from './app.routes.muruca';
+} from '@n7-frontend/boilerplate';
+
+import { APP_ROUTES } from '@mr-routes';
+import configMuruca from '@mr-config';
+import layoutsConfig from '@mr-config/layouts';
+import i18n from '@mr-config/i18n';
 
 import { AppComponent } from './app.component';
-import configMuruca from './config-muruca';
-import i18n from './config-muruca/i18n';
 
 const LANG_CODE = 'it_IT';
 
@@ -44,7 +44,6 @@ translate.init({
       APP_ROUTES
     ),
     N7BoilerplateCommonModule.forRoot({
-      global: globalConfig,
       layouts: layoutsConfig
     }),
     N7BoilerplateMurucaModule
