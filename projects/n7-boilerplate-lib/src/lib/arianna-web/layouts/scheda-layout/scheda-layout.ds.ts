@@ -90,7 +90,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     this.titleService = titleService;
     this.communication = communication;
     this.options = options;
-    this.sidebarCollapsed = false;
+    this.sidebarCollapsed = this.configuration.get('scheda-layout').tree.collapsedByDefault ?? false;
     this.relatedEntitiesHeader = this.configuration.get('scheda-layout')['related-entities'].title;
     this.similarItemsSectionTitle = this.configuration.get('scheda-layout')['related-items'].title;
     this.externalUrlText = this.configuration.get('scheda-layout')['external-url-text'];
