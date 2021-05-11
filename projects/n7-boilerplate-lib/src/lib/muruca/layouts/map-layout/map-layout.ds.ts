@@ -1,19 +1,17 @@
 import { LayoutDataSource, _t } from '@n7-frontend/core';
-import { ItemPreviewData, TimelineData } from '@n7-frontend/components';
+import { ItemPreviewData } from '@n7-frontend/components';
 import { Location } from '@angular/common';
-import { Timeline } from 'vis-timeline';
-import { Subject } from 'rxjs';
+import { Map } from 'leaflet';
 import { first } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 import { ConfigurationService } from '../../../common/services/configuration.service';
 import { CommunicationService } from '../../../common/services/communication.service';
 import { MainStateService } from '../../../common/services/main-state.service';
 import { MrLayoutStateService } from '../../services/layout-state.service';
 import 'leaflet.markercluster';
-import { CollectionItem, GetResourceResponse } from './timeline-layout.types';
+import { CollectionItem, GetResourceResponse } from './map-layout.types';
 
-// demo page: http://localhost:4200/timeline/2992/missione-venezia
-
-export class MrTimelineLayoutDS extends LayoutDataSource {
+export class MrMapLayoutDS extends LayoutDataSource {
   private configuration: ConfigurationService;
 
   private communication: CommunicationService;
@@ -39,15 +37,9 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
 
   public eventDescription = ''
 
-  public timelineData: TimelineData;
-
-  public hasMap = false;
-
   public route;
 
-  public mapHeader = _t('timeline#mapheader');
-
-  public timelineListener$: Subject<Timeline> = new Subject()
+  public mapListener$: Subject<Map> = new Subject();
 
   public bibliographyData: {
     header: { title: string };
@@ -84,44 +76,28 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
     this.configId = payload.configId;
     this.pageConfig = this.configuration.get(this.configId) || {};
 
-    // update the timeline
-    this.communication.request$('timeline', {
+    // update the map
+    this.communication.request$('map', {
       method: 'GET',
       onError: (e) => console.error(e)
-    }).subscribe((d) => {
-      this.timelineData = d;
-      this.loading.timeline = false;
-      this.one('mr-timeline').update(d);
+    }).subscribe(({ dataSet }) => {
+      if (dataSet) { this.one('mr-map').update(dataSet); }
     });
-    this.getWidgetDataSource('mr-timeline').timelineLoaded$
+    this.getWidgetDataSource('mr-map').mapLoaded$
       .pipe(first())
-      .subscribe((timeline: Timeline) => {
-        this.timelineListener$.next(timeline);
+      .subscribe(({ map, markers }) => {
+        this.mapListener$.next({ map, markers });
       });
-
-    // update the description
-    this.communication.request$('timelineDescription', {
-      method: 'GET',
-      onError: (e) => console.error(e),
-    }).subscribe((d) => {
-      this.defaultDescription = d.text;
-      this.loadDefaults(false);
-    });
   }
 
   loadDefaults(navigate: boolean) {
-    const timelineInstance = this.getWidgetDataSource('mr-timeline').timeline as Timeline;
-    if (timelineInstance) {
-      timelineInstance.setSelection([]);
-    }
     this.eventDescription = this.defaultDescription;
     this.eventHeader = '';
-    this.hasMap = false;
     this.bibliographyData = undefined;
     this.collectionWitnessData = undefined;
     this.collectionWorksData = undefined;
     this.collectionGalleryData = undefined;
-    if (navigate) this.location.go('/timeline/');
+    if (navigate) this.location.go('/map/');
     this.one('mr-year-header').update({
       title: { main: { text: _t(this.pageConfig.title) } },
     });
@@ -132,7 +108,7 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
       onError: (e) => console.error(e),
       method: 'POST',
       params: {
-        id, type: 'views/time-events'
+        id, type: 'views/places'
       }
     }).subscribe((res: GetResourceResponse) => {
       if (!res || res == null) return;
@@ -147,10 +123,10 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
         /* eslint-enable */
       } = res.sections;
       if (placesData) {
-        this.hasMap = true;
+        // this.hasMap = true;
         this.one('mr-map').update(placesData);
       } else {
-        this.hasMap = false;
+        // this.hasMap = false;
       }
       if (bibData) {
         this.bibliographyData = bibData;

@@ -11,7 +11,8 @@
     /* Paragraph */
     p {
         max-width: $page-readable-width;
-        margin: $space * 3 auto $space * 6;
+        // margin: $space * 3 auto $space * 6;
+        margin: 0 auto $space * 3;
         font-family: $font-family-text;
         font-size: $font-size-l-xl;
     }
@@ -98,11 +99,13 @@
     /* Images */
     .wp-block-image {
         max-width: $page-max-width;
-        margin: $space * 3 auto $space * 6;
+        // margin: $space * 3 auto $space * 6;
+        margin: 0 auto $space * 3;
 
         img {
             border-radius: $border-radius;
             box-shadow: 0 1px 1px rgba(0, 0, 0, 0.095), 0 5px 25px rgba(0, 0, 0, 0.095);
+            max-height: 500px;
         }
 
         /* Center alignment, 700px max width */
@@ -305,8 +308,9 @@
     figcaption {
         margin-top: $space;
         color: $color-text-light;
-        font-size: $font-size-m;
+        font-size: $font-size-s;
         font-family: $font-family-main;
+        text-align: center;
     }
 }
 

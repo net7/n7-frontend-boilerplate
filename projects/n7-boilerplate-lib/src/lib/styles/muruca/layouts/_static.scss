@@ -51,6 +51,25 @@
 
 
 /* ------------------------------------ *\
+   #RELATED RESOURCES (SECTIONS)
+\* ------------------------------------ */
+/* Stuff like: Risorse collegate... */
+.mr-static {
+    &__related-resources {
+        // border-top: 1px solid $color-border-normal;
+        margin: $space*8 auto $space*4;
+        max-width: $page-max-width;
+
+        .mr-resource__section {
+            margin-bottom: $space*4;
+            padding-top: $space*8;
+            border-top: 1px solid $color-border-normal;
+        }
+    }
+}
+
+
+/* ------------------------------------ *\
    #MEDIA-QUERIES
 \* ------------------------------------ */
 @media all and (max-width: 1120px) {

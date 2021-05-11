@@ -1,4 +1,4 @@
-<div class="mr-itinerary mr-layout" 
+<div class="mr-static mr-layout" 
      *ngIf="lb.dataSource && lb.dataSource.pageConfig"
      [ngClass]="{
         'is-loading': ( layoutState.get$('content') | async ) == 'LOADING',
@@ -32,12 +32,14 @@
                 </div>
             </div>
 
-            <div class="mr-resource__content mr-side-margin">
+            <div class="mr-static__content mr-side-margin">
                 <!-- Page content html -->
                 <div class="mr-wp-content" [innerHTML]="lb.dataSource.content | keepHtml"></div>
     
                 <!-- Pass the list of blocks to render to the block template -->
-                <ng-container *ngTemplateOutlet="blocks; context: { $implicit: lb.dataSource.pageConfig.sections }"></ng-container>
+                <div class="mr-static__related-resources">
+                    <ng-container *ngTemplateOutlet="blocks; context: { $implicit: lb.dataSource.pageConfig.sections }"></ng-container>
+                </div>
             </div>
         </ng-container>
 

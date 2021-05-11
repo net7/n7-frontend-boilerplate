@@ -1,25 +1,26 @@
 <div class="mr-timeline mr-layout"
      *ngIf="lb.dataSource">
-    <div class="mr-timeline__timeline">
-        <div class="mr-timeline__timeline-loading"
+    <div class="mr-map__timeline">
+        <div class="mr-map__timeline-loading"
              *ngIf="lb.dataSource.loading.timeline">
         </div>
-        <n7-timeline [data]="lb.widgets['mr-timeline'].ds.out$ | async"
+        <n7-map [data]="lb.widgets['mr-map'].ds.out$ | async"></n7-map>
+        <!-- <n7-timeline [data]="lb.widgets['mr-timeline'].ds.out$ | async"
                      *ngIf="!lb.dataSource.loading.timeline">
-        </n7-timeline>
+        </n7-timeline> -->
     </div>
 
-    <div class="mr-timeline__page mr-side-margin">
-        <div class="mr-timeline__date">
+    <div class="mr-map__page mr-side-margin">
+        <div class="mr-map__date">
             <n7-inner-title [data]="lb.widgets['mr-year-header'].ds.out$ | async"
                             [emit]="lb.widgets['mr-year-header'].emit">
             </n7-inner-title>
         </div>
-        <h1 class="mr-timeline__title"
+        <h1 class="mr-map__title"
             *ngIf="!lb.dataSource.loading.resourceDetails">
             {{lb.dataSource.eventHeader}}
         </h1>
-        <div class="mr-timeline__content">
+        <div class="mr-map__content">
             <!-- DESCRIZIONE -->
             <div class="mr-content-block mr-content-block-description">
                 <p [innerHTML]="lb.dataSource.eventDescription">
@@ -35,15 +36,6 @@
                         </a>
                     </ng-container>
                 </div>
-                
-
-                <!-- MAPPA -->
-                <div class="mr-content-block mr-content-block-map" *ngIf="lb.dataSource.hasMap">
-                    <h3 class="mr-content-block__title" *ngIf="lb.dataSource.mapHeader">{{ lb.dataSource.mapHeader }}</h3>
-                    <div class="mr-content-block__content">
-                        <n7-map [data]="lb.widgets['mr-map'].ds.out$ | async"></n7-map>
-                    </div>
-                </div>
 
                 <!-- BIBLIOGRAFIA -->
                 <ng-container *ngIf="lb.dataSource.bibliographyData as biblio">
@@ -52,7 +44,7 @@
                             <h3 class="mr-content-block__title">{{ biblio.header.title }}</h3>
                             <div class="mr-content-block__content n7-grid-1">
                                 <ng-container *ngFor="let item of biblio.items">
-                                    <div class="mr-timeline__collection-content">
+                                    <div class="mr-map__collection-content">
                                         <n7-item-preview [data]="item"></n7-item-preview>
                                     </div>
                                 </ng-container>

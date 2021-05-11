@@ -5,10 +5,6 @@
  * Mostly used in the resource page, but can be used also in other pages.
  */
 
-$content-block-title-width: 170px;
-$content-block-label-width: 170px;
-$content-block-label-second-level-width: 120px;
-
 /* ------------------------------------ *\
     CONTENT-BLOCK
 \* ------------------------------------ */
@@ -148,9 +144,42 @@ $content-block-label-second-level-width: 120px;
             }
         }
     }
-
 }
 
+
+/* ------------------------------------ *\
+    CONTENT-BLOCK-MAP
+\* ------------------------------------ */
+.mr-content-block-map {
+    display: block;
+    
+    .mr-content-block__title {
+        width: auto;
+        margin-bottom: $space*1.5;
+    }
+
+    .mr-content-block__content {
+    }
+}
+
+
+/* ------------------------------------ *\
+    WP-INSIDE-CONTENT-BLOCK-METADATA
+\* ------------------------------------ */
+.mr-content-block {
+    .n7-metadata-viewer {
+        img[class^="wp-image"] {
+            margin-top: $space*2;
+            margin-bottom: $space*2;
+
+            &.aligncenter {
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+    }
+}
 
 
 /* ------------------------------------ *\

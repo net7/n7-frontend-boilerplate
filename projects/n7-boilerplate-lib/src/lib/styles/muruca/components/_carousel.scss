@@ -8,9 +8,50 @@
    #CAROUSEL
 \* ------------------------------------ */
 .n7-carousel {
+    &__slide-title {
+        font-size: $font-size-xxxl;
+        font-weight: $font-weight-bold;
+        color: $color-text-inverse;
+    }
+
     &__slide-text {
-        h1, h2, h3, h4, h5, h6, p {
+        font-size: $font-size-xl;
+        font-weight: $font-weight-normal;
+        color: $color-text-inverse;
+        line-height: 1.3;
+
+        h1, h2, h3, h4, h5, h6, p, strong {
+            font-weight: $font-weight-normal;
             color: $color-text-inverse;
+            line-height: 1.3;
+        }
+
+        h1 {
+            font-size: $font-size-m + 10;
+        }
+
+        h2 {
+            font-size: $font-size-m + 8;
+        }
+
+        h3 {
+            font-size: $font-size-m + 7;
+        }
+
+        h4 {
+            font-size: $font-size-m + 6;
+        }
+        
+        h5 {
+            font-size: $font-size-m + 4;
+        }
+
+        h6 {
+            font-size: $font-size-m + 2;
+        }
+
+        p {
+            font-size: $font-size-m;
         }
     }
 }

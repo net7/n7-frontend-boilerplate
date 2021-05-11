@@ -25,7 +25,7 @@
                 <div class="n7-item-preview__metadata-group {{ meta.classes || '' }}"
                      *ngFor="let meta of data.metadata">
                     <h3 class="n7-item-preview__metadata-group-title"
-                        *ngIf="meta.title"
+                        *ngIf="meta.title && meta.items.length"
                         [innerHTML]="meta.title"></h3>
                     <div class="n7-item-preview__metadata-item {{ item.classes || '' }}"
                          *ngFor="let item of meta.items">

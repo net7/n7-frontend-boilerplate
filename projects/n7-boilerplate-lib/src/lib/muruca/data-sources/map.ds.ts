@@ -1,6 +1,8 @@
 import { MapData, MarkerData } from '@n7-frontend/components';
 import { DataSource } from '@n7-frontend/core';
 import 'leaflet.markercluster';
+import { Subject } from 'rxjs';
+import { Map } from 'leaflet';
 // leaflet is already present in the window,
 // a double import results in errors with tooltips.
 declare const L;
@@ -13,12 +15,18 @@ interface Marker extends Coords {
 }
 
 type TimelineResponse = {
+  id?: number;
   title: string;
   slug: string;
   zoom: number;
   map_center: Coords;
   markers: Marker[];
 }[]
+
+interface MarkerWithID extends MarkerData {
+  id?: number;
+  slug: string;
+}
 
 const MARKER_ICON = L.icon({
   iconUrl: '/assets/pin.png',
@@ -43,9 +51,11 @@ export class MrMapDS extends DataSource {
   /** Instance of the marker layerGroup */
   markerLayer;
 
+  mapLoaded$: Subject<Map> = new Subject()
+
   // eslint-disable-next-line consistent-return
   protected transform(data: TimelineResponse): MapData {
-    let markers: MarkerData[];
+    let markers: MarkerWithID[];
 
     if (data.find((d) => d.markers)) {
       markers = data
@@ -55,6 +65,8 @@ export class MrMapDS extends DataSource {
             coords: [+m.lat, +m.lng] as [number, number],
             template: m.default_label ?? m.label,
             title: m.label ?? m.default_label,
+            id: area.id,
+            slug: area.slug,
           }))))
         // flatten the list of markers
         .reduce((acc, val) => acc.concat(val), []);
@@ -81,6 +93,7 @@ export class MrMapDS extends DataSource {
         this.fitMapToBounds(markers.map((m) => m.coords));
         // load custom markers
         this.buildMarkers(markers);
+        this.mapLoaded$.next({ map: instance, markers: this.markerLayer });
       },
       containerId: 'map-canvas',
       libOptions: {
@@ -109,7 +122,7 @@ export class MrMapDS extends DataSource {
    * Builds markers with a custom icon and adds them to the map.
    * @param markers an array of markers
    */
-  private buildMarkers(markers: MarkerData[]) {
+  private buildMarkers(markers: MarkerWithID[]) {
     if (!markers) return;
     // remove all existing markers
     if (this.markerLayer) {
@@ -117,9 +130,16 @@ export class MrMapDS extends DataSource {
       this.mapInstance.removeLayer(this.markerLayer);
     }
     const markerGroup = L.markerClusterGroup();
-    markers.forEach(({ coords, template }) => {
+    markers.forEach(({
+      coords, template, id, slug
+    }) => {
       // create custom icon marker
-      const newMarker = L.marker(coords, { icon: MARKER_ICON })
+      const newMarker = L.marker(coords, { icon: MARKER_ICON });
+      if (id && slug) {
+        newMarker.id = id;
+        newMarker.slug = slug;
+      }
+      newMarker
         // add the marker to the group
         .addTo(markerGroup)
         // add the on-click tooltip
