@@ -1,6 +1,6 @@
 {
   "name": "@n7-frontend/boilerplate",
-  "version": "2.25.0",
+  "version": "2.29.2",
   "peerDependencies": {
     "@angular/common": "^9.1.10",
     "@angular/core": "^9.1.10"
