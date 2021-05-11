@@ -14,6 +14,7 @@ export default {
   },
   tree: {
     lite: true,
+    collapsedByDefault: true,
     'icon-expand': 'n7-icon-angle-right',
     'icon-collapse': 'n7-icon-angle-down',
     'icon-image': 'n7-icon-image',
