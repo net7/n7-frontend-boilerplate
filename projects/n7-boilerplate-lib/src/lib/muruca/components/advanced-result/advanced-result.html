@@ -1,36 +1,36 @@
 <div *ngIf="data"
-     class="mr-result">
+     class="mr-advanced-result">
     <n7-item-preview [data]="data"></n7-item-preview>
-    <div class="mr-result-highlight__metadata"
+    <div class="mr-advanced-result__content"
          *ngFor="let highlightGroup of data.highlights">
-        <div class="mr-result-highlight__metadata-group">
+        <div class="mr-advanced-result__content-group">
             <!-- METADATA GROUP TITLE -->
-            <h3 class="mr-result-highlight__metadata-group-title"
+            <h3 class="mr-advanced-result__title"
                 *ngIf="highlightGroup.title"
                 [innerHTML]="highlightGroup.title">
             </h3>
             <!-- METADATA ITEM -->
-            <div class="mr-result-highlight__metadata-item {{ item.classes || '' }}"
+            <div class="mr-advanced-result__item {{ item.classes || '' }}"
                  *ngFor="let item of highlightGroup.items">
                 <!-- ICON -->
-                <span class="mr-result-highlight__metadata-item-icon {{item.icon}}"
+                <span class="mr-advanced-result__icon {{item.icon}}"
                       *ngIf="item.icon">
                 </span>
                 <!-- LABEL -->
-                <span class="mr-result-highlight__metadata-item-label"
+                <span class="mr-advanced-result__label"
                       *ngIf="item.label"
                       [innerHTML]="item.label">
                 </span>
                 <!-- VALUE W/ HREF -->
                 <a *ngIf="item.href"
                    [href]="item.href">
-                    <span class="mr-result-highlight__metadata-item-value"
+                    <span class="mr-advanced-result__value"
                           *ngIf="item.value"
                           [innerHTML]="item.value">
                     </span>
                 </a>
                 <!-- VALUE W/OUT HREF -->
-                <span class="mr-result-highlight__metadata-item-value"
+                <span class="mr-advanced-result__value"
                       *ngIf="item.value && !item.href"
                       [innerHTML]="item.value">
                 </span>
