@@ -1,0 +1,79 @@
+/**
+ * ADVANCED RESULT
+ *
+ * Style for the advanced results that are displayed below the item previews, 
+ in the advanced search.
+ */
+ 
+/* ------------------------------------ *\
+    ADVANCED-RESULT
+\* ------------------------------------ */
+.mr-advanced-result {
+    &__content {
+
+    }
+
+    &__content-group {
+
+    }
+
+    &__title {
+        margin-bottom: $space*1.5;
+        color: $color-text-light;
+        font-weight: $font-weight-normal;
+        font-size: $font-size-s;
+    }
+
+    &__item {
+        margin-bottom: $space;
+        
+        &:hover {
+            .mr-advanced-result__label {
+                color: $color-text-link;
+            }
+        
+            .mr-advanced-result__value {
+                color: $color-text-link;
+            } 
+        }
+
+        &:not(:last-child) {
+            margin-bottom: $space;
+            padding-bottom: $space;
+            border-bottom: 1px solid $color-border-light;
+        }
+    }
+
+    &__label {
+        color: $color-text;
+        font-weight: $font-weight-bold;
+        font-family: $font-family-text;
+        font-size: $font-size-l;
+        transition: color $transition-durations;
+    }
+
+    &__value {
+        color: $color-text;
+        font-weight: $font-weight-normal;
+        font-family: $font-family-text;
+        font-size: $font-size-l;
+        transition: color $transition-durations;
+    }
+}
+
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: $breakpoint-laptop) {
+}
+
+@media all and (max-width: $breakpoint-ipad-portrait) {
+}
+
+@media all and (max-width: $breakpoint-smartphone-landscape) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}
