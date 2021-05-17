@@ -5,6 +5,7 @@ import { LayoutsConfigurationService } from '../../../common/services/layouts-co
 import { MainStateService } from '../../../common/services/main-state.service';
 import { ConfigurationService } from '../../../common/services/configuration.service';
 import { CommunicationService } from '../../../common/services/communication.service';
+import { MrResourceModalService } from '../../services/resource-modal.service';
 import { MrAdvancedResultsLayoutConfig as config } from './advanced-results-layout.config';
 import { MrLayoutStateService } from '../../services/layout-state.service';
 
@@ -22,6 +23,7 @@ export class MrAdvancedResultsLayoutComponent extends AbstractLayout implements 
     private configuration: ConfigurationService,
     private communication: CommunicationService,
     public layoutState: MrLayoutStateService,
+    public modalService: MrResourceModalService,
     layoutsConfiguration: LayoutsConfigurationService,
     ) {
       super(layoutsConfiguration.get('MrAdvancedResultsLayoutConfig') || config);
@@ -36,6 +38,7 @@ export class MrAdvancedResultsLayoutComponent extends AbstractLayout implements 
         router: this.router,
         activatedRoute: this.activatedRoute,
         layoutState: this.layoutState,
+        modalService: this.modalService,
         options: this.config.options || {},
       };
     }
