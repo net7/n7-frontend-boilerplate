@@ -69,6 +69,7 @@ export class MrSearchResultsDS extends DataSource {
       /*
         Add the highlights to the item's metadata with a custom group
       */
+      const highlights = [];
       if (item.highlights) {
         const highlightGroup = {
           title: _t('advancedsearch#highlights_title'),
@@ -91,7 +92,7 @@ export class MrSearchResultsDS extends DataSource {
             });
           }
         });
-        metadata.push(highlightGroup);
+        highlights.push(highlightGroup);
       }
 
       let anchor = null;
@@ -114,6 +115,7 @@ export class MrSearchResultsDS extends DataSource {
         ...item,
         metadata,
         anchor,
+        highlights,
         classes: itemPreviewOptions.classes,
       };
     });

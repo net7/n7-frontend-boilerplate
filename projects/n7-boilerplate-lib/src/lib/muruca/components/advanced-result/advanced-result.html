@@ -1,55 +1,42 @@
 <div *ngIf="data"
-     class="n7-item-preview {{data.classes || ''}}"
-     [ngClass]="{ 'has-image' : !!data.image, 'has-color' : !!data.color }">
-    <n7-anchor-wrapper [data]="data.anchor"
-                       (clicked)="onClick($event)"
-                       [classes]="'n7-item-preview__inner'">
-        <!-- Image, color -->
-        <div class="n7-item-preview__image n7-item-preview__color"
-             *ngIf="data.image || data.color"
-             [style.background-image]="data.image ? 'url(' + data.image + ')' : undefined"
-             [style.background-color]="data.color">
-        </div>
-        <div class="n7-item-preview__content">
-            <!-- Title and text -->
-            <div class="n7-item-preview__title-text">
-                <h1 class="n7-item-preview__title"
-                    [innerHTML]="data.title"></h1>
-                <p class="n7-item-preview__text"
-                   *ngIf="data.text"
-                   [innerHTML]="data.text"></p>
-            </div>
-            <!-- Metadata -->
-            <div class="n7-item-preview__metadata"
-                 *ngIf="data.metadata">
-                <div class="n7-item-preview__metadata-group {{ meta.classes || '' }}"
-                     *ngFor="let meta of data.metadata">
-                    <h3 class="n7-item-preview__metadata-group-title"
-                        *ngIf="meta.title && meta.items.length"
-                        [innerHTML]="meta.title"></h3>
-                    <div class="n7-item-preview__metadata-item {{ item.classes || '' }}"
-                         *ngFor="let item of meta.items">
-                        <span class="n7-item-preview__metadata-item-icon {{item.icon}}"
-                              *ngIf="item.icon">
-                        </span>
-                        <span class="n7-item-preview__metadata-item-label"
-                              *ngIf="item.label"
-                              [innerHTML]="item.label">
-                        </span>
-                        <a *ngIf="item.href"
-                           [href]="item.href">
-                            <span class="n7-item-preview__metadata-item-value"
-                                  *ngIf="item.value"
-                                  [innerHTML]="item.value">
-                            </span>
-                        </a>
-                        <span class="n7-item-preview__metadata-item-value"
-                              *ngIf="item.value && !item.href"
-                              [innerHTML]="item.value">
-                        </span>
-                    </div>
-                </div>
+     class="mr-advanced-result">
+    <n7-item-preview [data]="data"></n7-item-preview>
+    <div class="mr-advanced-result__content"
+         *ngFor="let highlightGroup of data.highlights">
+        <div class="mr-advanced-result__content-group">
+            <!-- METADATA GROUP TITLE -->
+            <!--
+            <h3 class="mr-advanced-result__title"
+                *ngIf="highlightGroup.title"
+                [innerHTML]="highlightGroup.title">
+            </h3>
+            -->
+            <!-- METADATA ITEM -->
+            <div class="mr-advanced-result__item {{ item.classes || '' }}"
+                 *ngFor="let item of highlightGroup.items">
+                <!-- ICON -->
+                <span class="mr-advanced-result__icon {{item.icon}}"
+                      *ngIf="item.icon">
+                </span>
+                <!-- LABEL -->
+                <span class="mr-advanced-result__label"
+                      *ngIf="item.label"
+                      [innerHTML]="item.label">
+                </span>
+                <!-- VALUE W/ HREF -->
+                <a *ngIf="item.href"
+                   [href]="item.href">
+                    <span class="mr-advanced-result__value"
+                          *ngIf="item.value"
+                          [innerHTML]="item.value">
+                    </span>
+                </a>
+                <!-- VALUE W/OUT HREF -->
+                <span class="mr-advanced-result__value"
+                      *ngIf="item.value && !item.href"
+                      [innerHTML]="item.value">
+                </span>
             </div>
         </div>
-    </n7-anchor-wrapper>
+    </div>
 </div>

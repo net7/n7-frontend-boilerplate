@@ -25,12 +25,26 @@
       "dom"
     ],
     "paths": {
-      "n7-boilerplate-lib": [
+      "@n7-frontend/boilerplate": [
         "projects/n7-boilerplate-lib/src/public-api"
       ],
-      "n7-boilerplate-lib/*": [
+      "@n7-frontend/boilerplate/*": [
         "projects/n7-boilerplate-lib/src/*"
-      ]
+      ],
+      // MURUCA PROJECT PATHS
+      "@mr-routes": ["src/app/app.routes.muruca.ts"],
+      "@mr-config": ["src/app/config-muruca/"],
+      "@mr-config/*": ["src/app/config-muruca/*"],
+      // "@mr-routes": ["<PROJECT-LOCAL-PATH>/src/app/app.routes.ts"],
+      // "@mr-config": ["<PROJECT-LOCAL-PATH>/src/app/config"],
+      // "@mr-config/*": ["<PROJECT-LOCAL-PATH>/src/app/config/*"],
+      // ARIANNA PROJECT PATHS
+      "@aw-routes": ["src/app/app.routes.arianna.ts"],
+      "@aw-config": ["src/app/config-arianna/"],
+      "@aw-config/*": ["src/app/config-arianna/*"],
+      // "@aw-routes": ["<PROJECT-LOCAL-PATH>/src/app/app.routes.ts"],
+      // "@aw-config": ["<PROJECT-LOCAL-PATH>/src/app/config-arianna/"],
+      // "@aw-config/*": ["<PROJECT-LOCAL-PATH>/src/app/config-arianna/*"],
     }
   }
 }
