@@ -36,7 +36,10 @@ export class AwMapDS extends DataSource {
     },
     _setInstance: (map) => {
       this.map = map;
-      const bounds = new Leaflet.LatLngBounds(data.map(({ lat, lon }) => [lat, lon]));
+      const bounds = new Leaflet
+        .LatLngBounds(data
+          .filter((d) => this.isValidMarker(d))
+          .map(({ lat, lon }) => [lat, lon]));
       this.map.fitBounds(bounds);
 
       // adding markers
@@ -45,7 +48,7 @@ export class AwMapDS extends DataSource {
       });
       data
         // skip broken markers
-        .filter((d) => (d.lat && d.lon))
+        .filter((d) => (this.isValidMarker(d)))
         // draw markers on the map
         .forEach(({ lat, lon, item }) => {
           const { label } = item;
@@ -72,4 +75,23 @@ export class AwMapDS extends DataSource {
       this.map.addLayer(markers);
     }
   });
+
+  /**
+   * Performs validation for a leaflet marker data.
+   * If the data is invalid displays an error.
+   *
+   * @param marker data for a leaflet marker
+   * @returns true if the marker data is valid
+   */
+  private isValidMarker({ lat, lon }): boolean {
+    const test = (
+      lat
+      && lon
+      && /^-?\d+\.\d*$/.test(lat)
+      && /^-?\d+\.\d*$/.test(lon)
+    );
+    if (test) return true;
+    console.error(`${lat}, ${lon} is not a valid marker!`);
+    return false;
+  }
 }
