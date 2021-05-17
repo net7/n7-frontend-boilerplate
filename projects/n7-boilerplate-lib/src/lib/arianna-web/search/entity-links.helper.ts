@@ -9,7 +9,7 @@ const ENTITY_LINKS_PARENT_SELECTOR = '.n7-facets-wrapper__group:last-child .n7-f
 
 const loaderItem = {
   counter: null,
-  label: 'Loading...',
+  label: 'Caricamento in corso...',
   searchData: [],
   value: '__loading__',
 };
