@@ -5,10 +5,12 @@
          *ngFor="let highlightGroup of data.highlights">
         <div class="mr-advanced-result__content-group">
             <!-- METADATA GROUP TITLE -->
+            <!--
             <h3 class="mr-advanced-result__title"
                 *ngIf="highlightGroup.title"
                 [innerHTML]="highlightGroup.title">
             </h3>
+            -->
             <!-- METADATA ITEM -->
             <div class="mr-advanced-result__item {{ item.classes || '' }}"
                  *ngFor="let item of highlightGroup.items">
