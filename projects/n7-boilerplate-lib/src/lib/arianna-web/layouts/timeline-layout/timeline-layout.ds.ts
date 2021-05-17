@@ -1,6 +1,8 @@
+import { InnerTitleData } from '@n7-frontend/components';
 import { LayoutDataSource } from '@n7-frontend/core';
 import { isNull } from 'lodash';
 import { BehaviorSubject } from 'rxjs';
+import helpers from '../../../common/helpers';
 
 type LayoutState = 'LOADING' | 'EMPTY' | 'SUCCESS';
 
@@ -74,14 +76,23 @@ export class AwTimelineLayoutDS extends LayoutDataSource {
           text = `<strong>${this.total}</strong> Risultato collegato a<br><span class="aw-multimedia__results-title-big">${label}</span>`;
         }
 
-        this.one('aw-scheda-inner-title').update({
+        const titleData: InnerTitleData = {
           title: {
             main: { text },
             secondary: dateText ? {
               text: dateText
             } : null
+          },
+          actions: {
+            buttons: [{
+              anchor: {
+                href: `${this.configuration.get('paths').entitaBasePath}/${id}/${helpers.slugify(label)}`,
+              },
+              text: 'Vedi Entità'
+            }]
           }
-        });
+        };
+        this.one('aw-scheda-inner-title').update(titleData);
 
         // update items
         this.updateItems();
