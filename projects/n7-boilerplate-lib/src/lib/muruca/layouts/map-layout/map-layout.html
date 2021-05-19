@@ -10,7 +10,7 @@
         </n7-timeline> -->
     </div>
 
-    <div class="mr-map__page mr-side-margin">
+    <div class="mr-timeline__page mr-side-margin">
         <div class="mr-map__date">
             <n7-inner-title [data]="lb.widgets['mr-year-header'].ds.out$ | async"
                             [emit]="lb.widgets['mr-year-header'].emit">
@@ -22,7 +22,7 @@
         </h1>
         <div class="mr-map__content">
             <!-- DESCRIZIONE -->
-            <div class="mr-content-block mr-content-block-description">
+            <div class="mr-content-block mr-content-block-description" *ngIf="lb.dataSource.eventDescription">
                 <p [innerHTML]="lb.dataSource.eventDescription">
                 <p>
             </div>
