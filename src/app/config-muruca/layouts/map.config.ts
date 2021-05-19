@@ -1,4 +1,4 @@
 export default {
-  title: 'timeline#title',
-
+  title: 'map#title',
+  defaultText: 'map#defaultText',
 };

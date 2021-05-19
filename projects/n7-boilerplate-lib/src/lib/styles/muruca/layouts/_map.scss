@@ -11,8 +11,11 @@
     padding-bottom: $space*8;
 
     &__map {
-        min-height: 500px;
         width: 100%;
+
+        .n7-map__container {
+            height: calc( 80vh - #{$header-height});
+        }
     }
 
     // &__map-loading {
