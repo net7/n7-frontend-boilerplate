@@ -15,12 +15,14 @@ import searchWitnessesConfig from './search-witnesses.config';
 import searchWorksConfig from './search-works.config';
 import itineraryConfig from './itinerary.config';
 import timelineConfig from './timeline.config';
+import mapConfig from './map.config';
 
 export default {
   home: homeConfig,
   posts: postsConfig,
   itinerary: itineraryConfig,
   timeline: timelineConfig,
+  map: mapConfig,
   'advanced-results': advancedResultsConfig,
   'advanced-search-full': advancedSearchFullConfig,
   'advanced-search': advancedSearchConfig,
