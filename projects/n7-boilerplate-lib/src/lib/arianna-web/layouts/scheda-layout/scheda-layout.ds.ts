@@ -150,7 +150,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   getTree = () => AwSchedaLayoutDS.tree;
 
   updateNavigation(text) {
-    this.one('aw-sidebar-header').update({ text });
+    this.one('aw-sidebar-header').update({ text, isExpanded: !this.sidebarCollapsed });
   }
 
   loadItem(id) {
@@ -161,6 +161,10 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     });
   }
 
+  /**
+   * Loads the content of the selected tree item in the right portion of the view.
+   * @param response http response for the tree item
+   */
   loadContent(response) {
     if (response) {
       // reset
@@ -268,6 +272,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
   collapseSidebar() {
     this.sidebarCollapsed = !this.sidebarCollapsed;
+    this.getWidgetDataSource('aw-sidebar-header').toggleSidebar();
   }
 
   private _sidebarStickyControl() {

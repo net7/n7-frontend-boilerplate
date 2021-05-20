@@ -4,13 +4,8 @@ export class AwSidebarHeaderEH extends EventHandler {
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
       if (type === 'aw-sidebar-header.click') {
-        this.dataSource.toggleSidebar();
         this.emitOuter('click', payload);
       }
     });
-
-    /* this.outerEvents$.subscribe(event => {
-
-    }); */
   }
 }

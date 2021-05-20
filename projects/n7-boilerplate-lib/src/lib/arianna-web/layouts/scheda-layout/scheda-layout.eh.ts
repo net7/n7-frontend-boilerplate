@@ -31,7 +31,12 @@ export class AwSchedaLayoutEH extends EventHandler {
           this.dataSource.onDestroy();
           break;
 
+        case 'aw-scheda-layout.togglesidebar':
+          this.dataSource.collapseSidebar();
+          break;
+
         default:
+          console.warn('unhandled inner event of type', type);
           break;
       }
     });

@@ -14,7 +14,8 @@
             </n7-smart-breadcrumbs>
 
             <div *ngIf="!lb.dataSource.hasBreadcrumb"
-                 class="aw-scheda__fake-breadcrumbs">
+                 class="aw-scheda__fake-breadcrumbs"
+                 (click)="lb.eventHandler.emitInner('togglesidebar', {})">
                  <p class="aw-scheda__fake-breadcrumbs-open" 
                     *ngIf="lb.dataSource.sidebarCollapsed">
                     Consulta il patrimonio
