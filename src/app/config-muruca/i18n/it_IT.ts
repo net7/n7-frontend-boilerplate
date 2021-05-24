@@ -58,5 +58,7 @@ export default {
   'advancedsearch#filters_title': 'Filtri attivi:',
   'timeline#mapheader': 'Luoghi',
   'itinerary#related_res_title': 'Risorse collegate',
-  'timeline#title': 'Cronologia'
+  'timeline#title': 'Cronologia',
+  'map#title': 'Mappa',
+  'map#defaultText': 'Clicca su un elemento per vedere i dettagli'
 };

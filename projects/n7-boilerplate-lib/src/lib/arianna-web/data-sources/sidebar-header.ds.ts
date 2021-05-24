@@ -5,8 +5,8 @@ export class AwSidebarHeaderDS extends DataSource {
     return {
       iconLeft: 'n7-icon-tree-icon',
       text: data.text || '',
-      iconRight: 'n7-icon-angle-left',
-      classes: 'is-expanded',
+      iconRight: data.isExpanded ? 'n7-icon-angle-left' : 'n7-icon-angle-right',
+      classes: data.isExpanded ? 'is-expanded' : 'is-collapsed',
       payload: 'header',
     };
   }

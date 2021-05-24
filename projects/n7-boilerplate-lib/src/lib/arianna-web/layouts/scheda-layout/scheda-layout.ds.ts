@@ -26,6 +26,8 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
   public options: any;
 
+  private layoutConfig;
+
   public pageTitle: string;
 
   public hasBreadcrumb: boolean;
@@ -84,27 +86,32 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   onInit({
     configuration, mainState, router, options, titleService, communication,
   }) {
-    this.configuration = configuration;
+    if (configuration) {
+      this.configuration = configuration;
+      this.layoutConfig = this.configuration.get('scheda-layout');
+    }
     this.mainState = mainState;
     this.router = router;
     this.titleService = titleService;
     this.communication = communication;
     this.options = options;
-    this.sidebarCollapsed = this.configuration.get('scheda-layout').tree.collapsedByDefault ?? false;
-    this.relatedEntitiesHeader = this.configuration.get('scheda-layout')['related-entities'].title;
-    this.similarItemsSectionTitle = this.configuration.get('scheda-layout')['related-items'].title;
-    this.externalUrlText = this.configuration.get('scheda-layout')['external-url-text'];
+    if (!this.sidebarCollapsed) {
+      this.sidebarCollapsed = this.layoutConfig.tree.collapsedByDefault ?? false;
+    }
+    this.relatedEntitiesHeader = this.layoutConfig['related-entities'].title;
+    this.similarItemsSectionTitle = this.layoutConfig['related-items'].title;
+    this.externalUrlText = this.layoutConfig['external-url-text'];
     this.metadataSectionTitle = this.getMetadataSectionTitle();
     this.hasSimilarItems = false;
     this.one('aw-chart-tippy').updateOptions({
       basePath: this.configuration.get('paths').entitaBasePath,
     });
-    this.emptyLabel = this.configuration.get('scheda-layout')['empty-label'];
-    this.emptyStateString = this.configuration.get('scheda-layout')['empty-html'];
+    this.emptyLabel = this.layoutConfig['empty-label'];
+    this.emptyStateString = this.layoutConfig['empty-html'];
     this.one('aw-tree').updateOptions({ config: this.configuration.get('config-keys') });
 
     // switch the tree query to the slim version
-    if (this.configuration.get('scheda-layout')?.tree?.lite) {
+    if (this.layoutConfig?.tree?.lite) {
       this.getTreeQuery = 'getTreeLite';
     }
 
@@ -150,7 +157,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   getTree = () => AwSchedaLayoutDS.tree;
 
   updateNavigation(text) {
-    this.one('aw-sidebar-header').update({ text });
+    this.one('aw-sidebar-header').update({ text, isExpanded: !this.sidebarCollapsed });
   }
 
   loadItem(id) {
@@ -161,6 +168,10 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     });
   }
 
+  /**
+   * Loads the content of the selected tree item in the right portion of the view.
+   * @param response http response for the tree item
+   */
   loadContent(response) {
     if (response) {
       // reset
@@ -266,8 +277,14 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     });
   }
 
+  /**
+   * Toggle between the tree's collapsed or expanded state.
+   */
   collapseSidebar() {
+    // overwrite the configuration to prevent unwanted changes to the tree state.
+    this.layoutConfig.tree.collapsedByDefault = !this.layoutConfig.tree.collapsedByDefault;
     this.sidebarCollapsed = !this.sidebarCollapsed;
+    this.getWidgetDataSource('aw-sidebar-header').toggleSidebar();
   }
 
   private _sidebarStickyControl() {

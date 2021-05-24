@@ -1,7 +1,7 @@
-<div class="mr-timeline mr-layout"
+<div class="mr-map-layout mr-layout"
      *ngIf="lb.dataSource">
-    <div class="mr-map__timeline">
-        <div class="mr-map__timeline-loading"
+    <div class="mr-map-layout__map">
+        <div class="mr-map-layout__map-loading"
              *ngIf="lb.dataSource.loading.timeline">
         </div>
         <n7-map [data]="lb.widgets['mr-map'].ds.out$ | async"></n7-map>
@@ -10,19 +10,21 @@
         </n7-timeline> -->
     </div>
 
-    <div class="mr-map__page mr-side-margin">
-        <div class="mr-map__date">
+    <div class="mr-map-layout__page mr-side-margin">
+        <div class="mr-map-layout__date">
             <n7-inner-title [data]="lb.widgets['mr-year-header'].ds.out$ | async"
                             [emit]="lb.widgets['mr-year-header'].emit">
             </n7-inner-title>
         </div>
-        <h1 class="mr-map__title"
+        <!--
+        <h1 class="mr-map-layout__title"
             *ngIf="!lb.dataSource.loading.resourceDetails">
             {{lb.dataSource.eventHeader}}
         </h1>
-        <div class="mr-map__content">
+        -->
+        <div class="mr-map-layout__content">
             <!-- DESCRIZIONE -->
-            <div class="mr-content-block mr-content-block-description">
+            <div class="mr-content-block mr-content-block-description" *ngIf="lb.dataSource.eventDescription">
                 <p [innerHTML]="lb.dataSource.eventDescription">
                 <p>
             </div>
@@ -44,7 +46,7 @@
                             <h3 class="mr-content-block__title">{{ biblio.header.title }}</h3>
                             <div class="mr-content-block__content n7-grid-1">
                                 <ng-container *ngFor="let item of biblio.items">
-                                    <div class="mr-map__collection-content">
+                                    <div class="mr-map-layout__collection-content">
                                         <n7-item-preview [data]="item"></n7-item-preview>
                                     </div>
                                 </ng-container>

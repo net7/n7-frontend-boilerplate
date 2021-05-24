@@ -1,5 +1,7 @@
+import { InnerTitleData } from '@n7-frontend/components';
 import { LayoutDataSource } from '@n7-frontend/core';
 import { BehaviorSubject } from 'rxjs';
+import helpers from '../../../common/helpers';
 
 type LayoutState = 'LOADING' | 'EMPTY' | 'SUCCESS';
 
@@ -62,11 +64,20 @@ export class AwMapLayoutDS extends LayoutDataSource {
         text = `<strong>${this.total}</strong> Risultato collegato a<br><span class="aw-multimedia__results-title-big">${label}</span>`;
       }
 
-      this.one('aw-scheda-inner-title').update({
+      const titleData: InnerTitleData = {
         title: {
-          main: { text }
+          main: { text },
+        },
+        actions: {
+          buttons: [{
+            anchor: {
+              href: `${this.configuration.get('paths').entitaBasePath}/${id}/${helpers.slugify(label)}`,
+            },
+            text: 'Vedi Entità'
+          }]
         }
-      });
+      };
+      this.one('aw-scheda-inner-title').update(titleData);
 
       // update items
       this.updateItems();

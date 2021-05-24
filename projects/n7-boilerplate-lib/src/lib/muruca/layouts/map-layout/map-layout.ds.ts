@@ -31,8 +31,6 @@ export class MrMapLayoutDS extends LayoutDataSource {
     timeline: true,
   }
 
-  public defaultDescription = '';
-
   public eventHeader: string;
 
   public eventDescription = ''
@@ -91,7 +89,7 @@ export class MrMapLayoutDS extends LayoutDataSource {
   }
 
   loadDefaults(navigate: boolean) {
-    this.eventDescription = this.defaultDescription;
+    this.eventDescription = _t(this.pageConfig.defaultText);
     this.eventHeader = '';
     this.bibliographyData = undefined;
     this.collectionWitnessData = undefined;
@@ -172,7 +170,7 @@ export class MrMapLayoutDS extends LayoutDataSource {
         this.eventDescription = header.content;
         this.eventHeader = res.title;
         this.one('mr-year-header').update({
-          title: { main: { text: header.title } },
+          title: { main: { text: res.title } },
           actions: {
             buttons: [{
               text: '',
