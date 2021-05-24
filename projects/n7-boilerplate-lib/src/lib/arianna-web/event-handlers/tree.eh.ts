@@ -27,9 +27,6 @@ export class AwTreeEH extends EventHandler {
 
     this.outerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
-        case 'aw-sidebar-header.click':
-          this.dataSource.toggleSidebar();
-          break;
         case 'aw-scheda-layout.selectItem':
           this.dataSource.build(payload);
           break;

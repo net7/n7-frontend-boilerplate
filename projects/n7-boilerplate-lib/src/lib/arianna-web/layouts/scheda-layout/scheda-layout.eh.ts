@@ -31,7 +31,12 @@ export class AwSchedaLayoutEH extends EventHandler {
           this.dataSource.onDestroy();
           break;
 
+        case 'aw-scheda-layout.togglesidebar':
+          this.dataSource.collapseSidebar();
+          break;
+
         default:
+          console.warn('unhandled inner event of type', type);
           break;
       }
     });
@@ -70,7 +75,7 @@ export class AwSchedaLayoutEH extends EventHandler {
   }
 
   private loadNavigation(selectedItem) {
-    this.dataSource.updateNavigation('Loading...');
+    this.dataSource.updateNavigation('Caricamento in corso...');
     this.dataSource.getNavigation('patrimonio').subscribe((response) => {
       if (response) {
         this.dataSource.setTree(response);
