@@ -3,7 +3,7 @@
 //---------------------------
 
 import {
-  Component, Input, ViewChild, ElementRef, AfterViewInit,
+  Component, Input, ViewChild, ElementRef, AfterViewChecked,
 } from '@angular/core';
 import tippy from 'tippy.js';
 
@@ -58,7 +58,7 @@ export interface SmartBreadcrumbsData {
   templateUrl: './smart-breadcrumbs.html',
 })
 
-export class SmartBreadcrumbsComponent implements AfterViewInit {
+export class SmartBreadcrumbsComponent implements AfterViewChecked {
   @Input() data: SmartBreadcrumbsData;
 
   @Input() emit: any;
@@ -67,25 +67,8 @@ export class SmartBreadcrumbsComponent implements AfterViewInit {
 
   @ViewChild('bcdiv', { read: ElementRef }) bcdiv: ElementRef
 
-  ngAfterViewInit() {
-    if (this.bcdiv && this.bcol) {
-      let { parentWidth, childWidth } = this.getWidths(this.bcdiv, this.bcol);
-      const liArray = this.bcol.nativeElement.children;
-      if (parentWidth === childWidth) { // collapse condition
-        let i = 1; // Skip element in position 0
-        while (parentWidth === childWidth && i < liArray.length - 1) { // Skip last element
-          const tippyData = document.createElement('ol'); // initialize tippy data
-          tippyData.className = 'n7-smart-breadcrumbs__tippy-content';
-          tippyData.appendChild(liArray[i].cloneNode(true)); // add <li> to tippy data (<ol>)
-          liArray[i].children[0].innerText = '…'; // convert to ellipsis
-          liArray[i].className = 'n7-breadcrumbs__item-ellipsis'; // set class to list item
-          this.tippyBuilder(liArray[i].children[0], tippyData); // append tooltip to ellipsis
-          i += 1;
-          // update widths
-          ({ parentWidth, childWidth } = this.getWidths(this.bcdiv, this.bcol));
-        }
-      }
-    }
+  ngAfterViewChecked(): void {
+    this.triggerSmartEllipsis();
   }
 
   onClick(payload) {
@@ -104,10 +87,11 @@ export class SmartBreadcrumbsComponent implements AfterViewInit {
     appendTo: document.body, // silence tippy interactive warning
   });
 
+  /** Calculate the width of an HTML Element and it's child */
   getWidths = (parent: ElementRef, child: ElementRef) => {
-    const pw = parent.nativeElement.clientWidth;
-    const cw = child.nativeElement.clientWidth;
-    const pp = this.getSidePadding(parent.nativeElement);
+    const pw = parent.nativeElement.clientWidth; // parent width
+    const cw = child.nativeElement.clientWidth; // child width
+    const pp = this.getSidePadding(parent.nativeElement); // parent padding
     return { parentWidth: pw - pp, childWidth: cw };
   }
 
@@ -116,4 +100,29 @@ export class SmartBreadcrumbsComponent implements AfterViewInit {
     (+window.getComputedStyle(node, null).getPropertyValue('padding-left').match(/\d+/)[0])
     + (+window.getComputedStyle(node, null).getPropertyValue('padding-right').match(/\d+/)[0])
   )
+
+  /**
+   * Checks if the smart ellipsis functionality should be enabled,
+   * if the children elements are too wide, it enables it.
+   */
+  triggerSmartEllipsis = () => {
+    if (this.bcdiv && this.bcol) {
+      let { parentWidth, childWidth } = this.getWidths(this.bcdiv, this.bcol);
+      const liArray = this.bcol.nativeElement.children;
+      if (parentWidth <= childWidth) { // collapse condition
+        let i = 1; // Skip element in position 0
+        while (parentWidth <= childWidth && i < liArray.length - 1) { // Skip last element
+          const tippyData = document.createElement('ol'); // initialize tippy data
+          tippyData.className = 'n7-smart-breadcrumbs__tippy-content';
+          tippyData.appendChild(liArray[i].cloneNode(true)); // add <li> to tippy data (<ol>)
+          liArray[i].children[0].innerText = '…'; // convert to ellipsis
+          liArray[i].className = 'n7-breadcrumbs__item-ellipsis'; // set class to list item
+          this.tippyBuilder(liArray[i].children[0], tippyData); // append tooltip to ellipsis
+          i += 1;
+          // update widths
+          ({ parentWidth, childWidth } = this.getWidths(this.bcdiv, this.bcol));
+        }
+      }
+    }
+  }
 }
