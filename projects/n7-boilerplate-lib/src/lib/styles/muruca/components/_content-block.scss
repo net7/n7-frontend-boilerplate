@@ -168,7 +168,7 @@
 \* ------------------------------------ */
 .mr-content-block {
     .n7-metadata-viewer {
-        img[class^="wp-image"] {
+        img[class*="wp-image"] {
             margin-top: $space*2;
             margin-bottom: $space*2;
 
