@@ -1,5 +1,9 @@
 import { EventHandler } from '@n7-frontend/core';
-import { Subject } from 'rxjs';
+import { isEmpty } from 'lodash';
+import {
+  forkJoin, from, of, Subject
+} from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 export class AwSchedaLayoutEH extends EventHandler {
   private destroyed$: Subject<any> = new Subject();
@@ -64,7 +68,9 @@ export class AwSchedaLayoutEH extends EventHandler {
           this.emitOuter('routechanged', paramId);
         }
         this.dataSource.contentIsLoading = true;
-        this.dataSource.loadItem(paramId).subscribe((response) => {
+        this.dataSource.loadItem(paramId).pipe(
+          switchMap((response) => this.parseDigitalObjects$(response))
+        ).subscribe((response) => {
           this.dataSource.contentIsLoading = false;
           if (response) this.dataSource.loadContent(response);
         });
@@ -87,5 +93,64 @@ export class AwSchedaLayoutEH extends EventHandler {
         });
       }
     });
+  }
+
+  private parseDigitalObjects$(response) {
+    response.digitalObjects[0].items = [
+      {
+        url: 'https://jarvis.edl.beniculturali.it/meta/iiif/de4fbcb0-4554-44aa-b2e1-795a1822cbe9/manifest',
+        type: 'images-iiif'
+      },
+
+      {
+        url: 'https://jarvis.edl.beniculturali.it/meta/iiif/de4fbcb0-4554-44aa-b2e1-795a1822cbe9/manifest',
+        type: 'images-iiif'
+      },
+
+      {
+        url: 'https://jarvis.edl.beniculturali.it/meta/iiif/de4fbcb0-4554-44aa-b2e1-795a1822cbe9/manifest',
+        type: 'images-iiif'
+      },
+
+    ];
+    const iiifManifest$ = {};
+    response.digitalObjects.forEach((digitalObject) => {
+      if (digitalObject.type === 'images-iiif') {
+        digitalObject.items.forEach(({ url }) => {
+          iiifManifest$[url] = from(fetch(url).then((data) => data.json()));
+        });
+      }
+    });
+    if (!isEmpty(iiifManifest$)) {
+      return forkJoin(iiifManifest$).pipe(
+        switchMap((data) => {
+          response.digitalObjects.forEach((digitalObject) => {
+            if (digitalObject.type === 'images-iiif') {
+              digitalObject.items.forEach((itemImages, index) => {
+                if (data[itemImages.url]) {
+                  digitalObject.items[index].iiifImages = this.getManifestImages(
+                    data[itemImages.url]
+                  );
+                }
+              });
+            }
+          });
+          return of(response);
+        })
+      );
+    }
+    return of(response);
+  }
+
+  private getManifestImages(manifest) {
+    const iiifImages = [];
+    manifest.sequences.forEach(({ canvases }) => {
+      canvases.forEach(({ images }) => {
+        images.forEach(({ resource }) => {
+          iiifImages.push(resource['@id']);
+        });
+      });
+    });
+    return iiifImages;
   }
 }
