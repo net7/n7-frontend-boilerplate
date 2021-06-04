@@ -59,7 +59,7 @@ export class AwSchedaImageDS extends DataSource {
           url,
           type: 'image'
         });
-      } else if (type === 'images-ip') {
+      } else if (type === 'images-iip') {
         // FIXME: togliere replace
         tileSources.push(url.replace('FIF', 'Deepzoom').replace('.tif', '.tif.dzi'));
       } else if (type === 'images-iiif') {
