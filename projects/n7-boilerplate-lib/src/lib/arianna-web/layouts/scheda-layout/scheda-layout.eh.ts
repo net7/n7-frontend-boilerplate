@@ -97,7 +97,7 @@ export class AwSchedaLayoutEH extends EventHandler {
 
   private parseDigitalObjects$(response) {
     const iiifManifest$ = {};
-    if (Array.isArray(response.digitalObjects)) {
+    if (Array.isArray(response?.digitalObjects)) {
       response.digitalObjects.forEach((digitalObject) => {
         if (digitalObject.type === 'images-iiif') {
           digitalObject.items.forEach(({ url }) => {
