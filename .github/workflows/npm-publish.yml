@@ -13,6 +13,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 14
+      - run: git checkout master
       - run: npm i
       - run: np build --prod
 
@@ -28,6 +29,7 @@ jobs:
         with:
           node-version: 14
           registry-url: https://npm.pkg.github.com/
+      - run: git checkout master
       - run: npm i
       - run: npm publish
         env:
