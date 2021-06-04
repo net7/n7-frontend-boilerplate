@@ -96,42 +96,37 @@ export class AwSchedaLayoutEH extends EventHandler {
   }
 
   private parseDigitalObjects$(response) {
-    response.digitalObjects[0].items = [
-      {
-        url: 'https://jarvis.edl.beniculturali.it/meta/iiif/de4fbcb0-4554-44aa-b2e1-795a1822cbe9/manifest',
-        type: 'images-iiif'
-      },
-
-      {
-        url: 'https://jarvis.edl.beniculturali.it/meta/iiif/de4fbcb0-4554-44aa-b2e1-795a1822cbe9/manifest',
-        type: 'images-iiif'
-      },
-
-      {
-        url: 'https://jarvis.edl.beniculturali.it/meta/iiif/de4fbcb0-4554-44aa-b2e1-795a1822cbe9/manifest',
-        type: 'images-iiif'
-      },
-
-    ];
     const iiifManifest$ = {};
-    response.digitalObjects.forEach((digitalObject) => {
-      if (digitalObject.type === 'images-iiif') {
-        digitalObject.items.forEach(({ url }) => {
-          iiifManifest$[url] = from(fetch(url).then((data) => data.json()));
-        });
-      }
-    });
+    if (Array.isArray(response.digitalObjects)) {
+      response.digitalObjects.forEach((digitalObject) => {
+        if (digitalObject.type === 'images-iiif') {
+          digitalObject.items.forEach(({ url }) => {
+            iiifManifest$[url] = from(
+              fetch(url)
+                .then((data) => {
+                  if (!data.ok) {
+                    throw Error(data.statusText);
+                  }
+                  return data.json();
+                })
+                .catch((err) => {
+                  console.warn(`Error loading iiif manifest ${url}`, err);
+                  return null;
+                })
+            );
+          });
+        }
+      });
+    }
     if (!isEmpty(iiifManifest$)) {
       return forkJoin(iiifManifest$).pipe(
-        switchMap((data) => {
+        switchMap((data: object) => {
           response.digitalObjects.forEach((digitalObject) => {
             if (digitalObject.type === 'images-iiif') {
               digitalObject.items.forEach((itemImages, index) => {
-                if (data[itemImages.url]) {
-                  digitalObject.items[index].iiifImages = this.getManifestImages(
-                    data[itemImages.url]
-                  );
-                }
+                digitalObject.items[index].iiifImages = this.getManifestImages(
+                  data[itemImages.url]
+                );
               });
             }
           });
@@ -144,13 +139,15 @@ export class AwSchedaLayoutEH extends EventHandler {
 
   private getManifestImages(manifest) {
     const iiifImages = [];
-    manifest.sequences.forEach(({ canvases }) => {
-      canvases.forEach(({ images }) => {
-        images.forEach(({ resource }) => {
-          iiifImages.push(resource['@id']);
+    if (manifest?.sequences) {
+      manifest.sequences.forEach(({ canvases }) => {
+        canvases.forEach(({ images }) => {
+          images.forEach(({ resource }) => {
+            iiifImages.push(resource['@id']);
+          });
         });
       });
-    });
+    }
     return iiifImages;
   }
 }
