@@ -14,7 +14,7 @@ jobs:
         with:
           node-version: 14
       - run: npm i
-      - run: np build --prod
+      - run: ng build --prod
 
   publish-gpr:
     needs: build
