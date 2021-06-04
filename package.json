@@ -8,6 +8,7 @@
     "muruca": "ng serve -c muruca",
     "dataviz": "ng serve -c dataviz",
     "build": "ng build n7-boilerplate-lib --prod",
+    "postbuild": "node scripts/build-after",
     "test": "ng test",
     "lint": "ng lint",
     "stylelint": "stylelint \"projects/n7-boilerplate-lib/src/lib/styles/**/**/*.scss\"; exit 0",
