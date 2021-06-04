@@ -373,8 +373,9 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
           type: $do.type,
           label: $do.label,
           hasNavigation: $do.items.length > 1,
-          items: $do.items.map(({ url }) => ({
+          items: $do.items.map(({ url, iiifImages }) => ({
             url,
+            iiifImages,
             type: $do.type,
           }))
         };

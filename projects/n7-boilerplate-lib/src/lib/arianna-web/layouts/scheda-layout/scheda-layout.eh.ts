@@ -1,5 +1,9 @@
 import { EventHandler } from '@n7-frontend/core';
-import { Subject } from 'rxjs';
+import { isEmpty } from 'lodash';
+import {
+  forkJoin, from, of, Subject
+} from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 export class AwSchedaLayoutEH extends EventHandler {
   private destroyed$: Subject<any> = new Subject();
@@ -64,7 +68,9 @@ export class AwSchedaLayoutEH extends EventHandler {
           this.emitOuter('routechanged', paramId);
         }
         this.dataSource.contentIsLoading = true;
-        this.dataSource.loadItem(paramId).subscribe((response) => {
+        this.dataSource.loadItem(paramId).pipe(
+          switchMap((response) => this.parseDigitalObjects$(response))
+        ).subscribe((response) => {
           this.dataSource.contentIsLoading = false;
           if (response) this.dataSource.loadContent(response);
         });
@@ -87,5 +93,61 @@ export class AwSchedaLayoutEH extends EventHandler {
         });
       }
     });
+  }
+
+  private parseDigitalObjects$(response) {
+    const iiifManifest$ = {};
+    if (Array.isArray(response?.digitalObjects)) {
+      response.digitalObjects.forEach((digitalObject) => {
+        if (digitalObject.type === 'images-iiif') {
+          digitalObject.items.forEach(({ url }) => {
+            iiifManifest$[url] = from(
+              fetch(url)
+                .then((data) => {
+                  if (!data.ok) {
+                    throw Error(data.statusText);
+                  }
+                  return data.json();
+                })
+                .catch((err) => {
+                  console.warn(`Error loading iiif manifest ${url}`, err);
+                  return null;
+                })
+            );
+          });
+        }
+      });
+    }
+    if (!isEmpty(iiifManifest$)) {
+      return forkJoin(iiifManifest$).pipe(
+        switchMap((data: object) => {
+          response.digitalObjects.forEach((digitalObject) => {
+            if (digitalObject.type === 'images-iiif') {
+              digitalObject.items.forEach((itemImages, index) => {
+                digitalObject.items[index].iiifImages = this.getManifestImages(
+                  data[itemImages.url]
+                );
+              });
+            }
+          });
+          return of(response);
+        })
+      );
+    }
+    return of(response);
+  }
+
+  private getManifestImages(manifest) {
+    const iiifImages = [];
+    if (manifest?.sequences) {
+      manifest.sequences.forEach(({ canvases }) => {
+        canvases.forEach(({ images }) => {
+          images.forEach(({ resource }) => {
+            iiifImages.push(resource['@id']);
+          });
+        });
+      });
+    }
+    return iiifImages;
   }
 }

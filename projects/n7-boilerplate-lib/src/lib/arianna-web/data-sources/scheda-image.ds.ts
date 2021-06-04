@@ -52,15 +52,22 @@ export class AwSchedaImageDS extends DataSource {
   }
 
   private getTileSources(images) {
-    return images.map(({ type, url }) => {
+    const tileSources = [];
+    images.forEach(({ type, url, iiifImages }) => {
       if (type === 'images-simple') {
-        return {
+        tileSources.push({
           url,
           type: 'image'
-        };
+        });
+      } else if (type === 'images-iip') {
+        // FIXME: togliere replace
+        tileSources.push(url.replace('FIF', 'Deepzoom').replace('.tif', '.tif.dzi'));
+      } else if (type === 'images-iiif') {
+        iiifImages.forEach((iiifUrl) => {
+          tileSources.push(iiifUrl);
+        });
       }
-      // FIXME: togliere replace
-      return url.replace('FIF', 'Deepzoom').replace('.tif', '.tif.dzi');
     });
+    return tileSources;
   }
 }
