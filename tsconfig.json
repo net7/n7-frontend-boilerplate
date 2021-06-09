@@ -35,9 +35,9 @@
       "@mr-routes": ["src/app/app.routes.muruca.ts"],
       "@mr-config": ["src/app/config-muruca/"],
       "@mr-config/*": ["src/app/config-muruca/*"],
-      // "@mr-routes": ["<PROJECT-LOCAL-PATH>/src/app/app.routes.ts"],
-      // "@mr-config": ["<PROJECT-LOCAL-PATH>/src/app/config"],
-      // "@mr-config/*": ["<PROJECT-LOCAL-PATH>/src/app/config/*"],
+      // "@mr-routes": ["../petrarca-frontend/src/app/app.routes.ts"],
+      // "@mr-config": ["../petrarca-frontend/src/app/config"],
+      // "@mr-config/*": ["../petrarca-frontend/src/app/config/*"],
       // ARIANNA PROJECT PATHS
       "@aw-routes": ["src/app/app.routes.arianna.ts"],
       "@aw-config": ["src/app/config-arianna/"],

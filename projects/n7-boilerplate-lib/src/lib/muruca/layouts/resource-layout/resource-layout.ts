@@ -9,11 +9,13 @@ import { MrLayoutStateService } from '../../services/layout-state.service';
 import { MrResourceModalService } from '../../services/resource-modal.service';
 import { MrResourceLayoutConfig as config } from './resource-layout.config';
 import { MrImageViewerEH } from '../../event-handlers/image-viewer.eh';
+import { MrImageViewerToolsEH } from '../../event-handlers/image-viewer-tools.eh';
 import { MrCollectionEH } from '../../event-handlers/collection.eh';
 import {
   MrBreadcrumbsDS,
   MrCollectionDS,
   MrImageViewerDS,
+  MrImageViewerToolsDS,
   MrInfoBoxDS,
   MrInnerTitleDS,
   MrItemPreviewDS,
@@ -31,12 +33,14 @@ const DATASOURCE_MAP = {
   text: MrTextViewerDS,
   title: MrInnerTitleDS,
   viewer: MrImageViewerDS,
+  'viewer-tools': MrImageViewerToolsDS,
   tabs: MrResourceTabsDS,
   'text-viewer': MrTextViewerDS
 };
 
 const EVENTHANDLER_MAP = {
   viewer: MrImageViewerEH,
+  'viewer-tools': MrImageViewerToolsEH,
   collection: MrCollectionEH,
 };
 
