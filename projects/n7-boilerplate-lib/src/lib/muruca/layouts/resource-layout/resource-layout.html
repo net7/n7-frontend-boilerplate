@@ -88,7 +88,6 @@
                 <!-- COLLECTION -->
                 <ng-container *ngSwitchCase="'collection'">
                     <ng-container *ngIf="lb.widgets[section.id].ds.out$ | async as collection$">
-                        
                         <div *ngIf="collection$.items?.length > 0" class="mr-content-block mr-content-block-collection">
                             <h3 *ngIf="section.title" class="mr-content-block__title">
                                 {{ section.title }}
@@ -99,7 +98,6 @@
                                 </n7-item-preview>
                             </div>
                         </div>
-
                     </ng-container>
                 </ng-container>
     
