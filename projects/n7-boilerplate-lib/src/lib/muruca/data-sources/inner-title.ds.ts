@@ -3,6 +3,7 @@ import linksHelper from '../helpers/links-helper';
 
 export class MrInnerTitleDS extends DataSource {
   protected transform(data: any): any {
+    if (!data) return null;
     const { title, description, button } = data;
     return {
       title: {
