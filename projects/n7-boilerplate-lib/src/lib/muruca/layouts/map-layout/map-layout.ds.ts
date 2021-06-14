@@ -73,6 +73,8 @@ export class MrMapLayoutDS extends LayoutDataSource {
 
     this.configId = payload.configId;
     this.pageConfig = this.configuration.get(this.configId) || {};
+    // overwrite leaflet options with configuration.libOptions
+    this.one('mr-map').updateOptions({ libOptions: this.pageConfig.libOptions });
 
     // update the map
     this.communication.request$('map', {

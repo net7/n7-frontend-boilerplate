@@ -13,6 +13,7 @@ export class MrItemPreviewDS extends DataSource {
   id: string;
 
   protected transform(data: any): ItemPreviewData {
+    if (!data) return null;
     const { classes, itemPreview } = this.options;
     const itemPreviewOptions = merge(ITEM_PREVIEW_DEFAULTS, (itemPreview || {}));
 

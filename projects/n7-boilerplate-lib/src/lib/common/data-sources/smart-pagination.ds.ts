@@ -1,4 +1,4 @@
-import { DataSource } from '@n7-frontend/core';
+import { DataSource, _t } from '@n7-frontend/core';
 
 export class SmartPaginationDS extends DataSource {
   protected transform(data) {
@@ -24,7 +24,7 @@ export class SmartPaginationDS extends DataSource {
       last,
       links,
       select: sizes ? {
-        label: sizes.label || 'Numero di risultati',
+        label: sizes.label || _t('search#resultsamount'),
         options: sizes.list.map((s) => ({
           text: s,
           selected: s === sizes.active,

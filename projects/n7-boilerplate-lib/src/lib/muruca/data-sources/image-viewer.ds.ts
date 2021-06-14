@@ -6,6 +6,7 @@ export class MrImageViewerDS extends DataSource {
   viewer: any;
 
   protected transform(data: any): any {
+    if (!data) return null;
     const { images, thumbs } = data;
     return {
       images,

@@ -3,6 +3,7 @@ import { BreadcrumbsData } from '@n7-frontend/components';
 
 export class MrBreadcrumbsDS extends DataSource {
   protected transform(data: any): BreadcrumbsData {
+    if (!data) return null;
     let items = [];
     if (Array.isArray(data) && data.length) {
       let { base } = this.options || {};

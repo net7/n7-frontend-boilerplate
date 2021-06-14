@@ -68,8 +68,13 @@ export default {
     const rect = el.getBoundingClientRect();
 
     return rect.bottom > 0
-        && rect.right > 0
-        && rect.left < (window.innerWidth || document.documentElement.clientWidth)
-        && rect.top < (window.innerHeight || document.documentElement.clientHeight);
+      && rect.right > 0
+      && rect.left < (window.innerWidth || document.documentElement.clientWidth)
+      && rect.top < (window.innerHeight || document.documentElement.clientHeight);
   },
+  /** Return true if an object is empty */
+  isEmpty: (obj) => (
+    typeof obj === 'object'
+      && Object.keys(obj).length === 0
+  )
 };

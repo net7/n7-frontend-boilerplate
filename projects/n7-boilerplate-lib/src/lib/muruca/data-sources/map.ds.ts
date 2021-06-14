@@ -97,7 +97,7 @@ export class MrMapDS extends DataSource {
       },
       containerId: 'map-canvas',
       libOptions: {
-        scrollWheelZoom: false,
+        ...this.options.libOptions,
       },
       tileLayers: [{
         url: 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
