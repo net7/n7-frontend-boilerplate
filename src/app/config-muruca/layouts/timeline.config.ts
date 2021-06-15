@@ -1,4 +1,4 @@
-// import { parseTwoDigitYear } from "moment";
+import { utc } from 'moment';
 
 export default {
   title: 'timeline#title',
@@ -18,8 +18,8 @@ export default {
     template: (itemData, element, data) => {
       if (data.isCluster) {
         const dateLength = data.items.length;
-        const startYear = String(data.items[0].start).substring(11, 15);
-        const endYear = String(data.items[dateLength - 1].start).substring(11, 15);
+        const startYear = utc(data.items[0].start).format('YYYY');
+        const endYear = utc(data.items[dateLength - 1].start).format('YYYY');
         return `<div>Clicca per visualizzare ${dateLength} eventi</div>
         <div>dal ${startYear} al ${endYear}</div>`; // configurare traduzione
       }
