@@ -20,8 +20,8 @@ export default {
         const dateLength = data.items.length;
         const startYear = utc(data.items[0].start).format('YYYY');
         const endYear = utc(data.items[dateLength - 1].start).format('YYYY');
-        return `<div>Clicca per visualizzare ${dateLength} eventi</div>
-        <div>dal ${startYear} al ${endYear}</div>`; // configurare traduzione
+        return `<div class="vis-cluster__title">${dateLength} eventi</div>
+        <div class="vis-cluster__date">dal ${startYear} al ${endYear}</div>`; // configurare traduzione
       }
       const truncate = (input) => (input.length > 50 ? `${input.substring(0, 50)}...` : input);
       return `<div>${truncate(data.content)}</div>`;
