@@ -65,7 +65,12 @@
                 <ng-container *ngSwitchCase="'viewer'">
                     <n7-image-viewer [data]="lb.widgets[section.id].ds.out$ | async" [emit]="lb.widgets[section.id].emit">
                     </n7-image-viewer>
+                        <n7-image-viewer-tools [data]="lb.widgets[section.id + '-tools'].ds.out$ | async" [emit]="lb.widgets[section.id + '-tools'].emit">
+                        </n7-image-viewer-tools>
                 </ng-container>
+
+                <!-- IMAGE VIEWER TOOLS -->
+                
     
                 <!-- METADATA VIEWER -->
                 <ng-container *ngSwitchCase="'metadata'">

@@ -45,7 +45,7 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
 
   public route;
 
-  public mapHeader = _t('timeline#mapheader');
+  public mapHeader;
 
   public timelineListener$: Subject<Timeline> = new Subject()
 
@@ -91,6 +91,7 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
     }).subscribe((d) => {
       this.timelineData = d;
       this.loading.timeline = false;
+      this.one('mr-timeline').updateOptions({ libOptions: this.pageConfig.libOptions });
       this.one('mr-timeline').update(d);
     });
     this.getWidgetDataSource('mr-timeline').timelineLoaded$
@@ -107,6 +108,9 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
       this.defaultDescription = d.text;
       this.loadDefaults(false);
     });
+
+    // set map header
+    this.mapHeader = _t(this.pageConfig.mapHeader);
   }
 
   loadDefaults(navigate: boolean) {
