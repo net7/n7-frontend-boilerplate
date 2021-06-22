@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { ConfigurationService } from '../../../common/services/configuration.service';
 import { CommunicationService } from '../../../common/services/communication.service';
 import { MainStateService } from '../../../common/services/main-state.service';
+import helpers from '../../../common/helpers';
 
 export class MrResourceLayoutDS extends LayoutDataSource {
   private configuration: ConfigurationService;
@@ -81,8 +82,11 @@ export class MrResourceLayoutDS extends LayoutDataSource {
       // set id
       widgetDataSource.id = id;
       // update data
-      if (responseSection) {
+      if (responseSection && !helpers.isEmpty(responseSection)) {
         this.one(id).update(responseSection);
+      } else {
+        // unload the component wihout data
+        this.one(id).update(undefined);
       }
     });
 

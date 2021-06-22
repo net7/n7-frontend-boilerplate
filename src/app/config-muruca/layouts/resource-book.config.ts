@@ -24,6 +24,18 @@ export default {
     ],
     content: [
       {
+        id: 'image-viewer',
+        type: 'viewer',
+        grid: 3,
+        title: 'resource#image-viewer',
+      },
+      {
+        id: 'image-viewer-tools',
+        type: 'viewer-tools',
+        grid: 3,
+        title: 'resource#image-viewer',
+      },
+      {
         id: 'metadata-description',
         type: 'metadata',
         grid: null,

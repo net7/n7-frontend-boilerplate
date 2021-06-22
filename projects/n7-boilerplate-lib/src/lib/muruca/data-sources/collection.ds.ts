@@ -27,7 +27,9 @@ export class MrCollectionDS extends DataSource {
   id: string;
 
   protected transform(data: collectionResponse): any {
-    if (data === undefined) { return null; }
+    if (data === undefined) {
+      return null;
+    }
 
     const { header, items } = data;
 

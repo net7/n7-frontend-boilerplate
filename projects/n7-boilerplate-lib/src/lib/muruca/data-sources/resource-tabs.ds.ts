@@ -2,6 +2,7 @@ import { DataSource, _t } from '@n7-frontend/core';
 
 export class MrResourceTabsDS extends DataSource {
   protected transform(data: any): any {
+    if (!data) return null;
     const {
       currentTab, root, slug, id: resourceId
     } = this.options;

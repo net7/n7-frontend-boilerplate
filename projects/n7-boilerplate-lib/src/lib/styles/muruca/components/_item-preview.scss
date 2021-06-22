@@ -31,6 +31,7 @@
     }
 
     &__title {
+        margin-bottom: $space*0.75;
         font-family: $font-family-main;
         line-height: 1.4;
         font-size: $font-size-l;

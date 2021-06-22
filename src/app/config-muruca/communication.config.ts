@@ -13,9 +13,9 @@ export default {
     'rest-local': {
       type: 'rest',
       // baseUrl: 'http://theatheor-sls.netseven.it/', // THEATHEOR
-      baseUrl: 'http://petrarca-sls.netseven.it/', // PETRARCA
+      // baseUrl: 'http://petrarca-sls.netseven.it/', // PETRARCA
       // baseUrl: 'http://demosls.muruca.cloud/', // DEMO
-      // baseUrl: 'http://localhost:3124/',
+      baseUrl: 'http://localhost:3126/',
       config: {
         home: 'get_home',
         menu: 'get_menu',

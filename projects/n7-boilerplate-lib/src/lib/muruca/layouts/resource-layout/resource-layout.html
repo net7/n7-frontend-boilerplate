@@ -65,7 +65,12 @@
                 <ng-container *ngSwitchCase="'viewer'">
                     <n7-image-viewer [data]="lb.widgets[section.id].ds.out$ | async" [emit]="lb.widgets[section.id].emit">
                     </n7-image-viewer>
+                        <n7-image-viewer-tools [data]="lb.widgets[section.id + '-tools'].ds.out$ | async" [emit]="lb.widgets[section.id + '-tools'].emit">
+                        </n7-image-viewer-tools>
                 </ng-container>
+
+                <!-- IMAGE VIEWER TOOLS -->
+                
     
                 <!-- METADATA VIEWER -->
                 <ng-container *ngSwitchCase="'metadata'">
@@ -88,7 +93,6 @@
                 <!-- COLLECTION -->
                 <ng-container *ngSwitchCase="'collection'">
                     <ng-container *ngIf="lb.widgets[section.id].ds.out$ | async as collection$">
-                        
                         <div *ngIf="collection$.items?.length > 0" class="mr-content-block mr-content-block-collection">
                             <h3 *ngIf="section.title" class="mr-content-block__title">
                                 {{ section.title }}
@@ -99,7 +103,6 @@
                                 </n7-item-preview>
                             </div>
                         </div>
-
                     </ng-container>
                 </ng-container>
     

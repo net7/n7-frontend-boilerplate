@@ -10,7 +10,8 @@
 \* ------------------------------------ */
 .mr-advanced-result {
     &__content {
-
+        padding-top: $space*1;
+        border-top: 1px solid $color-border-light;
     }
 
     &__content-group {
@@ -26,30 +27,32 @@
 
     &__item {
         margin-bottom: $space;
-        
-        &:hover {
-            .mr-advanced-result__label {
-                color: $color-text-link;
-            }
-        
-            .mr-advanced-result__value {
-                color: $color-text-link;
+
+        a {
+            &:hover {
+                .mr-advanced-result__label {
+                    color: $color-text-link;
+                }
+            
+                .mr-advanced-result__value {
+                    color: $color-text-link;
+                }
             }
         }
 
         &:not(:last-child) {
-            margin-bottom: $space;
-            padding-bottom: $space;
+            margin-bottom: $space*1.5;
+            padding-bottom: $space*1.5;
             border-bottom: 1px solid $color-border-light;
         }
     }
 
     &__label {
-        margin-right: $space;
-        color: $color-text;
+        margin-right: $space/2;
+        color: $color-text-light;
+        font-size: $font-size-s;
         font-weight: $font-weight-bold;
-        font-family: $font-family-text;
-        font-size: $font-size-l;
+        font-family: $font-family-main;
         transition: color $transition-durations;
     }
 
@@ -57,8 +60,23 @@
         color: $color-text;
         font-weight: $font-weight-normal;
         font-family: $font-family-text;
-        font-size: $font-size-l;
+        font-size: $font-size-m;
         transition: color $transition-durations;
+    }
+
+    .mrc__text-breadcrumbs {
+        display: block;
+        margin-bottom: $space/2;
+        font-family: $font-family-main;
+        font-size: $font-size-xs;
+        color: $color-text-light;
+    }
+
+    .mrc__text-emph-attribute {
+        color: $color-text-light;
+        font-size: $font-size-s;
+        font-weight: $font-weight-bold;
+        font-family: $font-family-main;
     }
 }
 

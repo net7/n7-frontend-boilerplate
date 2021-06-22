@@ -21,6 +21,50 @@
     &__buttons {
         text-align: center;
     }
+
+    &__results {
+        margin-bottom: $space*2;
+    }
+
+    &__results > .n7-grid-1 > *:not(:last-child) {
+        padding-bottom: $space*3;
+        margin-bottom: $space*3.5;
+        border-bottom: 1px solid $color-border-normal;
+    }
+}
+
+
+/* ------------------------------------ *\
+    NUMBER-OF-RESULTS
+\* ------------------------------------ */
+.mr-advanced-results {
+    &__results-info {
+        .n7-inner-title {
+            padding-top: 0;
+        }
+
+        .n7-inner-title__title  {
+            font-size: $font-size-l;
+            font-family: $font-family-main;
+            font-weight: $font-weight-normal;
+
+            strong {
+                font-weight: $font-weight-bold;
+            }
+        }
+
+        .n7-inner-title__sorting {
+
+        }
+
+        .n7-inner-title__sorting-label {
+            font-size: $font-size-s;
+        }
+
+        .n7-inner-title__sorting-select {
+            font-size: $font-size-s;
+        }
+    }
 }
 
 

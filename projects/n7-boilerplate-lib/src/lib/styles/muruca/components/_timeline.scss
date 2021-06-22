@@ -72,7 +72,26 @@
         width: auto !important;
         background-color: $color-third;
         color: $color-text-inverse;
-        font-weight: $font-weight-bold;
+        transition: background-color $transition-durations;
+        border: 0;
+        border-radius: $border-radius;
+
+        .vis-item-content {
+            padding: $space/2 $space;
+            white-space: normal;
+        }
+
+        .vis-cluster__title {
+            font-weight: $font-weight-bold;
+        }
+
+        .vis-cluster__date {
+            font-style: italic;
+        }
+
+        &:hover {
+            background-color: $color-main;
+        }
     }
 
     /* Selected items */
