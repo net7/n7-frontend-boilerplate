@@ -103,6 +103,14 @@
             'navigation-hidden': !$do.hasNavigation
         }">
         <ng-container [ngSwitch]="$do.type">
+            <!-- IMAGE VIEWER (IIP) -->
+            <ng-container *ngSwitchCase="'images-iip'">
+                <n7-image-viewer 
+                (contextmenu)="lb.dataSource.hasContextMenu()" 
+                [data]="lb.widgets['aw-scheda-image'].ds.out$ | async">
+                </n7-image-viewer>
+            </ng-container>
+
             <!-- IMAGE VIEWER (IIIF) -->
             <ng-container *ngSwitchCase="'images-iiif'">
                 <n7-image-viewer 
