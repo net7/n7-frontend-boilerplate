@@ -27,9 +27,7 @@ export class MrCollectionDS extends DataSource {
   id: string;
 
   protected transform(data: collectionResponse): any {
-    if (data === undefined) {
-      return null;
-    }
+    if (!data) return null;
 
     const { header, items } = data;
 
@@ -38,7 +36,7 @@ export class MrCollectionDS extends DataSource {
       return null;
     }
 
-    const { classes, itemPreview } = this.options;
+    const { classes, itemPreview, linkTarget } = this.options;
     const itemPreviewOptions = merge(ITEM_PREVIEW_DEFAULTS, (itemPreview || {}));
 
     if ((header || {}).button) {
@@ -82,8 +80,11 @@ export class MrCollectionDS extends DataSource {
         if (item.link) {
           anchor = {
             href: linksHelper.getRouterLink(item.link),
-            queryParams: linksHelper.getQueryParams(item.link)
+            queryParams: linksHelper.getQueryParams(item.link),
           };
+          if (linkTarget) {
+            anchor.target = linkTarget;
+          }
         }
         if (item.payload) {
           anchor = {

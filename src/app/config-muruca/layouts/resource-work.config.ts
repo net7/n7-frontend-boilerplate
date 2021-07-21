@@ -24,7 +24,10 @@ export default {
         id: 'collection-witnesses',
         type: 'collection',
         grid: 3,
-        title: 'Testimoni collegati'
+        title: 'Testimoni collegati',
+        options: {
+          linkTarget: '_blank'
+        }
       },
       {
         id: 'collection-taxonomies',
