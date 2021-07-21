@@ -1,20 +1,50 @@
-import { ImageViewerToolsData, IMAGE_VIEWER_TOOLS_MOCK } from '@n7-frontend/components';
+import { ImageViewerToolsData } from '@n7-frontend/components';
 import { DataSource } from '@n7-frontend/core';
 
-export class MrImageViewerToolsDS extends DataSource {
-  protected transform(): ImageViewerToolsData {
-    const data = IMAGE_VIEWER_TOOLS_MOCK;
-    data.images = [
-      { thumb: 'http://placekitten.com/200/130', payload: { thumbindex: 0 }, caption: 'Test caption <b>#1</b>' },
-      { thumb: 'http://placekitten.com/90/180', payload: { thumbindex: 1 }, caption: 'Test caption <b>#2</b>' },
-      { thumb: 'http://placekitten.com/90/110', payload: { thumbindex: 2 }, caption: 'Test caption <b>#3</b>' },
-    ];
-    const initialDescription = data.images[data.initial].caption;
-    if (initialDescription !== undefined) {
-      data.description = initialDescription;
-    }
+type ImageViewerResponse = {
+  thumbs: string[];
+  images: {
+    url: string;
+    type: string;
+    caption?: string;
+  }[];
+};
 
-    return data;
+export class MrImageViewerToolsDS extends DataSource {
+  id: string;
+
+  protected transform(data: ImageViewerResponse): ImageViewerToolsData {
+    if (!data) return null;
+
+    const { thumbs } = data;
+    const images = data.images.map(({ caption }, thumbindex) => ({
+      caption,
+      thumb: thumbs[thumbindex],
+      payload: { thumbindex }
+    }));
+    return {
+      images,
+      controls: {
+        description: {
+          icon: 'n7-icon-info1',
+          anchor: { payload: 'toggle-description' }
+        },
+        thumbs: {
+          icon: 'n7-icon-images',
+          anchor: { payload: 'toggle-thumbs' }
+        },
+        closedescription: {
+          icon: 'n7-icon-close-circle',
+          anchor: { payload: 'close-description' }
+        }
+      },
+      isVisible: {
+        description: false,
+        thumbnails: false,
+      },
+      description: images[0].caption,
+      initial: 0
+    };
   }
 
   public toggleDescription() {
