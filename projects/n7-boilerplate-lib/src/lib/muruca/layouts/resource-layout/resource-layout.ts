@@ -97,13 +97,23 @@ export class MrResourceLayoutComponent extends AbstractLayout implements OnInit,
     const sections = top.concat(content);
     this.widgets = [];
     if (sections) {
-      sections.forEach(({ id, type, options }) => {
+      sections.forEach(({
+        id, type, options, tools
+      }) => {
         this.widgets.push({
           id,
           options,
           dataSource: DATASOURCE_MAP[type],
           eventHandler: EVENTHANDLER_MAP[type]
         });
+        if (type === 'viewer' && tools) {
+          this.widgets.push({
+            options,
+            id: `${id}-tools`,
+            dataSource: DATASOURCE_MAP[`${type}-tools`],
+            eventHandler: EVENTHANDLER_MAP[`${type}-tools`]
+          });
+        }
       });
     }
   }

@@ -75,18 +75,41 @@ export class MrResourceLayoutDS extends LayoutDataSource {
   private initSections(response) {
     const { top, content } = this.pageConfig.sections;
     const sections = top.concat(content);
-    sections.forEach(({ id }) => {
+    sections.forEach(({ id, type, tools }) => {
+      // update section datasource
       const widgetDataSource = this.getWidgetDataSource(id);
       if (!widgetDataSource) return;
       const responseSection = response.sections[id];
       // set id
       widgetDataSource.id = id;
+      // check viewer tools
+      if (type === 'viewer') {
+        // update image viewer options
+        this.one(id).updateOptions({ tools });
+      }
       // update data
       if (responseSection && !helpers.isEmpty(responseSection)) {
         this.one(id).update(responseSection);
       } else {
-        // unload the component wihout data
+        // unload the component without data
         this.one(id).update(undefined);
+      }
+
+      // image viewer tools check
+      if (type === 'viewer' && tools) {
+        const toolsId = `${id}-tools`;
+        // update image viewer tools datasource
+        const widgetToolsDataSource = this.getWidgetDataSource(toolsId);
+        if (!widgetToolsDataSource) return;
+        // set id
+        widgetToolsDataSource.id = toolsId;
+        // update data
+        if (responseSection && !helpers.isEmpty(responseSection)) {
+          this.one(toolsId).update(responseSection);
+        } else {
+          // unload the component without data
+          this.one(toolsId).update(undefined);
+        }
       }
     });
 

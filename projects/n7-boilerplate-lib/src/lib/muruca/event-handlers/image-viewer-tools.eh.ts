@@ -1,10 +1,13 @@
 import { EventHandler } from '@n7-frontend/core';
+import { MrImageViewerToolsDS } from '../data-sources/image-viewer-tools.ds';
 
 export class MrImageViewerToolsEH extends EventHandler {
+  dataSource: MrImageViewerToolsDS;
+
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
-        case 'sb-image-viewer-tools.click':
+        case `${this.dataSource.id}.click`:
           if (payload.thumbindex !== undefined) {
             const index = payload.thumbindex;
             this.dataSource.handleThumbs(index);
@@ -32,12 +35,14 @@ export class MrImageViewerToolsEH extends EventHandler {
 
     this.outerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
-        case 'sb-image-viewer-layout.init':
-        case 'sb-image-viewer-layout.thumbclick':
+        case 'mr-resource-layout.init':
+        case 'mr-resource-layout.thumbclick':
           // Silent
           break;
-        case 'sb-image-viewer-layout.pagechange':
-          this.dataSource.handlePageChange(payload);
+        case 'mr-resource-layout.pagechange':
+          if (payload.targetId === this.dataSource.id) {
+            this.dataSource.handlePageChange(payload.eventData);
+          }
           break;
         default:
           // console.warn('unhandled event of type', type);
