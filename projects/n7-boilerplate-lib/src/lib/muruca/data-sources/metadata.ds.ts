@@ -9,6 +9,8 @@ export class MrMetadataDS extends DataSource {
   toUrl = (string: string) => `<a href="${string}" target="_blank">${string}<a>`
 
   protected transform(data: any): any {
+    if (!data) return null;
+
     const { hideLabels } = this.options;
     const { group } = data;
 
