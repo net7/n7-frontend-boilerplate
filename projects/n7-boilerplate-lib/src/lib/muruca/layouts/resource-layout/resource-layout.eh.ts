@@ -35,6 +35,9 @@ export class MrResourceLayoutEH extends EventHandler {
           this.listenRoute();
           // scroll top
           window.scrollTo(0, 0);
+
+          // emit signal
+          this.emitOuter('init');
         } break;
         case 'mr-resource-layout.destroy':
           this.destroy$.next();
@@ -49,6 +52,22 @@ export class MrResourceLayoutEH extends EventHandler {
       if (type.indexOf('openresourcemodal') !== -1) {
         const { id, type: resourceType } = payload;
         this.modalService.open(id, resourceType);
+      }
+      if (type.indexOf('thumbclick') !== -1) {
+        const [sourceId] = type.split('.');
+        const targetId = sourceId.replace('-tools', '');
+        this.emitOuter('thumbclick', {
+          targetId,
+          thumbindex: payload
+        });
+      }
+      if (type.indexOf('pagechange') !== -1) {
+        const [sourceId] = type.split('.');
+        const targetId = `${sourceId}-tools`;
+        this.emitOuter('pagechange', {
+          targetId,
+          eventData: payload
+        });
       }
     });
   }
