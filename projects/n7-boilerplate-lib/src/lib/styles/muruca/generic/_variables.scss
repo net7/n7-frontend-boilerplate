@@ -30,8 +30,8 @@ $grid-gutter-v: $space*2;
 // ------------------------------------ //
 // #Z-INDEX
 // ------------------------------------ //
-// $z-index-base: 1000;
-// $z-index-modal:         $z-index-base + 10;
+$z-index-base: 1000;
+$z-index-modal: $z-index-base + 10;
 
 
 // ------------------------------------ //
@@ -348,4 +348,11 @@ $gallery-item-width: 130px;
 // ------------------------------------ //
 // FORM-WRAPPER-ACCORDION
 // ------------------------------------ //
-$form-wrapper-accordion-header-height:56px;
+$form-wrapper-accordion-header-height: 56px;
+
+
+// ------------------------------------ //
+// #METADATA-VIEWER
+// ------------------------------------ //
+// Set a high value if you don't want to activate the scrollbar
+$metadata-viewer-item-value-max-height: 400px;
