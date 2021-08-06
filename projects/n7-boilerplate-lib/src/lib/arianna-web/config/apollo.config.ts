@@ -1,3 +1,41 @@
+import { environment as env } from 'src/environments/environment';
+
+const getTreeBranches = (hasImage = true) => {
+  const depth = (env as any).treeDepth || 15;
+  let branchConfig = `
+    label
+    id
+    document_type
+    document_classification
+  `;
+  if (hasImage) {
+    branchConfig = `
+      label
+      id
+      img
+      document_type
+      document_classification
+    `;
+  }
+  const output = [];
+  let i;
+  let j;
+  // open config
+  for (i = 0; i < depth; i += 1) {
+    output.push(
+      i === 0
+        ? branchConfig
+        : `branches {${branchConfig}`
+    );
+  }
+  // close config
+  for (j = 0; j < depth; j += 1) {
+    output.push(j === 0 ? '' : '}');
+  }
+
+  return output.join('');
+};
+
 export default {
   getLastPosts: {
     queryName: 'getLastPosts',
@@ -35,58 +73,7 @@ export default {
     queryBody: `
       {
         getTreeOfItems{
-          label
-          id
-          document_type
-          document_classification
-          branches {
-            label
-            id
-            document_type
-            document_classification
-            branches {
-              label
-              id
-              document_type
-              document_classification
-              branches {
-                label
-                id
-                document_type
-                document_classification
-                branches {
-                  label
-                  id
-                  document_type
-                  document_classification
-                  branches {
-                    label
-                    id
-                    document_type
-                    document_classification
-                    branches {
-                      label
-                      id
-                      document_type
-                      document_classification
-                      branches {
-                        label
-                        id
-                        document_type
-                        document_classification
-                        branches {
-                          label
-                          id
-                          document_type
-                          document_classification
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
+          ${getTreeBranches(false)}
         }
       }
       `,
@@ -96,67 +83,7 @@ export default {
     queryBody: `
       {
         getTreeOfItems{
-          label
-          id
-          img
-          document_type
-          document_classification
-          branches {
-            label
-            id
-            img
-            document_type
-            document_classification
-            branches {
-              label
-              id
-              img
-              document_type
-              document_classification
-              branches {
-                label
-                id
-                img
-                document_type
-                document_classification
-                branches {
-                  label
-                  id
-                  img
-                  document_type
-                  document_classification
-                  branches {
-                    label
-                    id
-                    img
-                    document_type
-                    document_classification
-                    branches {
-                      label
-                      id
-                      img
-                      document_type
-                      document_classification
-                      branches {
-                        label
-                        id
-                        img
-                        document_type
-                        document_classification
-                        branches {
-                          label
-                          id
-                          img
-                          document_type
-                          document_classification
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
+          ${getTreeBranches()}
         }
       }
       `,
