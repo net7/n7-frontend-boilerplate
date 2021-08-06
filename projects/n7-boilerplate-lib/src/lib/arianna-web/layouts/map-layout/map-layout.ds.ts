@@ -136,6 +136,7 @@ export class AwMapLayoutDS extends LayoutDataSource {
       currentPage: this.currentPage,
       pageLimit: 5,
       sizes: {
+        label: 'Numero di risultati',
         list: [10, 25, 50],
         active: this.pageSize,
       },
