@@ -53,7 +53,10 @@
                             <div class="mr-content-block__content n7-grid-1">
                                 <ng-container *ngFor="let item of biblio.items">
                                     <div class="mr-timeline__collection-content">
-                                        <n7-item-preview [data]="item"></n7-item-preview>
+                                        <n7-item-preview 
+                                            [emit]="lb.eventHandler.itemPreviewEmit"    
+                                            [data]="item">
+                                        </n7-item-preview>
                                     </div>
                                 </ng-container>
                             </div>
