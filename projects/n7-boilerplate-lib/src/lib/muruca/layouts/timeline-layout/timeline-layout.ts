@@ -6,6 +6,7 @@ import { CommunicationService } from '../../../common/services/communication.ser
 import { LayoutsConfigurationService } from '../../../common/services/layouts-configuration.service';
 import { ConfigurationService } from '../../../common/services/configuration.service';
 import { MainStateService } from '../../../common/services/main-state.service';
+import { MrResourceModalService } from '../../services/resource-modal.service';
 import { MrLayoutStateService } from '../../services/layout-state.service';
 import { MrTimelineLayoutConfig as config } from './timeline-layout.config';
 
@@ -25,6 +26,7 @@ export class MrTimelineLayoutComponent extends AbstractLayout implements OnInit,
     private communication: CommunicationService,
     private mainState: MainStateService,
     public layoutState: MrLayoutStateService,
+    public modalService: MrResourceModalService
   ) {
     super(layoutsConfiguration.get('MrTimelineLayoutConfig') || config);
   }
@@ -36,6 +38,7 @@ export class MrTimelineLayoutComponent extends AbstractLayout implements OnInit,
       configuration: this.configuration,
       communication: this.communication,
       layoutState: this.layoutState,
+      modalService: this.modalService,
       route: this.route,
       router: this.router,
       location: this.location,

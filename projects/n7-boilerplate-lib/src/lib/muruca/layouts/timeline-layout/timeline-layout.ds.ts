@@ -157,7 +157,16 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
         this.hasMap = false;
       }
       if (bibData) {
-        this.bibliographyData = bibData;
+        this.bibliographyData = {
+          header: bibData.header,
+          items: bibData.items.map((item) => ({
+            ...item,
+            anchor: {
+              payload: item.payload
+            },
+            classes: 'mr-item-preview-bibliography'
+          }))
+        };
       } else {
         this.bibliographyData = undefined;
       }
