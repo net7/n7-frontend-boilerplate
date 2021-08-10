@@ -4,6 +4,7 @@ import { tap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Anchor } from '@n7-frontend/components';
 import { ConfigurationService } from '../../common/services/configuration.service';
+import linksHelper from '../helpers/links-helper';
 
 type MenuItem = {
   text: string;
@@ -55,7 +56,10 @@ export class MrMenuService {
         const item = {
           classes,
           text: label,
-          anchor: slug ? { href } : null,
+          anchor: href ? {
+            href: linksHelper.getRouterLink(href),
+            queryParams: linksHelper.getQueryParams(href)
+          } : null,
           _meta: {
             id: href
           }
@@ -71,7 +75,10 @@ export class MrMenuService {
             item.subnav.push({
               classes: el.classes || null,
               text: el.label,
-              anchor: { href: subHref },
+              anchor: subHref ? {
+                href: linksHelper.getRouterLink(subHref),
+                queryParams: linksHelper.getQueryParams(subHref)
+              } : null,
               _meta: {
                 id: subHref
               }
