@@ -1,7 +1,4 @@
-import { environment as env } from 'src/environments/environment';
-
-const getTreeBranches = (hasImage = true) => {
-  const depth = (env as any).treeDepth || 15;
+const getTreeBranches = (depth, hasImage = true) => {
   let branchConfig = `
     label
     id
@@ -36,7 +33,7 @@ const getTreeBranches = (hasImage = true) => {
   return output.join('');
 };
 
-export default {
+export default (treeDepth) => ({
   getLastPosts: {
     queryName: 'getLastPosts',
     queryBody: `
@@ -73,7 +70,7 @@ export default {
     queryBody: `
       {
         getTreeOfItems{
-          ${getTreeBranches(false)}
+          ${getTreeBranches(treeDepth, false)}
         }
       }
       `,
@@ -83,7 +80,7 @@ export default {
     queryBody: `
       {
         getTreeOfItems{
-          ${getTreeBranches()}
+          ${getTreeBranches(treeDepth)}
         }
       }
       `,
@@ -709,4 +706,4 @@ export default {
       }
     }`
   }
-};
+});

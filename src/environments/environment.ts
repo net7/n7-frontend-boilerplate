@@ -4,8 +4,6 @@
 
 export const environment = {
   production: false,
-  // arianna patrimonio tree depth
-  // treeDepth: 3
 };
 
 /*

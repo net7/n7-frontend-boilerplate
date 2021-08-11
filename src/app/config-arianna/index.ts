@@ -28,4 +28,5 @@ export default {
     bubblechart: true,
     carousel: true,
   },
+  // treeDepth: 3
 };
