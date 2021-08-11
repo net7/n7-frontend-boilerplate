@@ -3,21 +3,27 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { CommunicationProvider } from './communication-provider.interface';
+import { ConfigurationService } from '../configuration.service';
+
+const DEFAULT_TREE_DEPTH = 15;
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApolloProvider implements CommunicationProvider {
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private configuration: ConfigurationService,
   ) {}
 
   request$(providerConfig, requestId: string, options) {
     const { params, method, httpOptions } = options;
+    const treeDepth = this.configuration.get('treeDepth') || DEFAULT_TREE_DEPTH;
+    const config = providerConfig.config ? providerConfig.config(treeDepth) : {};
     let query;
 
-    if (providerConfig.config && providerConfig.config[requestId]) {
-      query = providerConfig.config[requestId];
+    if (config && config[requestId]) {
+      query = config[requestId];
     }
 
     query = query || {};
