@@ -190,6 +190,7 @@ export class AwSearchLayoutDS extends LayoutDataSource {
       currentPage: this.currentPage,
       pageLimit: 5,
       sizes: {
+        label: 'Numero di risultati',
         list: this.paginationList,
         active: this.pageSize,
       },

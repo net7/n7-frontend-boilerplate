@@ -8,6 +8,9 @@
    #OVERLAY
 \* ------------------------------------ */
 .mr-modal {
+    position: relative;
+    z-index: $z-index-modal;
+    
     &__overlay {
         position: fixed;
         z-index: 999;

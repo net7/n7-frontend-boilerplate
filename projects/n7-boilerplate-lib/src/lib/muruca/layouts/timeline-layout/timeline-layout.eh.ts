@@ -3,8 +3,11 @@ import { Location } from '@angular/common';
 import { EventHandler } from '@n7-frontend/core';
 import { Timeline } from 'vis-timeline';
 import helpers from '../../../common/helpers';
+import { MrResourceModalService } from '../../services/resource-modal.service';
 
 export class MrTimelineLayoutEH extends EventHandler {
+  private modalService: MrResourceModalService;
+
   private route: ActivatedRoute;
 
   private router: Router;
@@ -16,6 +19,7 @@ export class MrTimelineLayoutEH extends EventHandler {
       switch (type) {
         case 'mr-timeline-layout.init':
           this.dataSource.onInit(payload);
+          this.modalService = payload.modalService;
           this.route = payload.route;
           this.router = payload.router;
           this.location = payload.location;
@@ -65,5 +69,12 @@ export class MrTimelineLayoutEH extends EventHandler {
         this.dataSource.loadDefaults(true);
       }
     });
+  }
+
+  public itemPreviewEmit = (type, payload) => {
+    if (type === 'click' && payload?.action === 'resource-modal') {
+      const { id, type: resourceType } = payload;
+      this.modalService.open(id, resourceType);
+    }
   }
 }

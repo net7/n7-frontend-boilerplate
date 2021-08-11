@@ -116,6 +116,7 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       currentPage: +this.currentPage || 1,
       pageLimit: 5,
       sizes: {
+        label: 'Numero di risultati',
         list: [10, 25, 50],
         active: +this.pageSize,
       },

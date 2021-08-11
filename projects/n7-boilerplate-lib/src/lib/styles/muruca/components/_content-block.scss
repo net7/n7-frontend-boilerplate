@@ -65,6 +65,12 @@
         word-break: break-word;
     }
 
+    .n7-metadata-viewer__item-value {
+        max-height: $metadata-viewer-item-value-max-height;
+        padding-right: $space*2;
+        overflow-y: auto;
+    }
+
     .n7-metadata-viewer__item-value,
     .n7-metadata-viewer__item-value p {
         font-size: $font-size-m;
