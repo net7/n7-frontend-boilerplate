@@ -16,10 +16,12 @@ export class MrImageViewerDS extends DataSource {
       images,
       thumbs,
       viewerId: this.id,
+      hideNavigation: !(data.images.length > 1),
       libOptions: {
         /* SHOW GROUP */
         showNavigator: false, // shows the mini-map
         autoHideControls: false,
+        // showNavigationControl: false,
 
         /* SHOW BUTTONS */
         showRotationControl: false,

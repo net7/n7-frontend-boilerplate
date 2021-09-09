@@ -26,6 +26,22 @@ export class MrImageViewerToolsEH extends EventHandler {
             this.dataSource.toggleThumbs();
             break;
           }
+          if (payload === 'next') {
+            // let index = this.dataSource.retrieveIndex();
+            // this.dataSource.handleThumbsNext(index);
+            // let updatedIndex = this.dataSource.retrieveIndex();
+            // this.emitOuter('thumbclick', updatedIndex);
+            this.dataSource.scrollRight();
+            break;
+          }
+          if (payload === 'prev') {
+            // let index = this.dataSource.retrieveIndex();
+            // this.dataSource.handleThumbsPrev(index);
+            // let updatedIndex = this.dataSource.retrieveIndex();
+            // this.emitOuter('thumbclick', updatedIndex);
+            this.dataSource.scrollLeft();
+            break;
+          }
           break;
         default:
           // console.warn('unhandled event of type', type);
@@ -34,6 +50,7 @@ export class MrImageViewerToolsEH extends EventHandler {
     });
 
     this.outerEvents$.subscribe(({ type, payload }) => {
+      // console.log(payload);
       switch (type) {
         case 'mr-resource-layout.init':
         case 'mr-resource-layout.thumbclick':
