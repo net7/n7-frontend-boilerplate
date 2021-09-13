@@ -87,20 +87,56 @@ export class MrImageViewerToolsDS extends DataSource {
 
   public scrollRight() {
     const thumbsStrip = document.querySelectorAll<HTMLElement>('div.n7-image-viewer-tools__thumbs-strip')[0];
-    thumbsStrip.scrollBy({
-      top: 0,
-      left: +400,
-      behavior: 'smooth'
-    });
+    const rightArrow = document.querySelectorAll<HTMLElement>(`div.${this.output.navigation.next.classes}`)[0];
+    const leftArrow = document.querySelectorAll<HTMLElement>(`div.${this.output.navigation.prev.classes}`)[0];
+    const maxStrip = thumbsStrip.scrollWidth - thumbsStrip.clientWidth;
+    const { scrollLeft } = thumbsStrip;
+
+    if ((scrollLeft + 400) >= maxStrip) { // mettere value da config e.g. scrollStrength
+      thumbsStrip.scrollBy({
+        top: 0,
+        left: +400,
+        behavior: 'smooth'
+      });
+      rightArrow.style.opacity = '0.5';
+    } else {
+      thumbsStrip.scrollBy({
+        top: 0,
+        left: +400,
+        behavior: 'smooth'
+      });
+    }
+
+    if (((scrollLeft + 400) > 0)) {
+      leftArrow.style.opacity = '1.0';
+    }
   }
 
   public scrollLeft() {
     const thumbsStrip = document.querySelectorAll<HTMLElement>('div.n7-image-viewer-tools__thumbs-strip')[0];
-    thumbsStrip.scrollBy({
-      top: 0,
-      left: -400,
-      behavior: 'smooth'
-    });
+    const rightArrow = document.querySelectorAll<HTMLElement>(`div.${this.output.navigation.next.classes}`)[0];
+    const leftArrow = document.querySelectorAll<HTMLElement>(`div.${this.output.navigation.prev.classes}`)[0];
+    const maxStrip = thumbsStrip.scrollWidth - thumbsStrip.clientWidth;
+    const { scrollLeft } = thumbsStrip;
+
+    if ((scrollLeft - 400) <= 0) { // mettere value da config e.g. scrollStrength
+      thumbsStrip.scrollBy({
+        top: 0,
+        left: -400,
+        behavior: 'smooth'
+      });
+      leftArrow.style.opacity = '0.5';
+    } else {
+      thumbsStrip.scrollBy({
+        top: 0,
+        left: -400,
+        behavior: 'smooth'
+      });
+    }
+
+    if (((scrollLeft - 400) < maxStrip)) {
+      rightArrow.style.opacity = '1.0';
+    }
   }
 
   //
