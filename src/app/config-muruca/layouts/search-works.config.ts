@@ -8,6 +8,7 @@ export default {
   facetsTitle: 'search#facets_title',
   totalResultsText: 'search#works_total',
   filtersTitle: 'search#filters_title',
+  advancedResults: true,
   sort: {
     label: 'search#sort_title',
     options: [
