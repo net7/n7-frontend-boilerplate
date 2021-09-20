@@ -72,9 +72,17 @@
                         <!-- success: items > 0 -->
                         <ng-container *ngSwitchCase="'SUCCESS'">
                             <div class="n7-grid-{{ lb.dataSource.pageConfig.grid || 3 }}">
-                                <n7-item-preview *ngFor="let item of (lb.widgets['mr-search-results'].ds.out$ | async)"
-                                [data]="item" [emit]="lb.widgets['mr-search-results'].emit">
-                                </n7-item-preview>
+                                <ng-container *ngIf="!lb.dataSource.pageConfig?.advancedResults">
+                                    <n7-item-preview *ngFor="let item of (lb.widgets['mr-search-results'].ds.out$ | async)"
+                                    [data]="item" [emit]="lb.widgets['mr-search-results'].emit">
+                                    </n7-item-preview>
+                                </ng-container>
+                                <ng-container *ngIf="lb.dataSource.pageConfig?.advancedResults">
+                                    <mr-advanced-result
+                                        *ngFor="let item of (lb.widgets['mr-search-results'].ds.out$ | async)"
+                                        [data]="item" [emit]="lb.widgets['mr-search-results'].emit">
+                                    </mr-advanced-result>
+                                </ng-container>
                             </div>
                         </ng-container>
 
