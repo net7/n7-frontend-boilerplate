@@ -1,4 +1,6 @@
-export default {
+import { FooterConfig } from '@n7-frontend/boilerplate';
+
+const config: FooterConfig = {
   columns: [
     {
       classes: 'col-class',
@@ -57,3 +59,5 @@ export default {
     }
   ]
 };
+
+export default config;
