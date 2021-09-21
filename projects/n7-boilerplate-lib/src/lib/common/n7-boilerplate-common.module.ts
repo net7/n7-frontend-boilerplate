@@ -34,7 +34,7 @@ const COMPONENTS = [
   exports: COMPONENTS,
 })
 export class N7BoilerplateCommonModule {
-  static forRoot(config: any): ModuleWithProviders {
+  static forRoot(config?: any): ModuleWithProviders {
     return {
       ngModule: N7BoilerplateCommonModule,
       providers: [
