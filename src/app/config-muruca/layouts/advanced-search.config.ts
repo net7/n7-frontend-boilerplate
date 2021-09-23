@@ -1,4 +1,6 @@
-export default {
+import { ConfigMurucaAdvancedSearchLayout } from '@n7-frontend/boilerplate';
+
+const config: ConfigMurucaAdvancedSearchLayout = {
   title: 'advancedsearch#page_title',
   resultsUrl: '/advanced-results',
   formConfig: {
@@ -71,9 +73,11 @@ export default {
         data: {
           id: 'checkbox-1',
           checkboxes: [{
+            id: 'checkbox-1-1',
             label: 'advancedsearch#test_checkbox_1',
             payload: 1,
           }, {
+            id: 'checkbox-1-2',
             label: 'advancedsearch#test_checkbox_2',
             payload: 2,
           }]
@@ -136,3 +140,5 @@ export default {
     }]
   }
 };
+
+export default config;

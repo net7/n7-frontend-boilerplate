@@ -1,6 +1,7 @@
+import { ConfigMurucaTimelineLayout } from '@n7-frontend/boilerplate';
 import { utc } from 'moment';
 
-export default {
+const config: ConfigMurucaTimelineLayout = {
   title: 'timeline#title',
   mapHeader: 'timeline#mapheader',
   libOptions: {
@@ -35,3 +36,5 @@ export default {
     end: '1340-01-06T00:00:00'
   }
 };
+
+export default config;

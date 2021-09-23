@@ -11,8 +11,8 @@
         <div *ngIf="group.options.isOpen" class="mr-form-wrapper-accordion__content" [attr.id]="group.id">
             <mr-form [form]="data.form" [group]="group">
                 <!-- CUSTOM INPUTS -->
-                <!-- <ng-template let-type="type" let-input="input">
-                    <ng-container [ngSwitch]="type">
+                <!-- <ng-template let-customType="customType" let-input="input">
+                    <ng-container [ngSwitch]="customType">
                         
                         <n7-tag *ngSwitchCase="'tag'" 
                             [data]="input.ds.out$ | async"

@@ -1,8 +1,10 @@
+import { LibOptions } from '@n7-frontend/components';
 import { MrSearchConfig } from '../../muruca/interfaces/search.interface';
 import {
   ConfigMurucaBreadcrumbsSection,
   ConfigMurucaCollectionSection,
   ConfigMurucaContentSection,
+  ConfigMurucaGallerySection,
   ConfigMurucaHeroSection,
   ConfigMurucaImageViewerSection,
   ConfigMurucaInfoBoxSection,
@@ -45,6 +47,44 @@ export interface ConfigMurucaResourceLayout extends ConfigMurucaLayout {
   };
 }
 
+export interface ConfigMurucaItineraryLayout extends ConfigMurucaLayout {
+  sections: (
+    ConfigMurucaMetadataSection
+    | ConfigMurucaCollectionSection
+    | ConfigMurucaGallerySection
+  )[];
+}
+
+export interface ConfigMurucaTimelineLayout extends ConfigMurucaLayout {
+  mapHeader: string;
+  libOptions: LibOptions;
+}
+
+type SearchSortConfig = {
+  label?: string;
+  options: Array<{
+    value: string;
+    label: string;
+    selected?: boolean;
+    disabled?: boolean;
+  }>;
+}
+
+type SearchPaginationConfig = {
+  limit: number;
+  options: number[];
+  selectLabel?: string;
+}
+
+type SearchItemPreviewConfig = {
+  classes: string;
+}
+
+type SearchButtonConfig = {
+  text: string;
+  button: string;
+}
+
 export interface ConfigMurucaSearchLayout extends ConfigMurucaLayout {
   searchId: string;
   searchConfig: MrSearchConfig;
@@ -59,29 +99,25 @@ export interface ConfigMurucaSearchLayout extends ConfigMurucaLayout {
     linkText: string;
   };
   grid?: number;
-  sort?: {
-    label?: string;
-    options: Array<{
-      value: string;
-      label: string;
-      selected?: boolean;
-      disabled?: boolean;
-    }>;
-  };
-  pagination: {
-    limit: number;
-    options: number[];
-    selectLabel?: string;
-  };
-  itemPreview?: {
-    classes: string;
-  };
-  fallback: {
-    text: string;
-    button: string;
-  };
-  ko: {
-    text: string;
-    button: string;
-  };
+  sort?: SearchSortConfig;
+  pagination: SearchPaginationConfig;
+  itemPreview?: SearchItemPreviewConfig;
+  fallback: SearchButtonConfig;
+  ko: SearchButtonConfig;
+}
+
+export interface ConfigMurucaLayoutPosts extends ConfigMurucaLayout {
+  searchId: string;
+  resourcePath: string;
+  totalResultsText: string;
+  grid?: number;
+  sort?: SearchSortConfig;
+  pagination: SearchPaginationConfig;
+  itemPreview?: SearchItemPreviewConfig;
+  fallback: SearchButtonConfig;
+  ko: SearchButtonConfig;
+}
+
+export interface ConfigMurucaLayoutMap extends ConfigMurucaLayout {
+  defaultText: string;
 }

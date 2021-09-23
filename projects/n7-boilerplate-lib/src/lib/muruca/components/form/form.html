@@ -26,12 +26,12 @@
                         [data]="form.inputs[input.id].ds.out$ | async"
                         [emit]="form.inputs[input.id].emit"></n7-input-select>
 
-                    <!-- DEFAULT (external template) -->
-                    <ng-container *ngSwitchDefault>
+                    <!-- INPUT CUSTOM (external template) -->
+                    <ng-container *ngSwitchCase="'custom'">
                         <ng-template *ngTemplateOutlet="
                         templateRef; 
                         context: { 
-                            type: input.type, 
+                            customType: input.customType, 
                             input: form.inputs[input.id] 
                         }"></ng-template>
                     </ng-container>

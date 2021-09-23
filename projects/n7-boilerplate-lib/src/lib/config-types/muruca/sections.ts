@@ -77,3 +77,7 @@ export interface ConfigMurucaMetadataSection extends ConfigMurucaSection {
     hideLabels: boolean;
   };
 }
+
+export interface ConfigMurucaGallerySection extends ConfigMurucaSection {
+  type: 'gallery';
+}

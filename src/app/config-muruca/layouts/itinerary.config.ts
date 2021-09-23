@@ -1,4 +1,6 @@
-export default {
+import { ConfigMurucaItineraryLayout } from '@n7-frontend/boilerplate';
+
+const config: ConfigMurucaItineraryLayout = {
   title: 'global#itinerary',
   bodyClasses: 'resource-layout',
   sections: [
@@ -10,7 +12,7 @@ export default {
       options: {
         classes: 'mr-item-preview-itinerary',
         itemPreview: {
-          limit: false,
+          limit: null,
           striptags: false
         }
       }
@@ -42,3 +44,5 @@ export default {
     // }
   ]
 };
+
+export default config;
