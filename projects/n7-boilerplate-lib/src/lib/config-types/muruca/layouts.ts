@@ -118,6 +118,24 @@ export interface ConfigMurucaLayoutPosts extends ConfigMurucaLayout {
   ko: SearchButtonConfig;
 }
 
+export interface ConfigMurucaLayoutAdvancedResults extends ConfigMurucaLayout {
+  searchId: string;
+  resourcePath: string;
+  totalResultsText: string;
+  filters: {
+    title: string;
+    labels: {
+      [filterId: string]: string;
+    };
+  };
+  grid?: number;
+  sort?: SearchSortConfig;
+  pagination: SearchPaginationConfig;
+  itemPreview?: SearchItemPreviewConfig;
+  fallback: SearchButtonConfig;
+  ko: SearchButtonConfig;
+}
+
 export interface ConfigMurucaLayoutMap extends ConfigMurucaLayout {
   defaultText: string;
 }
