@@ -34,7 +34,8 @@ export interface ConfigMurucaAdvancedSearchSection {
     ConfigMurucaAdvancedSearchInputText<unknown>
     | ConfigMurucaAdvancedSearchInputCheckbox<unknown>
     | ConfigMurucaAdvancedSearchInputSelect<unknown>
-    | ConfigMurucaAdvancedSearchInputCustom<unknown>
+    // FIXME: custom inputs
+    // | ConfigMurucaAdvancedSearchInputCustom<unknown>
   )[];
 }
 
@@ -69,9 +70,9 @@ export interface ConfigMurucaAdvancedSearchInputSelect<T>
   data: InputSelectData;
 }
 
-export interface ConfigMurucaAdvancedSearchInputCustom<T>
-  extends ConfigMurucaAdvancedSearchInput<T> {
-  type: 'custom';
-  customType: string;
-  data: object;
-}
+// FIXME: custom inputs
+// export interface ConfigMurucaAdvancedSearchInputCustom<T>
+//   extends ConfigMurucaAdvancedSearchInput<T> {
+//   type: string;
+//   data: object;
+// }

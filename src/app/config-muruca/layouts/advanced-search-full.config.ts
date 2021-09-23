@@ -190,20 +190,19 @@ const config: ConfigMurucaAdvancedSearchLayout = {
               hidden: false
             }
           },
-          // custom input example
-          {
-            id: 'input-3',
-            type: 'custom',
-            customType: 'tag',
-            data: {
-              label: 'label: ',
-              text: 'text',
-              icon: 'n7-icon-close',
-              payload: {
-                value: 'tag value!'
-              }
-            }
-          }
+          // FIXME: custom input example
+          // {
+          //   id: 'input-3',
+          //   type: 'tag',
+          //   data: {
+          //     label: 'label: ',
+          //     text: 'text',
+          //     icon: 'n7-icon-close',
+          //     payload: {
+          //       value: 'tag value!'
+          //     }
+          //   }
+          // }
         ]
       },
       {
