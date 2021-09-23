@@ -1,7 +1,11 @@
 export interface ConfigMurucaSection {
+  /** id (unique) */
   id: string;
+  /** section title */
   title?: string;
+  /** css grid value 1, 2, 3 */
   grid?: number;
+  /** section options */
   options?: object;
 }
 
@@ -16,7 +20,9 @@ export interface ConfigMurucaContentSection extends ConfigMurucaSection {
 export interface ConfigMurucaHeroSection extends ConfigMurucaSection {
   type: 'hero';
   options?: {
+    /** aditional css classes */
     classes?: string;
+    /** has background? */
     background?: boolean;
   };
 }
@@ -24,10 +30,14 @@ export interface ConfigMurucaHeroSection extends ConfigMurucaSection {
 export interface ConfigMurucaCollectionSection extends ConfigMurucaSection {
   type: 'collection';
   options?: {
+    /** aditional css classes */
     classes?: string;
     itemPreview?: {
+      /** text character limit */
       limit?: number;
+      /** no html tags? */
       striptags?: boolean;
+      /** link target <a target="{target}">  */
       linkTarget?: '_blank' | '_self' | '_parent' | '_top';
     };
   };
@@ -52,6 +62,7 @@ export interface ConfigMurucaTitleSection extends ConfigMurucaSection {
 export interface ConfigMurucaImageViewerSection extends ConfigMurucaSection {
   type: 'viewer';
   options?: {
+    /** has image viewer tools? */
     tools: boolean;
   };
 }
@@ -63,9 +74,12 @@ export interface ConfigMurucaTabsSection extends ConfigMurucaSection {
 export interface ConfigMurucaItemPreviewSection extends ConfigMurucaSection {
   type: 'preview';
   options?: {
+    /** aditional css classes */
     classes?: string;
     itemPreview?: {
+      /** text character limit */
       limit?: number;
+      /** no html tags? */
       striptags?: boolean;
     };
   };
@@ -74,6 +88,7 @@ export interface ConfigMurucaItemPreviewSection extends ConfigMurucaSection {
 export interface ConfigMurucaMetadataSection extends ConfigMurucaSection {
   type: 'metadata';
   options?: {
+    /** hide metadata labels? */
     hideLabels: boolean;
   };
 }
