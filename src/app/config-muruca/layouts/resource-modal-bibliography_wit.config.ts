@@ -1,4 +1,7 @@
-export default {
+import { ConfigMurucaResourceLayout } from '@n7-frontend/boilerplate';
+
+const config: ConfigMurucaResourceLayout = {
+  title: 'Testimoni',
   type: 'bibliography_wit',
   sections: {
     top: [
@@ -17,3 +20,5 @@ export default {
     ]
   }
 };
+
+export default config;

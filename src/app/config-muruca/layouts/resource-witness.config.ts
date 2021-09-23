@@ -1,4 +1,6 @@
-export default {
+import { ConfigMurucaResourceLayout } from '@n7-frontend/boilerplate';
+
+const config: ConfigMurucaResourceLayout = {
   title: 'Testimoni',
   type: 'witness',
   sections: {
@@ -49,7 +51,7 @@ export default {
         options: {
           classes: 'mr-item-preview-bibliography',
           itemPreview: {
-            limit: false,
+            limit: null,
             striptags: false
           }
         }
@@ -67,3 +69,5 @@ export default {
     ]
   }
 };
+
+export default config;

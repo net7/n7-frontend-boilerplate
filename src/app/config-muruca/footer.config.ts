@@ -1,6 +1,6 @@
-import { FooterConfig } from '@n7-frontend/boilerplate';
+import { ConfigCommonFooter } from '@n7-frontend/boilerplate';
 
-const config: FooterConfig = {
+const config: ConfigCommonFooter = {
   columns: [
     {
       title: 'Unus non sufficit orbis',

@@ -6,12 +6,8 @@ import {
   FacetHeaderData,
 } from '@n7-frontend/components';
 
-type InputType = 'text' | 'checkbox' | 'select' | 'link';
-
-type ValueType = 'string' | 'number' | 'boolean';
-
 export interface MrInputSchema {
-  valueType: ValueType;
+  valueType: 'string' | 'number' | 'boolean';
   multiple?: boolean;
 }
 
@@ -30,18 +26,54 @@ export interface MrSearchLayoutInput {
 
 export interface MrSearchFacetsInput {
   id: string;
-  type: InputType;
-  data: InputCheckboxData | InputLinkData | InputSelectData | InputTextData;
   schema: MrInputSchema;
   queryParam?: boolean;
   delay?: number;
   value?: string | string[] | boolean | null;
 }
 
+export interface MrSearchInputText extends MrSearchFacetsInput {
+  type: 'text';
+  data: InputTextData;
+}
+
+export interface MrSearchInputSelect extends MrSearchFacetsInput {
+  type: 'select';
+  data: InputSelectData;
+}
+
+export interface MrSearchInputCheckbox extends MrSearchFacetsInput {
+  type: 'checkbox';
+  data: InputCheckboxData;
+}
+
+export interface MrSearchInputLink extends MrSearchFacetsInput {
+  type: 'link';
+  data: InputLinkData;
+  limit?: number;
+}
+
 export interface MrSearchFacetsSection {
+  /**
+   * Section id (must be unique)
+   */
   id: string;
-  header: MrInputHeaderData;
-  inputs: MrSearchFacetsInput[];
+  /**
+   * Section header
+   */
+  header?: MrInputHeaderData;
+  /**
+   * Section inputs (allowed types: text, checkbox, select, link)
+   */
+  inputs: (
+    MrSearchInputText
+    | MrSearchInputCheckbox
+    | MrSearchInputSelect
+    | MrSearchInputLink
+  )[];
+  /**
+   * Section aditional css classes
+   */
   classes?: string;
 }
 

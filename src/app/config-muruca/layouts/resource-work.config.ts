@@ -1,5 +1,6 @@
-export default {
-  maxHeight: 100, // Threshold where the "read-more" button appears
+import { ConfigMurucaResourceLayout } from '@n7-frontend/boilerplate';
+
+const config: ConfigMurucaResourceLayout = {
   title: 'Opera',
   type: 'work',
   sections: {
@@ -13,7 +14,7 @@ export default {
     content: [
       {
         id: 'text-viewer',
-        type: 'text-viewer'
+        type: 'text'
       },
       {
         id: 'metadata',
@@ -26,7 +27,9 @@ export default {
         grid: 3,
         title: 'Testimoni collegati',
         options: {
-          linkTarget: '_blank'
+          itemPreview: {
+            linkTarget: '_blank'
+          }
         }
       },
       {
@@ -38,3 +41,5 @@ export default {
     ]
   }
 };
+
+export default config;

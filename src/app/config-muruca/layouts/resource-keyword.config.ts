@@ -1,4 +1,6 @@
-export default {
+import { ConfigMurucaResourceLayout } from '@n7-frontend/boilerplate';
+
+const config: ConfigMurucaResourceLayout = {
   title: 'Termini',
   type: 'keywords',
   sections: {
@@ -22,3 +24,5 @@ export default {
     ]
   }
 };
+
+export default config;

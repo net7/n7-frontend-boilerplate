@@ -1,6 +1,6 @@
 import { FooterData, HeaderData } from '@n7-frontend/components';
 
-export type CommunicationConfig = {
+export type ConfigCommonCommunication = {
   defaultProvider: string;
   providers: {
     [providerId: string]: {
@@ -13,10 +13,10 @@ export type CommunicationConfig = {
   };
 };
 
-export type FooterConfig = FooterData;
+export type ConfigCommonFooter = FooterData;
 
-export type HeaderConfig = Partial<HeaderData>;
+export type ConfigCommonHeader = Partial<HeaderData>;
 
-export type LabelsConfig = {
+export type ConfigCommonLabels = {
   [key: string]: string;
 };

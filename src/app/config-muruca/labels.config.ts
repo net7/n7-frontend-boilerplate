@@ -1,5 +1,5 @@
-import { LabelsConfig } from '@n7-frontend/boilerplate';
+import { ConfigCommonLabels } from '@n7-frontend/boilerplate';
 
-const config: LabelsConfig = {};
+const config: ConfigCommonLabels = {};
 
 export default config;

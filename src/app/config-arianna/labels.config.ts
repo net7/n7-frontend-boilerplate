@@ -1,7 +1,7 @@
-import { LabelsConfig } from '@n7-frontend/boilerplate';
+import { ConfigCommonLabels } from '@n7-frontend/boilerplate';
 
 /* eslint-disable @typescript-eslint/camelcase */
-const config: LabelsConfig = {
+const config: ConfigCommonLabels = {
   'aggregazioni-logiche-collegate': 'Fondi collegati',
   estremo_remoto: 'Estremo remoto',
   estremo_recente: 'Estremo recente',

@@ -1,6 +1,8 @@
+import { ConfigMurucaSearchLayout } from '@n7-frontend/boilerplate';
 import searchBooksFacetsConfig from './search-books-facets.config';
 
-export default {
+const config: ConfigMurucaSearchLayout = {
+
   title: 'Biblioteca',
   searchId: 'book',
   searchConfig: searchBooksFacetsConfig,
@@ -55,3 +57,5 @@ export default {
     button: 'search#ko_button'
   }
 };
+
+export default config;

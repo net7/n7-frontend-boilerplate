@@ -1,6 +1,6 @@
-import { HeaderConfig } from '@n7-frontend/boilerplate';
+import { ConfigCommonHeader } from '@n7-frontend/boilerplate';
 
-const config: HeaderConfig = {
+const config: ConfigCommonHeader = {
   classes: '',
   logo: {
     title: 'Petrarca Online',
