@@ -102,11 +102,11 @@ type SearchFallbackConfig = {
 }
 
 export interface ConfigMurucaSearchLayout extends ConfigMurucaLayout {
-  /** id (unique) used by search service */
+  /** search id (unique) used by search service */
   searchId: string;
   /** search config */
   searchConfig: MrSearchConfig;
-  /** results resource path (link) */
+  /** results resource path (route) */
   resourcePath: string;
   /** total results text */
   totalResultsText: string;
