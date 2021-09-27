@@ -5,12 +5,12 @@ export type ConfigCommonCommunication = {
   defaultProvider: string;
   providers: {
     [providerId: string]: {
-      /** api type: rest | apollo (graphql) */
-      type: 'rest' | 'apollo';
       /** api base url */
       baseUrl: string;
+      /** api type: rest | apollo (graphql) */
+      type?: 'rest' | 'apollo';
       /** request map: request id => api point */
-      config: {
+      config?: {
         [requestId: string]: string;
       };
     };

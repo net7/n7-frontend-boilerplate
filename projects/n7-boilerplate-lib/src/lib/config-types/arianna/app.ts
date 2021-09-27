@@ -34,14 +34,14 @@ export type ConfigAriannaItemPreview = {
     /** response payload path */
     data: string;
     /** title characters limit */
-    maxLength: number;
+    maxLength?: number;
   };
   /** item description */
-  text: {
+  text?: {
     /** response payload path */
     data: string;
     /** text characters limit */
-    maxLength: number;
+    maxLength?: number;
   };
   /** item metadata */
   metadata: {
