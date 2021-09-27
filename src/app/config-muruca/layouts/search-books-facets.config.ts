@@ -1,6 +1,6 @@
-import { MrSearchConfig } from '@n7-frontend/boilerplate';
+import { MrSearchConfig, MrSearchFacetsConfig, MrSearchLayoutInput } from '@n7-frontend/boilerplate';
 
-const facets = {
+const facets: MrSearchFacetsConfig = {
   sections: [{
     id: 'section-query',
     inputs: [{
@@ -64,32 +64,7 @@ const facets = {
         links: []
       }
     }],
-  },
-  // {
-  //   id: 'section-signatures',
-  //   header: {
-  //     id: 'header-signatures',
-  //     data: {
-  //       text: 'search#header_signatures',
-  //       additionalText: null,
-  //
-  //     }
-  //   },
-  //   inputs: [{
-  //     id: 'signatures',
-  //     type: 'link',
-  //     limit: 50,
-  //     queryParam: true,
-  //     schema: {
-  //       valueType: 'string',
-  //       multiple: true
-  //     },
-  //     data: {
-  //       links: []
-  //     }
-  //   }],
-  // },
-  {
+  }, {
     id: 'section-dates',
     header: {
       id: 'header-dates',
@@ -111,56 +86,7 @@ const facets = {
         links: []
       }
     }],
-  },
-  // {
-  //   id: 'section-contents',
-  //   header: {
-  //     id: 'header-contents',
-  //     data: {
-  //       text: 'search#header_contents',
-  //       additionalText: null,
-  //       iconRight: 'n7-icon-angle-down'
-  //     }
-  //   },
-  //   inputs: [{
-  //     id: 'contents',
-  //     type: 'link',
-  //     limit: 50,
-  //     queryParam: true,
-  //     schema: {
-  //       valueType: 'string',
-  //       multiple: true
-  //     },
-  //     data: {
-  //       links: []
-  //     }
-  //   }],
-  // },
-  // {
-  //   id: 'section-origins',
-  //   header: {
-  //     id: 'header-origins',
-  //     data: {
-  //       text: 'search#header_origins',
-  //       additionalText: null,
-  //       iconRight: 'n7-icon-angle-down'
-  //     }
-  //   },
-  //   inputs: [{
-  //     id: 'origins',
-  //     type: 'link',
-  //     limit: 50,
-  //     queryParam: true,
-  //     schema: {
-  //       valueType: 'string',
-  //       multiple: true
-  //     },
-  //     data: {
-  //       links: []
-  //     }
-  //   }],
-  // }
-  ],
+  }],
   classes: 'facets-wrapper'
 };
 
@@ -170,7 +96,7 @@ const layoutInputs = ['page', 'limit', 'sort'].map((id) => ({
   schema: {
     valueType: id === 'sort' ? 'string' : 'number'
   }
-}));
+} as MrSearchLayoutInput));
 
 const request = {
   results: {
@@ -184,4 +110,10 @@ const request = {
   delay: 500
 };
 
-export default { request, facets, layoutInputs } as unknown as MrSearchConfig;
+const config: MrSearchConfig = {
+  request,
+  facets,
+  layoutInputs
+};
+
+export default config;

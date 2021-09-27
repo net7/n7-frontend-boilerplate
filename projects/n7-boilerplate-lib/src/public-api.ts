@@ -5,6 +5,9 @@
 // core
 export * from './lib/n7-boilerplate-lib.module';
 
+// config types
+export * from './lib/config-types';
+
 // common
 export * from './lib/common/n7-boilerplate-common.module';
 export * from './lib/common/services';

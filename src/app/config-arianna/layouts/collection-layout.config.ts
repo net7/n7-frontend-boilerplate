@@ -1,4 +1,6 @@
-export default {
+import { ConfigAriannaCollectionLayout } from '@n7-frontend/boilerplate';
+
+const config: ConfigAriannaCollectionLayout = {
   header: {
     maxLength: 100,
     char: '…',
@@ -19,3 +21,5 @@ export default {
     }
   }
 };
+
+export default config;

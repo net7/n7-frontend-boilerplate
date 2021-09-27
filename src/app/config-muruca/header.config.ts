@@ -1,4 +1,6 @@
-export default {
+import { ConfigCommonHeader } from '@n7-frontend/boilerplate';
+
+const config: ConfigCommonHeader = {
   classes: '',
   logo: {
     title: 'Petrarca Online',
@@ -10,3 +12,5 @@ export default {
     items: []
   }
 };
+
+export default config;

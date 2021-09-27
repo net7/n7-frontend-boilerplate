@@ -1,4 +1,6 @@
-export default {
+import { ConfigCommonFooter } from '@n7-frontend/boilerplate';
+
+const config: ConfigCommonFooter = {
   columns: [
     {
       title: 'Unus non sufficit orbis',
@@ -73,3 +75,5 @@ export default {
     }
   ]
 };
+
+export default config;

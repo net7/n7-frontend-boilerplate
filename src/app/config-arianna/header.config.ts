@@ -1,5 +1,8 @@
-export default {
+import { ConfigCommonHeader } from '@n7-frontend/boilerplate';
+
+const config: ConfigCommonHeader = {
   logo: {
+    title: '',
     image: 'https://i.imgur.com/kTND3Do.png',
     anchor: {
       href: 'aw/home'
@@ -88,3 +91,5 @@ export default {
     }
   }
 };
+
+export default config;

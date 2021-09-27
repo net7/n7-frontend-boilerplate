@@ -1,4 +1,6 @@
-export default {
+import { ConfigCommonCommunication } from '@n7-frontend/boilerplate';
+
+const config: ConfigCommonCommunication = {
   defaultProvider: 'rest-local',
   providers: {
     rest: {
@@ -36,3 +38,5 @@ export default {
     }
   }
 };
+
+export default config;
