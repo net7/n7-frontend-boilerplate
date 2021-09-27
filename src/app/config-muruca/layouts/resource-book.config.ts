@@ -1,4 +1,6 @@
-export default {
+import { ConfigMurucaResourceLayout } from '@n7-frontend/boilerplate';
+
+const config: ConfigMurucaResourceLayout = {
   title: 'Libro',
   type: 'book',
   bodyClasses: 'resource-layout',
@@ -29,12 +31,12 @@ export default {
         grid: 3,
         title: 'resource#image-viewer',
       },
-      {
-        id: 'image-viewer-tools',
-        type: 'viewer-tools',
-        grid: 3,
-        title: 'resource#image-viewer',
-      },
+      // {
+      //   id: 'image-viewer-tools',
+      //   type: 'viewer-tools',
+      //   grid: 3,
+      //   title: 'resource#image-viewer',
+      // },
       {
         id: 'metadata-description',
         type: 'metadata',
@@ -62,7 +64,7 @@ export default {
         options: {
           classes: 'mr-item-preview-bibliography',
           itemPreview: {
-            limit: false,
+            limit: null,
             striptags: false
           }
         }
@@ -80,3 +82,5 @@ export default {
     ]
   }
 };
+
+export default config;

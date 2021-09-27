@@ -1,4 +1,6 @@
-export default {
+import { ConfigMurucaLayoutPosts } from '@n7-frontend/boilerplate';
+
+const config: ConfigMurucaLayoutPosts = {
   searchId: 'posts',
   title: 'Lista Articoli',
   resourcePath: '/list/posts',
@@ -33,9 +35,9 @@ export default {
       48
     ]
   },
-  itemPreview: {
-    // classes: 'is-vertical'
-  },
+  // itemPreview: {
+  //   classes: 'is-vertical'
+  // },
   fallback: {
     text: 'search#fallback_text',
     button: 'search#fallback_button'
@@ -45,3 +47,5 @@ export default {
     button: 'search#ko_button'
   }
 };
+
+export default config;

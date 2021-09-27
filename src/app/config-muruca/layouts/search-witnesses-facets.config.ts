@@ -1,6 +1,7 @@
-import { MrSearchConfig } from '@n7-frontend/boilerplate';
+import { MrSearchConfig, MrSearchFacetsConfig } from '@n7-frontend/boilerplate';
+import { MrSearchLayoutInput } from 'dist/n7-boilerplate-lib/public-api';
 
-const facets = {
+const facets: MrSearchFacetsConfig = {
   sections: [{
     id: 'section-query',
     inputs: [{
@@ -73,7 +74,8 @@ const layoutInputs = ['page', 'limit', 'sort'].map((id) => ({
   schema: {
     valueType: id === 'sort' ? 'string' : 'number'
   }
-}));
+} as MrSearchLayoutInput));
+
 const request = {
   results: {
     id: 'search',
@@ -85,4 +87,11 @@ const request = {
   provider: 'rest',
   delay: 500
 };
-export default { request, facets, layoutInputs } as unknown as MrSearchConfig;
+
+const config: MrSearchConfig = {
+  request,
+  facets,
+  layoutInputs
+};
+
+export default config;

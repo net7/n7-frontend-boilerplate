@@ -7,8 +7,6 @@ import {
   LocalConfigService,
   JsonConfigService,
 } from '@n7-frontend/boilerplate';
-import globalConfig from './config/global';
-import layoutsConfig from './config/layouts';
 import { APP_ROUTES } from './app.routes.dataviz';
 
 import { AppComponent } from './app.component';
@@ -26,10 +24,7 @@ const JSON_PATH = './assets/app-config.local.json';
     RouterModule.forRoot(
       APP_ROUTES
     ),
-    N7BoilerplateCommonModule.forRoot({
-      global: globalConfig,
-      layouts: layoutsConfig
-    }),
+    N7BoilerplateCommonModule.forRoot(),
     N7BoilerplateDataVizModule
   ],
   providers: [{

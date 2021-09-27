@@ -1,6 +1,8 @@
+import { ConfigMurucaSearchLayout } from '@n7-frontend/boilerplate';
 import searchWitnessesFacetsConfig from './search-witnesses-facets.config';
 
-export default {
+const config: ConfigMurucaSearchLayout = {
+
   title: 'Testimoni',
   searchId: 'witness',
   searchConfig: searchWitnessesFacetsConfig,
@@ -49,3 +51,5 @@ export default {
     button: 'search#ko_button'
   }
 };
+
+export default config;

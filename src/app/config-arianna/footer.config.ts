@@ -1,4 +1,6 @@
-export default {
+import { ConfigCommonFooter } from '@n7-frontend/boilerplate';
+
+const config: ConfigCommonFooter = {
   columns: [
     {
       classes: 'col-class',
@@ -57,3 +59,5 @@ export default {
     }
   ]
 };
+
+export default config;

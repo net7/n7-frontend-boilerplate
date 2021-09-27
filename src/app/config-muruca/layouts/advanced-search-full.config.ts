@@ -1,4 +1,6 @@
-export default {
+import { ConfigMurucaAdvancedSearchLayout } from '@n7-frontend/boilerplate';
+
+const config: ConfigMurucaAdvancedSearchLayout = {
   title: 'Ricerca avanzata',
   resultsUrl: '/advanced-results',
   formConfig: {
@@ -87,6 +89,7 @@ export default {
           data: {
             id: 'checkbox-1',
             checkboxes: [1, 2, 3, 4].map((number) => ({
+              id: `checkbox-1-${number}`,
               label: `check ${number}`,
               payload: number,
             }))
@@ -163,7 +166,6 @@ export default {
               hidden: false
             }
           }
-
         ]
       },
       {
@@ -188,18 +190,19 @@ export default {
               hidden: false
             }
           },
-          /* {
-            id: 'input-3',
-            type: 'tag',
-            data: {
-              label: 'label: ',
-              text: 'text',
-              icon: 'n7-icon-close',
-              payload: {
-                value: 'tag value!'
-              }
-            }
-          } */
+          // FIXME: custom input example
+          // {
+          //   id: 'input-3',
+          //   type: 'tag',
+          //   data: {
+          //     label: 'label: ',
+          //     text: 'text',
+          //     icon: 'n7-icon-close',
+          //     payload: {
+          //       value: 'tag value!'
+          //     }
+          //   }
+          // }
         ]
       },
       {
@@ -251,18 +254,6 @@ export default {
               hidden: false
             }
           }
-          /* {
-            id: 'input-3',
-            type: 'tag',
-            data: {
-              label: 'label: ',
-              text: 'text',
-              icon: 'n7-icon-close',
-              payload: {
-                value: 'tag value!'
-              }
-            }
-          } */
         ]
       },
       {
@@ -352,6 +343,7 @@ export default {
         ]
       }
     ]
-
   }
 };
+
+export default config;

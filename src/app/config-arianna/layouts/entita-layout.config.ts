@@ -1,4 +1,6 @@
-export default {
+import { ConfigAriannaEntitaLayout } from '@n7-frontend/boilerplate';
+
+const config: ConfigAriannaEntitaLayout = {
   overview: {
     informazioni: [
       'data_istituzione',
@@ -57,3 +59,5 @@ export default {
     'struttura_funzioni'
   ]
 };
+
+export default config;

@@ -7,7 +7,7 @@ export class LayoutsConfigurationService {
   private defaults: any = {};
 
   constructor(@Inject('config') private config: any) {
-    if (this.config.layouts) {
+    if (this.config?.layouts) {
       Object.keys(this.config.layouts).forEach((key) => {
         this.set(key, this.config.layouts[key]);
       });

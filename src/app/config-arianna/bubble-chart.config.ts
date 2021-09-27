@@ -1,4 +1,6 @@
-export default {
+import { ConfigAriannaBubbleChart } from '@n7-frontend/boilerplate';
+
+const config: ConfigAriannaBubbleChart = {
   fontRendering: {
     label: {
       family: "'Source Sans Pro', sans-serif",
@@ -13,3 +15,5 @@ export default {
   transition: 750,
   shuffle: true
 };
+
+export default config;

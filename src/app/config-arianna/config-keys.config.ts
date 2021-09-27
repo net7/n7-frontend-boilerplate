@@ -1,4 +1,6 @@
-export default {
+import { ConfigAriannaKeys } from '@n7-frontend/boilerplate';
+
+const config: ConfigAriannaKeys = {
   persona: {
     color: {
       hex: '#4D8FF2',
@@ -149,3 +151,5 @@ export default {
     'class-name': 'evento'
   }
 };
+
+export default config;

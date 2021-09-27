@@ -1,6 +1,7 @@
+import { ConfigMurucaSearchLayout } from '@n7-frontend/boilerplate';
 import searchWorksFacetsConfig from './search-works-facets.config';
 
-export default {
+const config: ConfigMurucaSearchLayout = {
   title: 'Opere',
   searchId: 'work',
   searchConfig: searchWorksFacetsConfig,
@@ -50,3 +51,5 @@ export default {
     button: 'search#ko_button'
   }
 };
+
+export default config;

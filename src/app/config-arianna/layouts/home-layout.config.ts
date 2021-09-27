@@ -1,4 +1,6 @@
-export default {
+import { ConfigAriannaHomeLayout } from '@n7-frontend/boilerplate';
+
+const config: ConfigAriannaHomeLayout = {
   'top-hero': {
     title: 'Arte,<em>architettura</em> e fotografia nel XXI secolo',
     text: "Consulta il <em>patrimonio completo</em> del polo nazionale per l'arte e l'architettura contemporanee.",
@@ -60,3 +62,5 @@ export default {
   'autocomplete-fallback': 'Nessun risultato, prova a\ncambiare la ricerca.',
   'linked-objects-fallback': 'Non sono stati trovati oggetti culturali collegati alle entità selezionate. Prova a cambiare le entità selezionate o resetta la ricerca.'
 };
+
+export default config;

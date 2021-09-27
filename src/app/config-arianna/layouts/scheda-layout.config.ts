@@ -1,4 +1,6 @@
-export default {
+import { ConfigAriannaSchedaLayout } from '@n7-frontend/boilerplate';
+
+const config: ConfigAriannaSchedaLayout = {
   'empty-html': '<span>Non sono disponibili informazioni.<span>',
   'empty-label': `<h2>Benvenuto nel patrimonio archivistico dell'Archivio di Stato di Venezia</h2>
   <img src="/assets/patrimonio-text-image.jpeg"></im><p><em>moreveneto</em> ci presenta un quadro pluridimensionale dove troviamo:</p>
@@ -203,3 +205,5 @@ export default {
     ]
   }
 };
+
+export default config;
