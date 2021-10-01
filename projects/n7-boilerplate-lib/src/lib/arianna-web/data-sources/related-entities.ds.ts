@@ -4,17 +4,22 @@ import { ItemPreviewData } from '@n7-frontend/components';
 export class AwRelatedEntitiesDS extends DataSource {
   protected transform = (data): { previews: ItemPreviewData[] } => {
     const basePath = this.options.config.get('paths').entitaBasePath;
+    const configKeys = this.options.config.get('config-keys');
     const { title } = this.options;
     const previews: ItemPreviewData[] = data ? data.map((d) => ({
       title: d.entity.label,
       anchor: {
         href: `${basePath}${d.entity.id}/${d.entity.label}`,
       },
-      classes: `is-${d.entity.typeOfEntity}`, // adds color to the title
+      classes: (configKeys[d.entity.typeOfEntity])
+        ? `is-${configKeys[d.entity.typeOfEntity]['class-name']}`
+        : null, // adds color to the title
       metadata: [{
         items: [{
           label: 'Tipo di entità',
-          value: d.entity.typeOfEntity,
+          value: (configKeys[d.entity.typeOfEntity])
+            ? configKeys[d.entity.typeOfEntity].label
+            : d.entity.typeOfEntity,
         }],
       }],
       // A special kind of metadata, not to be viewed as other metadata
