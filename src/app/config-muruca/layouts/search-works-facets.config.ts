@@ -1,5 +1,4 @@
-import { MrSearchConfig, MrSearchFacetsConfig } from '@n7-frontend/boilerplate';
-import { MrSearchLayoutInput } from 'dist/n7-boilerplate-lib/public-api';
+import { MrSearchConfig, MrSearchFacetsConfig, MrSearchLayoutInput } from '@n7-frontend/boilerplate';
 
 const facets: MrSearchFacetsConfig = {
   sections: [{
