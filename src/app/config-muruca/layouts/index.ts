@@ -10,6 +10,7 @@ import resourceModalBibliography_witConfig from './resource-modal-bibliography_w
 import resourceToponymConfig from './resource-toponym.config';
 import resourceWitnessConfig from './resource-witness.config';
 import resourceWorkConfig from './resource-work.config';
+import searchActsConfig from './search-acts.config';
 import searchBooksConfig from './search-books.config';
 import searchWitnessesConfig from './search-witnesses.config';
 import searchWorksConfig from './search-works.config';
@@ -32,6 +33,7 @@ export default {
   'resource-toponym': resourceToponymConfig,
   'resource-witness': resourceWitnessConfig,
   'resource-work': resourceWorkConfig,
+  'search-acts': searchActsConfig,
   'search-books': searchBooksConfig,
   'search-witnesses': searchWitnessesConfig,
   'search-works': searchWorksConfig,

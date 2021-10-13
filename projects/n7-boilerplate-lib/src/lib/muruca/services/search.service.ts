@@ -224,7 +224,7 @@ export class MrSearchService {
           }
 
           // links internal state
-          if (type === 'link') {
+          if (['link', 'map'].includes(type)) {
             this.internalFilterState.facets[id] = {
               id,
               limit,
@@ -453,7 +453,7 @@ export class MrSearchService {
       map((params) => {
         params.facets = [];
         this.config.facets.sections.forEach(({ inputs }) => {
-          inputs.filter(({ type }) => type === 'link')
+          inputs.filter(({ type }) => ['link', 'map'].includes(type))
             .forEach(({ id }) => {
               // reset offset
               this.internalFilterState.facets[id].offset = 0;
