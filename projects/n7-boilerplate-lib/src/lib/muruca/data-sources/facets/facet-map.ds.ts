@@ -4,36 +4,43 @@ import { FacetDataSource } from './facet-datasource';
 
 type FACET_VALUE = string | null;
 
+type CadastralUnit = {
+  text: string;
+  payload: string;
+  counter: 1;
+  args: {
+    lat: string | null;
+    lon: string | null;
+  };
+}
+
 export class FacetMapDS extends DataSource implements FacetDataSource {
   id: string;
 
   value: FACET_VALUE;
 
-  protected transform(data: MapData): MapData {
+  protected transform({ links }: { links: CadastralUnit[] }): MapData {
     return {
       containerId: 'map-canvas',
       tileLayers: [{
         url: 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
-        options: {}
+        options: {
+        },
       }],
       initialView: {
-        center: [51.505, -0.09],
+        center: [46.49, 11.33],
         zoom: 13
       },
-      markers: [
-        {
-          coords: [51.505, -0.09],
-          template: 'This is the center of the map',
-          title: 'London'
-        }, {
-          coords: [51.495, -0.1],
-          template: 'Elephant and castle',
-        }, {
-          coords: [51.46687084654015, -0.2130156755447388],
-          template: 'Putney bridge',
-        }
-      ],
-      ...data
+      // libOptions: {},
+      markers: links
+        .filter((d) => d.args?.lat && d.args?.lon)
+        .map((d) => ({
+          coords: [+d.args.lat, +d.args.lon],
+          template: d.text,
+        })),
+      // _setInstance: (map) => {
+      //   console.log('map created');
+      // }
     };
   }
 
