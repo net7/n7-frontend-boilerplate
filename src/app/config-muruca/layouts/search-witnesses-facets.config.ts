@@ -64,6 +64,35 @@ const facets: MrSearchFacetsConfig = {
         links: []
       }
     }],
+  },
+  {
+    id: 'section-amount',
+    header: {
+      id: 'header-amount',
+      data: {
+        text: 'search#header_amount',
+        additionalText: null,
+      }
+    },
+    inputs: [{
+      id: 'amount',
+      type: 'text',
+      queryParam: true,
+      delay: 500,
+      schema: {
+        valueType: 'number'
+      },
+      data: {
+        id: 'amount',
+        type: 'number',
+        min: 0,
+        max: 20,
+        placeholder: 'search#placeholder_amount',
+        inputPayload: 'amount-input',
+        enterPayload: 'amount-enter',
+        iconPayload: 'amount-icon'
+      }
+    }],
   }],
   classes: 'facets-wrapper'
 };

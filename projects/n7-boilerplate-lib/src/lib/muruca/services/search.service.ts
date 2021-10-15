@@ -306,7 +306,13 @@ export class MrSearchService {
               .filter((inputId) => this.queryParamKeys.includes(inputId))
               .filter((inputId) => this.notEquals(inputContext[inputId], params[inputId]))
               .forEach((inputId) => {
-                this.setState(INPUT_STATE_CONTEXT, inputId, params[inputId] || null);
+                this.setState(
+                  INPUT_STATE_CONTEXT,
+                  inputId,
+                  (params[inputId] || params[inputId] === 0)
+                    ? params[inputId]
+                    : null
+                );
               });
           }
         }

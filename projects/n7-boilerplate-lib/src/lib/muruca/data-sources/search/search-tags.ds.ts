@@ -14,11 +14,11 @@ export class MrSearchTagsDS extends DataSource {
       inputs
         .filter(({ queryParam }) => queryParam)
         .forEach(({ id }) => {
-          if (state[id]) {
+          if (state[id] || state[id] === 0) {
             const values = Array.isArray(state[id]) ? state[id] : [state[id]];
             values
               .forEach((value) => {
-                let text = value;
+                let text = `${value}`;
                 if (facets[id]) {
                   const selectedFacet = facets[id].values.find(({ payload }) => payload === value);
                   if (selectedFacet) {

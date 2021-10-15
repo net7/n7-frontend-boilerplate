@@ -4,7 +4,7 @@ const hasValue = (value) => {
   if (Array.isArray(value)) {
     return value.length > 0;
   }
-  return !!value;
+  return !!(value || value === 0);
 };
 
 export default {
