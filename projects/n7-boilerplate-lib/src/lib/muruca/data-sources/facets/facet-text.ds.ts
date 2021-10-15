@@ -2,7 +2,7 @@ import { DataSource, _t } from '@n7-frontend/core';
 import { InputTextData } from '@n7-frontend/components';
 import { FacetDataSource } from './facet-datasource';
 
-type FACET_VALUE = string | null;
+type FACET_VALUE = string | number | null;
 
 export class FacetTextDS extends DataSource implements FacetDataSource {
   id: string;
@@ -22,13 +22,13 @@ export class FacetTextDS extends DataSource implements FacetDataSource {
     if (update) {
       this.update({
         ...this.input,
-        value
+        value: value || value === 0 ? `${value}` : null
       });
 
       // fix element update
       const el = document.getElementById(this.output.id) as HTMLInputElement;
       if (el) {
-        el.value = value;
+        el.value = value || value === 0 ? `${value}` : null;
       }
     }
   }
