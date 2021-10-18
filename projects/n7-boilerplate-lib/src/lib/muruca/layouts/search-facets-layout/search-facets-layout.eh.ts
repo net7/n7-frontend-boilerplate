@@ -29,6 +29,7 @@ export class SearchFacetsLayoutEH extends EventHandler {
           this.initStateListener();
           // init
           this.dataSource.onInit(payload);
+          this.emitOuter('facetloaded');
           break;
 
         case 'mr-search-facets-layout.destroy':

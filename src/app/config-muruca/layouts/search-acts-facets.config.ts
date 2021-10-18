@@ -41,9 +41,9 @@ const facets = {
         schema: {
           valueType: 'string',
         },
-        data: {
-          links: []
-        }
+        // data: {
+        //   links: []
+        // }
       }],
     },
     // LOCALIZZAZIONE
