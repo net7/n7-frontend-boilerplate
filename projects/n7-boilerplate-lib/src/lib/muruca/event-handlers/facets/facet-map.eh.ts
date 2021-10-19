@@ -14,7 +14,7 @@ export class FacetMapEH extends EventHandler {
               case 'marker.click':
                 // trigger search facet logic
                 // (make request and update component)
-                this.dataSource.setValue(event.id);
+                this.dataSource.toggleValue(event.id);
                 this.emitOuter('change', {
                   value: this.dataSource.getValue(),
                   id: this.dataSource.id

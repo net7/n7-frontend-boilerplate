@@ -7,7 +7,9 @@ import { FacetDataSource } from './facet-datasource';
 // a double import results in errors with tooltips.
 declare const L;
 
-type FACET_VALUE = string | null;
+const ACTIVE_CLASS = 'is-active';
+
+type FACET_VALUE = string[];
 
 type CadastralUnit = {
   text: string;
@@ -46,13 +48,15 @@ const MARKER_ICON_SELECTED = L.icon({
 export class FacetMapDS extends DataSource implements FacetDataSource {
   id: string;
 
-  value: FACET_VALUE;
+  value: FACET_VALUE = [];
 
   mapInstance;
 
   markerLayer;
 
   markerEvents$ = new Subject<MarkerEvent>();
+
+  private isUpdate = false;
 
   protected transform({ links }: { links: CadastralUnit[] }): MapData {
     const markers = links
@@ -138,18 +142,36 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
 
   setValue(value: FACET_VALUE, update = false) {
     this.value = value;
+    this.isUpdate = update;
 
     if (update) {
+      const { links } = this.input;
+      const updatedLinks = links.map((link: CadastralUnit) => ({
+        ...link,
+        classes: this.value.includes(link.payload) ? ACTIVE_CLASS : ''
+      }));
       this.update({
         ...this.input,
-        value
+        links: updatedLinks
       });
     }
+  }
+
+  toggleValue(value: string) {
+    const exists = this.value.includes(value);
+    if (!exists) {
+      this.value.push(value);
+    } else if (exists) {
+      this.value.splice(this.value.indexOf(value), 1);
+    }
+
+    // update
+    this.setValue(this.value, true);
   }
 
   getValue = (): FACET_VALUE => this.value;
 
   clear() {
-    this.value = null;
+    this.value = [];
   }
 }
