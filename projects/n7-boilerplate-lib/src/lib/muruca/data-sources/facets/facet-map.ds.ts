@@ -14,7 +14,7 @@ type FACET_VALUE = string[];
 type CadastralUnit = {
   text: string;
   payload: string;
-  counter: 1;
+  counter: number;
   args: {
     lat: string | null;
     lon: string | null;
@@ -28,11 +28,19 @@ export interface MarkerEvent {
 
 interface MarkerWithID extends MarkerData {
   id?: string;
+  counter: number;
   slug: string;
 }
 
 const MARKER_ICON = L.icon({
   iconUrl: '/assets/pin.png',
+  iconSize: [30, 45.5],
+  popupAnchor: [0, -25],
+  className: 'marker-icon'
+});
+
+const MARKER_ICON_UNAVAILABLE = L.icon({
+  iconUrl: '/assets/pin-unavailable.png',
   iconSize: [30, 45.5],
   popupAnchor: [0, -25],
   className: 'marker-icon'
@@ -67,6 +75,7 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
         title: d.text,
         id: d.payload,
         slug: d.payload,
+        counter: d.counter,
       }));
     return {
       containerId: 'map-canvas',
@@ -80,15 +89,10 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
         center: [46.49, 11.33],
         zoom: 8
       },
-      // markers,
       _setInstance: (map) => {
         this.mapInstance = map;
         this.buildMarkers(markers);
-        // const markerCluster = (L as any).markerClusterGroup();
       },
-      // _setMarkerLayer: (markerLayer) => {
-      //   this.markerLayer = markerLayer;
-      // }
     };
   }
 
@@ -105,12 +109,13 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
     }
     const markerGroup = L.markerClusterGroup();
     markers.forEach(({
-      coords, template, id, slug
+      coords, template, id, slug, counter
     }) => {
       // create custom icon marker
-      const newMarker = L.marker(coords, { icon: MARKER_ICON });
+      const newMarker = L.marker(coords, { icon: this.getIcon(id, counter) });
       if (id && slug) {
         newMarker.id = id;
+        newMarker.counter = counter;
         newMarker.slug = slug;
       }
       newMarker
@@ -118,14 +123,6 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
         .addTo(markerGroup)
         // add the on-click tooltip
         .bindPopup(template);
-
-      newMarker.getPopup().on('remove', ({ target }) => {
-        target._source.setIcon(MARKER_ICON);
-      });
-
-      newMarker.getPopup().on('add', ({ target }) => {
-        target._source.setIcon(MARKER_ICON_SELECTED);
-      });
 
       newMarker.on('click', ({ target }) => {
         this.markerEvents$.next({
@@ -150,11 +147,25 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
         ...link,
         classes: this.value.includes(link.payload) ? ACTIVE_CLASS : ''
       }));
+      // update marker icons
+      if (this.markerLayer) {
+        this.markerLayer.eachLayer((marker) => {
+          const { counter, id } = marker;
+          marker.getPopup()._source.setIcon(this.getIcon(id, counter));
+        });
+      }
+      // ---
       this.update({
         ...this.input,
         links: updatedLinks
       });
     }
+  }
+
+  getIcon = (id: string, counter: number) => {
+    if (this.value.includes(id)) return MARKER_ICON_SELECTED;
+    if (counter > 0) return MARKER_ICON;
+    return MARKER_ICON_UNAVAILABLE;
   }
 
   toggleValue(value: string) {
