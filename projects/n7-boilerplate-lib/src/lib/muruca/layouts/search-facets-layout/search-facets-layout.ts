@@ -28,6 +28,7 @@ const DATASOURCE_MAP = {
   checkbox: FacetCheckboxDS,
   select: FacetSelectDS,
   link: FacetLinkDS,
+  map: FacetMapDS,
   // if the facet value is an array you MUST include it in the name
   'map-multiple': FacetMapDS,
   'link-multiple': FacetLinkMultipleDS,
@@ -39,6 +40,7 @@ const EVENTHANDLER_MAP = {
   checkbox: FacetCheckboxEH,
   select: FacetSelectEH,
   link: FacetLinkEH,
+  map: FacetMapEH,
   // if the facet value is an array you MUST include it in the name
   'map-multiple': FacetMapEH,
   'link-multiple': FacetLinkMultipleEH,
@@ -90,6 +92,9 @@ export class MrSearchFacetsLayoutComponent extends AbstractLayout implements OnI
         }
         this.widgets.push({
           id: input.id,
+          options: {
+            isMultiple: !!multiple,
+          },
           dataSource: DATASOURCE_MAP[inputType],
           eventHandler: EVENTHANDLER_MAP[inputType]
         });

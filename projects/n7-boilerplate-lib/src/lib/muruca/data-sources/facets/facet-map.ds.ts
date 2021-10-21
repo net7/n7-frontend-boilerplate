@@ -64,7 +64,7 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
 
   markerEvents$ = new Subject<MarkerEvent>();
 
-  private isUpdate = false;
+  isUpdate = false;
 
   protected transform({ links }: { links: CadastralUnit[] }): MapData {
     const markers = links
@@ -82,7 +82,7 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
       tileLayers: [{
         url: 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
         options: {
-          attribution: null,
+          attribution: 'Hello, world',
         },
       }],
       initialView: {
@@ -141,7 +141,7 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
     this.value = value;
     this.isUpdate = update;
 
-    if (update) {
+    if (update && this.input) {
       const { links } = this.input;
       const updatedLinks = links.map((link: CadastralUnit) => ({
         ...link,

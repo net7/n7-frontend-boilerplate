@@ -11,7 +11,7 @@ const facets = {
         queryParam: true,
         delay: 500,
         schema: {
-          valueType: 'string'
+          valueType: 'string',
         },
         data: {
           id: 'query',
