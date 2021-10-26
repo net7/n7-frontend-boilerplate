@@ -22,12 +22,26 @@
 }
 
 .marker-cluster-small, .marker-cluster-medium {
-    background-color: rgba($color-main, 0.6);
+    background-color: transparent;
     div {
-        background-color: rgba($color-main, 1);
+        background-color: $color-main;
         font-family: $font-family-main;
         color: $color-text-inverse;
         font-weight: $font-weight-bold;
+
+        &:after {
+            content: " ";
+            position: absolute;
+            display: block;
+            top: 0px;
+            width: 40px;
+            left: 0;
+            height: 40px;
+            background-color: $color-main;
+            border-radius: 20px;
+            opacity: 0.5;
+            z-index: -1;
+        }
     }
 }
 
