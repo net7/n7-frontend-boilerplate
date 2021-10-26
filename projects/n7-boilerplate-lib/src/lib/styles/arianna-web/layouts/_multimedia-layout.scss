@@ -30,14 +30,18 @@
         margin-left: $space;
         padding: $space $space;
         font-size: $font-size-l;
-        background-color: rgba( $color-gray-05, 0.75);
         border: 0;
-        color: rgba( $color-text-inverse, 0.65);
+        background-color: $color-gray-05;
+        color: $color-text-inverse;
         height: auto !important;
         cursor: pointer;
-        &:hover {
-            background-color: rgba( $color-gray-05, 1);
-            color: rgba( $color-text-inverse, 1);
+        opacity: 0.75;
+        transition: all $transition-durations;
+
+        &:hover, &:active, &:hover:active {
+            background-color: $color-gray-05;
+            color: $color-text-inverse;
+            opacity: 1;
         }
     }
     /* Map */
