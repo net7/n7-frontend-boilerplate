@@ -10,6 +10,11 @@
 .n7-header {
     padding: 0 $space*2;
 
+    // Hide the H1 in the header.
+    &__title-subtitle {
+        display: none;
+    }
+
     &__nav-item {
         margin: 0;
         padding: 0;
