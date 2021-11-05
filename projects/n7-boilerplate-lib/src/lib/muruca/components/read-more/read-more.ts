@@ -7,6 +7,14 @@ import {
 } from '@angular/core';
 import { _t } from '@n7-frontend/core';
 
+export type ReadMoreData = {
+  height: number;
+  labels: {
+    more: string;
+    less: string;
+  };
+};
+
 const HEIGHT_MARGIN = 50;
 
 @Component({
@@ -14,9 +22,7 @@ const HEIGHT_MARGIN = 50;
   templateUrl: './read-more.html',
 })
 export class ReadMoreComponent implements AfterViewChecked {
-  @Input() data: any;
-
-  @Input() emit: any;
+  @Input() data: ReadMoreData;
 
   // Root div
   @ViewChild('root', { read: ElementRef }) root: ElementRef;

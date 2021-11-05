@@ -36,7 +36,14 @@ const config: ConfigMurucaResourceLayout = {
         id: 'metadata',
         type: 'metadata',
         // title: 'Metadati',
-        grid: null
+        grid: null,
+        readmore: {
+          height: 150,
+          labels: {
+            more: 'readmore#more',
+            less: 'readmore#less'
+          }
+        }
       },
       {
         id: 'metadata-size',
