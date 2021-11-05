@@ -30,6 +30,8 @@ export default {
   'map#defaultText': 'Clicca su un elemento per vedere i dettagli',
   'map#title': 'Mappa',
   'readmore#label': 'Mostra tutto',
+  'readmore#more': 'Mostra tutto',
+  'readmore#less': 'Mostra meno',
   'resource#authors': 'di',
   'resource#date': 'pubblicato il',
   'resource#metadata_size': 'Dimensioni',
