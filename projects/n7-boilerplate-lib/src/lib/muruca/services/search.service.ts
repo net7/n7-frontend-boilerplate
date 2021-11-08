@@ -542,10 +542,21 @@ export class MrSearchService {
   private onFacetsRequestSuccess(response) {
     const { facets: responseFacets } = response;
     if (!isEmpty(this.initializeValues)) {
+      // intialValues and responseFacets merge strategy
       Object.keys(responseFacets).forEach((inputKey) => {
         if (this.initializeValues[inputKey]) {
-          // TODO: merge strategy
-          console.log('TODO: merge strategy', responseFacets[inputKey], this.initializeValues[inputKey]);
+          const updatedValues = this.initializeValues[inputKey].values.map((initialValue) => {
+            const singleValue = responseFacets[inputKey].values.find(
+              ({ payload }) => payload === initialValue.payload
+            );
+            return {
+              ...initialValue,
+              counter: singleValue?.counter || 0
+            };
+          });
+          // sort by counter
+          updatedValues.sort((a, b) => b.counter - a.counter);
+          responseFacets[inputKey].values = updatedValues;
         }
       });
     }
@@ -553,14 +564,11 @@ export class MrSearchService {
       // update internal filter state
       const { filtered_total_count } = responseFacets[inputKey];
       this.internalFilterState.facets[inputKey].filtered_total_count = filtered_total_count;
-      // responseFacets[inputKey].values = responseFacets[inputKey].values.map((item) => ({
-      //   ...item,
-      //   payload: item.payload && typeof item.payload === 'string'
-      //     ? encodeURIComponent(item.payload)
-      //     : item.payload
-      // }));
     });
-    this.setState(FACETS_REQUEST_STATE_CONTEXT, 'success', response);
+    this.setState(FACETS_REQUEST_STATE_CONTEXT, 'success', {
+      ...response,
+      facets: responseFacets
+    });
   }
 
   private onFacetsScroll() {
