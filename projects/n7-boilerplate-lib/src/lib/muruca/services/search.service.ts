@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { fromEvent, Subject } from 'rxjs';
+import {
+  fromEvent, Observable, of, Subject
+} from 'rxjs';
 import {
   filter,
   switchMap,
@@ -9,7 +11,8 @@ import {
   debounceTime,
   delay,
   tap,
-  takeUntil
+  takeUntil,
+  switchMapTo
 } from 'rxjs/operators';
 import { isEmpty, xor } from 'lodash';
 import { _t } from '@n7-frontend/core';
@@ -32,6 +35,12 @@ export class MrSearchService {
   private config;
 
   private queryParamKeys: string[] = [];
+
+  private initializeKeys: string[] = [];
+
+  private initializeValues: {
+    [id: string]: any;
+  } = {};
 
   private inputSchemas: {
     [key: string]: MrInputSchema;
@@ -192,7 +201,7 @@ export class MrSearchService {
       [header, ...inputs]
         .filter((input) => input)
         .forEach(({
-          id, queryParam, schema, limit, type, target
+          id, queryParam, schema, limit, type, target, initialize
         }) => {
           if (!id) {
             return;
@@ -202,6 +211,11 @@ export class MrSearchService {
           // is query param?
           if (queryParam) {
             this.queryParamKeys.push(id);
+          }
+
+          // input has initial values request
+          if (initialize) {
+            this.initializeKeys.push(id);
           }
 
           // schemas
@@ -452,6 +466,31 @@ export class MrSearchService {
         this.setState(FACETS_REQUEST_STATE_CONTEXT, 'request', params);
         return params;
       }),
+      switchMap((state) => {
+        let initializeRequest$: Observable<any> = of(true);
+        if (this.initializeKeys.length) {
+          initializeRequest$ = this.communication.request$(facets.id, {
+            params: {
+              facets: state.facets,
+              searchId: this.searchId
+            },
+            method: 'POST',
+            onError: (error) => {
+              this.setState(FACETS_REQUEST_STATE_CONTEXT, 'error', error);
+            }
+          }, facets.provider || null);
+        }
+        return initializeRequest$.pipe(
+          tap((response) => {
+            if (response.facets) {
+              Object.keys(response.facets).forEach((inputKey) => {
+                this.initializeValues[inputKey] = response.facets[inputKey];
+              });
+            }
+          }),
+          switchMapTo(of(state))
+        );
+      }),
       switchMap((state) => this.communication.request$(facets.id, {
         params: {
           ...state,
@@ -502,6 +541,14 @@ export class MrSearchService {
 
   private onFacetsRequestSuccess(response) {
     const { facets: responseFacets } = response;
+    if (!isEmpty(this.initializeValues)) {
+      Object.keys(responseFacets).forEach((inputKey) => {
+        if (this.initializeValues[inputKey]) {
+          // TODO: merge strategy
+          console.log('TODO: merge strategy', responseFacets[inputKey], this.initializeValues[inputKey]);
+        }
+      });
+    }
     Object.keys(responseFacets).forEach((inputKey) => {
       // update internal filter state
       const { filtered_total_count } = responseFacets[inputKey];

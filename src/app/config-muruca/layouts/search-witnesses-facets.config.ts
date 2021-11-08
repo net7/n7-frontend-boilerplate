@@ -34,6 +34,7 @@ const facets: MrSearchFacetsConfig = {
       type: 'link',
       limit: 50,
       queryParam: true,
+      initialize: true,
       schema: {
         valueType: 'string',
         multiple: true

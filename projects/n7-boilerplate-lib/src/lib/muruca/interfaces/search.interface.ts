@@ -43,6 +43,8 @@ export interface MrSearchFacetsInput {
   delay?: number;
   /** allowed value types */
   value?: string | string[] | boolean | null;
+  /** facet has a request for initial values */
+  initialize?: boolean;
 }
 
 export interface MrSearchInputText extends MrSearchFacetsInput {
