@@ -130,6 +130,14 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
           id: target.id
         });
       });
+
+      newMarker.on('mouseover', ({ target }) => {
+        target.openPopup();
+      });
+
+      newMarker.on('mouseout', ({ target }) => {
+        target.closePopup();
+      });
     });
     // add the markers to the map instance
     this.mapInstance.addLayer(markerGroup);
