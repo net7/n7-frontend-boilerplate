@@ -224,7 +224,7 @@ export class MrSearchService {
           }
 
           // links internal state
-          if (type === 'link') {
+          if (['link', 'map'].includes(type)) {
             this.internalFilterState.facets[id] = {
               id,
               limit,
@@ -453,7 +453,7 @@ export class MrSearchService {
       map((params) => {
         params.facets = [];
         this.config.facets.sections.forEach(({ inputs }) => {
-          inputs.filter(({ type }) => type === 'link')
+          inputs.filter(({ type }) => ['link', 'map'].includes(type))
             .forEach(({ id }) => {
               // reset offset
               this.internalFilterState.facets[id].offset = 0;
@@ -468,7 +468,7 @@ export class MrSearchService {
       }),
       switchMap((state) => {
         let initializeRequest$: Observable<any> = of(true);
-        if (this.initializeKeys.length) {
+        if (this.initializeKeys.length && isEmpty(this.initializeValues)) {
           initializeRequest$ = this.communication.request$(facets.id, {
             params: {
               facets: state.facets,
@@ -483,9 +483,11 @@ export class MrSearchService {
         return initializeRequest$.pipe(
           tap((response) => {
             if (response.facets) {
-              Object.keys(response.facets).forEach((inputKey) => {
-                this.initializeValues[inputKey] = response.facets[inputKey];
-              });
+              Object.keys(response.facets)
+                .filter((inputKey) => this.initializeKeys.includes(inputKey))
+                .forEach((inputKey) => {
+                  this.initializeValues[inputKey] = response.facets[inputKey];
+                });
             }
           }),
           switchMapTo(of(state))

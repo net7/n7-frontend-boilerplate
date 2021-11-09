@@ -43,6 +43,12 @@
                     *ngSwitchCase="'linkMulti'"
                     [data]="lb.widgets[input.id].ds.out$ | async"
                     [emit]="lb.widgets[input.id].emit"></n7-input-link>
+                    
+                    <!-- INPUT MAP -->
+                    <n7-map 
+                    *ngSwitchCase="'map'"
+                    [data]="lb.widgets[input.id].ds.out$ | async"
+                    [emit]="lb.widgets[input.id].emit"></n7-map>
                 
                 </ng-container>
             </div>

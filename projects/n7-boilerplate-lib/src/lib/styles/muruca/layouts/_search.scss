@@ -21,7 +21,8 @@
 
     .mr-facets {
         flex-shrink: 0;
-        width: calc( ( (100% - 4px) - ( 1px * 3) ) / 4 );
+        // change the last number to set the facets column width
+        width: calc( ( (100% - 4px) - ( 1px * 3) ) / 2 );
         margin-right: $grid-gutter-h;
     }
 
@@ -76,7 +77,7 @@
 /* ------------------------------------ *\
     NO-RESULTS
 \* ------------------------------------ */
-.mr-search{
+.mr-search {
     &__results-ko-string {
         margin-bottom: $space*2;
     }

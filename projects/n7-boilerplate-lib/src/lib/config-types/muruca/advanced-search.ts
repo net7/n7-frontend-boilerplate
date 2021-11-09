@@ -1,4 +1,6 @@
-import { InputCheckboxData, InputSelectData, InputTextData } from '@n7-frontend/components';
+import {
+  InputCheckboxData, InputSelectData, InputTextData, MapData
+} from '@n7-frontend/components';
 import { ConfigMurucaLayout } from './layouts';
 
 export interface ConfigMurucaAdvancedSearchLayout extends ConfigMurucaLayout {
@@ -49,6 +51,7 @@ export interface ConfigMurucaAdvancedSearchSection {
     ConfigMurucaAdvancedSearchInputText<unknown>
     | ConfigMurucaAdvancedSearchInputCheckbox<unknown>
     | ConfigMurucaAdvancedSearchInputSelect<unknown>
+    | ConfigMurucaAdvancedSearchInputMap<unknown>
     // FIXME: custom inputs
     // | ConfigMurucaAdvancedSearchInputCustom<unknown>
   )[];
@@ -84,6 +87,13 @@ export interface ConfigMurucaAdvancedSearchInputSelect<T>
   extends ConfigMurucaAdvancedSearchInput<T> {
   type: 'select';
   data: InputSelectData;
+}
+
+// Allow embedding of map-component into the search facets
+export interface ConfigMurucaAdvancedSearchInputMap<T>
+  extends ConfigMurucaAdvancedSearchInput<T> {
+  type: 'map';
+  data: MapData;
 }
 
 // FIXME: custom inputs

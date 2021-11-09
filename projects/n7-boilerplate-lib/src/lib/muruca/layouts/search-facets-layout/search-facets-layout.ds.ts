@@ -32,7 +32,9 @@ export class SearchFacetsLayoutDS extends LayoutDataSource {
           // caching DS for next updates
           this.inputsDS[input.id] = widgetDataSource;
           // first update
-          widgetDataSource.update(input.data);
+          if (input.data) {
+            widgetDataSource.update(input.data);
+          }
         });
     });
   }

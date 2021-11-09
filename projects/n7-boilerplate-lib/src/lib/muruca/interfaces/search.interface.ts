@@ -4,6 +4,7 @@ import {
   InputTextData,
   InputSelectData,
   FacetHeaderData,
+  MapData,
 } from '@n7-frontend/components';
 
 export interface MrInputSchema {
@@ -69,6 +70,11 @@ export interface MrSearchInputLink extends MrSearchFacetsInput {
   limit?: number;
 }
 
+export interface MrSearchInputMap extends MrSearchFacetsInput {
+  type: 'map';
+  data: MapData;
+}
+
 export interface MrSearchFacetsSection {
   /** Section id (must be unique) */
   id: string;
@@ -80,6 +86,7 @@ export interface MrSearchFacetsSection {
     | MrSearchInputCheckbox
     | MrSearchInputSelect
     | MrSearchInputLink
+    | MrSearchInputMap
   )[];
   /** Section aditional css classes */
   classes?: string;

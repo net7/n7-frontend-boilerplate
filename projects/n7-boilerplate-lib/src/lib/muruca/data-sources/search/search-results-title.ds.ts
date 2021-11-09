@@ -46,6 +46,8 @@ export class MrSearchResultsTitleDS extends DataSource {
         option.disabled = !value;
       }
     });
-    this.update(this.input);
+    if (this.input) {
+      this.update(this.input);
+    }
   }
 }
