@@ -150,7 +150,8 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
       // update marker icons
       if (this.markerLayer) {
         this.markerLayer.eachLayer((marker) => {
-          const { counter, id } = marker;
+          const { id } = marker;
+          const counter = links.find(({ payload }) => payload === id)?.counter || 0;
           marker.getPopup()._source.setIcon(this.getIcon(id, counter));
         });
       }
