@@ -40,7 +40,8 @@ const facets = {
         queryParam: true,
         schema: {
           valueType: 'string',
-          multiple: true,
+          // multiple: true,
+          // canBeEmpty: true,
         },
         // data: {
         //   links: []

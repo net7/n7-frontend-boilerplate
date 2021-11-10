@@ -146,8 +146,12 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
   }
 
   setValue(value: FACET_VALUE, update = false) {
-    this.value = value;
-    this.isUpdate = update;
+    if (this.value === value) {
+      this.value = [];
+    } else {
+      this.value = value;
+    }
+    this.isUpdate = update || this.value === [];
 
     if (update && this.input) {
       const { links } = this.input;
