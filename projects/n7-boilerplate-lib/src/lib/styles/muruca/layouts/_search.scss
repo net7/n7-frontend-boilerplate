@@ -21,8 +21,7 @@
 
     .mr-facets {
         flex-shrink: 0;
-        // change the last number to set the facets column width
-        width: calc( ( (100% - 4px) - ( 1px * 3) ) / 2 );
+        width: 25%;
         margin-right: $grid-gutter-h;
     }
 

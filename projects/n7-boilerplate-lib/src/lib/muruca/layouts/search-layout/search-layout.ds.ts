@@ -22,6 +22,8 @@ export class MrSearchLayoutDS extends LayoutDataSource {
 
   public totalResultsText: string | null = null;
 
+  public facetsWidthPercentage: number = null;
+
   private hideDescriptionKey: string;
 
   private descriptionLoaded = false;
