@@ -15,8 +15,8 @@ const config: ConfigCommonCommunication = {
     'rest-local': {
       type: 'rest',
       // baseUrl: 'http://theatheor-sls.netseven.it/', // THEATHEOR
-      // baseUrl: 'http://petrarca-sls.netseven.it/', // PETRARCA
-      baseUrl: 'http://cartetrentine-sls.muruca.cloud/', // CARTE TRENTINE
+      baseUrl: 'http://petrarca-sls.netseven.it/', // PETRARCA
+      // baseUrl: 'http://cartetrentine-sls.muruca.cloud/', // CARTE TRENTINE
       // baseUrl: 'http://demosls.muruca.cloud/', // DEMO
       // baseUrl: 'http://localhost:3126/',
       config: {

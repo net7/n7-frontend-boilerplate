@@ -7,6 +7,8 @@ import { ItemPreviewData, MetadataData } from '@n7-frontend/components';
 export interface LinkedMetadataData extends MetadataData {
   /** href to use on the html element */
   href: string;
+  /** list of highlights */
+  items: string[];
 }
 
 /**
@@ -24,6 +26,12 @@ export class MrAdvancedResultComponent {
   @Input() data: AdvancedResultsData;
 
   @Input() emit: any;
+
+  /** Returns true if there are some highlights to render */
+  hasHighlights = (): boolean => this.data
+    ?.highlights
+    // there is at least one group that has highlights
+    ?.some((d) => d.items.length > 0);
 
   onClick(payload) {
     if (!this.emit) return;
