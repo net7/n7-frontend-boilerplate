@@ -21,8 +21,13 @@ export class MrSearchTagsDS extends DataSource {
                 let text = `${value}`;
                 if (facets[id]) {
                   const selectedFacet = facets[id].values.find(({ payload }) => payload === value);
-                  if (selectedFacet) {
+                  const cachedTag = Array.isArray(this.output)
+                    ? this.output.find(({ payload }) => payload.value === value)
+                    : null;
+                  if (selectedFacet?.text) {
                     text = selectedFacet.text;
+                  } else if (cachedTag?.text) {
+                    text = cachedTag?.text;
                   }
                 }
                 tags.push({
