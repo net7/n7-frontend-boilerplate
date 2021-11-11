@@ -109,10 +109,7 @@ export class MrSearchLayoutEH extends EventHandler {
     // default params
     const { pageConfig } = this.dataSource;
     const defaultLimit = pageConfig.pagination.options[0];
-    let defaultSort = pageConfig.sort.options.find((option) => option.selected === true)?.value;
-    if (!defaultSort) {
-      defaultSort = pageConfig.sort.options[0].value;
-    }
+    const defaultSort = pageConfig.sort.options.find((option) => option.selected === true)?.value;
 
     // inputs listener
     this.searchService.getState$(INPUT_STATE_CONTEXT).pipe(
@@ -129,8 +126,6 @@ export class MrSearchLayoutEH extends EventHandler {
       takeUntil(this.destroyed$)
     ).subscribe((val) => {
       this.emitOuter('inputquerychange', val);
-
-      this.searchService.setState(INPUT_STATE_CONTEXT, 'sort', val ? '_score' : 'sort_ASC');
     });
     this.searchService.getState$(FACETS_REQUEST_STATE_CONTEXT, 'success').pipe(
       takeUntil(this.destroyed$)
@@ -160,15 +155,20 @@ export class MrSearchLayoutEH extends EventHandler {
 
     // results params hook
     this.searchService.setBeforeHook(RESULTS_REQUEST_STATE_CONTEXT, 'loading', (params: any = {}) => {
-      const results = {
-        sort: defaultSort,
+      const results: {
+        limit: number;
+        offset: number;
+        sort?: string;
+      } = {
         limit: defaultLimit,
         offset: 0
       };
 
+      const sortParam = params.sort || defaultSort;
+
       // sort check
-      if (params.sort) {
-        results.sort = params.sort;
+      if (sortParam) {
+        results.sort = sortParam;
       }
 
       // limit check

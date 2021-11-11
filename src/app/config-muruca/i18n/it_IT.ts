@@ -55,6 +55,7 @@ export default {
   'search#ko_text': 'Oops, abbiamo riscontrato un errore nella ricerca. Prova a cambiare i parametri oppure a resettare la ricerca cliccando sul pulsante sottostante.',
   'search#placeholder_query': 'Cerca nei titoli',
   'search#resultsamount': 'Mostra n risultati:',
+  'search#sort_empty': 'Seleziona un\'opzione',
   'search#sort_asc': 'Ordine alfabetico (A→Z)',
   'search#sort_desc': 'Ordine alfabetico (Z→A)',
   'search#sort_score': 'Ordine per pertinenza',
