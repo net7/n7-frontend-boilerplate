@@ -116,6 +116,8 @@ export interface ConfigMurucaSearchLayout extends ConfigMurucaLayout {
   filtersTitle?: string;
   /** item preview is advanced? */
   advancedResults?: boolean;
+  /** facets column width (%) */
+  facetsWidthPercentage?: number;
   /** page description */
   description?: {
     id: string;
