@@ -17,7 +17,16 @@ type MrSearchResponse = {
   total_count: number;
 }
 
-type HighlightItem = [string, [string]] | { link?: string; text?: string; label?: string }
+type HighlightItem = [string, [string]] | {
+  link?: {
+    /** from the baseUrl of the application */
+    absolute: string;
+    /** path relative to the item preview url */
+    relative: string;
+  };
+  text?: string;
+  label?: string;
+}
 
 interface MrSearchResult extends ItemPreviewData {
   /** unique id for the search result entry */
@@ -85,10 +94,18 @@ export class MrSearchResultsDS extends DataSource {
             });
           // if it's an object then it should have a custom hyperlink
           } else {
+            let href = '';
+            if (highlight.link.absolute) {
+              // path is relative to the baseUrl
+              href = `${highlight.link.absolute}`;
+            } else if (highlight.link.relative) {
+              // path is relative to the item-preview url
+              href = `${item.link}${highlight.link}`;
+            }
             highlightGroup.items.push({
               label: highlight.label ? _t(highlight.label) : undefined,
               value: highlight.text ?? '',
-              href: `${item.link}${highlight.link}` ?? undefined, // custom hyperlink
+              href, // custom hyperlink
             });
           }
         });
