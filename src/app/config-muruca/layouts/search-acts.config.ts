@@ -16,7 +16,7 @@ export default {
       {
         value: null,
         label: 'search#sort_empty',
-        selected: true,
+        selected: false,
       },
       {
         value: '_score',
