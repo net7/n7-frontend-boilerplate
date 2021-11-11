@@ -14,6 +14,11 @@ export default {
     label: 'search#sort_title',
     options: [
       {
+        value: null,
+        label: 'search#sort_empty',
+        selected: true,
+      },
+      {
         value: '_score',
         label: 'search#sort_score',
         selected: false,
@@ -22,7 +27,7 @@ export default {
       {
         value: 'sort_ASC',
         label: 'search#sort_asc',
-        selected: true
+        selected: false
       },
       {
         value: 'sort_DESC',
