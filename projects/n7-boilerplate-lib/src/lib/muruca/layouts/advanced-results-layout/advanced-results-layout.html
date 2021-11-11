@@ -20,7 +20,9 @@
                     </n7-inner-title>
                 </div>
                 
-                <div *ngIf="lb.dataSource.pageConfig['filters']" class="mr-active-filters">
+                <div *ngIf="lb.dataSource.pageConfig['filters'] 
+                            && (lb.widgets['mr-advanced-search-tags'].ds.out$ | async)?.length" 
+                     class="mr-active-filters">
                     <span *ngIf="lb.dataSource.pageConfig['filters'].title" 
                     class="mr-active-filters__label">{{ lb.dataSource.pageConfig['filters'].title }}</span>
                     <div class="mr-active-filters__tags-wrapper">
