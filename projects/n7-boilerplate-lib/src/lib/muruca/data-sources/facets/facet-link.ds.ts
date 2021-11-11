@@ -34,7 +34,7 @@ export class FacetLinkDS extends DataSource implements FacetDataSource {
       const { links } = this.input;
       const updatedLinks = links.map((link: InputLink) => ({
         ...link,
-        classes: this.value === link.payload ? ACTIVE_CLASS : ''
+        classes: this.value && (this.value === link.payload) ? ACTIVE_CLASS : ''
       }));
       this.update({
         ...this.input,
