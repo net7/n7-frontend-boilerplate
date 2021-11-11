@@ -17,7 +17,10 @@
         </div>
         
         <div class="mr-search__results-content">
-            <aside class="mr-facets">
+            <aside class="mr-facets"
+                   [ngStyle]="{
+                    width: lb.dataSource.pageConfig['facetsWidthPercentage'] ? lb.dataSource.pageConfig['facetsWidthPercentage'] + '%' : ''
+                    }">
                 <div class="scroll-ref">&nbsp;</div>
                 <div class="mr-facets__contents">
                     <h2 class="mr-facets__title" 

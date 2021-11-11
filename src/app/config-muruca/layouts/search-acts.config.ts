@@ -8,6 +8,7 @@ export default {
   facetsTitle: 'search#facets_title',
   totalResultsText: 'search#acts_total',
   filtersTitle: 'search#filters_title',
+  facetsWidthPercentage: 50,
   grid: 1,
   advancedResults: true,
   sort: {
