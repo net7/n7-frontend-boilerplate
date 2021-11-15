@@ -87,10 +87,7 @@ export class MrResourceLayoutDS extends LayoutDataSource {
         // update image viewer options
         this.one(id).updateOptions({ tools });
       }
-      // else if (type === 'map') {
-      //   //update map
-      //     this.one('mr-map').update(responseSection); //data
-      // }
+      
       // update data
       if (responseSection && !helpers.isEmpty(responseSection)) {
         this.one(id).update(responseSection);
