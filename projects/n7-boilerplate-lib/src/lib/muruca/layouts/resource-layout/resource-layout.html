@@ -134,6 +134,28 @@
                   </div>
                   
                 </ng-container>
+
+                <!-- MAP -->
+                <!-- <ng-container *ngSwitchCase="'map'">
+                    <div class="mr-content-block mr-content-block-map">
+                          <h3 *ngIf="section.title" class="mr-content-block__title">
+                              {{ section.title }}
+                          </h3>
+                          <div class="mr-content-block__content">
+                            <n7-map [data]="lb.widgets[section.id].ds.out$ | async" [emit]="lb.widgets[section.id].emit">
+                            </n7-map>
+                      </div>
+                    </div>
+                    
+                  </ng-container> -->
+
+                  <ng-container *ngSwitchCase="'map'">
+                  <div class="mr-content-block mr-content-block-map">
+                    <div class="mr-content-block__content">
+                        <n7-map [data]="lb.widgets[section.id].ds.out$ | async" [emit]="lb.widgets[section.id].emit"></n7-map>
+                    </div>
+                </div>
+            </ng-container>
     
                 <!-- INFO BOX -->
                 <ng-container *ngSwitchCase="'info-box'">

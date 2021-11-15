@@ -11,6 +11,7 @@ import { MrResourceLayoutConfig as config } from './resource-layout.config';
 import { MrImageViewerEH } from '../../event-handlers/image-viewer.eh';
 import { MrImageViewerToolsEH } from '../../event-handlers/image-viewer-tools.eh';
 import { MrCollectionEH } from '../../event-handlers/collection.eh';
+// import { MrMapEH } from '../../event-handlers/map.eh';
 import {
   MrBreadcrumbsDS,
   MrCollectionDS,
@@ -23,6 +24,7 @@ import {
   MrTextViewerDS,
   MrResourceTabsDS,
 } from '../../data-sources';
+import { MrMapDS } from '../../data-sources/map.ds';
 
 const DATASOURCE_MAP = {
   breadcrumbs: MrBreadcrumbsDS,
@@ -35,13 +37,15 @@ const DATASOURCE_MAP = {
   viewer: MrImageViewerDS,
   'viewer-tools': MrImageViewerToolsDS,
   tabs: MrResourceTabsDS,
-  'text-viewer': MrTextViewerDS
+  'text-viewer': MrTextViewerDS,
+  map: MrMapDS
 };
 
 const EVENTHANDLER_MAP = {
   viewer: MrImageViewerEH,
   'viewer-tools': MrImageViewerToolsEH,
   collection: MrCollectionEH,
+  // map: MrMapEH
 };
 
 @Component({
