@@ -11,7 +11,6 @@ import { MrResourceLayoutConfig as config } from './resource-layout.config';
 import { MrImageViewerEH } from '../../event-handlers/image-viewer.eh';
 import { MrImageViewerToolsEH } from '../../event-handlers/image-viewer-tools.eh';
 import { MrCollectionEH } from '../../event-handlers/collection.eh';
-// import { MrMapEH } from '../../event-handlers/map.eh';
 import {
   MrBreadcrumbsDS,
   MrCollectionDS,
