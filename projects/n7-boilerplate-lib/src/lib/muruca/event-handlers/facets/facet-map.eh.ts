@@ -21,7 +21,12 @@ export class FacetMapEH extends EventHandler {
                 if (isMultiple) {
                   this.dataSource.toggleValue(event.id);
                 } else {
-                  this.dataSource.setValue([event.id]);
+                  const currentValue = this.dataSource.value;
+                  if (currentValue[0] === event.id) {
+                    this.dataSource.toggleValue(event.id);
+                  } else {
+                    this.dataSource.setValue([event.id]);
+                  }
                 }
                 // (make request and update component)
                 this.emitOuter('change', {
