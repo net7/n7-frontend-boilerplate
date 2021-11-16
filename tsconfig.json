@@ -32,12 +32,12 @@
         "projects/n7-boilerplate-lib/src/*"
       ],
       // MURUCA PROJECT PATHS
-      // "@mr-routes": ["src/app/app.routes.muruca.ts"],
-      // "@mr-config": ["src/app/config-muruca/"],
-      // "@mr-config/*": ["src/app/config-muruca/*"],
-      "@mr-routes": ["../../carte-trentine-fe/src/app/app.routes.ts"],
-      "@mr-config": ["../../carte-trentine-fe/src/app/config"],
-      "@mr-config/*": ["../../carte-trentine-fe/src/app/config/*"],
+      "@mr-routes": ["src/app/app.routes.muruca.ts"],
+      "@mr-config": ["src/app/config-muruca/"],
+      "@mr-config/*": ["src/app/config-muruca/*"],
+      // "@mr-routes": ["../../carte-trentine-fe/src/app/app.routes.ts"],
+      // "@mr-config": ["../../carte-trentine-fe/src/app/config"],
+      // "@mr-config/*": ["../../carte-trentine-fe/src/app/config/*"],
       // ARIANNA PROJECT PATHS
       "@aw-routes": ["src/app/app.routes.arianna.ts"],
       "@aw-config": ["src/app/config-arianna/"],
