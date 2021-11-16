@@ -40,7 +40,7 @@ const facets = {
         queryParam: true,
         schema: {
           valueType: 'string',
-          // multiple: true,
+          multiple: false,
           // canBeEmpty: true,
         },
         // data: {
