@@ -79,11 +79,12 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
       }));
     return {
       containerId: 'map-canvas',
+      libOptions: {
+        attributionControl: false,
+      },
       tileLayers: [{
         url: 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
-        options: {
-          attribution: 'Hello, world',
-        },
+        options: null
       }],
       initialView: {
         center: [46.49, 11.33],
