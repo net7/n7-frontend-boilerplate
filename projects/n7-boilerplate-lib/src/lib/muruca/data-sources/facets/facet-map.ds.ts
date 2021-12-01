@@ -34,22 +34,22 @@ interface MarkerWithID extends MarkerData {
 
 const MARKER_ICON = L.icon({
   iconUrl: '/assets/pin.png',
-  iconSize: [30, 45.5],
-  popupAnchor: [0, -25],
+  iconSize: [16, 25],
+  popupAnchor: [0, -15],
   className: 'marker-icon'
 });
 
 const MARKER_ICON_UNAVAILABLE = L.icon({
   iconUrl: '/assets/pin-unavailable.png',
-  iconSize: [30, 45.5],
-  popupAnchor: [0, -25],
+  iconSize: [16, 25],
+  popupAnchor: [0, -15],
   className: 'marker-icon'
 });
 
 const MARKER_ICON_SELECTED = L.icon({
   iconUrl: '/assets/pin-selected.png',
-  iconSize: [30, 45.5],
-  popupAnchor: [0, -25],
+  iconSize: [16, 25],
+  popupAnchor: [0, -15],
   className: 'marker-icon-selected'
 });
 
@@ -67,16 +67,32 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
   isUpdate = false;
 
   protected transform({ links }: { links: CadastralUnit[] }): MapData {
-    const markers = links
+    const markers = [];
+    links
       .filter((d) => d.args?.lat && d.args?.lon)
-      .map((d) => ({
-        coords: [+d.args.lat, +d.args.lon] as [number, number],
-        template: d.text,
-        title: d.text,
-        id: d.payload,
-        slug: d.payload,
-        counter: d.counter,
-      }));
+      .forEach((d) => {
+        if (Array.isArray(d.args.lat)) {
+          d.args.lat.forEach((element, i) => {
+            markers.push({
+              coords: [+d.args.lat[i], +d.args.lon[i]] as [number, number],
+              template: d.text,
+              title: d.text,
+              id: d.payload,
+              slug: d.payload,
+              counter: d.counter,
+            });
+          });
+        } else {
+          markers.push({
+            coords: [+d.args.lat, +d.args.lon] as [number, number],
+            template: d.text,
+            title: d.text,
+            id: d.payload,
+            slug: d.payload,
+            counter: d.counter,
+          });
+        }
+      });
     return {
       containerId: 'map-canvas',
       libOptions: {
@@ -87,8 +103,8 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
         options: null
       }],
       initialView: {
-        center: [46.49, 11.33],
-        zoom: 8
+        center: [46.06, 11.21],
+        zoom: 9
       },
       _setInstance: (map) => {
         this.mapInstance = map;
@@ -108,7 +124,13 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
       this.markerLayer.clearLayers();
       this.mapInstance.removeLayer(this.markerLayer);
     }
-    const markerGroup = L.markerClusterGroup();
+    const markerGroup = L.markerClusterGroup(
+      {
+        maxClusterRadius: 10,
+        disableClusteringAtZoom: 8
+      }
+    );
+    console.log(markers);
     markers.forEach(({
       coords, template, id, slug, counter
     }) => {
