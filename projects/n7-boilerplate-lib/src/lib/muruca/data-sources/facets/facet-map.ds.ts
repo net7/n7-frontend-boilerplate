@@ -71,6 +71,7 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
     links
       .filter((d) => d.args?.lat && d.args?.lon)
       .forEach((d) => {
+        // if a link has more than one corresponding marker
         if (Array.isArray(d.args.lat)) {
           d.args.lat.forEach((element, i) => {
             markers.push({
@@ -83,6 +84,7 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
             });
           });
         } else {
+          // if a link has only one marker
           markers.push({
             coords: [+d.args.lat, +d.args.lon] as [number, number],
             template: d.text,
@@ -130,7 +132,6 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
         disableClusteringAtZoom: 8
       }
     );
-    console.log(markers);
     markers.forEach(({
       coords, template, id, slug, counter
     }) => {
