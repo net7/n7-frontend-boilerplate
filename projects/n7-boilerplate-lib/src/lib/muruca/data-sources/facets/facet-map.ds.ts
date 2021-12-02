@@ -34,22 +34,22 @@ interface MarkerWithID extends MarkerData {
 
 const MARKER_ICON = L.icon({
   iconUrl: '/assets/pin.png',
-  iconSize: [30, 45.5],
-  popupAnchor: [0, -25],
+  iconSize: [16, 25],
+  popupAnchor: [0, -15],
   className: 'marker-icon'
 });
 
 const MARKER_ICON_UNAVAILABLE = L.icon({
   iconUrl: '/assets/pin-unavailable.png',
-  iconSize: [30, 45.5],
-  popupAnchor: [0, -25],
+  iconSize: [16, 25],
+  popupAnchor: [0, -15],
   className: 'marker-icon'
 });
 
 const MARKER_ICON_SELECTED = L.icon({
   iconUrl: '/assets/pin-selected.png',
-  iconSize: [30, 45.5],
-  popupAnchor: [0, -25],
+  iconSize: [16, 25],
+  popupAnchor: [0, -15],
   className: 'marker-icon-selected'
 });
 
@@ -67,27 +67,46 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
   isUpdate = false;
 
   protected transform({ links }: { links: CadastralUnit[] }): MapData {
-    const markers = links
+    const markers = [];
+    links
       .filter((d) => d.args?.lat && d.args?.lon)
-      .map((d) => ({
-        coords: [+d.args.lat, +d.args.lon] as [number, number],
-        template: d.text,
-        title: d.text,
-        id: d.payload,
-        slug: d.payload,
-        counter: d.counter,
-      }));
+      .forEach((d) => {
+        // if a link has more than one corresponding marker
+        if (Array.isArray(d.args.lat)) {
+          d.args.lat.forEach((element, i) => {
+            markers.push({
+              coords: [+d.args.lat[i], +d.args.lon[i]] as [number, number],
+              template: d.text,
+              title: d.text,
+              id: d.payload,
+              slug: d.payload,
+              counter: d.counter,
+            });
+          });
+        } else {
+          // if a link has only one marker
+          markers.push({
+            coords: [+d.args.lat, +d.args.lon] as [number, number],
+            template: d.text,
+            title: d.text,
+            id: d.payload,
+            slug: d.payload,
+            counter: d.counter,
+          });
+        }
+      });
     return {
       containerId: 'map-canvas',
+      libOptions: {
+        attributionControl: false,
+      },
       tileLayers: [{
         url: 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
-        options: {
-          attribution: 'Hello, world',
-        },
+        options: null
       }],
       initialView: {
-        center: [46.49, 11.33],
-        zoom: 8
+        center: [46.06, 11.21],
+        zoom: 9
       },
       _setInstance: (map) => {
         this.mapInstance = map;
@@ -107,7 +126,12 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
       this.markerLayer.clearLayers();
       this.mapInstance.removeLayer(this.markerLayer);
     }
-    const markerGroup = L.markerClusterGroup();
+    const markerGroup = L.markerClusterGroup(
+      {
+        maxClusterRadius: 10,
+        disableClusteringAtZoom: 8
+      }
+    );
     markers.forEach(({
       coords, template, id, slug, counter
     }) => {

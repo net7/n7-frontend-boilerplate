@@ -43,6 +43,7 @@ const facets = {
           multiple: false,
           // canBeEmpty: true,
         },
+        initialize: true,
         // data: {
         //   links: []
         // }
