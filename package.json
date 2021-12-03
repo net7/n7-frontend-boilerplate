@@ -26,7 +26,7 @@
     "@angular/platform-browser": "^9.1.10",
     "@angular/platform-browser-dynamic": "^9.1.10",
     "@angular/router": "^9.1.10",
-    "@n7-frontend/components": "git://github.com/net7/n7-frontend-components-dist.git#master",
+    "@n7-frontend/components": "git://github.com/net7/n7-frontend-components-dist.git#histogram-range-test",
     "@n7-frontend/core": "git://github.com/net7/n7-frontend-core.git#master",
     "@n7-frontend/icon-font": "git://github.com/net7/n7-icon-font.git#master",
     "classlist.js": "^1.1.20150312",
