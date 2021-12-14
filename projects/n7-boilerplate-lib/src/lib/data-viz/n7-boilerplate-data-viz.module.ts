@@ -8,11 +8,15 @@ import { DataWidgetWrapperComponent } from './components/data-widget-wrapper/dat
 import { DatepickerWrapperComponent } from './components/datepicker-wrapper/datepicker-wrapper';
 // LAYOUTS
 import { DvExampleLayoutComponent } from './layout/example-layout/example-layout';
+import { CardComponent } from './components/card/card';
+import { DvCardExampleLayoutComponent } from './layout/card-example-layout/card-example-layout';
 
 const COMPONENTS = [
   DataWidgetWrapperComponent,
   DatepickerWrapperComponent,
+  CardComponent,
   DvExampleLayoutComponent,
+  DvCardExampleLayoutComponent
 ];
 
 @NgModule({
