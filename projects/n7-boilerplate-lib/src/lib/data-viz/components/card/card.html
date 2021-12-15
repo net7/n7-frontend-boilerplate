@@ -1,7 +1,11 @@
 <div *ngIf="data" class="dv-card {{ data.classes || '' }}">
-    <div class="dv-card__top">
-        <div *ngIf="data.title as title" class="dv-card__title {{ title.classes || '' }}">{{ title.text }}</div>
-        <div *ngIf="data.actions" class="dv-card__actions">#TODO: actions</div>
+    <div *ngIf="data.title || data.actions" class="dv-card__header">
+        <div *ngIf="data.title as title" class="dv-card__title-wrapper {{ title.classes || '' }}">
+            <h1 class="dv-card__title">{{ title.text }}</h1>
+        </div>
+        <div *ngIf="data.actions as actions" class="dv-card__actions-wrapper">
+            #TODO
+        </div>
     </div>
     <div class="dv-card__content">
         <section *ngFor="let section of data.sections" class="dv-card__section {{ section.classes || '' }}">

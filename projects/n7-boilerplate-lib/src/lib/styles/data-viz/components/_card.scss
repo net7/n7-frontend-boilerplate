@@ -1,0 +1,102 @@
+/**
+ * CARD
+ *
+ * Standard and generic style for card
+ */
+
+/* ------------------------------------ *\
+   #CARD
+\* ------------------------------------ */
+
+.dv-card {
+    display: flex;
+    flex-direction: column;
+    // padding: $space;
+    margin-bottom: $space*2;
+    background-color: $color-background-base;
+    border-radius: $border-radius;
+    box-shadow: 0 30px 30px -20px rgba(0,0,0,0.10);
+    font-family: $font-family-main;
+
+    /* Header */
+    &__header {
+        display: flex;
+        flex-wrap: nowrap;
+        align-content: stretch;
+        width: 100%;
+    }
+
+    &__title-wrapper {
+        flex-grow: 1;
+        padding: $space $space*2;
+    }
+
+    &__title {
+        margin: 0;
+        padding: 0;
+        font-size: $font-size-l;
+        font-weight: $font-weight-bold;
+    }
+
+    &__actions-wrapper {
+        flex-shrink: 0;
+    }
+
+    // &__action {
+    //     display: inline-block;
+    //     height: 30px;
+    //     padding: 0 $space;
+    //     color: $color-text-inverse;
+    //     font-weight: $font-weight-bold;
+    //     background-color: $color-background-medium;
+    //     text-transform: uppercase;
+    //     font-size: $font-size-xs;
+    //     font-family: $font-family-main;
+    //     line-height: 30px;
+    //     background-repeat: no-repeat;
+    //     background-position: $space/1.5 center;
+    //     background-size: $space*1.5 auto;
+
+    //     &:hover, &.action-is-active {
+    //         cursor: pointer;
+    //         background-color: $color-text-link;
+    //     }
+
+    //     &:first-child {
+    //         border-bottom-left-radius: $border-radius;
+    //     }
+
+    //     &:last-child {
+    //         border-top-right-radius: $border-radius;
+    //     }
+    //     i{
+    //       padding-right: $space/2;
+    //       font-size: $font-size-xs;
+    //     }
+    // }
+
+    /* Content */
+    &__content {
+        // display: flex;
+        flex-grow: 1;
+        padding: 0 $space $space $space;
+    }
+}
+
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+
+@media all and (max-width: $breakpoint-laptop) {
+}
+
+@media all and (max-width: $breakpoint-ipad-portrait) {
+}
+
+@media all and (max-width: $breakpoint-smartphone-landscape) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}
