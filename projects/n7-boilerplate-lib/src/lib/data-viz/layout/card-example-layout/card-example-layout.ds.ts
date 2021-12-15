@@ -1,48 +1,34 @@
 import { LayoutDataSource } from '@n7-frontend/core';
-
-import { ConfigurationService } from '../../../common/services/configuration.service';
 import { CardData } from '../../components/card/card.types';
 import { CardLoader } from '../../models/card-loader';
 
 export class DvCardExampleLayoutDS extends LayoutDataSource {
-  private configuration: ConfigurationService;
-
-  private configId: string;
-
-  public pageConfig: any;
-
   public cardLoader: CardLoader;
 
   public cards: CardData[];
 
   onInit(payload) {
-    this.configuration = payload.configuration;
-    this.configId = payload.configId;
-    // this.pageConfig = this.configuration.get(this.configId);
     this.cardLoader = payload.cardLoader;
     this.cards = this.cardLoader.getCards();
 
-    // this.initWidgets();
+    // setTimeout(() => {
+    //   this.one('item-1').update('<code>Hola</code> ✈ <b>✈</b> ✈ <b>✈</b> <i>mundo</i>!!!');
+    //   this.one('item-2').update({
+    //     icon: 'n7-icon-earth',
+    //     text: '197 <em>Dipendenti</em>',
+    //     subtitle: {
+    //       text: 'Going down...',
+    //       icon: 'n7-icon-caret-down',
+    //       value: '-19%',
+    //       payload: 'view percent tooltip'
+    //     },
+    //     payload: 'view earth tooltip',
+    //     classes: 'is-negative'
+    //   });
+    // }, 3000);
   }
 
   onDestroy() {
     console.warn('DvCardExampleLayout destroyed!');
   }
-
-  // private initWidgets() {
-  //   const { cards } = this.pageConfig;
-  //   if (cards) {
-  //     cards.forEach(({ sections }) => {
-  //       sections.forEach(({ items }) => {
-  //         items.forEach(({ id, initialData }, index) => {
-  //           items[index].ds = this.getWidgetDataSource(id);
-  //           items[index].eh = this.getWidgetEventHandler(id);
-  //           if (initialData) {
-  //             this.one(id).update(initialData);
-  //           }
-  //         });
-  //       });
-  //     });
-  //   }
-  // }
 }
