@@ -5,14 +5,7 @@ import { CommunicationService } from '../../../common/services/communication.ser
 import { LayoutsConfigurationService } from '../../../common/services/layouts-configuration.service';
 import { ConfigurationService } from '../../../common/services/configuration.service';
 import { DvCardExampleLayoutConfig as config } from './card-example-layout.config';
-import {
-  TextItemDS,
-} from '../../data-sources';
-import { CardEH } from '../../event-handlers';
-
-const DATASOURCE_MAP = {
-  text: TextItemDS,
-};
+import { CardLoader } from '../../models/card-loader';
 
 @Component({
   selector: 'dv-card-example-layout',
@@ -20,6 +13,8 @@ const DATASOURCE_MAP = {
 })
 export class DvCardExampleLayoutComponent extends AbstractLayout implements OnInit, OnDestroy {
   private configId: string;
+
+  private cardLoader: CardLoader;
 
   constructor(
     layoutsConfiguration: LayoutsConfigurationService,
@@ -35,6 +30,7 @@ export class DvCardExampleLayoutComponent extends AbstractLayout implements OnIn
       configId: this.configId,
       configuration: this.configuration,
       communication: this.communication,
+      cardLoader: this.cardLoader,
       options: this.config.options || {},
     };
   }
@@ -42,33 +38,13 @@ export class DvCardExampleLayoutComponent extends AbstractLayout implements OnIn
   ngOnInit() {
     this.activatedRoute.data.subscribe((data) => {
       this.configId = data.configId;
-      this.loadWidgets();
+      const pageConfig = this.configuration.get(this.configId);
+      this.cardLoader = new CardLoader(this, pageConfig);
       this.onInit();
     });
   }
 
   ngOnDestroy() {
     this.onDestroy();
-  }
-
-  loadWidgets() {
-    const { cards } = this.configuration.get(this.configId);
-    this.widgets = [];
-    if (cards) {
-      cards.forEach(({ sections }) => {
-        sections.forEach(({ items }) => {
-          items.forEach(({
-            id, type, options
-          }) => {
-            this.widgets.push({
-              id,
-              options,
-              dataSource: DATASOURCE_MAP[type],
-              eventHandler: CardEH
-            });
-          });
-        });
-      });
-    }
   }
 }

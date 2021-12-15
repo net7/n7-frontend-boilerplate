@@ -1,5 +1,5 @@
-<div *ngIf="lb.dataSource && lb.dataSource.pageConfig" class="dv-card-example-layout">
-    <ng-container *ngFor="let card of lb.dataSource.pageConfig.cards">
+<div *ngIf="lb.dataSource && lb.dataSource.cards" class="dv-card-example-layout">
+    <ng-container *ngFor="let card of lb.dataSource.cards">
         <dv-card [data]="card"></dv-card>
     </ng-container>
 </div>

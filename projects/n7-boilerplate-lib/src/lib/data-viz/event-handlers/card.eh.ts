@@ -4,7 +4,7 @@ export class CardEH extends EventHandler {
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
       // redirect signal
-      this.emitOuter(type, payload);
+      this.emitOuter(type.replace(`${this.hostId}.`, ''), payload);
     });
   }
 }

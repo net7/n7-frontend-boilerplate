@@ -17,7 +17,14 @@
     
                 <!-- TEXT -->
                 <ng-container *ngSwitchCase="'text'">
-                    <div [innerHTML]="item.data$ | async"></div> 
+                    <div [innerHTML]="data.widgets[item.id].ds.out$ | async"></div> 
+                </ng-container> 
+
+                <!-- DATA WIDGET -->
+                <ng-container *ngSwitchCase="'data-widget'">
+                    <n7-data-widget 
+                    [data]="data.widgets[item.id].ds.out$ | async"
+                    [emit]="data.widgets[item.id].emit"></n7-data-widget> 
                 </ng-container> 
 
             </ng-container>
