@@ -4,7 +4,9 @@
             <h1 class="dv-card__title">{{ title.text }}</h1>
         </div>
         <div *ngIf="data.actions as actions" class="dv-card__actions-wrapper">
-            #TODO
+            <dv-card-action *ngFor="let actionData of actions" 
+                [data]="actionData" 
+                [emit]="data.actionEmit"></dv-card-action>
         </div>
     </div>
     <div class="dv-card__content">

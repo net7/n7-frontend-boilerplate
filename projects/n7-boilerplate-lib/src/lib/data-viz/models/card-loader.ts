@@ -27,6 +27,7 @@ export class CardLoader {
     // initialize items
     if (cards && !this.itemsInitialized) {
       const { widgets } = this.layout.lb;
+      const { eventHandler: layoutEventHandler } = this.layout.lb;
       this.itemsInitialized = true;
       cards.forEach(({ sections }, index) => {
         const cardWidgets = {};
@@ -45,6 +46,11 @@ export class CardLoader {
 
         // add widgets to card
         cards[index].widgets = cardWidgets;
+
+        // add card action emitter
+        cards[index].actionEmit = (
+          type: string, payload?: any
+        ) => layoutEventHandler.emitInner(type, payload);
       });
     }
 

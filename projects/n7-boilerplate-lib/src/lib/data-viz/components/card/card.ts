@@ -7,4 +7,6 @@ import { CardData } from './card.types';
 })
 export class CardComponent {
     @Input() data: CardData;
+
+    @Input() emit: (type: string, payload: any) => void;
 }

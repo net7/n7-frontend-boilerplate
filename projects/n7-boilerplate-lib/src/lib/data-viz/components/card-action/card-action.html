@@ -1,0 +1,46 @@
+<div *ngIf="data" class="dv-card-action">
+    <ng-container *ngIf="!data.header">
+        <ng-container *ngTemplateOutlet="button; context: { $implicit: data }"></ng-container>
+    </ng-container>
+
+    <!-- Dropdown -->
+    <ng-container *ngIf="data.header">
+        <div class="dv-card-action__dropdown"
+            [ngClass]="{
+                'is-expanded': data.isExpanded
+            }">
+            <!-- Dropdown header -->
+            <button class="dv-card-action__dropdown-header"
+                (click)="dropdownToggle()">
+                <div *ngIf="data.header.label" class="dv-card-action__dropdown-label">
+                    {{ data.header.label }}
+                </div>
+                <div *ngIf="data.header.icon" class="dv-card-action__dropdown-icon">
+                    <span class="{{ data.isExpanded ? data.header.icon.open : data.header.icon.close }}"></span>
+                </div>
+            </button>
+            <!-- END // Dropdown header -->
+            
+            <!-- Dropdown items -->
+            <div class="dv-card-action__dropdown-items-wrapper">
+                <div class="dv-card-action__dropdown-items">
+                    <ng-container *ngFor="let item of data.items">
+                        <ng-container *ngTemplateOutlet="button; context: { $implicit: item }"></ng-container>
+                    </ng-container>
+                </div>
+            </div>
+            <!-- END // Dropdown items -->
+        </div>
+    </ng-container>
+    <!-- END // Dropdown -->
+</div>
+
+<ng-template #button let-button>
+    <div class="dv-card-action__button {{ button.classes || '' }}"
+        (click)="onClick(button.payload)">
+        <div *ngIf="button.label" class="dv-card-action__button-label">{{ button.label }}</div>
+        <div *ngIf="button.icon" class="dv-card-action__button-icon">
+            <span class="{{ button.icon }}"></span>
+        </div>
+    </div>
+</ng-template>

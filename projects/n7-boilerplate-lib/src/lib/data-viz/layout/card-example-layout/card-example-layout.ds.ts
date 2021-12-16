@@ -12,14 +12,14 @@ export class DvCardExampleLayoutDS extends LayoutDataSource {
     this.cards = this.cardLoader.getCards();
 
     // setTimeout(() => {
-    //   this.one('item-1').update('<code>Hola</code> ✈ <b>✈</b> ✈ <b>✈</b> <i>mundo</i>!!!');
+    //   this.one('item-1').update('<b>Hola</b> <i>mundo</i>!!!');
     //   this.one('item-2').update({
     //     icon: 'n7-icon-earth',
     //     text: '197 <em>Dipendenti</em>',
     //     subtitle: {
     //       text: 'Going down...',
     //       icon: 'n7-icon-caret-down',
-    //       value: '-19%',
+    //       value: '-49%',
     //       payload: 'view percent tooltip'
     //     },
     //     payload: 'view earth tooltip',

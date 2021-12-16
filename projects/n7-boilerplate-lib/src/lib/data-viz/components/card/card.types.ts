@@ -6,7 +6,17 @@ export type CardTitle = {
   classes?: string;
 };
 
-export type CardActionList = CardActionButton[];
+export type CardActionList = {
+  header: {
+    icon: {
+      open: string;
+      close: string;
+    };
+    label?: string;
+  };
+  items: CardActionButton[];
+  isExpanded?: boolean;
+}
 
 export type CardActionButton = {
   label: string;
@@ -50,8 +60,9 @@ export interface DataWidgetItem extends CardSectionItem {
 
 export type CardData = {
   sections: CardSection[];
-  widgets?: CardWidgets;
   title?: CardTitle;
   actions?: CardAction[];
+  widgets?: CardWidgets;
+  actionEmit?: (type: string, payload?: any) => void;
   classes?: string;
 };

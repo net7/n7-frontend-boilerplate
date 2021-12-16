@@ -8,6 +8,26 @@ const config: {
       text: 'Card 1',
       classes: 'card-1-title'
     },
+    actions: [{
+      label: null,
+      payload: 'action-1-emit',
+      icon: 'n7-icon-earth',
+      classes: 'action-1-class'
+    }, {
+      header: {
+        // label: 'Options',
+        icon: {
+          open: 'n7-icon-caret-up',
+          close: 'n7-icon-caret-down'
+        }
+      },
+      items: [1, 2, 3, 4, 5].map((number) => ({
+        label: `Item ${number}`,
+        payload: `item-${number}-emit`,
+        // icon: 'n7-icon-earth',
+        classes: `item-${number}-class`
+      }))
+    }],
     sections: [{
       items: [{
         id: 'item-1',

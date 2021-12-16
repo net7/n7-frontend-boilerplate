@@ -1,0 +1,125 @@
+/**
+ * CARD ACTION
+ *
+ * Style for card actions
+ */
+
+$notebook-selector-height: 30px;
+
+@mixin cardShadow-1 {
+    box-shadow: 0 1px 1px rgba(0,0,0,0.04), 0 2px 10px rgba(0,0,0,0.04);
+}
+
+/* ------------------------------------ *\
+   #CARD ACTION
+\* ------------------------------------ */
+.dv-card-action {
+    position: relative;
+    display: inline-block;
+    height: $notebook-selector-height;
+    margin: 0;
+    text-align: left;
+    overflow: visible;
+    color: $color-text;
+    
+    /* header */
+    &__dropdown-header {
+        width: 100%;
+        display: flex;
+        box-sizing: border-box;
+        align-items: center;
+        height: 28px;
+        padding: 0 8px;
+        background-color: transparent;
+        border: none;
+        // border-radius: $border-radius;
+        cursor: pointer;
+        transition: color $transition-durations;
+
+        &:hover {
+            color: $color-text-link;
+            .dv-card-action__header-icon {
+                color: $color-text-link;
+            }
+        }
+    }
+
+    &__dropdown-icon {
+        width: 14px;
+        height: auto;
+    }
+
+    &__dropdown-label {
+        margin-right: auto;
+        font-size: $font-size-s;
+        font-weight: $font-weight-bold;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* Dropdown */
+    &__dropdown-items-wrapper {
+        display: none;
+        z-index: 10;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: $notebook-selector-height + 2;
+        background-color: $color-background-base;
+        border: 1px solid $color-border-normal;
+        border-radius: $border-radius;
+        @include cardShadow-1;
+    }
+
+    &__button {
+        padding: $space/2 $space;
+        color: $color-text;
+        font-size: $font-size-s;
+        transition: color $transition-durations;
+        cursor: pointer;
+
+        &:hover {
+            color: $color-text-link;
+        }
+
+        &:not(:last-child) {
+            border-bottom: 1px solid $color-border-normal;
+        }
+
+        .dv-card-action__button-icon span {
+            width: 14px;
+            height: auto;
+        }
+    }
+}
+
+
+/* ------------------------------------ *\
+   #EXPANDED
+\* ------------------------------------ */
+.dv-card-action__dropdown {
+    &.is-expanded {
+        .dv-card-action__dropdown-items-wrapper {
+            display: block;
+        }
+    }
+}
+
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+
+@media all and (max-width: $breakpoint-laptop) {
+}
+
+@media all and (max-width: $breakpoint-ipad-portrait) {
+}
+
+@media all and (max-width: $breakpoint-smartphone-landscape) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}
