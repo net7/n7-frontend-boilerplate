@@ -49,6 +49,12 @@
                     *ngSwitchCase="'map'"
                     [data]="lb.widgets[input.id].ds.out$ | async"
                     [emit]="lb.widgets[input.id].emit"></n7-map>
+
+                    <!-- INPUT HISTOGRAM -->
+                    <n7-histogram-range 
+                    *ngSwitchCase="'histogram'"
+                    [data]="lb.widgets[input.id].ds.out$ | async"
+                    [emit]="lb.widgets[input.id].emit"></n7-histogram-range>
                 
                 </ng-container>
             </div>

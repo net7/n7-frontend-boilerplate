@@ -21,6 +21,8 @@ import { FacetLinkMultipleDS } from '../../data-sources/facets/facet-link-multip
 import { FacetLinkMultipleEH } from '../../event-handlers/facets/facet-link-multiple.eh';
 import { FacetMapDS } from '../../data-sources/facets/facet-map.ds';
 import { FacetMapEH } from '../../event-handlers/facets/facet-map.eh';
+import { FacetHistogramEH } from '../../event-handlers/facets/facet-histogram.eh';
+import { FacetHistogramDS } from '../../data-sources/facets/facet-histogram.ds';
 
 const DATASOURCE_MAP = {
   header: FacetHeaderDS,
@@ -32,6 +34,7 @@ const DATASOURCE_MAP = {
   // if the facet value is an array you MUST include it in the name
   'map-multiple': FacetMapDS,
   'link-multiple': FacetLinkMultipleDS,
+  histogram: FacetHistogramDS,
 };
 
 const EVENTHANDLER_MAP = {
@@ -44,6 +47,7 @@ const EVENTHANDLER_MAP = {
   // if the facet value is an array you MUST include it in the name
   'map-multiple': FacetMapEH,
   'link-multiple': FacetLinkMultipleEH,
+  histogram: FacetHistogramEH,
 };
 
 @Component({

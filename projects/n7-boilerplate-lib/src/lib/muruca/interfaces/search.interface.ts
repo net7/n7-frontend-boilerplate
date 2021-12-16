@@ -5,6 +5,7 @@ import {
   InputSelectData,
   FacetHeaderData,
   MapData,
+  HistogramRangeData,
 } from '@n7-frontend/components';
 
 export interface MrInputSchema {
@@ -75,6 +76,11 @@ export interface MrSearchInputMap extends MrSearchFacetsInput {
   data: MapData;
 }
 
+export interface MrSearchInputHistogram extends MrSearchFacetsInput {
+  type: 'histogram';
+  data: HistogramRangeData;
+}
+
 export interface MrSearchFacetsSection {
   /** Section id (must be unique) */
   id: string;
@@ -82,11 +88,12 @@ export interface MrSearchFacetsSection {
   header?: MrInputHeaderData;
   /** Section inputs (allowed types: text, checkbox, select, link) */
   inputs: (
-    MrSearchInputText
-    | MrSearchInputCheckbox
-    | MrSearchInputSelect
+    MrSearchInputCheckbox
+    | MrSearchInputHistogram
     | MrSearchInputLink
     | MrSearchInputMap
+    | MrSearchInputSelect
+    | MrSearchInputText
   )[];
   /** Section aditional css classes */
   classes?: string;
