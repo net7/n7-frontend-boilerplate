@@ -45,6 +45,6 @@ export type CardData = {
   title?: CardTitle;
   actions?: CardAction[];
   widgets?: CardWidgets;
-  actionEmit?: (type: string, payload?: any) => void;
+  cardCustomEmit?: (type: string, payload?: any) => void;
   classes?: string;
 };

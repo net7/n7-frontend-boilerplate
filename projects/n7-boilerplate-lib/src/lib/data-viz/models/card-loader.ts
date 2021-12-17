@@ -32,9 +32,11 @@ export class CardLoader {
       cards.forEach(({ sections }, index) => {
         const cardWidgets = {};
         sections.forEach(({ items }) => {
-          items.forEach(({ id, initialData }) => {
+          items.forEach(({ id, type: itemType, initialData }) => {
             const { ds } = widgets[id];
             const { eh } = widgets[id];
+            ds.id = id;
+            ds.type = itemType;
             const emit = (type: string, payload?: any) => eh.emitInner(type, payload);
             cardWidgets[id] = { ds, emit };
             // with initialData
@@ -47,8 +49,8 @@ export class CardLoader {
         // add widgets to card
         cards[index].widgets = cardWidgets;
 
-        // add card action emitter
-        cards[index].actionEmit = (
+        // add card emitter
+        cards[index].cardCustomEmit = (
           type: string, payload?: any
         ) => layoutEventHandler.emitInner(type, payload);
       });

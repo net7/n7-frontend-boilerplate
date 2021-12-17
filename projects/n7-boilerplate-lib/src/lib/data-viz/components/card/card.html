@@ -6,7 +6,7 @@
         <div *ngIf="data.actions as actions" class="dv-card__actions-wrapper">
             <dv-card-action *ngFor="let actionData of actions" 
                 [data]="actionData" 
-                [emit]="data.actionEmit"></dv-card-action>
+                [emit]="data.cardCustomEmit"></dv-card-action>
         </div>
     </div>
     <div class="dv-card__content">
