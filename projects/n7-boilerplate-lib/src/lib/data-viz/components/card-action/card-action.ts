@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { CardAction } from '../card/card.types';
+import { CardAction } from '../../types/card.types';
 
 @Component({
   selector: 'dv-card-action',

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { CardData } from './card.types';
+import { CardData } from '../../types/card.types';
 
 @Component({
   selector: 'dv-card',

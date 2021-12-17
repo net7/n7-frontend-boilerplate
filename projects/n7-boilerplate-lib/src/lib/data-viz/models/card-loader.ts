@@ -1,4 +1,4 @@
-import { CardData } from '../components/card/card.types';
+import { CardData } from '../types/card.types';
 import {
   TextItemDS,
   DataWidgetItemDS,

@@ -1,5 +1,5 @@
 import { LayoutDataSource } from '@n7-frontend/core';
-import { CardData } from '../../components/card/card.types';
+import { CardData } from '../../types/card.types';
 import { CardLoader } from '../../models/card-loader';
 
 export class DvCardExampleLayoutDS extends LayoutDataSource {
