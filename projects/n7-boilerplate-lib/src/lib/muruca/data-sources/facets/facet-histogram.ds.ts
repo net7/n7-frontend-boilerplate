@@ -14,6 +14,18 @@ export class FacetHistogramDS extends DataSource implements FacetDataSource {
   isUpdate = false;
 
   protected transform({ links }): HistogramRangeData {
+    // Remap the response values in the correct
+    // format for histogram-range-component
+    const items = links.map((link) => ({
+      label: link.text,
+      value: link.counter,
+      payload: link.payload,
+      range: link.range ? {
+        payload: link.range.payload,
+        label: link.range.text
+      } : undefined,
+    })).sort((a, b) => +a.label - b.label);
+
     return {
       containerId: 'container-for-histogram',
       width: 300,
@@ -29,7 +41,7 @@ export class FacetHistogramDS extends DataSource implements FacetDataSource {
         top: 10,
         bottom: 45
       },
-      items: links,
+      items,
     };
   }
 
