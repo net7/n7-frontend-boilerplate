@@ -7,9 +7,9 @@ export class FacetHistogramEH extends EventHandler {
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
-        case `${this.dataSource.id}.change`:
-          console.log('triggered change in histogram facet');
+        case `${this.dataSource.id}.rangeselected`:
           if (payload) {
+            this.dataSource.setValue(payload.join('-'));
             this.emitOuter('change', {
               value: this.dataSource.getValue(),
               id: this.dataSource.id

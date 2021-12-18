@@ -4,12 +4,12 @@ import { FacetDataSource } from './facet-datasource';
 
 const ACTIVE_CLASS = 'is-active';
 
-type FACET_VALUE = any[];
+type FACET_VALUE = string;
 
 export class FacetHistogramDS extends DataSource implements FacetDataSource {
   id: string;
 
-  value: FACET_VALUE = [];
+  value: FACET_VALUE = '';
 
   isUpdate = false;
 
@@ -65,6 +65,6 @@ export class FacetHistogramDS extends DataSource implements FacetDataSource {
   getValue = (): FACET_VALUE => this.value;
 
   clear() {
-    this.value = [];
+    this.value = '';
   }
 }
