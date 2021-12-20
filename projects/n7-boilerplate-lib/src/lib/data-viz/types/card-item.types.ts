@@ -16,13 +16,17 @@ export interface DataWidgetItem extends CardSectionItem {
   type: 'data-widget';
   initialData: DataWidgetData;
 }
-export interface ApexPieChartItem extends CardSectionItem {
-  type: 'apex-pie-chart';
+export interface ApexChartItem extends CardSectionItem {
   initialData: ChartResponseData;
 }
+export interface ApexBarChartItem extends ApexChartItem { type: 'apex-bar-chart' }
+export interface ApexLineChartItem extends ApexChartItem { type: 'apex-line-chart' }
+export interface ApexPieChartItem extends ApexChartItem { type: 'apex-pie-chart' }
 
 export type CardItemTypes = (
   TextItem
   | DataWidgetItem
+  | ApexBarChartItem
+  | ApexLineChartItem
   | ApexPieChartItem
 );

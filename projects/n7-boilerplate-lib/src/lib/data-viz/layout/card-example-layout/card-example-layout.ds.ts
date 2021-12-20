@@ -33,7 +33,23 @@ export class DvCardExampleLayoutDS extends LayoutDataSource {
         }],
         categories: ['Fetta A', 'Fetta B', 'Fetta C', 'Fetta D'],
       });
-    }, 3000);
+      this.one('item-4').update({
+        series: [{
+          id: 'serie-desktops',
+          name: 'Desktops',
+          data: [10, 41, 35, 51, 49, 62, 69, 91, 148].reverse()
+        }],
+        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+      });
+      this.one('item-5').update({
+        series: [{
+          id: 'serie-countries',
+          name: 'Countries',
+          data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380].reverse()
+        }],
+        categories: ['South Korea', 'Canada', 'United Kingdom', 'Netherlands', 'Italy', 'France', 'Japan', 'United States', 'China', 'Germany'],
+      });
+    }, 5000);
   }
 
   onDestroy() {

@@ -42,44 +42,13 @@
         flex-shrink: 0;
     }
 
-    // &__action {
-    //     display: inline-block;
-    //     height: 30px;
-    //     padding: 0 $space;
-    //     color: $color-text-inverse;
-    //     font-weight: $font-weight-bold;
-    //     background-color: $color-background-medium;
-    //     text-transform: uppercase;
-    //     font-size: $font-size-xs;
-    //     font-family: $font-family-main;
-    //     line-height: 30px;
-    //     background-repeat: no-repeat;
-    //     background-position: $space/1.5 center;
-    //     background-size: $space*1.5 auto;
-
-    //     &:hover, &.action-is-active {
-    //         cursor: pointer;
-    //         background-color: $color-text-link;
-    //     }
-
-    //     &:first-child {
-    //         border-bottom-left-radius: $border-radius;
-    //     }
-
-    //     &:last-child {
-    //         border-top-right-radius: $border-radius;
-    //     }
-    //     i{
-    //       padding-right: $space/2;
-    //       font-size: $font-size-xs;
-    //     }
-    // }
-
-    /* Content */
     &__content {
-        // display: flex;
         flex-grow: 1;
         padding: 0 $space $space $space;
+    }
+
+    &__section {
+        display: flex;
     }
 }
 

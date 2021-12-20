@@ -9,6 +9,8 @@ import { CardEH } from '../event-handlers';
 const DATASOURCE_MAP = {
   text: TextItemDS,
   'data-widget': DataWidgetItemDS,
+  'apex-bar-chart': ApexChartItemDS,
+  'apex-line-chart': ApexChartItemDS,
   'apex-pie-chart': ApexChartItemDS,
 };
 
