@@ -1,5 +1,5 @@
 import { ChartData } from '@n7-frontend/components';
-import * as transformers from './transformers';
+import transformers from './transformers';
 
 export class ApexHandler {
   transform({

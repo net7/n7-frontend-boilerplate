@@ -10,7 +10,7 @@ export default {
       chart: {
         type: 'pie',
       },
-      series: apexHelpers.getSeries(data.series),
+      series: apexHelpers.getSeries(data.series)[0].data,
       labels: data.categories
     }, options)
   })

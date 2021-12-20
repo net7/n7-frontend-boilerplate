@@ -7,7 +7,7 @@ const transformers: {
     run: (id: string, data: ChartResponseData, options?: any) => ChartData;
   };
 } = {
-  'pie-chart': pieChart
+  'apex-pie-chart': pieChart
 };
 
 export default transformers;

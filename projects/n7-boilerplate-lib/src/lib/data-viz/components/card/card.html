@@ -19,21 +19,22 @@
 <ng-template #blocks let-items>
     <ng-container *ngFor="let item of items">
         <div class="{{ 'dv-card__item dv-card__' + item.type }}">
-            <ng-container [ngSwitch]="item.type">
-    
-                <!-- TEXT -->
-                <ng-container *ngSwitchCase="'text'">
-                    <div [innerHTML]="data.widgets[item.id].ds.out$ | async"></div> 
-                </ng-container> 
+            <!-- TEXT -->
+            <ng-container *ngIf="item.type === 'text'">
+                <div [innerHTML]="data.widgets[item.id].ds.out$ | async"></div> 
+            </ng-container> 
 
-                <!-- DATA WIDGET -->
-                <ng-container *ngSwitchCase="'data-widget'">
-                    <n7-data-widget 
-                    [data]="data.widgets[item.id].ds.out$ | async"
-                    [emit]="data.widgets[item.id].emit"></n7-data-widget> 
-                </ng-container> 
+            <!-- DATA WIDGET -->
+            <ng-container *ngIf="'item.type === data-widget'">
+                <n7-data-widget 
+                [data]="data.widgets[item.id].ds.out$ | async"
+                [emit]="data.widgets[item.id].emit"></n7-data-widget> 
+            </ng-container> 
 
-            </ng-container>
+            <!-- APEX CHARTS -->
+            <ng-container *ngIf="item.type.includes('apex')">
+                <n7-chart [data]="data.widgets[item.id].ds.out$ | async"></n7-chart> 
+            </ng-container> 
         </div>
     </ng-container>
 </ng-template>

@@ -2,12 +2,14 @@ import { CardData } from '../types/card.types';
 import {
   TextItemDS,
   DataWidgetItemDS,
+  ApexChartItemDS,
 } from '../data-sources';
 import { CardEH } from '../event-handlers';
 
 const DATASOURCE_MAP = {
   text: TextItemDS,
   'data-widget': DataWidgetItemDS,
+  'apex-pie-chart': ApexChartItemDS,
 };
 
 export class CardLoader {
