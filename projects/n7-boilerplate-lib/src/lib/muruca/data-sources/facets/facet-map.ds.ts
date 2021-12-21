@@ -34,21 +34,21 @@ interface MarkerWithID extends MarkerData {
 
 const MARKER_ICON = L.icon({
   iconUrl: '/assets/pin.png',
-  iconSize: [16, 25],
+  iconSize: [13, 20],
   popupAnchor: [0, -15],
   className: 'marker-icon'
 });
 
 const MARKER_ICON_UNAVAILABLE = L.icon({
   iconUrl: '/assets/pin-unavailable.png',
-  iconSize: [16, 25],
+  iconSize: [13, 20],
   popupAnchor: [0, -15],
   className: 'marker-icon'
 });
 
 const MARKER_ICON_SELECTED = L.icon({
   iconUrl: '/assets/pin-selected.png',
-  iconSize: [16, 25],
+  iconSize: [13, 20],
   popupAnchor: [0, -15],
   className: 'marker-icon-selected'
 });
@@ -99,9 +99,13 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
       containerId: 'map-canvas',
       libOptions: {
         attributionControl: false,
+        minZoom: 8,
+        maxBounds: [[46.8505, 10.3393], [45.6635, 12.2429]]
       },
       tileLayers: [{
-        url: 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
+        // url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        url: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png',
+        // url: 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
         options: null
       }],
       initialView: {
