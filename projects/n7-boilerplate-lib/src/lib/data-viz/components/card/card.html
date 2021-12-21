@@ -38,6 +38,13 @@
                 [emit]="data.widgets[item.id].emit"></n7-table> 
             </ng-container> 
 
+            <!-- INNER TITLE -->
+            <ng-container *ngIf="item.type === 'inner-title'">
+                <n7-inner-title 
+                [data]="data.widgets[item.id].ds.out$ | async"
+                [emit]="data.widgets[item.id].emit"></n7-inner-title> 
+            </ng-container> 
+
             <!-- APEX CHARTS -->
             <ng-container *ngIf="item.type.includes('apex')">
                 <n7-chart [data]="data.widgets[item.id].ds.out$ | async"></n7-chart> 

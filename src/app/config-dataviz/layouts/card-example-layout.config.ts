@@ -6,6 +6,7 @@ import {
   ApexRadialBarChartItem,
   CardData,
   DataWidgetItem,
+  InnerTitleItem,
   TableItem,
   TextItem
 } from '@n7-frontend/boilerplate';
@@ -160,7 +161,7 @@ const radarBarChartItem: ApexRadarChartItem = {
   },
   options: {
     chart: {
-      width: '800',
+      width: '600',
       animations: {
         enabled: true
       }
@@ -207,8 +208,8 @@ const radarBarChartItem: ApexRadarChartItem = {
       fontWeight: 300,
       horizontalAlign: 'center',
       customLegendItems: ['QUARTILE 3-|4', 'QUARTILE 2-|3', 'QUARTILE 1-|2', 'QUARTILE1'],
-      offsetX: 40,
-      offsetY: 170,
+      offsetX: 20,
+      offsetY: 100,
       markers: {
         fillColors: ['#C5E9C9', '#FBEFC9', '#FFD8C7', '#F8CAC3'],
         width: 20,
@@ -248,6 +249,58 @@ const tableItem: TableItem = {
   },
 };
 
+const selectItem: InnerTitleItem = {
+  id: 'item-9',
+  type: 'inner-title',
+  initialData: {
+    title: {
+      main: {
+        text: 'Punteggio'
+      }
+    },
+    actions: {
+      select: {
+        options: [
+          'TOTALE',
+          'BIOLOGIA',
+          'CHIMICA',
+          'FISICA',
+          'INGLESE',
+          'LOGICA',
+          'MATEMATICA'
+        ].map((label) => ({ text: label, value: label })),
+        payload: 'punteggio'
+      },
+    }
+  },
+};
+
+const buttonToggleItem: InnerTitleItem = {
+  id: 'item-10',
+  type: 'inner-title',
+  initialData: {
+    title: {
+      main: {
+        text: 'Punteggi Normalizzati'
+      }
+    },
+    actions: {
+      buttons: [{
+        text: 'SI',
+        anchor: {
+          payload: 'button-yes'
+        }
+      },
+      {
+        text: 'NO',
+        anchor: {
+          payload: 'button-no'
+        }
+      }]
+    }
+  },
+};
+
 const config: {
   cards: CardData[];
 } = {
@@ -278,16 +331,22 @@ const config: {
     }],
     sections: [
       {
-        items: [textItem, dataWidgetItem, pieChartItem]
+        items: [textItem, dataWidgetItem]
       },
       {
-        items: [lineChartItem, barChartItem, radialBarChartItem]
+        items: [lineChartItem, pieChartItem]
       },
       {
-        items: [radarBarChartItem]
+        items: [barChartItem, radialBarChartItem]
       },
       {
-        items: [tableItem]
+        items: [radarBarChartItem, tableItem]
+      },
+      {
+        items: [selectItem]
+      },
+      {
+        items: [buttonToggleItem]
       }
     ]
   }]
