@@ -12,6 +12,7 @@ const DATASOURCE_MAP = {
   'apex-bar-chart': ApexChartItemDS,
   'apex-line-chart': ApexChartItemDS,
   'apex-pie-chart': ApexChartItemDS,
+  'apex-radialbar-chart': ApexChartItemDS,
 };
 
 export class CardLoader {

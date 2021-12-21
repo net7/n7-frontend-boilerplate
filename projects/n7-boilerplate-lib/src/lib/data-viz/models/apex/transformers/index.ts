@@ -3,6 +3,7 @@ import { ChartResponseData } from '../../../types/response.types';
 import barChart from './bar-chart';
 import lineChart from './line-chart';
 import pieChart from './pie-chart';
+import radialbarChart from './radialbar-chart';
 
 const transformers: {
   [id: string]: {
@@ -11,7 +12,8 @@ const transformers: {
 } = {
   'apex-pie-chart': pieChart,
   'apex-line-chart': lineChart,
-  'apex-bar-chart': barChart
+  'apex-bar-chart': barChart,
+  'apex-radialbar-chart': radialbarChart,
 };
 
 export default transformers;
