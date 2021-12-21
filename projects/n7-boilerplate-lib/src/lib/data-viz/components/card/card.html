@@ -25,10 +25,17 @@
             </ng-container> 
 
             <!-- DATA WIDGET -->
-            <ng-container *ngIf="'item.type === data-widget'">
+            <ng-container *ngIf="item.type === 'data-widget'">
                 <n7-data-widget 
                 [data]="data.widgets[item.id].ds.out$ | async"
                 [emit]="data.widgets[item.id].emit"></n7-data-widget> 
+            </ng-container> 
+
+            <!-- TABLE -->
+            <ng-container *ngIf="item.type === 'table'">
+                <n7-table 
+                [data]="data.widgets[item.id].ds.out$ | async"
+                [emit]="data.widgets[item.id].emit"></n7-table> 
             </ng-container> 
 
             <!-- APEX CHARTS -->

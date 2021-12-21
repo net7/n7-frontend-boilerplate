@@ -1,7 +1,13 @@
 import {
   ApexBarChartItem,
   ApexLineChartItem,
-  ApexPieChartItem, ApexRadarChartItem, ApexRadialBarChartItem, CardData, DataWidgetItem, TextItem
+  ApexPieChartItem,
+  ApexRadarChartItem,
+  ApexRadialBarChartItem,
+  CardData,
+  DataWidgetItem,
+  TableItem,
+  TextItem
 } from '@n7-frontend/boilerplate';
 
 const textItem: TextItem = {
@@ -220,6 +226,28 @@ const radarBarChartItem: ApexRadarChartItem = {
   }
 };
 
+const tableItem: TableItem = {
+  id: 'item-8',
+  type: 'table',
+  initialData: {
+    head: [{
+      cells: ['SEZIONE', 'PUNTEGGIO'].map((label) => ({
+        content: label
+      }))
+    }],
+    body: [
+      { label: 'Biologia', value: 7.5 },
+      { label: 'Testo', value: 6.5 },
+      { label: 'Fisica', value: 6 },
+      { label: 'Chimica', value: 4.5 },
+      { label: 'Logica', value: 4 },
+      { label: 'Matematica', value: 3 },
+    ].map(({ label, value }) => ({
+      cells: [{ content: label }, { content: value }]
+    }))
+  },
+};
+
 const config: {
   cards: CardData[];
 } = {
@@ -257,6 +285,9 @@ const config: {
       },
       {
         items: [radarBarChartItem]
+      },
+      {
+        items: [tableItem]
       }
     ]
   }]

@@ -1,4 +1,4 @@
-import { DataWidgetData } from '@n7-frontend/components';
+import { DataWidgetData, TableData } from '@n7-frontend/components';
 import { ChartResponseData } from './response.types';
 
 export interface CardSectionItem {
@@ -16,6 +16,10 @@ export interface DataWidgetItem extends CardSectionItem {
   type: 'data-widget';
   initialData: DataWidgetData;
 }
+export interface TableItem extends CardSectionItem {
+  type: 'table';
+  initialData: TableData;
+}
 export interface CardChartItem extends CardSectionItem {
   initialData: ChartResponseData;
 }
@@ -27,6 +31,7 @@ export interface ApexRadarChartItem extends CardChartItem { type: 'apex-radar-ch
 
 export type CardItemTypes = (
   TextItem
+  | TableItem
   | DataWidgetItem
   | ApexBarChartItem
   | ApexLineChartItem

@@ -3,11 +3,13 @@ import {
   TextItemDS,
   DataWidgetItemDS,
   ApexChartItemDS,
+  TableItemDS,
 } from '../data-sources';
 import { CardEH } from '../event-handlers';
 
 const DATASOURCE_MAP = {
   text: TextItemDS,
+  table: TableItemDS,
   'data-widget': DataWidgetItemDS,
   'apex-bar-chart': ApexChartItemDS,
   'apex-line-chart': ApexChartItemDS,
