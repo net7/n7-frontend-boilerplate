@@ -23,6 +23,7 @@ export interface ApexBarChartItem extends CardChartItem { type: 'apex-bar-chart'
 export interface ApexLineChartItem extends CardChartItem { type: 'apex-line-chart' }
 export interface ApexPieChartItem extends CardChartItem { type: 'apex-pie-chart' }
 export interface ApexRadialBarChartItem extends CardChartItem { type: 'apex-radialbar-chart' }
+export interface ApexRadarChartItem extends CardChartItem { type: 'apex-radar-chart' }
 
 export type CardItemTypes = (
   TextItem
@@ -31,4 +32,5 @@ export type CardItemTypes = (
   | ApexLineChartItem
   | ApexPieChartItem
   | ApexRadialBarChartItem
+  | ApexRadarChartItem
 );

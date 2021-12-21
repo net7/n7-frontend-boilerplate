@@ -1,7 +1,7 @@
 import {
   ApexBarChartItem,
   ApexLineChartItem,
-  ApexPieChartItem, ApexRadialBarChartItem, CardData, DataWidgetItem, TextItem
+  ApexPieChartItem, ApexRadarChartItem, ApexRadialBarChartItem, CardData, DataWidgetItem, TextItem
 } from '@n7-frontend/boilerplate';
 
 const textItem: TextItem = {
@@ -123,12 +123,6 @@ const radialBarChartItem: ApexRadialBarChartItem = {
     categories: ['Average Results'],
   },
   options: {
-    // chart: {
-    //   offsetY: -20,
-    //   sparkline: {
-    //     enabled: false
-    //   }
-    // },
     track: {
       background: '#e7e7e7'
     },
@@ -142,6 +136,85 @@ const radialBarChartItem: ApexRadialBarChartItem = {
             show: false
           }
         },
+      }
+    }
+  }
+};
+
+const radarBarChartItem: ApexRadarChartItem = {
+  id: 'item-7',
+  type: 'apex-radar-chart',
+  initialData: {
+    series: [{
+      id: 'serie-avg',
+      name: 'Punteggio',
+      data: [67, 40, 35, 54, 49, 60]
+    }],
+    categories: ['Testo', 'Logica', 'Matematica', 'Fisica', 'Chimica', 'Biologia'],
+  },
+  options: {
+    chart: {
+      width: '800',
+      animations: {
+        enabled: true
+      }
+    },
+    fill: {
+      opacity: 0.25,
+      colors: ['#616161']
+    },
+    stroke: {
+      show: true,
+      width: 2,
+      colors: ['#616161'],
+      dashArray: 0
+    },
+    yaxis: {
+      tickAmount: 4,
+      min: 0,
+      max: 100,
+      show: false,
+    },
+    markers: {
+      size: 5,
+      colors: ['#616161'],
+      hover: {
+        size: 10
+      }
+    },
+    plotOptions: {
+      radar: {
+        polygons: {
+          strokeColor: '#FFoooo',
+          fill: {
+            colors: ['#C5E9C9', '#FBEFC9', '#FFD8C7', '#F8CAC3']
+          }
+        }
+      }
+    },
+    legend: {
+      show: true,
+      showForSingleSeries: true,
+      position: 'right',
+      fontSize: '18px',
+      fontFamily: 'Helvetica, Arial',
+      fontWeight: 300,
+      horizontalAlign: 'center',
+      customLegendItems: ['QUARTILE 3-|4', 'QUARTILE 2-|3', 'QUARTILE 1-|2', 'QUARTILE1'],
+      offsetX: 40,
+      offsetY: 170,
+      markers: {
+        fillColors: ['#C5E9C9', '#FBEFC9', '#FFD8C7', '#F8CAC3'],
+        width: 20,
+        height: 20,
+        strokeWidth: 0,
+        strokeColor: '#fff',
+        radius: 20,
+        offsetX: -5,
+        offsetY: 3
+      },
+      customHTML() {
+        return '<span class="custom-marker"><i class="fas fa-chart-pie"></i></span>';
       }
     }
   }
@@ -183,7 +256,7 @@ const config: {
         items: [lineChartItem, barChartItem, radialBarChartItem]
       },
       {
-        items: []
+        items: [radarBarChartItem]
       }
     ]
   }]
