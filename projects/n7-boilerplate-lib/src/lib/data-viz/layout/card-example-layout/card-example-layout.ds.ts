@@ -43,9 +43,13 @@ export class DvCardExampleLayoutDS extends LayoutDataSource {
       });
       this.one('item-5').update({
         series: [{
-          id: 'serie-countries',
-          name: 'Countries',
+          id: 'serie-2021',
+          name: '2021',
           data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380].reverse()
+        }, {
+          id: 'serie-2020',
+          name: '2020',
+          data: [300, 530, 418, 370, 240, 680, 390, 100, 200, 1280].reverse()
         }],
         categories: ['South Korea', 'Canada', 'United Kingdom', 'Netherlands', 'Italy', 'France', 'Japan', 'United States', 'China', 'Germany'],
       });

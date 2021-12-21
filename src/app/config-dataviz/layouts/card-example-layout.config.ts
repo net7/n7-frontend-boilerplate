@@ -66,7 +66,7 @@ const lineChartItem: ApexLineChartItem = {
   options: {
     chart: {
       height: 350,
-      width: 350,
+      width: 550,
       zoom: {
         enabled: false
       }
@@ -95,16 +95,20 @@ const barChartItem: ApexBarChartItem = {
   type: 'apex-bar-chart',
   initialData: {
     series: [{
-      id: 'serie-countries',
-      name: 'Countries',
+      id: 'serie-2021',
+      name: '2021',
       data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380]
+    }, {
+      id: 'serie-2020',
+      name: '2020',
+      data: [300, 530, 418, 370, 240, 680, 390, 100, 200, 1280]
     }],
     categories: ['South Korea', 'Canada', 'United Kingdom', 'Netherlands', 'Italy', 'France', 'Japan', 'United States', 'China', 'Germany'],
   },
   options: {
     chart: {
       height: 350,
-      width: 350
+      width: 550
     },
     plotOptions: {
       bar: {
