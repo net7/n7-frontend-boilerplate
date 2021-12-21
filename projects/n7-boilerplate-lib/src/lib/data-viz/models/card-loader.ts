@@ -5,12 +5,14 @@ import {
   ApexChartItemDS,
   TableItemDS,
   InnerTitleItemDS,
+  SelectItemDS,
 } from '../data-sources';
 import { CardEH } from '../event-handlers';
 
 const DATASOURCE_MAP = {
   text: TextItemDS,
   table: TableItemDS,
+  select: SelectItemDS,
   'inner-title': InnerTitleItemDS,
   'data-widget': DataWidgetItemDS,
   'apex-bar-chart': ApexChartItemDS,

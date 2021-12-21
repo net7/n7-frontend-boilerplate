@@ -1,4 +1,9 @@
-import { DataWidgetData, InnerTitleData, TableData } from '@n7-frontend/components';
+import {
+  DataWidgetData,
+  InnerTitleData,
+  InputSelectData,
+  TableData
+} from '@n7-frontend/components';
 import { ChartResponseData } from './response.types';
 
 export interface CardSectionItem {
@@ -24,6 +29,10 @@ export interface InnerTitleItem extends CardSectionItem {
   type: 'inner-title';
   initialData: InnerTitleData;
 }
+export interface SelectItem extends CardSectionItem {
+  type: 'select';
+  initialData: InputSelectData;
+}
 export interface CardChartItem extends CardSectionItem {
   initialData: ChartResponseData;
 }
@@ -38,6 +47,7 @@ export type CardItemTypes = (
   | TableItem
   | DataWidgetItem
   | InnerTitleItem
+  | SelectItem
   | ApexBarChartItem
   | ApexLineChartItem
   | ApexPieChartItem

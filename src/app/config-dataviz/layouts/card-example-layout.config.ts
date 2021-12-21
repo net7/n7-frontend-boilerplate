@@ -7,6 +7,7 @@ import {
   CardData,
   DataWidgetItem,
   InnerTitleItem,
+  SelectItem,
   TableItem,
   TextItem
 } from '@n7-frontend/boilerplate';
@@ -253,29 +254,22 @@ const tableItem: TableItem = {
   },
 };
 
-const selectItem: InnerTitleItem = {
+const selectItem: SelectItem = {
   id: 'item-9',
-  type: 'inner-title',
+  type: 'select',
   initialData: {
-    title: {
-      main: {
-        text: 'Punteggio'
-      }
-    },
-    actions: {
-      select: {
-        options: [
-          'TOTALE',
-          'BIOLOGIA',
-          'CHIMICA',
-          'FISICA',
-          'INGLESE',
-          'LOGICA',
-          'MATEMATICA'
-        ].map((label) => ({ text: label, value: label })),
-        payload: 'punteggio'
-      },
-    }
+    id: 'select-punteggio',
+    label: 'Punteggio',
+    options: [
+      'TOTALE',
+      'BIOLOGIA',
+      'CHIMICA',
+      'FISICA',
+      'INGLESE',
+      'LOGICA',
+      'MATEMATICA'
+    ].map((label) => ({ label, value: label })),
+    payload: 'punteggio'
   },
 };
 
@@ -285,9 +279,10 @@ const buttonToggleItem: InnerTitleItem = {
   initialData: {
     title: {
       main: {
-        text: 'Punteggi Normalizzati'
+        text: ''
       }
     },
+    tools: 'Punteggi Normalizzati',
     actions: {
       buttons: [{
         text: 'SI',
