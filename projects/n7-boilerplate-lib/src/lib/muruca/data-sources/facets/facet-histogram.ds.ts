@@ -28,12 +28,12 @@ export class FacetHistogramDS extends DataSource implements FacetDataSource {
 
     return {
       containerId: 'container-for-histogram',
-      width: 300,
+      width: 450,
       height: 50,
       colours: {
-        top: '#F5AE34',
-        bottom: '#FBD45E',
-        accent: '#1857B6',
+        top: '#7091B3',
+        bottom: '#96c2f2',
+        accent: '#2F528B',
       },
       margin: {
         left: 0,
