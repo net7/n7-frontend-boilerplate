@@ -2,6 +2,7 @@ import {
   DataWidgetData,
   InnerTitleData,
   InputSelectData,
+  MapData,
   TableData
 } from '@n7-frontend/components';
 import { ChartResponseData } from './response.types';
@@ -42,6 +43,11 @@ export interface ApexPieChartItem extends CardChartItem { type: 'apex-pie-chart'
 export interface ApexRadialBarChartItem extends CardChartItem { type: 'apex-radialbar-chart' }
 export interface ApexRadarChartItem extends CardChartItem { type: 'apex-radar-chart' }
 
+export interface MapItem extends CardSectionItem {
+  type: 'map';
+  initialData: Partial<MapData>;
+}
+
 export type CardItemTypes = (
   TextItem
   | TableItem
@@ -53,4 +59,5 @@ export type CardItemTypes = (
   | ApexPieChartItem
   | ApexRadialBarChartItem
   | ApexRadarChartItem
+  | MapItem
 );

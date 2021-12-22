@@ -7,7 +7,6 @@
 /* ------------------------------------ *\
    #CARD
 \* ------------------------------------ */
-
 .dv-card {
     display: flex;
     flex-direction: column;
@@ -44,14 +43,27 @@
 
     &__content {
         flex-grow: 1;
-        padding: 0 $space $space $space;
+        // padding: 0 $space $space $space;
     }
 
     &__section {
         display: flex;
+        padding: $space $space;
+    }
+
+    &__item {
+        flex-grow: 1;
+        margin: 0 $space;
     }
 }
 
+
+/* ------------------------------------ *\
+   #MAP ITEM
+\* ------------------------------------ */
+.dv-card .dv-card__map {
+    width: 100%;
+}
 
 /* ------------------------------------ *\
    #MEDIA-QUERIES

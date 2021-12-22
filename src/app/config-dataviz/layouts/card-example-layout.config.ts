@@ -9,14 +9,20 @@ import {
   InnerTitleItem,
   SelectItem,
   TableItem,
-  TextItem
+  TextItem,
+  MapItem
 } from '@n7-frontend/boilerplate';
 
-const textItem: TextItem = {
-  id: 'item-1',
-  type: 'text',
-  initialData: '<b>Hello</b> <i>world</i>!',
+const getTextItem = (label: string): TextItem => {
+  getTextItem.counter += 1;
+  return {
+    id: `text-${getTextItem.counter}`,
+    type: 'text',
+    initialData: `<i>${label}</i>`,
+  };
 };
+
+getTextItem.counter = 0;
 
 const dataWidgetItem: DataWidgetItem = {
   id: 'item-2',
@@ -300,6 +306,30 @@ const buttonToggleItem: InnerTitleItem = {
   },
 };
 
+const mapItem: MapItem = {
+  id: 'item-11',
+  type: 'map',
+  initialData: {
+    initialView: {
+      center: [51.505, -0.09],
+      zoom: 13
+    },
+    markers: [
+      {
+        coords: [51.505, -0.09],
+        template: 'This is the center of the map',
+        title: 'London'
+      }, {
+        coords: [51.495, -0.1],
+        template: 'Elephant and castle',
+      }, {
+        coords: [51.46687084654015, -0.2130156755447388],
+        template: 'Putney bridge',
+      }
+    ]
+  },
+};
+
 const config: {
   cards: CardData[];
 } = {
@@ -330,23 +360,35 @@ const config: {
     }],
     sections: [
       {
-        items: [textItem, dataWidgetItem]
+        items: [getTextItem('Data Widget'), dataWidgetItem]
       },
       {
-        items: [lineChartItem, pieChartItem]
+        items: [getTextItem('Line Chart'), lineChartItem]
       },
       {
-        items: [barChartItem, radialBarChartItem]
+        items: [getTextItem('Pie Chart'), pieChartItem]
       },
       {
-        items: [radarBarChartItem, tableItem]
+        items: [getTextItem('Bar Chart'), barChartItem]
       },
       {
-        items: [selectItem]
+        items: [getTextItem('Radial Chart'), radialBarChartItem]
       },
       {
-        items: [buttonToggleItem]
-      }
+        items: [getTextItem('Radar Chart'), radarBarChartItem]
+      },
+      {
+        items: [getTextItem('Select'), selectItem]
+      },
+      {
+        items: [getTextItem('Inner title'), buttonToggleItem]
+      },
+      {
+        items: [getTextItem('Table'), tableItem]
+      },
+      {
+        items: [getTextItem('Map'), mapItem]
+      },
     ]
   }]
 };

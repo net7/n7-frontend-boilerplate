@@ -56,6 +56,11 @@
             <ng-container *ngIf="item.type.includes('apex')">
                 <n7-chart [data]="data.widgets[item.id].ds.out$ | async"></n7-chart> 
             </ng-container> 
+
+            <!-- MAP -->
+            <ng-container *ngIf="item.type === 'map'">
+                <n7-map [data]="data.widgets[item.id].ds.out$ | async"></n7-map> 
+            </ng-container> 
         </div>
     </ng-container>
 </ng-template>

@@ -8,7 +8,7 @@ export class ApexChartItemDS extends DataSource {
 
   type: string;
 
-  private instance: any;
+  instance: any;
 
   protected transform(data: ChartData): ChartData {
     return data;
