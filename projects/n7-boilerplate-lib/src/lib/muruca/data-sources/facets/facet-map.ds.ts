@@ -140,7 +140,10 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
       coords, template, id, slug, counter
     }) => {
       // create custom icon marker
-      const newMarker = L.marker(coords, { icon: this.getIcon(id, counter) });
+      const newMarker = L.marker(coords, {
+        icon: this.getIcon(id, counter),
+        zIndexOffset: this.getZindex(id, counter)
+      });
       if (id && slug) {
         newMarker.id = id;
         newMarker.counter = counter;
@@ -194,7 +197,8 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
         this.markerLayer.eachLayer((marker) => {
           const { id } = marker;
           const counter = links.find(({ payload }) => payload === id)?.counter || 0;
-          marker.getPopup()._source.setIcon(this.getIcon(id, counter));
+          marker.getPopup()._source.setIcon(this.getIcon(id, counter))
+            .setZIndexOffset(this.getZindex(id, counter));
         });
       }
       // ---
@@ -209,6 +213,12 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
     if (this.value.includes(id)) return MARKER_ICON_SELECTED;
     if (counter > 0) return MARKER_ICON;
     return MARKER_ICON_UNAVAILABLE;
+  }
+
+  getZindex = (id: string, counter: number) => {
+    if (this.value.includes(id)) return 19999;
+    if (counter > 0) return 9999;
+    return null;
   }
 
   toggleValue(value: string) {

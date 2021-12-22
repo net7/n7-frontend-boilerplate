@@ -36,10 +36,17 @@ export class FacetHistogramDS extends DataSource implements FacetDataSource {
         accent: '#2F528B',
       },
       margin: {
-        left: 0,
+        left: 30,
         right: 0,
         top: 10,
         bottom: 45
+      },
+      axis: {
+        yAxis: {
+          show: true,
+          // tickAmount: 3
+          values: [0, 5, 20, 60]
+        }
       },
       items,
     };
