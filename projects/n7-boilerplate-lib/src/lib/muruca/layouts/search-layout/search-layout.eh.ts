@@ -110,7 +110,6 @@ export class MrSearchLayoutEH extends EventHandler {
     const { pageConfig } = this.dataSource;
     const defaultLimit = pageConfig.pagination.options[0];
     const defaultSort = pageConfig.sort.options.find((option) => option.selected === true)?.value;
-
     // inputs listener
     this.searchService.getState$(INPUT_STATE_CONTEXT).pipe(
       filter(({ lastUpdated }) => this.searchService.isQueryParamKey(lastUpdated)),
@@ -206,10 +205,12 @@ export class MrSearchLayoutEH extends EventHandler {
         // update layout state
         this.layoutState.set('results', isEmpty(response.results) ? LayoutState.EMPTY : LayoutState.SUCCESS);
         // scroll to ref element
-        if (!this.scrollRefElement) {
-          this.scrollRefElement = document.querySelector('.scroll-ref');
-        } else if (!helpers.isElementInViewport(this.scrollRefElement)) {
-          this.scrollRefElement.scrollIntoView();
+        if (!pageConfig.disableScroll) {
+          if (!this.scrollRefElement) {
+            this.scrollRefElement = document.querySelector('.scroll-ref');
+          } else if (!helpers.isElementInViewport(this.scrollRefElement)) {
+            this.scrollRefElement.scrollIntoView();
+          }
         }
       });
 

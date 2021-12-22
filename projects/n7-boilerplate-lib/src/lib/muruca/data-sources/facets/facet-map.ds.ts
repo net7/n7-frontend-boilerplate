@@ -34,21 +34,21 @@ interface MarkerWithID extends MarkerData {
 
 const MARKER_ICON = L.icon({
   iconUrl: '/assets/pin.png',
-  iconSize: [16, 25],
+  iconSize: [13, 20],
   popupAnchor: [0, -15],
   className: 'marker-icon'
 });
 
 const MARKER_ICON_UNAVAILABLE = L.icon({
   iconUrl: '/assets/pin-unavailable.png',
-  iconSize: [16, 25],
+  iconSize: [13, 20],
   popupAnchor: [0, -15],
   className: 'marker-icon'
 });
 
 const MARKER_ICON_SELECTED = L.icon({
   iconUrl: '/assets/pin-selected.png',
-  iconSize: [16, 25],
+  iconSize: [13, 20],
   popupAnchor: [0, -15],
   className: 'marker-icon-selected'
 });
@@ -99,9 +99,13 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
       containerId: 'map-canvas',
       libOptions: {
         attributionControl: false,
+        minZoom: 8,
+        maxBounds: [[46.8505, 10.3393], [45.6635, 12.2429]]
       },
       tileLayers: [{
-        url: 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
+        // url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        url: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png',
+        // url: 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
         options: null
       }],
       initialView: {
@@ -136,7 +140,10 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
       coords, template, id, slug, counter
     }) => {
       // create custom icon marker
-      const newMarker = L.marker(coords, { icon: this.getIcon(id, counter) });
+      const newMarker = L.marker(coords, {
+        icon: this.getIcon(id, counter),
+        zIndexOffset: this.getZindex(id, counter)
+      });
       if (id && slug) {
         newMarker.id = id;
         newMarker.counter = counter;
@@ -190,7 +197,8 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
         this.markerLayer.eachLayer((marker) => {
           const { id } = marker;
           const counter = links.find(({ payload }) => payload === id)?.counter || 0;
-          marker.getPopup()._source.setIcon(this.getIcon(id, counter));
+          marker.getPopup()._source.setIcon(this.getIcon(id, counter))
+            .setZIndexOffset(this.getZindex(id, counter));
         });
       }
       // ---
@@ -205,6 +213,12 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
     if (this.value.includes(id)) return MARKER_ICON_SELECTED;
     if (counter > 0) return MARKER_ICON;
     return MARKER_ICON_UNAVAILABLE;
+  }
+
+  getZindex = (id: string, counter: number) => {
+    if (this.value.includes(id)) return 19999;
+    if (counter > 0) return 9999;
+    return null;
   }
 
   toggleValue(value: string) {
