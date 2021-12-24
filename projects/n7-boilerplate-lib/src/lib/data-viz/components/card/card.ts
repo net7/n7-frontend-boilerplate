@@ -1,12 +1,12 @@
 import { Component, Input } from '@angular/core';
-import { CardData } from '../../types/card.types';
+import { CardDataWithWidgets } from '../../types/card.types';
 
 @Component({
   selector: 'dv-card',
   templateUrl: './card.html',
 })
 export class CardComponent {
-    @Input() data: CardData;
+    @Input() data: CardDataWithWidgets;
 
     @Input() emit: (type: string, payload: any) => void;
 }
