@@ -18,7 +18,10 @@ const getTextItem = (label: string): TextItem => {
   return {
     id: `text-${getTextItem.counter}`,
     type: 'text',
-    initialData: `<i>${label}</i>`,
+    initialData: {
+      text: `<i>${label}</i>`,
+      payload: `text-${getTextItem.counter} click!`
+    }
   };
 };
 

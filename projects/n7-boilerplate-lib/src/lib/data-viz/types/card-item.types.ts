@@ -5,6 +5,7 @@ import {
   MapData,
   TableData
 } from '@n7-frontend/components';
+import { CardTextItemData } from '../components/card-text-item/card-text-item';
 import { ChartResponseData } from './response.types';
 
 export interface CardSectionItem {
@@ -16,7 +17,7 @@ export interface CardSectionItem {
 
 export interface TextItem extends CardSectionItem {
   type: 'text';
-  initialData: string;
+  initialData: CardTextItemData;
 }
 export interface DataWidgetItem extends CardSectionItem {
   type: 'data-widget';

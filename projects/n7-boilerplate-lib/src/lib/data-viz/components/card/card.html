@@ -13,7 +13,9 @@
         <div class="{{ 'dv-card__item dv-card__' + item.type }}">
             <!-- TEXT -->
             <ng-container *ngIf="item.type === 'text'">
-                <div [innerHTML]="data.widgets[item.id].ds.out$ | async"></div> 
+                <dv-card-text-item 
+                [data]="data.widgets[item.id].ds.out$ | async"
+                [emit]="data.widgets[item.id].emit"></dv-card-text-item> 
             </ng-container> 
 
             <!-- DATA WIDGET -->
