@@ -40,11 +40,19 @@ export interface CardWidgets {
   };
 }
 
-export type CardData = {
-  sections: CardSection[];
-  title?: CardTitle;
-  actions?: CardAction[];
-  widgets?: CardWidgets;
-  cardCustomEmit?: (type: string, payload?: any) => void;
+export interface CardData {
+  header?: {
+    sections: CardSection[];
+  };
+  content: {
+    sections: CardSection[];
+  };
+  footer?: {
+    sections: CardSection[];
+  };
   classes?: string;
-};
+}
+
+export interface CardDataWithWidgets extends CardData {
+  widgets: CardWidgets;
+}

@@ -1,19 +1,11 @@
 <div *ngIf="data" class="dv-card {{ data.classes || '' }}">
-    <div *ngIf="data.title || data.actions" class="dv-card__header">
-        <div *ngIf="data.title as title" class="dv-card__title-wrapper {{ title.classes || '' }}">
-            <h1 class="dv-card__title">{{ title.text }}</h1>
+    <ng-container *ngFor="let area of ['header', 'content', 'footer']">
+        <div *ngIf="data[area]" class="dv-card__{{ area }}">
+            <section *ngFor="let section of data[area].sections" class="dv-card__section {{ section.classes || '' }}">
+                <ng-container *ngTemplateOutlet="blocks; context: { $implicit: section.items }"></ng-container>
+            </section>
         </div>
-        <div *ngIf="data.actions as actions" class="dv-card__actions-wrapper">
-            <dv-card-action *ngFor="let actionData of actions" 
-                [data]="actionData" 
-                [emit]="data.cardCustomEmit"></dv-card-action>
-        </div>
-    </div>
-    <div class="dv-card__content">
-        <section *ngFor="let section of data.sections" class="dv-card__section {{ section.classes || '' }}">
-            <ng-container *ngTemplateOutlet="blocks; context: { $implicit: section.items }"></ng-container>
-        </section>
-    </div>
+    </ng-container>
 </div>
 
 <ng-template #blocks let-items>

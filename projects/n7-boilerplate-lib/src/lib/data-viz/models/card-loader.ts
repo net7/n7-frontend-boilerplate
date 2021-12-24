@@ -1,4 +1,4 @@
-import { CardData } from '../types/card.types';
+import { CardData, CardDataWithWidgets } from '../types/card.types';
 import {
   TextItemDS,
   DataWidgetItemDS,
@@ -36,16 +36,20 @@ export class CardLoader {
     this.addLayoutWidgets();
   }
 
-  public getCards() {
+  public getCards(): CardDataWithWidgets[] {
     const { cards } = this.config;
+    const cardsWithWidgets = [] as CardDataWithWidgets[];
     // initialize items
     if (cards && !this.itemsInitialized) {
       const { widgets } = this.layout.lb;
-      const { eventHandler: layoutEventHandler } = this.layout.lb;
       this.itemsInitialized = true;
-      cards.forEach(({ sections }, index) => {
+      cards.forEach(({ header, content, footer }, index) => {
         const cardWidgets = {};
-        sections.forEach(({ items }) => {
+        const cardSections = content.sections
+          .concat(header?.sections || [])
+          .concat(footer?.sections || []);
+
+        cardSections.forEach(({ items }) => {
           items.forEach(({ id, type: itemType, initialData }) => {
             const { ds } = widgets[id];
             const { eh } = widgets[id];
@@ -61,24 +65,26 @@ export class CardLoader {
         });
 
         // add widgets to card
-        cards[index].widgets = cardWidgets;
-
-        // add card emitter
-        cards[index].cardCustomEmit = (
-          type: string, payload?: any
-        ) => layoutEventHandler.emitInner(type, payload);
+        cardsWithWidgets[index] = {
+          ...cards[index],
+          widgets: cardWidgets
+        };
       });
     }
 
-    return cards;
+    return cardsWithWidgets;
   }
 
   private addLayoutWidgets() {
     const { cards } = this.config;
     if (cards) {
       this.layout.widgets = [];
-      cards.forEach(({ sections }) => {
-        sections.forEach(({ items }) => {
+      cards.forEach(({ header, content, footer }) => {
+        const cardSections = content.sections
+          .concat(header?.sections || [])
+          .concat(footer?.sections || []);
+
+        cardSections.forEach(({ items }) => {
           items.forEach(({
             id, type, options
           }) => {

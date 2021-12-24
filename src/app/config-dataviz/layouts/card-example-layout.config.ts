@@ -334,62 +334,45 @@ const config: {
   cards: CardData[];
 } = {
   cards: [{
-    title: {
-      text: 'Card 1',
-      classes: 'card-1-title'
+    header: {
+      sections: [{
+        items: [getTextItem('Card 1')]
+      }]
     },
-    actions: [{
-      label: null,
-      payload: 'action-1-emit',
-      icon: 'n7-icon-earth',
-      classes: 'action-1-class'
-    }, {
-      header: {
-        // label: 'Options',
-        icon: {
-          open: 'n7-icon-caret-up',
-          close: 'n7-icon-caret-down'
-        }
-      },
-      items: [1, 2, 3, 4, 5].map((number) => ({
-        label: `Item ${number}`,
-        payload: `item-${number}-emit`,
-        // icon: 'n7-icon-earth',
-        classes: `item-${number}-class`
-      }))
-    }],
-    sections: [
-      {
-        items: [getTextItem('Data Widget'), dataWidgetItem]
-      },
-      {
-        items: [getTextItem('Line Chart'), lineChartItem]
-      },
-      {
-        items: [getTextItem('Pie Chart'), pieChartItem]
-      },
-      {
-        items: [getTextItem('Bar Chart'), barChartItem]
-      },
-      {
-        items: [getTextItem('Radial Chart'), radialBarChartItem]
-      },
-      {
-        items: [getTextItem('Radar Chart'), radarBarChartItem]
-      },
-      {
-        items: [getTextItem('Select'), selectItem]
-      },
-      {
-        items: [getTextItem('Inner title'), buttonToggleItem]
-      },
-      {
-        items: [getTextItem('Table'), tableItem]
-      },
-      {
-        items: [getTextItem('Map'), mapItem]
-      },
-    ]
+    content: {
+      sections: [
+        {
+          items: [getTextItem('Data Widget'), dataWidgetItem]
+        },
+        {
+          items: [getTextItem('Line Chart'), lineChartItem]
+        },
+        {
+          items: [getTextItem('Pie Chart'), pieChartItem]
+        },
+        {
+          items: [getTextItem('Bar Chart'), barChartItem]
+        },
+        {
+          items: [getTextItem('Radial Chart'), radialBarChartItem]
+        },
+        {
+          items: [getTextItem('Radar Chart'), radarBarChartItem]
+        },
+        {
+          items: [getTextItem('Select'), selectItem]
+        },
+        {
+          items: [getTextItem('Inner title'), buttonToggleItem]
+        },
+        {
+          items: [getTextItem('Table'), tableItem]
+        },
+        {
+          items: [getTextItem('Map'), mapItem]
+        },
+      ]
+    }
   }]
 };
 
