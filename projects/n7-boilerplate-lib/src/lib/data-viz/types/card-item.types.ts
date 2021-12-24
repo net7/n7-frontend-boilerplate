@@ -17,26 +17,26 @@ export interface CardSectionItem {
 
 export interface TextItem extends CardSectionItem {
   type: 'text';
-  initialData: CardTextItemData;
+  initialData?: CardTextItemData;
 }
 export interface DataWidgetItem extends CardSectionItem {
   type: 'data-widget';
-  initialData: DataWidgetData;
+  initialData?: DataWidgetData;
 }
 export interface TableItem extends CardSectionItem {
   type: 'table';
-  initialData: TableData;
+  initialData?: TableData;
 }
 export interface InnerTitleItem extends CardSectionItem {
   type: 'inner-title';
-  initialData: InnerTitleData;
+  initialData?: InnerTitleData;
 }
 export interface SelectItem extends CardSectionItem {
   type: 'select';
-  initialData: InputSelectData;
+  initialData?: InputSelectData;
 }
 export interface CardChartItem extends CardSectionItem {
-  initialData: ChartResponseData;
+  initialData?: ChartResponseData;
 }
 export interface ApexBarChartItem extends CardChartItem { type: 'apex-bar-chart' }
 export interface ApexLineChartItem extends CardChartItem { type: 'apex-line-chart' }
@@ -46,7 +46,7 @@ export interface ApexRadarChartItem extends CardChartItem { type: 'apex-radar-ch
 
 export interface MapItem extends CardSectionItem {
   type: 'map';
-  initialData: Partial<MapData>;
+  initialData?: Partial<MapData>;
 }
 
 export type CardItemTypes = (
