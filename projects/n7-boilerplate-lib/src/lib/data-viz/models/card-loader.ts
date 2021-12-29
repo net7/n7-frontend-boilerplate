@@ -78,7 +78,7 @@ export class CardLoader {
   private addLayoutWidgets() {
     const { cards } = this.config;
     if (cards) {
-      this.layout.widgets = [];
+      this.layout.widgets = this.layout.widgets || [];
       cards.forEach(({ header, content, footer }) => {
         const cardSections = content.sections
           .concat(header?.sections || [])
