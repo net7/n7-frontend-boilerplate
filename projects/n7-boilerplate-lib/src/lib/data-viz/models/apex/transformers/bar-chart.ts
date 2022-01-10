@@ -13,7 +13,10 @@ export default {
       series: apexHelpers.getSeries(data.series),
       xaxis: {
         categories: data.categories,
-      }
+      },
+      metadata: {
+        series: apexHelpers.getSeriesMetadata(data.series),
+      },
     }, options)
   })
 };

@@ -11,7 +11,10 @@ export default {
         type: 'pie',
       },
       series: apexHelpers.getSeries(data.series)[0].data,
-      labels: data.categories
+      labels: data.categories,
+      metadata: {
+        series: apexHelpers.getSeriesMetadata(data.series),
+      },
     }, options)
   })
 };

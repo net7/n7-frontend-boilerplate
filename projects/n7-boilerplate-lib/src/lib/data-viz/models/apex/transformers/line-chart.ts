@@ -1,5 +1,5 @@
-import { ChartData } from '@n7-frontend/components';
 import { merge } from 'lodash';
+import { ChartData } from '@n7-frontend/components';
 import apexHelpers from '../apex-helpers';
 import { ChartResponseData } from '../../../types/response.types';
 
@@ -13,7 +13,10 @@ export default {
       series: apexHelpers.getSeries(data.series),
       xaxis: {
         categories: data.categories,
-      }
+      },
+      metadata: {
+        series: apexHelpers.getSeriesMetadata(data.series),
+      },
     }, options)
   })
 };

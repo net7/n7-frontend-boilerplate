@@ -37,7 +37,12 @@ export class DvCardExampleLayoutDS extends LayoutDataSource {
         series: [{
           id: 'serie-desktops',
           name: 'Desktops',
-          data: [10, 41, 35, 51, 49, 62, 69, 91, 148].reverse()
+          data: [10, 41, 35, 51, 49, 62, 69, 91, 148].map((value) => ({
+            value,
+            metadata: {
+              info: `è questo il valore: ${value}`
+            }
+          })).reverse()
         }],
         categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
       });
