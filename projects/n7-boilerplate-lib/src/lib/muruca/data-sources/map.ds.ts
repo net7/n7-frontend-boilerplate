@@ -30,16 +30,16 @@ interface MarkerWithID extends MarkerData {
 
 const MARKER_ICON = L.icon({
   iconUrl: '/assets/pin.png',
-  iconSize: [30, 45.5],
-  popupAnchor: [0, -25],
-  iconAnchor: [15, 45.5],
+  iconSize: [20, 30],
+  popupAnchor: [0, -20],
+  iconAnchor: [10, 30],
   className: 'marker-icon'
 });
 
 const MARKER_ICON_SELECTED = L.icon({
   iconUrl: '/assets/pin-selected.png',
-  iconSize: [30, 45.5],
-  popupAnchor: [0, -25],
+  iconSize: [20, 30],
+  popupAnchor: [0, -20],
   className: 'marker-icon-selected'
 });
 
@@ -136,8 +136,8 @@ export class MrMapDS extends DataSource {
     }
     const markerGroup = L.markerClusterGroup(
       {
-        maxClusterRadius: 5,
-        disableClusteringAtZoom: 20
+        maxClusterRadius: 10,
+        disableClusteringAtZoom: 8
       }
     );
     markers.forEach(({
