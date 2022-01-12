@@ -5,6 +5,7 @@ import {
   Page404LayoutComponent,
   // DV
   DvExampleLayoutComponent,
+  DvCardExampleLayoutComponent
 } from '@n7-frontend/boilerplate';
 
 export const APP_ROUTES: Routes = [
@@ -14,5 +15,6 @@ export const APP_ROUTES: Routes = [
     pathMatch: 'full'
   },
   { path: 'dv/home', component: DvExampleLayoutComponent },
+  { path: 'dv/card-example', component: DvCardExampleLayoutComponent, data: { configId: 'card-example' } },
   { path: '**', component: Page404LayoutComponent }
 ];

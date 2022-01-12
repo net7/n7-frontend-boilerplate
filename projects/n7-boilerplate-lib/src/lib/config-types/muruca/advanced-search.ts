@@ -1,5 +1,5 @@
 import {
-  InputCheckboxData, InputSelectData, InputTextData, MapData
+  InputCheckboxData, InputSelectData, InputTextData, MapData, HistogramRangeData
 } from '@n7-frontend/components';
 import { ConfigMurucaLayout } from './layouts';
 
@@ -94,6 +94,13 @@ export interface ConfigMurucaAdvancedSearchInputMap<T>
   extends ConfigMurucaAdvancedSearchInput<T> {
   type: 'map';
   data: MapData;
+}
+
+// Allow embedding of histogram-component into the search facets
+export interface ConfigMurucaAdvancedSearchInputHistogram<T>
+  extends ConfigMurucaAdvancedSearchInput<T> {
+  type: 'histogram';
+  data: HistogramRangeData;
 }
 
 // FIXME: custom inputs

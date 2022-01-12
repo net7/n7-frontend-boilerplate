@@ -129,6 +129,7 @@ export interface ConfigMurucaSearchLayout extends ConfigMurucaLayout {
   sort?: SearchSortConfig;
   pagination: SearchPaginationConfig;
   itemPreview?: SearchItemPreviewConfig;
+  disableScroll?: boolean;
   fallback: SearchFallbackConfig;
   ko: SearchFallbackConfig;
 }

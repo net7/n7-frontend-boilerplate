@@ -30,15 +30,16 @@ interface MarkerWithID extends MarkerData {
 
 const MARKER_ICON = L.icon({
   iconUrl: '/assets/pin.png',
-  iconSize: [30, 45.5],
-  popupAnchor: [0, -25],
+  iconSize: [20, 30],
+  popupAnchor: [0, -20],
+  iconAnchor: [10, 30],
   className: 'marker-icon'
 });
 
 const MARKER_ICON_SELECTED = L.icon({
   iconUrl: '/assets/pin-selected.png',
-  iconSize: [30, 45.5],
-  popupAnchor: [0, -25],
+  iconSize: [20, 30],
+  popupAnchor: [0, -20],
   className: 'marker-icon-selected'
 });
 
@@ -56,8 +57,8 @@ export class MrMapDS extends DataSource {
   // eslint-disable-next-line consistent-return
   protected transform(data: TimelineResponse): MapData {
     let markers: MarkerWithID[];
-
-    if (data.find((d) => d.markers)) {
+    const d = data.find((z) => z.zoom);
+    if (data.find((a) => a.markers)) {
       markers = data
         .map((area) => (area.markers
           .map((m) => ({
@@ -71,18 +72,19 @@ export class MrMapDS extends DataSource {
         // flatten the list of markers
         .reduce((acc, val) => acc.concat(val), []);
     }
-
+    const mapCenter: [number, number] = d.map_center ? [d.map_center.lat, d.map_center.lng]
+      : [54.5260, 15.2551];
     const initialView: { center: [number, number]; zoom: number } = {
-      // center of europe (only for initial load)
-      center: [54.5260, 15.2551],
-      zoom: 5,
+    // center of europe (only for initial load)
+      center: mapCenter,
+      zoom: d.zoom,
     };
 
     // if the map and the markers already exist
     // update the already existing layers.
     if (this.mapInstance && this.markerLayer) {
       this.buildMarkers(markers);
-      this.fitMapToBounds(markers.map((m) => m.coords));
+      this.fitMapToBounds(markers.map((m) => m.coords), d.zoom);
     }
 
     return {
@@ -90,7 +92,7 @@ export class MrMapDS extends DataSource {
       _setInstance: (instance) => {
         this.mapInstance = instance;
         // center the map on the markers
-        this.fitMapToBounds(markers.map((m) => m.coords));
+        this.fitMapToBounds(markers.map((m) => m.coords), d.zoom);
         // load custom markers
         this.buildMarkers(markers);
         this.mapLoaded$.next({ map: instance, markers: this.markerLayer });
@@ -100,18 +102,21 @@ export class MrMapDS extends DataSource {
         ...this.options.libOptions,
       },
       tileLayers: [{
-        url: 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
+        // url: 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
+        // url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        url: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png',
         options: {}
       }],
       initialView,
     };
   }
 
-  private fitMapToBounds(bounds) {
+  private fitMapToBounds(bounds, zoom = 10) {
+    console.log(zoom);
     if (this.mapInstance) {
       this.mapInstance.fitBounds(bounds, {
-        maxZoom: 15,
-        padding: [20, 20],
+        maxZoom: zoom,
+        padding: [20, 20]
       });
     } else {
       console.warn('map instance is missing');
@@ -129,7 +134,12 @@ export class MrMapDS extends DataSource {
       this.markerLayer.clearLayers();
       this.mapInstance.removeLayer(this.markerLayer);
     }
-    const markerGroup = L.markerClusterGroup();
+    const markerGroup = L.markerClusterGroup(
+      {
+        maxClusterRadius: 10,
+        disableClusteringAtZoom: 8
+      }
+    );
     markers.forEach(({
       coords, template, id, slug
     }) => {

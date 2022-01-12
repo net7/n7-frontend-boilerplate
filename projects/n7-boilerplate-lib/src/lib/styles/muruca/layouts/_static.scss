@@ -47,6 +47,13 @@
     &__content {
         margin: 0 auto;
     }
+
+    .mrc-iframe {
+        margin: 0 auto;
+        display: block;
+        border: 0;
+        max-width: $page-readable-width;
+    }
 }
 
 
