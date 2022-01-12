@@ -6,13 +6,19 @@ import { N7BoilerplateCommonModule } from '../common/n7-boilerplate-common.modul
 // COMPONENTS
 import { DataWidgetWrapperComponent } from './components/data-widget-wrapper/data-widget-wrapper';
 import { DatepickerWrapperComponent } from './components/datepicker-wrapper/datepicker-wrapper';
+import { CardComponent } from './components/card/card';
+import { CardTextItemComponent } from './components/card-text-item/card-text-item';
 // LAYOUTS
 import { DvExampleLayoutComponent } from './layout/example-layout/example-layout';
+import { DvCardExampleLayoutComponent } from './layout/card-example-layout/card-example-layout';
 
 const COMPONENTS = [
   DataWidgetWrapperComponent,
   DatepickerWrapperComponent,
+  CardComponent,
+  CardTextItemComponent,
   DvExampleLayoutComponent,
+  DvCardExampleLayoutComponent
 ];
 
 @NgModule({
@@ -23,6 +29,7 @@ const COMPONENTS = [
     N7BoilerplateCommonModule,
   ],
   providers: [],
+  entryComponents: COMPONENTS,
   exports: COMPONENTS,
 })
 export class N7BoilerplateDataVizModule { }

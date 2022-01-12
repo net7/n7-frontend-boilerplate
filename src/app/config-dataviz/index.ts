@@ -1,4 +1,5 @@
 import { ConfigCommonCommunication } from '@n7-frontend/boilerplate';
+import layouts from './layouts';
 
 const communication: ConfigCommonCommunication = {
   defaultProvider: 'rest-local',
@@ -20,4 +21,7 @@ const communication: ConfigCommonCommunication = {
   }
 };
 
-export default { communication };
+export default {
+  communication,
+  ...layouts
+};

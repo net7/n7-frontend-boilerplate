@@ -1,0 +1,83 @@
+/**
+ * CARD
+ *
+ * Standard and generic style for card
+ */
+
+/* ------------------------------------ *\
+   #CARD
+\* ------------------------------------ */
+.dv-card {
+    display: flex;
+    flex-direction: column;
+    // padding: $space;
+    margin-bottom: $space*2;
+    background-color: $color-background-base;
+    border-radius: $border-radius;
+    box-shadow: 0 30px 30px -20px rgba(0,0,0,0.10);
+    font-family: $font-family-main;
+
+    /* Header */
+    &__header {
+        display: flex;
+        flex-wrap: nowrap;
+        align-content: stretch;
+        width: 100%;
+    }
+
+    &__title-wrapper {
+        flex-grow: 1;
+        padding: $space $space*2;
+    }
+
+    &__title {
+        margin: 0;
+        padding: 0;
+        font-size: $font-size-l;
+        font-weight: $font-weight-bold;
+    }
+
+    &__actions-wrapper {
+        flex-shrink: 0;
+    }
+
+    &__content {
+        flex-grow: 1;
+        // padding: 0 $space $space $space;
+    }
+
+    &__section {
+        display: flex;
+        padding: $space $space;
+    }
+
+    &__item {
+        flex-grow: 1;
+        margin: 0 $space;
+    }
+}
+
+
+/* ------------------------------------ *\
+   #MAP ITEM
+\* ------------------------------------ */
+.dv-card .dv-card__map {
+    width: 100%;
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+
+@media all and (max-width: $breakpoint-laptop) {
+}
+
+@media all and (max-width: $breakpoint-ipad-portrait) {
+}
+
+@media all and (max-width: $breakpoint-smartphone-landscape) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}
