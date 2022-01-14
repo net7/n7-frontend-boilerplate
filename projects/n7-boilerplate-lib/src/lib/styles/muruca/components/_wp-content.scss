@@ -327,6 +327,16 @@
         font-family: $font-family-main;
         text-align: center;
     }
+
+    /* Video */
+    .wp-block-video {
+        width: $page-readable-width;
+        margin: 0 auto $space * 3;
+
+        video {
+            width: $page-readable-width;
+        }
+    }    
 }
 
 
