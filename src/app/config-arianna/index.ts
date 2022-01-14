@@ -27,7 +27,7 @@ export default {
   baseUrls: {
     iiifServer: '',
     iipServer: '',
-    portaleMatriceServer: 'https://portalematrice.com',
+    portaleMatriceServer: 'http://ariannaweb-matrice.netseven.it',
   },
   'features-enabled': {
     bubblechart: true,
