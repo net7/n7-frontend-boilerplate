@@ -51,7 +51,7 @@
 
     .n7-metadata-viewer__item {
         display: flex;
-        margin-bottom: $space*2;
+        margin-bottom: $space*3;
     }
 
     .n7-metadata-viewer__item-label {
@@ -86,6 +86,7 @@
     
     /* Metadata-second level */
     .n7-metadata-viewer__group-wrapper {
+
         // Label of element that has children
         .n7-metadata-viewer__group-title {
             width: $content-block-label-width;
@@ -97,7 +98,7 @@
         }
 
         // Actual Second level
-        .n7-metadata-viewer__group + div { // Wrapper of alls econd level items
+        .n7-metadata-viewer__group + div { // Wrapper of all second level items
             width: 100%;
             max-height: 300px;
             overflow-y: auto;

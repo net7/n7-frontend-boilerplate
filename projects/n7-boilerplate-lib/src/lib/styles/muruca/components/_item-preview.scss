@@ -51,7 +51,7 @@
     
 }
 
-.n7-item-preview:not(.mr-item-preview-bibliography, .has-image) {
+.n7-item-preview:not(.mr-item-preview-bibliography, .is-vertical.has-image) {
     border-bottom: 1px solid $color-border-normal;
     padding-bottom: $space;
     height: 100%;
