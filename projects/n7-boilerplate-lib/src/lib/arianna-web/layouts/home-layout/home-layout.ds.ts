@@ -228,9 +228,9 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   loadCarousel() {
     const baseUrls = this.configuration.get('baseUrls') || {};
     const baseUrl = baseUrls.portaleMatriceServer || null;
-    this.communication.request$('getSlider', {
+    this.communication.request$('getSlider', baseUrl ? {
       params: { baseUrl }
-    }).subscribe({
+    } : {}).subscribe({
       next: (res) => {
         if (res) {
           this.one('aw-carousel').update(res);
