@@ -24,6 +24,11 @@ export default {
     searchBasePath: '/aw/ricerca/',
     galleryBasePath: '/aw/galleria/'
   },
+  baseUrls: {
+    iiifServer: '',
+    iipServer: '',
+    portaleMatriceServer: 'https://portalematrice.com',
+  },
   'features-enabled': {
     bubblechart: true,
     carousel: true,

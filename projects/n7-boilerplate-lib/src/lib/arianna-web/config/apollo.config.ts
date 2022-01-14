@@ -48,7 +48,7 @@ export default (treeDepth) => ({
   getSlider: {
     queryName: 'getSlider',
     queryBody: ` {
-      getSlider {
+      getSlider(__PARAMS__) {
         pretext
         title
         text

@@ -83,6 +83,12 @@ export class AwCollectionLayoutDS extends LayoutDataSource {
         offset: this.currentOffset,
       }
     };
+    // check base url config
+    const baseUrls = this.configuration.get('baseUrls') || {};
+    const baseUrl = baseUrls.portaleMatriceServer || null;
+    if (baseUrl) {
+      params.baseUrl = baseUrl;
+    }
     this.communication.request$('getCollection', {
       onError: (error) => console.error(error),
       params
