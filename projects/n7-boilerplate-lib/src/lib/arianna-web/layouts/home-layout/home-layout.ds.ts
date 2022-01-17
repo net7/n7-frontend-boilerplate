@@ -35,6 +35,8 @@ export class AwHomeLayoutDS extends LayoutDataSource {
 
   public outerLinksTitle: string;
 
+  public outerLinksDescription: string;
+
   public homeAutocompleteQuery: string;
 
   private destroyed$: Subject<any> = new Subject();
@@ -82,6 +84,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     this._listenAutoCompleteChanges();
     this.outerLinks = this.configuration.get('home-layout')['outer-links'].test;
     this.outerLinksTitle = this.configuration.get('home-layout')['outer-links'].title;
+    this.outerLinksDescription = this.configuration.get('home-layout')['outer-links'].description;
     this.one('aw-bubble-chart').updateOptions({
       selectable: true,
       config: this.configuration,

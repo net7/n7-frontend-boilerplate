@@ -625,48 +625,65 @@
 /* ------------------------------------ *\
     OUTER-LINKS
 \* ------------------------------------ */
-.aw-home__outer-links {
-    padding: $space*6 0;
-    background-color: $color-background-base;
-}
-
-.aw-home__outer-links-title {
-    margin-bottom: $space*3;
-    text-align: center;
-    font-size: $font-size-xxl;
-    font-weight: $font-weight-bold;
-    color: $color-text;
-}
-
-.aw-home__outer-links-items {
-    display: flex;
-    max-width: $page-max-width;
-    margin: 0 auto;
-
-    .n7-item-preview.is-vertical.has-image {
-        border-bottom: 0;
-        margin: 0 $grid-gutter-h/2;
-        padding-bottom: 0;
-
-        .n7-item-preview__image {
-            height: 200px;
-            border-radius: $border-radius;
-        }
+.aw-home {
+    &__outer-links {
+        padding: $space*6 0;
+        background-color: $color-background-base;
     }
-
-    > * {
-        flex: 1;
+    
+    &__outer-links-title {
+        margin-bottom: $space*3;
+        text-align: center;
+        font-size: $font-size-xxl;
+        font-weight: $font-weight-bold;
+        color: $color-text;
     }
-
-    > *:first-child {
+    
+    &__outer-links-description {
+        max-width: $page-readable-width;
+        margin: 0 auto $space*4 auto;
+        text-align: center;
+        line-height: 1.4;
+        font-size: $font-size-l;
+        color: $color-text;
+    }
+    
+    &__outer-links-items {
+        display: flex;
+        max-width: $page-max-width;
+        margin: 0 auto;
+    
         .n7-item-preview.is-vertical.has-image {
-            margin-left: 0;
+            border-bottom: 0;
+            margin: 0 $grid-gutter-h/2;
+            padding-bottom: 0;
+    
+            .n7-item-preview__image {
+                height: 200px;
+                margin-bottom: $space*2.5;
+                border-radius: $border-radius;
+            }
         }
-    }
 
-    > *:last-child {
-        .n7-item-preview.is-vertical.has-image {
-            margin-right: 0;
+        .n7-item-preview__title {
+            font-size: $font-size-l;
+            line-height: 1.4;
+        }
+    
+        > * {
+            flex: 1;
+        }
+    
+        > *:first-child {
+            .n7-item-preview.is-vertical.has-image {
+                margin-left: 0;
+            }
+        }
+    
+        > *:last-child {
+            .n7-item-preview.is-vertical.has-image {
+                margin-right: 0;
+            }
         }
     }
 }

@@ -20,6 +20,7 @@ export interface ConfigAriannaHomeLayout {
   /** home external links */
   'outer-links'?: {
     title?: string;
+    description?: string;
     test: ItemPreviewData[];
   };
   /** facets wrapper autocomplete results limit */
