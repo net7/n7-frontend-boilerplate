@@ -10,15 +10,21 @@
     </div>
 
     <div class="mr-timeline__page mr-side-margin">
-        <div class="mr-timeline__date">
-            <n7-inner-title [data]="lb.widgets['mr-year-header'].ds.out$ | async"
-                            [emit]="lb.widgets['mr-year-header'].emit">
-            </n7-inner-title>
+
+        <!-- Result header -->
+        <div class="mr-timeline__page-header">
+            <p class="mr-timeline__date"
+                *ngIf="!lb.dataSource.loading.resourceDetails">
+                {{lb.dataSource.eventHeader}}
+            </p>
+            <div class="mr-timeline__title">
+                <n7-inner-title [data]="lb.widgets['mr-year-header'].ds.out$ | async"
+                                [emit]="lb.widgets['mr-year-header'].emit">
+                </n7-inner-title>
+            </div>
         </div>
-        <h1 class="mr-timeline__title"
-            *ngIf="!lb.dataSource.loading.resourceDetails">
-            {{lb.dataSource.eventHeader}}
-        </h1>
+        <!-- END // Result header -->        
+        
         <div class="mr-timeline__content">
             <!-- DESCRIZIONE -->
             <div class="mr-content-block mr-content-block-description">
