@@ -11,7 +11,6 @@
     /* Paragraph */
     p {
         max-width: $page-readable-width;
-        // margin: $space * 3 auto $space * 6;
         margin: 0 auto $space * 3;
         font-family: $font-family-text;
         font-size: $font-size-l-xl;
@@ -146,6 +145,22 @@
                 width: 100%;
                 height: auto;
             }
+        }
+    }
+
+    /* Block with media (image) and text on the side */
+    .wp-block-media-text {
+        display: flex;
+        max-width: $page-readable-width;
+        margin: 0 auto $space * 3;
+    }
+
+    .wp-block-media-text__media {
+        margin: 0 $space*2 0 0;        
+
+        [class^="wp-image"] {
+            max-width: 160px;
+            height: auto;
         }
     }
 
@@ -312,6 +327,16 @@
         font-family: $font-family-main;
         text-align: center;
     }
+
+    /* Video */
+    .wp-block-video {
+        width: $page-readable-width;
+        margin: 0 auto $space * 3;
+
+        video {
+            width: $page-readable-width;
+        }
+    }    
 }
 
 
