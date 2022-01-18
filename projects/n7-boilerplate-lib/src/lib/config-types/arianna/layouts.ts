@@ -76,6 +76,14 @@ export interface ConfigAriannaMapLayout {
   // nothing here!
 }
 
+export interface ConfigAriannaTimelineLayout {
+  /** Options for the timeline component */
+  timeline: {
+    /** Forces the timeline to render all dates as single moments */
+    disableEndDates: boolean;
+  };
+}
+
 export interface ConfigAriannaSchedaLayout {
   /** no item information fallback text */
   'empty-html': string;
