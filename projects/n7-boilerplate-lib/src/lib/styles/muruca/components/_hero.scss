@@ -17,11 +17,17 @@
    #HERO
 \* ------------------------------------ */
 .n7-hero {
+    background-color: $hero-bg-color;
+
     &__text {
-        text-align: left;
+        text-align: left;    
+
+        h1, h2, h3, h4, h5, h6, p, strong {
+            color: $hero-text-color;
+        }
 
         p {
-            text-align: left;
+            text-align: justify;
         }
     }
     

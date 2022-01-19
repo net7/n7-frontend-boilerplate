@@ -4,11 +4,12 @@ import {
   forkJoin, from, of, Subject
 } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { ConfigurationService } from '../../../common/services/configuration.service';
 
 export class AwSchedaLayoutEH extends EventHandler {
   private destroyed$: Subject<any> = new Subject();
 
-  private configuration: any;
+  private configuration: ConfigurationService;
 
   private route: any;
 
@@ -97,8 +98,23 @@ export class AwSchedaLayoutEH extends EventHandler {
 
   private parseDigitalObjects$(response) {
     const iiifManifest$ = {};
+    const baseUrls = this.configuration.get('baseUrls') || {};
+    const { iiifServer, iipServer } = baseUrls;
     if (Array.isArray(response?.digitalObjects)) {
       response.digitalObjects.forEach((digitalObject) => {
+        // iip config url check
+        if (iipServer && digitalObject.type === 'images-iip') {
+          digitalObject.items.forEach((item) => {
+            item.url = `${iipServer}${item.url}`;
+          });
+        }
+        // iiif config url check
+        if (iiifServer && digitalObject.type === 'images-iiif') {
+          digitalObject.items.forEach((item) => {
+            item.url = `${iiifServer}${item.url}`;
+          });
+        }
+
         if (digitalObject.type === 'images-iiif') {
           digitalObject.items.forEach(({ url }) => {
             iiifManifest$[url] = from(

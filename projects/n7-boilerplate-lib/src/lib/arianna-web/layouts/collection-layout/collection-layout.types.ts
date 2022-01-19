@@ -11,6 +11,7 @@ export interface GetCollectionParams {
     limit: number;
     offset: number;
   };
+  baseUrl?: string;
 }
 
 export type CollectionItem = {

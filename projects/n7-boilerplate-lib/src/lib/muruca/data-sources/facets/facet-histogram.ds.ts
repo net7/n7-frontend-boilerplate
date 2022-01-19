@@ -1,5 +1,7 @@
 import { HistogramRangeData } from '@n7-frontend/components';
 import { DataSource } from '@n7-frontend/core';
+import tippy from 'tippy.js';
+import 'tippy.js/dist/tippy.css';
 import { FacetDataSource } from './facet-datasource';
 
 const ACTIVE_CLASS = 'is-active';
@@ -73,5 +75,18 @@ export class FacetHistogramDS extends DataSource implements FacetDataSource {
 
   clear() {
     this.value = '';
+  }
+
+  loadTooltips() {
+    const elements = document.querySelectorAll('#container-for-histogram g.bars rect.bars');
+    tippy(elements, {
+      content(reference) {
+        const start = reference.getAttribute('data-start');
+        const end = reference.getAttribute('data-end');
+        return `<span class="tippy-template">${start}<br>${end}</span>`;
+      },
+      allowHTML: true,
+      appendTo: () => document.body,
+    });
   }
 }

@@ -16,6 +16,9 @@ export class FacetHistogramEH extends EventHandler {
             });
           }
           break;
+        case `${this.dataSource.id}.loaded`:
+          this.dataSource.loadTooltips();
+          break;
         default:
           break;
       }

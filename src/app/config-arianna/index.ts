@@ -24,6 +24,11 @@ export default {
     searchBasePath: '/aw/ricerca/',
     galleryBasePath: '/aw/galleria/'
   },
+  baseUrls: {
+    iiifServer: '',
+    iipServer: '',
+    portaleMatriceServer: 'http://ariannaweb-matrice.netseven.it',
+  },
   'features-enabled': {
     bubblechart: true,
     carousel: true,

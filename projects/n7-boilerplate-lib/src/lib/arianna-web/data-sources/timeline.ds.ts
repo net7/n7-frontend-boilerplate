@@ -16,13 +16,16 @@ export class AwTimelineDS extends DataSource {
   public timelineControlsVisible = false;
 
   protected transform = (data) => {
+    const { disableEndDates } = this.options.configuration;
     this.dataSet = data.map(({
       id, start, end, item, label
     }) => ({
       id,
       item,
       start: start ? moment(start).format('YYYY-MM-DD') : null,
-      end: end && end !== start ? moment(end).format('YYYY-MM-DD') : null,
+      end: (end && end !== start && !disableEndDates)
+        ? moment(end).format('YYYY-MM-DD') // show end date
+        : null, // hide end date
       content: this.getItemTemplate(label, item.label),
       _meta: {
         dateText: label

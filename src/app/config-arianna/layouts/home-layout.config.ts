@@ -27,6 +27,7 @@ const config: ConfigAriannaHomeLayout = {
   },
   'outer-links': {
     title: "Sezioni dell'archivio",
+    description: "Questa è la descrizione per le sezioni dell'archivio, anche noti come 'outer links', qui è possibile spiegare più approfonditamente di cosa trattano le sezioni in evidenza in modo da guidare l'utente nel suo percorso di esplorazione.",
     test: [
       {
         image: 'https://picsum.photos/200',

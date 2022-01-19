@@ -20,6 +20,7 @@ export interface ConfigAriannaHomeLayout {
   /** home external links */
   'outer-links'?: {
     title?: string;
+    description?: string;
     test: ItemPreviewData[];
   };
   /** facets wrapper autocomplete results limit */
@@ -73,6 +74,14 @@ export interface ConfigAriannaEntitaLayout {
 
 export interface ConfigAriannaMapLayout {
   // nothing here!
+}
+
+export interface ConfigAriannaTimelineLayout {
+  /** Options for the timeline component */
+  timeline: {
+    /** Forces the timeline to render all dates as single moments */
+    disableEndDates: boolean;
+  };
 }
 
 export interface ConfigAriannaSchedaLayout {

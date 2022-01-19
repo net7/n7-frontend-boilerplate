@@ -35,6 +35,8 @@ export class AwHomeLayoutDS extends LayoutDataSource {
 
   public outerLinksTitle: string;
 
+  public outerLinksDescription: string;
+
   public homeAutocompleteQuery: string;
 
   private destroyed$: Subject<any> = new Subject();
@@ -82,6 +84,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     this._listenAutoCompleteChanges();
     this.outerLinks = this.configuration.get('home-layout')['outer-links'].test;
     this.outerLinksTitle = this.configuration.get('home-layout')['outer-links'].title;
+    this.outerLinksDescription = this.configuration.get('home-layout')['outer-links'].description;
     this.one('aw-bubble-chart').updateOptions({
       selectable: true,
       config: this.configuration,
@@ -226,7 +229,11 @@ export class AwHomeLayoutDS extends LayoutDataSource {
    * Loads data for the carousel component
    */
   loadCarousel() {
-    this.communication.request$('getSlider').subscribe({
+    const baseUrls = this.configuration.get('baseUrls') || {};
+    const baseUrl = baseUrls.portaleMatriceServer || null;
+    this.communication.request$('getSlider', baseUrl ? {
+      params: { baseUrl }
+    } : {}).subscribe({
       next: (res) => {
         if (res) {
           this.one('aw-carousel').update(res);

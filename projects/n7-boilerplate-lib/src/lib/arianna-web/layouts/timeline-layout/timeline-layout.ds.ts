@@ -50,6 +50,9 @@ export class AwTimelineLayoutDS extends LayoutDataSource {
         console.warn(err);
       }
     }).subscribe((response) => {
+      this.one('aw-timeline').updateOptions({
+        configuration: this.configuration.get('timeline-layout')?.timeline
+      });
       this.one('aw-timeline').update(response);
     });
   }
