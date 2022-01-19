@@ -31,6 +31,8 @@ export * from './lib/data-viz/data-sources';
 export * from './lib/data-viz/event-handlers';
 export * from './lib/data-viz/layout';
 export * from './lib/data-viz/components';
+export * from './lib/data-viz/types';
+export * from './lib/data-viz/models';
 
 // muruca
 export * from './lib/muruca/n7-boilerplate-muruca.module';

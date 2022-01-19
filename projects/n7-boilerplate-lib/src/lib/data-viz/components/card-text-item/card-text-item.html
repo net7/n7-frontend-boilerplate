@@ -1,0 +1,3 @@
+<div *ngIf="data" class="dv-card-text-item {{ data.classes || '' }}">
+    <span [innerHTML]="data.text" (click)="onClick(data.payload)"></span>
+</div>
