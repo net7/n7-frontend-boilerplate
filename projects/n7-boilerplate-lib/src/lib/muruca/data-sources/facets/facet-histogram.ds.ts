@@ -15,6 +15,8 @@ export class FacetHistogramDS extends DataSource implements FacetDataSource {
 
   isUpdate = false;
 
+  histogramApi: any;
+
   protected transform({ links }): HistogramRangeData {
     // Remap the response values in the correct
     // format for histogram-range-component
@@ -51,14 +53,21 @@ export class FacetHistogramDS extends DataSource implements FacetDataSource {
         }
       },
       items,
+      setApi: (api) => {
+        if (!this.histogramApi) this.histogramApi = api;
+        // console.log('api was set');
+      }
     };
   }
 
-  setValue(value, update = false) {
+  setValue = (value, update = false) => {
+    // console.log('setting value', value);
+    // console.log(this.histogramApi);
     this.value = value;
     this.isUpdate = update;
+    // const sliders = value.split('-');
 
-    if (update) {
+    if (update && this.input) {
       const { links } = this.input;
       const updatedLinks = links.map((link) => ({
         ...link,
@@ -66,9 +75,16 @@ export class FacetHistogramDS extends DataSource implements FacetDataSource {
       }));
       this.update({
         ...this.input,
-        links: updatedLinks
+        links: updatedLinks,
+        // setSliders: sliders ?? undefined,
       });
     }
+
+    setTimeout(() => {
+      // console.log(this.histogramApi);
+    });
+
+    this.loadTooltips();
   }
 
   getValue = (): FACET_VALUE => this.value;
