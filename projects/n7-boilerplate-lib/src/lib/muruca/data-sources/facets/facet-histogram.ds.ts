@@ -30,7 +30,7 @@ export class FacetHistogramDS extends DataSource implements FacetDataSource {
       } : undefined,
     })).sort((a, b) => +a.label - b.label);
 
-    return {
+    const histogramData: HistogramRangeData = {
       containerId: 'container-for-histogram',
       width: 450,
       height: 50,
@@ -56,8 +56,25 @@ export class FacetHistogramDS extends DataSource implements FacetDataSource {
       setApi: (api) => {
         if (!this.histogramApi) this.histogramApi = api;
         // console.log('api was set');
+        // if (this.value) {
+        //   const [firstYear, lastYear] = this.value.split('-');
+        //   const firstLabel = this.getFirstLabel(firstYear);
+        //   const lastLabel = this.getLastLabel(lastYear);
+        //   setTimeout(() => {
+        //     this.histogramApi.setValue([firstLabel, lastLabel]);
+        //   }, 3000);
+        // }
       }
     };
+
+    if (this.value) {
+      const [firstYear, lastYear] = this.value.split('-');
+      const firstLabel = this.getFirstLabel(firstYear, items);
+      const lastLabel = this.getLastLabel(lastYear, items);
+      histogramData.setSliders = [firstLabel, lastLabel];
+    }
+
+    return histogramData;
   }
 
   setValue = (value, update = false) => {
@@ -104,5 +121,18 @@ export class FacetHistogramDS extends DataSource implements FacetDataSource {
       allowHTML: true,
       appendTo: () => document.body,
     });
+  }
+
+  private getFirstLabel(year: string, items) {
+    return items.find(({ label }) => +label === +year)?.label;
+  }
+
+  private getLastLabel(year: string, items) {
+    return items.find(({ label, range }) => {
+      if (range) {
+        return +range.label === +year;
+      }
+      return +label === +year;
+    })?.label;
   }
 }
