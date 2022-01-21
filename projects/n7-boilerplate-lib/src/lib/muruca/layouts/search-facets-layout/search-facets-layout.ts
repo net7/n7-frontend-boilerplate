@@ -98,6 +98,7 @@ export class MrSearchFacetsLayoutComponent extends AbstractLayout implements OnI
           id: input.id,
           options: {
             isMultiple: !!multiple,
+            libOptions: input.libOptions ?? undefined,
           },
           dataSource: DATASOURCE_MAP[inputType],
           eventHandler: EVENTHANDLER_MAP[inputType]
