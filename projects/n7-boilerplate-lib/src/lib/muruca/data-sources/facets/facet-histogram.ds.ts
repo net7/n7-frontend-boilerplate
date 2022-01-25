@@ -4,8 +4,6 @@ import tippy from 'tippy.js';
 import 'tippy.js/dist/tippy.css';
 import { FacetDataSource } from './facet-datasource';
 
-const ACTIVE_CLASS = 'is-active';
-
 type FACET_VALUE = string;
 
 export class FacetHistogramDS extends DataSource implements FacetDataSource {
@@ -15,20 +13,12 @@ export class FacetHistogramDS extends DataSource implements FacetDataSource {
 
   isUpdate = false;
 
-  protected transform({ links }): HistogramRangeData {
-    // Remap the response values in the correct
-    // format for histogram-range-component
-    const items = links.map((link) => ({
-      label: link.text,
-      value: link.counter,
-      payload: link.payload,
-      range: link.range ? {
-        payload: link.range.payload,
-        label: link.range.text
-      } : undefined,
-    })).sort((a, b) => +a.label - b.label);
+  histogramApi: any;
 
-    return {
+  protected transform({ links }): HistogramRangeData {
+    const items = this.parseLinks(links); // format data
+
+    const histogramData: HistogramRangeData = {
       containerId: 'container-for-histogram',
       width: 450,
       height: 50,
@@ -51,32 +41,69 @@ export class FacetHistogramDS extends DataSource implements FacetDataSource {
         }
       },
       items,
+      setApi: (api) => {
+        if (!this.histogramApi) this.histogramApi = api;
+        if (this.value) {
+          const [firstYear, lastYear] = this.value.split('-');
+          const firstLabel = this.getFirstLabel(firstYear, items);
+          const lastLabel = this.getLastLabel(lastYear, items);
+          setTimeout(() => {
+            // when the component loads, set the sliders and the bars
+            // (necessary if search url has params)
+            this.histogramApi.setSliders([firstLabel, lastLabel]);
+            this.histogramApi.setBars(items);
+          });
+        }
+      }
     };
+    // if (this.value) {
+    //   const [firstYear, lastYear] = this.value.split('-');
+    //   const firstLabel = this.getFirstLabel(firstYear, items);
+    //   const lastLabel = this.getLastLabel(lastYear, items);
+    //   histogramData.setSliders = [firstLabel, lastLabel];
+    //   histogramData.items = items;
+    // }
+    return histogramData;
   }
 
-  setValue(value, update = false) {
+  setValue = (value, update = false) => {
     this.value = value;
     this.isUpdate = update;
 
-    if (update) {
+    if (update && this.input) {
       const { links } = this.input;
-      const updatedLinks = links.map((link) => ({
-        ...link,
-        classes: this.value && (this.value === link.payload) ? ACTIVE_CLASS : ''
-      }));
-      this.update({
-        ...this.input,
-        links: updatedLinks
-      });
+      this.update({ ...this.input, links });
+      if (!this.histogramApi) return;
+      // format the new bars data
+      const newBars = this.parseLinks(links);
+      const [firstYear, lastYear] = this.value.split('-');
+      // get years for slider positions
+      const firstLabel = this.getFirstLabel(firstYear, newBars);
+      const lastLabel = this.getLastLabel(lastYear, newBars);
+      this.value = `${firstLabel}-${lastLabel}`;
+      // update the histogram
+      this.histogramApi.setSliders([firstLabel, lastLabel]);
+      this.histogramApi.setBars(newBars);
     }
+    // reload the tooltips
+    this.loadTooltips();
   }
 
+  /**
+   * Returns the current facet value
+   */
   getValue = (): FACET_VALUE => this.value;
 
+  /**
+   * Reset to the default facet value
+   */
   clear() {
     this.value = '';
   }
 
+  /**
+   * Loads tippy tooltips and appends them to the histogram bars
+   */
   loadTooltips() {
     const elements = document.querySelectorAll('#container-for-histogram g.bars rect.bars');
     tippy(elements, {
@@ -88,5 +115,41 @@ export class FacetHistogramDS extends DataSource implements FacetDataSource {
       allowHTML: true,
       appendTo: () => document.body,
     });
+  }
+
+  /**
+   * Convert the links into the histogram component format
+   */
+  parseLinks(links) {
+    return links.map((link) => ({
+      label: link.text,
+      value: link.counter,
+      payload: link.payload,
+      range: link.range ? {
+        payload: link.range.payload,
+        label: link.range.text
+      } : undefined,
+    })).sort((a, b) => +a.label - b.label);
+  }
+
+  /**
+   * Get the left-most label
+   */
+  private getFirstLabel(year: string, items) {
+    if (!year) return items[0].label;
+    return items.find(({ label }) => +label === +year)?.label;
+  }
+
+  /**
+   * Get the right-most label
+   */
+  private getLastLabel(year: string, items) {
+    if (!year) return items[items.length - 1].label;
+    return items.find(({ label, range }) => {
+      if (range) {
+        return +range.label === +year;
+      }
+      return +label === +year;
+    })?.label;
   }
 }
