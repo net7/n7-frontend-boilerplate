@@ -77,7 +77,7 @@
         border-radius: $border-radius;
 
         .vis-item-content {
-            padding: $space/2 $space;
+            padding: calc($space/2) $space;
             white-space: normal;
         }
 

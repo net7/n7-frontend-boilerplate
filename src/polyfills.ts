@@ -24,7 +24,7 @@
 /***************************************************************************************************
  * Zone JS is required by default for Angular itself.
  */
-import 'zone.js/dist/zone';  // Included with Angular CLI.
+import 'zone.js';  // Included with Angular CLI.
 
 /***************************************************************************************************
 /** IE9, IE10 and IE11 requires all of the following polyfills. **/

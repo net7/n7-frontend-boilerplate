@@ -52,7 +52,7 @@
 \* ------------------------------------ */
 .n7-facet {
     &__section-input-link {
-        margin-bottom: $space/2;
+        margin-bottom: calc($space/2);
         border-bottom: 1px solid $color-border-normal;
 
         &:last-of-type {
@@ -61,7 +61,7 @@
     }
 
     &__input-link {
-        padding-bottom: $space/2;
+        padding-bottom: calc($space/2);
 
         &[class*="color-"] {
             .n7-facet__input-link-text {

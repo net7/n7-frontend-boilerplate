@@ -22,7 +22,7 @@
     }
 
     &__title {
-        margin-bottom: $space/2;
+        margin-bottom: calc($space/2);
         padding-right: $space*3;
         font-weight: $font-weight-black;
     }

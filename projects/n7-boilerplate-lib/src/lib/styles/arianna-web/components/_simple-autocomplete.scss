@@ -20,8 +20,8 @@
     }
 
     &__item {
-        // padding: 0 0 $space/1.5 0;
-        // margin-bottom: $space/1.5;
+        // padding: 0 0 calc($space/1.5) 0;
+        // margin-bottom: calc($space/1.5);
         // border-bottom: 2px solid $color-border-light;
         font-weight: $font-weight-normal;
         cursor: pointer;

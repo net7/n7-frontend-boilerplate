@@ -148,7 +148,7 @@
     /* Sizes */
     &.n7-btn-s {
         // height: $button-small-height;
-        // padding: 0 $space/2;
+        // padding: 0 calc($space/2);
         // line-height: $button-small-height - $button-border-width;
         // font-size: $font-size-xs;
     }

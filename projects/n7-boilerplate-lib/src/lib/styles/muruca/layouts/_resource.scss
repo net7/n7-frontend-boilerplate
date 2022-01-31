@@ -44,7 +44,7 @@
             margin: -$space*3 auto $space*4 auto;
 
             .n7-metadata-viewer__group {
-                margin-bottom: $space/2;
+                margin-bottom: calc($space/2);
             }
         }
 
@@ -61,7 +61,7 @@
 
         .n7-metadata-viewer__item-label {
             display: inline;
-            margin-right: $space/2;
+            margin-right: calc($space/2);
             font-size: $font-size-s;
         }
 

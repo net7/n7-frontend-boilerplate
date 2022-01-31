@@ -48,7 +48,7 @@
     }
 
     &__label {
-        margin-right: $space/2;
+        margin-right: calc($space/2);
         color: $color-text-light;
         font-size: $font-size-s;
         font-weight: $font-weight-bold;
@@ -66,7 +66,7 @@
 
     .mrc__text-breadcrumbs {
         display: block;
-        margin-bottom: $space/2;
+        margin-bottom: calc($space/2);
         font-family: $font-family-main;
         font-size: $font-size-xs;
         color: $color-text-light;
