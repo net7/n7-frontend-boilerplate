@@ -213,18 +213,6 @@
               "src/assets"
             ]
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "src/tsconfig.app.json",
-              "src/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
         }
       }
     },
@@ -242,15 +230,6 @@
             "production": {
               "devServerTarget": "n7-boilerplate:serve:production"
             }
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": "e2e/tsconfig.e2e.json",
-            "exclude": [
-              "**/node_modules/**"
-            ]
           }
         }
       }
@@ -279,18 +258,6 @@
             "main": "projects/n7-boilerplate-lib/src/test.ts",
             "tsConfig": "projects/n7-boilerplate-lib/tsconfig.spec.json",
             "karmaConfig": "projects/n7-boilerplate-lib/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/n7-boilerplate-lib/tsconfig.lib.json",
-              "projects/n7-boilerplate-lib/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
           }
         }
       }
