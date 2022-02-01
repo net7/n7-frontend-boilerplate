@@ -10,7 +10,7 @@
 .n7-item-preview {
     /* Main fields */
     &__title {
-        margin-bottom: $space*1.5; //  $space/2;
+        margin-bottom: $space*1.5; //  calc($space/2);
         font-weight: $font-weight-bold;
         font-size: $font-size-m;
 
@@ -21,7 +21,7 @@
     }
 
     &__text {
-        margin-bottom: $space; //  $space/2;
+        margin-bottom: $space; //  calc($space/2);
         color: $color-gray-04;
 
         em {
@@ -32,7 +32,7 @@
 
     /* Metadata wrapper  */
     &__metadata {
-        margin-top: -$space/2;
+        margin-top: -calc($space/2);
     }
 
     /* Metadata group */
@@ -83,7 +83,7 @@
     flex-grow: 0;
     margin-bottom: 0;
     background-color: $color-background-light;
-    padding: $space/2 $space;
+    padding: calc($space/2) $space;
     border-radius: $border-radius;
     box-shadow: inset 0 0 8px rgba(0,0,0,0.05);
     
@@ -149,7 +149,7 @@
         margin-left: auto;
         flex: 0 0 auto;
         text-align: right;
-        margin-top: -$space/2;
+        margin-top: -calc($space/2);
     }
 }
 
@@ -215,7 +215,7 @@
 .aw-item-preview-relation {
     display: inline-block;
     margin-top: $space*1.5;
-    padding: $space/2 $space;
+    padding: calc($space/2) $space;
     background-color: $color-background-light;
     border-radius: $border-radius;
     box-shadow: inset 0 0 8px rgba(0,0,0,0.05);

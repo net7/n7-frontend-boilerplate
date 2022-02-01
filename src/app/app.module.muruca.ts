@@ -22,7 +22,7 @@ import configMuruca from '@mr-config';
 import layoutsConfig from '@mr-config/layouts';
 import i18n from '@mr-config/i18n';
 
-import { AppComponent } from './app.component';
+import { AppComponent } from './app.component-muruca';
 
 const LANG_CODE = 'it_IT';
 

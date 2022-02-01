@@ -1,15 +1,16 @@
 {
   "name": "@n7-frontend/boilerplate",
-  "version": "2.38.2",
+  "version": "3.0.0",
   "peerDependencies": {
-    "@angular/common": "^9.1.10",
-    "@angular/core": "^9.1.10"
+    "@angular/common": "^13.2.0",
+    "@angular/core": "^13.2.0"
   },
   "dependencies": {
     "lodash": "^4.17.15",
     "moment": "^2.26.0",
     "slugify": "^1.4.0",
     "tippy.js": "^5.1.2",
-    "ngx-extended-pdf-viewer": "^7.3.2"
+    "ngx-extended-pdf-viewer": "^11.1.2",
+    "tslib": "^2.0.0"
   }
 }

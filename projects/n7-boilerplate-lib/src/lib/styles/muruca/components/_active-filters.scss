@@ -18,7 +18,7 @@
     &__label {
         flex-shrink: 0;
         margin-right: $space;
-        padding-top: $space/4;
+        padding-top: calc($space/4);
     }
 
     &__tags-wrapper {
@@ -28,7 +28,7 @@
     }
 
     .n7-tag {
-        display: inline-flex;;
+        display: inline-flex;
         margin-right: $space;
         margin-bottom: $space;
         overflow: hidden;

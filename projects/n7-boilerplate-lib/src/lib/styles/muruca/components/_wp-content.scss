@@ -156,7 +156,7 @@
     }
 
     .wp-block-media-text__media {
-        margin: 0 $space*2 0 0;        
+        margin: 0 $space*2 0 0;
 
         [class^="wp-image"] {
             max-width: 160px;
@@ -216,7 +216,7 @@
         }
 
         .blocks-gallery-item__caption {
-            margin-top: $space/2;
+            margin-top: calc($space/2);
             margin-bottom: $space;
             color: $color-text-light;
             font-size: $font-size-s;
@@ -336,7 +336,7 @@
         video {
             width: $page-readable-width;
         }
-    }    
+    }
 }
 
 

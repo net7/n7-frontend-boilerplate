@@ -29,7 +29,6 @@ const COMPONENTS = [
     N7BoilerplateCommonModule,
   ],
   providers: [],
-  entryComponents: COMPONENTS,
-  exports: COMPONENTS,
+  exports: COMPONENTS
 })
 export class N7BoilerplateDataVizModule { }

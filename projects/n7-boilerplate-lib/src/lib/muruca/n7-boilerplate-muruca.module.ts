@@ -70,7 +70,6 @@ const COMPONENTS = [
     MrLayoutStateService,
     MrResourceModalService
   ],
-  entryComponents: COMPONENTS,
-  exports: COMPONENTS,
+  exports: COMPONENTS
 })
 export class N7BoilerplateMurucaModule { }

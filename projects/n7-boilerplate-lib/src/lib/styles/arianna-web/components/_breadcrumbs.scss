@@ -33,8 +33,8 @@
 
     &__item {
         &:after {
-            padding-right: $space/2;
-            padding-left: $space/2;
+            padding-right: calc($space/2);
+            padding-left: calc($space/2);
         }
 
         &:last-child {
@@ -45,7 +45,7 @@
     }
 
     &__label {
-        padding-right: $space/2;
+        padding-right: calc($space/2);
         color: $color-text-light;
     }
 }
@@ -57,14 +57,14 @@
 .n7-breadcrumbs {
     /* Ellipsis element */
     &__item-ellipsis {
-        margin: $space/2 0;
+        margin: calc($space/2) 0;
         list-style: none;
         cursor: pointer;
 
         &:after {
             content: $breadcrumbs-arrow;
-            padding-right: $space/2;
-            padding-left: $space/2;
+            padding-right: calc($space/2);
+            padding-left: calc($space/2);
             color: $breadcrumbs-arrow-color;
             font-family: 'n7-icon' !important;
             vertical-align: bottom;

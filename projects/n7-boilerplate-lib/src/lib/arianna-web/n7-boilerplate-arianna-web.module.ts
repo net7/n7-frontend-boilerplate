@@ -53,8 +53,7 @@ const COMPONENTS = [
     N7BoilerplateCommonModule,
     NgxExtendedPdfViewerModule
   ],
-  entryComponents: COMPONENTS,
-  exports: COMPONENTS,
+  exports: COMPONENTS
 })
 export class N7BoilerplateAriannaWebModule {
   constructor(

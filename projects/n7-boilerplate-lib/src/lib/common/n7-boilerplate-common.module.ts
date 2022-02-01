@@ -30,11 +30,10 @@ const COMPONENTS = [
     DvComponentsLibModule,
   ],
   providers: [],
-  entryComponents: COMPONENTS,
-  exports: COMPONENTS,
+  exports: COMPONENTS
 })
 export class N7BoilerplateCommonModule {
-  static forRoot(config?: any): ModuleWithProviders {
+  static forRoot(config?: any): ModuleWithProviders<any> {
     return {
       ngModule: N7BoilerplateCommonModule,
       providers: [
