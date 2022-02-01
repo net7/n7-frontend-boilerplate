@@ -3,3 +3,4 @@ export * from './datepicker-wrapper/datepicker-wrapper';
 
 // card
 export * from './card/card';
+export * from './card-text-item/card-text-item';
