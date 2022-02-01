@@ -32,27 +32,6 @@ interface MarkerWithID extends MarkerData {
   slug: string;
 }
 
-const MARKER_ICON = L.icon({
-  iconUrl: '/assets/pin.png',
-  iconSize: [13, 20],
-  popupAnchor: [0, -15],
-  className: 'marker-icon'
-});
-
-const MARKER_ICON_UNAVAILABLE = L.icon({
-  iconUrl: '/assets/pin-unavailable.png',
-  iconSize: [13, 20],
-  popupAnchor: [0, -15],
-  className: 'marker-icon'
-});
-
-const MARKER_ICON_SELECTED = L.icon({
-  iconUrl: '/assets/pin-selected.png',
-  iconSize: [13, 20],
-  popupAnchor: [0, -15],
-  className: 'marker-icon-selected'
-});
-
 export class FacetMapDS extends DataSource implements FacetDataSource {
   id: string;
 
@@ -65,6 +44,29 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
   markerEvents$ = new Subject<MarkerEvent>();
 
   isUpdate = false;
+
+  iconSize = this.options.libOptions.iconSize ?? [13, 20];
+
+  private MARKER_ICON = L.icon({
+    iconUrl: '/assets/pin.png',
+    iconSize: this.iconSize,
+    popupAnchor: [0, -15],
+    className: 'marker-icon'
+  });
+
+  private MARKER_ICON_UNAVAILABLE = L.icon({
+    iconUrl: '/assets/pin-unavailable.png',
+    iconSize: this.iconSize,
+    popupAnchor: [0, -15],
+    className: 'marker-icon'
+  });
+
+  private MARKER_ICON_SELECTED = L.icon({
+    iconUrl: '/assets/pin-selected.png',
+    iconSize: this.iconSize,
+    popupAnchor: [0, -15],
+    className: 'marker-icon-selected'
+  });
 
   protected transform({ links }: { links: CadastralUnit[] }): MapData {
     const markers = [];
@@ -95,22 +97,24 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
           });
         }
       });
+    const mapConfig = this.options?.libOptions;
     return {
       containerId: 'map-canvas',
       libOptions: {
         attributionControl: false,
-        minZoom: 8,
+        minZoom: mapConfig.minZoom ?? 8,
+        maxZoom: mapConfig.maxZoom ?? undefined,
         maxBounds: [[46.8505, 10.3393], [45.6635, 12.2429]]
       },
       tileLayers: [{
         // url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-        url: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png',
+        url: mapConfig.layerUrl ?? 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png',
         // url: 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
         options: null
       }],
       initialView: {
-        center: [46.06, 11.21],
-        zoom: 9
+        center: mapConfig.center ?? [46.06, 11.21],
+        zoom: mapConfig.zoom ?? 9
       },
       _setInstance: (map) => {
         this.mapInstance = map;
@@ -125,6 +129,7 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
    */
   private buildMarkers(markers: MarkerWithID[]) {
     if (!markers) return;
+    const mapConfig = this.options?.libOptions;
     // remove all existing markers
     if (this.markerLayer) {
       this.markerLayer.clearLayers();
@@ -132,8 +137,8 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
     }
     const markerGroup = L.markerClusterGroup(
       {
-        maxClusterRadius: 10,
-        disableClusteringAtZoom: 8
+        maxClusterRadius: mapConfig.maxClusterRadius ?? 10,
+        disableClusteringAtZoom: mapConfig.disableClusteringAtZoom ?? 8
       }
     );
     markers.forEach(({
@@ -210,9 +215,9 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
   }
 
   getIcon = (id: string, counter: number) => {
-    if (this.value.includes(id)) return MARKER_ICON_SELECTED;
-    if (counter > 0) return MARKER_ICON;
-    return MARKER_ICON_UNAVAILABLE;
+    if (this.value.includes(id)) return this.MARKER_ICON_SELECTED;
+    if (counter > 0) return this.MARKER_ICON;
+    return this.MARKER_ICON_UNAVAILABLE;
   }
 
   getZindex = (id: string, counter: number) => {

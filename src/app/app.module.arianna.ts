@@ -12,7 +12,7 @@ import { APP_ROUTES } from '@aw-routes';
 import configArianna from '@aw-config';
 import layoutsConfig from '@aw-config/layouts';
 
-import { AppComponent } from './app.component';
+import { AppComponent } from './app.component-arianna';
 
 const JSON_PATH = './assets/app-config.local.json';
 

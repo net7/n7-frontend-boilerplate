@@ -23,8 +23,8 @@
     // }
 
     &__left-wrapper {
-    //     display: flex;
-    //     align-items: center;
+        //     display: flex;
+        //     align-items: center;
     }
 
     // &__icon-left {
@@ -44,7 +44,7 @@
     // }
 
     &__title {
-        // margin-bottom: $space/2     ;
+        // margin-bottom: calc($space/2)     ;
         font-weight: $font-weight-black;
         font-family: $font-family-headings;
         font-size: $font-size-xxl;
@@ -90,7 +90,7 @@
     // }
 
     // &__search-bar {
-    //     margin-right: $space/2;
+    //     margin-right: calc($space/2);
     // }
 
     // &__buttons-wrapper {

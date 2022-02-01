@@ -1,9 +1,9 @@
-import searchActsFacetsConfig from './search-acts-facets.config';
+// import searchActsFacetsConfig from './search-acts-facets.config';
 
 export default {
   title: 'Risultati della ricerca',
   searchId: 'act',
-  searchConfig: searchActsFacetsConfig,
+  // searchConfig: searchActsFacetsConfig,
   resourcePath: '/atto',
   facetsTitle: 'search#facets_title',
   totalResultsText: 'search#acts_total',

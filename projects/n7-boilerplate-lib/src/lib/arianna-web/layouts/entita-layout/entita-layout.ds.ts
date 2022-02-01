@@ -277,12 +277,12 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
       paginationParams: this._getPaginationURL(),
       size: this.pageSize,
     });
-    this.getLinkedObjectItems().forEach((el) => {
+    this.getLinkedObjectItems().forEach((el: any) => {
       el.relationName = res.label.length > 30
         ? `${res.label.substr(0, 30)}... `
         : res.label;
     });
-    res.relatedEntities.forEach((el) => {
+    res.relatedEntities.forEach((el: any) => {
       el.relationName = res.label.length > 30
         ? `${res.label.substr(0, 30)}... `
         : res.label;

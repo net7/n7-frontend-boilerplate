@@ -9,7 +9,7 @@ import {
 } from '@n7-frontend/boilerplate';
 import { APP_ROUTES } from './app.routes.sandbox';
 
-import { AppComponent } from './app.component';
+import { AppComponent } from './app.component-sandbox';
 
 import configSandbox from './config-sandbox';
 

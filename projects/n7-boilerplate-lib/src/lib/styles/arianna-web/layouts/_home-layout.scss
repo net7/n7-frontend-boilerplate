@@ -204,7 +204,7 @@
         }
 
         &__text {
-            margin-bottom: $space/2;
+            margin-bottom: calc($space/2);
             font-size: $font-size-l;
             font-weight: $font-weight-bold;
         }
@@ -431,7 +431,7 @@
     }
 
     &__bubble-results-title-counter {
-        margin-right: $space/2;
+        margin-right: calc($space/2);
         font-weight: $bubble-results-count-font-weight;
     }
 
@@ -444,9 +444,9 @@
         .n7-tag {
             display: flex;
             align-items: center;
-            margin-right: $space/2;
-            margin-bottom: $space/2;
-            padding-right: $space/2;
+            margin-right: calc($space/2);
+            margin-bottom: calc($space/2);
+            padding-right: calc($space/2);
             position: relative;
             border-radius: 20px;
 

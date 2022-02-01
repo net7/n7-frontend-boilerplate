@@ -13,20 +13,11 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "aot": true,
             "preserveSymlinks": true,
             "fileReplacements": [
               {
                 "replace": "src/app/app.module.ts",
                 "with": "src/app/app.module.arianna.ts"
-              }, 
-              {
-                "replace": "src/styles/styles.scss",
-                "with": "src/styles/styles.arianna.scss"
-              }, 
-              {
-                "replace": "src/app/app.component.html",
-                "with": "src/app/app.component-arianna.html"
               }
             ],
             "outputPath": "dist/n7-boilerplate",
@@ -50,9 +41,15 @@
               "./node_modules/leaflet.markercluster/dist/MarkerCluster.css",
               "./node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css",
               "./node_modules/vis-timeline/dist/vis-timeline-graph2d.css",
-              "src/styles/styles.scss"
+              "src/styles/styles.arianna.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -71,9 +68,7 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true
@@ -89,15 +84,16 @@
                 {
                   "replace": "src/app/app.module.ts",
                   "with": "src/app/app.module.arianna.ts"
-                }, 
-                {
-                  "replace": "src/styles/styles.scss",
-                  "with": "src/styles/styles.arianna.scss"
-                }, 
-                {
-                  "replace": "src/app/app.component.html",
-                  "with": "src/app/app.component-arianna.html"
                 }
+              ],
+              "styles": [
+                "./node_modules/flatpickr/dist/flatpickr.min.css",
+                "./node_modules/latte-carousel/dist/latte-carousel.min.css",
+                "./node_modules/leaflet/dist/leaflet.css",
+                "./node_modules/leaflet.markercluster/dist/MarkerCluster.css",
+                "./node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css",
+                "./node_modules/vis-timeline/dist/vis-timeline-graph2d.css",
+                "src/styles/styles.arianna.scss"
               ]
             },
             "dataviz": {
@@ -111,15 +107,16 @@
                 {
                   "replace": "src/app/app.module.ts",
                   "with": "src/app/app.module.dataviz.ts"
-                }, 
-                {
-                  "replace": "src/styles/styles.scss",
-                  "with": "src/styles/styles.dataviz.scss"
-                }, 
-                {
-                  "replace": "src/app/app.component.html",
-                  "with": "src/app/app.component-dataviz.html"
                 }
+              ],
+              "styles": [
+                "./node_modules/flatpickr/dist/flatpickr.min.css",
+                "./node_modules/latte-carousel/dist/latte-carousel.min.css",
+                "./node_modules/leaflet/dist/leaflet.css",
+                "./node_modules/leaflet.markercluster/dist/MarkerCluster.css",
+                "./node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css",
+                "./node_modules/vis-timeline/dist/vis-timeline-graph2d.css",
+                "src/styles/styles.dataviz.scss"
               ]
             },
             "sandbox": {
@@ -133,15 +130,16 @@
                 {
                   "replace": "src/app/app.module.ts",
                   "with": "src/app/app.module.sandbox.ts"
-                }, 
-                {
-                  "replace": "src/styles/styles.scss",
-                  "with": "src/styles/styles.sandbox.scss"
-                }, 
-                {
-                  "replace": "src/app/app.component.html",
-                  "with": "src/app/app.component-sandbox.html"
                 }
+              ],
+              "styles": [
+                "./node_modules/flatpickr/dist/flatpickr.min.css",
+                "./node_modules/latte-carousel/dist/latte-carousel.min.css",
+                "./node_modules/leaflet/dist/leaflet.css",
+                "./node_modules/leaflet.markercluster/dist/MarkerCluster.css",
+                "./node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css",
+                "./node_modules/vis-timeline/dist/vis-timeline-graph2d.css",
+                "src/styles/styles.sandbox.scss"
               ]
             },
             "muruca": {
@@ -155,18 +153,20 @@
                 {
                   "replace": "src/app/app.module.ts",
                   "with": "src/app/app.module.muruca.ts"
-                }, 
-                {
-                  "replace": "src/styles/styles.scss",
-                  "with": "src/styles/styles.muruca.scss"
-                }, 
-                {
-                  "replace": "src/app/app.component.html",
-                  "with": "src/app/app.component-muruca.html"
                 }
+              ],
+              "styles": [
+                "./node_modules/flatpickr/dist/flatpickr.min.css",
+                "./node_modules/latte-carousel/dist/latte-carousel.min.css",
+                "./node_modules/leaflet/dist/leaflet.css",
+                "./node_modules/leaflet.markercluster/dist/MarkerCluster.css",
+                "./node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css",
+                "./node_modules/vis-timeline/dist/vis-timeline-graph2d.css",
+                "src/styles/styles.muruca.scss"
               ]
             }
-          }
+          },
+          "defaultConfiguration": ""
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -213,18 +213,6 @@
               "src/assets"
             ]
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "src/tsconfig.app.json",
-              "src/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
         }
       }
     },
@@ -243,15 +231,6 @@
               "devServerTarget": "n7-boilerplate:serve:production"
             }
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": "e2e/tsconfig.e2e.json",
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
         }
       }
     },
@@ -262,7 +241,7 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/n7-boilerplate-lib/tsconfig.lib.json",
             "project": "projects/n7-boilerplate-lib/ng-package.json"
@@ -279,18 +258,6 @@
             "main": "projects/n7-boilerplate-lib/src/test.ts",
             "tsConfig": "projects/n7-boilerplate-lib/tsconfig.spec.json",
             "karmaConfig": "projects/n7-boilerplate-lib/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/n7-boilerplate-lib/tsconfig.lib.json",
-              "projects/n7-boilerplate-lib/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
           }
         }
       }
