@@ -1,0 +1,141 @@
+/**
+ * ITEM-PREVIEW
+ *
+ * Component used to preview any kind of element with image, title, text, metadata and icons.
+ */
+
+/* ------------------------------------ *\
+   #ITEM-PREVIEW
+\* ------------------------------------ */
+/* Grid */
+.n7-item-preview {
+    &__metadata-group-title {
+        font-family: $font-family-main;
+        font-weight: $font-weight-normal;
+        color: $color-text-light;
+        font-size: $font-size-m;
+    }
+
+    &__metadata-item {
+        display: block;
+    }
+
+    &__metadata-item-label {
+        font-weight: $font-weight-bold;
+        color: $color-text-light;
+    }
+
+    &__metadata-item-value {
+        font-weight: $font-weight-normal;
+        color: $color-text-light;
+    }
+
+    &__title {
+        margin-bottom: $space*0.75;
+        font-family: $font-family-main;
+        line-height: 1.3;
+        font-size: $font-size-l;
+    }
+
+    &__image {
+        border-radius: $border-radius * 2;
+        transition: all $transition-durations;
+        @include imageShadow;
+    }
+
+    &:hover {
+        .n7-item-preview__image {
+            @include imageShadowHover;
+        }
+    }
+    
+}
+
+/* No grid */
+.n7-grid-1 {
+    .n7-item-preview:not(.mr-item-preview-bibliography) {
+        border-bottom: 1px solid $color-border-normal;
+        padding-bottom: $space * 1;
+
+        .n7-item-preview___metadata-item {
+            display: inline-block;
+        }
+    }
+
+    /* Last row */
+    *:last-child {
+        .n7-item-preview {
+            border-bottom: 0;
+        }
+    }
+}
+
+/* Grid 2 */
+.n7-grid-2 {
+    /* Last row */
+    > *:nth-child(2n + 1):nth-last-child(-n + 2) .n7-item-preview,
+    > *:nth-child(2n + 1):nth-last-child(-n + 2) ~ * .n7-item-preview {
+        border-bottom: 0;
+    }
+}
+
+/* Grid 3 */
+.n7-grid-3 {
+    /* Last row */
+    > *:nth-child(3n + 1):nth-last-child(-n + 3) .n7-item-preview,
+    > *:nth-child(3n + 1):nth-last-child(-n + 3) ~ * .n7-item-preview {
+        border-bottom: 0;
+    }
+}
+
+/* Grid 4 */
+.n7-grid-4 {
+    /* Last row */
+    > *:nth-child(4n + 1):nth-last-child(-n + 4) .n7-item-preview,
+    > *:nth-child(4n + 1):nth-last-child(-n + 4) ~ * .n7-item-preview {
+        border-bottom: 0;
+    }
+}
+
+
+/* ------------------------------------ *\
+   #BIBLIOGRAPHY-ITEM-PREVIEW
+\* ------------------------------------ */
+.mr-item-preview-bibliography {
+    .n7-item-preview__content {
+        padding: $space * 2;
+        border: 1px solid $color-border-normal;
+        border-radius: $border-radius * 2;
+        font-size: $font-size-m;
+        @include cardShadow;
+        transition: all $transition-durations;
+
+        &:hover {
+            @include cardShadowHover;
+            border: 1px solid $color-gray-03;
+        }
+    }
+
+    .n7-item-preview__text {
+        font-size: $font-size-m;
+    }
+}
+
+
+/* ------------------------------------ *\
+   #SPECIAL-CASES
+\* ------------------------------------ */
+/* All Item Previews except bibliography and vertical images */
+.n7-item-preview:not(.mr-item-preview-bibliography, .is-vertical.has-image) {
+    border-bottom: 1px solid $color-border-normal;
+    padding-bottom: $space*2;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+/* Horizontal with image */
+.n7-item-preview.has-image:not(.is-vertical) {
+    .n7-item-preview__title {
+        margin-top: -4px;
+    }    
+}

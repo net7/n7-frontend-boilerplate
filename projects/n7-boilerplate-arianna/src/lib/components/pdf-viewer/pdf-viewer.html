@@ -1,0 +1,50 @@
+<div *ngIf="data" class="aw-pdf-viewer {{ data.classes || '' }}">
+    <div class="aw-pdf-viewer__loader">
+        <n7-loader></n7-loader>
+    </div>
+    
+    <ngx-extended-pdf-viewer
+        [src]="data.currentUrl"
+        [height]="'90vh'"
+        [useBrowserLocale]="true"
+        [textLayer]="true"
+        [showToolbar]="data.libOptions.showToolbar"
+        [showSidebarButton]="data.libOptions.showSidebarButton"
+        [showFindButton]="data.libOptions.showFindButton"
+        [showPagingButtons]="data.libOptions.showPagingButtons"
+        [showZoomButtons]="data.libOptions.showZoomButtons"
+        [showPresentationModeButton]="data.libOptions.showPresentationModeButton"
+        [showOpenFileButton]="data.libOptions.showOpenFileButton"
+        [showPrintButton]="data.libOptions.showPrintButton"
+        [showDownloadButton]="data.libOptions.showDownloadButton"
+        [showBookmarkButton]="data.libOptions.showBookmarkButton"
+        [showSecondaryToolbarButton]="data.libOptions.showSecondaryToolbarButton"
+        [showRotateButton]="data.libOptions.showRotateButton"
+        [showHandToolButton]="data.libOptions.showHandToolButton"
+        [showScrollingButton]="data.libOptions.showScrollingButton"
+        [showSpreadButton]="data.libOptions.showSpreadButton"
+        [showPropertiesButton]="data.libOptions.showPropertiesButton"
+        (pdfLoaded)="onLoaded()"
+        (pdfLoadingFailed)="onLoaded()">
+    </ngx-extended-pdf-viewer>
+    
+    <div *ngIf="data.items.length > 1" class="aw-pdf-viewer__navigation">
+        <div class="aw-pdf-viewer__navigation-tools">
+            <a class="aw-pdf-viewer__navigation-prev {{ (!data.prev && data.prev !== 0) ? 'is-disabled' : '' }}" 
+            (click)="onClick(data.prev)">
+                <span class="n7-icon-angle-left"></span>
+            </a>
+            <div class="aw-pdf-viewer__navigation-select">
+                <p class="aw-pdf-viewer__navigation-select-text">Scorri i documenti PDF</p>
+                <select (change)="onClick(+$event.target.value)">
+                    <option *ngFor="let item of data.items; let $i = index" [value]="$i"
+                    [selected]="item.selected">{{ item.label }}</option>
+                </select>
+            </div>
+            <a class="aw-pdf-viewer__navigation-next {{ !data.next ? 'is-disabled' : '' }}" 
+            (click)="onClick(data.next)">
+                <span class="n7-icon-angle-right"></span>
+            </a>
+        </div>
+    </div>
+</div>

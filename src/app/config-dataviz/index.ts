@@ -1,4 +1,4 @@
-import { ConfigCommonCommunication } from '@n7-frontend/boilerplate';
+import { ConfigCommonCommunication } from '@n7-frontend/boilerplate-common';
 import layouts from './layouts';
 
 const communication: ConfigCommonCommunication = {

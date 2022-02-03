@@ -1,0 +1,56 @@
+<div class="aw-multimedia" id="map-layout" *ngIf="lb.dataSource">
+    <n7-inner-title [data]="{
+        title: {
+            main: {
+                    text: 'I luoghi dell\'archivio'
+            }
+        }
+    }">
+    </n7-inner-title>
+
+    <!-- Map -->
+    <div class="aw-multimedia__map">
+        <n7-map [data]="lb.widgets['aw-map'].ds.out$ | async"></n7-map>
+    </div>
+    <!-- END // Map -->
+
+    <!-- RESULTS -->
+    <div class="aw-multimedia__results">
+        <div class="aw-multimedia__loader" *ngIf="(lb.dataSource.state$ | async) === 'LOADING'">
+            <ng-container>
+                <n7-loader></n7-loader>
+            </ng-container>
+        </div>
+
+        <div class="aw-multimedia__empty" *ngIf="(lb.dataSource.state$ | async) === 'EMPTY'">
+            <ng-container>
+                <p class="aw-multimedia__empty-text">Clicca su un luogo della mappa per vedere tutti gli oggetti collegati.</p>
+            </ng-container>
+        </div>
+        
+        <ng-container *ngIf="(lb.dataSource.state$ | async) === 'SUCCESS'">
+            <div class="aw-multimedia__results-title">
+                <n7-inner-title 
+                    [data]="lb.widgets['aw-scheda-inner-title'].ds.out$ | async">
+                </n7-inner-title>
+            </div>
+            <div class="aw-multimedia__results-wrapper">
+                <div>
+                    <div class="aw-item-preview-wrapper" *ngFor="let preview of (lb.widgets['aw-linked-objects'].ds.out$ | async)?.previews">
+                        <n7-smart-breadcrumbs 
+                            [data]="preview.breadcrumbs">
+                        </n7-smart-breadcrumbs>
+                        <n7-item-preview 
+                            [data]="preview" 
+                            [emit]="lb.widgets['aw-linked-objects'].emit">
+                        </n7-item-preview>
+                    </div>
+                </div>
+                <n7-smart-pagination *ngIf="lb.dataSource.total > 0"
+                    [data]="lb.widgets['n7-smart-pagination'].ds.out$ | async"
+                    [emit]="lb.widgets['n7-smart-pagination'].emit">
+                </n7-smart-pagination>
+            </div>
+        </ng-container>
+    </div>
+</div>

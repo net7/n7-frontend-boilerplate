@@ -1,0 +1,48 @@
+/**
+ * GRIDS
+ *
+ * Helper class to display items feed in grids.
+ * Apply the class to the container of the griddable elements (like cards). Direct
+ * descendants will be gridded.
+ */
+
+/* ------------------------------------ *\
+   #GRIDS
+\* ------------------------------------ */
+.aw-item-preview-list {
+    .aw-item-preview-wrapper:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: 0;
+    }
+}
+
+
+.aw-item-preview-list.n7-grid-2 {
+    /* Targeting elements in the last row, and removes bottom border */
+    > .aw-item-preview-wrapper:nth-child(2n + 1):nth-last-child(-n + 2),
+    > .aw-item-preview-wrapper:nth-child(2n + 1):nth-last-child(-n + 2) ~ * {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: 0;
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: $breakpoint-laptop) {
+}
+
+@media all and (max-width: $breakpoint-ipad-portrait) {
+}
+
+@media all and (max-width: $breakpoint-smartphone-landscape) {
+}
+
+@media all and (max-width: $breakpoint-smartphone-portrait) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}

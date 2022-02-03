@@ -26,7 +26,7 @@
 // ------------------------------------ //
 // #DV COLOR SCHEME
 // ------------------------------------ //
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/data-viz/generic/color_scheme";
+@import "../../projects/n7-boilerplate-dataviz/src/lib/styles/dataviz/generic/color_scheme";
 
 
 // ------------------------------------ //
@@ -38,7 +38,7 @@
 // ------------------------------------ //
 // #DV VARIABLES
 // ------------------------------------ //
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/data-viz/generic/variables";
+@import "../../projects/n7-boilerplate-dataviz/src/lib/styles/dataviz/generic/variables";
 
 
 // ------------------------------------ //
@@ -50,24 +50,24 @@
 // ------------------------------------ //
 // #COMMON COMPONENTS
 // ------------------------------------ //
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/common/components/facets-wrapper";
+@import "../../projects/n7-boilerplate-common/src/lib/styles/common/components/facets-wrapper";
 
 
 // ------------------------------------ //
 // #COMMON LAYOUTS
 // ------------------------------------ //
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/common/layouts/main-layout";
+@import "../../projects/n7-boilerplate-common/src/lib/styles/common/layouts/main-layout";
 
 
 // ------------------------------------ //
 // #DATAVIZ COMPONENTS
 // ------------------------------------ //
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/data-viz/components/data-widget-wrapper";
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/data-viz/components/datepicker-wrapper";
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/data-viz/components/card";
+@import "../../projects/n7-boilerplate-dataviz/src/lib/styles/dataviz/components/data-widget-wrapper";
+@import "../../projects/n7-boilerplate-dataviz/src/lib/styles/dataviz/components/datepicker-wrapper";
+@import "../../projects/n7-boilerplate-dataviz/src/lib/styles/dataviz/components/card";
 
 
 // ------------------------------------ //
 // #COMMON UTILITIES
 // ------------------------------------ //
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/common/utilities/_utilities";
+@import "../../projects/n7-boilerplate-common/src/lib/styles/common/utilities/_utilities";

@@ -1,4 +1,4 @@
-import { ConfigMurucaResourceLayout } from '@n7-frontend/boilerplate';
+import { ConfigMurucaResourceLayout } from '@n7-frontend/boilerplate-muruca';
 
 const config: ConfigMurucaResourceLayout = {
   title: 'Libro',

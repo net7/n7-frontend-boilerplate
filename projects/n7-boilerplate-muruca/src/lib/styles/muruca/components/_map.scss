@@ -1,0 +1,38 @@
+/**
+ * MAP
+ *
+ * Style for the leaflet map.
+ */
+
+/* ------------------------------------ *\
+    MAP
+\* ------------------------------------ */
+.mr-map {
+    font-family: $font-family-main;
+    font-size: $font-size-xs;
+
+    .n7-map__container {
+        border-radius: $border-radius;
+    }
+
+    .leaflet-control-attribution a {
+        font-family: $font-family-main;
+        font-size: $font-size-xs;
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: $breakpoint-laptop) {
+}
+
+@media all and (max-width: $breakpoint-ipad-portrait) {
+}
+
+@media all and (max-width: $breakpoint-smartphone-landscape) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}

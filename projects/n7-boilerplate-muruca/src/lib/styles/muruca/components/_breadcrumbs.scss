@@ -1,0 +1,60 @@
+/**
+ * BREADCRUMBS
+ *
+ * Style for breadcrumbs for desktop and mobile
+ */
+ 
+/* ------------------------------------ *\
+    BREADCRUMBS
+\* ------------------------------------ */
+.n7-breadcrumbs {
+    padding: 0;
+    white-space: nowrap;
+
+    &__list {
+        font-size: $font-size-s;
+    }
+
+    &__item {
+        margin: 0;
+
+        &:after {
+            vertical-align: initial;
+        }
+
+        &:first-child {
+            .n7-breadcrumbs__label {
+                padding-left: 0;
+            }
+        }
+        
+        &:last-child {
+            .n7-breadcrumbs__label {
+                color: $color-second;
+            }
+        }
+    }
+
+    &__label {
+        display: inline-block;
+        padding: $space*1.5 $space;
+        color: $color-text;
+    }
+}
+
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: $breakpoint-laptop) {
+}
+
+@media all and (max-width: $breakpoint-ipad-portrait) {
+}
+
+@media all and (max-width: $breakpoint-smartphone-landscape) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}

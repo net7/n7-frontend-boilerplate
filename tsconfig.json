@@ -30,6 +30,30 @@
       "@n7-frontend/boilerplate/*": [
         "projects/n7-boilerplate-lib/src/*"
       ],
+      "@n7-frontend/boilerplate-common": [
+        "projects/n7-boilerplate-common/src/public-api"
+      ],
+      "@n7-frontend/boilerplate-common/*": [
+        "projects/n7-boilerplate-common/src/*"
+      ],
+      "@n7-frontend/boilerplate-arianna": [
+        "projects/n7-boilerplate-arianna/src/public-api"
+      ],
+      "@n7-frontend/boilerplate-arianna/*": [
+        "projects/n7-boilerplate-arianna/src/*"
+      ],
+      "@n7-frontend/boilerplate-muruca": [
+        "projects/n7-boilerplate-muruca/src/public-api"
+      ],
+      "@n7-frontend/boilerplate-muruca/*": [
+        "projects/n7-boilerplate-muruca/src/*"
+      ],
+      "@n7-frontend/boilerplate-dataviz": [
+        "projects/n7-boilerplate-dataviz/src/public-api"
+      ],
+      "@n7-frontend/boilerplate-dataviz/*": [
+        "projects/n7-boilerplate-dataviz/src/*"
+      ],
       // MURUCA PROJECT PATHS
       "@mr-routes": ["src/app/app.routes.muruca.ts"],
       "@mr-config": ["src/app/config-muruca/"],
@@ -40,7 +64,25 @@
       // ARIANNA PROJECT PATHS
       "@aw-routes": ["src/app/app.routes.arianna.ts"],
       "@aw-config": ["src/app/config-arianna/"],
-      "@aw-config/*": ["src/app/config-arianna/*"],
+      "@aw-config/*": [
+        "src/app/config-arianna/*"
+      ],
+      "n7-boilerplate-arianna": [
+        "dist/n7-boilerplate-arianna/n7-boilerplate-arianna",
+        "dist/n7-boilerplate-arianna"
+      ],
+      "n7-boilerplate-common": [
+        "dist/n7-boilerplate-common/n7-boilerplate-common",
+        "dist/n7-boilerplate-common"
+      ],
+      "n7-boilerplate-dataviz": [
+        "dist/n7-boilerplate-dataviz/n7-boilerplate-dataviz",
+        "dist/n7-boilerplate-dataviz"
+      ],
+      "n7-boilerplate-muruca": [
+        "dist/n7-boilerplate-muruca/n7-boilerplate-muruca",
+        "dist/n7-boilerplate-muruca"
+      ],
       // "@aw-routes": ["<PROJECT-LOCAL-PATH>/src/app/app.routes.ts"],
       // "@aw-config": ["<PROJECT-LOCAL-PATH>/src/app/config-arianna/"],
       // "@aw-config/*": ["<PROJECT-LOCAL-PATH>/src/app/config-arianna/*"],

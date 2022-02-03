@@ -1,0 +1,17 @@
+<div *ngIf="lb.dataSource" class="mr-advanced-search mr-layout">
+    <div class="mr-layout__maxwidth mr-side-margin">
+
+        <n7-inner-title [data]="{
+            title: {
+                main: {
+                    text: lb.dataSource.pageConfig.title
+                }
+            }
+        }"></n7-inner-title>
+
+        <mr-form-wrapper-accordion 
+            [data]="lb.widgets['mr-form-wrapper-accordion'].ds.out$ | async"
+            [emit]="lb.widgets['mr-form-wrapper-accordion'].emit">
+        </mr-form-wrapper-accordion>
+    </div>
+</div>

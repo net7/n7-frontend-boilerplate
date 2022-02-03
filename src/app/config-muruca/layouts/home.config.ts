@@ -1,4 +1,4 @@
-import { ConfigMurucaHomeLayout } from '@n7-frontend/boilerplate';
+import { ConfigMurucaHomeLayout } from '@n7-frontend/boilerplate-muruca';
 
 const config: ConfigMurucaHomeLayout = {
   title: 'Home',

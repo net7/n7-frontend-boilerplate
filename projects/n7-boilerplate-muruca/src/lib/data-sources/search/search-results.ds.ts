@@ -1,0 +1,140 @@
+import { ItemPreviewData, MetadataGroup } from '@n7-frontend/components';
+import { DataSource, _t } from '@n7-frontend/core';
+import { merge, clone } from 'lodash';
+import { helpers } from '@n7-frontend/boilerplate-common';
+import linksHelper from '../../helpers/links-helper';
+
+const ITEM_PREVIEW_DEFAULTS = {
+  limit: 100,
+  striptags: true
+};
+
+type MrSearchResponse = {
+  limit: number;
+  offset: number;
+  results: MrSearchResult[];
+  sort: string;
+  total_count: number;
+}
+
+type HighlightItem = [string, [string]] | {
+  link?: {
+    /** from the baseUrl of the application */
+    absolute: string;
+    /** path relative to the item preview url */
+    relative: string;
+  };
+  text?: string;
+  label?: string;
+}
+
+interface MrSearchResult extends ItemPreviewData {
+  /** unique id for the search result entry */
+  id: number;
+  /** relative path */
+  link?: string;
+  /** items that matched the search input */
+  highlights?: HighlightItem[];
+  /** payload for item anchor */
+  payload?: {
+    action: string;
+    id: string | number;
+    type: string;
+  };
+}
+
+export class MrSearchResultsDS extends DataSource {
+  protected transform(data: MrSearchResponse) {
+    const { results } = data;
+    const { itemPreview } = this.options.config;
+    const itemPreviewOptions = merge(clone(ITEM_PREVIEW_DEFAULTS), (itemPreview || {}));
+
+    return results.map((item) => {
+      if (typeof item.text === 'string') {
+        // striptags
+        if (itemPreviewOptions.striptags) {
+          item.text = helpers.striptags(item.text);
+        }
+        // limit
+        if (itemPreviewOptions.limit && (item.text.length > itemPreviewOptions.limit)) {
+          item.text = `${item.text.substring(0, itemPreviewOptions.limit)}...`;
+        }
+      }
+      // metadata
+      const metadata: MetadataGroup[] = [];
+      if (Array.isArray(item.metadata)) {
+        item.metadata.forEach((group) => {
+          const items = [];
+          (group.items || []).forEach((metadataItem) => {
+            items.push({
+              ...metadataItem,
+              label: _t(metadataItem.label)
+            });
+          });
+          metadata.push({ items });
+        });
+      }
+
+      /*
+        Add the highlights to the item's metadata with a custom group
+      */
+      const highlights = [];
+      if (item.highlights) {
+        const highlightGroup = {
+          title: _t('advancedsearch#highlights_title'),
+          items: [],
+          classes: 'n7-item-preview__highlights'
+        };
+        item.highlights.forEach((highlight: HighlightItem) => {
+          // if the item is an array interpret it as [label, [value]]
+          if (Array.isArray(highlight)) {
+            highlightGroup.items.push({
+              label: _t(highlight[0]),
+              value: _t(highlight[1][0])
+            });
+          // if it's an object then it should have a custom hyperlink
+          } else {
+            let href = '';
+            if (highlight.link.absolute) {
+              // path is relative to the baseUrl
+              href = `${highlight.link.absolute}`;
+            } else if (highlight.link.relative) {
+              // path is relative to the item-preview url
+              href = `${item.link}${highlight.link}`;
+            }
+            highlightGroup.items.push({
+              label: highlight.label ? _t(highlight.label) : undefined,
+              value: highlight.text ?? '',
+              href, // custom hyperlink
+            });
+          }
+        });
+        highlights.push(highlightGroup);
+      }
+
+      let anchor = null;
+      if (item.link) {
+        anchor = {
+          href: linksHelper.getRouterLink(item.link),
+          queryParams: linksHelper.getQueryParams(item.link),
+          target: '_blank'
+        };
+      }
+      if (item.payload) {
+        anchor = {
+          payload: {
+            ...item.payload
+          }
+        };
+      }
+
+      return {
+        ...item,
+        metadata,
+        anchor,
+        highlights,
+        classes: itemPreviewOptions.classes,
+      };
+    });
+  }
+}

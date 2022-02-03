@@ -1,0 +1,26 @@
+<div *ngIf="data" style="display: none;">
+  <div *ngFor="let d of data" id="template__{{d.id}}" class="bubble-chart__tippy-template">
+    <div id="bubble-popup-menu" class="aw-bubble-popup-menu">
+      <h2 class="aw-bubble-popup-menu__title">{{ d.title }}</h2>
+      <p class="aw-bubble-popup-menu__text">
+        {{ d.text }}
+      </p>
+
+      <div *ngIf="d.relation.value" class="aw-item-preview-relation">
+        <p class="aw-item-preview-relation__description">Tipo di relazione 
+          <!-- <span class="aw-item-preview-relation__key">{{d.relation.key}}</span>: -->
+          <span class="aw-item-preview-relation__label">{{d.relation.value}}</span>
+        </p>
+      </div>
+
+      <div class="aw-bubble-popup-menu__actions">
+        <n7-anchor-wrapper [classes]="'aw-bubble-popup-menu__link'" [data]="d.anchorData">
+          Vai alla scheda
+        </n7-anchor-wrapper>
+        <span *ngIf="d.selectable" class="aw-bubble-popup-menu__link" (click)="onClick('select', {id: d.id})">
+          {{ d.isSelected ? 'Deseleziona' : 'Seleziona'}}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

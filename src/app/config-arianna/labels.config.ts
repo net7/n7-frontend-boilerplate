@@ -1,4 +1,4 @@
-import { ConfigCommonLabels } from '@n7-frontend/boilerplate';
+import { ConfigCommonLabels } from '@n7-frontend/boilerplate-common';
 
 /* eslint-disable @typescript-eslint/camelcase */
 const config: ConfigCommonLabels = {

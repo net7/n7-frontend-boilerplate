@@ -1,0 +1,103 @@
+/**
+ * ADVANCED-AUTOCOMPLETE
+ *
+ * Search bar autocomplete component which shows datas preview matching the typed words or words parts
+ */
+
+/* ------------------------------------ *\
+   #ADVANCED-AUTOCOMPLETE
+\* ------------------------------------ */
+.n7-advanced-autocomplete {
+    .n7-advanced-autocomplete__group-title-wrapper {
+        // color: $color-text-light;
+        &.color-persona {
+            .n7-advanced-autocomplete__group-icon,
+            .n7-advanced-autocomplete__group-title {
+                color: $color-people;
+            }
+        }
+
+        &.color-luogo {
+            .n7-advanced-autocomplete__group-icon,
+            .n7-advanced-autocomplete__group-title {
+                color: $color-places;
+            }
+        }
+
+        &.color-concetto {
+            .n7-advanced-autocomplete__group-icon,
+            .n7-advanced-autocomplete__group-title {
+                color: $color-concepts;
+            }
+        }
+
+        &.color-cosa-notevole {
+            .n7-advanced-autocomplete__group-icon,
+            .n7-advanced-autocomplete__group-title {
+                color: $color-things;
+            }
+        }
+
+        &.color-organizzazione {
+            .n7-advanced-autocomplete__group-icon,
+            .n7-advanced-autocomplete__group-title {
+                color: $color-organizations;
+            }
+        }
+
+        &.color-oggetto-culturale {
+            .n7-advanced-autocomplete__group-icon,
+            .n7-advanced-autocomplete__group-title {
+                color: $color-oggetto-culturale;
+            }
+        }
+
+        &.color-aggregazione-logica {
+            .n7-advanced-autocomplete__group-icon,
+            .n7-advanced-autocomplete__group-title {
+                color: $color-aggregazione-logica;
+            }
+        }
+
+        &.color-famiglia {
+            .n7-advanced-autocomplete__group-icon,
+            .n7-advanced-autocomplete__group-title {
+                color: $color-families;
+            }
+        }
+
+        &.color-evento {
+            .n7-advanced-autocomplete__group-icon,
+            .n7-advanced-autocomplete__group-title {
+                color: $color-events;
+            }
+        }
+    }
+
+    &__group-title {
+        font-weight: $font-weight-bold;
+    }
+
+    &__action-bar {
+        padding: $space*2;
+        border-top: 1px solid $color-border-normal;
+        background-color: $color-background-medium;
+    }
+}
+
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: $breakpoint-laptop) {
+}
+
+@media all and (max-width: $breakpoint-ipad-portrait - 1) {
+}
+
+@media all and (max-width: $breakpoint-smartphone-landscape) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}

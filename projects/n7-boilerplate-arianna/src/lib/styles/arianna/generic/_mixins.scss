@@ -1,0 +1,18 @@
+//
+// MIXINS
+//
+// Definition of all mixins used in the Boilerplate.
+//
+
+// ------------------------------------ //
+// #CARD SHADOWS
+// ------------------------------------ //
+@mixin card-box-shadow {
+    box-shadow: 0 0px 1px rgba(0, 0, 0, 0.20), 0 2px 15px rgba(0, 0, 0, 0.05);
+    transition: box-shadow $transition-durations;
+    transition-timing-function: ease-in;
+}
+
+@mixin card-box-shadow-hover {
+    box-shadow: 0 0px 1px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05), 0 5px 25px rgba(0, 0, 0, 0.15);
+}

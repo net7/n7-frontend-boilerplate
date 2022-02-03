@@ -1,4 +1,8 @@
-import { MrSearchConfig, MrSearchFacetsConfig, MrSearchLayoutInput } from '@n7-frontend/boilerplate';
+import {
+  MrSearchConfig,
+  MrSearchFacetsConfig,
+  MrSearchLayoutInput
+} from '@n7-frontend/boilerplate-muruca';
 
 const facets: MrSearchFacetsConfig = {
   sections: [{

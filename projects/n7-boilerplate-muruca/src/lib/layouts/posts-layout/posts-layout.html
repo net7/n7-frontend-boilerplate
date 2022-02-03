@@ -1,0 +1,92 @@
+<div class="mr-search mr-layout"
+     *ngIf="lb.dataSource">
+    <section class="mr-layout__maxwidth mr-side-margin">
+
+        <div class="mr-search__title">
+            <div class="scroll-ref">&nbsp;</div>
+            <n7-inner-title
+            [data]="lb.widgets['mr-search-page-title'].ds.out$ | async"
+            [emit]="lb.widgets['mr-search-page-title'].emit">
+            </n7-inner-title>
+        </div>
+        
+        <div class="mr-search__results-content">
+            <div class="mr-search__results-wrapper">
+                <div class="mr-search__results-info">
+                    <n7-inner-title
+                    [data]="lb.widgets['mr-search-results-title'].ds.out$ | async"
+                    [emit]="lb.widgets['mr-search-results-title'].emit">
+                    </n7-inner-title>
+                </div>
+                <div *ngIf="lb.dataSource.pageConfig['filters']" class="mr-search__results-filters">
+                    <span *ngIf="lb.dataSource.pageConfig['filters'].title" 
+                    class="mr-search__results-filters-title">{{ lb.dataSource.pageConfig['filters'].title }}</span>
+                    <div class="mr-search__results-filters-wrapper">
+                        <n7-tag *ngFor="let tag of (lb.widgets['mr-advanced-search-tags'].ds.out$ | async)"
+                            [data]="tag">
+                        </n7-tag>
+                    </div>
+                </div>
+                <main class="mr-search__results">
+                    <!-- SEARCH RESULTS -->
+                    <ng-container [ngSwitch]="layoutState.get$('results') | async">
+                        
+                        <!-- loading -->
+                        <ng-container *ngSwitchCase="'LOADING'">
+                            <div class="mr-search__results-loading n7-grid-{{ lb.dataSource.pageConfig.grid || 3 }}">
+                                <n7-content-placeholder *ngFor="let n of [0,1,2,3,4,5,6,7,8,9]" [data]="{
+                                    blocks: [
+                                        { classes: 'search-result-placeholder-title' },
+                                        { classes: 'search-result-placeholder-metadata' },
+                                        { classes: 'search-result-placeholder-metadata' },
+                                        { classes: 'search-result-placeholder-metadata' }
+                                    ]
+                                }"></n7-content-placeholder>
+                            </div>
+                        </ng-container>
+                        
+                        <!-- success: items > 0 -->
+                        <ng-container *ngSwitchCase="'SUCCESS'">
+                            <div class="n7-grid-{{ lb.dataSource.pageConfig.grid || 3 }}">
+                                <n7-item-preview *ngFor="let item of (lb.widgets['mr-search-results'].ds.out$ | async)"
+                                [data]="item">
+                                </n7-item-preview>
+                            </div>
+                        </ng-container>
+
+                        <!-- empty: items === 0 -->
+                        <ng-container *ngSwitchCase="'EMPTY'">
+                            <div class="mr-search__results-fallback">
+                                <p class="mr-search__results-fallback-string">
+                                    {{ lb.dataSource.pageConfig.fallback.text }}
+                                </p>
+                                <button class="n7-btn mr-search__results-fallback-button"
+                                    (click)="lb.eventHandler.emitInner('searchreset')">
+                                    {{ lb.dataSource.pageConfig.fallback.button }}
+                                </button>
+                            </div>
+                        </ng-container>
+
+                        <!-- error: request problem -->
+                        <ng-container *ngSwitchCase="'ERROR'">
+                            <p class="mr-search__results-ko-string">
+                                {{ lb.dataSource.pageConfig.ko.text }}
+                            </p>
+                            <button class="n7-btn mr-search__results-ko-button"
+                                (click)="lb.eventHandler.emitInner('searchreset')">
+                                {{ lb.dataSource.pageConfig.ko.button }}
+                            </button>
+                        </ng-container>
+                        
+                    </ng-container>
+                </main>               
+                <n7-smart-pagination
+                *ngIf="(layoutState.get$('results') | async) === 'SUCCESS'"
+                [data]="lb.widgets['n7-smart-pagination'].ds.out$ | async"
+                [emit]="lb.widgets['n7-smart-pagination'].emit">
+                </n7-smart-pagination>
+            </div>
+        </div>
+
+    </section>
+</div>

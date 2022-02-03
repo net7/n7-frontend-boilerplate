@@ -1,4 +1,4 @@
-import { ConfigMurucaItineraryLayout } from '@n7-frontend/boilerplate';
+import { ConfigMurucaItineraryLayout } from '@n7-frontend/boilerplate-muruca';
 
 const config: ConfigMurucaItineraryLayout = {
   title: 'global#itinerary',

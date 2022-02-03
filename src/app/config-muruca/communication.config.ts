@@ -1,4 +1,4 @@
-import { ConfigCommonCommunication } from '@n7-frontend/boilerplate';
+import { ConfigCommonCommunication } from '@n7-frontend/boilerplate-common';
 
 const config: ConfigCommonCommunication = {
   defaultProvider: 'rest-local',

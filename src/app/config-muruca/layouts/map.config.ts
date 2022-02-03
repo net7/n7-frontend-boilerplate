@@ -1,4 +1,4 @@
-import { ConfigMurucaLayoutMap } from '@n7-frontend/boilerplate';
+import { ConfigMurucaLayoutMap } from '@n7-frontend/boilerplate-muruca';
 
 const config: ConfigMurucaLayoutMap = {
   title: 'map#title',

@@ -7,15 +7,17 @@ import { filter, map } from 'rxjs/operators';
 import { translate } from '@n7-frontend/core';
 import {
   N7BoilerplateCommonModule,
-  N7BoilerplateMurucaModule,
   LocalConfigService,
-  MrMenuService,
-  MrFooterService,
   MainStateService,
-  MrTranslationsLoaderService,
   ConfigurationService,
   JsonConfigService,
-} from '@n7-frontend/boilerplate';
+} from '@n7-frontend/boilerplate-common';
+import {
+  N7BoilerplateMurucaModule,
+  MrMenuService,
+  MrFooterService,
+  MrTranslationsLoaderService,
+} from '@n7-frontend/boilerplate-muruca';
 
 import { APP_ROUTES } from '@mr-routes';
 import configMuruca from '@mr-config';

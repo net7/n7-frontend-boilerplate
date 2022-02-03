@@ -1,4 +1,4 @@
-import { ConfigAriannaCollectionLayout } from '@n7-frontend/boilerplate';
+import { ConfigAriannaCollectionLayout } from '@n7-frontend/boilerplate-arianna';
 
 const config: ConfigAriannaCollectionLayout = {
   header: {

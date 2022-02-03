@@ -1,4 +1,4 @@
-import { ConfigMurucaSearchLayout } from '@n7-frontend/boilerplate';
+import { ConfigMurucaSearchLayout } from '@n7-frontend/boilerplate-muruca';
 import searchWitnessesFacetsConfig from './search-witnesses-facets.config';
 
 const config: ConfigMurucaSearchLayout = {

@@ -1,4 +1,4 @@
-import { ConfigAriannaHomeLayout } from '@n7-frontend/boilerplate';
+import { ConfigAriannaHomeLayout } from '@n7-frontend/boilerplate-arianna';
 
 const config: ConfigAriannaHomeLayout = {
   'top-hero': {

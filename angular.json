@@ -261,6 +261,130 @@
           }
         }
       }
+    },
+    "n7-boilerplate-common": {
+      "projectType": "library",
+      "root": "projects/n7-boilerplate-common",
+      "sourceRoot": "projects/n7-boilerplate-common/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/n7-boilerplate-common/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/n7-boilerplate-common/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/n7-boilerplate-common/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/n7-boilerplate-common/src/test.ts",
+            "tsConfig": "projects/n7-boilerplate-common/tsconfig.spec.json",
+            "karmaConfig": "projects/n7-boilerplate-common/karma.conf.js"
+          }
+        }
+      }
+    },
+    "n7-boilerplate-arianna": {
+      "projectType": "library",
+      "root": "projects/n7-boilerplate-arianna",
+      "sourceRoot": "projects/n7-boilerplate-arianna/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/n7-boilerplate-arianna/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/n7-boilerplate-arianna/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/n7-boilerplate-arianna/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/n7-boilerplate-arianna/src/test.ts",
+            "tsConfig": "projects/n7-boilerplate-arianna/tsconfig.spec.json",
+            "karmaConfig": "projects/n7-boilerplate-arianna/karma.conf.js"
+          }
+        }
+      }
+    },
+    "n7-boilerplate-muruca": {
+      "projectType": "library",
+      "root": "projects/n7-boilerplate-muruca",
+      "sourceRoot": "projects/n7-boilerplate-muruca/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/n7-boilerplate-muruca/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/n7-boilerplate-muruca/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/n7-boilerplate-muruca/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/n7-boilerplate-muruca/src/test.ts",
+            "tsConfig": "projects/n7-boilerplate-muruca/tsconfig.spec.json",
+            "karmaConfig": "projects/n7-boilerplate-muruca/karma.conf.js"
+          }
+        }
+      }
+    },
+    "n7-boilerplate-dataviz": {
+      "projectType": "library",
+      "root": "projects/n7-boilerplate-dataviz",
+      "sourceRoot": "projects/n7-boilerplate-dataviz/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/n7-boilerplate-dataviz/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/n7-boilerplate-dataviz/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/n7-boilerplate-dataviz/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/n7-boilerplate-dataviz/src/test.ts",
+            "tsConfig": "projects/n7-boilerplate-dataviz/tsconfig.spec.json",
+            "karmaConfig": "projects/n7-boilerplate-dataviz/karma.conf.js"
+          }
+        }
+      }
     }
   },
   "defaultProject": "n7-boilerplate"

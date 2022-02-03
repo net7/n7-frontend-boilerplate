@@ -1,4 +1,4 @@
-import { ConfigAriannaEntitaLayout } from '@n7-frontend/boilerplate';
+import { ConfigAriannaEntitaLayout } from '@n7-frontend/boilerplate-arianna';
 
 const config: ConfigAriannaEntitaLayout = {
   overview: {

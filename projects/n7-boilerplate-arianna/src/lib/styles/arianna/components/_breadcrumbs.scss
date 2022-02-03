@@ -1,0 +1,129 @@
+/**
+ * BREADCRUMBS
+ *
+ * Style for breadcrumbs for desktop and mobile
+ */
+ 
+/* ------------------------------------ *\
+    BREADCRUMBS
+\* ------------------------------------ */
+.n7-breadcrumbs {
+    white-space: nowrap;
+
+    &__nav {
+        max-width: 100%;
+    }
+
+    &__list {
+        max-width: 100%;
+        font-size: $font-size-s;
+
+        &:first-of-type {
+            .n7-breadcrumbs__label {
+                padding-left: 0;
+            }
+        }
+
+        &:last-of-type {
+            a {
+                color: $color-text-light;
+            }
+        }
+    }
+
+    &__item {
+        &:after {
+            padding-right: calc($space/2);
+            padding-left: calc($space/2);
+        }
+
+        &:last-child {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+
+    &__label {
+        padding-right: calc($space/2);
+        color: $color-text-light;
+    }
+}
+
+
+/* ------------------------------------ *\
+   #SMART-BREADCRUMBS-ELLIPSIS
+\* ------------------------------------ */
+.n7-breadcrumbs {
+    /* Ellipsis element */
+    &__item-ellipsis {
+        margin: calc($space/2) 0;
+        list-style: none;
+        cursor: pointer;
+
+        &:after {
+            content: $breadcrumbs-arrow;
+            padding-right: calc($space/2);
+            padding-left: calc($space/2);
+            color: $breadcrumbs-arrow-color;
+            font-family: 'n7-icon' !important;
+            vertical-align: bottom;
+        }
+
+        &:hover {
+            color: $color-text-link;
+        }
+    }
+}
+
+
+/* ------------------------------------ *\
+   #SMART-BREADCRUMBS-TIPPY
+\* ------------------------------------ */
+.n7-smart-breadcrumbs__tippy-content {
+    padding: 0;
+    margin: 0;
+
+    .n7-breadcrumbs__item {
+        padding: 0;
+        margin: 0;
+    }
+
+    /* Last child also */
+    .n7-breadcrumbs__item:last-child {
+        white-space: normal;
+        overflow: visible;
+
+        .n7-breadcrumbs__label {
+            cursor: pointer;
+        }
+    }
+
+    .n7-breadcrumbs__label {
+        padding: 0;
+        margin: 0;
+        cursor: pointer;
+
+        
+        &:hover {
+            color: $color-text-link;
+        }
+    }
+}
+
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: $breakpoint-laptop) {
+}
+
+@media all and (max-width: $breakpoint-ipad-portrait) {
+}
+
+@media all and (max-width: $breakpoint-smartphone-landscape) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}

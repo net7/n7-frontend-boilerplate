@@ -1,0 +1,48 @@
+/**
+ * MAIN LAYOUT
+ *
+ * Css definining the style for the outer layout wrapper:
+ * (projects/n7-boilerplate-lib/src/lib/common/layouts/main-layout/main-layout.html)
+ */
+
+/* ------------------------------------ *\
+    MAIN LAYOUT
+\* ------------------------------------ */
+.n7-main-layout {
+    min-width: $page-min-width;
+    background-color: $color-background-layout;
+}
+
+
+/* ------------------------------------ *\
+    STICKY FOOTER
+\* ------------------------------------ */
+/* Implemented with CSS flex */
+.n7-main-layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    // display: grid;
+    // grid-template-rows: 1fr auto;
+}
+
+.n7-page-content {
+    flex: 1 0 auto; /* for sticky footer - prevent element from shrinking */
+
+    + * {
+        flex: none; /* for sticky footer - prevent element from shrinking */
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: $page-max-width + $space*4) {
+
+    /* Layout utility class */
+    .n7-side-auto-padding {
+        padding-left: $space*2;
+        padding-right: $space*2;
+    }
+
+}

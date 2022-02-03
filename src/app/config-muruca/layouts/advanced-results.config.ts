@@ -1,4 +1,4 @@
-import { ConfigMurucaLayoutAdvancedResults } from '@n7-frontend/boilerplate';
+import { ConfigMurucaLayoutAdvancedResults } from '@n7-frontend/boilerplate-muruca';
 
 const config: ConfigMurucaLayoutAdvancedResults = {
   searchId: 'advanced_search',

@@ -26,7 +26,7 @@
 // ------------------------------------ //
 // #AW COLOR SCHEME
 // ------------------------------------ //
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/generic/color_scheme";
+@import "../../projects/n7-boilerplate-arianna/src/lib/styles/arianna/generic/color_scheme";
 
 
 // ------------------------------------ //
@@ -38,13 +38,13 @@
 // ------------------------------------ //
 // #AW VARIABLES
 // ------------------------------------ //
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/generic/variables";
+@import "../../projects/n7-boilerplate-arianna/src/lib/styles/arianna/generic/variables";
 
 
 // ------------------------------------ //
 // #AW MIXINS
 // ------------------------------------ //
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/generic/mixins";
+@import "../../projects/n7-boilerplate-arianna/src/lib/styles/arianna/generic/mixins";
 
 
 // ------------------------------------ //
@@ -56,55 +56,55 @@
 // ------------------------------------ //
 // #COMMON COMPONENTS
 // ------------------------------------ //
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/common/components/facets-wrapper";
+@import "../../projects/n7-boilerplate-common/src/lib/styles/common/components/facets-wrapper";
 
 
 // ------------------------------------ //
 // #COMMON LAYOUTS
 // ------------------------------------ //
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/common/layouts/main-layout";
+@import "../../projects/n7-boilerplate-common/src/lib/styles/common/layouts/main-layout";
 
 
 // ------------------------------------ //
 // #ARIANNA COMPONENTS
 // ------------------------------------ //
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/advanced-autocomplete";
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/breadcrumbs";
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/bubble-popup-menu";
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/carousel";
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/facet";
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/facet-header";
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/footer";
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/header";
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/item-preview";
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/map";
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/metadata-viewer";
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/pdf-viewer";
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/simple-autocomplete";
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/timeline";
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/tippy-tooltip";
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/components/tree";
+@import "../../projects/n7-boilerplate-arianna/src/lib/styles/arianna/components/advanced-autocomplete";
+@import "../../projects/n7-boilerplate-arianna/src/lib/styles/arianna/components/breadcrumbs";
+@import "../../projects/n7-boilerplate-arianna/src/lib/styles/arianna/components/bubble-popup-menu";
+@import "../../projects/n7-boilerplate-arianna/src/lib/styles/arianna/components/carousel";
+@import "../../projects/n7-boilerplate-arianna/src/lib/styles/arianna/components/facet";
+@import "../../projects/n7-boilerplate-arianna/src/lib/styles/arianna/components/facet-header";
+@import "../../projects/n7-boilerplate-arianna/src/lib/styles/arianna/components/footer";
+@import "../../projects/n7-boilerplate-arianna/src/lib/styles/arianna/components/header";
+@import "../../projects/n7-boilerplate-arianna/src/lib/styles/arianna/components/item-preview";
+@import "../../projects/n7-boilerplate-arianna/src/lib/styles/arianna/components/map";
+@import "../../projects/n7-boilerplate-arianna/src/lib/styles/arianna/components/metadata-viewer";
+@import "../../projects/n7-boilerplate-arianna/src/lib/styles/arianna/components/pdf-viewer";
+@import "../../projects/n7-boilerplate-arianna/src/lib/styles/arianna/components/simple-autocomplete";
+@import "../../projects/n7-boilerplate-arianna/src/lib/styles/arianna/components/timeline";
+@import "../../projects/n7-boilerplate-arianna/src/lib/styles/arianna/components/tippy-tooltip";
+@import "../../projects/n7-boilerplate-arianna/src/lib/styles/arianna/components/tree";
 
 
 // ------------------------------------ //
 // #ARIANNA WEB LAYOUTS
 // ------------------------------------ //
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/layouts/entita-layout";
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/layouts/home-layout";
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/layouts/multimedia-layout";
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/layouts/search-layout";
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/layouts/scheda-layout";
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/layouts/collection-layout";
+@import "../../projects/n7-boilerplate-arianna/src/lib/styles/arianna/layouts/entita-layout";
+@import "../../projects/n7-boilerplate-arianna/src/lib/styles/arianna/layouts/home-layout";
+@import "../../projects/n7-boilerplate-arianna/src/lib/styles/arianna/layouts/multimedia-layout";
+@import "../../projects/n7-boilerplate-arianna/src/lib/styles/arianna/layouts/search-layout";
+@import "../../projects/n7-boilerplate-arianna/src/lib/styles/arianna/layouts/scheda-layout";
+@import "../../projects/n7-boilerplate-arianna/src/lib/styles/arianna/layouts/collection-layout";
 
 
 // ------------------------------------ //
 // #COMMON UTILITIES
 // ------------------------------------ //
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/common/utilities/_utilities";
+@import "../../projects/n7-boilerplate-common/src/lib/styles/common/utilities/_utilities";
 
 
 // ------------------------------------ //
 // #ARIANNA UTILITIES
 // ------------------------------------ //
-@import "../../projects/n7-boilerplate-lib/src/lib/styles/arianna-web/utilities/item-preview-list";
+@import "../../projects/n7-boilerplate-arianna/src/lib/styles/arianna/utilities/item-preview-list";
 

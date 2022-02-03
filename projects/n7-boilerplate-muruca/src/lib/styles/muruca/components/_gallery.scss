@@ -1,0 +1,68 @@
+/**
+ * GALLERY
+ *
+ * Gallery component displaying thumbs of images.
+ */
+
+/* ------------------------------------ *\
+    GALLERY
+\* ------------------------------------ */
+.mr-gallery {
+    // TODO
+}
+
+/* ------------------------------------ *\
+    GALLERY ZOOM (MODAL)
+\* ------------------------------------ */
+.mr-gallery-modal {
+    .mr-modal__window {
+        max-height: none;
+        background: none;
+        max-width: none;
+        overflow: hidden;
+        position: fixed;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+    }
+    .mr-modal__header {
+        padding: 0;
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 10;
+        
+    }
+    .mr-modal__content {
+        padding: 0;
+
+        img {
+            height: 100vh;
+            width: 100%;
+            object-fit: contain;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+    }
+}
+
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: $breakpoint-laptop) {
+}
+
+@media all and (max-width: $breakpoint-ipad-portrait) {
+}
+
+@media all and (max-width: $breakpoint-smartphone-landscape) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}

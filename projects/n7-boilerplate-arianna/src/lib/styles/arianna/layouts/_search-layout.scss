@@ -1,0 +1,284 @@
+/**
+ * SEARCH
+ *
+ * Layout for search page
+ */
+
+/* ------------------------------------ *\
+    SEARCH
+\* ------------------------------------ */
+.aw-search {
+    margin: $space*3 auto $space*6 auto;
+    max-width: $page-max-width;
+    box-shadow: $search-box-shadow;
+
+    &__content-wrapper {
+        display: flex;
+        position: relative;
+    }
+}
+
+
+/* ------------------------------------ *\
+   #HEADER
+\* ------------------------------------ */
+.aw-search {
+    &__header {
+        display: flex;
+        align-items: center;
+        padding: $space*3;
+        background-color: $color-background-base;
+        border-bottom: 1px solid $color-border-light;
+    }
+
+    &__header-title {
+        margin-bottom: 0;
+    }
+
+    &__header-left {
+        flex: 1;
+    }
+
+    &__header-right {
+        margin-left: auto;
+    }
+
+    .n7-nav {
+        &__list {
+            display: flex;
+        }
+
+        &__item {
+            padding: 0 $space*2;
+            font-size: $font-size-m;
+
+            &:last-of-type {
+                padding-right: 0;
+            }
+
+            &.is-selected {
+                .n7-nav__link {
+                    position: relative;
+                    color: $color-text;
+
+                    &::before {
+                        content: '';
+                        height: $search-nav-decoration-height;
+                        position: absolute;
+                        right: 0;
+                        bottom: -($space*3 + $search-nav-decoration-height + 1px);
+                        left: 0;
+                        background-color: $color-text;
+                    }
+                }
+            }
+        }
+
+        &__link {
+            color: $color-text-light;
+        }
+    }
+}
+
+
+/* ------------------------------------ *\
+   #SIDEBAR
+\* ------------------------------------ */
+.aw-search {
+    &__sidebar {
+        padding: $space*2 0 $space*4 $space*2;
+
+        &,
+        &-loading {
+            flex: 0 0 $aw-scheda-tree-width;
+            width: $aw-scheda-tree-width;
+            margin-right: $space*2;
+        }
+
+        &.is-sticky {
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .n7-facet {
+            &__section {
+                margin-right: 0;
+                margin-left: 0;
+            }
+
+            &__section-input-select {
+                width: calc(50% - #{$space});
+        
+                .n7-facet__section-input,
+                .n7-facet__input-select {
+                    width: 100%;
+                }
+
+                & + .n7-facet__section-input-select {
+                    margin-left: $space*2;
+                }
+            }
+        }
+    }
+
+    &__facets {
+        height: 100%;
+    }
+}
+
+/* Loading */
+.aw-search__facets-loading {
+    padding: $space*2;
+
+    .search-placeholder-facet-input {
+        height: 38px;
+        margin-bottom: $space*2;
+    }
+
+    .search-placeholder-facet-check {
+        height: 20px;
+        margin-bottom: $space*3;
+    }
+
+    .search-placeholder-facet-item {
+        height: 16px;
+        margin-bottom: $space*2;
+    }
+}
+
+/* facet links loader */
+.aw-search {
+    .loader-link {
+        overflow: hidden;
+        .loader-link {
+            @extend .n7-loader;
+        
+            padding: 0;
+            margin: $space auto 0;
+            width: 40px !important;
+            height: 40px !important;
+        }
+    }
+}
+
+
+/* ------------------------------------ *\
+   #CONTENT
+\* ------------------------------------ */
+.aw-search {
+    &__content {
+        flex: 1;
+        overflow: hidden;
+        padding: $space*2 0 0;
+        box-shadow: 0 2px 20px 0 rgba(0,0,0,0.05);
+    }
+
+    &__total {
+        margin-bottom: 0;
+        font-size: $font-size-xl;
+    }
+
+    &__total-number {
+        font-weight: $font-weight-bold;
+    }
+
+    &__total-title {
+        font-weight: $font-weight-normal;
+    }
+
+    &__results-header {
+        display: flex;
+        align-items: center;
+        padding: 0 $space*2 $space*2;
+    }
+
+    &__results-header-right {
+        margin-left: auto;
+        padding-left: $space;
+    }
+
+    &__results-wrapper {
+        padding: $space*2;
+        background-color: $color-background-base;
+        border-radius: $border-radius 0 0 0;
+        box-shadow: 0 2px 20px 0 rgba(0,0,0,0.05);
+        
+        /* Hover on breadcrumbs */
+        n7-smart-breadcrumbs {
+            cursor: pointer;
+
+            &:hover {
+                + n7-item-preview {
+                    .n7-item-preview__title {
+                        color: $color-main;
+                    }
+                }
+            }
+        }
+    }
+
+    &__results-select-orderby-label {
+        margin-right: $space;
+    }
+
+    .n7-pagination {
+        padding-top: $space*4;
+    }
+
+    /* No results */
+    &__fallback {
+        padding: $space*2;
+    }
+
+    &__fallback-string {
+        margin-bottom: $space*2;
+    }
+
+    /* Loading */
+    &__results-wrapper-loading {
+        padding: $space;
+        background: #ffffff;
+
+        .n7-content-placeholder {
+            margin-bottom: $space*2;
+            clear: both;
+            overflow: hidden;
+        }
+
+        .search-result-placeholder-title {
+            height: 24px;
+            clear: both;
+            margin-bottom: $space*1.5;
+        }
+
+        .search-result-placeholder-metadata {
+            height: 16px;
+            width: 120px;
+            margin-right: $space*2;
+            float: left;
+        }
+    }
+}
+
+
+/* ------------------------------------ *\
+    GALLERY
+\* ------------------------------------ */
+/* Special style for the gallery page */
+.aw-gallery {
+    /* Only last item of the  breadcrumbs is displayed */
+    .n7-breadcrumbs__list {
+        >*:not(:last-child) {
+            display: none;
+        }
+
+        .n7-breadcrumbs__item {
+            font-size: $font-size-xs;
+            cursor: pointer;
+
+            a {
+                cursor: pointer;
+            }
+        }
+    }
+}

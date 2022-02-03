@@ -1,0 +1,215 @@
+<div class="aw-scheda"
+     id="scheda-layout">
+    <div class="aw-scheda__content n7-side-auto-padding sticky-parent"
+         [ngClass]="{ 'is-collapsed' : lb.dataSource.sidebarCollapsed }">
+
+        <ng-container *ngTemplateOutlet="tree"></ng-container>
+
+        <div class="aw-scheda__scheda-wrapper"
+             [hidden]="lb.dataSource.contentIsLoading">
+
+            <n7-smart-breadcrumbs *ngIf="lb.dataSource.hasBreadcrumb"
+                                  [data]="lb.widgets['aw-scheda-breadcrumbs'].ds.out$ | async"
+                                  [emit]="lb.widgets['aw-scheda-breadcrumbs'].emit">
+            </n7-smart-breadcrumbs>
+
+            <div *ngIf="!lb.dataSource.hasBreadcrumb"
+                 class="aw-scheda__fake-breadcrumbs"
+                 (click)="lb.eventHandler.emitInner('togglesidebar', {})">
+                 <p class="aw-scheda__fake-breadcrumbs-open" 
+                    *ngIf="lb.dataSource.sidebarCollapsed">
+                    Consulta il patrimonio
+                 </p>
+            </div>
+
+            <div *ngIf="!lb.dataSource.currentId"
+                 class="aw-scheda__intro-text"
+                 [innerHTML]="lb.dataSource.emptyLabel">
+            </div>
+
+            <n7-inner-title [data]="lb.widgets['aw-scheda-inner-title'].ds.out$ | async">
+            </n7-inner-title>
+
+            <!-- Empty state -->
+            <ng-container *ngIf="!lb.dataSource.hasContent">
+                <ng-container *ngTemplateOutlet="empty"></ng-container>
+            </ng-container>
+
+            <!-- Content sections -->
+            <ng-container *ngIf="lb.dataSource.hasContent">
+                <ng-container *ngTemplateOutlet="content"></ng-container>
+            </ng-container>
+
+        </div>
+
+    </div>
+</div>
+
+<ng-template #tree>
+    <div class="aw-scheda__tree sticky-target"
+         [ngClass]="{ 'is-sticky': lb.dataSource.sidebarIsSticky }">
+        <n7-sidebar-header [data]="lb.widgets['aw-sidebar-header'].ds.out$ | async"
+                           [emit]="lb.widgets['aw-sidebar-header'].emit"></n7-sidebar-header>
+        <div class="aw-scheda__tree-content-loading"
+             *ngIf="!(lb.widgets['aw-tree'].ds.out$ | async)">
+            <n7-content-placeholder *ngFor="let n of [0,1,2,3]"
+                                    [data]="{
+                            blocks: [{
+                                classes: 'tree-placeholder-item'
+                            }]
+                        }"></n7-content-placeholder>
+        </div>
+        <div class="aw-scheda__tree-content"
+             (click)="lb.eventHandler.emitOuter('treeposition', $event)"
+             [ngStyle]="{
+                            'max-height': lb.dataSource.treeMaxHeight,
+                            'overflow': 'auto'
+                        }">
+            <n7-tree [data]="lb.widgets['aw-tree'].ds.out$ | async"
+                     [emit]="lb.widgets['aw-tree'].emit"
+                     *ngIf="!lb.dataSource.sidebarCollapsed">
+            </n7-tree>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #empty>
+    <section class="aw-scheda__section aw-scheda__empty"
+             [innerHTML]="lb.dataSource.emptyStateString">
+    </section>
+</ng-template>
+
+<ng-template #content>
+    <!-- Digital Object selection dropdown -->
+    <section class="aw-scheda__digital-object-dropdown"
+            *ngIf="(
+                lb.dataSource.hasDigitalObjects 
+                && lb.dataSource.digitalObjects.length > 1
+            )">
+        <p class="aw-scheda__digital-object-dropdown-label">
+            Seleziona l'oggetto digitale da visualizzare:
+        </p>
+        <aw-scheda-dropdown 
+        [data]="lb.widgets['aw-scheda-dropdown'].ds.out$ | async"
+        [emit]="lb.widgets['aw-scheda-dropdown'].emit">
+        </aw-scheda-dropdown>
+    </section>
+    <!-- END // Digital Object selection dropdown -->
+
+    <!-- Digital Objects: images, IIP, PDFs, external links -->
+    <section *ngIf="lb.dataSource.currentDigitalObject as $do" 
+        class="aw-scheda__media aw-scheda__{{ $do.type }}"
+        [ngClass]="{ 
+            'navigation-hidden': !$do.hasNavigation
+        }">
+        <ng-container [ngSwitch]="$do.type">
+            <!-- IMAGE VIEWER (IIP) -->
+            <ng-container *ngSwitchCase="'images-iip'">
+                <n7-image-viewer 
+                (contextmenu)="lb.dataSource.hasContextMenu()" 
+                [data]="lb.widgets['aw-scheda-image'].ds.out$ | async">
+                </n7-image-viewer>
+            </ng-container>
+
+            <!-- IMAGE VIEWER (IIIF) -->
+            <ng-container *ngSwitchCase="'images-iiif'">
+                <n7-image-viewer 
+                (contextmenu)="lb.dataSource.hasContextMenu()" 
+                [data]="lb.widgets['aw-scheda-image'].ds.out$ | async">
+                </n7-image-viewer>
+            </ng-container>
+
+            <!-- IMAGE VIEWER (Simple: jpg, png) -->
+            <ng-container *ngSwitchCase="'images-simple'">
+                <n7-image-viewer 
+                (contextmenu)="lb.dataSource.hasContextMenu()"
+                [data]="lb.widgets['aw-scheda-image'].ds.out$ | async">
+                </n7-image-viewer>
+            </ng-container>
+    
+            <!-- PDF -->
+            <ng-container *ngSwitchCase="'pdf'">
+                <aw-pdf-viewer 
+                [data]="lb.widgets['aw-scheda-pdf'].ds.out$ | async"
+                [emit]="lb.widgets['aw-scheda-pdf'].emit">
+                </aw-pdf-viewer>
+            </ng-container>
+    
+            <!-- EXTERNAL URL -->
+            <ng-container *ngSwitchCase="'external'">
+                <div class="aw-scheda__external-url">
+                    <a class="aw-scheda__external-url-link" href="{{ $do.url }}" target="_blank">
+                        {{ $do.label || lb.dataSource.externalUrlText }}
+                        <span class="n7-icon-external-link"></span>
+                    </a>
+                </div>
+            </ng-container>
+        </ng-container>
+    </section>
+    <!-- END // Digital Objects -->
+
+    <section class="aw-scheda__section aw-scheda__description"
+             *ngIf="lb.dataSource.contentParts.content">
+        <div *ngFor="let part of lb.dataSource.contentParts">
+            <div [innerHTML]="part.content"></div>
+        </div>
+    </section>
+
+    <!-- Metadata -->
+    <section class="aw-scheda__section aw-scheda__metadata"
+             *ngIf="lb.dataSource.hasMetadata">
+        <div class="aw-scheda__inner-title"
+             *ngIf="lb.dataSource.metadataSectionTitle">
+            {{lb.dataSource.metadataSectionTitle}}
+        </div>
+        <n7-metadata-viewer [data]="lb.widgets['aw-scheda-metadata'].ds.out$ | async">
+        </n7-metadata-viewer>
+    </section>
+    <!-- END // Metadata -->
+
+    <!-- Related entities -->
+    <section *ngIf="lb.dataSource.hasRelatedEntities"
+             id="related-item-container"
+             class="aw-scheda__section aw-scheda__related">
+        <div class="aw-scheda__inner-title">
+            {{lb.dataSource.relatedEntitiesHeader}}
+        </div>
+        <div class="aw-scheda__related-items aw-item-preview-list n7-grid-2">
+            <ng-container *ngFor="let preview of (lb.widgets['aw-related-entities'].ds.out$ | async)?.previews">
+                <div class="aw-item-preview-wrapper">
+                    <n7-item-preview [data]="preview"
+                                     [emit]="lb.widgets['aw-related-entities'].emit">
+                    </n7-item-preview>
+                    <!-- Relation -->
+                    <div class="aw-item-preview-relation"
+                         *ngIf="preview.relation?.value">
+                        <p class="aw-item-preview-relation__description">Tipo di relazione
+                            <!-- <span class="aw-item-preview-relation__key">{{preview.relation.key}}</span>: -->
+                            <span class="aw-item-preview-relation__value">{{preview.relation.value}}</span>
+                        </p>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </section>
+    <!-- END // Related entities -->
+
+    <!-- Similar Objects -->
+    <section *ngIf="lb.dataSource.hasSimilarItems"
+             id="related-item-container"
+             class="aw-scheda__section aw-scheda__related">
+        <div class="aw-scheda__inner-title">
+            {{lb.dataSource.similarItemsSectionTitle}}
+        </div>
+        <div class="aw-scheda__related-items aw-item-preview-list n7-grid-2">
+            <ng-container *ngFor="let preview of (lb.widgets['aw-linked-objects'].ds.out$ | async)?.previews">
+                <div class="aw-item-preview-wrapper">
+                    <n7-item-preview [data]="preview"
+                                    [emit]="lb.widgets['aw-linked-objects'].emit">
+                    </n7-item-preview>
+                </div> 
+            </ng-container>
+        </div>
+    </section>
+    <!-- END // Similar Objects -->
+</ng-template>
