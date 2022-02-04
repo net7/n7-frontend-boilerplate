@@ -1,6 +1,9 @@
 {
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../../dist/n7-boilerplate-muruca",
+  "allowedNonPeerDependencies": [
+    "."
+  ],
   "assets": [
     "./src/lib/styles/"
   ],

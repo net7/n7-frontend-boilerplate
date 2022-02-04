@@ -28,11 +28,31 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              { "glob": "**/*", "input": "./node_modules/@teipublisher/pb-components/dist", "output": "/assets/pb-components/dist" },
-              { "glob": "**/*", "input": "./node_modules/@teipublisher/pb-components/lib", "output": "/assets/pb-components/lib" },
-              { "glob": "**/*", "input": "./node_modules/@teipublisher/pb-components/images", "output": "/assets/pb-components/images" },
-              { "glob": "**/*", "input": "./node_modules/@teipublisher/pb-components/i18n", "output": "/assets/pb-components/i18n" },
-              { "glob": "**/*", "input": "./node_modules/ngx-extended-pdf-viewer/assets/", "output": "/assets/" }
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@teipublisher/pb-components/dist",
+                "output": "/assets/pb-components/dist"
+              },
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@teipublisher/pb-components/lib",
+                "output": "/assets/pb-components/lib"
+              },
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@teipublisher/pb-components/images",
+                "output": "/assets/pb-components/images"
+              },
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@teipublisher/pb-components/i18n",
+                "output": "/assets/pb-components/i18n"
+              },
+              {
+                "glob": "**/*",
+                "input": "./node_modules/ngx-extended-pdf-viewer/assets/",
+                "output": "/assets/"
+              }
             ],
             "styles": [
               "./node_modules/latte-carousel/dist/latte-carousel.min.css",
@@ -154,10 +174,10 @@
             },
             "arianna": {
               "browserTarget": "n7-boilerplate:build:arianna"
-            }, 
+            },
             "dataviz": {
               "browserTarget": "n7-boilerplate:build:dataviz"
-            }, 
+            },
             "muruca": {
               "browserTarget": "n7-boilerplate:build:muruca"
             }
@@ -217,13 +237,13 @@
           "options": {
             "tsConfig": "projects/n7-boilerplate-lib/tsconfig.lib.json",
             "project": "projects/n7-boilerplate-lib/ng-package.json"
-          }
-        ,          "configurations": {
+          },
+          "configurations": {
             "production": {
               "tsConfig": "projects/n7-boilerplate-lib/tsconfig.lib.prod.json"
             }
           }
-},
+        },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
