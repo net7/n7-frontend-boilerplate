@@ -1,11 +1,11 @@
 import { MapData, MarkerData } from '@n7-frontend/components';
 import { DataSource } from '@n7-frontend/core';
+import * as L from 'leaflet';
 import 'leaflet.markercluster';
 import { Subject } from 'rxjs';
-import { Map } from 'leaflet';
 // leaflet is already present in the window,
 // a double import results in errors with tooltips.
-declare const L;
+// declare const L;
 
 interface Coords { lat: number; lng: number }
 
@@ -52,7 +52,7 @@ export class MrMapDS extends DataSource {
   /** Instance of the marker layerGroup */
   markerLayer;
 
-  mapLoaded$: Subject<Map> = new Subject()
+  mapLoaded$: Subject<L.Map> = new Subject()
 
   // eslint-disable-next-line consistent-return
   protected transform(data: TimelineResponse): MapData {

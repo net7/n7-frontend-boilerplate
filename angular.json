@@ -155,9 +155,6 @@
                 "./node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css",
                 "./node_modules/vis-timeline/dist/vis-timeline-graph2d.css",
                 "src/styles/styles.muruca.scss"
-              ],
-              "scripts": [
-                "./node_modules/leaflet/dist/leaflet.js"
               ]
             }
           },

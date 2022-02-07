@@ -1,7 +1,7 @@
 import { LayoutDataSource, _t } from '@n7-frontend/core';
 import { ItemPreviewData } from '@n7-frontend/components';
 import { Location } from '@angular/common';
-import { Map } from 'leaflet';
+import * as L from 'leaflet';
 import { first } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ConfigurationService, CommunicationService, MainStateService } from '@n7-frontend/boilerplate-common';
@@ -35,7 +35,7 @@ export class MrMapLayoutDS extends LayoutDataSource {
 
   public route;
 
-  public mapListener$: Subject<Map> = new Subject();
+  public mapListener$: Subject<L.Map> = new Subject();
 
   public bibliographyData: {
     header: { title: string };

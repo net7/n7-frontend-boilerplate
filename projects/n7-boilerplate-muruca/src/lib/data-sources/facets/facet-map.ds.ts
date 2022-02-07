@@ -1,11 +1,12 @@
 import { DataSource } from '@n7-frontend/core';
 import { MapData, MarkerData } from '@n7-frontend/components';
+import * as L from 'leaflet';
 import 'leaflet.markercluster';
 import { Subject } from 'rxjs';
 import { FacetDataSource } from './facet-datasource';
 // leaflet is already present in the window,
 // a double import results in errors with tooltips.
-declare const L;
+// declare const L;
 
 const ACTIVE_CLASS = 'is-active';
 
