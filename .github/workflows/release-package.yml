@@ -17,7 +17,7 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: npm i
       - run: npm run build
-      - run: npm publish dist/common --access public
+      - run: npm publish dist/n7-boilerplate-common --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
@@ -31,7 +31,7 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: npm i
       - run: npm run build
-      - run: npm publish dist/muruca --access public
+      - run: npm publish dist/n7-boilerplate-muruca --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
@@ -45,7 +45,7 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: npm i
       - run: npm run build
-      - run: npm publish dist/arianna --access public
+      - run: npm publish dist/n7-boilerplate-arianna --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
@@ -59,6 +59,6 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: npm i
       - run: npm run build
-      - run: npm publish dist/dataviz --access public
+      - run: npm publish dist/n7-boilerplate-dataviz --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
