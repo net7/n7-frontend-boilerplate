@@ -1,6 +1,6 @@
 import { EventHandler } from '@n7-frontend/core';
 import { Subject, forkJoin } from 'rxjs';
-import { helpers } from '@n7-frontend/boilerplate-common';
+import { helpers } from '@net7/boilerplate-common';
 
 export class AwHomeLayoutEH extends EventHandler {
   private destroyed$: Subject<any> = new Subject();

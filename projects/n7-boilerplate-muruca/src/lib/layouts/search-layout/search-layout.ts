@@ -6,7 +6,7 @@ import {
   CommunicationService,
   ConfigurationService,
   MainStateService
-} from '@n7-frontend/boilerplate-common';
+} from '@net7/boilerplate-common';
 import { MrSearchLayoutConfig as config } from './search-layout.config';
 import { MrSearchService } from '../../services/search.service';
 import { MrLayoutStateService } from '../../services/layout-state.service';

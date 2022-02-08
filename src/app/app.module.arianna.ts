@@ -5,8 +5,8 @@ import {
   N7BoilerplateCommonModule,
   JsonConfigService,
   LocalConfigService,
-} from '@n7-frontend/boilerplate-common';
-import { N7BoilerplateAriannaModule, } from '@n7-frontend/boilerplate-arianna';
+} from '@net7/boilerplate-common';
+import { N7BoilerplateAriannaModule, } from '@net7/boilerplate-arianna';
 
 import { APP_ROUTES } from '@aw-routes';
 import configArianna from '@aw-config';

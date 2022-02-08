@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AbstractLayout } from '@n7-frontend/boilerplate-common';
+import { AbstractLayout } from '@net7/boilerplate-common';
 import { DvExampleLayoutConfig as config } from './example-layout.config';
 
 @Component({

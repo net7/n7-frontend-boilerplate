@@ -7,7 +7,7 @@ import {
   LayoutsConfigurationService,
   ConfigurationService,
   MainStateService
-} from '@n7-frontend/boilerplate-common';
+} from '@net7/boilerplate-common';
 import { MrResourceModalService } from '../../services/resource-modal.service';
 import { MrLayoutStateService } from '../../services/layout-state.service';
 import { MrTimelineLayoutConfig as config } from './timeline-layout.config';

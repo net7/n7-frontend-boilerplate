@@ -1,4 +1,4 @@
-import { ConfigMurucaLayoutPosts } from '@n7-frontend/boilerplate-muruca';
+import { ConfigMurucaLayoutPosts } from '@net7/boilerplate-muruca';
 
 const config: ConfigMurucaLayoutPosts = {
   searchId: 'posts',

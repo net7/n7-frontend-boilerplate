@@ -6,7 +6,7 @@ import {
   MainStateService,
   ConfigurationService,
   CommunicationService,
-} from '@n7-frontend/boilerplate-common';
+} from '@net7/boilerplate-common';
 import { MrPostsLayoutConfig as config } from './posts-layout.config';
 import { MrLayoutStateService } from '../../services/layout-state.service';
 

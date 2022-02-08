@@ -1,4 +1,4 @@
-import { ConfigAriannaBubbleChart } from '@n7-frontend/boilerplate-arianna';
+import { ConfigAriannaBubbleChart } from '@net7/boilerplate-arianna';
 
 const config: ConfigAriannaBubbleChart = {
   fontRendering: {

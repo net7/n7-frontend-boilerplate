@@ -2,7 +2,7 @@ import { LayoutDataSource, _t } from '@n7-frontend/core';
 import { Observable } from 'rxjs';
 import {
   ConfigurationService, CommunicationService, MainStateService, helpers
-} from '@n7-frontend/boilerplate-common';
+} from '@net7/boilerplate-common';
 
 export class MrResourceLayoutDS extends LayoutDataSource {
   private configuration: ConfigurationService;

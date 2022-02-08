@@ -6,7 +6,7 @@ import {
   MainStateService,
   ConfigurationService,
   CommunicationService
-} from '@n7-frontend/boilerplate-common';
+} from '@net7/boilerplate-common';
 import { MrResourceModalService } from '../../services/resource-modal.service';
 import { MrAdvancedResultsLayoutConfig as config } from './advanced-results-layout.config';
 import { MrLayoutStateService } from '../../services/layout-state.service';

@@ -1,4 +1,4 @@
-import { helpers } from '@n7-frontend/boilerplate-common';
+import { helpers } from '@net7/boilerplate-common';
 import { AwFacetInput } from './aw-facet-input';
 
 export class AwFacetInputText extends AwFacetInput {

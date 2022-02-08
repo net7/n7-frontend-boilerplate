@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
 
-import { Page404LayoutComponent } from '@n7-frontend/boilerplate-common';
+import { Page404LayoutComponent } from '@net7/boilerplate-common';
 import {
   DvExampleLayoutComponent,
   DvCardExampleLayoutComponent
-} from '@n7-frontend/boilerplate-dataviz';
+} from '@net7/boilerplate-dataviz';
 
 export const APP_ROUTES: Routes = [
   {

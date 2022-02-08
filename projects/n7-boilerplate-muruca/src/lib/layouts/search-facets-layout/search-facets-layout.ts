@@ -4,7 +4,7 @@ import {
   OnDestroy,
   Input
 } from '@angular/core';
-import { AbstractLayout } from '@n7-frontend/boilerplate-common';
+import { AbstractLayout } from '@net7/boilerplate-common';
 import { SearchFacetsLayoutConfig as config } from './search-facets-layout.config';
 import { FacetTextDS } from '../../data-sources/facets/facet-text.ds';
 import { FacetCheckboxDS } from '../../data-sources/facets/facet-checkbox.ds';

@@ -16,7 +16,7 @@ import {
 } from 'rxjs/operators';
 import { isEmpty, xor } from 'lodash';
 import { _t } from '@n7-frontend/core';
-import { CommunicationService } from '@n7-frontend/boilerplate-common';
+import { CommunicationService } from '@net7/boilerplate-common';
 import searchHelper from '../helpers/search-helper';
 import { MrInputSchema } from '../interfaces/search.interface';
 

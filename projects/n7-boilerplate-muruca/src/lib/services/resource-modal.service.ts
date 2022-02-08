@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { _t } from '@n7-frontend/core';
-import { ConfigurationService, CommunicationService } from '@n7-frontend/boilerplate-common';
+import { ConfigurationService, CommunicationService } from '@net7/boilerplate-common';
 
 export type ModalStatus = 'LOADING' | 'ERROR' | 'SUCCESS' | 'EMPTY' | 'IDLE';
 

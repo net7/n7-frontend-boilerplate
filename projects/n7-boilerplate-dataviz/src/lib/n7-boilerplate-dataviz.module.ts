@@ -2,7 +2,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DvComponentsLibModule } from '@n7-frontend/components';
-import { N7BoilerplateCommonModule } from '@n7-frontend/boilerplate-common';
+import { N7BoilerplateCommonModule } from '@net7/boilerplate-common';
 // COMPONENTS
 import { DataWidgetWrapperComponent } from './components/data-widget-wrapper/data-widget-wrapper';
 import { DatepickerWrapperComponent } from './components/datepicker-wrapper/datepicker-wrapper';

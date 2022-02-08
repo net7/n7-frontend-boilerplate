@@ -6,7 +6,7 @@ import {
 import {
   Observable, of, fromEvent, Subject, BehaviorSubject, forkJoin
 } from 'rxjs';
-import { helpers } from '@n7-frontend/boilerplate-common';
+import { helpers } from '@net7/boilerplate-common';
 import facetsConfig from './search-facets.config';
 import { AwSearchService } from '../../search/aw-search.service';
 import { AwSearchModel } from '../../search/aw-search.model';

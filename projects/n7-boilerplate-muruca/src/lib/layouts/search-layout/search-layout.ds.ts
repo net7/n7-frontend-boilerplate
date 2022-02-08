@@ -1,5 +1,5 @@
 import { LayoutDataSource, _t } from '@n7-frontend/core';
-import { ConfigurationService, CommunicationService, MainStateService } from '@n7-frontend/boilerplate-common';
+import { ConfigurationService, CommunicationService, MainStateService } from '@net7/boilerplate-common';
 import localStorageHelper from '../../helpers/local-storage-helper';
 import { MrSearchService } from '../../services/search.service';
 

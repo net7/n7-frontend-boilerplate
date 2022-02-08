@@ -3,7 +3,7 @@ import { EventHandler } from '@n7-frontend/core';
 import { Subject } from 'rxjs';
 import { switchMap, takeUntil, tap } from 'rxjs/operators';
 import { isEmpty } from 'lodash';
-import { helpers } from '@n7-frontend/boilerplate-common';
+import { helpers } from '@net7/boilerplate-common';
 import { MrAdvancedResultsLayoutDS } from './advanced-results-layout.ds';
 import { MrLayoutStateService, LayoutState } from '../../services/layout-state.service';
 import { MrResourceModalService } from '../../services/resource-modal.service';

@@ -2,7 +2,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DvComponentsLibModule } from '@n7-frontend/components';
-import { N7BoilerplateCommonModule } from '@n7-frontend/boilerplate-common';
+import { N7BoilerplateCommonModule } from '@net7/boilerplate-common';
 // SERVICES
 import { MrSearchService } from './services/search.service';
 import { MrLayoutStateService } from './services/layout-state.service';

@@ -4,7 +4,7 @@ import {
   ConfigurationService,
   CommunicationService,
   MainStateService
-} from '@n7-frontend/boilerplate-common';
+} from '@net7/boilerplate-common';
 
 export class MrItineraryLayoutDS extends LayoutDataSource {
   private configuration: ConfigurationService;

@@ -6,7 +6,7 @@ import {
   ConfigurationService,
   MainStateService,
   LayoutsConfigurationService,
-} from '@n7-frontend/boilerplate-common';
+} from '@net7/boilerplate-common';
 import { MrLayoutStateService } from '../../services/layout-state.service';
 import { MrStaticLayoutConfig as config } from './static-layout.config';
 

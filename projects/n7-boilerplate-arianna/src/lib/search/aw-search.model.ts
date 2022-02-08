@@ -1,7 +1,7 @@
 /* eslint-disable max-classes-per-file */
 import { get as _get, isEmpty as _isEmpty } from 'lodash';
 import { Subject } from 'rxjs';
-import { helpers } from '@n7-frontend/boilerplate-common';
+import { helpers } from '@net7/boilerplate-common';
 import {
   AwFacetInput,
   AwFacetInputCheckbox,

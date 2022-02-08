@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AbstractLayout, LayoutsConfigurationService } from '@n7-frontend/boilerplate-common';
+import { AbstractLayout, LayoutsConfigurationService } from '@net7/boilerplate-common';
 import { MrGlossaryLayoutConfig as config } from './glossary-layout.config';
 
 @Component({

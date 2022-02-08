@@ -1,7 +1,7 @@
 import { ItemPreviewData, MetadataGroup } from '@n7-frontend/components';
 import { DataSource, _t } from '@n7-frontend/core';
 import { merge, clone } from 'lodash';
-import { helpers } from '@n7-frontend/boilerplate-common';
+import { helpers } from '@net7/boilerplate-common';
 import linksHelper from '../../helpers/links-helper';
 
 const ITEM_PREVIEW_DEFAULTS = {

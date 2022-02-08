@@ -24,16 +24,16 @@
       "dom"
     ],
     "paths": {
-      "@n7-frontend/boilerplate-common": [
+      "@net7/boilerplate-common": [
         "projects/n7-boilerplate-common/src/public-api"
       ],
-      "@n7-frontend/boilerplate-arianna": [
+      "@net7/boilerplate-arianna": [
         "projects/n7-boilerplate-arianna/src/public-api"
       ],
-      "@n7-frontend/boilerplate-muruca": [
+      "@net7/boilerplate-muruca": [
         "projects/n7-boilerplate-muruca/src/public-api"
       ],
-      "@n7-frontend/boilerplate-dataviz": [
+      "@net7/boilerplate-dataviz": [
         "projects/n7-boilerplate-dataviz/src/public-api"
       ],
       // MURUCA PROJECT PATHS

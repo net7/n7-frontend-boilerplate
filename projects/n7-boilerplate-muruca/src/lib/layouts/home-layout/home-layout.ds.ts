@@ -1,6 +1,6 @@
 import { LayoutDataSource, _t } from '@n7-frontend/core';
 import { isEmpty } from 'lodash';
-import { ConfigurationService, CommunicationService, MainStateService } from '@n7-frontend/boilerplate-common';
+import { ConfigurationService, CommunicationService, MainStateService } from '@net7/boilerplate-common';
 import { MrLayoutStateService, LayoutState } from '../../services/layout-state.service';
 
 export class MrHomeLayoutDS extends LayoutDataSource {

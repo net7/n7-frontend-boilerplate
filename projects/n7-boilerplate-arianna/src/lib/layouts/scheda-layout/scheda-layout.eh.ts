@@ -4,7 +4,7 @@ import {
   forkJoin, from, of, Subject
 } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { ConfigurationService } from '@n7-frontend/boilerplate-common';
+import { ConfigurationService } from '@net7/boilerplate-common';
 
 export class AwSchedaLayoutEH extends EventHandler {
   private destroyed$: Subject<any> = new Subject();

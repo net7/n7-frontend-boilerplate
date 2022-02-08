@@ -1,5 +1,5 @@
 import { DataSource } from '@n7-frontend/core';
-import { helpers } from '@n7-frontend/boilerplate-common';
+import { helpers } from '@net7/boilerplate-common';
 
 export class AwHomeAutocompleteDS extends DataSource {
   protected transform(data) {

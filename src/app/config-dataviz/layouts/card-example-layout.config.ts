@@ -11,7 +11,7 @@ import {
   TableItem,
   TextItem,
   MapItem
-} from '@n7-frontend/boilerplate-dataviz';
+} from '@net7/boilerplate-dataviz';
 
 const getTextItem = (label: string): TextItem => {
   getTextItem.counter += 1;

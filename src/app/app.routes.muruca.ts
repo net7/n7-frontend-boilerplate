@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 
-import { Page404LayoutComponent } from '@n7-frontend/boilerplate-common';
+import { Page404LayoutComponent } from '@net7/boilerplate-common';
 import {
   MrHomeLayoutComponent,
   MrSearchLayoutComponent,
@@ -13,7 +13,7 @@ import {
   MrTimelineLayoutComponent,
   MrMapLayoutComponent,
   // DynamicPathGuard,
-} from '@n7-frontend/boilerplate-muruca';
+} from '@net7/boilerplate-muruca';
 
 const NOT_FOUND_PATH = 'page-404';
 

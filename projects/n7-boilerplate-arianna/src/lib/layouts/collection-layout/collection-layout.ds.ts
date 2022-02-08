@@ -3,7 +3,7 @@ import { LayoutDataSource } from '@n7-frontend/core';
 import { BehaviorSubject } from 'rxjs';
 import { first, map } from 'rxjs/operators';
 import slugify from 'slugify';
-import { ConfigurationService, CommunicationService } from '@n7-frontend/boilerplate-common';
+import { ConfigurationService, CommunicationService } from '@net7/boilerplate-common';
 import { CollectionItem, GetCollectionParams, GetCollectionResponse } from './collection-layout.types';
 
 export class AwCollectionLayoutDS extends LayoutDataSource {

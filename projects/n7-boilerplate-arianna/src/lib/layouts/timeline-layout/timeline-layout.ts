@@ -6,7 +6,7 @@ import {
   LayoutsConfigurationService,
   MainStateService,
   CommunicationService
-} from '@n7-frontend/boilerplate-common';
+} from '@net7/boilerplate-common';
 import { AwTimelineLayoutConfig as config } from './timeline-layout.config';
 
 @Component({

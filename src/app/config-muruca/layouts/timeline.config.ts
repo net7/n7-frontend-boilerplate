@@ -1,4 +1,4 @@
-import { ConfigMurucaTimelineLayout } from '@n7-frontend/boilerplate-muruca';
+import { ConfigMurucaTimelineLayout } from '@net7/boilerplate-muruca';
 import { utc } from 'moment';
 
 const config: ConfigMurucaTimelineLayout = {

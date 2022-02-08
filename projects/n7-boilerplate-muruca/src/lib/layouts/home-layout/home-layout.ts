@@ -6,7 +6,7 @@ import {
   LayoutsConfigurationService,
   ConfigurationService,
   MainStateService
-} from '@n7-frontend/boilerplate-common';
+} from '@net7/boilerplate-common';
 import { MrLayoutStateService } from '../../services/layout-state.service';
 import { MrHomeLayoutConfig as config } from './home-layout.config';
 import { MrSliderDS } from '../../data-sources/slider.ds';

@@ -1,4 +1,4 @@
-import { ConfigAriannaItemPreview } from '@n7-frontend/boilerplate-arianna';
+import { ConfigAriannaItemPreview } from '@net7/boilerplate-arianna';
 
 const config: ConfigAriannaItemPreview = {
   image: 'image',

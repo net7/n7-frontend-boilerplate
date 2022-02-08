@@ -1,4 +1,4 @@
-import { SmartPaginationDS, SmartPaginationEH } from '@n7-frontend/boilerplate-common';
+import { SmartPaginationDS, SmartPaginationEH } from '@net7/boilerplate-common';
 import { AwGalleryLayoutDS } from './gallery-layout.ds';
 import { AwGalleryLayoutEH } from './gallery-layout.eh';
 import * as DS from '../../data-sources';

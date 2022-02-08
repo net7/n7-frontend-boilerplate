@@ -5,7 +5,7 @@ import {
   LayoutsConfigurationService,
   MainStateService,
   ConfigurationService
-} from '@n7-frontend/boilerplate-common';
+} from '@net7/boilerplate-common';
 import { MrAdvancedSearchLayoutConfig as config } from './advanced-search-layout.config';
 
 @Component({

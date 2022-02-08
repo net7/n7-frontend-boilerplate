@@ -11,13 +11,13 @@ import {
   MainStateService,
   ConfigurationService,
   JsonConfigService,
-} from '@n7-frontend/boilerplate-common';
+} from '@net7/boilerplate-common';
 import {
   N7BoilerplateMurucaModule,
   MrMenuService,
   MrFooterService,
   MrTranslationsLoaderService,
-} from '@n7-frontend/boilerplate-muruca';
+} from '@net7/boilerplate-muruca';
 
 import { APP_ROUTES } from '@mr-routes';
 import configMuruca from '@mr-config';

@@ -2,7 +2,7 @@ import { InnerTitleData } from '@n7-frontend/components';
 import { LayoutDataSource } from '@n7-frontend/core';
 import { isNull } from 'lodash';
 import { BehaviorSubject } from 'rxjs';
-import { helpers } from '@n7-frontend/boilerplate-common';
+import { helpers } from '@net7/boilerplate-common';
 
 type LayoutState = 'LOADING' | 'EMPTY' | 'SUCCESS';
 

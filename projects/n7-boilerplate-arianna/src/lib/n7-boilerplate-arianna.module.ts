@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { RouterModule } from '@angular/router';
 import { DvComponentsLibModule } from '@n7-frontend/components';
-import { N7BoilerplateCommonModule, ConfigurationService } from '@n7-frontend/boilerplate-common';
+import { N7BoilerplateCommonModule, ConfigurationService } from '@net7/boilerplate-common';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 // LAYOUTS
 import { AwCollectionLayoutComponent } from './layouts/collection-layout/collection-layout';

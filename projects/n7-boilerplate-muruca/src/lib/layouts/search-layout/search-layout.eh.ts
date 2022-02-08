@@ -2,7 +2,7 @@ import { EventHandler } from '@n7-frontend/core';
 import { Subject } from 'rxjs';
 import { isEmpty } from 'lodash';
 import { takeUntil, filter } from 'rxjs/operators';
-import { helpers } from '@n7-frontend/boilerplate-common';
+import { helpers } from '@net7/boilerplate-common';
 import { MrSearchLayoutDS } from './search-layout.ds';
 import {
   MrSearchService,

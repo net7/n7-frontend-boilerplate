@@ -1,4 +1,4 @@
-import { SmartPaginationDS, SmartPaginationEH } from '@n7-frontend/boilerplate-common';
+import { SmartPaginationDS, SmartPaginationEH } from '@net7/boilerplate-common';
 import { MrAdvancedResultsLayoutDS } from './advanced-results-layout.ds';
 import { MrAdvancedResultsLayoutEH } from './advanced-results-layout.eh';
 import * as DS from '../../data-sources';

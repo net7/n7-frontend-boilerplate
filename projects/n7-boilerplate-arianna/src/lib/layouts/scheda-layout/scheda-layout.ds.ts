@@ -4,7 +4,7 @@ import {
 } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { get as _get } from 'lodash';
-import { helpers } from '@n7-frontend/boilerplate-common';
+import { helpers } from '@net7/boilerplate-common';
 import metadataHelper from '../../helpers/metadata.helper';
 
 export class AwSchedaLayoutDS extends LayoutDataSource {

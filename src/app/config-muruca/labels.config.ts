@@ -1,4 +1,4 @@
-import { ConfigCommonLabels } from '@n7-frontend/boilerplate-common';
+import { ConfigCommonLabels } from '@net7/boilerplate-common';
 
 const config: ConfigCommonLabels = {};
 

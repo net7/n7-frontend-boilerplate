@@ -7,7 +7,7 @@ import {
   MainStateService,
   CommunicationService,
   LayoutsConfigurationService
-} from '@n7-frontend/boilerplate-common';
+} from '@net7/boilerplate-common';
 import { AwEntitaLayoutConfig as config } from './entita-layout.config';
 
 @Component({

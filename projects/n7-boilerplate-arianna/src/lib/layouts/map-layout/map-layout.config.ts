@@ -1,4 +1,4 @@
-import { SmartPaginationDS, SmartPaginationEH } from '@n7-frontend/boilerplate-common';
+import { SmartPaginationDS, SmartPaginationEH } from '@net7/boilerplate-common';
 import { AwMapLayoutDS } from './map-layout.ds';
 import { AwMapLayoutEH } from './map-layout.eh';
 import * as DS from '../../data-sources';

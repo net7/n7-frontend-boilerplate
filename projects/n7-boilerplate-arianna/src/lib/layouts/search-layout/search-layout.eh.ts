@@ -3,7 +3,7 @@ import { Subject } from 'rxjs';
 import {
   debounceTime, takeUntil
 } from 'rxjs/operators';
-import { helpers } from '@n7-frontend/boilerplate-common';
+import { helpers } from '@net7/boilerplate-common';
 import entityLinksHelper from '../../search/entity-links.helper';
 
 export class AwSearchLayoutEH extends EventHandler {

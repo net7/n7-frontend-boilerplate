@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { tap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Anchor } from '@n7-frontend/components';
-import { ConfigurationService } from '@n7-frontend/boilerplate-common';
+import { ConfigurationService } from '@net7/boilerplate-common';
 import linksHelper from '../helpers/links-helper';
 
 type MenuItem = {

@@ -5,8 +5,8 @@ import {
   N7BoilerplateCommonModule,
   LocalConfigService,
   JsonConfigService,
-} from '@n7-frontend/boilerplate-common';
-import { N7BoilerplateDatavizModule } from '@n7-frontend/boilerplate-dataviz';
+} from '@net7/boilerplate-common';
+import { N7BoilerplateDatavizModule } from '@net7/boilerplate-dataviz';
 import { APP_ROUTES } from './app.routes.dataviz';
 
 import { AppComponent } from './app.component-dataviz';

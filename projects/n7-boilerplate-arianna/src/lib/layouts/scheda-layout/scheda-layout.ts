@@ -7,7 +7,7 @@ import {
   LayoutsConfigurationService,
   MainStateService,
   CommunicationService
-} from '@n7-frontend/boilerplate-common';
+} from '@net7/boilerplate-common';
 import { AwPatrimonioLayoutConfig as config } from './scheda-layout.config';
 
 @Component({

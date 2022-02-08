@@ -1,4 +1,4 @@
-import { ConfigAriannaTimelineLayout } from '@n7-frontend/boilerplate-arianna';
+import { ConfigAriannaTimelineLayout } from '@net7/boilerplate-arianna';
 
 const config: ConfigAriannaTimelineLayout = {
   timeline: {

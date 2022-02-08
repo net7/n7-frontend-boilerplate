@@ -1,4 +1,4 @@
-import { ConfigMurucaAdvancedSearchLayout } from '@n7-frontend/boilerplate-muruca';
+import { ConfigMurucaAdvancedSearchLayout } from '@net7/boilerplate-muruca';
 
 const config: ConfigMurucaAdvancedSearchLayout = {
   title: 'advancedsearch#page_title',

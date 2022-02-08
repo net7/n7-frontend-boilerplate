@@ -5,7 +5,7 @@ import {
   CommunicationService,
   LayoutsConfigurationService,
   ConfigurationService
-} from '@n7-frontend/boilerplate-common';
+} from '@net7/boilerplate-common';
 import { DvCardExampleLayoutConfig as config } from './card-example-layout.config';
 import { CardLoader } from '../../models/card-loader';
 

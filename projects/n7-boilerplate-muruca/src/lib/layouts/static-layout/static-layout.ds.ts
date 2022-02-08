@@ -1,7 +1,7 @@
 import { LayoutDataSource, _t } from '@n7-frontend/core';
 import { Observable } from 'rxjs';
 import { UrlSegment } from '@angular/router';
-import { ConfigurationService, CommunicationService, MainStateService } from '@n7-frontend/boilerplate-common';
+import { ConfigurationService, CommunicationService, MainStateService } from '@net7/boilerplate-common';
 
 export class MrStaticLayoutDS extends LayoutDataSource {
   private configuration: ConfigurationService;

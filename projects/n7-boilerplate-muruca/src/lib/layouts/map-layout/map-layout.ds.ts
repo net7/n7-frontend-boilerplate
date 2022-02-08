@@ -4,7 +4,7 @@ import { Location } from '@angular/common';
 import * as L from 'leaflet';
 import { first } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { ConfigurationService, CommunicationService, MainStateService } from '@n7-frontend/boilerplate-common';
+import { ConfigurationService, CommunicationService, MainStateService } from '@net7/boilerplate-common';
 import { MrLayoutStateService } from '../../services/layout-state.service';
 import 'leaflet.markercluster';
 import { CollectionItem, GetResourceResponse } from './map-layout.types';

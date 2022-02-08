@@ -6,7 +6,7 @@ import {
   LayoutsConfigurationService,
   MainStateService,
   CommunicationService
-} from '@n7-frontend/boilerplate-common';
+} from '@net7/boilerplate-common';
 import { AwSearchService } from '../../search/aw-search.service';
 import { AwGalleryLayoutConfig as config } from './gallery-layout.config';
 

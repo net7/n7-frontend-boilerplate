@@ -1,4 +1,4 @@
-import { helpers } from '@n7-frontend/boilerplate-common';
+import { helpers } from '@net7/boilerplate-common';
 
 const metadataIsEmpty = (value) => (!value || value === 'null');
 

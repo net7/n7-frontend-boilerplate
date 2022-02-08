@@ -2,7 +2,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { EventHandler } from '@n7-frontend/core';
 import { Timeline } from 'vis-timeline';
-import { helpers } from '@n7-frontend/boilerplate-common';
+import { helpers } from '@net7/boilerplate-common';
 import { MrResourceModalService } from '../../services/resource-modal.service';
 
 export class MrTimelineLayoutEH extends EventHandler {

@@ -5,7 +5,7 @@ import {
   AbstractLayout,
   CommunicationService,
   LayoutsConfigurationService
-} from '@n7-frontend/boilerplate-common';
+} from '@net7/boilerplate-common';
 import { AwCollectionLayoutConfig as config } from './collection-layout.config';
 
 @Component({

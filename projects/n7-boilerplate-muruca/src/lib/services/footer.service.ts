@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { tap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { ConfigurationService } from '@n7-frontend/boilerplate-common';
+import { ConfigurationService } from '@net7/boilerplate-common';
 
 @Injectable({
   providedIn: 'root',

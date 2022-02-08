@@ -1,4 +1,4 @@
-import { SmartPaginationDS, SmartPaginationEH } from '@n7-frontend/boilerplate-common';
+import { SmartPaginationDS, SmartPaginationEH } from '@net7/boilerplate-common';
 import { AwEntitaLayoutDS } from './entita-layout.ds';
 import { AwEntitaLayoutEH } from './entita-layout.eh';
 import * as DS from '../../data-sources';

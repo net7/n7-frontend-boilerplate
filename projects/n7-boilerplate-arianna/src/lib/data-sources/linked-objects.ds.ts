@@ -1,6 +1,6 @@
 import { DataSource } from '@n7-frontend/core';
 import { get as _get } from 'lodash'; // used for cherry-picking object keys from app-config.json
-import { helpers } from '@n7-frontend/boilerplate-common';
+import { helpers } from '@net7/boilerplate-common';
 
 export class AwLinkedObjectsDS extends DataSource {
   public currentPage: number;
