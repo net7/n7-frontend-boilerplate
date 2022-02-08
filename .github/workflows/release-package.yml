@@ -2,8 +2,9 @@ name: Node.js Package
 
 on: 
   push:
-    tags:
-      - v*
+    branches: ['feature/module-split']
+    # tags:
+    #   - v*
 
 jobs:
   publish-common:
