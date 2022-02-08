@@ -16,7 +16,7 @@ jobs:
           node-version: 14
           registry-url: https://registry.npmjs.org/
       - run: npm i
-      - run: npm run build:common
+      - run: npm run build
       - run: npm publish dist/common --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
@@ -30,7 +30,7 @@ jobs:
           node-version: 14
           registry-url: https://registry.npmjs.org/
       - run: npm i
-      - run: npm run build:muruca
+      - run: npm run build
       - run: npm publish dist/muruca --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
@@ -44,7 +44,7 @@ jobs:
           node-version: 14
           registry-url: https://registry.npmjs.org/
       - run: npm i
-      - run: npm run build:arianna
+      - run: npm run build
       - run: npm publish dist/arianna --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
@@ -58,7 +58,7 @@ jobs:
           node-version: 14
           registry-url: https://registry.npmjs.org/
       - run: npm i
-      - run: npm run build:dataviz
+      - run: npm run build
       - run: npm publish dist/dataviz --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
