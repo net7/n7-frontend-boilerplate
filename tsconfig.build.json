@@ -1,11 +1,11 @@
 {
-    "extends": "./tsconfig.json",
-    "compilerOptions": {
-      "paths": {
-        "@n7-frontend/boilerplate-common": [
-          "dist/n7-boilerplate-common/*",
-          "dist/n7-boilerplate-common"
-        ]
-      }
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@n7-frontend/boilerplate-common": [
+        "dist/n7-boilerplate-common/*",
+        "dist/n7-boilerplate-common"
+      ]
     }
   }
+}
