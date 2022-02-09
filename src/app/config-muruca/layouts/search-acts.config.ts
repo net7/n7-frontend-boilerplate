@@ -1,39 +1,45 @@
-// import searchActsFacetsConfig from './search-acts-facets.config';
+import searchActsFacetsConfig from './search-acts-facets.config';
 
 export default {
   title: 'Risultati della ricerca',
   searchId: 'act',
-  // searchConfig: searchActsFacetsConfig,
+  searchConfig: searchActsFacetsConfig,
   resourcePath: '/atto',
   facetsTitle: 'search#facets_title',
   totalResultsText: 'search#acts_total',
   filtersTitle: 'search#filters_title',
-  facetsWidthPercentage: 50,
+  facetsWidthPercentage: 40,
   grid: 1,
   advancedResults: true,
+  disableScroll: true,
   sort: {
     label: 'search#sort_title',
     options: [
       {
-        value: null,
-        label: 'search#sort_empty',
-        selected: false,
+        value: 'date.year_ASC',
+        label: 'search#sort_date_asc',
+        selected: true
       },
       {
-        value: '_score',
-        label: 'search#sort_score',
-        selected: false,
-        disabled: true
+        value: 'date.year_DESC',
+        label: 'search#sort_date_desc',
+        selected: true
       },
+      // {
+      //   value: '_score',
+      //   label: 'search#sort_score',
+      //   selected: false,
+      //   disabled: true
+      // },
       {
-        value: 'sort_ASC',
+        value: 'slug.keyword_ASC',
         label: 'search#sort_asc',
-        selected: false
+        selected: true
       },
       {
-        value: 'sort_DESC',
+        value: 'slug.keyword_DESC',
         label: 'search#sort_desc',
-        selected: false
+        selected: true
       }
     ]
   },
