@@ -1,4 +1,4 @@
-import { EventHandler } from '@n7-frontend/core';
+import { EventHandler } from '@net7/core';
 import tippy from 'tippy.js';
 
 export class AwChartTippyEH extends EventHandler {

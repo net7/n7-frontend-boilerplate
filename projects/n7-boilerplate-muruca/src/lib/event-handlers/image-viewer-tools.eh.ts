@@ -1,4 +1,4 @@
-import { EventHandler } from '@n7-frontend/core';
+import { EventHandler } from '@net7/core';
 import { MrImageViewerToolsDS } from '../data-sources/image-viewer-tools.ds';
 
 export class MrImageViewerToolsEH extends EventHandler {

@@ -1,4 +1,4 @@
-import { DataSource } from '@n7-frontend/core';
+import { DataSource } from '@net7/core';
 import { merge } from 'lodash';
 import { PdfViewerData } from '../components';
 

@@ -5,7 +5,7 @@
 import {
   Component, Input, AfterViewChecked, ViewChild, ElementRef
 } from '@angular/core';
-import { _t } from '@n7-frontend/core';
+import { _t } from '@net7/core';
 
 export type ReadMoreData = {
   height: number;

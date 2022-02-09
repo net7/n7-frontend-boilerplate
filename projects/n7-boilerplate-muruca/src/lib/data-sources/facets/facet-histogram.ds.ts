@@ -1,5 +1,5 @@
-import { HistogramRangeData } from '@n7-frontend/components';
-import { DataSource } from '@n7-frontend/core';
+import { HistogramRangeData } from '@net7/components';
+import { DataSource } from '@net7/core';
 import tippy from 'tippy.js';
 import 'tippy.js/dist/tippy.css';
 import { FacetDataSource } from './facet-datasource';

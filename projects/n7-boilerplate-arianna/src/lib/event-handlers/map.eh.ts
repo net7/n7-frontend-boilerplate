@@ -1,4 +1,4 @@
-import { EventHandler } from '@n7-frontend/core';
+import { EventHandler } from '@net7/core';
 
 export class AwMapEH extends EventHandler {
   public listen() {

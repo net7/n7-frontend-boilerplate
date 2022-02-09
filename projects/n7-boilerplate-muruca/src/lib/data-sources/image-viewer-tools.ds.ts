@@ -1,5 +1,5 @@
-import { ImageViewerToolsData } from '@n7-frontend/components';
-import { DataSource } from '@n7-frontend/core';
+import { ImageViewerToolsData } from '@net7/components';
+import { DataSource } from '@net7/core';
 
 type ImageViewerResponse = {
   thumbs: string[];

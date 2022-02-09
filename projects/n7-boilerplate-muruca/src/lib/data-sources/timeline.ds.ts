@@ -1,5 +1,5 @@
-import { TimelineData } from '@n7-frontend/components';
-import { DataSource } from '@n7-frontend/core';
+import { TimelineData } from '@net7/components';
+import { DataSource } from '@net7/core';
 import { Subject } from 'rxjs';
 import { Timeline } from 'vis-timeline';
 

@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { LayoutDataSource, _t } from '@n7-frontend/core';
+import { LayoutDataSource, _t } from '@net7/core';
 import {
   ConfigurationService,
   CommunicationService,

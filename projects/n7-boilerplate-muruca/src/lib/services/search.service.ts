@@ -15,7 +15,7 @@ import {
   switchMapTo
 } from 'rxjs/operators';
 import { isEmpty, xor } from 'lodash';
-import { _t } from '@n7-frontend/core';
+import { _t } from '@net7/core';
 import { CommunicationService } from '@net7/boilerplate-common';
 import searchHelper from '../helpers/search-helper';
 import { MrInputSchema } from '../interfaces/search.interface';

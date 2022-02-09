@@ -1,4 +1,4 @@
-import { DataSource } from '@n7-frontend/core';
+import { DataSource } from '@net7/core';
 
 export class MrNavDS extends DataSource {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

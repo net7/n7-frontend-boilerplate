@@ -1,5 +1,5 @@
-import { TableData } from '@n7-frontend/components';
-import { DataSource } from '@n7-frontend/core';
+import { TableData } from '@net7/components';
+import { DataSource } from '@net7/core';
 
 export class TableItemDS extends DataSource {
   protected transform(data: TableData): TableData {

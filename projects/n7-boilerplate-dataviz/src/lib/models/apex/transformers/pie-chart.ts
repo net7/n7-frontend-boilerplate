@@ -1,4 +1,4 @@
-import { ChartData } from '@n7-frontend/components';
+import { ChartData } from '@net7/components';
 import { merge } from 'lodash';
 import apexHelpers from '../apex-helpers';
 import { ChartResponseData } from '../../../types/response.types';

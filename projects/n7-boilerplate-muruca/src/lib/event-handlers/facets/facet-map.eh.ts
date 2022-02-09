@@ -1,4 +1,4 @@
-import { EventHandler } from '@n7-frontend/core';
+import { EventHandler } from '@net7/core';
 import { FacetMapDS } from '../../data-sources/facets/facet-map.ds';
 
 export class FacetMapEH extends EventHandler {

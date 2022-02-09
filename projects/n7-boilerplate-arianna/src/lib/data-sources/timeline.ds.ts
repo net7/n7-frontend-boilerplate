@@ -1,4 +1,4 @@
-import { DataSource } from '@n7-frontend/core';
+import { DataSource } from '@net7/core';
 import * as moment from 'moment';
 import { max as _max, min as _min } from 'lodash';
 import { Subject } from 'rxjs';

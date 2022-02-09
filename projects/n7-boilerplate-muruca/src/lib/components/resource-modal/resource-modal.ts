@@ -1,7 +1,7 @@
 import {
   Component, OnDestroy, OnInit
 } from '@angular/core';
-import { _t } from '@n7-frontend/core';
+import { _t } from '@net7/core';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { NavigationStart, Router } from '@angular/router';

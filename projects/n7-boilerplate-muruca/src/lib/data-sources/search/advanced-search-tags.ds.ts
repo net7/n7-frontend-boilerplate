@@ -1,5 +1,5 @@
-import { DataSource, _t } from '@n7-frontend/core';
-import { TagData } from '@n7-frontend/components';
+import { DataSource, _t } from '@net7/core';
+import { TagData } from '@net7/components';
 
 export class MrAdvancedSearchTagsDS extends DataSource {
   protected transform(data): TagData[] {

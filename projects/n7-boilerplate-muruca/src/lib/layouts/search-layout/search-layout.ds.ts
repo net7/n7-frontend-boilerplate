@@ -1,4 +1,4 @@
-import { LayoutDataSource, _t } from '@n7-frontend/core';
+import { LayoutDataSource, _t } from '@net7/core';
 import { ConfigurationService, CommunicationService, MainStateService } from '@net7/boilerplate-common';
 import localStorageHelper from '../../helpers/local-storage-helper';
 import { MrSearchService } from '../../services/search.service';

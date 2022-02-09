@@ -1,5 +1,5 @@
-import { DataSource } from '@n7-frontend/core';
-import { ImageViewerData } from '@n7-frontend/components';
+import { DataSource } from '@net7/core';
+import { ImageViewerData } from '@net7/components';
 import { interval } from 'rxjs';
 import { filter, first } from 'rxjs/operators';
 

@@ -1,5 +1,5 @@
-import { ChartData } from '@n7-frontend/components';
-import { DataSource } from '@n7-frontend/core';
+import { ChartData } from '@net7/components';
+import { DataSource } from '@net7/core';
 import { apexHandler } from '../../models/apex/apex-handler';
 import { ChartResponseData } from '../../types/response.types';
 

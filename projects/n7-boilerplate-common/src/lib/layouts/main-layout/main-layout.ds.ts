@@ -1,4 +1,4 @@
-import { LayoutDataSource } from '@n7-frontend/core';
+import { LayoutDataSource } from '@net7/core';
 import { hideAll } from 'tippy.js';
 
 export class MainLayoutDS extends LayoutDataSource {

@@ -1,5 +1,5 @@
-import { DataSource } from '@n7-frontend/core';
-import { HeaderData } from '@n7-frontend/components';
+import { DataSource } from '@net7/core';
+import { HeaderData } from '@net7/components';
 
 const MOBILE_CLASS = 'is-mobile-nav-displayed';
 

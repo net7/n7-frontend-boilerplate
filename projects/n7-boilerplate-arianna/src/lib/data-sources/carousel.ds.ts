@@ -1,5 +1,5 @@
-import { CarouselData } from '@n7-frontend/components';
-import { DataSource } from '@n7-frontend/core';
+import { CarouselData } from '@net7/components';
+import { DataSource } from '@net7/core';
 
 type GetSliderResponse = SlideData[];
 type SlideData = {

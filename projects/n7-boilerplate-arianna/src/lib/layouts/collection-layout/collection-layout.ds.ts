@@ -1,5 +1,5 @@
-import { InnerTitleData, ItemPreviewData } from '@n7-frontend/components';
-import { LayoutDataSource } from '@n7-frontend/core';
+import { InnerTitleData, ItemPreviewData } from '@net7/components';
+import { LayoutDataSource } from '@net7/core';
 import { BehaviorSubject } from 'rxjs';
 import { first, map } from 'rxjs/operators';
 import slugify from 'slugify';

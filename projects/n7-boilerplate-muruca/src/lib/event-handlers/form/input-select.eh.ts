@@ -1,4 +1,4 @@
-import { EventHandler } from '@n7-frontend/core';
+import { EventHandler } from '@net7/core';
 import { Subject } from 'rxjs';
 import { MrInputSelectDS } from '../../data-sources/form/input-select.ds';
 import { MrInputEventHandler, MrChangedParams } from '../../interfaces/form.interface';

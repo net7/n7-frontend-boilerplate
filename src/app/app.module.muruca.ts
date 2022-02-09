@@ -4,7 +4,7 @@ import {
   RouterModule, Router, NavigationStart, RoutesRecognized
 } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
-import { translate } from '@n7-frontend/core';
+import { translate } from '@net7/core';
 import {
   N7BoilerplateCommonModule,
   LocalConfigService,

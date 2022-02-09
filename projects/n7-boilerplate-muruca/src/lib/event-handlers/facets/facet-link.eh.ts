@@ -1,4 +1,4 @@
-import { EventHandler } from '@n7-frontend/core';
+import { EventHandler } from '@net7/core';
 import { FacetLinkDS } from '../../data-sources/facets/facet-link.ds';
 
 export class FacetLinkEH extends EventHandler {

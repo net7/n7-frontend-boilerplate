@@ -1,5 +1,5 @@
-import { DataSource } from '@n7-frontend/core';
-import { MapData, MarkerData } from '@n7-frontend/components';
+import { DataSource } from '@net7/core';
+import { MapData, MarkerData } from '@net7/components';
 import * as L from 'leaflet';
 import 'leaflet.markercluster';
 import { Subject } from 'rxjs';

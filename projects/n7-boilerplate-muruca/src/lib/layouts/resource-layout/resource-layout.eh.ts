@@ -1,4 +1,4 @@
-import { EventHandler } from '@n7-frontend/core';
+import { EventHandler } from '@net7/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import {

@@ -1,4 +1,4 @@
-import { LayoutDataSource, _t } from '@n7-frontend/core';
+import { LayoutDataSource, _t } from '@net7/core';
 import { isEmpty } from 'lodash';
 import { ConfigurationService, CommunicationService, MainStateService } from '@net7/boilerplate-common';
 import { MrLayoutStateService, LayoutState } from '../../services/layout-state.service';

@@ -1,4 +1,4 @@
-import { EventHandler } from '@n7-frontend/core';
+import { EventHandler } from '@net7/core';
 import { AwSchedaPdfDS } from '../data-sources';
 
 export class AwSchedaPdfEH extends EventHandler {

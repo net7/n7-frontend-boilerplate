@@ -1,4 +1,4 @@
-import { EventHandler } from '@n7-frontend/core';
+import { EventHandler } from '@net7/core';
 import { first, filter, withLatestFrom } from 'rxjs/operators';
 import { ReplaySubject } from 'rxjs';
 

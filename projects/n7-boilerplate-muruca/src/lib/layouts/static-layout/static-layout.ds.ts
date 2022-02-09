@@ -1,4 +1,4 @@
-import { LayoutDataSource, _t } from '@n7-frontend/core';
+import { LayoutDataSource, _t } from '@net7/core';
 import { Observable } from 'rxjs';
 import { UrlSegment } from '@angular/router';
 import { ConfigurationService, CommunicationService, MainStateService } from '@net7/boilerplate-common';

@@ -1,5 +1,5 @@
-import { DataSource } from '@n7-frontend/core';
-import { InputSelectData } from '@n7-frontend/components';
+import { DataSource } from '@net7/core';
+import { InputSelectData } from '@net7/components';
 import { FacetDataSource } from './facet-datasource';
 
 type FACET_VALUE = string | null;

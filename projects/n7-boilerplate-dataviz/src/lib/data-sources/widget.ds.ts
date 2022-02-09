@@ -1,5 +1,5 @@
-import { DataSource } from '@n7-frontend/core';
-import { DATA_WIDGET_MOCK } from '@n7-frontend/components';
+import { DataSource } from '@net7/core';
+import { DATA_WIDGET_MOCK } from '@net7/components';
 
 export class DvWidgetDS extends DataSource {
   protected transform() {

@@ -1,5 +1,5 @@
-import { InnerTitleData } from '@n7-frontend/components';
-import { DataSource, _t } from '@n7-frontend/core';
+import { InnerTitleData } from '@net7/components';
+import { DataSource, _t } from '@net7/core';
 
 export class MrSearchPageTitleDS extends DataSource {
   protected transform(): InnerTitleData {

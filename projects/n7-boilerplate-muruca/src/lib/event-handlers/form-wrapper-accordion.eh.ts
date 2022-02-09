@@ -1,4 +1,4 @@
-import { EventHandler } from '@n7-frontend/core';
+import { EventHandler } from '@net7/core';
 import { fromEvent, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { MrFormWrapperAccordionDS } from '../data-sources';

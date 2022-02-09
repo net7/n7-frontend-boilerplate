@@ -6,7 +6,7 @@ import {
   FacetHeaderData,
   MapData,
   HistogramRangeData,
-} from '@n7-frontend/components';
+} from '@net7/components';
 
 export interface MrInputSchema {
   /** allowed schema value types */

@@ -1,4 +1,4 @@
-import { DataSource } from '@n7-frontend/core';
+import { DataSource } from '@net7/core';
 
 export class AwBubbleChartDS extends DataSource {
   public chartData: any = [] // data rendered into the graph

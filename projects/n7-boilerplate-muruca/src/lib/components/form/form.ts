@@ -1,7 +1,7 @@
 import {
   Component, ContentChild, Input, OnInit, TemplateRef
 } from '@angular/core';
-import { _t } from '@n7-frontend/core';
+import { _t } from '@net7/core';
 import { MrFormConfigGroup, MrFormConfigSection } from '../../interfaces/form.interface';
 import { MrFormModel } from '../../models/form.model';
 

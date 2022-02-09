@@ -1,4 +1,4 @@
-import { LayoutDataSource } from '@n7-frontend/core';
+import { LayoutDataSource } from '@net7/core';
 import { CardData } from '../../types/card.types';
 import { CardLoader } from '../../models/card-loader';
 

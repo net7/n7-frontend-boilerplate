@@ -1,4 +1,4 @@
-import { IDataSource } from '@n7-frontend/core';
+import { IDataSource } from '@net7/core';
 import { CardItemTypes } from './card-item.types';
 
 export type CardTitle = {

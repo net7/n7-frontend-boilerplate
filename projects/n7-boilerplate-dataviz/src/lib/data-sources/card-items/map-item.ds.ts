@@ -1,5 +1,5 @@
-import { ChartData, MapData } from '@n7-frontend/components';
-import { DataSource } from '@n7-frontend/core';
+import { ChartData, MapData } from '@net7/components';
+import { DataSource } from '@net7/core';
 import { merge } from 'lodash';
 
 export class MapItemDS extends DataSource {

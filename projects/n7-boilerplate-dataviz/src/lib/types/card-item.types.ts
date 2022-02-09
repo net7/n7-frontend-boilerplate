@@ -4,7 +4,7 @@ import {
   InputSelectData,
   MapData,
   TableData
-} from '@n7-frontend/components';
+} from '@net7/components';
 import { CardTextItemData } from '../components/card-text-item/card-text-item';
 import { ChartResponseData } from './response.types';
 

@@ -1,5 +1,5 @@
-import { DataSource, _t } from '@n7-frontend/core';
-import { InputTextData } from '@n7-frontend/components';
+import { DataSource, _t } from '@net7/core';
+import { InputTextData } from '@net7/components';
 import { MrFormInputState, MrInputDataSource } from '../../interfaces/form.interface';
 
 export type MrInputTextValue = string | null;

@@ -1,4 +1,4 @@
-import { EventHandler } from '@n7-frontend/core';
+import { EventHandler } from '@net7/core';
 import { Subject } from 'rxjs';
 import { MrAdvancedSearchLayoutDS } from './advanced-search-layout.ds';
 

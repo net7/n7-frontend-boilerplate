@@ -1,4 +1,4 @@
-import { LayoutDataSource } from '@n7-frontend/core';
+import { LayoutDataSource } from '@net7/core';
 import { Subject, forkJoin, fromEvent } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { CommunicationService, helpers } from '@net7/boilerplate-common';

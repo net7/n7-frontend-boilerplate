@@ -1,4 +1,4 @@
-import { DataSource } from '@n7-frontend/core';
+import { DataSource } from '@net7/core';
 import tippy from 'tippy.js';
 
 export class AwHomeFacetsWrapperDS extends DataSource {

@@ -1,5 +1,5 @@
-import { InnerTitleData } from '@n7-frontend/components';
-import { LayoutDataSource } from '@n7-frontend/core';
+import { InnerTitleData } from '@net7/components';
+import { LayoutDataSource } from '@net7/core';
 import { BehaviorSubject } from 'rxjs';
 import { helpers } from '@net7/boilerplate-common';
 

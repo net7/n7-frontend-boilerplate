@@ -1,5 +1,5 @@
-import { MapData } from '@n7-frontend/components';
-import { DataSource } from '@n7-frontend/core';
+import { MapData } from '@net7/components';
+import { DataSource } from '@net7/core';
 import * as Leaflet from 'leaflet';
 import { Subject } from 'rxjs';
 

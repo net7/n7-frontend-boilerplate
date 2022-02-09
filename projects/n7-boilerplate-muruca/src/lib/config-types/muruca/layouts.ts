@@ -1,4 +1,4 @@
-import { LibOptions } from '@n7-frontend/components';
+import { LibOptions } from '@net7/components';
 import { MrSearchConfig } from '../../interfaces/search.interface';
 import {
   ConfigMurucaBreadcrumbsSection,

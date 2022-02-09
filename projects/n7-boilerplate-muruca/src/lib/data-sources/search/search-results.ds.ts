@@ -1,5 +1,5 @@
-import { ItemPreviewData, MetadataGroup } from '@n7-frontend/components';
-import { DataSource, _t } from '@n7-frontend/core';
+import { ItemPreviewData, MetadataGroup } from '@net7/components';
+import { DataSource, _t } from '@net7/core';
 import { merge, clone } from 'lodash';
 import { helpers } from '@net7/boilerplate-common';
 import linksHelper from '../../helpers/links-helper';

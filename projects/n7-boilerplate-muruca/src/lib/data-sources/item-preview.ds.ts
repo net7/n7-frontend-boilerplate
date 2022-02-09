@@ -1,5 +1,5 @@
-import { ItemPreviewData } from '@n7-frontend/components';
-import { DataSource } from '@n7-frontend/core';
+import { ItemPreviewData } from '@net7/components';
+import { DataSource } from '@net7/core';
 import { merge } from 'lodash';
 import { helpers } from '@net7/boilerplate-common';
 import linksHelper from '../helpers/links-helper';

@@ -1,4 +1,4 @@
-import { IDataSource, IEventHandler } from '@n7-frontend/core';
+import { IDataSource, IEventHandler } from '@net7/core';
 import { Subject } from 'rxjs';
 
 export type MrFormInputState<T> = {

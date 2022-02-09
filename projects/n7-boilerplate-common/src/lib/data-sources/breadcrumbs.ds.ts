@@ -1,5 +1,5 @@
-import { DataSource } from '@n7-frontend/core';
-import { BreadcrumbsData } from '@n7-frontend/components';
+import { DataSource } from '@net7/core';
+import { BreadcrumbsData } from '@net7/components';
 
 export class BreadcrumbsDS extends DataSource {
   protected transform(data): BreadcrumbsData | null {

@@ -1,5 +1,5 @@
-import { LayoutDataSource, _t } from '@n7-frontend/core';
-import { ItemPreviewData } from '@n7-frontend/components';
+import { LayoutDataSource, _t } from '@net7/core';
+import { ItemPreviewData } from '@net7/components';
 import { Location } from '@angular/common';
 import * as L from 'leaflet';
 import { first } from 'rxjs/operators';

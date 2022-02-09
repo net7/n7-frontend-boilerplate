@@ -1,4 +1,4 @@
-import { LayoutDataSource } from '@n7-frontend/core';
+import { LayoutDataSource } from '@net7/core';
 import { MrSearchService } from '../../services/search.service';
 
 export class SearchFacetsLayoutDS extends LayoutDataSource {

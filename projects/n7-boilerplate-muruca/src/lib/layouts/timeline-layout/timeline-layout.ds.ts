@@ -1,5 +1,5 @@
-import { LayoutDataSource, _t } from '@n7-frontend/core';
-import { ItemPreviewData, TimelineData } from '@n7-frontend/components';
+import { LayoutDataSource, _t } from '@net7/core';
+import { ItemPreviewData, TimelineData } from '@net7/components';
 import { Location } from '@angular/common';
 import { Timeline } from 'vis-timeline';
 import { Subject } from 'rxjs';

@@ -1,4 +1,4 @@
-import { DataSource } from '@n7-frontend/core';
+import { DataSource } from '@net7/core';
 import { MrFormWrapperAccordionData } from '../components/form-wrapper-accordion/form-wrapper-accordion';
 
 const ICON_OPEN = 'n7-icon-angle-up';

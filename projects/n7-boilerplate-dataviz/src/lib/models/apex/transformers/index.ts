@@ -1,4 +1,4 @@
-import { ChartData } from '@n7-frontend/components';
+import { ChartData } from '@net7/components';
 import { ChartResponseData } from '../../../types/response.types';
 import barChart from './bar-chart';
 import lineChart from './line-chart';

@@ -1,4 +1,4 @@
-import { LayoutDataSource } from '@n7-frontend/core';
+import { LayoutDataSource } from '@net7/core';
 
 export class Page404LayoutDS extends LayoutDataSource {
   public options: any;

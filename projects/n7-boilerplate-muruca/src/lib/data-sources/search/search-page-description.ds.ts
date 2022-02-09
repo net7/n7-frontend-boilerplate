@@ -1,4 +1,4 @@
-import { DataSource, _t } from '@n7-frontend/core';
+import { DataSource, _t } from '@net7/core';
 import { SearchPageDescriptionData } from '../../components/search-page-description/search-page-description';
 
 export class MrSearchPageDescriptionDS extends DataSource {

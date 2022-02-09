@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { LayoutDataSource, _t } from '@n7-frontend/core';
+import { LayoutDataSource, _t } from '@net7/core';
 import { cloneDeep, isEmpty } from 'lodash';
 import { ConfigurationService, MainStateService } from '@net7/boilerplate-common';
 import { MrFormModel } from '../../models/form.model';

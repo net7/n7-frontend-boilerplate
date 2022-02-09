@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { EventHandler } from '@n7-frontend/core';
+import { EventHandler } from '@net7/core';
 import { Subject } from 'rxjs';
 import { switchMap, takeUntil, tap } from 'rxjs/operators';
 import { isEmpty } from 'lodash';

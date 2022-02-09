@@ -1,4 +1,4 @@
-import { FooterData, HeaderData } from '@n7-frontend/components';
+import { FooterData, HeaderData } from '@net7/components';
 
 export type ConfigCommonCommunication = {
   /** default provider id */

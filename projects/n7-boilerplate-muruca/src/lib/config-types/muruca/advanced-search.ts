@@ -1,6 +1,6 @@
 import {
   InputCheckboxData, InputSelectData, InputTextData, MapData, HistogramRangeData
-} from '@n7-frontend/components';
+} from '@net7/components';
 import { ConfigMurucaLayout } from './layouts';
 
 export interface ConfigMurucaAdvancedSearchLayout extends ConfigMurucaLayout {

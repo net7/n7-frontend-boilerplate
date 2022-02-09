@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ItemPreviewData, MetadataData } from '@n7-frontend/components';
+import { ItemPreviewData, MetadataData } from '@net7/components';
 
 /**
  * A hyperlinked metadata item

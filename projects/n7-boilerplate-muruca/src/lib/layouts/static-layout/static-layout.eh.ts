@@ -1,7 +1,7 @@
 import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subject } from 'rxjs';
-import { EventHandler } from '@n7-frontend/core';
+import { EventHandler } from '@net7/core';
 import { takeUntil, switchMap, tap } from 'rxjs/operators';
 import { MrLayoutStateService, LayoutState } from '../../services/layout-state.service';
 import { MrStaticLayoutDS } from './static-layout.ds';

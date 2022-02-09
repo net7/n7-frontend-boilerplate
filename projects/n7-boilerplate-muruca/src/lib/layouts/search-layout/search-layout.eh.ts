@@ -1,4 +1,4 @@
-import { EventHandler } from '@n7-frontend/core';
+import { EventHandler } from '@net7/core';
 import { Subject } from 'rxjs';
 import { isEmpty } from 'lodash';
 import { takeUntil, filter } from 'rxjs/operators';

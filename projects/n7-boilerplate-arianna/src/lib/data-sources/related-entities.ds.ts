@@ -1,5 +1,5 @@
-import { DataSource } from '@n7-frontend/core';
-import { ItemPreviewData } from '@n7-frontend/components';
+import { DataSource } from '@net7/core';
+import { ItemPreviewData } from '@net7/components';
 
 export class AwRelatedEntitiesDS extends DataSource {
   protected transform = (data): { previews: ItemPreviewData[] } => {

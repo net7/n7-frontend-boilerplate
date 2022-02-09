@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { EventHandler } from '@n7-frontend/core';
+import { EventHandler } from '@net7/core';
 
 export class DvExampleLayoutEH extends EventHandler {
   public listen() {

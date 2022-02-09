@@ -1,4 +1,4 @@
-import { ChartData } from '@n7-frontend/components';
+import { ChartData } from '@net7/components';
 import transformers from './transformers';
 
 export class ApexHandler {

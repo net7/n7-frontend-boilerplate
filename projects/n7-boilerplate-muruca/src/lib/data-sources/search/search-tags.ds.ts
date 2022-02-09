@@ -1,5 +1,5 @@
-import { DataSource } from '@n7-frontend/core';
-import { TagData } from '@n7-frontend/components';
+import { DataSource } from '@net7/core';
+import { TagData } from '@net7/components';
 
 export class MrSearchTagsDS extends DataSource {
   public hasFilters = false;

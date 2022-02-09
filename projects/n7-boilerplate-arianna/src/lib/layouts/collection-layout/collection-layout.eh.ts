@@ -1,5 +1,5 @@
 import { ActivatedRoute } from '@angular/router';
-import { EventHandler } from '@n7-frontend/core';
+import { EventHandler } from '@net7/core';
 
 export class AwCollectionLayoutEH extends EventHandler {
   private route: ActivatedRoute;

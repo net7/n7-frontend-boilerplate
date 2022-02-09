@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-interface */
-import { HeroData, ItemPreviewData } from '@n7-frontend/components';
+import { HeroData, ItemPreviewData } from '@net7/components';
 
 interface HomeHeroData extends Omit<HeroData, 'input'> {
   /** advanced search fallback text */

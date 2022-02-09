@@ -1,4 +1,4 @@
-import { DataSource } from '@n7-frontend/core';
+import { DataSource } from '@net7/core';
 import { AwSearchModel } from '../search/aw-search.model';
 import entityLinksHelper from '../search/entity-links.helper';
 

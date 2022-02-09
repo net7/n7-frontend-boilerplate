@@ -3,7 +3,7 @@ import { NgModule, ApplicationInitStatus } from '@angular/core';
 import { CommonModule } from '@angular/common';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { RouterModule } from '@angular/router';
-import { DvComponentsLibModule } from '@n7-frontend/components';
+import { DvComponentsLibModule } from '@net7/components';
 import { N7BoilerplateCommonModule, ConfigurationService } from '@net7/boilerplate-common';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 // LAYOUTS

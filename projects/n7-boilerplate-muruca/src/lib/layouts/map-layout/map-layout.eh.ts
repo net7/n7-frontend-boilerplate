@@ -1,6 +1,6 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { EventHandler } from '@n7-frontend/core';
+import { EventHandler } from '@net7/core';
 
 export class MrMapLayoutEH extends EventHandler {
   private route: ActivatedRoute;

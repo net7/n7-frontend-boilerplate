@@ -1,4 +1,4 @@
-import { EventHandler } from '@n7-frontend/core';
+import { EventHandler } from '@net7/core';
 import { FacetHistogramDS } from '../../data-sources/facets/facet-histogram.ds';
 
 export class FacetHistogramEH extends EventHandler {

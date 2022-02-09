@@ -1,5 +1,5 @@
 import { merge } from 'lodash';
-import { ChartData } from '@n7-frontend/components';
+import { ChartData } from '@net7/components';
 import apexHelpers from '../apex-helpers';
 import { ChartResponseData } from '../../../types/response.types';
 

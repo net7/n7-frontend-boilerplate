@@ -1,5 +1,5 @@
-import { DataSource, _t } from '@n7-frontend/core';
-import { InputLink, InputLinkData } from '@n7-frontend/components';
+import { DataSource, _t } from '@net7/core';
+import { InputLink, InputLinkData } from '@net7/components';
 import { FacetDataSource } from './facet-datasource';
 
 const ACTIVE_CLASS = 'is-active';

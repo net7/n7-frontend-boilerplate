@@ -1,4 +1,4 @@
-import { DataSource } from '@n7-frontend/core';
+import { DataSource } from '@net7/core';
 import { helpers } from '@net7/boilerplate-common';
 
 export class AwChartTippyDS extends DataSource {

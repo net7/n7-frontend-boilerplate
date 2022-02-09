@@ -1,5 +1,5 @@
-import { DataSource, _t } from '@n7-frontend/core';
-import { FacetHeaderData } from '@n7-frontend/components';
+import { DataSource, _t } from '@net7/core';
+import { FacetHeaderData } from '@net7/components';
 import { FacetDataSource } from './facet-datasource';
 
 type FACET_VALUE = string | null;

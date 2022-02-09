@@ -3,7 +3,7 @@
 //---------------------------
 
 import { Component, Input } from '@angular/core';
-import { Icon } from '@n7-frontend/components';
+import { Icon } from '@net7/components';
 
 export type SchedaDropdownData = {
   header: {
