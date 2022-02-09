@@ -80,9 +80,17 @@ export class FacetHistogramDS extends DataSource implements FacetDataSource {
       // get years for slider positions
       const firstLabel = this.getFirstLabel(firstYear, newBars);
       const lastLabel = this.getLastLabel(lastYear, newBars);
-      this.value = `${firstLabel}-${lastLabel}`;
+      // do not update the value when resetting
+      if (this.value !== '') {
+        this.value = `${firstLabel}-${lastLabel}`;
+      }
       // update the histogram
-      this.histogramApi.setSliders([firstLabel, lastLabel]);
+      setTimeout(() => {
+        this.histogramApi.setSliders(
+          [`${firstLabel}`, `${lastLabel}`], // move the sliders
+          value !== '' // do not emit range when resetting
+        );
+      });
       this.histogramApi.setBars(newBars);
     }
     // reload the tooltips
@@ -122,7 +130,7 @@ export class FacetHistogramDS extends DataSource implements FacetDataSource {
    */
   parseLinks(links) {
     return links.map((link) => ({
-      label: link.text,
+      label: `${link.text}`,
       value: link.counter,
       payload: link.payload,
       range: link.range ? {
