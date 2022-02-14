@@ -1,4 +1,4 @@
-import { ConfigAriannaSchedaLayout } from '@n7-frontend/boilerplate';
+import { ConfigAriannaSchedaLayout } from '@net7/boilerplate-arianna';
 
 const config: ConfigAriannaSchedaLayout = {
   'empty-html': '<span>Non sono disponibili informazioni.<span>',
