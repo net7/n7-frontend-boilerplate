@@ -1,0 +1,14 @@
+{
+  "name": "@net7/boilerplate-common",
+  "version": "3.0.1-rc.2",
+  "peerDependencies": {
+    "@angular/common": "^13.2.0",
+    "@angular/core": "^13.2.0"
+  },
+  "dependencies": {
+    "lodash": "^4.17.15",
+    "slugify": "^1.4.0",
+    "tippy.js": "^5.1.2",
+    "tslib": "^2.3.0"
+  }
+}

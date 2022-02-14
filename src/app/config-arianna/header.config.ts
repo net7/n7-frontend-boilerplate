@@ -1,4 +1,4 @@
-import { ConfigCommonHeader } from '@n7-frontend/boilerplate';
+import { ConfigCommonHeader } from '@net7/boilerplate-common';
 
 const config: ConfigCommonHeader = {
   logo: {

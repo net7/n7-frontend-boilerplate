@@ -4,18 +4,20 @@ import {
   RouterModule, Router, NavigationStart, RoutesRecognized
 } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
-import { translate } from '@n7-frontend/core';
+import { translate } from '@net7/core';
 import {
   N7BoilerplateCommonModule,
-  N7BoilerplateMurucaModule,
   LocalConfigService,
-  MrMenuService,
-  MrFooterService,
   MainStateService,
-  MrTranslationsLoaderService,
   ConfigurationService,
   JsonConfigService,
-} from '@n7-frontend/boilerplate';
+} from '@net7/boilerplate-common';
+import {
+  N7BoilerplateMurucaModule,
+  MrMenuService,
+  MrFooterService,
+  MrTranslationsLoaderService,
+} from '@net7/boilerplate-muruca';
 
 import { APP_ROUTES } from '@mr-routes';
 import configMuruca from '@mr-config';

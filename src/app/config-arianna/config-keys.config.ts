@@ -1,4 +1,4 @@
-import { ConfigAriannaKeys } from '@n7-frontend/boilerplate';
+import { ConfigAriannaKeys } from '@net7/boilerplate-arianna';
 
 const config: ConfigAriannaKeys = {
   persona: {

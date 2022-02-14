@@ -1,4 +1,4 @@
-import { ConfigCommonFooter } from '@n7-frontend/boilerplate';
+import { ConfigCommonFooter } from '@net7/boilerplate-common';
 
 const config: ConfigCommonFooter = {
   columns: [
