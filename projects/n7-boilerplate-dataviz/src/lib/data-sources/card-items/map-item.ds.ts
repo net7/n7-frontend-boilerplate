@@ -20,10 +20,7 @@ export class MapItemDS extends DataSource {
         libOptions: {
           attributionControl: false,
         },
-        tileLayers: [{
-          url: 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
-          options: {}
-        }],
+        tileLayers: [],
         initialView: {
           center: []
         },
