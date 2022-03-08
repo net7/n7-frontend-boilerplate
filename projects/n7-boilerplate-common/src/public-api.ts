@@ -12,3 +12,4 @@ export * from './lib/event-handlers';
 export * from './lib/layouts';
 export * from './lib/components';
 export * from './lib/helpers';
+export * from './lib/directives';
