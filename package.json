@@ -1,6 +1,6 @@
 {
   "name": "n7-boilerplate",
-  "version": "3.2.2",
+  "version": "3.2.3",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
