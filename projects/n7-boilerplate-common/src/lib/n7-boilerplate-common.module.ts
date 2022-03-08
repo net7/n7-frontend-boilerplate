@@ -16,21 +16,25 @@ import { Page404LayoutComponent } from './layouts/page404-layout/page404-layout'
 // components
 import { SmartPaginationComponent } from './components/smart-pagination/smart-pagination';
 
-const COMPONENTS = [
+// directives
+import { ClickOutsideDirective } from './directives/click-outside.directive';
+
+const DECLARATIONS = [
   MainLayoutComponent,
   Page404LayoutComponent,
   SmartPaginationComponent,
+  ClickOutsideDirective,
 ];
 
 @NgModule({
-  declarations: COMPONENTS,
+  declarations: DECLARATIONS,
   imports: [
     CommonModule,
     HttpClientModule,
     DvComponentsLibModule,
   ],
   providers: [],
-  exports: COMPONENTS
+  exports: DECLARATIONS
 })
 export class N7BoilerplateCommonModule {
   static forRoot(config?: any): ModuleWithProviders<N7BoilerplateCommonModule> {
