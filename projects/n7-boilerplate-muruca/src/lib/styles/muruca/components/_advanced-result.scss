@@ -10,6 +10,7 @@
 \* ------------------------------------ */
 .mr-advanced-result {
     &__content {
+        margin-top: $space * 0.75;
         padding-top: $space * 1;
         border-top: 1px solid $color-border-light;
     }
@@ -76,6 +77,16 @@
         font-size: $font-size-s;
         font-weight: $font-weight-bold;
         font-family: $font-family-main;
+    }
+
+    /* Item preview style */
+    div.n7-item-preview:not(.fake_class_for_specificity) {
+        padding-bottom: $space * 0.5;
+        border-bottom: 0;
+
+        .n7-item-preview__metadata-group {
+            margin-bottom: 0;
+        }
     }
 }
 
