@@ -2,6 +2,7 @@ import { Router } from '@angular/router';
 import { LayoutDataSource, _t } from '@net7/core';
 import { cloneDeep, isEmpty } from 'lodash';
 import { ConfigurationService, MainStateService } from '@net7/boilerplate-common';
+import { InputCheckboxData, InputSelectData, InputTextData } from '@net7/components';
 import { MrFormModel } from '../../models/form.model';
 
 export class MrAdvancedSearchLayoutDS extends LayoutDataSource {
@@ -105,6 +106,10 @@ export class MrAdvancedSearchLayoutDS extends LayoutDataSource {
           input.data.label = _t(input.data.label);
         }
 
+        if (input.data.legend) {
+          input.data.legend = _t(input.data.legend);
+        }
+
         // input text
         if (input.type === 'text') {
           if (input.data.placeholder) {
@@ -122,6 +127,22 @@ export class MrAdvancedSearchLayoutDS extends LayoutDataSource {
           input.data.options.forEach((option) => {
             option.label = _t(option.label);
           });
+        }
+
+        // info tooltip
+        if (input.info && input.data.label && ['text', 'select'].includes(input.type)) {
+          const inputData = input.data as InputTextData | InputSelectData;
+          (input.data as InputTextData | InputSelectData).label = [
+            `<span>${inputData.label}</span>`,
+            `<span class="mr-input-info n7-icon n7-icon-info-circle" alt="${_t(input.info)}"></span>`
+          ].join('');
+        }
+        if (input.info && input.data.legend && input.type === 'checkbox') {
+          const inputData = input.data as InputCheckboxData;
+          (input.data as InputCheckboxData).legend = [
+            `<span>${inputData.legend}</span>`,
+            `<span class="mr-input-info n7-icon n7-icon-info-circle" alt="${_t(input.info)}"></span>`
+          ].join('');
         }
       });
     });
