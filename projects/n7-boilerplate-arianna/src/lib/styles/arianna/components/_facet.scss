@@ -17,7 +17,6 @@
     }
 }
 
-
 /* ------------------------------------ *\
    #INPUT TEXT
 \* ------------------------------------ */
@@ -34,7 +33,7 @@
     &__input-text[type="text"] {
         width: 100%;
         box-sizing: border-box;
-        padding-right: $space*4;
+        padding-right: $space * 4;
     }
 
     &__input-text-icon {
@@ -46,13 +45,12 @@
     }
 }
 
-
 /* ------------------------------------ *\
    #LIST
 \* ------------------------------------ */
 .n7-facet {
     &__section-input-link {
-        margin-bottom: calc($space/2);
+        margin-bottom: calc($space * 0.5);
         border-bottom: 1px solid $color-border-normal;
 
         &:last-of-type {
@@ -61,7 +59,7 @@
     }
 
     &__input-link {
-        padding-bottom: calc($space/2);
+        padding-bottom: calc($space * 0.5);
 
         &[class*="color-"] {
             .n7-facet__input-link-text {
@@ -82,7 +80,6 @@
     /* Hover */
     .n7-facet__input-link:hover {
         .n7-facet__input-link-text {
-
         }
     }
 
@@ -90,24 +87,22 @@
     .n7-facet__input-link.is-active {
         &:before {
             content: "\e93d";
-            font-family: 'n7-icon';
+            font-family: "n7-icon";
             margin-right: $space;
             color: $color-success;
         }
 
         .n7-facet__input-link-text {
-
         }
     }
 }
-
 
 /* ------------------------------------ *\
    #SELECT
 \* ------------------------------------ */
 .n7-facet {
     &__section-input-select {
-        width: calc(50% - #{$space*2});
+        width: calc(50% - #{$space * 2});
 
         .n7-facet__section-input,
         .n7-facet__input-select {
@@ -115,7 +110,6 @@
         }
     }
 }
-
 
 /* ------------------------------------ *\
    #COLORS
@@ -183,7 +177,7 @@
             .n7-facet__input-link-text {
                 color: $color-organizations;
             }
-            
+
             &:hover {
                 .n7-facet__input-link-icon,
                 .n7-facet__input-link-text {
@@ -249,7 +243,6 @@
         }
     }
 }
-
 
 /* ------------------------------------ *\
    #MEDIA-QUERIES

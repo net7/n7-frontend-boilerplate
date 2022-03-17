@@ -4,22 +4,21 @@
  * Style for the advanced results that are displayed below the item previews, 
  in the advanced search.
  */
- 
+
 /* ------------------------------------ *\
     ADVANCED-RESULT
 \* ------------------------------------ */
 .mr-advanced-result {
     &__content {
-        padding-top: $space*1;
+        padding-top: $space * 1;
         border-top: 1px solid $color-border-light;
     }
 
     &__content-group {
-
     }
 
     &__title {
-        margin-bottom: $space*1.5;
+        margin-bottom: $space * 1.5;
         color: $color-text-light;
         font-weight: $font-weight-normal;
         font-size: $font-size-s;
@@ -33,7 +32,7 @@
                 .mr-advanced-result__label {
                     color: $color-text-link;
                 }
-            
+
                 .mr-advanced-result__value {
                     color: $color-text-link;
                 }
@@ -41,14 +40,14 @@
         }
 
         &:not(:last-child) {
-            margin-bottom: $space*1.5;
-            padding-bottom: $space*1.5;
+            margin-bottom: $space * 1.5;
+            padding-bottom: $space * 1.5;
             border-bottom: 1px solid $color-border-light;
         }
     }
 
     &__label {
-        margin-right: calc($space/2);
+        margin-right: calc($space * 0.5);
         color: $color-text-light;
         font-size: $font-size-s;
         font-weight: $font-weight-bold;
@@ -66,7 +65,7 @@
 
     .mrc__text-breadcrumbs {
         display: block;
-        margin-bottom: calc($space/2);
+        margin-bottom: calc($space * 0.5);
         font-family: $font-family-main;
         font-size: $font-size-xs;
         color: $color-text-light;
@@ -79,7 +78,6 @@
         font-family: $font-family-main;
     }
 }
-
 
 /* ------------------------------------ *\
    #MEDIA-QUERIES

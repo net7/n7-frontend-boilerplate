@@ -11,13 +11,11 @@ $page-max-width: 1240px;
 $page-min-width: 768px;
 $page-readable-width: 800px;
 
-
 // ------------------------------------ //
 // #GRIDS
 // ------------------------------------ //
 // $grid-gutter-h: $space*3;
-$grid-gutter-v: $space*2;
-
+$grid-gutter-v: $space * 2;
 
 // //////////////////////////////////// //
 //            ATTENTION PLEASE          //
@@ -26,19 +24,16 @@ $grid-gutter-v: $space*2;
 // just to see which ones are available to be
 // overwritten and must be removed if not used
 
-
 // ------------------------------------ //
 // #Z-INDEX
 // ------------------------------------ //
 $z-index-base: 1000;
 $z-index-modal: $z-index-base + 10;
 
-
 // ------------------------------------ //
 // #SPACING-UNIT
 // ------------------------------------ //
 // $space: 8px;
-
 
 // ------------------------------------ //
 // #FONTS
@@ -50,9 +45,9 @@ $z-index-modal: $z-index-base + 10;
 // @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 // @import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,800;1,400;1,800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,800;1,400;1,800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 
 // ------------------------------------ //
 // TYPOGRAPHY
@@ -62,9 +57,9 @@ $z-index-modal: $z-index-base + 10;
 // $font-family-main: 'Source Sans Pro', sans-serif;
 // $font-family-main: 'Libre Franklin', sans-serif;
 
-$font-family-main: 'Open Sans', sans-serif;
-$font-family-headings: 'Montserrat', sans-serif;
-$font-family-text: 'EB Garamond', serif;
+$font-family-main: "Open Sans", sans-serif;
+$font-family-headings: "Montserrat", sans-serif;
+$font-family-text: "EB Garamond", serif;
 
 $font-size-xxxl: 38px;
 $font-size-xxl: 32px;
@@ -80,20 +75,18 @@ $font-weight-normal: 400;
 $font-weight-bold: 700;
 $font-weight-black: 800;
 
-
 // ------------------------------------ //
 // COLORS
 // ------------------------------------ //
 // Text Colors
 // $color-text: $color-gray-05;
 // $color-text-inverse: $color-gray-00;
-$color-text-light: rgba( $color-gray-05, .68);
+$color-text-light: rgba($color-gray-05, 0.68);
 $color-text-title: $color-third;
 // $color-text-link: $color-main;
 // $color-text-link-hover: $color-text-hover;
 // $color-text-link-visited: $color-text-hover;
 $color-text-form-placeholder: $color-gray-03;
-
 
 // Borders
 // $color-border-light: $color-gray-02;
@@ -106,8 +99,11 @@ $color-text-form-placeholder: $color-gray-03;
 // $color-background-medium: $color-gray-01;
 // $color-background-dark: $color-gray-03;
 $color-background-layout: $color-background-base;
-$gradient-item-preview-list: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, $color-background-layout 100%);
-
+$gradient-item-preview-list: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0) 0%,
+    $color-background-layout 100%
+);
 
 // ------------------------------------ //
 // #MEDIA-QUERIES-BREAKPOINT
@@ -118,13 +114,11 @@ $gradient-item-preview-list: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, 
 // $breakpoint-smartphone-landscape: 480px;
 // $breakpoint-smartphone-portrait: 400px;
 
-
 // ------------------------------------ //
 // #BORDER-RADIUS
 // ------------------------------------ //
 // $border-radius: 5px;
 // $border-radius-hard: 8px;
-
 
 // ------------------------------------ //
 // #BUTTONS
@@ -166,7 +160,6 @@ $color-button-text: $color-text;
 // $color-button-light-text-disabled: $color-text-light;
 // $color-button-light-text-active: $color-text-link-hover;
 
-
 // ------------------------------------ //
 // #FORMS
 // ------------------------------------ //
@@ -175,12 +168,10 @@ $color-button-text: $color-text;
 // $form-border-radius: $border-radius;
 // $form-dropdown-height: 30px;
 
-
 // ------------------------------------ //
 // #TRANSITIONS
 // ------------------------------------ //
 // $transition-durations: 0.2s;
-
 
 // ------------------------------------ //
 // #HEADER
@@ -202,7 +193,6 @@ $header-transparent-logo-url: url("/assets/logo-petrarca-transparent.png");
 // $header-breakpoint-mobile: 0px;
 // $header-breakpoint-mobile-small: 600px;
 
-
 // ------------------------------------ //
 // #LOADER
 // ------------------------------------ //
@@ -211,14 +201,12 @@ $header-transparent-logo-url: url("/assets/logo-petrarca-transparent.png");
 $loader-color-front: $color-gray-03;
 $loader-color-back: $color-gray-02;
 
-
 // ------------------------------------ //
 // #CONTENT-BLOCK
 // ------------------------------------ //
 $content-block-title-width: 170px;
 $content-block-label-width: 170px;
 $content-block-label-second-level-width: 120px;
-
 
 // ------------------------------------ //
 // #TABLE
@@ -239,13 +227,11 @@ $content-block-label-second-level-width: 120px;
 // $table-footer-text-color: $color-text-light;
 // $table-footer-bg: $color-background-medium;
 
-
 // ------------------------------------ //
 // #FACET
 // ------------------------------------ //
 // $n7-facet-search-input-height: 32px;
 // $n7-facet-search-input-border-radius: $border-radius;
-
 
 // ------------------------------------ //
 // #TAG
@@ -253,7 +239,6 @@ $content-block-label-second-level-width: 120px;
 // $n7-tag-icon-size: 16px;
 // $n7-tag-icon-font-size: 8px;
 // $n7-tag-icon-background: #ffffff;
-
 
 // ------------------------------------ //
 // #SIDEBAR-HEADER
@@ -266,18 +251,15 @@ $content-block-label-second-level-width: 120px;
 // $sidebar-right-background-color: $color-text-link;
 // $sidebar-right-text-color: $color-text-inverse;
 
-
 // ------------------------------------ //
 // #ITEM-PREVIEW
 // ------------------------------------ //
 // $item-preview-image-size: 85px;
 
-
 // ------------------------------------ //
 // #TIPPY-COMPONENT
 // ------------------------------------ //
 // $tippy-box-shadow: 0 2px 10px 0 rgba(0,0,0,0.1);
-
 
 // ------------------------------------ //
 // #BUBBLE-CHART
@@ -285,7 +267,6 @@ $content-block-label-second-level-width: 120px;
 // $bubble-popover-title-font-weight: $font-weight-bold;
 // $bubble-results-height: 555px;
 // $bubble-results-count-font-weight: $font-weight-bold;
-
 
 // ------------------------------------ //
 // #FACET-HEADER
@@ -295,7 +276,6 @@ $facet-header-text-color: $color-text;
 $facet-header-background: transparent;
 $facet-header-icon-background: transparent;
 
-
 // ------------------------------------ //
 // #DATA-WIDGET-WRAPPER
 // ------------------------------------ //
@@ -303,14 +283,12 @@ $data-widget-wrapper-height: 265px;
 $data-widget-wrapper-header-height: 44px;
 $data-widget-wrapper-width: auto;
 
-
 // ------------------------------------ //
 // #HOME
 // ------------------------------------ //
 $home-hero-1-height: 400px;
 $home-hero-2-height: 400px;
 $hero-image-text-width: 500px;
-
 
 // ------------------------------------ //
 // #FOOTER
@@ -320,36 +298,30 @@ $footer-background-color: $color-gray-05;
 $footer-breakpoint-desktop: $page-max-width + $grid-gutter-h;
 $footer-breakpoint-mobile: 700px;
 
-
 // ------------------------------------ //
 // #SEARCH-RESULTS-FILTERS
 // ------------------------------------ //
 $mr-search-result-filter-height: 26px;
 
-
 // ------------------------------------ //
 // #BREADCRUMBS
 // ------------------------------------ //
-$breadcrumbs-arrow: '\e90a';
-
+$breadcrumbs-arrow: "\e90a";
 
 // ------------------------------------ //
 // #MODAL
 // ------------------------------------ //
 $modal-width: $page-readable-width;
 
-
 // ------------------------------------ //
 // #GALLERY
 // ------------------------------------ //
 $gallery-item-width: 130px;
 
-
 // ------------------------------------ //
 // FORM-WRAPPER-ACCORDION
 // ------------------------------------ //
 $form-wrapper-accordion-header-height: 56px;
-
 
 // ------------------------------------ //
 // #METADATA-VIEWER
@@ -357,9 +329,13 @@ $form-wrapper-accordion-header-height: 56px;
 // Set a high value if you don't want to activate the scrollbar
 $metadata-viewer-item-value-max-height: 400px;
 
-
 // ------------------------------------ //
 // #HERO
 // ------------------------------------ //
 $hero-bg-color: $color-third;
 $hero-text-color: $color-text-inverse;
+
+// ------------------------------------ //
+// #IMAGE-VIEWER
+// ------------------------------------ //
+$image-viewer-height: 650px;
