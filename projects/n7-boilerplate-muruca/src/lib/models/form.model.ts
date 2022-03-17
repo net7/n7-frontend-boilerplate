@@ -20,6 +20,7 @@ export class MrFormModel {
     [id: string]: {
       ds: any;
       eh: any;
+      // eslint-disable-next-line @typescript-eslint/ban-types
       emit: (t: string, p: any) => Function;
     };
   } = {};
@@ -30,19 +31,19 @@ export class MrFormModel {
       eh: any;
     };
   } = {
-    text: {
-      ds: MrInputTextDS,
-      eh: MrInputTextEH
-    },
-    select: {
-      ds: MrInputSelectDS,
-      eh: MrInputSelectEH
-    },
-    checkbox: {
-      ds: MrInputCheckboxDS,
-      eh: MrInputCheckboxEH
-    }
-  };
+      text: {
+        ds: MrInputTextDS,
+        eh: MrInputTextEH
+      },
+      select: {
+        ds: MrInputSelectDS,
+        eh: MrInputSelectEH
+      },
+      checkbox: {
+        ds: MrInputCheckboxDS,
+        eh: MrInputCheckboxEH
+      }
+    };
 
   changed$: Subject<MrChangedParams> = new Subject();
 
@@ -66,7 +67,7 @@ export class MrFormModel {
       inputs[id] = this.getInput(id);
     });
     return inputs;
-  }
+  };
 
   getState() {
     const state = {};

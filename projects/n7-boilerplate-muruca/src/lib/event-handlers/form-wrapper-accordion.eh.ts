@@ -13,6 +13,7 @@ export class MrFormWrapperAccordionEH extends EventHandler {
       switch (type) {
         case 'mr-form-wrapper-accordion.init':
           this.listenKeyUpEvents();
+          this.dataSource.checkInfoTooltips();
           break;
         case 'mr-form-wrapper-accordion.destroy':
           this.destroy$.next();
@@ -29,6 +30,7 @@ export class MrFormWrapperAccordionEH extends EventHandler {
           break;
         case 'mr-form-wrapper-accordion.click':
           this.dataSource.toggleGroup(payload);
+          this.dataSource.checkInfoTooltips();
           break;
         default:
           break;

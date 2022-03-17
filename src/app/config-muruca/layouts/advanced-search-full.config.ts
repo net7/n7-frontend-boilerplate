@@ -52,6 +52,7 @@ const config: ConfigMurucaAdvancedSearchLayout = {
         inputs: [{
           id: 'query',
           type: 'text',
+          info: 'advancedsearch#query_info',
           data: {
             id: 'query',
             label: 'QUERY',
@@ -69,6 +70,7 @@ const config: ConfigMurucaAdvancedSearchLayout = {
         }, {
           id: 'author',
           type: 'text',
+          info: 'advancedsearch#author_info',
           data: {
             id: 'author',
             label: 'AUTHOR',
@@ -86,8 +88,10 @@ const config: ConfigMurucaAdvancedSearchLayout = {
         }, {
           id: 'checkbox-1',
           type: 'checkbox',
+          info: 'advancedsearch#checkbox-1_info',
           data: {
             id: 'checkbox-1',
+            legend: 'advancedsearch#checkbox-1_label',
             checkboxes: [1, 2, 3, 4].map((number) => ({
               id: `checkbox-1-${number}`,
               label: `check ${number}`,
@@ -102,6 +106,7 @@ const config: ConfigMurucaAdvancedSearchLayout = {
         }, {
           id: 'select-1',
           type: 'select',
+          info: 'advancedsearch#select-1_info',
           data: {
             id: 'select-1',
             label: 'Paesi',
@@ -132,10 +137,10 @@ const config: ConfigMurucaAdvancedSearchLayout = {
         id: 'section-1-2',
         inputs: [
           {
-            id: 'query',
+            id: 'query-2',
             type: 'text',
             data: {
-              id: 'query',
+              id: 'query-2',
               label: 'QUERY',
               placeholder: 'Cerca in tutti i campi...',
               icon: 'n7-icon-search',
@@ -149,10 +154,10 @@ const config: ConfigMurucaAdvancedSearchLayout = {
               hidden: false
             }
           }, {
-            id: 'author',
+            id: 'author-2',
             type: 'text',
             data: {
-              id: 'author',
+              id: 'author-2',
               label: 'AUTHOR',
               placeholder: 'Cerca tra gli autori...',
               icon: 'n7-icon-search',
