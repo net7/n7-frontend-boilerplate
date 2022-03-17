@@ -1,4 +1,4 @@
-import { MrSearchConfig } from '@n7-frontend/boilerplate';
+import { MrSearchConfig } from '@net7/boilerplate-muruca';
 
 const facets = {
   sections: [
