@@ -10,7 +10,7 @@
 .n7-item-preview {
     /* Main fields */
     &__title {
-        margin-bottom: $space*1.5; //  calc($space/2);
+        margin-bottom: $space * 1.5;
         font-weight: $font-weight-bold;
         font-size: $font-size-m;
 
@@ -21,7 +21,7 @@
     }
 
     &__text {
-        margin-bottom: $space; //  calc($space/2);
+        margin-bottom: $space;
         color: $color-gray-04;
 
         em {
@@ -32,7 +32,7 @@
 
     /* Metadata wrapper  */
     &__metadata {
-        margin-top: -calc($space/2);
+        margin-top: -calc($space * 0.5);
     }
 
     /* Metadata group */
@@ -40,7 +40,6 @@
         margin-bottom: 0;
     }
 }
-
 
 /* ------------------------------------ *\
    #MAIN-METADATA
@@ -74,7 +73,6 @@
     }
 }
 
-
 /* ------------------------------------ *\
    #ENTITIES-METADATA
 \* ------------------------------------ */
@@ -83,10 +81,10 @@
     flex-grow: 0;
     margin-bottom: 0;
     background-color: $color-background-light;
-    padding: calc($space/2) $space;
+    padding: calc($space * 0.5) $space;
     border-radius: $border-radius;
-    box-shadow: inset 0 0 8px rgba(0,0,0,0.05);
-    
+    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.05);
+
     .n7-item-preview__metadata-item-icon {
         font-size: $font-size-m;
         font-weight: $font-weight-bold;
@@ -105,11 +103,11 @@
         &.color-concetto {
             color: $color-concepts;
         }
-        
+
         &.color-cosa-notevole {
             color: $color-things;
         }
-        
+
         &.color-organizzazione {
             color: $color-organizations;
         }
@@ -121,7 +119,7 @@
         &.color-evento {
             color: $color-events;
         }
-        
+
         &.has-image {
             .n7-item-preview__image {
                 width: $item-preview-image-size;
@@ -130,7 +128,6 @@
         }
     }
 }
-
 
 /* ------------------------------------ *\
    #IS-FULLWIDTH
@@ -149,10 +146,9 @@
         margin-left: auto;
         flex: 0 0 auto;
         text-align: right;
-        margin-top: -calc($space/2);
+        margin-top: -calc($space * 0.5);
     }
 }
-
 
 /* ------------------------------------ *\
    #VERTICAL-WITH-IMAGE
@@ -160,7 +156,6 @@
 .n7-item-preview.is-vertical.has-image {
     border-bottom: 0;
 }
-
 
 /* ------------------------------------ *\
    #ENTITIES-COLOURED-TITLE
@@ -207,18 +202,17 @@
     }
 }
 
-
 /* ------------------------------------ *\
    #RELATION-DESCRIPTION
 \* ------------------------------------ */
 /* Description of the relation with an entity, OC or AL */
 .aw-item-preview-relation {
     display: inline-block;
-    margin-top: $space*1.5;
-    padding: calc($space/2) $space;
+    margin-top: $space * 1.5;
+    padding: calc($space * 0.5) $space;
     background-color: $color-background-light;
     border-radius: $border-radius;
-    box-shadow: inset 0 0 8px rgba(0,0,0,0.05);
+    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.05);
 
     &__description {
         margin: 0;
@@ -237,20 +231,19 @@
     }
 }
 
-
 /* ------------------------------------ *\
    #ITEM-PREVIEW-WRAPPER
 \* ------------------------------------ */
 /* When the item preview needs to be wrapped with other elements
 like breadcrumbs or relation description */
 .aw-item-preview-wrapper {
-    margin-bottom: $space*1.8;
-    padding-bottom: $space*2.5;
+    margin-bottom: $space * 1.8;
+    padding-bottom: $space * 2.5;
     border-bottom: 1px solid $color-border-light;
     cursor: pointer;
 
     .n7-breadcrumbs {
-        padding: 0 0 $space*1.2 0;
+        padding: 0 0 $space * 1.2 0;
         background-color: transparent;
         cursor: pointer;
 
@@ -259,7 +252,6 @@ like breadcrumbs or relation description */
         }
     }
 }
-
 
 /* ------------------------------------ *\
    #MEDIA-QUERIES

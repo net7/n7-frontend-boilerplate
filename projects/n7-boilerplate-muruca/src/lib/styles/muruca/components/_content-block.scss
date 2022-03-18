@@ -10,12 +10,12 @@
 \* ------------------------------------ */
 .mr-content-block {
     display: flex;
-    
+
     &__title {
         width: $content-block-title-width;
         flex-shrink: 0;
         flex-grow: 0;
-        margin-right: $space*4;
+        margin-right: $space * 4;
         font-family: $font-family-main;
         color: $color-text-title;
         font-size: $font-size-xl;
@@ -28,12 +28,10 @@
     }
 }
 
-
 /* ------------------------------------ *\
     CONTENT-BLOCK-METADATA
 \* ------------------------------------ */
 .mr-content-block-metadata {
-    
     .n7-metadata-viewer__group-wrapper {
         display: flex;
     }
@@ -51,14 +49,14 @@
 
     .n7-metadata-viewer__item {
         display: flex;
-        margin-bottom: $space*3;
+        margin-bottom: $space * 3;
     }
 
     .n7-metadata-viewer__item-label {
         font-size: $font-size-m;
         color: $color-text;
         width: $content-block-label-width;
-        margin-right: $space*1.5;
+        margin-right: $space * 1.5;
         flex-shrink: 0;
         @include first-letter-capital();
         word-break: break-word;
@@ -66,7 +64,7 @@
 
     .n7-metadata-viewer__item-value {
         max-height: $metadata-viewer-item-value-max-height;
-        padding-right: $space*2;
+        padding-right: $space * 2;
         overflow-y: auto;
     }
 
@@ -83,14 +81,13 @@
         max-width: 100%;
         height: auto;
     }
-    
+
     /* Metadata-second level */
     .n7-metadata-viewer__group-wrapper {
-
         // Label of element that has children
         .n7-metadata-viewer__group-title {
             width: $content-block-label-width;
-            margin-right: $space*1.5;
+            margin-right: $space * 1.5;
             font-size: $font-size-m;
             color: $color-text;
             font-weight: $font-weight-bold;
@@ -98,7 +95,8 @@
         }
 
         // Actual Second level
-        .n7-metadata-viewer__group + div { // Wrapper of all second level items
+        .n7-metadata-viewer__group + div {
+            // Wrapper of all second level items
             width: 100%;
             max-height: 300px;
             overflow-y: auto;
@@ -116,18 +114,18 @@
             }
 
             .n7-metadata-viewer__group-content {
-                margin-bottom: calc($space/2);
-                padding-bottom: calc($space/2);
+                margin-bottom: calc($space * 0.5);
+                padding-bottom: calc($space * 0.5);
                 border-bottom: 1px solid $color-border-light;
             }
 
             .n7-metadata-viewer__item {
-                margin-bottom: calc($space/2);
+                margin-bottom: calc($space * 0.5);
             }
 
             .n7-metadata-viewer__item-label {
                 width: $content-block-label-second-level-width;
-                margin-right: $space*1.5;
+                margin-right: $space * 1.5;
                 @include first-letter-capital();
                 word-break: break-word;
             }
@@ -141,7 +139,7 @@
 
             /* Last child */
             &:last-child {
-                margin-bottom: $space*2;
+                margin-bottom: $space * 2;
 
                 .n7-metadata-viewer__group-content {
                     padding-bottom: 0;
@@ -152,22 +150,20 @@
     }
 }
 
-
 /* ------------------------------------ *\
     CONTENT-BLOCK-MAP
 \* ------------------------------------ */
 .mr-content-block-map {
     display: block;
-    
+
     .mr-content-block__title {
         width: auto;
-        margin-bottom: $space*1.5;
+        margin-bottom: $space * 1.5;
     }
 
     .mr-content-block__content {
     }
 }
-
 
 /* ------------------------------------ *\
     WP-INSIDE-CONTENT-BLOCK-METADATA
@@ -175,8 +171,8 @@
 .mr-content-block {
     .n7-metadata-viewer {
         img[class*="wp-image"] {
-            margin-top: $space*2;
-            margin-bottom: $space*2;
+            margin-top: $space * 2;
+            margin-bottom: $space * 2;
 
             &.aligncenter {
                 display: block;
@@ -186,7 +182,6 @@
         }
     }
 }
-
 
 /* ------------------------------------ *\
    #MEDIA-QUERIES

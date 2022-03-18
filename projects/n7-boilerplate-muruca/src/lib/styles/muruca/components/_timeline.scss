@@ -33,7 +33,7 @@
         border-width: 2px;
         border-color: $color-third;
         background-color: $color-background-medium;
-        box-shadow: 0 2px 8px rgba(0,0,0,.1);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         cursor: pointer;
     }
 
@@ -54,7 +54,7 @@
             text-align: left;
         }
     }
-    
+
     /* Range */
     .vis-range {
         border-top: 0;
@@ -63,7 +63,7 @@
         border-width: 2px;
         border-color: $color-third;
         background-color: $color-background-medium;
-        box-shadow: 0 2px 8px rgba(0,0,0,.1);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         cursor: pointer;
     }
 
@@ -77,7 +77,7 @@
         border-radius: $border-radius;
 
         .vis-item-content {
-            padding: calc($space/2) $space;
+            padding: calc($space * 0.5) $space;
             white-space: normal;
         }
 
@@ -124,7 +124,6 @@
         }
     }
 }
-
 
 /* ------------------------------------ *\
    #MEDIA-QUERIES
