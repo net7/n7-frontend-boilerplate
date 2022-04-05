@@ -24,13 +24,20 @@
       "dom"
     ],
     "paths": {
-      "@n7-frontend/boilerplate": [
-        "projects/n7-boilerplate-lib/src/public-api"
+      "@net7/boilerplate-common": [
+        "projects/n7-boilerplate-common/src/public-api"
       ],
-      "@n7-frontend/boilerplate/*": [
-        "projects/n7-boilerplate-lib/src/*"
+      "@net7/boilerplate-arianna": [
+        "projects/n7-boilerplate-arianna/src/public-api"
+      ],
+      "@net7/boilerplate-muruca": [
+        "projects/n7-boilerplate-muruca/src/public-api"
+      ],
+      "@net7/boilerplate-dataviz": [
+        "projects/n7-boilerplate-dataviz/src/public-api"
       ],
       // MURUCA PROJECT PATHS
+      // ------------------------------------------------------------------->
       "@mr-routes": ["src/app/app.routes.muruca.ts"],
       "@mr-config": ["src/app/config-muruca/"],
       "@mr-config/*": ["src/app/config-muruca/*"],
@@ -38,9 +45,10 @@
       // "@mr-config": ["../../carte-trentine-fe/src/app/config"],
       // "@mr-config/*": ["../../carte-trentine-fe/src/app/config/*"],
       // ARIANNA PROJECT PATHS
+      // ------------------------------------------------------------------->
       "@aw-routes": ["src/app/app.routes.arianna.ts"],
       "@aw-config": ["src/app/config-arianna/"],
-      "@aw-config/*": ["src/app/config-arianna/*"],
+      "@aw-config/*": [ "src/app/config-arianna/*" ],
       // "@aw-routes": ["<PROJECT-LOCAL-PATH>/src/app/app.routes.ts"],
       // "@aw-config": ["<PROJECT-LOCAL-PATH>/src/app/config-arianna/"],
       // "@aw-config/*": ["<PROJECT-LOCAL-PATH>/src/app/config-arianna/*"],

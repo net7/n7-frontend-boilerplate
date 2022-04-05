@@ -1,4 +1,4 @@
-import { ConfigMurucaSearchLayout } from '@n7-frontend/boilerplate';
+import { ConfigMurucaSearchLayout } from '@net7/boilerplate-muruca';
 import searchWorksFacetsConfig from './search-works-facets.config';
 
 const config: ConfigMurucaSearchLayout = {

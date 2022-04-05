@@ -28,14 +28,33 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              { "glob": "**/*", "input": "./node_modules/@teipublisher/pb-components/dist", "output": "/assets/pb-components/dist" },
-              { "glob": "**/*", "input": "./node_modules/@teipublisher/pb-components/lib", "output": "/assets/pb-components/lib" },
-              { "glob": "**/*", "input": "./node_modules/@teipublisher/pb-components/images", "output": "/assets/pb-components/images" },
-              { "glob": "**/*", "input": "./node_modules/@teipublisher/pb-components/i18n", "output": "/assets/pb-components/i18n" },
-              { "glob": "**/*", "input": "./node_modules/ngx-extended-pdf-viewer/assets/", "output": "/assets/" }
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@teipublisher/pb-components/dist",
+                "output": "/assets/pb-components/dist"
+              },
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@teipublisher/pb-components/lib",
+                "output": "/assets/pb-components/lib"
+              },
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@teipublisher/pb-components/images",
+                "output": "/assets/pb-components/images"
+              },
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@teipublisher/pb-components/i18n",
+                "output": "/assets/pb-components/i18n"
+              },
+              {
+                "glob": "**/*",
+                "input": "./node_modules/ngx-extended-pdf-viewer/assets/",
+                "output": "/assets/"
+              }
             ],
             "styles": [
-              "./node_modules/flatpickr/dist/flatpickr.min.css",
               "./node_modules/latte-carousel/dist/latte-carousel.min.css",
               "./node_modules/leaflet/dist/leaflet.css",
               "./node_modules/leaflet.markercluster/dist/MarkerCluster.css",
@@ -87,7 +106,6 @@
                 }
               ],
               "styles": [
-                "./node_modules/flatpickr/dist/flatpickr.min.css",
                 "./node_modules/latte-carousel/dist/latte-carousel.min.css",
                 "./node_modules/leaflet/dist/leaflet.css",
                 "./node_modules/leaflet.markercluster/dist/MarkerCluster.css",
@@ -111,35 +129,10 @@
               ],
               "styles": [
                 "./node_modules/flatpickr/dist/flatpickr.min.css",
-                "./node_modules/latte-carousel/dist/latte-carousel.min.css",
                 "./node_modules/leaflet/dist/leaflet.css",
                 "./node_modules/leaflet.markercluster/dist/MarkerCluster.css",
                 "./node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css",
-                "./node_modules/vis-timeline/dist/vis-timeline-graph2d.css",
                 "src/styles/styles.dataviz.scss"
-              ]
-            },
-            "sandbox": {
-              "budgets": [
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb"
-                }
-              ],
-              "fileReplacements": [
-                {
-                  "replace": "src/app/app.module.ts",
-                  "with": "src/app/app.module.sandbox.ts"
-                }
-              ],
-              "styles": [
-                "./node_modules/flatpickr/dist/flatpickr.min.css",
-                "./node_modules/latte-carousel/dist/latte-carousel.min.css",
-                "./node_modules/leaflet/dist/leaflet.css",
-                "./node_modules/leaflet.markercluster/dist/MarkerCluster.css",
-                "./node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css",
-                "./node_modules/vis-timeline/dist/vis-timeline-graph2d.css",
-                "src/styles/styles.sandbox.scss"
               ]
             },
             "muruca": {
@@ -156,7 +149,6 @@
                 }
               ],
               "styles": [
-                "./node_modules/flatpickr/dist/flatpickr.min.css",
                 "./node_modules/latte-carousel/dist/latte-carousel.min.css",
                 "./node_modules/leaflet/dist/leaflet.css",
                 "./node_modules/leaflet.markercluster/dist/MarkerCluster.css",
@@ -179,13 +171,10 @@
             },
             "arianna": {
               "browserTarget": "n7-boilerplate:build:arianna"
-            }, 
+            },
             "dataviz": {
               "browserTarget": "n7-boilerplate:build:dataviz"
-            }, 
-            "sandbox": {
-              "browserTarget": "n7-boilerplate:build:sandbox"
-            }, 
+            },
             "muruca": {
               "browserTarget": "n7-boilerplate:build:muruca"
             }
@@ -245,19 +234,143 @@
           "options": {
             "tsConfig": "projects/n7-boilerplate-lib/tsconfig.lib.json",
             "project": "projects/n7-boilerplate-lib/ng-package.json"
-          }
-        ,          "configurations": {
+          },
+          "configurations": {
             "production": {
               "tsConfig": "projects/n7-boilerplate-lib/tsconfig.lib.prod.json"
             }
           }
-},
+        },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "main": "projects/n7-boilerplate-lib/src/test.ts",
             "tsConfig": "projects/n7-boilerplate-lib/tsconfig.spec.json",
             "karmaConfig": "projects/n7-boilerplate-lib/karma.conf.js"
+          }
+        }
+      }
+    },
+    "n7-boilerplate-common": {
+      "projectType": "library",
+      "root": "projects/n7-boilerplate-common",
+      "sourceRoot": "projects/n7-boilerplate-common/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/n7-boilerplate-common/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/n7-boilerplate-common/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/n7-boilerplate-common/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/n7-boilerplate-common/src/test.ts",
+            "tsConfig": "projects/n7-boilerplate-common/tsconfig.spec.json",
+            "karmaConfig": "projects/n7-boilerplate-common/karma.conf.js"
+          }
+        }
+      }
+    },
+    "n7-boilerplate-arianna": {
+      "projectType": "library",
+      "root": "projects/n7-boilerplate-arianna",
+      "sourceRoot": "projects/n7-boilerplate-arianna/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/n7-boilerplate-arianna/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/n7-boilerplate-arianna/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/n7-boilerplate-arianna/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/n7-boilerplate-arianna/src/test.ts",
+            "tsConfig": "projects/n7-boilerplate-arianna/tsconfig.spec.json",
+            "karmaConfig": "projects/n7-boilerplate-arianna/karma.conf.js"
+          }
+        }
+      }
+    },
+    "n7-boilerplate-muruca": {
+      "projectType": "library",
+      "root": "projects/n7-boilerplate-muruca",
+      "sourceRoot": "projects/n7-boilerplate-muruca/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/n7-boilerplate-muruca/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/n7-boilerplate-muruca/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/n7-boilerplate-muruca/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/n7-boilerplate-muruca/src/test.ts",
+            "tsConfig": "projects/n7-boilerplate-muruca/tsconfig.spec.json",
+            "karmaConfig": "projects/n7-boilerplate-muruca/karma.conf.js"
+          }
+        }
+      }
+    },
+    "n7-boilerplate-dataviz": {
+      "projectType": "library",
+      "root": "projects/n7-boilerplate-dataviz",
+      "sourceRoot": "projects/n7-boilerplate-dataviz/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/n7-boilerplate-dataviz/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/n7-boilerplate-dataviz/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/n7-boilerplate-dataviz/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/n7-boilerplate-dataviz/src/test.ts",
+            "tsConfig": "projects/n7-boilerplate-dataviz/tsconfig.spec.json",
+            "karmaConfig": "projects/n7-boilerplate-dataviz/karma.conf.js"
           }
         }
       }

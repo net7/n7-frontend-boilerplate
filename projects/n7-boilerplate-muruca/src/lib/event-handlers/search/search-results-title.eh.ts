@@ -1,0 +1,25 @@
+import { EventHandler } from '@net7/core';
+
+export class MrSearchResultsTitleEH extends EventHandler {
+  public listen() {
+    this.innerEvents$.subscribe(({ type, payload }) => {
+      switch (type) {
+        case 'mr-search-results-title.change':
+          this.emitOuter('change', payload);
+          break;
+        default:
+          break;
+      }
+    });
+
+    this.outerEvents$.subscribe(({ type, payload }) => {
+      switch (type) {
+        case 'mr-search-layout.inputquerychange':
+          this.dataSource.OnInputQueryChange(payload);
+          break;
+        default:
+          break;
+      }
+    });
+  }
+}
