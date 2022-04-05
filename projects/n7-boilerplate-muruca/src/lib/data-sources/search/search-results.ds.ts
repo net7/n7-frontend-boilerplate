@@ -4,19 +4,6 @@ import { merge, clone } from 'lodash';
 import { helpers } from '@net7/boilerplate-common';
 import linksHelper from '../../helpers/links-helper';
 
-const ITEM_PREVIEW_DEFAULTS = {
-  limit: 100,
-  striptags: true
-};
-
-type MrSearchResponse = {
-  limit: number;
-  offset: number;
-  results: MrSearchResult[];
-  sort: string;
-  total_count: number;
-}
-
 type HighlightItem = [string, [string]] | {
   link?: {
     /** from the baseUrl of the application */
@@ -41,6 +28,19 @@ interface MrSearchResult extends ItemPreviewData {
     id: string | number;
     type: string;
   };
+}
+
+const ITEM_PREVIEW_DEFAULTS = {
+  limit: 100,
+  striptags: true
+};
+
+type MrSearchResponse = {
+  limit: number;
+  offset: number;
+  results: MrSearchResult[];
+  sort: string;
+  total_count: number;
 }
 
 export class MrSearchResultsDS extends DataSource {
@@ -98,7 +98,7 @@ export class MrSearchResultsDS extends DataSource {
             if (highlight.link.absolute) {
               // path is relative to the baseUrl
               href = `${highlight.link.absolute}`;
-            } else if (highlight.link.relative) {
+            } else if (highlight.link) {
               // path is relative to the item-preview url
               href = `${item.link}${highlight.link}`;
             }
