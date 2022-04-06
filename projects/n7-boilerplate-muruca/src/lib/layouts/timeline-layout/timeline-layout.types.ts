@@ -30,6 +30,7 @@ export interface GetResourceResponse {
     'collection-places': CollectionData;
     'collection-witnesses': CollectionData;
     'collection-works': CollectionData;
+    'collection-books': CollectionData;
     gallery?: GalleryItem[] | [];
     header: {
       title: string;

@@ -1,104 +1,100 @@
-<div class="mr-timeline mr-layout"
-     *ngIf="lb.dataSource">
-    <div class="mr-timeline__timeline">
-        <div class="mr-timeline__timeline-loading"
-             *ngIf="lb.dataSource.loading.timeline">
-        </div>
-        <n7-timeline [data]="lb.widgets['mr-timeline'].ds.out$ | async"
-                     *ngIf="!lb.dataSource.loading.timeline">
-        </n7-timeline>
+<div class="mr-timeline mr-layout" *ngIf="lb.dataSource">
+  <div class="mr-timeline__timeline">
+    <div
+      class="mr-timeline__timeline-loading"
+      *ngIf="lb.dataSource.loading.timeline"
+    ></div>
+    <n7-timeline
+      [data]="lb.widgets['mr-timeline'].ds.out$ | async"
+      *ngIf="!lb.dataSource.loading.timeline"
+    >
+    </n7-timeline>
+  </div>
+
+  <div class="mr-timeline__page mr-side-margin">
+    <!-- Result header -->
+    <div class="mr-timeline__page-header">
+      <p
+        class="mr-timeline__date"
+        *ngIf="!lb.dataSource.loading.resourceDetails"
+      >
+        {{lb.dataSource.eventHeader}}
+      </p>
+      <div class="mr-timeline__title">
+        <n7-inner-title
+          [data]="lb.widgets['mr-year-header'].ds.out$ | async"
+          [emit]="lb.widgets['mr-year-header'].emit"
+        >
+        </n7-inner-title>
+      </div>
     </div>
+    <!-- END // Result header -->
 
-    <div class="mr-timeline__page mr-side-margin">
+    <div class="mr-timeline__content">
+      <!-- DESCRIZIONE -->
+      <div class="mr-content-block mr-content-block-description">
+        <p [innerHTML]="lb.dataSource.eventDescription"></p>
+        <p></p>
+      </div>
 
-        <!-- Result header -->
-        <div class="mr-timeline__page-header">
-            <p class="mr-timeline__date"
-                *ngIf="!lb.dataSource.loading.resourceDetails">
-                {{lb.dataSource.eventHeader}}
-            </p>
-            <div class="mr-timeline__title">
-                <n7-inner-title [data]="lb.widgets['mr-year-header'].ds.out$ | async"
-                                [emit]="lb.widgets['mr-year-header'].emit">
-                </n7-inner-title>
-            </div>
+      <ng-container *ngIf="!lb.dataSource.loading.resourceDetails">
+        <!-- GALLERIA -->
+        <div class="mr-content-block n7-grid-6">
+          <ng-container
+            *ngFor="let image of lb.dataSource.collectionGalleryData"
+          >
+            <a [href]="image.image" class="mr-gallery__image">
+              <img [src]="image.thumbnail" alt="image.title" />
+            </a>
+          </ng-container>
         </div>
-        <!-- END // Result header -->        
-        
-        <div class="mr-timeline__content">
-            <!-- DESCRIZIONE -->
-            <div class="mr-content-block mr-content-block-description">
-                <p [innerHTML]="lb.dataSource.eventDescription">
-                <p>
-            </div>
-            <ng-container *ngIf="!lb.dataSource.loading.resourceDetails">
 
-                <!-- GALLERIA -->
-                <div class="mr-content-block n7-grid-6">
-                    <ng-container *ngFor="let image of lb.dataSource.collectionGalleryData">
-                        <a [href]="image.image" class="mr-gallery__image">
-                            <img [src]="image.thumbnail" alt="image.title">
-                        </a>
-                    </ng-container>
-                </div>
-                
-
-                <!-- MAPPA -->
-                <div class="mr-content-block mr-content-block-map" *ngIf="lb.dataSource.hasMap">
-                    <h3 class="mr-content-block__title" *ngIf="lb.dataSource.mapHeader">{{ lb.dataSource.mapHeader }}</h3>
-                    <div class="mr-content-block__content">
-                        <n7-map [data]="lb.widgets['mr-map'].ds.out$ | async"></n7-map>
-                    </div>
-                </div>
-
-                <!-- BIBLIOGRAFIA -->
-                <ng-container *ngIf="lb.dataSource.bibliographyData as biblio">
-                    <ng-container *ngIf="biblio.items && biblio.items.length > 0">
-                        <div class="mr-content-block mr-content-block-collection">
-                            <h3 class="mr-content-block__title">{{ biblio.header.title }}</h3>
-                            <div class="mr-content-block__content n7-grid-1">
-                                <ng-container *ngFor="let item of biblio.items">
-                                    <div class="mr-timeline__collection-content">
-                                        <n7-item-preview 
-                                            [emit]="lb.eventHandler.itemPreviewEmit"    
-                                            [data]="item">
-                                        </n7-item-preview>
-                                    </div>
-                                </ng-container>
-                            </div>
-                        </div>
-                    </ng-container>
-                </ng-container>
-
-                <!-- TESTIMONI -->
-                <ng-container *ngIf="lb.dataSource.collectionWitnessData as wit">
-                    <ng-container *ngIf="wit.items && wit.items.length > 0">
-                        <div class="mr-content-block-collection mr-content-block">
-                            <h3 class="mr-content-block__title">{{ wit.header.title }}</h3>
-                            <div class="mr-content-block__content n7-grid-3">
-                                <n7-item-preview *ngFor="let item of wit.items"
-                                                 [data]="item">
-                                </n7-item-preview>
-                            </div>
-                        </div>
-                    </ng-container>
-                </ng-container>
-
-                <!-- OPERE -->
-                <ng-container *ngIf="lb.dataSource.collectionWorksData as works">
-                    <ng-container *ngIf="works.items && works.items.length > 0">
-                        <div class="mr-content-block-collection mr-content-block">
-                            <h3 class="mr-content-block__title">{{ works.header.title }}</h3>
-                            <div class="mr-content-block__content n7-grid-3">
-                                <n7-item-preview *ngFor="let item of works.items"
-                                                 [data]="item">
-                                </n7-item-preview>
-                            </div>
-                        </div>
-                    </ng-container>
-                </ng-container>
-
-            </ng-container>
+        <!-- MAPPA -->
+        <div
+          class="mr-content-block mr-content-block-map"
+          *ngIf="lb.dataSource.hasMap"
+        >
+          <h3 class="mr-content-block__title" *ngIf="lb.dataSource.mapHeader">
+            {{ lb.dataSource.mapHeader }}
+          </h3>
+          <div class="mr-content-block__content">
+            <n7-map [data]="lb.widgets['mr-map'].ds.out$ | async"></n7-map>
+          </div>
         </div>
+
+        <!-- BIBLIOGRAFIA -->
+        <ng-container *ngIf="lb.dataSource.bibliographyData as biblio">
+          <ng-container *ngIf="biblio.items && biblio.items.length > 0">
+            <div class="mr-content-block mr-content-block-collection">
+              <h3 class="mr-content-block__title">{{ biblio.header.title }}</h3>
+              <div class="mr-content-block__content n7-grid-1">
+                <ng-container *ngFor="let item of biblio.items">
+                  <div class="mr-timeline__collection-content">
+                    <n7-item-preview
+                      [emit]="lb.eventHandler.itemPreviewEmit"
+                      [data]="item"
+                    >
+                    </n7-item-preview>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </ng-container>
+        </ng-container>
+
+        <!-- COLLECTIONS  -->
+        <ng-container *ngFor="let coll of lb.dataSource.collectionData">
+          <ng-container *ngIf="coll.items && coll.items.length > 0">
+            <div class="mr-content-block-collection mr-content-block">
+              <h3 class="mr-content-block__title">{{ coll.header.title }}</h3>
+              <div class="mr-content-block__content n7-grid-3">
+                <n7-item-preview *ngFor="let item of coll.items" [data]="item">
+                </n7-item-preview>
+              </div>
+            </div>
+          </ng-container>
+        </ng-container>
+      </ng-container>
     </div>
+  </div>
 </div>
