@@ -4,10 +4,14 @@ import { Location } from '@angular/common';
 import { Timeline } from 'vis-timeline';
 import { Subject } from 'rxjs';
 import { first } from 'rxjs/operators';
-import { ConfigurationService, CommunicationService, MainStateService } from '@net7/boilerplate-common';
+import {
+  ConfigurationService,
+  CommunicationService,
+  MainStateService,
+} from '@net7/boilerplate-common';
 import { MrLayoutStateService } from '../../services/layout-state.service';
 import 'leaflet.markercluster';
-import { CollectionItem, GetResourceResponse } from './timeline-layout.types';
+import { GetResourceResponse } from './timeline-layout.types';
 
 // demo page: http://localhost:4200/timeline/2992/missione-venezia
 
@@ -29,13 +33,13 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
   public loading = {
     resourceDetails: true,
     timeline: true,
-  }
+  };
 
   public defaultDescription = '';
 
   public eventHeader: string;
 
-  public eventDescription = ''
+  public eventDescription = '';
 
   public timelineData: TimelineData;
 
@@ -45,7 +49,7 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
 
   public mapHeader;
 
-  public timelineListener$: Subject<Timeline> = new Subject()
+  public timelineListener$: Subject<Timeline> = new Subject();
 
   public bibliographyData: {
     header: { title: string };
@@ -57,17 +61,24 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
       };
       text?: string;
     }[];
-  }
+  };
 
   public collectionWorksData: {
     header: { title: string };
     items: ItemPreviewData[];
-  }
+  };
 
   public collectionWitnessData: {
     header: { title: string };
     items: ItemPreviewData[];
   };
+
+  public collectionBooksData: {
+    header: { title: string };
+    items: ItemPreviewData[];
+  };
+
+  public collectionData: any;
 
   public collectionGalleryData;
 
@@ -83,36 +94,43 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
     this.pageConfig = this.configuration.get(this.configId) || {};
 
     // update the timeline
-    this.communication.request$('timeline', {
-      method: 'GET',
-      onError: (e) => console.error(e)
-    }).subscribe((d) => {
-      this.timelineData = d;
-      this.loading.timeline = false;
-      this.one('mr-timeline').updateOptions({ libOptions: this.pageConfig.libOptions });
-      this.one('mr-timeline').update(d);
-    });
-    this.getWidgetDataSource('mr-timeline').timelineLoaded$
-      .pipe(first())
+    this.communication
+      .request$('timeline', {
+        method: 'GET',
+        onError: (e) => console.error(e),
+      })
+      .subscribe((d) => {
+        this.timelineData = d;
+        this.loading.timeline = false;
+        this.one('mr-timeline').updateOptions({
+          libOptions: this.pageConfig.libOptions,
+        });
+        this.one('mr-timeline').update(d);
+      });
+    this.getWidgetDataSource('mr-timeline')
+      .timelineLoaded$.pipe(first())
       .subscribe((timeline: Timeline) => {
         this.timelineListener$.next(timeline);
       });
 
     // update the description
-    this.communication.request$('timelineDescription', {
-      method: 'GET',
-      onError: (e) => console.error(e),
-    }).subscribe((d) => {
-      this.defaultDescription = d.text;
-      this.loadDefaults(false);
-    });
+    this.communication
+      .request$('timelineDescription', {
+        method: 'GET',
+        onError: (e) => console.error(e),
+      })
+      .subscribe((d) => {
+        this.defaultDescription = d.text;
+        this.loadDefaults(false);
+      });
 
     // set map header
     this.mapHeader = _t(this.pageConfig.mapHeader);
   }
 
   loadDefaults(navigate: boolean) {
-    const timelineInstance = this.getWidgetDataSource('mr-timeline').timeline as Timeline;
+    const timelineInstance = this.getWidgetDataSource('mr-timeline')
+      .timeline as Timeline;
     if (timelineInstance) {
       timelineInstance.setSelection([]);
     }
@@ -122,6 +140,7 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
     this.bibliographyData = undefined;
     this.collectionWitnessData = undefined;
     this.collectionWorksData = undefined;
+    this.collectionBooksData = undefined;
     this.collectionGalleryData = undefined;
     if (navigate) this.location.go('/timeline/');
     this.one('mr-year-header').update({
@@ -130,96 +149,102 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
   }
 
   updatePageDetails(id) {
-    this.communication.request$('resource', {
-      onError: (e) => console.error(e),
-      method: 'POST',
-      params: {
-        id, type: 'views/time-events'
-      }
-    }).subscribe((res: GetResourceResponse) => {
-      if (!res || res == null) return;
-      const {
-        /* eslint-disable */
-        'collection-bibliography': bibData,
-        'collection-places': placesData,
-        'collection-witnesses': witnessData,
-        'collection-works': worksData,
-        gallery,
-        header,
-        /* eslint-enable */
-      } = res.sections;
-      if (placesData) {
-        this.hasMap = true;
-        this.one('mr-map').update(placesData);
-      } else {
-        this.hasMap = false;
-      }
-      if (bibData) {
-        this.bibliographyData = {
-          header: bibData.header,
-          items: bibData.items.map((item) => ({
-            ...item,
-            anchor: {
-              payload: item.payload
-            },
-            classes: 'mr-item-preview-bibliography'
-          }))
-        };
-      } else {
-        this.bibliographyData = undefined;
-      }
-      if (witnessData) {
-        this.collectionWitnessData = {
-          items: witnessData.items.map((witness: {
-            link: string; title: string; type: string;
-          }): ItemPreviewData => ({
-            title: witness.title,
-            anchor: {
-              href: witness.link,
+    this.communication
+      .request$('resource', {
+        onError: (e) => console.error(e),
+        method: 'POST',
+        params: {
+          id,
+          type: 'views/time-events',
+        },
+      })
+      .subscribe((res: GetResourceResponse) => {
+        // any
+        if (!res || res == null) return;
+
+        const {
+          /* eslint-disable */
+          "collection-bibliography": bibData,
+          "collection-places": placesData,
+          gallery,
+          header,
+          /* eslint-enable */
+        } = res.sections;
+
+        if (res.sections['collection-bibliography']) {
+          delete res.sections['collection-bibliography'];
+        }
+        if (res.sections['collection-places']) {
+          delete res.sections['collection-places'];
+        }
+        const collections = [];
+        Object.keys(res.sections).forEach((collection) => {
+          if (String(collection).startsWith('collection-')) {
+            if (res.sections[collection].items) {
+              collections.push({
+                items: res.sections[collection].items.map(
+                  (type: {
+                    link: string;
+                    title: string;
+                    type: string;
+                  }): ItemPreviewData => ({
+                    title: type.title,
+                    anchor: {
+                      href: type.link,
+                    },
+                  })
+                ),
+                header: res.sections[collection].header,
+              });
             }
-          })),
-          header: witnessData.header
-        };
-      } else {
-        this.collectionWitnessData = undefined;
-      }
-      if (worksData?.items) {
-        this.collectionWorksData = {
-          header: worksData.header,
-          items: worksData.items.map((item: CollectionItem) => ({
-            image: item.image,
-            title: item.title,
-            anchor: item.link ? {
-              href: item.link,
-            } : undefined,
-            text: item.text,
-          }))
-        };
-      } else {
-        this.collectionWorksData = undefined;
-      }
-      if (gallery) {
-        this.collectionGalleryData = gallery;
-      } else {
-        this.collectionGalleryData = undefined;
-      }
-      if (header) {
-        this.eventDescription = header.content;
-        this.eventHeader = res.title;
-        this.one('mr-year-header').update({
-          title: { main: { text: header.title } },
-          actions: {
-            buttons: [{
-              text: '',
-              icon: 'n7-icon-close',
-              anchor: {
-                payload: 'closebutton'
-              }
-            }]
+            this.collectionData = collections;
           }
         });
-      }
-      this.loading.resourceDetails = false;
-    });
+
+        if (gallery) {
+          this.collectionGalleryData = gallery;
+        } else {
+          this.collectionGalleryData = undefined;
+        }
+        if (header) {
+          this.eventDescription = header.content;
+          this.eventHeader = res.title;
+          this.one('mr-year-header').update({
+            title: { main: { text: header.title } },
+            actions: {
+              buttons: [
+                {
+                  text: '',
+                  icon: 'n7-icon-close',
+                  anchor: {
+                    payload: 'closebutton',
+                  },
+                },
+              ],
+            },
+          });
+        }
+        if (placesData) {
+          this.hasMap = true;
+          this.one('mr-map').update(placesData);
+        } else {
+          this.hasMap = false;
+        }
+        if (bibData) {
+          this.bibliographyData = {
+            header: bibData.header,
+            items: bibData.items.map((item) => ({
+              ...item,
+              anchor: {
+                payload: item.payload,
+              },
+              classes: 'mr-item-preview-bibliography',
+            })),
+          };
+        } else {
+          this.bibliographyData = undefined;
+        }
+        this.loading.resourceDetails = false;
+      });
   }
 }
