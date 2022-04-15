@@ -3,15 +3,15 @@
  *
  * Title component for page, sections, with title, subtitle and some sortings items.
  */
- 
+
 /* ------------------------------------ *\
    #INNER-TITLE
 \* ------------------------------------ */
 .n7-inner-title {
     // display: flex;
     // align-items: center;
-    padding: $space*4 0;
-    
+    padding: $space * 4 0;
+
     &__wrapper-texts {
         // display: flex;
         // align-items: center;
@@ -44,7 +44,6 @@
     // }
 
     &__title {
-        // margin-bottom: calc($space/2)     ;
         font-weight: $font-weight-black;
         font-family: $font-family-headings;
         font-size: $font-size-xxl;
@@ -90,7 +89,7 @@
     // }
 
     // &__search-bar {
-    //     margin-right: calc($space/2);
+    //     margin-right: calc($space * 0.5);
     // }
 
     // &__buttons-wrapper {
@@ -113,12 +112,10 @@
     // }
 }
 
-
 /* ------------------------------------ *\
    #MEDIA-QUERIES
 \* ------------------------------------ */
 @media all and (max-width: $breakpoint-inner-title-medium) {
-
     // .n7-inner-title {
     //     flex-wrap: wrap;
 
@@ -128,13 +125,11 @@
     //         @include flex-item-width(calc(100% - #{$space*6}));
     //     }
     // }
-
 }
 
 @media all and (max-width: $breakpoint-inner-title-small) {
-    
     // .n7-inner-title {
-     
+
     //     &__wrapper-texts {
     //         margin-bottom: $space;
     //     }
@@ -154,7 +149,6 @@
     //         }
     //     }
     // }
-
 }
 
 @media all and (max-width: $breakpoint-smartphone-landscape) {

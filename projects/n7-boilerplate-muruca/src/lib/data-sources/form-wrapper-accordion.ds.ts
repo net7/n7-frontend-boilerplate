@@ -1,4 +1,5 @@
 import { DataSource } from '@net7/core';
+import tippy from 'tippy.js';
 import { MrFormWrapperAccordionData } from '../components/form-wrapper-accordion/form-wrapper-accordion';
 
 const ICON_OPEN = 'n7-icon-angle-up';
@@ -30,6 +31,14 @@ export class MrFormWrapperAccordionDS extends DataSource {
         group.options.iconRight = isOpen ? ICON_CLOSE : ICON_OPEN;
         group.options.isOpen = !group.options.isOpen;
       }
+    });
+  }
+
+  checkInfoTooltips() {
+    setTimeout(() => {
+      tippy(document.querySelectorAll('.mr-input-info'), {
+        content: (reference) => reference.getAttribute('alt'),
+      });
     });
   }
 }

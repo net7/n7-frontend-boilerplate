@@ -10,8 +10,8 @@
 .aw-bubble-popup-menu {
     &__close {
         position: absolute;
-        top: $space*1.5;
-        right: $space*1.5;
+        top: $space * 1.5;
+        right: $space * 1.5;
         color: $color-text-light;
         cursor: pointer;
         transition: all $transition-durations;
@@ -22,8 +22,8 @@
     }
 
     &__title {
-        margin-bottom: calc($space/2);
-        padding-right: $space*3;
+        margin-bottom: calc($space * 0.5);
+        padding-right: $space * 3;
         font-weight: $font-weight-black;
     }
 
@@ -42,12 +42,12 @@
             cursor: pointer;
             transition: all $transition-durations;
             margin-right: $space;
-            padding-right: $space*0.8;
+            padding-right: $space * 0.8;
             border-right: 1px solid $color-border-normal;
 
             a {
                 color: $color-text;
-                
+
                 &:hover {
                     color: $color-text-link;
                 }

@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 import {
   InputCheckboxData, InputSelectData, InputTextData, MapData, HistogramRangeData
 } from '@net7/components';
@@ -59,6 +60,7 @@ export interface ConfigMurucaAdvancedSearchSection {
 
 export interface ConfigMurucaAdvancedSearchInput<T> {
   id: string;
+  info?: string;
   /** input state */
   state?: {
     value: T;
