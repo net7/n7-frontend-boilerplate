@@ -11,7 +11,7 @@ For each commit add a description under the Unreleased section under the corresp
 
 ### Added 
 Muruca
- - 
+ - added input info tooltip
 Dataviz
  - 
 Arianna
@@ -19,7 +19,8 @@ Arianna
 
 ### Changed
 Muruca
- - 
+ - Space * 0.5
+ - Quote style
 Dataviz
  - 
 Arianna
@@ -27,7 +28,9 @@ Arianna
 
 ### Fixed
 Muruca
- - 
+ - Fix muruca search config path
+ - Fixed highlight link in advanced search item preview
+ - timeline-layout-fix 
 Dataviz
  - 
 Arianna
