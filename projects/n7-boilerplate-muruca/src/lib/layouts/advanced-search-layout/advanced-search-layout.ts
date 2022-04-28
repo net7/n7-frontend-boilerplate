@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import {
   AbstractLayout,
   LayoutsConfigurationService,
@@ -13,7 +13,7 @@ import { MrAdvancedSearchLayoutConfig as config } from './advanced-search-layout
   templateUrl: './advanced-search-layout.html',
 })
 export class MrAdvancedSearchLayoutComponent extends AbstractLayout implements OnInit, OnDestroy {
-  private configId: string;
+  private routeData: Data;
 
   constructor(
     private router: Router,
@@ -27,7 +27,7 @@ export class MrAdvancedSearchLayoutComponent extends AbstractLayout implements O
 
   protected initPayload() {
     return {
-      configId: this.configId,
+      routeData: this.routeData,
       configuration: this.configuration,
       mainState: this.mainState,
       router: this.router,
@@ -37,8 +37,8 @@ export class MrAdvancedSearchLayoutComponent extends AbstractLayout implements O
   }
 
   ngOnInit() {
-    this.activatedRoute.data.subscribe((data) => {
-      this.configId = data.configId;
+    this.activatedRoute.data.subscribe((routeData) => {
+      this.routeData = routeData;
       this.onInit();
     });
   }

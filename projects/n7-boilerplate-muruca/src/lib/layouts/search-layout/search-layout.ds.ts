@@ -1,3 +1,4 @@
+import { Data } from '@angular/router';
 import { LayoutDataSource, _t } from '@net7/core';
 import { ConfigurationService, CommunicationService, MainStateService } from '@net7/boilerplate-common';
 import localStorageHelper from '../../helpers/local-storage-helper';
@@ -10,7 +11,7 @@ export class MrSearchLayoutDS extends LayoutDataSource {
 
   private mainState: MainStateService;
 
-  private configId: string;
+  private routerData: Data;
 
   public searchService: MrSearchService;
 
@@ -31,9 +32,9 @@ export class MrSearchLayoutDS extends LayoutDataSource {
     this.communication = payload.communication;
     this.mainState = payload.mainState;
     this.searchService = payload.searchService;
-    this.configId = payload.configId;
-    this.pageConfig = this.configuration.get(this.configId);
-    this.hideDescriptionKey = `hide-description-${this.configId}`;
+    this.routerData = payload.routerData;
+    this.pageConfig = this.configuration.get(this.routerData.configId);
+    this.hideDescriptionKey = `hide-description-${this.routerData.configId}`;
 
     // config
     this.all().updateOptions({ config: this.pageConfig });
@@ -129,8 +130,9 @@ export class MrSearchLayoutDS extends LayoutDataSource {
   getPageDescription() {
     if (this.pageConfig.description && !localStorageHelper.get(this.hideDescriptionKey)) {
       const { description } = this.pageConfig;
+      const { locale } = this.routerData;
       this.communication.request$('searchDescription', {
-        urlParams: description.id,
+        urlParams: locale ? `${description.id}?locale=${locale}` : description.id,
       }).subscribe((response) => {
         this.one('mr-search-page-description').update(response);
         this.descriptionLoaded = true;

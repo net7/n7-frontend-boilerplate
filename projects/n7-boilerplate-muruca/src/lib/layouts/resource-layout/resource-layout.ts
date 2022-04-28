@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import {
   AbstractLayout,
   CommunicationService,
@@ -54,7 +54,7 @@ const EVENTHANDLER_MAP = {
   templateUrl: './resource-layout.html',
 })
 export class MrResourceLayoutComponent extends AbstractLayout implements OnInit, OnDestroy {
-  private configId: string;
+  private routerData: Data;
 
   constructor(
     layoutsConfiguration: LayoutsConfigurationService,
@@ -72,7 +72,7 @@ export class MrResourceLayoutComponent extends AbstractLayout implements OnInit,
 
   protected initPayload() {
     return {
-      configId: this.configId,
+      routerData: this.routerData,
       configuration: this.configuration,
       communication: this.communication,
       mainState: this.mainState,
@@ -85,9 +85,9 @@ export class MrResourceLayoutComponent extends AbstractLayout implements OnInit,
   }
 
   ngOnInit() {
-    this.activatedRoute.data.subscribe((data) => {
+    this.activatedRoute.data.subscribe((routerData) => {
       this.layoutState.add('content');
-      this.configId = data.configId;
+      this.routerData = routerData;
       this.loadWidgets();
       this.onInit();
     });
@@ -98,7 +98,8 @@ export class MrResourceLayoutComponent extends AbstractLayout implements OnInit,
   }
 
   loadWidgets() {
-    const { top, content } = this.configuration.get(this.configId).sections;
+    const { configId } = this.routerData;
+    const { top, content } = this.configuration.get(configId).sections;
     const sections = top.concat(content);
     this.widgets = [];
     if (sections) {

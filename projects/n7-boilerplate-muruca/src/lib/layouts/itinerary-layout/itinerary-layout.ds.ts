@@ -1,3 +1,4 @@
+import { Data } from '@angular/router';
 import { Observable } from 'rxjs';
 import { LayoutDataSource, _t } from '@net7/core';
 import {
@@ -11,9 +12,9 @@ export class MrItineraryLayoutDS extends LayoutDataSource {
 
   private communication: CommunicationService;
 
-  private mainState: MainStateService
+  private mainState: MainStateService;
 
-  private configId: string;
+  private routerData: Data;
 
   private pageConfig: any;
 
@@ -29,8 +30,8 @@ export class MrItineraryLayoutDS extends LayoutDataSource {
     this.configuration = payload.configuration;
     this.communication = payload.communication;
     this.mainState = payload.mainState;
-    this.configId = payload.configId;
-    this.pageConfig = this.configuration.get(this.configId);
+    this.routerData = payload.routerData;
+    this.pageConfig = this.configuration.get(this.routerData.configId);
 
     // add translations
     this.pageConfig.sections = this.pageConfig.sections.map((section) => ({
@@ -40,10 +41,11 @@ export class MrItineraryLayoutDS extends LayoutDataSource {
   }
 
   pageRequest$(id, onError: (err: any) => void): Observable<any> {
+    const { locale } = this.routerData;
     return this.communication.request$('itinerary', {
       onError,
       method: 'GET',
-      urlParams: id
+      urlParams: locale ? `${id}?locale=${locale}` : id
     });
   }
 

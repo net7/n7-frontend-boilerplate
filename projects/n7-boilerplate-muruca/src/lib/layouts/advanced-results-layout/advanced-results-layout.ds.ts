@@ -1,3 +1,4 @@
+import { Data } from '@angular/router';
 import { LayoutDataSource, _t } from '@net7/core';
 import { Observable } from 'rxjs';
 import {
@@ -13,16 +14,16 @@ export class MrAdvancedResultsLayoutDS extends LayoutDataSource {
 
   protected mainState: MainStateService;
 
-  protected configId: string;
+  protected routeData: Data;
 
   public pageConfig;
 
   onInit(payload) {
     this.configuration = payload.configuration;
     this.mainState = payload.mainState;
-    this.configId = payload.configId;
+    this.routeData = payload.routeData;
     this.communication = payload.communication;
-    this.pageConfig = this.configuration.get(this.configId);
+    this.pageConfig = this.configuration.get(this.routeData.configId);
 
     // config
     this.all().updateOptions({ config: this.pageConfig });
@@ -55,6 +56,7 @@ export class MrAdvancedResultsLayoutDS extends LayoutDataSource {
   }
 
   request$(params, onError): Observable<any> {
+    const { locale } = this.routeData;
     const { searchId } = this.pageConfig;
     const searchParams = {
       ...params
@@ -86,6 +88,7 @@ export class MrAdvancedResultsLayoutDS extends LayoutDataSource {
           ...resultsParams
         }
       },
+      urlParams: locale ? `?locale=${locale}` : '',
       onError
     });
   }

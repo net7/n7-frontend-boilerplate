@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import {
   AbstractLayout,
@@ -16,7 +16,7 @@ import { MrMapLayoutConfig as config } from './map-layout.config';
   templateUrl: './map-layout.html',
 })
 export class MrMapLayoutComponent extends AbstractLayout implements OnInit, OnDestroy {
-  private configId: string;
+  private routerData: Data;
 
   constructor(
     layoutsConfiguration: LayoutsConfigurationService,
@@ -33,7 +33,7 @@ export class MrMapLayoutComponent extends AbstractLayout implements OnInit, OnDe
 
   protected initPayload() {
     return {
-      configId: this.configId,
+      routerData: this.routerData,
       mainState: this.mainState,
       configuration: this.configuration,
       communication: this.communication,
@@ -46,8 +46,8 @@ export class MrMapLayoutComponent extends AbstractLayout implements OnInit, OnDe
   }
 
   ngOnInit() {
-    this.route.data.subscribe((data) => {
-      this.configId = data.configId;
+    this.route.data.subscribe((routerData) => {
+      this.routerData = routerData;
       this.layoutState.add('content');
       this.onInit();
     });

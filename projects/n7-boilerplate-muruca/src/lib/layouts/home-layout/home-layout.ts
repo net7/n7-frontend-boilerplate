@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 import {
   AbstractLayout,
   CommunicationService,
@@ -35,7 +35,7 @@ const EVENTHANDLER_MAP = {
   templateUrl: './home-layout.html',
 })
 export class MrHomeLayoutComponent extends AbstractLayout implements OnInit, OnDestroy {
-  private configId: string;
+  private routeData: Data;
 
   constructor(
     layoutsConfiguration: LayoutsConfigurationService,
@@ -50,7 +50,7 @@ export class MrHomeLayoutComponent extends AbstractLayout implements OnInit, OnD
 
   protected initPayload() {
     return {
-      configId: this.configId,
+      routeData: this.routeData,
       mainState: this.mainState,
       configuration: this.configuration,
       communication: this.communication,
@@ -60,8 +60,8 @@ export class MrHomeLayoutComponent extends AbstractLayout implements OnInit, OnD
   }
 
   ngOnInit() {
-    this.activatedRoute.data.subscribe((data) => {
-      this.configId = data.configId;
+    this.activatedRoute.data.subscribe((routeData) => {
+      this.routeData = routeData;
       this.layoutState.add('content');
       this.loadWidgets();
       this.onInit();
@@ -73,7 +73,8 @@ export class MrHomeLayoutComponent extends AbstractLayout implements OnInit, OnD
   }
 
   loadWidgets() {
-    const homeConfig = this.configuration.get(this.configId) || {};
+    const { configId } = this.routeData;
+    const homeConfig = this.configuration.get(configId) || {};
     const { sections } = homeConfig;
 
     this.widgets = [];

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import {
   AbstractLayout,
   LayoutsConfigurationService,
@@ -17,7 +17,7 @@ import { MrResourceModalService } from '../../services/resource-modal.service';
   templateUrl: './search-layout.html',
 })
 export class MrSearchLayoutComponent extends AbstractLayout implements OnInit, OnDestroy {
-  private configId: string;
+  private routerData: Data;
 
   constructor(
     layoutsConfiguration: LayoutsConfigurationService,
@@ -36,7 +36,7 @@ export class MrSearchLayoutComponent extends AbstractLayout implements OnInit, O
 
   protected initPayload() {
     return {
-      configId: this.configId,
+      routerData: this.routerData,
       configuration: this.configuration,
       mainState: this.mainState,
       router: this.router,
@@ -50,10 +50,11 @@ export class MrSearchLayoutComponent extends AbstractLayout implements OnInit, O
   }
 
   ngOnInit() {
-    this.activatedRoute.data.subscribe((data) => {
-      this.configId = data.configId;
-      const { searchId, searchConfig } = this.configuration.get(this.configId);
-      this.searchService.init(searchId, searchConfig);
+    this.activatedRoute.data.subscribe((routerData) => {
+      this.routerData = routerData;
+      const { configId, locale } = this.routerData;
+      const { searchId, searchConfig } = this.configuration.get(configId);
+      this.searchService.init(searchId, searchConfig, locale);
       // add layout states
       this.layoutState.add(['results']);
       this.onInit();

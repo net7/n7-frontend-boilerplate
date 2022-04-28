@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+import { Data, Router } from '@angular/router';
 import { LayoutDataSource, _t } from '@net7/core';
 import { cloneDeep, isEmpty } from 'lodash';
 import { ConfigurationService, MainStateService } from '@net7/boilerplate-common';
@@ -12,7 +12,7 @@ export class MrAdvancedSearchLayoutDS extends LayoutDataSource {
 
   protected mainState: MainStateService;
 
-  protected configId: string;
+  protected routeData: Data;
 
   protected initialState = {};
 
@@ -24,8 +24,8 @@ export class MrAdvancedSearchLayoutDS extends LayoutDataSource {
     this.router = payload.router;
     this.configuration = payload.configuration;
     this.mainState = payload.mainState;
-    this.configId = payload.configId;
-    this.pageConfig = this.configuration.get(this.configId);
+    this.routeData = payload.routeData;
+    this.pageConfig = this.configuration.get(this.routeData.configId);
 
     // add translations
     this.addTranslations(this.pageConfig);
