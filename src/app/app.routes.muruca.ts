@@ -17,17 +17,186 @@ import {
 
 const NOT_FOUND_PATH = 'page-404';
 
-const config = {
+type RouteConfig = {
+  component?: any;
+  paths: {
+    [locale: string]: string;
+  };
+  data?: any;
+  hasRedirect?: boolean;
+}
+// pathMatch: 'full'
+const config: {
+  [layoutID: string]: RouteConfig
+} = {
   home: {
-    component: MrSearchLayoutComponent,
-    path: {
+    component: MrHomeLayoutComponent,
+    paths: {
       it: '',
-      en: 'en/',
-      es: 'es/',
+      en: 'en/'
+    },
+    data: { configId: 'home' }
+  },
+  works: {
+    component: MrSearchLayoutComponent,
+    paths: {
+      it: 'opere',
+      en: 'en/works'
+    },
+    data: { configId: 'search-works' },
+  },
+  atti: {
+    component: MrSearchLayoutComponent,
+    paths: {
+      it: 'atti',
+      en: 'en/acts'
+    },
+    data: { configId: 'search-acts' },
+  },
+  books: {
+    component: MrSearchLayoutComponent,
+    paths: {
+      it: 'biblioteca',
+      en: 'en/books'
+    },
+    data: { configId: 'search-books' },
+  },
+  work: {
+    component: MrResourceLayoutComponent,
+    paths: {
+      it: 'opera/:id/:slug',
+      en: 'en/work/:id/:slug'
+    },
+    data: { configId: 'resource-work' }
+  },
+  book: {
+    component: MrResourceLayoutComponent,
+    paths: {
+      it: 'libro/:id/:slug',
+      en: 'en/book/:id/:slug'
+    },
+    data: { configId: 'resource-book' }
+  },
+  toponym: {
+    component: MrResourceLayoutComponent,
+    paths: {
+      it: 'toponimo/:id/:slug',
+      en: 'en/toponym/:id/:slug'
+    },
+    data: { configId: 'resource-toponym' }
+  },
+  keyword: {
+    component: MrResourceLayoutComponent,
+    paths: {
+      it: 'parola-chiave/:id/:slug',
+      en: 'en/keyword/:id/:slug'
+    },
+    data: { configId: 'resource-keyword' }
+  },
+  witness: {
+    component: MrResourceLayoutComponent,
+    paths: {
+      it: 'testimone/:id/:slug',
+      en: 'en/witness/:id/:slug'
+    },
+    data: { configId: 'resource-witness' }
+  },
+  witnesses: {
+    component: MrSearchLayoutComponent,
+    paths: {
+      it: 'testimoni/:id/:slug',
+      en: 'en/witnesses/:id/:slug'
+    },
+    data: { configId: 'search-witnesses' },
+  },
+  timeline: {
+    component: MrTimelineLayoutComponent,
+    paths: {
+      it: 'linea-del-tempo/:id',
+      en: 'en/timeline/:id'
+    },
+    data: { configId: 'timeline' }
+  },
+  // FIXME
+  timelineRedirect: {
+    paths: {
+      it: 'linea-del-tempo',
+      en: 'en/timeline'
     },
     hasRedirect: true,
-    data: { configId: 'home' }
-  }
+  },
+  map: {
+    component: MrMapLayoutComponent,
+    paths: {
+      it: 'mappa/:id/:slug',
+      en: 'en/map/:id/:slug'
+    },
+    data: { configId: 'map' }
+  },
+  mapLanding: {
+    component: MrMapLayoutComponent,
+    paths: {
+      it: 'mappa/:id',
+      en: 'en/map/:id'
+    },
+    data: { configId: 'map' }
+  },
+  // FIXME
+  mapRedirect: {
+    paths: {
+      it: 'mappa',
+      en: 'en/map',
+    },
+    hasRedirect: true,
+  },
+  posts: {
+    component: MrPostsLayoutComponent,
+    paths: {
+      it: 'post',
+      en: 'en/posts'
+    },
+    data: { configId: 'posts' }
+  },
+  post: {
+    component: MrStaticLayoutComponent,
+    paths: {
+      it: 'post/:slug',
+      en: 'en/posts/:slug',
+    },
+    data: { configId: 'post' }
+  },
+  advancedSearch: {
+    component: MrAdvancedSearchLayoutComponent,
+    paths: {
+      it: 'ricerca-avanzata',
+      en: 'en/advanced-search'
+    },
+    data: { configId: 'advanced-search' }
+  },
+  advancedSearchFull: {
+    component: MrAdvancedResultsLayoutComponent,
+    paths: {
+      it: 'ricerca-avanzata-completa',
+      en: 'en/advanced-search-full'
+    },
+    data: { configId: 'advanced-search-full' }
+  },
+  advancedSearchResults: {
+    component: MrAdvancedResultsLayoutComponent,
+    paths: {
+      it: 'risultati-ricerca',
+      en: 'en/advanced-results'
+    },
+    data: { configId: 'advanced-results' }
+  },
+  itinerary: {
+    component: MrItineraryLayoutComponent,
+    paths: {
+      it: 'itinerario/:id/:slug',
+      en: 'en/itinerary/:id/:slug'
+    },
+    data: { configId: 'itinerary' }
+  },
 };
 
 const APP_ROUTES: Routes = [
@@ -38,75 +207,41 @@ const APP_ROUTES: Routes = [
   },
 ];
 
+/**
+ * Generate angular routes from config
+ */
 Object.keys(config).forEach((routeId) => {
   const {
-    component, data, path, hasRedirect
+    component, data, paths, hasRedirect
   } = config[routeId];
-  Object.keys(path).forEach((locale) => {
-    const currentPath = path[locale];
-    APP_ROUTES.push(
-      { path: currentPath, component, data: { ...data, routeId, locale } },
-    );
+  Object.entries(paths).forEach(([locale, path]) => {
+    // path to component
+    if (component) {
+      APP_ROUTES.push(
+        { path, component, data: { ...data, routeId, locale } },
+      );
+    }
+    // catch route
     if (hasRedirect) {
       APP_ROUTES.push(
-        { path: currentPath, redirectTo: `${currentPath}/` }
+        { path, redirectTo: `${path}/` }
       );
     }
   });
 });
 
 // default route handler
-APP_ROUTES.push(
-  {
-    path: '**',
-    component: MrStaticLayoutComponent,
-    canActivate: [],
-    data: {
-      notFoundPath: NOT_FOUND_PATH
-    }
+APP_ROUTES.push({
+  path: '**',
+  component: MrStaticLayoutComponent,
+  canActivate: [],
+  data: {
+    notFoundPath: NOT_FOUND_PATH
   }
-);
+}, {
+  path: NOT_FOUND_PATH,
+  component: Page404LayoutComponent,
+  data: { id: 'page-404' }
+});
 
-// export const APP_ROUTES: Routes = [
-//   {
-//     path: 'home',
-//     redirectTo: '',
-//     pathMatch: 'full'
-//   },
-//   { path: '', component: MrHomeLayoutComponent, data: { configId: 'home' } },
-//   // BOOK
-//   { path: 'en/book', component: MrSearchLayoutComponent, data: { configId: 'search-works' } },
-//   { path: 'book', component: MrSearchLayoutComponent, data: { configId: 'search-works' } },
-
-//   { path: 'opere', component: MrSearchLayoutComponent, data: { configId: 'search-works' } },
-//   { path: 'atti', component: MrSearchLayoutComponent, data: { configId: 'search-acts' } },
-//   { path: 'biblioteca', component: MrSearchLayoutComponent, data: { configId: 'search-books' } },
-//   { path: 'work/:id/:slug', redirectTo: 'opera/:id/:slug' },
-//   { path: 'libro/:id/:slug', component: MrResourceLayoutComponent, data: { configId: 'resource-book' } },
-//   { path: 'opera/:id/:slug', component: MrResourceLayoutComponent, data: { configId: 'resource-work' } },
-//   { path: 'toponym/:id/:slug', component: MrResourceLayoutComponent, data: { configId: 'resource-toponym' } },
-//   { path: 'keyword/:id/:slug', component: MrResourceLayoutComponent, data: { configId: 'resource-keyword' } },
-//   { path: 'testimone/:id/:slug', component: MrResourceLayoutComponent, data: { configId: 'resource-witness' } },
-//   { path: 'testimoni', component: MrSearchLayoutComponent, data: { configId: 'search-witnesses' } },
-//   { path: 'timeline/:id/:slug', component: MrTimelineLayoutComponent, data: { configId: 'timeline' } },
-//   { path: 'timeline/:id', component: MrTimelineLayoutComponent, data: { configId: 'timeline' } },
-//   { path: 'timeline', redirectTo: 'timeline/' },
-//   { path: 'map/:id/:slug', component: MrMapLayoutComponent, data: { configId: 'map' } },
-//   { path: 'map/:id', component: MrMapLayoutComponent, data: { configId: 'map' } },
-//   { path: 'map', redirectTo: 'map/' },
-//   { path: 'posts', component: MrPostsLayoutComponent, data: { configId: 'posts' } },
-//   { path: 'post/:slug', component: MrStaticLayoutComponent },
-//   { path: 'advanced-search', component: MrAdvancedSearchLayoutComponent, data: { configId: 'advanced-search' } },
-//   { path: 'advanced-search-full', component: MrAdvancedSearchLayoutComponent, data: { configId: 'advanced-search-full' } },
-//   { path: 'advanced-results', component: MrAdvancedResultsLayoutComponent, data: { configId: 'advanced-results' } },
-//   { path: 'itinerary/:id/:slug', component: MrItineraryLayoutComponent, data: { configId: 'itinerary' } },
-//   { path: NOT_FOUND_PATH, component: Page404LayoutComponent, data: { id: 'page-404' } },
-//   {
-//     path: '**',
-//     component: MrStaticLayoutComponent,
-//     canActivate: [],
-//     data: {
-//       notFoundPath: NOT_FOUND_PATH
-//     }
-//   }
-// ];
+export { APP_ROUTES };
