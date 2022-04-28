@@ -23,7 +23,7 @@ type RouteConfig = {
     [locale: string]: string;
   };
   data?: any;
-  hasRedirect?: boolean;
+  isRedirect?: boolean;
 }
 // pathMatch: 'full'
 const config: {
@@ -36,6 +36,12 @@ const config: {
       en: 'en/'
     },
     data: { configId: 'home' }
+  },
+  homeRedirect: {
+    paths: {
+      en: 'en',
+    },
+    isRedirect: true,
   },
   works: {
     component: MrSearchLayoutComponent,
@@ -123,7 +129,7 @@ const config: {
       it: 'linea-del-tempo',
       en: 'en/timeline'
     },
-    hasRedirect: true,
+    isRedirect: true,
   },
   map: {
     component: MrMapLayoutComponent,
@@ -147,7 +153,7 @@ const config: {
       it: 'mappa',
       en: 'en/map',
     },
-    hasRedirect: true,
+    isRedirect: true,
   },
   posts: {
     component: MrPostsLayoutComponent,
@@ -212,7 +218,7 @@ const APP_ROUTES: Routes = [
  */
 Object.keys(config).forEach((routeId) => {
   const {
-    component, data, paths, hasRedirect
+    component, data, paths, isRedirect
   } = config[routeId];
   Object.entries(paths).forEach(([locale, path]) => {
     // path to component
@@ -222,7 +228,7 @@ Object.keys(config).forEach((routeId) => {
       );
     }
     // catch route
-    if (hasRedirect) {
+    if (isRedirect) {
       APP_ROUTES.push(
         { path, redirectTo: `${path}/` }
       );
