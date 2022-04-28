@@ -12,7 +12,6 @@ import { EscapeHtmlPipe } from './pipes/keep-html.pipe';
 // LAYOUTS
 import { MrAdvancedResultsLayoutComponent } from './layouts/advanced-results-layout/advanced-results-layout';
 import { MrAdvancedSearchLayoutComponent } from './layouts/advanced-search-layout/advanced-search-layout';
-import { MrGlossaryLayoutComponent } from './layouts/glossary-layout/glossary-layout';
 import { MrHomeLayoutComponent } from './layouts/home-layout/home-layout';
 import { MrItineraryLayoutComponent } from './layouts/itinerary-layout/itinerary-layout';
 import { MrMapLayoutComponent } from './layouts/map-layout/map-layout';
@@ -35,7 +34,6 @@ const COMPONENTS = [
   // Layout components
   MrAdvancedResultsLayoutComponent,
   MrAdvancedSearchLayoutComponent,
-  MrGlossaryLayoutComponent,
   MrHomeLayoutComponent,
   MrItineraryLayoutComponent,
   MrMapLayoutComponent,
