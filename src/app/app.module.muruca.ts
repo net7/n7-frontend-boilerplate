@@ -14,9 +14,6 @@ import {
 } from '@net7/boilerplate-common';
 import {
   N7BoilerplateMurucaModule,
-  MrMenuService,
-  MrFooterService,
-  MrTranslationsLoaderService,
 } from '@net7/boilerplate-muruca';
 
 import { APP_ROUTES } from '@mr-routes';
@@ -26,7 +23,7 @@ import i18n from '@mr-config/i18n';
 
 import { AppComponent } from './app.component-muruca';
 
-const LANG_CODE = 'it_IT';
+const LANG_CODE = 'it';
 
 const JSON_PATH = './assets/app-config.local.json';
 
@@ -55,24 +52,13 @@ translate.init({
     useFactory: (
       localConfigService: LocalConfigService,
       jsonConfigService: JsonConfigService,
-      menuService: MrMenuService,
-      footerService: MrFooterService,
-      translationsLoader: MrTranslationsLoaderService
     ) => () => (
       localConfigService.load(configMuruca)
         .then(() => jsonConfigService.load(JSON_PATH))
-        .then(() => Promise.all([
-          menuService.load(),
-          footerService.load(),
-          translationsLoader.load(LANG_CODE)
-        ]))
     ),
     deps: [
       LocalConfigService,
       JsonConfigService,
-      MrMenuService,
-      MrFooterService,
-      MrTranslationsLoaderService
     ],
     multi: true
   }],

@@ -12,6 +12,7 @@ import {
   MrPostsLayoutComponent,
   MrTimelineLayoutComponent,
   MrMapLayoutComponent,
+  LocaleDependenciesGuard,
   // DynamicPathGuard,
 } from '@net7/boilerplate-muruca';
 
@@ -29,20 +30,6 @@ type RouteConfig = {
 const config: {
   [layoutID: string]: RouteConfig
 } = {
-  home: {
-    component: MrHomeLayoutComponent,
-    paths: {
-      it: '',
-      en: 'en/'
-    },
-    data: { configId: 'home' }
-  },
-  homeRedirect: {
-    paths: {
-      en: 'en',
-    },
-    isRedirect: true,
-  },
   works: {
     component: MrSearchLayoutComponent,
     paths: {
@@ -203,6 +190,20 @@ const config: {
     },
     data: { configId: 'itinerary' }
   },
+  home: {
+    component: MrHomeLayoutComponent,
+    paths: {
+      it: '',
+      en: 'en/'
+    },
+    data: { configId: 'home' }
+  },
+  homeRedirect: {
+    paths: {
+      en: 'en',
+    },
+    isRedirect: true,
+  },
 };
 
 const APP_ROUTES: Routes = [
@@ -223,9 +224,12 @@ Object.keys(config).forEach((routeId) => {
   Object.entries(paths).forEach(([locale, path]) => {
     // path to component
     if (component) {
-      APP_ROUTES.push(
-        { path, component, data: { ...data, routeId, locale } },
-      );
+      APP_ROUTES.push({
+        path,
+        component,
+        data: { ...data, routeId, locale },
+        canActivate: [LocaleDependenciesGuard]
+      });
     }
     // catch route
     if (isRedirect) {
@@ -237,17 +241,22 @@ Object.keys(config).forEach((routeId) => {
 });
 
 // default route handler
-APP_ROUTES.push({
-  path: '**',
-  component: MrStaticLayoutComponent,
-  canActivate: [],
-  data: {
-    notFoundPath: NOT_FOUND_PATH
+APP_ROUTES.push(
+  {
+    path: '**',
+    component: MrStaticLayoutComponent,
+    data: {
+      notFoundPath: NOT_FOUND_PATH,
+      locale: 'it'
+    },
+    canActivate: [LocaleDependenciesGuard]
+  },
+  {
+    path: NOT_FOUND_PATH,
+    component: Page404LayoutComponent,
+    data: { id: 'page-404', locale: 'it' },
+    canActivate: [LocaleDependenciesGuard]
   }
-}, {
-  path: NOT_FOUND_PATH,
-  component: Page404LayoutComponent,
-  data: { id: 'page-404' }
-});
+);
 
 export { APP_ROUTES };
