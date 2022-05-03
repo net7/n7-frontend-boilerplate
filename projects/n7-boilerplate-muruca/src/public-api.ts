@@ -13,5 +13,6 @@ export * from './lib/components';
 export * from './lib/services/menu.service';
 export * from './lib/services/footer.service';
 export * from './lib/services/translations-loader.service';
+export * from './lib/services/locale.service';
 export * from './lib/guards/dynamic-path.guard';
 export * from './lib/guards/locale-dependencies.guard';

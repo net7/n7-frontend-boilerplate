@@ -7,6 +7,7 @@ import { N7BoilerplateCommonModule } from '@net7/boilerplate-common';
 import { MrSearchService } from './services/search.service';
 import { MrLayoutStateService } from './services/layout-state.service';
 import { MrResourceModalService } from './services/resource-modal.service';
+import { MrLocaleService } from './services/locale.service';
 // PIPES
 import { EscapeHtmlPipe } from './pipes/keep-html.pipe';
 // LAYOUTS
@@ -66,7 +67,8 @@ const COMPONENTS = [
   providers: [
     MrSearchService,
     MrLayoutStateService,
-    MrResourceModalService
+    MrResourceModalService,
+    MrLocaleService
   ],
   exports: COMPONENTS
 })
