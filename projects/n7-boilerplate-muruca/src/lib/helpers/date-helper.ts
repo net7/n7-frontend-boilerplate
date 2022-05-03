@@ -1,7 +1,7 @@
-import * as moment from 'moment';
+import * as dayjs from 'dayjs';
 
 export default {
   format(date, format) {
-    return moment(date).format(format);
+    return dayjs(date).format(format);
   }
 };
