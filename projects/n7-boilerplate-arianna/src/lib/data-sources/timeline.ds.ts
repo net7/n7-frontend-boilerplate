@@ -1,5 +1,5 @@
 import { DataSource } from '@net7/core';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs'; // in arianna pkg "import * as dayjs" does not work
 import { max as _max, min as _min } from 'lodash';
 import { Subject } from 'rxjs';
 
