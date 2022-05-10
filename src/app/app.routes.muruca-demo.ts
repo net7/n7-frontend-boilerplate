@@ -42,8 +42,8 @@ const config: {
   motifsItem: {
     component: MrResourceLayoutComponent,
     paths: {
-      it: 'motivi/:id/:slug',
-      en: 'en/motifs/:id/:slug'
+      it: 'motivo/:id/:slug',
+      en: 'en/motif/:id/:slug'
     },
     data: { configId: 'resource-motif' }
   },
