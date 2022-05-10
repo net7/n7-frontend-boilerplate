@@ -66,20 +66,12 @@ const config: {
   records: {
     component: MrSearchLayoutComponent,
     paths: {
-      it: 'record',
-      en: 'en/record'
+      it: 'risorse',
+      en: 'en/records'
     },
     data: { configId: 'search-records' },
   },
   recordsItem: {
-    component: MrResourceLayoutComponent,
-    paths: {
-      it: 'record/:id/:slug',
-      en: 'en/record/:id/:slug'
-    },
-    data: { configId: 'resource-record' }
-  },
-  record: {
     component: MrResourceLayoutComponent,
     paths: {
       it: 'record/:id/:slug',
