@@ -7,7 +7,57 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 For each commit add a description under the Unreleased section under the correspondig section and library (Muruca, Arianna, Dataviz)
 
-## [Unreleased]
+## [UNREALEASED]
+
+### Added 
+Muruca
+
+Arianna 
+
+Dataviz
+
+### Changed
+Muruca
+
+### Fixed
+Muruca
+
+Arianna 
+
+Dataviz
+
+### Changed
+
+Arianna 
+
+Dataviz
+
+## [v3.3.1]
+
+### Changed
+All
+- update dependencies
+- removed moment library
+- added dayjs
+
+## [v3.3.0]
+
+### Added 
+Muruca
+ - added input info tooltip
+
+### Changed
+Muruca
+ - Space * 0.5
+ - Quote style
+
+### Fixed
+Muruca
+ - Fix muruca search config path
+ - Fixed highlight link in advanced search item preview
+ - timeline-layout-fix 
+
+## [v3.2.2]
 
 ### Added 
 Muruca
