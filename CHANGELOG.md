@@ -11,6 +11,7 @@ For each commit add a description under the Unreleased section under the corresp
 
 ### Added 
 Muruca
+- Style: added rule for item-preview's border as last element in grid
 
 Arianna 
 
