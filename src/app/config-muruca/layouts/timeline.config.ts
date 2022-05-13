@@ -1,5 +1,8 @@
 import { ConfigMurucaTimelineLayout } from '@net7/boilerplate-muruca';
-import { utc } from 'moment';
+import * as utc from 'dayjs/plugin/utc';
+import * as dayjs from 'dayjs';
+
+dayjs.extend(utc);
 
 const config: ConfigMurucaTimelineLayout = {
   title: 'timeline#title',
@@ -19,8 +22,8 @@ const config: ConfigMurucaTimelineLayout = {
     template: (itemData, element, data) => {
       if (data.isCluster) {
         const dateLength = data.items.length;
-        const startYear = utc(data.items[0].start).format('YYYY');
-        const endYear = utc(data.items[dateLength - 1].start).format('YYYY');
+        const startYear = dayjs.utc(data.items[0].start).format('YYYY');
+        const endYear = dayjs.utc(data.items[dateLength - 1].start).format('YYYY');
         return `<div class="vis-cluster__title">${dateLength} eventi</div>
         <div class="vis-cluster__date">dal ${startYear} al ${endYear}</div>`; // configurare traduzione
       }

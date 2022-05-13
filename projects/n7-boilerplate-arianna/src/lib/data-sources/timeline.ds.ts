@@ -1,5 +1,5 @@
 import { DataSource } from '@net7/core';
-import * as moment from 'moment';
+import dayjs from 'dayjs'; // in arianna pkg "import * as dayjs" does not work
 import { max as _max, min as _min } from 'lodash';
 import { Subject } from 'rxjs';
 
@@ -22,9 +22,9 @@ export class AwTimelineDS extends DataSource {
     }) => ({
       id,
       item,
-      start: start ? moment(start).format('YYYY-MM-DD') : null,
+      start: start ? dayjs(start).format('YYYY-MM-DD') : null,
       end: (end && end !== start && !disableEndDates)
-        ? moment(end).format('YYYY-MM-DD') // show end date
+        ? dayjs(end).format('YYYY-MM-DD') // show end date
         : null, // hide end date
       content: this.getItemTemplate(label, item.label),
       _meta: {
@@ -70,9 +70,9 @@ export class AwTimelineDS extends DataSource {
         this.timelineLoaded$.next();
 
         // fix cluster visualization
-        setTimeout(() => {
-          this.timeline.fit();
-        });
+        // setTimeout(() => {
+        //   this.timeline.fit();
+        // });
 
         // timeout for zoom controls
         setTimeout(() => {
@@ -80,7 +80,7 @@ export class AwTimelineDS extends DataSource {
         }, 1000);
       }
     };
-  }
+  };
 
   getItemTemplate(datesLabel, label) {
     return (`
