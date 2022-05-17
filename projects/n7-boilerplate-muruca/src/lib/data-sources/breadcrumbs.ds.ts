@@ -1,5 +1,7 @@
 import { DataSource, _t } from '@net7/core';
 import { BreadcrumbsData } from '@net7/components';
+import { MrLocaleService } from '../services/locale.service';
+import linksHelper from '../helpers/links-helper';
 
 export class MrBreadcrumbsDS extends DataSource {
   protected transform(data: any): BreadcrumbsData {
@@ -9,13 +11,13 @@ export class MrBreadcrumbsDS extends DataSource {
       let { base } = this.options || {};
       base = Array.isArray(base) ? base : [];
       items = [
-        ...base.map(({ link, title }) => ({
-          label: _t(title),
-          anchor: { href: link }
+        ...base.map((item) => ({
+          label: _t(item.title),
+          anchor: this.getAnchor(item),
         })),
-        ...data.map(({ link, title }) => ({
-          label: title,
-          anchor: { href: link }
+        ...data.map((item) => ({
+          label: item.title,
+          anchor: this.getAnchor(item),
         }))
       ];
     }
@@ -25,5 +27,24 @@ export class MrBreadcrumbsDS extends DataSource {
       items[items.length - 1].anchor = null;
     }
     return { items };
+  }
+
+  private getAnchor({
+    link, routeId, slug, id
+  }) {
+    const { localeService }: { localeService: MrLocaleService } = this.options;
+    // link
+    let anchor;
+    if (routeId) {
+      const routeLink = localeService.getLinkByRouteId(routeId, id, slug);
+      anchor = {
+        href: routeLink
+      };
+    } else if (link) {
+      anchor = {
+        href: linksHelper.getRouterLink(link)
+      };
+    }
+    return anchor;
   }
 }

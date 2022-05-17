@@ -6,6 +6,7 @@ import {
   MainStateService,
   ConfigurationService
 } from '@net7/boilerplate-common';
+import { MrLocaleService } from '../../services/locale.service';
 import { MrAdvancedSearchLayoutConfig as config } from './advanced-search-layout.config';
 
 @Component({
@@ -20,6 +21,7 @@ export class MrAdvancedSearchLayoutComponent extends AbstractLayout implements O
     private activatedRoute: ActivatedRoute,
     private mainState: MainStateService,
     private configuration: ConfigurationService,
+    public localeService: MrLocaleService,
     layoutsConfiguration: LayoutsConfigurationService,
   ) {
     super(layoutsConfiguration.get('MrAdvancedSearchLayoutConfig') || config);
@@ -32,6 +34,7 @@ export class MrAdvancedSearchLayoutComponent extends AbstractLayout implements O
       mainState: this.mainState,
       router: this.router,
       activatedRoute: this.activatedRoute,
+      localeService: this.localeService,
       options: this.config.options || {},
     };
   }

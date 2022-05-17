@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import {
   ConfigurationService, CommunicationService, MainStateService, helpers
 } from '@net7/boilerplate-common';
+import { MrLocaleService } from '../../services/locale.service';
 
 export class MrResourceLayoutDS extends LayoutDataSource {
   private configuration: ConfigurationService;
@@ -11,6 +12,8 @@ export class MrResourceLayoutDS extends LayoutDataSource {
   private communication: CommunicationService;
 
   private mainState: MainStateService;
+
+  private localeService: MrLocaleService;
 
   private routerData: Data;
 
@@ -32,6 +35,7 @@ export class MrResourceLayoutDS extends LayoutDataSource {
     this.configuration = payload.configuration;
     this.communication = payload.communication;
     this.mainState = payload.mainState;
+    this.localeService = payload.localeService;
     this.routerData = payload.routerData;
     this.pageConfig = this.configuration.get(this.routerData.configId);
 
@@ -123,7 +127,8 @@ export class MrResourceLayoutDS extends LayoutDataSource {
         id: this.id,
         root: this.pageConfig.tabs,
         slug: this.slug,
-        currentTab: this.tab
+        currentTab: this.tab,
+        localeService: this.localeService
       });
       this.one(tabSection.id).update(this.tabConfig);
     }

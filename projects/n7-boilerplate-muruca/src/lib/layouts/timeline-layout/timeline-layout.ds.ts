@@ -1,6 +1,5 @@
 import { LayoutDataSource, _t } from '@net7/core';
-import { ItemPreviewData, TimelineData } from '@net7/components';
-import { Location } from '@angular/common';
+import { Anchor, ItemPreviewData, TimelineData } from '@net7/components';
 import { Timeline } from 'vis-timeline';
 import { Subject } from 'rxjs';
 import { first } from 'rxjs/operators';
@@ -9,9 +8,12 @@ import {
   CommunicationService,
   MainStateService,
 } from '@net7/boilerplate-common';
+import { Router } from '@angular/router';
 import { MrLayoutStateService } from '../../services/layout-state.service';
 import 'leaflet.markercluster';
 import { GetResourceResponse } from './timeline-layout.types';
+import { MrLocaleService } from '../../services/locale.service';
+import linksHelper from '../../helpers/links-helper';
 
 // demo page: http://localhost:4200/timeline/2992/missione-venezia
 
@@ -24,11 +26,13 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
 
   private layoutState: MrLayoutStateService;
 
+  private router: Router;
+
   private configId: string;
 
   private pageConfig;
 
-  private location: Location;
+  private localeService: MrLocaleService;
 
   public loading = {
     resourceDetails: true,
@@ -88,7 +92,8 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
     this.configuration = payload.configuration;
     this.communication = payload.communication;
     this.route = payload.route;
-    this.location = payload.location;
+    this.router = payload.router;
+    this.localeService = payload.localeService;
 
     this.configId = payload.configId;
     this.pageConfig = this.configuration.get(this.configId) || {};
@@ -142,7 +147,10 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
     this.collectionWorksData = undefined;
     this.collectionBooksData = undefined;
     this.collectionGalleryData = undefined;
-    if (navigate) this.location.go('/timeline/');
+    if (navigate) {
+      const href = this.localeService.getLinkByRouteId('timeline');
+      this.router.navigate([href]);
+    }
     this.one('mr-year-header').update({
       title: { main: { text: _t(this.pageConfig.title) } },
     });
@@ -183,16 +191,34 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
             if (res.sections[collection].items) {
               collections.push({
                 items: res.sections[collection].items.map(
-                  (type: {
+                  (item: {
+                    id: string;
                     link: string;
                     title: string;
                     type: string;
-                  }): ItemPreviewData => ({
-                    title: type.title,
-                    anchor: {
-                      href: type.link,
-                    },
-                  })
+                    routeId?: string;
+                    params?: object;
+                    slug?: string;
+                  }): ItemPreviewData => {
+                    let anchor: Anchor;
+                    if (item.routeId) {
+                      const routeLink = this.localeService
+                        .getLinkByRouteId(item.routeId, item.id, item.slug);
+                      anchor = {
+                        href: routeLink,
+                        queryParams: item.params || null,
+                      };
+                    } else if (item.link) {
+                      anchor = {
+                        href: linksHelper.getRouterLink(item.link),
+                        queryParams: linksHelper.getQueryParams(item.link),
+                      };
+                    }
+                    return {
+                      title: item.title,
+                      anchor
+                    };
+                  }
                 ),
                 header: res.sections[collection].header,
               });

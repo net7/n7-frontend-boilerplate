@@ -28,7 +28,9 @@ const LANG_CODE = 'it';
 const JSON_PATH = './assets/app-config.local.json';
 
 // FIXME: togliere
-(i18n as any).it = i18n.it_IT;
+if ('it_IT' in i18n) {
+  (i18n as any).it = (i18n as any).it_IT;
+}
 
 // load translations
 translate.init({

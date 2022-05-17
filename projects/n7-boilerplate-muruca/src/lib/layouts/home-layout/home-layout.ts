@@ -16,6 +16,7 @@ import { MrSliderEH } from '../../event-handlers/slider.eh';
 import { MrCollectionEH } from '../../event-handlers/collection.eh';
 import { MrHeroEH } from '../../event-handlers/hero.eh';
 import { MrContentDS } from '../../data-sources/content.ds';
+import { MrLocaleService } from '../../services/locale.service';
 
 const DATASOURCE_MAP = {
   slider: MrSliderDS,
@@ -44,6 +45,7 @@ export class MrHomeLayoutComponent extends AbstractLayout implements OnInit, OnD
     private communication: CommunicationService,
     private mainState: MainStateService,
     public layoutState: MrLayoutStateService,
+    private localeService: MrLocaleService,
   ) {
     super(layoutsConfiguration.get('MrHomeLayoutConfig') || config);
   }
@@ -80,9 +82,11 @@ export class MrHomeLayoutComponent extends AbstractLayout implements OnInit, OnD
     this.widgets = [];
     if (sections) {
       sections.forEach(({ id, type, options }) => {
+        const widgetOptions = options || {};
+        widgetOptions.localeService = this.localeService;
         this.widgets.push({
           id,
-          options,
+          options: widgetOptions,
           dataSource: DATASOURCE_MAP[type],
           eventHandler: EVENTHANDLER_MAP[type]
         });

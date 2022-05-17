@@ -32,8 +32,29 @@ export class MrLocaleService {
 
   getLocale = () => this.locale;
 
-  getRouteByLocale = (locale: string) => this.router.config.find((routeConfig) => {
-    const { routeId, locale: routeLocale } = routeConfig?.data || {};
-    return routeId === this.routeId && locale === routeLocale;
-  });
+  getLink = (locale: string, routeId: string, id?: string, slug?: string) => {
+    const routeConfig = this.router.config.find((config) => {
+      const { routeId: currentRouteId, locale: currentRouteLocale } = config?.data || {};
+      return routeId === currentRouteId && locale === currentRouteLocale;
+    });
+    if (routeConfig.path) {
+      return routeConfig.path
+        .replace(':id', id)
+        .replace(':slug', slug);
+    }
+    console.warn('LocaleService link not found', locale, routeId);
+    return '';
+  };
+
+  getLinkByLocale = (
+    locale: string,
+    id?: string,
+    slug?: string
+  ) => this.getLink(locale, this.routeId, id, slug);
+
+  getLinkByRouteId = (
+    routeId: string,
+    id?: string,
+    slug?: string
+  ) => this.getLink(this.locale, routeId, id, slug);
 }

@@ -4,6 +4,7 @@ import { cloneDeep, isEmpty } from 'lodash';
 import { ConfigurationService, MainStateService } from '@net7/boilerplate-common';
 import { InputCheckboxData, InputSelectData, InputTextData } from '@net7/components';
 import { MrFormModel } from '../../models/form.model';
+import { MrLocaleService } from '../../services/locale.service';
 
 export class MrAdvancedSearchLayoutDS extends LayoutDataSource {
   protected router: Router;
@@ -11,6 +12,8 @@ export class MrAdvancedSearchLayoutDS extends LayoutDataSource {
   protected configuration: ConfigurationService;
 
   protected mainState: MainStateService;
+
+  protected localeService: MrLocaleService;
 
   protected routeData: Data;
 
@@ -25,6 +28,7 @@ export class MrAdvancedSearchLayoutDS extends LayoutDataSource {
     this.configuration = payload.configuration;
     this.mainState = payload.mainState;
     this.routeData = payload.routeData;
+    this.localeService = payload.localeService;
     this.pageConfig = this.configuration.get(this.routeData.configId);
 
     // add translations
@@ -54,6 +58,11 @@ export class MrAdvancedSearchLayoutDS extends LayoutDataSource {
   onSubmit({ state }) {
     if (!isEmpty(state)) {
       const { resultsUrl } = this.pageConfig;
+      let baseUrl = resultsUrl;
+      if (typeof resultsUrl !== 'string') {
+        const locale = this.localeService.getLocale();
+        baseUrl = resultsUrl[locale];
+      }
       const params = Object.keys(state)
         .filter((key) => !(state[key].disabled || isEmpty(state[key].value)))
         .map((key) => ({
@@ -63,7 +72,7 @@ export class MrAdvancedSearchLayoutDS extends LayoutDataSource {
             : state[key].value
         }))
         .map(({ key, value }) => `${key}=${encodeURIComponent(value)}`);
-      const url = `${resultsUrl}?${params.join('&')}`;
+      const url = `${baseUrl}?${params.join('&')}`;
       window.open(url, '_blank');
     }
   }

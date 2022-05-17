@@ -10,6 +10,7 @@ import {
 } from '@net7/boilerplate-common';
 import { MrLayoutStateService } from '../../services/layout-state.service';
 import { MrMapLayoutConfig as config } from './map-layout.config';
+import { MrLocaleService } from '../../services/locale.service';
 
 @Component({
   selector: 'mr-map-layout',
@@ -27,6 +28,7 @@ export class MrMapLayoutComponent extends AbstractLayout implements OnInit, OnDe
     private communication: CommunicationService,
     private mainState: MainStateService,
     public layoutState: MrLayoutStateService,
+    public localeService: MrLocaleService,
   ) {
     super(layoutsConfiguration.get('MrMapLayoutConfig') || config);
   }
@@ -41,6 +43,7 @@ export class MrMapLayoutComponent extends AbstractLayout implements OnInit, OnDe
       route: this.route,
       router: this.router,
       location: this.location,
+      localeService: this.localeService,
       options: this.config.options || {}
     };
   }

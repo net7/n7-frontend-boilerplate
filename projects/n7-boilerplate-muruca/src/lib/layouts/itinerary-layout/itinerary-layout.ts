@@ -19,6 +19,7 @@ import {
   MrCollectionEH,
   MrGalleryEH
 } from '../../event-handlers';
+import { MrLocaleService } from '../../services/locale.service';
 
 const DATASOURCE_MAP = {
   collection: MrCollectionDS,
@@ -47,7 +48,8 @@ export class MrItineraryLayoutComponent extends AbstractLayout implements OnInit
     private route: ActivatedRoute,
     private router: Router,
     public layoutState: MrLayoutStateService,
-    public modalService: MrResourceModalService
+    public modalService: MrResourceModalService,
+    public localeService: MrLocaleService,
   ) {
     super(layoutsConfiguration.get('MrItineraryLayoutConfig') || config);
   }
@@ -60,6 +62,7 @@ export class MrItineraryLayoutComponent extends AbstractLayout implements OnInit
       mainState: this.mainState,
       layoutState: this.layoutState,
       modalService: this.modalService,
+      localeService: this.localeService,
       options: this.config.options || {},
       route: this.route,
       router: this.router
@@ -84,9 +87,11 @@ export class MrItineraryLayoutComponent extends AbstractLayout implements OnInit
     const { sections } = this.configuration.get(configId);
     if (sections) {
       sections.forEach(({ id, type, options }) => {
+        const widgetOptions = options || {};
+        widgetOptions.localeService = this.localeService;
         this.widgets.push({
           id,
-          options,
+          options: widgetOptions,
           dataSource: DATASOURCE_MAP[type],
           eventHandler: EVENTHANDLER_MAP[type]
         });

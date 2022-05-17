@@ -1,7 +1,11 @@
 export interface CollectionItem {
+  id: string;
   image?: string;
   link?: string;
   text?: string;
+  routeId?: string;
+  slug?: string;
+  params?: object;
   payload?: {
     action: string;
     id: number;

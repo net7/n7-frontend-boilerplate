@@ -11,6 +11,7 @@ import { MrSearchLayoutConfig as config } from './search-layout.config';
 import { MrSearchService } from '../../services/search.service';
 import { MrLayoutStateService } from '../../services/layout-state.service';
 import { MrResourceModalService } from '../../services/resource-modal.service';
+import { MrLocaleService } from '../../services/locale.service';
 
 @Component({
   selector: 'mr-search-layout',
@@ -28,7 +29,8 @@ export class MrSearchLayoutComponent extends AbstractLayout implements OnInit, O
     private searchService: MrSearchService,
     public layoutState: MrLayoutStateService,
     private mainState: MainStateService,
-    public modalService: MrResourceModalService
+    public modalService: MrResourceModalService,
+    public localeService: MrLocaleService,
 
   ) {
     super(layoutsConfiguration.get('MrSearchLayoutConfig') || config);
@@ -45,6 +47,7 @@ export class MrSearchLayoutComponent extends AbstractLayout implements OnInit, O
       searchService: this.searchService,
       layoutState: this.layoutState,
       modalService: this.modalService,
+      localeService: this.localeService,
       options: this.config.options || {},
     };
   }

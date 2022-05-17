@@ -6,6 +6,7 @@ import {
   CommunicationService,
   MainStateService
 } from '@net7/boilerplate-common';
+import { MrLocaleService } from '../../services/locale.service';
 
 export class MrAdvancedResultsLayoutDS extends LayoutDataSource {
   protected configuration: ConfigurationService;
@@ -13,6 +14,8 @@ export class MrAdvancedResultsLayoutDS extends LayoutDataSource {
   protected communication: CommunicationService;
 
   protected mainState: MainStateService;
+
+  protected localeService: MrLocaleService;
 
   protected routeData: Data;
 
@@ -23,10 +26,11 @@ export class MrAdvancedResultsLayoutDS extends LayoutDataSource {
     this.mainState = payload.mainState;
     this.routeData = payload.routeData;
     this.communication = payload.communication;
+    this.localeService = payload.localeService;
     this.pageConfig = this.configuration.get(this.routeData.configId);
 
     // config
-    this.all().updateOptions({ config: this.pageConfig });
+    this.all().updateOptions({ config: this.pageConfig, localeService: this.localeService });
 
     // manual updates
     this.one('mr-search-page-title').update({});

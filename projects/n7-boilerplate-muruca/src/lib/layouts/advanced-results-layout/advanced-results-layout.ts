@@ -10,6 +10,7 @@ import {
 import { MrResourceModalService } from '../../services/resource-modal.service';
 import { MrAdvancedResultsLayoutConfig as config } from './advanced-results-layout.config';
 import { MrLayoutStateService } from '../../services/layout-state.service';
+import { MrLocaleService } from '../../services/locale.service';
 
 @Component({
   selector: 'mr-advanced-results-layout',
@@ -26,6 +27,7 @@ export class MrAdvancedResultsLayoutComponent extends AbstractLayout implements 
     private communication: CommunicationService,
     public layoutState: MrLayoutStateService,
     public modalService: MrResourceModalService,
+    public localeService: MrLocaleService,
     layoutsConfiguration: LayoutsConfigurationService,
   ) {
     super(layoutsConfiguration.get('MrAdvancedResultsLayoutConfig') || config);
@@ -41,6 +43,7 @@ export class MrAdvancedResultsLayoutComponent extends AbstractLayout implements 
       activatedRoute: this.activatedRoute,
       layoutState: this.layoutState,
       modalService: this.modalService,
+      localeService: this.localeService,
       options: this.config.options || {},
     };
   }

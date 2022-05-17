@@ -3,6 +3,7 @@ import { LayoutDataSource, _t } from '@net7/core';
 import { ConfigurationService, CommunicationService, MainStateService } from '@net7/boilerplate-common';
 import localStorageHelper from '../../helpers/local-storage-helper';
 import { MrSearchService } from '../../services/search.service';
+import { MrLocaleService } from '../../services/locale.service';
 
 export class MrSearchLayoutDS extends LayoutDataSource {
   private configuration: ConfigurationService;
@@ -10,6 +11,8 @@ export class MrSearchLayoutDS extends LayoutDataSource {
   private communication: CommunicationService;
 
   private mainState: MainStateService;
+
+  private localeService: MrLocaleService;
 
   private routerData: Data;
 
@@ -31,13 +34,17 @@ export class MrSearchLayoutDS extends LayoutDataSource {
     this.configuration = payload.configuration;
     this.communication = payload.communication;
     this.mainState = payload.mainState;
+    this.localeService = payload.localeService;
     this.searchService = payload.searchService;
     this.routerData = payload.routerData;
     this.pageConfig = this.configuration.get(this.routerData.configId);
     this.hideDescriptionKey = `hide-description-${this.routerData.configId}`;
 
     // config
-    this.all().updateOptions({ config: this.pageConfig });
+    this.all().updateOptions({
+      config: this.pageConfig,
+      localeService: this.localeService
+    });
 
     // manual updates
     this.one('mr-search-page-title').update({});

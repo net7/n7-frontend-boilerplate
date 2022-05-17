@@ -1,13 +1,13 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { Location } from '@angular/common';
 import { EventHandler } from '@net7/core';
+import { MrLocaleService } from '../../services/locale.service';
 
 export class MrMapLayoutEH extends EventHandler {
   private route: ActivatedRoute;
 
   private router: Router;
 
-  private location: Location;
+  private localeService: MrLocaleService;
 
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
@@ -16,7 +16,7 @@ export class MrMapLayoutEH extends EventHandler {
           this.dataSource.onInit(payload);
           this.route = payload.route;
           this.router = payload.router;
-          this.location = payload.location;
+          this.localeService = payload.localeService;
           this.listenRoute();
           // scroll top
           window.scrollTo(0, 0);
@@ -29,10 +29,12 @@ export class MrMapLayoutEH extends EventHandler {
                 const isSelected = marker.getIcon().options.className.includes('selected');
                 if (isSelected) {
                   // navigate to the clicked resource / marker
-                  this.location.go(`/map/${marker.id}/${marker.slug}`);
+                  const href = this.localeService.getLinkByRouteId('map', marker.id, marker.slug);
+                  this.router.navigate([href]);
                   this.dataSource.updatePageDetails(marker.id);
                 } else {
-                  this.location.go('/map/');
+                  const href = this.localeService.getLinkByRouteId('map');
+                  this.router.navigate([href]);
                   this.dataSource.loadDefaults();
                 }
               });
