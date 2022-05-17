@@ -51,6 +51,9 @@ export class MainLayoutDS extends LayoutDataSource {
     this.mainState.get$('header').subscribe((val) => {
       this.one('header').update(val);
     });
+    this.mainState.get$('footer').subscribe((val) => {
+      this.one('footer').update(val);
+    });
 
     // mainState test
     /* this.mainState.addCustom('customNav', new Subject());
