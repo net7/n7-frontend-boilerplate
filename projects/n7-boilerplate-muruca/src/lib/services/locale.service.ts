@@ -37,10 +37,11 @@ export class MrLocaleService {
       const { routeId: currentRouteId, locale: currentRouteLocale } = config?.data || {};
       return routeId === currentRouteId && locale === currentRouteLocale;
     });
-    if (routeConfig.path) {
-      return routeConfig.path
+    if (routeConfig?.path) {
+      const href = routeConfig.path
         .replace(':id', id)
         .replace(':slug', slug);
+      return `/${href}`;
     }
     console.warn('LocaleService link not found', locale, routeId);
     return '';
