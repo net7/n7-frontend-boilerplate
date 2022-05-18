@@ -1,8 +1,9 @@
 // MODULES
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { DvComponentsLibModule } from '@net7/components';
-import { N7BoilerplateCommonModule } from '@net7/boilerplate-common';
+import { MainStateService, N7BoilerplateCommonModule } from '@net7/boilerplate-common';
 // SERVICES
 import { MrSearchService } from './services/search.service';
 import { MrLayoutStateService } from './services/layout-state.service';
@@ -72,4 +73,24 @@ const COMPONENTS = [
   ],
   exports: COMPONENTS
 })
-export class N7BoilerplateMurucaModule { }
+export class N7BoilerplateMurucaModule {
+  constructor(
+    private localeService: MrLocaleService,
+    private mainState: MainStateService,
+    private router: Router,
+  ) {
+    // listen to locale (language select) change event
+    this.mainState.get$('footerEvents').subscribe(({ type, payload }) => {
+      if (type === 'footer.change' && payload?.inputPayload === 'locale') {
+        const currentLocale = this.localeService.getLocale();
+        const { value } = payload;
+        if (currentLocale !== value) {
+          const href = this.localeService.getLinkByLocale(value);
+          if (href) {
+            this.router.navigate([href]);
+          }
+        }
+      }
+    });
+  }
+}

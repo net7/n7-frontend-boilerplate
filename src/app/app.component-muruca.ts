@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { ConfigurationService, MainStateService } from '@net7/boilerplate-common';
-import { MrLocaleService } from '@net7/boilerplate-muruca';
+import { ConfigurationService } from '@net7/boilerplate-common';
 
 @Component({
   selector: 'app-root',
@@ -17,10 +15,7 @@ export class AppComponent {
   public useRouter = true;
 
   constructor(
-    private localeService: MrLocaleService,
     private configuration: ConfigurationService,
-    private mainState: MainStateService,
-    private router: Router,
   ) {
     const footer = this.configuration.get('footer');
     footer.columns[2].selects = [{
@@ -33,16 +28,5 @@ export class AppComponent {
       ],
       payload: 'locale'
     }];
-
-    this.mainState.get$('footerEvents').subscribe(({ type, payload }) => {
-      if (type === 'footer.change') {
-        const currentLocale = this.localeService.getLocale();
-        const { value } = payload;
-        if (currentLocale !== value) {
-          const href = this.localeService.getLinkByLocale(value);
-          this.router.navigate([href]);
-        }
-      }
-    });
   }
 }

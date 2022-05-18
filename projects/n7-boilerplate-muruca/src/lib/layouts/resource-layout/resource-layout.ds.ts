@@ -74,6 +74,7 @@ export class MrResourceLayoutDS extends LayoutDataSource {
 
   handleResponse(response) {
     this.initSections(response);
+    this.setLocaleResourceConfig(response);
     this.updateHeadTitle(response);
   }
 
@@ -131,6 +132,14 @@ export class MrResourceLayoutDS extends LayoutDataSource {
         localeService: this.localeService
       });
       this.one(tabSection.id).update(this.tabConfig);
+    }
+  }
+
+  // set resource locale config
+  // used by language switcher
+  private setLocaleResourceConfig(response) {
+    if (response?.locale) {
+      this.localeService.setResourceConfig(response.locale);
     }
   }
 

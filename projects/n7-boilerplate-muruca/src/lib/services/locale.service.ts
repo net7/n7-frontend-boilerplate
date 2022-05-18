@@ -3,11 +3,20 @@ import { Router, RoutesRecognized } from '@angular/router';
 import { ReplaySubject } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 
+export type LocaleResourceConfig = {
+  [locale: string]: {
+    id: string;
+    slug: string;
+  };
+};
+
 @Injectable()
 export class MrLocaleService {
   private routeId: string;
 
   private locale: string;
+
+  private resourceConfig: LocaleResourceConfig = null;
 
   public changed$: ReplaySubject<{ routeId: string; locale: string; }> = new ReplaySubject();
 
@@ -25,6 +34,9 @@ export class MrLocaleService {
         routeId: this.routeId,
         locale: this.locale
       });
+
+      // remove previous config
+      this.resourceConfig = null;
     });
   }
 
@@ -38,9 +50,12 @@ export class MrLocaleService {
       return routeId === currentRouteId && locale === currentRouteLocale;
     });
     if (routeConfig?.path) {
+      const resourceLocaleConfig = this.resourceConfig && this.resourceConfig[locale]
+        ? this.resourceConfig[locale]
+        : { id: null, slug: null };
       const href = routeConfig.path
-        .replace(':id', id)
-        .replace(':slug', slug);
+        .replace(':id', id || resourceLocaleConfig.id)
+        .replace(':slug', slug || resourceLocaleConfig.slug);
       return `/${href}`;
     }
     console.warn('LocaleService link not found', locale, routeId);
@@ -58,4 +73,8 @@ export class MrLocaleService {
     id?: string,
     slug?: string
   ) => this.getLink(this.locale, routeId, id, slug);
+
+  setResourceConfig = (config: LocaleResourceConfig) => {
+    this.resourceConfig = config;
+  };
 }
