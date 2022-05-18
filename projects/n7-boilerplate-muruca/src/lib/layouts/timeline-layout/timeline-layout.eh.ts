@@ -22,6 +22,7 @@ export class MrTimelineLayoutEH extends EventHandler {
           this.modalService = payload.modalService;
           this.route = payload.route;
           this.router = payload.router;
+          this.localeService = payload.localeService;
           this.listenRoute();
           // scroll top
           window.scrollTo(0, 0);
