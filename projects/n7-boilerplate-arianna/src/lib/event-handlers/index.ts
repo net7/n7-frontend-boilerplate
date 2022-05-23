@@ -14,6 +14,7 @@ export * from './sidebar-header.eh';
 export * from './tree.eh';
 export * from './scheda-dropdown.eh';
 export * from './scheda-pdf.eh';
+export * from './extended-tree.eh';
 
 // Search layout
 export * from './search-layout-tabs.eh';

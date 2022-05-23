@@ -1,17 +1,25 @@
+import { ActivatedRoute, Router } from '@angular/router';
 import { EventHandler } from '@net7/core';
 import { isEmpty } from 'lodash';
 import {
   forkJoin, from, of, Subject
 } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { debounceTime, switchMap } from 'rxjs/operators';
 import { ConfigurationService } from '@net7/boilerplate-common';
+import { AwSchedaLayoutDS } from './scheda-layout.ds';
 
 export class AwSchedaLayoutEH extends EventHandler {
+  dataSource: AwSchedaLayoutDS;
+
   private destroyed$: Subject<any> = new Subject();
 
   private configuration: ConfigurationService;
 
-  private route: any;
+  private route: ActivatedRoute;
+
+  private router: Router;
+
+  private extendedTreeChanged$: Subject<{ key: string; value: string | number }> = new Subject();
 
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
@@ -20,11 +28,14 @@ export class AwSchedaLayoutEH extends EventHandler {
           this.dataSource.onInit(payload);
           this.configuration = payload.configuration;
           this.route = payload.route;
+          this.router = payload.router;
           const paramId = this.route.snapshot.params.id || '';
           if (paramId) {
             this.dataSource.currentId = paramId;
           }
           this.listenRoute();
+          this.listenRouteQueryParams();
+          this.listenExtendedTree();
           this.loadNavigation(paramId);
           this.emitOuter('viewleaf');
           // scroll top
@@ -54,6 +65,24 @@ export class AwSchedaLayoutEH extends EventHandler {
         case 'aw-scheda-dropdown.click':
           this.dataSource.changeDigitalObject(payload);
           break;
+        case 'aw-extended-tree.change':
+          this.extendedTreeChanged$.next({
+            key: 'query',
+            value: payload.value
+          });
+          break;
+        case 'aw-extended-tree.search':
+          this.extendedTreeChanged$.next({
+            key: 'query',
+            value: payload.value
+          });
+          break;
+        case 'aw-extended-tree.click':
+          this.extendedTreeChanged$.next({
+            key: 'page',
+            value: payload
+          });
+          break;
         default:
           break;
       }
@@ -73,11 +102,47 @@ export class AwSchedaLayoutEH extends EventHandler {
           switchMap((response) => this.parseDigitalObjects$(response))
         ).subscribe((response) => {
           this.dataSource.contentIsLoading = false;
-          if (response) this.dataSource.loadContent(response);
+          if (response) {
+            this.dataSource.loadContent(response);
+            this.dataSource.loadExtendedTree(response);
+          }
         });
       }
       // scroll top
       window.scrollTo(0, 0);
+    });
+  }
+
+  private listenExtendedTree() {
+    this.extendedTreeChanged$.pipe(
+      debounceTime(500)
+    ).subscribe(({ key, value }) => {
+      const queryParams: {
+        [id: string]: string
+      } = {};
+
+      if (typeof value === 'string') {
+        queryParams[key] = value.trim().length ? value : null;
+      } else {
+        queryParams[key] = `${value}`;
+      }
+
+      // page check
+      if (key !== 'page') {
+        queryParams.page = '1';
+      }
+
+      // update url
+      this.router.navigate([], {
+        queryParams,
+        queryParamsHandling: 'merge'
+      });
+    });
+  }
+
+  private listenRouteQueryParams() {
+    this.route.queryParams.subscribe((params) => {
+      console.log('queryParams----->', params);
     });
   }
 

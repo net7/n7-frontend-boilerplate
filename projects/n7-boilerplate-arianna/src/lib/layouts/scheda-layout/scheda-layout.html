@@ -212,4 +212,12 @@
         </div>
     </section>
     <!-- END // Similar Objects -->
+
+    <!-- Extended Tree -->
+    <section *ngIf="lb.dataSource.hasExtendedTree" id="extended-tree-container" class="aw-scheda__section">
+        <aw-extended-tree
+        [data]="lb.widgets['aw-extended-tree'].ds.out$ | async"
+        [emit]="lb.widgets['aw-extended-tree'].emit"></aw-extended-tree>
+    </section>
+    <!-- END // Extended Tree -->
 </ng-template>

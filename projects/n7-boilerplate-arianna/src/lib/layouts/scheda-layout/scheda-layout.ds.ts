@@ -2,10 +2,11 @@ import { LayoutDataSource } from '@net7/core';
 import {
   fromEvent, Subject, of, merge,
 } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { delay, takeUntil } from 'rxjs/operators';
 import { get as _get } from 'lodash';
 import { helpers } from '@net7/boilerplate-common';
 import metadataHelper from '../../helpers/metadata.helper';
+import mock from './extended-tree.mock';
 
 export class AwSchedaLayoutDS extends LayoutDataSource {
   static tree: any = null;
@@ -49,6 +50,8 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   public hasRelatedEntities: boolean;
 
   public hasSimilarItems: boolean;
+
+  public hasExtendedTree: boolean;
 
   public hasDigitalObjects: boolean;
 
@@ -275,6 +278,41 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     setTimeout(() => {
       this.stickyControlTrigger$.next();
     });
+  }
+
+  loadExtendedTree(parentResponse) {
+    // FIXME: togliere
+    parentResponse.hasChildNodes = true;
+
+    if (this.layoutConfig['extended-tree'] && parentResponse.hasChildNodes) {
+      this.hasExtendedTree = true;
+      const widgetOptions = this.layoutConfig['extended-tree'];
+      const searchParams = {
+        page: 1
+      };
+      const basePath = this.configuration.get('paths').schedaBasePath;
+      // TODO: request
+      // const request$ = this.communication.request$('getNodeChilds', {
+      //   onError: (error) => console.error(error),
+      //   params: { nodeId: response.id },
+      // });
+      const request$ = of(mock(searchParams)).pipe(
+        delay(Math.random() * 3000)
+      );
+      request$.subscribe((nodesResponse) => {
+        this.one('aw-extended-tree').updateOptions({
+          searchParams,
+          basePath,
+          ...widgetOptions,
+        });
+        this.one('aw-extended-tree').update({
+          parent: parentResponse,
+          nodes: nodesResponse
+        });
+      });
+    } else {
+      this.hasExtendedTree = false;
+    }
   }
 
   /**

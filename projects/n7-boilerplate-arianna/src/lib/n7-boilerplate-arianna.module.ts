@@ -22,6 +22,7 @@ import { ChartTippyComponent } from './components/chart-tippy/chart-tippy';
 import { PdfViewerComponent } from './components/pdf-viewer/pdf-viewer';
 import { SchedaDropdownComponent } from './components/scheda-dropdown/scheda-dropdown';
 import { SmartBreadcrumbsComponent } from './components/smart-breadcrumbs/smart-breadcrumbs';
+import { ExtendedTreeComponent } from './components/extended-tree/extended-tree';
 // LIBS
 
 import apolloConfig from './config/apollo.config';
@@ -41,6 +42,7 @@ const COMPONENTS = [
   PdfViewerComponent,
   SchedaDropdownComponent,
   SmartBreadcrumbsComponent,
+  ExtendedTreeComponent,
 ];
 
 @NgModule({

@@ -21,6 +21,7 @@ export const AwPatrimonioLayoutConfig = {
     { id: 'aw-related-entities' },
     { id: 'aw-chart-tippy' },
     { id: 'aw-linked-objects' },
+    { id: 'aw-extended-tree' },
   ],
   layoutDS: AwSchedaLayoutDS,
   layoutEH: AwSchedaLayoutEH,

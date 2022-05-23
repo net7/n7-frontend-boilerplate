@@ -1,0 +1,41 @@
+/**
+ * EXTENDED TREE
+ */
+
+.aw-extended-tree {
+    &__item a {
+        display: flex;
+        align-items: center;
+        padding: $space * 1.8 0 ;
+        border-bottom: 1px solid $color-border-light;
+        cursor: pointer;
+    }
+
+    &__item-image img {
+        margin-left: $space;
+        margin-right: $space;
+        width: $tree-image-size;
+        height: $tree-image-size;
+    }
+
+    &__header, &__content, &__footer {
+        padding: 0 $aw-scheda-content-padding $aw-scheda-content-padding $aw-scheda-content-padding;
+    }
+}
+
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: $breakpoint-laptop) {
+}
+
+@media all and (max-width: $breakpoint-ipad-portrait) {
+}
+
+@media all and (max-width: $breakpoint-smartphone-landscape) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}
