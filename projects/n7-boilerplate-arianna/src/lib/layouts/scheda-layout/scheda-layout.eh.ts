@@ -1,10 +1,10 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventHandler } from '@net7/core';
-import { isEmpty } from 'lodash';
+import { clone, isEmpty, isNumber } from 'lodash';
 import {
-  forkJoin, from, of, Subject
+  forkJoin, from, of, Subject, timer
 } from 'rxjs';
-import { debounceTime, switchMap } from 'rxjs/operators';
+import { debounce, filter, switchMap } from 'rxjs/operators';
 import { ConfigurationService } from '@net7/boilerplate-common';
 import { AwSchedaLayoutDS } from './scheda-layout.ds';
 
@@ -19,7 +19,13 @@ export class AwSchedaLayoutEH extends EventHandler {
 
   private router: Router;
 
-  private extendedTreeChanged$: Subject<{ key: string; value: string | number }> = new Subject();
+  private extendedTreeChanged$: Subject<{
+    key: string;
+    value: string | number;
+    delay?: number;
+  }> = new Subject();
+
+  private pageInputValue: number;
 
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
@@ -65,12 +71,28 @@ export class AwSchedaLayoutEH extends EventHandler {
         case 'aw-scheda-dropdown.click':
           this.dataSource.changeDigitalObject(payload);
           break;
-        case 'aw-extended-tree.change':
-          this.extendedTreeChanged$.next({
-            key: 'query',
-            value: payload.value
-          });
-          break;
+        case 'aw-extended-tree.change': {
+          let key: string;
+          let delay: number;
+          if (payload.inputPayload === 'search-input') {
+            key = 'query';
+            delay = 1000;
+          } else if (payload.inputPayload === 'limit-select') {
+            key = 'limit';
+          } else if (payload.inputPayload === 'page-input-change') {
+            this.pageInputValue = payload.value;
+          } else if (payload.inputPayload === 'page-input-enter') {
+            key = 'page';
+          }
+
+          if (key) {
+            this.extendedTreeChanged$.next({
+              key,
+              delay,
+              value: payload.value,
+            });
+          }
+        } break;
         case 'aw-extended-tree.search':
           this.extendedTreeChanged$.next({
             key: 'query',
@@ -82,6 +104,14 @@ export class AwSchedaLayoutEH extends EventHandler {
             key: 'page',
             value: payload
           });
+          break;
+        case 'aw-extended-tree.pageinputsubmit':
+          if (isNumber(this.pageInputValue)) {
+            this.extendedTreeChanged$.next({
+              key: 'page',
+              value: this.pageInputValue
+            });
+          }
           break;
         default:
           break;
@@ -104,7 +134,7 @@ export class AwSchedaLayoutEH extends EventHandler {
           this.dataSource.contentIsLoading = false;
           if (response) {
             this.dataSource.loadContent(response);
-            this.dataSource.loadExtendedTree(response);
+            this.dataSource.loadExtendedTree();
           }
         });
       }
@@ -115,7 +145,8 @@ export class AwSchedaLayoutEH extends EventHandler {
 
   private listenExtendedTree() {
     this.extendedTreeChanged$.pipe(
-      debounceTime(500)
+      filter(({ key, value }) => !(key === 'page' && (!isNumber(+value) || +value < 1))),
+      debounce(({ delay }) => timer(delay || 1)),
     ).subscribe(({ key, value }) => {
       const queryParams: {
         [id: string]: string
@@ -132,6 +163,9 @@ export class AwSchedaLayoutEH extends EventHandler {
         queryParams.page = '1';
       }
 
+      // reset pageInput value
+      this.pageInputValue = null;
+
       // update url
       this.router.navigate([], {
         queryParams,
@@ -142,7 +176,23 @@ export class AwSchedaLayoutEH extends EventHandler {
 
   private listenRouteQueryParams() {
     this.route.queryParams.subscribe((params) => {
-      console.log('queryParams----->', params);
+      const extendedTreeParams = clone(params);
+      // force numeric
+      ['page', 'limit'].forEach((key) => {
+        if (params[key] && isNumber(+params[key])) {
+          extendedTreeParams[key] = +params[key];
+        } else {
+          delete extendedTreeParams[key];
+        }
+      });
+
+      this.dataSource.extendedTreeParams = extendedTreeParams;
+
+      // has node response
+      if (this.dataSource.lastResponse) {
+        this.emitOuter('extendedtreerequest');
+        this.dataSource.loadExtendedTree();
+      }
     });
   }
 

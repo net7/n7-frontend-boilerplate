@@ -1,4 +1,6 @@
-import { Button, InnerTitleData, PaginationData } from '@net7/components';
+import {
+  Button, InnerTitleData, InputSelectData, InputTextData, PaginationData
+} from '@net7/components';
 import { DataSource } from '@net7/core';
 import { helpers } from '@net7/boilerplate-common';
 import { ExtendedTreeData } from '../components/extended-tree/extended-tree';
@@ -26,8 +28,9 @@ export class AwExtendedTreeDS extends DataSource {
     { parent: ParentResponse; nodes: NodesResponse }
   ): ExtendedTreeData => {
     const { totalCount } = nodes;
-    const { title, searchParams, basePath } = this.options;
-    const { page } = searchParams;
+    const { title, params, basePath } = this.options;
+    const page = params.page ? +params.page : 1;
+    const limit = params.limit ? +params.limit : 10;
     // header
     const header: InnerTitleData = {
       title: {
@@ -57,12 +60,39 @@ export class AwExtendedTreeDS extends DataSource {
     }));
     // pagination
     const pagination: PaginationData = this.getPagination(page, totalCount);
+    // page input
+    const pageInput: InputTextData = {
+      id: 'page-input',
+      type: 'number',
+      // value: page,
+      placeholder: 'pag',
+      inputPayload: 'page-input-change',
+      enterPayload: 'page-input-enter',
+    };
+    // results limit select
+    const limitSelect: InputSelectData = {
+      id: 'limit-select',
+      label: 'Numero di risultati',
+      options: [10, 25, 50].map((size) => ({
+        label: `${size}`,
+        value: size,
+        selected: size === limit
+      })),
+      payload: 'limit-select',
+    };
     return {
       header,
       items,
       pagination,
+      pageInput,
+      limitSelect,
+      loading: false,
     };
   };
+
+  public setLoading(loading: boolean) {
+    this.output.loading = loading;
+  }
 
   private getPagination(page, totalCount): PaginationData {
     const limit = PAGE_LIMIT;

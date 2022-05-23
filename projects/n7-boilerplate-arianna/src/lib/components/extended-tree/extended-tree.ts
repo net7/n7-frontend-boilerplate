@@ -14,6 +14,7 @@ export type ExtendedTreeData = {
   pagination: PaginationData;
   limitSelect?: InputSelectData;
   pageInput?: InputTextData;
+  loading?: boolean;
 }
 
 @Component({
@@ -23,5 +24,11 @@ export type ExtendedTreeData = {
 export class ExtendedTreeComponent {
   @Input() data: ExtendedTreeData;
 
-  @Input() emit: (type: string, payload: any) => void;
+  @Input() emit: (type: string, payload?: any) => void;
+
+  onPageInputSubmit() {
+    if (!this.emit) return;
+
+    this.emit('pageinputsubmit');
+  }
 }

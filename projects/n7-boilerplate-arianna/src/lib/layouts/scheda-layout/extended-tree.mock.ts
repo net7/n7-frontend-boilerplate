@@ -6,8 +6,8 @@ const randomText = () => {
 };
 
 const mock = (params) => {
-  const { page } = params;
-  const items = Array(10).fill(null).map((_, i) => ({
+  const { page, limit } = params;
+  const items = Array(limit).fill(null).map((_, i) => ({
     thumbnail: 'https://picsum.photos/200',
     label: `[${page}-${i}] ${randomText()}`,
     id: `${page}-${i}`,

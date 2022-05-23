@@ -83,6 +83,12 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
   public hasContextMenu: () => boolean;
 
+  public extendedTreeParams: {
+    [key: string]: string;
+  } = {};
+
+  public lastResponse;
+
   /** Name of query that should be used (chosen in config) */
   private getTreeQuery: 'getTree' | 'getTreeLite' = 'getTree';
 
@@ -176,6 +182,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
    * @param response http response for the tree item
    */
   loadContent(response) {
+    this.lastResponse = response;
     if (response) {
       // reset
       this.currentDigitalObject = null;
@@ -280,28 +287,33 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     });
   }
 
-  loadExtendedTree(parentResponse) {
+  loadExtendedTree() {
+    const parentResponse = this.lastResponse;
+
     // FIXME: togliere
     parentResponse.hasChildNodes = true;
 
     if (this.layoutConfig['extended-tree'] && parentResponse.hasChildNodes) {
       this.hasExtendedTree = true;
       const widgetOptions = this.layoutConfig['extended-tree'];
-      const searchParams = {
-        page: 1
+      const params = {
+        page: 1,
+        limit: 12,
+        query: null,
+        ...this.extendedTreeParams,
       };
       const basePath = this.configuration.get('paths').schedaBasePath;
       // TODO: request
       // const request$ = this.communication.request$('getNodeChilds', {
+      //   params,
       //   onError: (error) => console.error(error),
-      //   params: { nodeId: response.id },
       // });
-      const request$ = of(mock(searchParams)).pipe(
+      const request$ = of(mock(params)).pipe(
         delay(Math.random() * 3000)
       );
       request$.subscribe((nodesResponse) => {
         this.one('aw-extended-tree').updateOptions({
-          searchParams,
+          params,
           basePath,
           ...widgetOptions,
         });
@@ -309,6 +321,15 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
           parent: parentResponse,
           nodes: nodesResponse
         });
+
+        // fix query input update
+        if (params.query) {
+          setTimeout(() => {
+            const queryInput: HTMLInputElement = document
+              .querySelector('.aw-extended-tree__header .n7-inner-title__search-bar');
+            queryInput.value = params.query || '';
+          });
+        }
       });
     } else {
       this.hasExtendedTree = false;
