@@ -112,6 +112,10 @@ export interface ConfigAriannaSchedaLayout {
       placeholder: string;
     }
   };
+  /** title prev/next navigation */
+  'title-nav'?: {
+    enabled: boolean;
+  };
   /** metadata section */
   metadata: {
     /** metadata section title */

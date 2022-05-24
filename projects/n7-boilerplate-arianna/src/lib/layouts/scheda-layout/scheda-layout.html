@@ -27,8 +27,26 @@
                  [innerHTML]="lb.dataSource.emptyLabel">
             </div>
 
-            <n7-inner-title [data]="lb.widgets['aw-scheda-inner-title'].ds.out$ | async">
-            </n7-inner-title>
+            <div class="aw-scheda__title-wrapper">
+                <div *ngIf="lb.dataSource.titleNavigation as titleNav" class="aw-scheda__prev">
+                    <a class="n7-btn n7-btn-light" [routerLink]="titleNav.prev?.href ? [titleNav.prev.href] : null"
+                    [title]="titleNav.prev?.label || ''"
+                    [ngClass]="{ 'is-disabled': !titleNav.prev?.href }">
+                        <span class="n7-icon-angle-left"></span>
+                    </a>
+                </div>
+                <div class="aw-scheda__title">
+                    <n7-inner-title [data]="lb.widgets['aw-scheda-inner-title'].ds.out$ | async">
+                    </n7-inner-title>
+                </div>
+                <div *ngIf="lb.dataSource.titleNavigation as titleNav" class="aw-scheda__next">
+                    <a class="n7-btn n7-btn-light" [routerLink]="titleNav.next?.href ? [titleNav.next.href] : null"
+                    [title]="titleNav.next?.label || ''"
+                    [ngClass]="{ 'is-disabled': !titleNav.next?.href }">
+                        <span class="n7-icon-angle-right"></span>
+                    </a>
+                </div>
+            </div>
 
             <!-- Empty state -->
             <ng-container *ngIf="!lb.dataSource.hasContent">

@@ -39,6 +39,9 @@ const config: ConfigAriannaSchedaLayout = {
       placeholder: 'Cerca negli oggetti culturali'
     }
   },
+  'title-nav': {
+    enabled: true
+  },
   'image-viewer': {
     'context-menu': false
   },

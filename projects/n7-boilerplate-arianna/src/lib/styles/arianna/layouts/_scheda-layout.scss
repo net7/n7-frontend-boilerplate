@@ -27,8 +27,8 @@
         &.is-sticky {
             .n7-tree {
                 height: calc(
-                    100% - #{$sidebar-header-height}
-                ); /* space for sidebar header */
+                100% - #{$sidebar-header-height}
+            ); /* space for sidebar header */
                 overflow-y: auto;
                 overflow-x: hidden;
             }
@@ -210,7 +210,7 @@
     /* Main title that describes the scheda content */
     .n7-inner-title {
         // margin-bottom: $aw-scheda-content-padding;
-        border-bottom: 2px solid $color-border-normal;
+        // border-bottom: 2px solid $color-border-normal;
 
         &__title {
             font-weight: $scheda-title-font-weight;
@@ -220,7 +220,7 @@
     /* Minor inner titles that describes the various sections */
     .aw-scheda__inner-title {
         padding: 0 $aw-scheda-content-padding $aw-scheda-content-padding
-            $aw-scheda-content-padding;
+        $aw-scheda-content-padding;
         font-size: $font-size-xxl;
         font-weight: $font-weight-normal;
     }
@@ -250,7 +250,7 @@
     .aw-scheda__metadata {
         .n7-metadata-viewer {
             padding: 0 $aw-scheda-content-padding $aw-scheda-content-padding
-                $aw-scheda-content-padding;
+            $aw-scheda-content-padding;
         }
     }
 
@@ -261,7 +261,7 @@
             align-items: center;
             justify-content: center;
             padding: 0 $aw-scheda-content-padding $aw-scheda-content-padding
-                $aw-scheda-content-padding;
+            $aw-scheda-content-padding;
             height: $bubble-section-patrimonio;
         }
 
@@ -277,7 +277,7 @@
 
     .aw-scheda__related-items {
         padding: 0 $aw-scheda-content-padding $aw-scheda-content-padding
-            $aw-scheda-content-padding;
+        $aw-scheda-content-padding;
 
         /* Targeting elements in the last row */
         > *:nth-child(2n + 1):nth-last-child(-n + 2),
@@ -289,6 +289,22 @@
             }
         }
     }
+
+    /* title wrapper */
+    .aw-scheda__title-wrapper {
+        display: flex;
+        align-items: center;
+        border-bottom: 2px solid $color-border-normal;
+
+        .aw-scheda__title {
+            flex-grow: 1;
+        }
+
+        .aw-scheda__next span, .aw-scheda__prev span {
+            font-size: $font-size-xxl;
+        }
+    }
+
 }
 
 /* ------------------------------------ *\
@@ -350,7 +366,7 @@
             background-color: $color-background-base;
             border: 1px solid $color-border-normal;
             box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04),
-                0 2px 10px rgba(0, 0, 0, 0.04);
+            0 2px 10px rgba(0, 0, 0, 0.04);
 
             ul {
                 padding: 0;

@@ -92,6 +92,11 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   /** Name of query that should be used (chosen in config) */
   private getTreeQuery: 'getTree' | 'getTreeLite' = 'getTree';
 
+  public titleNavigation: {
+    prev: { href: string; label: string; };
+    next: { href: string; label: string; };
+  } = null;
+
   onInit({
     configuration, mainState, router, options, titleService, communication,
   }) {
@@ -260,6 +265,9 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
         this.one('aw-scheda-breadcrumbs').update(breadcrumbs);
       }
 
+      // title prev / next navigation
+      this.loadTitleNavigation();
+
       // update head title
       this.mainState.update('headTitle', `Arianna4View - Patrimonio - ${response.title || response.label}`);
     }
@@ -334,6 +342,32 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     } else {
       this.hasExtendedTree = false;
     }
+  }
+
+  loadTitleNavigation() {
+    const hasTitleNav = !!this.layoutConfig['title-nav']?.enabled;
+    if (!hasTitleNav) return;
+
+    // FIXME: togliere
+    this.lastResponse.prev = {
+      id: 'd6d1558d-fb78-4287-895e-921d8e35bbf8',
+      label: '1: fondo - Fondo Export UNIFI 1'
+    };
+    this.lastResponse.next = {
+      id: 'ae66b736-3397-43b5-a440-04a97e7674ee',
+      label: '10: Fascicolo di Anna Fuggi (1970 - 1975)'
+    };
+
+    this.titleNavigation = { prev: null, next: null };
+    const basePath = this.configuration.get('paths').schedaBasePath;
+    ['prev', 'next'].forEach((key) => {
+      const item = this.lastResponse[key];
+      this.titleNavigation[key] = item
+        ? {
+          href: `${basePath}/${item.id}/${helpers.slugify(item.label)}`,
+          label: item.label,
+        } : null;
+    });
   }
 
   /**
