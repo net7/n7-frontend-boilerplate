@@ -7,31 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 For each commit add a description under the Unreleased section under the correspondig section and library (Muruca, Arianna, Dataviz)
 
-## [UNREALEASED]
+## [v3.4.0]
 
 ### Added 
 Muruca
 - Style: added rule for item-preview's border as last element in grid
-
-Arianna 
-
-Dataviz
-
-### Changed
-Muruca
-
-### Fixed
-Muruca
-
-Arianna 
-
-Dataviz
-
-### Changed
-
-Arianna 
-
-Dataviz
+- locale and i18n support
 
 ## [v3.3.1]
 
