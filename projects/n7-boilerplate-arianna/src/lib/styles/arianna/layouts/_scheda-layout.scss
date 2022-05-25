@@ -218,11 +218,23 @@
     }
 
     /* Minor inner titles that describes the various sections */
-    .aw-scheda__inner-title {
-        padding: 0 $aw-scheda-content-padding $aw-scheda-content-padding
+    .aw-scheda__section-title-wrapper {
+        display: flex;
+        align-items: center;
+        padding: 0 $aw-scheda-content-padding $aw-scheda-content-padding 
         $aw-scheda-content-padding;
-        font-size: $font-size-xxl;
-        font-weight: $font-weight-normal;
+        cursor: pointer;
+
+        .aw-scheda__inner-title {
+            flex-grow: 1;
+            font-size: $font-size-xxl;
+            font-weight: $font-weight-normal;
+        }
+
+        .aw-scheda__collapse button {
+            padding: 0 $space 0 0;
+            font-size: $font-size-l;
+        }
     }
 
     /* Sections */
@@ -303,6 +315,11 @@
         .aw-scheda__next span, .aw-scheda__prev span {
             font-size: $font-size-xxl;
         }
+    }
+
+    /* fix section hidden */
+    .aw-scheda__related-items[hidden] {
+        display: none !important;
     }
 
 }

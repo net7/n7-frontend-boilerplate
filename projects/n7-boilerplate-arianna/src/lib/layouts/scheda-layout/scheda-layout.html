@@ -166,22 +166,26 @@
     </section>
     <!-- END // Digital Objects -->
 
-    <section class="aw-scheda__section aw-scheda__description"
-             *ngIf="lb.dataSource.contentParts.content">
+    <section *ngIf="lb.dataSource.contentParts.content" class="aw-scheda__section aw-scheda__description">
         <div *ngFor="let part of lb.dataSource.contentParts">
             <div [innerHTML]="part.content"></div>
         </div>
     </section>
 
     <!-- Metadata -->
-    <section class="aw-scheda__section aw-scheda__metadata"
-             *ngIf="lb.dataSource.hasMetadata">
-        <div class="aw-scheda__inner-title"
-             *ngIf="lb.dataSource.metadataSectionTitle">
-            {{lb.dataSource.metadataSectionTitle}}
+    <section *ngIf="lb.dataSource.hasMetadata" class="aw-scheda__section aw-scheda__metadata">
+        <div class="aw-scheda__section-title-wrapper" (click)="lb.dataSource.onSectionCollapse('metadata')">
+            <ng-container *ngTemplateOutlet="collapse; context: { $implicit: 'metadata' }"></ng-container>
+            <div class="aw-scheda__inner-title"
+                 *ngIf="lb.dataSource.metadataSectionTitle">
+                {{lb.dataSource.metadataSectionTitle}}
+            </div>
         </div>
-        <n7-metadata-viewer [data]="lb.widgets['aw-scheda-metadata'].ds.out$ | async">
-        </n7-metadata-viewer>
+        <div [hidden]="!!lb.dataSource.sectionCollapseState['metadata']" 
+        class="aw-scheda__section-content-wrapper">
+            <n7-metadata-viewer [data]="lb.widgets['aw-scheda-metadata'].ds.out$ | async">
+            </n7-metadata-viewer>
+        </div>
     </section>
     <!-- END // Metadata -->
 
@@ -189,10 +193,14 @@
     <section *ngIf="lb.dataSource.hasRelatedEntities"
              id="related-item-container"
              class="aw-scheda__section aw-scheda__related">
-        <div class="aw-scheda__inner-title">
-            {{lb.dataSource.relatedEntitiesHeader}}
+        <div class="aw-scheda__section-title-wrapper" (click)="lb.dataSource.onSectionCollapse('related-entities')">
+            <ng-container *ngTemplateOutlet="collapse; context: { $implicit: 'related-entities' }"></ng-container>
+            <div class="aw-scheda__inner-title">
+                {{lb.dataSource.relatedEntitiesHeader}}
+            </div>
         </div>
-        <div class="aw-scheda__related-items aw-item-preview-list n7-grid-2">
+        <div [hidden]="!!lb.dataSource.sectionCollapseState['related-entities']" 
+        class="aw-scheda__related-items aw-item-preview-list n7-grid-2">
             <ng-container *ngFor="let preview of (lb.widgets['aw-related-entities'].ds.out$ | async)?.previews">
                 <div class="aw-item-preview-wrapper">
                     <n7-item-preview [data]="preview"
@@ -214,12 +222,16 @@
 
     <!-- Similar Objects -->
     <section *ngIf="lb.dataSource.hasSimilarItems"
-             id="related-item-container"
-             class="aw-scheda__section aw-scheda__related">
-        <div class="aw-scheda__inner-title">
-            {{lb.dataSource.similarItemsSectionTitle}}
+    id="related-item-container"
+    class="aw-scheda__section aw-scheda__related">
+        <div class="aw-scheda__section-title-wrapper" (click)="lb.dataSource.onSectionCollapse('similar-items')">
+            <ng-container *ngTemplateOutlet="collapse; context: { $implicit: 'similar-items' }"></ng-container>
+            <div class="aw-scheda__inner-title">
+                {{lb.dataSource.similarItemsSectionTitle}}
+            </div>
         </div>
-        <div class="aw-scheda__related-items aw-item-preview-list n7-grid-2">
+        <div [hidden]="!!lb.dataSource.sectionCollapseState['similar-items']" 
+        class="aw-scheda__related-items aw-item-preview-list n7-grid-2">
             <ng-container *ngFor="let preview of (lb.widgets['aw-linked-objects'].ds.out$ | async)?.previews">
                 <div class="aw-item-preview-wrapper">
                     <n7-item-preview [data]="preview"
@@ -235,7 +247,22 @@
     <section *ngIf="lb.dataSource.hasExtendedTree" id="extended-tree-container" class="aw-scheda__section">
         <aw-extended-tree
         [data]="lb.widgets['aw-extended-tree'].ds.out$ | async"
-        [emit]="lb.widgets['aw-extended-tree'].emit"></aw-extended-tree>
+        [emit]="lb.widgets['aw-extended-tree'].emit"
+        [lb]="lb">
+            <ng-container *ngTemplateOutlet="collapse; context: { $implicit: 'extended-tree' }"></ng-container>
+        </aw-extended-tree>
     </section>
     <!-- END // Extended Tree -->
+</ng-template>
+
+<ng-template #collapse let-id>
+    <div class="aw-scheda__collapse">
+        <button class="n7-btn n7-btn-light">
+            <span class="n7-icon-angle-right"
+            [ngClass]="{
+                'n7-icon-angle-right': !!lb.dataSource.sectionCollapseState[id],
+                'n7-icon-angle-down': !lb.dataSource.sectionCollapseState[id]
+            }"></span>
+        </button>
+    </div>
 </ng-template>

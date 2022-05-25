@@ -1,46 +1,51 @@
 <div *ngIf="data" class="aw-extended-tree">
-    <div *ngIf="data.header as header" class="aw-scheda__inner-title aw-extended-tree__header">
-        <n7-inner-title 
-        [data]="header"
-        [emit]="this.emit"></n7-inner-title>
+    <div class="aw-scheda__section-title-wrapper" (click)="onCollapseClick($event.target?.type)">
+        <ng-content></ng-content>
+        <div *ngIf="data.header as header" class="aw-scheda__inner-title aw-extended-tree__header">
+            <n7-inner-title 
+            [data]="header"
+            [emit]="this.emit"></n7-inner-title>
+        </div>
     </div>
-    <ng-container *ngIf="data.loading">
-        <div class="aw-extended-tree__loader">
-            <n7-loader></n7-loader>
-        </div>
-    </ng-container>
-    <ng-container *ngIf="!data.loading">
-        <div *ngIf="data.items as items" class="aw-extended-tree__content">
-            <div *ngFor="let item of data.items" class="aw-extended-tree__item">
-                <n7-anchor-wrapper [classes]="'aw-extended-tree__item-link'" [data]="item.anchor">
-                    <div *ngIf="item.icon" class="aw-extended-tree__item-icon">
-                        <span class="{{ item.icon }}"></span>
-                    </div>
-                    <div *ngIf="item.thumbnail" class="aw-extended-tree__item-image">
-                        <img src="{{ item.thumbnail }}" alt="{{ item.label }}">
-                    </div>
-                    <div *ngIf="item.label" class="aw-extended-tree__item-label">{{ item.label }}</div>
-                </n7-anchor-wrapper>
+    <div [hidden]="!!lb.dataSource.sectionCollapseState['extended-tree']">
+        <ng-container *ngIf="data.loading">
+            <div class="aw-extended-tree__loader">
+                <n7-loader></n7-loader>
             </div>
-        </div>
-        <div *ngIf="data.pagination as pagination" class="aw-extended-tree__footer">
-            <div *ngIf="data.pagination as pagination" class="aw-extended-tree__pagination">
-                <n7-pagination 
-                [data]="pagination"
-                [emit]="this.emit"></n7-pagination>
+        </ng-container>
+        <ng-container *ngIf="!data.loading">
+            <div *ngIf="data.items as items" class="aw-extended-tree__content">
+                <div *ngFor="let item of data.items" class="aw-extended-tree__item">
+                    <n7-anchor-wrapper [classes]="'aw-extended-tree__item-link'" [data]="item.anchor">
+                        <div *ngIf="item.icon" class="aw-extended-tree__item-icon">
+                            <span class="{{ item.icon }}"></span>
+                        </div>
+                        <div *ngIf="item.thumbnail" class="aw-extended-tree__item-image">
+                            <img src="{{ item.thumbnail }}" alt="{{ item.label }}">
+                        </div>
+                        <div *ngIf="item.label" class="aw-extended-tree__item-label">{{ item.label }}</div>
+                    </n7-anchor-wrapper>
+                </div>
             </div>
-            <div *ngIf="data.pageInput as pageInput" class="aw-extended-tree__page-input">
-                <n7-input-text 
-                [data]="pageInput"
-                [emit]="this.emit"></n7-input-text>
-                <button class="n7-btn"
-                (click)="onPageInputSubmit()">Vai</button>
+            <div *ngIf="data.pagination as pagination" class="aw-extended-tree__footer">
+                <div *ngIf="data.pagination as pagination" class="aw-extended-tree__pagination">
+                    <n7-pagination 
+                    [data]="pagination"
+                    [emit]="this.emit"></n7-pagination>
+                </div>
+                <div *ngIf="data.pageInput as pageInput" class="aw-extended-tree__page-input">
+                    <n7-input-text 
+                    [data]="pageInput"
+                    [emit]="this.emit"></n7-input-text>
+                    <button class="n7-btn"
+                    (click)="onPageInputSubmit()">Vai</button>
+                </div>
+                <div *ngIf="data.limitSelect as limitSelect" class="aw-extended-tree__limit-select">
+                    <n7-input-select 
+                    [data]="limitSelect"
+                    [emit]="this.emit"></n7-input-select>
+                </div>
             </div>
-            <div *ngIf="data.limitSelect as limitSelect" class="aw-extended-tree__limit-select">
-                <n7-input-select 
-                [data]="limitSelect"
-                [emit]="this.emit"></n7-input-select>
-            </div>
-        </div>
-    </ng-container>
+        </ng-container>
+    </div>
 </div>

@@ -8,6 +8,8 @@ import { helpers } from '@net7/boilerplate-common';
 import metadataHelper from '../../helpers/metadata.helper';
 import mock from './extended-tree.mock';
 
+const LOCAL_STORAGE_PREFIX = 'aw.scheda';
+
 export class AwSchedaLayoutDS extends LayoutDataSource {
   static tree: any = null;
 
@@ -97,6 +99,13 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     next: { href: string; label: string; };
   } = null;
 
+  public sectionCollapseState = {
+    metadata: false,
+    'extended-tree': false,
+    'similar-items': false,
+    'related-entities': false
+  };
+
   onInit({
     configuration, mainState, router, options, titleService, communication,
   }) {
@@ -139,6 +148,13 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
     // pdf viewer options
     this.one('aw-scheda-pdf').updateOptions(this.configuration.get('scheda-layout')['pdf-viewer'] || {});
+
+    // check section collapse state
+    Object.keys(this.sectionCollapseState).forEach((key) => {
+      const storageKey = `${LOCAL_STORAGE_PREFIX}.${key}`;
+      const storageValue = localStorage.getItem(storageKey);
+      this.sectionCollapseState[key] = storageValue ? JSON.parse(storageValue) : false;
+    });
 
     // sidebar sticky control
     this._sidebarStickyControl();
@@ -378,6 +394,14 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     this.layoutConfig.tree.collapsedByDefault = !this.layoutConfig.tree.collapsedByDefault;
     this.sidebarCollapsed = !this.sidebarCollapsed;
     this.getWidgetDataSource('aw-sidebar-header').toggleSidebar();
+  }
+
+  onSectionCollapse(id: string) {
+    this.sectionCollapseState[id] = !this.sectionCollapseState[id];
+
+    // update storage
+    const storageKey = `${LOCAL_STORAGE_PREFIX}.${id}`;
+    localStorage.setItem(storageKey, this.sectionCollapseState[id]);
   }
 
   private _sidebarStickyControl() {

@@ -26,9 +26,17 @@ export class ExtendedTreeComponent {
 
   @Input() emit: (type: string, payload?: any) => void;
 
+  @Input() lb: any;
+
   onPageInputSubmit() {
     if (!this.emit) return;
 
     this.emit('pageinputsubmit');
+  }
+
+  onCollapseClick(type) {
+    if (type === 'text') return;
+
+    this.lb.dataSource.onSectionCollapse('extended-tree');
   }
 }
