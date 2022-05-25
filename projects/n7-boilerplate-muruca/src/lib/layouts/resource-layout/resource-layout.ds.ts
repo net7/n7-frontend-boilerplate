@@ -1,17 +1,21 @@
+import { Data } from '@angular/router';
 import { LayoutDataSource, _t } from '@net7/core';
 import { Observable } from 'rxjs';
 import {
   ConfigurationService, CommunicationService, MainStateService, helpers
 } from '@net7/boilerplate-common';
+import { MrLocaleService } from '../../services/locale.service';
 
 export class MrResourceLayoutDS extends LayoutDataSource {
   private configuration: ConfigurationService;
 
   private communication: CommunicationService;
 
-  private mainState: MainStateService
+  private mainState: MainStateService;
 
-  private configId: string;
+  private localeService: MrLocaleService;
+
+  private routerData: Data;
 
   private pageConfig: any;
 
@@ -31,8 +35,9 @@ export class MrResourceLayoutDS extends LayoutDataSource {
     this.configuration = payload.configuration;
     this.communication = payload.communication;
     this.mainState = payload.mainState;
-    this.configId = payload.configId;
-    this.pageConfig = this.configuration.get(this.configId);
+    this.localeService = payload.localeService;
+    this.routerData = payload.routerData;
+    this.pageConfig = this.configuration.get(this.routerData.configId);
 
     // tabs config
     const tabs = this.configuration.get('tabs');
@@ -52,6 +57,7 @@ export class MrResourceLayoutDS extends LayoutDataSource {
 
   /** Request the configured widgets data */
   pageRequest$(id, onError: (err: any) => void): Observable<any> {
+    const { locale } = this.routerData;
     const { top, content } = this.pageConfig.sections;
     const sections = top.concat(content);
     return this.communication.request$('resource', {
@@ -61,12 +67,14 @@ export class MrResourceLayoutDS extends LayoutDataSource {
         id,
         type: this.pageConfig.type,
         sections: sections.map((s) => s.id),
-      }
+      },
+      urlParams: locale ? `?locale=${locale}` : '',
     });
   }
 
   handleResponse(response) {
     this.initSections(response);
+    this.setLocaleResourceConfig(response);
     this.updateHeadTitle(response);
   }
 
@@ -120,9 +128,18 @@ export class MrResourceLayoutDS extends LayoutDataSource {
         id: this.id,
         root: this.pageConfig.tabs,
         slug: this.slug,
-        currentTab: this.tab
+        currentTab: this.tab,
+        localeService: this.localeService
       });
       this.one(tabSection.id).update(this.tabConfig);
+    }
+  }
+
+  // set resource locale config
+  // used by language switcher
+  private setLocaleResourceConfig(response) {
+    if (response?.locale) {
+      this.localeService.setResourceConfig(response.locale);
     }
   }
 

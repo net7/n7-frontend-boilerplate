@@ -10,6 +10,4 @@ import { Component } from '@angular/core';
   `,
   styleUrls: []
 })
-export class AppComponent {
-  public useRouter = true;
-}
+export class AppComponent { }

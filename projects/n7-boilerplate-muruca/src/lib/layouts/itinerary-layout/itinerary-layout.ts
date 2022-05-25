@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import {
   AbstractLayout,
   CommunicationService,
@@ -19,6 +19,7 @@ import {
   MrCollectionEH,
   MrGalleryEH
 } from '../../event-handlers';
+import { MrLocaleService } from '../../services/locale.service';
 
 const DATASOURCE_MAP = {
   collection: MrCollectionDS,
@@ -36,7 +37,7 @@ const EVENTHANDLER_MAP = {
   templateUrl: './itinerary-layout.html',
 })
 export class MrItineraryLayoutComponent extends AbstractLayout implements OnInit, OnDestroy {
-  private configId: string;
+  private routeData: Data;
 
   constructor(
     layoutsConfiguration: LayoutsConfigurationService,
@@ -47,19 +48,21 @@ export class MrItineraryLayoutComponent extends AbstractLayout implements OnInit
     private route: ActivatedRoute,
     private router: Router,
     public layoutState: MrLayoutStateService,
-    public modalService: MrResourceModalService
+    public modalService: MrResourceModalService,
+    public localeService: MrLocaleService,
   ) {
     super(layoutsConfiguration.get('MrItineraryLayoutConfig') || config);
   }
 
   protected initPayload() {
     return {
-      configId: this.configId,
+      routeData: this.routeData,
       configuration: this.configuration,
       communication: this.communication,
       mainState: this.mainState,
       layoutState: this.layoutState,
       modalService: this.modalService,
+      localeService: this.localeService,
       options: this.config.options || {},
       route: this.route,
       router: this.router
@@ -67,9 +70,9 @@ export class MrItineraryLayoutComponent extends AbstractLayout implements OnInit
   }
 
   ngOnInit() {
-    this.activatedRoute.data.subscribe((data) => {
+    this.activatedRoute.data.subscribe((routeData) => {
       this.layoutState.add('content');
-      this.configId = data.configId;
+      this.routeData = routeData;
       this.loadWidgets();
       this.onInit();
     });
@@ -80,12 +83,15 @@ export class MrItineraryLayoutComponent extends AbstractLayout implements OnInit
   }
 
   loadWidgets() {
-    const { sections } = this.configuration.get(this.configId);
+    const { configId } = this.routeData;
+    const { sections } = this.configuration.get(configId);
     if (sections) {
       sections.forEach(({ id, type, options }) => {
+        const widgetOptions = options || {};
+        widgetOptions.localeService = this.localeService;
         this.widgets.push({
           id,
-          options,
+          options: widgetOptions,
           dataSource: DATASOURCE_MAP[type],
           eventHandler: EVENTHANDLER_MAP[type]
         });

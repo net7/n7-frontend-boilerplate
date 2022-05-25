@@ -1,6 +1,6 @@
+import { Data, Router } from '@angular/router';
 import { LayoutDataSource, _t } from '@net7/core';
-import { ItemPreviewData } from '@net7/components';
-import { Location } from '@angular/common';
+import { Anchor, ItemPreviewData } from '@net7/components';
 import * as L from 'leaflet';
 import { first } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -8,6 +8,7 @@ import { ConfigurationService, CommunicationService, MainStateService } from '@n
 import { MrLayoutStateService } from '../../services/layout-state.service';
 import 'leaflet.markercluster';
 import { CollectionItem, GetResourceResponse } from './map-layout.types';
+import { MrLocaleService } from '../../services/locale.service';
 
 export class MrMapLayoutDS extends LayoutDataSource {
   private configuration: ConfigurationService;
@@ -18,22 +19,24 @@ export class MrMapLayoutDS extends LayoutDataSource {
 
   private layoutState: MrLayoutStateService;
 
-  private configId: string;
+  private localeService: MrLocaleService;
+
+  private routerData: Data;
 
   private pageConfig;
-
-  private location: Location;
 
   public loading = {
     resourceDetails: true,
     timeline: true,
-  }
+  };
 
   public eventHeader: string;
 
-  public eventDescription = ''
+  public eventDescription = '';
 
   public route;
+
+  public router: Router;
 
   public mapListener$: Subject<L.Map> = new Subject();
 
@@ -47,12 +50,12 @@ export class MrMapLayoutDS extends LayoutDataSource {
       };
       text?: string;
     }[];
-  }
+  };
 
   public collectionWorksData: {
     header: { title: string };
     items: ItemPreviewData[];
-  }
+  };
 
   public collectionWitnessData: {
     header: { title: string };
@@ -66,17 +69,20 @@ export class MrMapLayoutDS extends LayoutDataSource {
   onInit(payload) {
     this.configuration = payload.configuration;
     this.communication = payload.communication;
+    this.localeService = payload.localeService;
     this.route = payload.route;
-    this.location = payload.location;
+    this.router = payload.router;
 
-    this.configId = payload.configId;
-    this.pageConfig = this.configuration.get(this.configId) || {};
+    this.routerData = payload.routerData;
+    this.pageConfig = this.configuration.get(this.routerData.configId) || {};
     // overwrite leaflet options with configuration.libOptions
     this.one('mr-map').updateOptions({ libOptions: this.pageConfig.libOptions });
 
     // update the map
+    const { locale } = this.routerData;
     this.communication.request$('map', {
       method: 'GET',
+      urlParams: locale ? `?locale=${locale}` : '',
       onError: (e) => console.error(e)
     }).subscribe(({ dataSet }) => {
       if (dataSet) { this.one('mr-map').update(dataSet); }
@@ -95,19 +101,24 @@ export class MrMapLayoutDS extends LayoutDataSource {
     this.collectionWitnessData = undefined;
     this.collectionWorksData = undefined;
     this.collectionGalleryData = undefined;
-    if (navigate) this.location.go('/map/');
+    if (navigate) {
+      const href = this.localeService.getLinkByRouteId('map');
+      this.router.navigate([href]);
+    }
     this.one('mr-year-header').update({
       title: { main: { text: _t(this.pageConfig.title) } },
     });
   }
 
   updatePageDetails(id) {
+    const { locale } = this.routerData;
     this.communication.request$('resource', {
       onError: (e) => console.error(e),
       method: 'POST',
       params: {
         id, type: 'views/places'
-      }
+      },
+      urlParams: locale ? `?locale=${locale}` : '',
     }).subscribe((res: GetResourceResponse) => {
       if (!res || res == null) return;
       const {
@@ -134,13 +145,26 @@ export class MrMapLayoutDS extends LayoutDataSource {
       if (witnessData) {
         this.collectionWitnessData = {
           items: witnessData.items.map((witness: {
-            link: string; title: string; type: string;
-          }): ItemPreviewData => ({
-            title: witness.title,
-            anchor: {
-              href: witness.link,
+            id: string;
+            link: string;
+            title: string;
+            type: string;
+            routeId?: string;
+            slug?: string;
+          }): ItemPreviewData => {
+            let anchor: Anchor;
+            if (witness.routeId) {
+              const href = this.localeService
+                .getLinkByRouteId(witness.routeId, witness.id, witness.slug);
+              anchor = { href };
+            } else if (witness.link) {
+              anchor = { href: witness.link };
             }
-          })),
+            return {
+              anchor,
+              title: witness.title,
+            };
+          }),
           header: witnessData.header
         };
       } else {
@@ -149,14 +173,22 @@ export class MrMapLayoutDS extends LayoutDataSource {
       if (worksData?.items) {
         this.collectionWorksData = {
           header: worksData.header,
-          items: worksData.items.map((item: CollectionItem) => ({
-            image: item.image,
-            title: item.title,
-            anchor: item.link ? {
-              href: item.link,
-            } : undefined,
-            text: item.text,
-          }))
+          items: worksData.items.map((item: CollectionItem) => {
+            let anchor: Anchor;
+            if (item.routeId) {
+              const href = this.localeService
+                .getLinkByRouteId(item.routeId, item.id, item.slug);
+              anchor = { href };
+            } else if (item.link) {
+              anchor = { href: item.link };
+            }
+            return {
+              anchor,
+              image: item.image,
+              title: item.title,
+              text: item.text,
+            };
+          })
         };
       } else {
         this.collectionWorksData = undefined;

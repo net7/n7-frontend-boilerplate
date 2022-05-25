@@ -12,10 +12,12 @@ const config: ConfigMurucaResourceLayout = {
         options: {
           base: [{
             title: 'global#home',
-            link: '/'
+            link: '/',
+            routeId: 'home',
           }, {
             title: 'global#maps',
-            link: '/maps'
+            link: '/maps',
+            routeId: 'maps'
           }]
         }
       },
