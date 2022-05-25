@@ -98,10 +98,13 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
     this.configId = payload.configId;
     this.pageConfig = this.configuration.get(this.configId) || {};
 
+    const locale = this.localeService.getLocale();
+
     // update the timeline
     this.communication
       .request$('timeline', {
         method: 'GET',
+        urlParams: locale ? `?locale=${locale}` : '',
         onError: (e) => console.error(e),
       })
       .subscribe((d) => {
@@ -122,6 +125,7 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
     this.communication
       .request$('timelineDescription', {
         method: 'GET',
+        urlParams: locale ? `?locale=${locale}` : '',
         onError: (e) => console.error(e),
       })
       .subscribe((d) => {
@@ -157,10 +161,12 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
   }
 
   updatePageDetails(id) {
+    const locale = this.localeService.getLocale();
     this.communication
       .request$('resource', {
         onError: (e) => console.error(e),
         method: 'POST',
+        urlParams: locale ? `?locale=${locale}` : '',
         params: {
           id,
           type: 'views/time-events',
