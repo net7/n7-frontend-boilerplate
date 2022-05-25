@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import {
   AbstractLayout,
@@ -10,13 +10,14 @@ import {
 } from '@net7/boilerplate-common';
 import { MrLayoutStateService } from '../../services/layout-state.service';
 import { MrMapLayoutConfig as config } from './map-layout.config';
+import { MrLocaleService } from '../../services/locale.service';
 
 @Component({
   selector: 'mr-map-layout',
   templateUrl: './map-layout.html',
 })
 export class MrMapLayoutComponent extends AbstractLayout implements OnInit, OnDestroy {
-  private configId: string;
+  private routerData: Data;
 
   constructor(
     layoutsConfiguration: LayoutsConfigurationService,
@@ -27,13 +28,14 @@ export class MrMapLayoutComponent extends AbstractLayout implements OnInit, OnDe
     private communication: CommunicationService,
     private mainState: MainStateService,
     public layoutState: MrLayoutStateService,
+    public localeService: MrLocaleService,
   ) {
     super(layoutsConfiguration.get('MrMapLayoutConfig') || config);
   }
 
   protected initPayload() {
     return {
-      configId: this.configId,
+      routerData: this.routerData,
       mainState: this.mainState,
       configuration: this.configuration,
       communication: this.communication,
@@ -41,13 +43,14 @@ export class MrMapLayoutComponent extends AbstractLayout implements OnInit, OnDe
       route: this.route,
       router: this.router,
       location: this.location,
+      localeService: this.localeService,
       options: this.config.options || {}
     };
   }
 
   ngOnInit() {
-    this.route.data.subscribe((data) => {
-      this.configId = data.configId;
+    this.route.data.subscribe((routerData) => {
+      this.routerData = routerData;
       this.layoutState.add('content');
       this.onInit();
     });

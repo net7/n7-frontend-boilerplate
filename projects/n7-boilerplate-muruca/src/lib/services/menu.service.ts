@@ -20,22 +20,37 @@ type MenuItem = {
 export class MrMenuService {
   private dynamicPaths: string[] = [];
 
+  private cache: {
+    [locale: string]: boolean;
+  } = {};
+
   constructor(
     private http: HttpClient,
     private configuration: ConfigurationService,
   ) {}
 
-  load(): Promise<any> {
+  load(locale = null): Promise<any> {
+    if (locale && this.cache[locale]) {
+      this._handleResponse(this.cache[locale]);
+      return Promise.resolve();
+    }
+
     const { defaultProvider, providers } = this.configuration.get('communication');
     const currentProvider = providers[defaultProvider] || {};
     const { baseUrl } = currentProvider;
     const menuPath = currentProvider?.config?.menu;
 
     if (baseUrl && menuPath) {
-      const url = baseUrl + menuPath;
+      let url = baseUrl + menuPath;
+      if (locale) {
+        url += `?locale=${locale}`;
+      }
       return this.http.get(url).pipe(
         catchError(() => of(null)),
-        tap((response) => this._handleResponse(response)),
+        tap((response) => {
+          this.cache[locale] = response;
+          this._handleResponse(response);
+        }),
       ).toPromise();
     }
     return of(null).toPromise();

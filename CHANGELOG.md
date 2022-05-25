@@ -63,29 +63,18 @@ Muruca
 ### Added 
 Muruca
  - added input info tooltip
-Dataviz
- - 
-Arianna
- -
+ - added locale and i18n support
 
 ### Changed
 Muruca
  - Space * 0.5
  - Quote style
-Dataviz
- - 
-Arianna
- -
 
 ### Fixed
 Muruca
  - Fix muruca search config path
  - Fixed highlight link in advanced search item preview
  - timeline-layout-fix 
-Dataviz
- - 
-Arianna
- -
 
 ## [v3.2.2]
 

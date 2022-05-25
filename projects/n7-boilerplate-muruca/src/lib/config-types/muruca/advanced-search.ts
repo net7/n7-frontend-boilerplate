@@ -6,7 +6,9 @@ import { ConfigMurucaLayout } from './layouts';
 
 export interface ConfigMurucaAdvancedSearchLayout extends ConfigMurucaLayout {
   /** results page url */
-  resultsUrl: string;
+  resultsUrl: string | {
+    [locale: string]: string;
+  };
   formConfig: {
     /** form submit button  */
     submitButton: {

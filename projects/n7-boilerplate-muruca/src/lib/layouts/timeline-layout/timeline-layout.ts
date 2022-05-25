@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Location } from '@angular/common';
 import {
   AbstractLayout,
   CommunicationService,
@@ -11,6 +10,7 @@ import {
 import { MrResourceModalService } from '../../services/resource-modal.service';
 import { MrLayoutStateService } from '../../services/layout-state.service';
 import { MrTimelineLayoutConfig as config } from './timeline-layout.config';
+import { MrLocaleService } from '../../services/locale.service';
 
 @Component({
   selector: 'mr-timeline-layout',
@@ -23,12 +23,12 @@ export class MrTimelineLayoutComponent extends AbstractLayout implements OnInit,
     layoutsConfiguration: LayoutsConfigurationService,
     private route: ActivatedRoute,
     private router: Router,
-    private location: Location,
     private configuration: ConfigurationService,
     private communication: CommunicationService,
     private mainState: MainStateService,
     public layoutState: MrLayoutStateService,
-    public modalService: MrResourceModalService
+    public modalService: MrResourceModalService,
+    public localeService: MrLocaleService,
   ) {
     super(layoutsConfiguration.get('MrTimelineLayoutConfig') || config);
   }
@@ -43,7 +43,7 @@ export class MrTimelineLayoutComponent extends AbstractLayout implements OnInit,
       modalService: this.modalService,
       route: this.route,
       router: this.router,
-      location: this.location,
+      localeService: this.localeService,
       options: this.config.options || {}
     };
   }

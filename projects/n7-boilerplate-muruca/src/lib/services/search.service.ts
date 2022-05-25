@@ -32,6 +32,8 @@ export class MrSearchService {
 
   private searchId: string | number;
 
+  private locale: string;
+
   private config;
 
   private queryParamKeys: string[] = [];
@@ -58,9 +60,9 @@ export class MrSearchService {
       [key: string]: any;
     };
   } = {
-    globalParams: {},
-    facets: {}
-  };
+      globalParams: {},
+      facets: {}
+    };
 
   private state$: {
     [key: string]: Subject<any>;
@@ -76,9 +78,10 @@ export class MrSearchService {
     private communication: CommunicationService,
   ) { }
 
-  public init(searchId, config) {
+  public init(searchId, config, locale = null) {
     this.searchId = searchId;
     this.config = config;
+    this.locale = locale;
 
     // first clear
     this.clear();
@@ -342,6 +345,7 @@ export class MrSearchService {
       }),
       switchMap((state) => this.communication.request$(results.id, {
         params: { ...state, searchId: this.searchId },
+        urlParams: this.locale ? `?locale=${this.locale}` : '',
         method: 'POST',
         onError: (error) => {
           this.setState(RESULTS_REQUEST_STATE_CONTEXT, 'error', error);
@@ -414,6 +418,7 @@ export class MrSearchService {
         }],
         searchId: this.searchId
       },
+      urlParams: this.locale ? `?locale=${this.locale}` : '',
       method: 'POST',
       onError: (error) => {
         this.setState(FACETS_REQUEST_STATE_CONTEXT, 'error', error);
@@ -474,6 +479,7 @@ export class MrSearchService {
               facets: state.facets,
               searchId: this.searchId
             },
+            urlParams: this.locale ? `?locale=${this.locale}` : '',
             method: 'POST',
             onError: (error) => {
               this.setState(FACETS_REQUEST_STATE_CONTEXT, 'error', error);
@@ -498,6 +504,7 @@ export class MrSearchService {
           ...state,
           searchId: this.searchId
         },
+        urlParams: this.locale ? `?locale=${this.locale}` : '',
         method: 'POST',
         onError: (error) => {
           this.setState(FACETS_REQUEST_STATE_CONTEXT, 'error', error);

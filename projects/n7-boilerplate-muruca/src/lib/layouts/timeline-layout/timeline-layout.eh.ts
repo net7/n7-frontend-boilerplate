@@ -1,9 +1,9 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { Location } from '@angular/common';
 import { EventHandler } from '@net7/core';
 import { Timeline } from 'vis-timeline';
 import { helpers } from '@net7/boilerplate-common';
 import { MrResourceModalService } from '../../services/resource-modal.service';
+import { MrLocaleService } from '../../services/locale.service';
 
 export class MrTimelineLayoutEH extends EventHandler {
   private modalService: MrResourceModalService;
@@ -12,7 +12,7 @@ export class MrTimelineLayoutEH extends EventHandler {
 
   private router: Router;
 
-  private location: Location;
+  private localeService: MrLocaleService;
 
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
@@ -22,7 +22,7 @@ export class MrTimelineLayoutEH extends EventHandler {
           this.modalService = payload.modalService;
           this.route = payload.route;
           this.router = payload.router;
-          this.location = payload.location;
+          this.localeService = payload.localeService;
           this.listenRoute();
           // scroll top
           window.scrollTo(0, 0);
@@ -35,7 +35,8 @@ export class MrTimelineLayoutEH extends EventHandler {
                 .find((d: { id: number; content: string }) => d.id === props.item);
               const slug = helpers.slugify(content);
               // navigate without reloading the layout
-              this.location.go(`/timeline/${props.item}/${slug}`);
+              const href = this.localeService.getLinkByRouteId('timeline', props.item, slug);
+              this.router.navigate([href]);
               this.dataSource.updatePageDetails(props.item);
             });
           });
@@ -76,5 +77,5 @@ export class MrTimelineLayoutEH extends EventHandler {
       const { id, type: resourceType } = payload;
       this.modalService.open(id, resourceType);
     }
-  }
+  };
 }

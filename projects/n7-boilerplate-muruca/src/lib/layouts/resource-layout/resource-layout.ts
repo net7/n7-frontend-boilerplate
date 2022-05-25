@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import {
   AbstractLayout,
   CommunicationService,
@@ -26,6 +26,7 @@ import {
   MrResourceTabsDS,
 } from '../../data-sources';
 import { MrMapDS } from '../../data-sources/map.ds';
+import { MrLocaleService } from '../../services/locale.service';
 
 const DATASOURCE_MAP = {
   breadcrumbs: MrBreadcrumbsDS,
@@ -54,7 +55,7 @@ const EVENTHANDLER_MAP = {
   templateUrl: './resource-layout.html',
 })
 export class MrResourceLayoutComponent extends AbstractLayout implements OnInit, OnDestroy {
-  private configId: string;
+  private routerData: Data;
 
   constructor(
     layoutsConfiguration: LayoutsConfigurationService,
@@ -65,19 +66,21 @@ export class MrResourceLayoutComponent extends AbstractLayout implements OnInit,
     private route: ActivatedRoute,
     private router: Router,
     public layoutState: MrLayoutStateService,
-    public modalService: MrResourceModalService
+    public modalService: MrResourceModalService,
+    public localeService: MrLocaleService,
   ) {
     super(layoutsConfiguration.get('MrResourceLayoutConfig') || config);
   }
 
   protected initPayload() {
     return {
-      configId: this.configId,
+      routerData: this.routerData,
       configuration: this.configuration,
       communication: this.communication,
       mainState: this.mainState,
       layoutState: this.layoutState,
       modalService: this.modalService,
+      localeService: this.localeService,
       options: this.config.options || {},
       route: this.route,
       router: this.router
@@ -85,9 +88,9 @@ export class MrResourceLayoutComponent extends AbstractLayout implements OnInit,
   }
 
   ngOnInit() {
-    this.activatedRoute.data.subscribe((data) => {
+    this.activatedRoute.data.subscribe((routerData) => {
       this.layoutState.add('content');
-      this.configId = data.configId;
+      this.routerData = routerData;
       this.loadWidgets();
       this.onInit();
     });
@@ -98,23 +101,26 @@ export class MrResourceLayoutComponent extends AbstractLayout implements OnInit,
   }
 
   loadWidgets() {
-    const { top, content } = this.configuration.get(this.configId).sections;
+    const { configId } = this.routerData;
+    const { top, content } = this.configuration.get(configId).sections;
     const sections = top.concat(content);
     this.widgets = [];
     if (sections) {
       sections.forEach(({
         id, type, options, tools
       }) => {
+        const widgetOptions = options || {};
+        widgetOptions.localeService = this.localeService;
         this.widgets.push({
           id,
-          options,
+          options: widgetOptions,
           dataSource: DATASOURCE_MAP[type],
           eventHandler: EVENTHANDLER_MAP[type]
         });
         if (type === 'viewer' && tools) {
           this.widgets.push({
-            options,
             id: `${id}-tools`,
+            options: widgetOptions,
             dataSource: DATASOURCE_MAP[`${type}-tools`],
             eventHandler: EVENTHANDLER_MAP[`${type}-tools`]
           });

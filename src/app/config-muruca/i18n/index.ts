@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/camelcase */
-import it_IT from './it_IT';
+import it from './it';
+import en from './en';
 
-export default { it_IT };
+export default { it, en };
