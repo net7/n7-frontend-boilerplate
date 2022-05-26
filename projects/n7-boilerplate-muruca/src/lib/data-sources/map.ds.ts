@@ -52,7 +52,7 @@ export class MrMapDS extends DataSource {
   /** Instance of the marker layerGroup */
   markerLayer;
 
-  mapLoaded$: Subject<L.Map> = new Subject()
+  mapLoaded$: Subject<L.Map> = new Subject();
 
   // eslint-disable-next-line consistent-return
   protected transform(data: TimelineResponse): MapData {
@@ -99,6 +99,7 @@ export class MrMapDS extends DataSource {
       },
       containerId: 'map-canvas',
       libOptions: {
+        attributionControl: false,
         ...this.options.libOptions,
       },
       tileLayers: [{
@@ -111,8 +112,50 @@ export class MrMapDS extends DataSource {
     };
   }
 
+  public updateMarkersState(id: string) {
+    if (id) {
+      const marker = this.getMarkerById(id);
+      if (marker) {
+        marker.setIcon(MARKER_ICON_SELECTED);
+        marker.openPopup();
+      }
+    } else {
+      const marker = this.getSelectedMarker();
+      if (marker) {
+        marker.setIcon(MARKER_ICON);
+        marker.closePopup();
+      }
+    }
+  }
+
+  private getMarkerById = (id: string) => {
+    let marker = null;
+    this.mapInstance.eachLayer((layer) => {
+      if (layer instanceof L.Marker) {
+        if (`${layer.id}` === id) {
+          marker = layer;
+        }
+      }
+    });
+    return marker;
+  };
+
+  private getSelectedMarker = () => {
+    let marker = null;
+    this.mapInstance.eachLayer((layer) => {
+      if (layer instanceof L.Marker) {
+        const { icon } = layer.options || {};
+        const className = icon?.options?.className || '';
+        const isSelected = className.includes('selected');
+        if (isSelected) {
+          marker = layer;
+        }
+      }
+    });
+    return marker;
+  };
+
   private fitMapToBounds(bounds, zoom = 10) {
-    console.log(zoom);
     if (this.mapInstance) {
       this.mapInstance.fitBounds(bounds, {
         maxZoom: zoom,
@@ -153,7 +196,9 @@ export class MrMapDS extends DataSource {
         // add the marker to the group
         .addTo(markerGroup)
         // add the on-click tooltip
-        .bindPopup(template);
+        .bindPopup(template, {
+          closeButton: false
+        });
 
       newMarker.getPopup().on('remove', ({ target }) => {
         target._source.setIcon(MARKER_ICON);
