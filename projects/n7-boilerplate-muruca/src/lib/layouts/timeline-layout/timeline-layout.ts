@@ -7,6 +7,7 @@ import {
   ConfigurationService,
   MainStateService
 } from '@net7/boilerplate-common';
+import { Location } from '@angular/common';
 import { MrResourceModalService } from '../../services/resource-modal.service';
 import { MrLayoutStateService } from '../../services/layout-state.service';
 import { MrTimelineLayoutConfig as config } from './timeline-layout.config';
@@ -29,6 +30,7 @@ export class MrTimelineLayoutComponent extends AbstractLayout implements OnInit,
     public layoutState: MrLayoutStateService,
     public modalService: MrResourceModalService,
     public localeService: MrLocaleService,
+    public location: Location,
   ) {
     super(layoutsConfiguration.get('MrTimelineLayoutConfig') || config);
   }
@@ -44,6 +46,7 @@ export class MrTimelineLayoutComponent extends AbstractLayout implements OnInit,
       route: this.route,
       router: this.router,
       localeService: this.localeService,
+      location: this.location,
       options: this.config.options || {}
     };
   }

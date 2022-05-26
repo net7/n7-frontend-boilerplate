@@ -9,6 +9,7 @@ import {
   MainStateService,
 } from '@net7/boilerplate-common';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { MrLayoutStateService } from '../../services/layout-state.service';
 import 'leaflet.markercluster';
 import { GetResourceResponse } from './timeline-layout.types';
@@ -33,6 +34,8 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
   private pageConfig;
 
   private localeService: MrLocaleService;
+
+  private location: Location;
 
   public loading = {
     resourceDetails: true,
@@ -94,6 +97,7 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
     this.route = payload.route;
     this.router = payload.router;
     this.localeService = payload.localeService;
+    this.location = payload.location;
 
     this.configId = payload.configId;
     this.pageConfig = this.configuration.get(this.configId) || {};
@@ -151,9 +155,10 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
     this.collectionWorksData = undefined;
     this.collectionBooksData = undefined;
     this.collectionGalleryData = undefined;
+    this.collectionData = [];
     if (navigate) {
       const href = this.localeService.getLinkByRouteId('timeline');
-      this.router.navigate([href]);
+      this.location.go(href);
     }
     this.one('mr-year-header').update({
       title: { main: { text: _t(this.pageConfig.title) } },

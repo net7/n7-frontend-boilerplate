@@ -8,6 +8,7 @@ import {
   ConfigurationService,
   MainStateService
 } from '@net7/boilerplate-common';
+import { first } from 'rxjs/operators';
 import { MrLayoutStateService } from '../../services/layout-state.service';
 import { MrMapLayoutConfig as config } from './map-layout.config';
 import { MrLocaleService } from '../../services/locale.service';
@@ -49,7 +50,9 @@ export class MrMapLayoutComponent extends AbstractLayout implements OnInit, OnDe
   }
 
   ngOnInit() {
-    this.route.data.subscribe((routerData) => {
+    this.route.data.pipe(
+      first()
+    ).subscribe((routerData) => {
       this.routerData = routerData;
       this.layoutState.add('content');
       this.onInit();

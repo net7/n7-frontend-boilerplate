@@ -2,6 +2,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { EventHandler } from '@net7/core';
 import { Timeline } from 'vis-timeline';
 import { helpers } from '@net7/boilerplate-common';
+import { Location } from '@angular/common';
 import { MrResourceModalService } from '../../services/resource-modal.service';
 import { MrLocaleService } from '../../services/locale.service';
 
@@ -14,6 +15,8 @@ export class MrTimelineLayoutEH extends EventHandler {
 
   private localeService: MrLocaleService;
 
+  private location: Location;
+
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
@@ -23,6 +26,7 @@ export class MrTimelineLayoutEH extends EventHandler {
           this.route = payload.route;
           this.router = payload.router;
           this.localeService = payload.localeService;
+          this.location = payload.location;
           this.listenRoute();
           // scroll top
           window.scrollTo(0, 0);
@@ -35,8 +39,8 @@ export class MrTimelineLayoutEH extends EventHandler {
                 .find((d: { id: number; content: string }) => d.id === props.item);
               const slug = helpers.slugify(content);
               // navigate without reloading the layout
-              const href = this.localeService.getLinkByRouteId('timeline', props.item, slug);
-              this.router.navigate([href]);
+              const href = this.localeService.getLinkByRouteId('timelineItem', props.item, slug);
+              this.location.go(href);
               this.dataSource.updatePageDetails(props.item);
             });
           });

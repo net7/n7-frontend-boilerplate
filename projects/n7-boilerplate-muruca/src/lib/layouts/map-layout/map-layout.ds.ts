@@ -5,6 +5,7 @@ import * as L from 'leaflet';
 import { first } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ConfigurationService, CommunicationService, MainStateService } from '@net7/boilerplate-common';
+import { Location } from '@angular/common';
 import { MrLayoutStateService } from '../../services/layout-state.service';
 import 'leaflet.markercluster';
 import { CollectionItem, GetResourceResponse } from './map-layout.types';
@@ -21,6 +22,8 @@ export class MrMapLayoutDS extends LayoutDataSource {
 
   private localeService: MrLocaleService;
 
+  private location: Location;
+
   private routerData: Data;
 
   private pageConfig;
@@ -31,6 +34,8 @@ export class MrMapLayoutDS extends LayoutDataSource {
   };
 
   public eventHeader: string;
+
+  public currentId: string;
 
   public eventDescription = '';
 
@@ -70,6 +75,7 @@ export class MrMapLayoutDS extends LayoutDataSource {
     this.configuration = payload.configuration;
     this.communication = payload.communication;
     this.localeService = payload.localeService;
+    this.location = payload.location;
     this.route = payload.route;
     this.router = payload.router;
 
@@ -94,7 +100,7 @@ export class MrMapLayoutDS extends LayoutDataSource {
       });
   }
 
-  loadDefaults(navigate: boolean) {
+  loadDefaults(navigate?: boolean) {
     this.eventDescription = _t(this.pageConfig.defaultText);
     this.eventHeader = '';
     this.bibliographyData = undefined;
@@ -103,7 +109,7 @@ export class MrMapLayoutDS extends LayoutDataSource {
     this.collectionGalleryData = undefined;
     if (navigate) {
       const href = this.localeService.getLinkByRouteId('map');
-      this.router.navigate([href]);
+      this.location.go(href);
     }
     this.one('mr-year-header').update({
       title: { main: { text: _t(this.pageConfig.title) } },
