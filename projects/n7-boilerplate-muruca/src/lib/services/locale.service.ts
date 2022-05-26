@@ -49,7 +49,7 @@ export class MrLocaleService {
       const { routeId: currentRouteId, locale: currentRouteLocale } = config?.data || {};
       return routeId === currentRouteId && locale === currentRouteLocale;
     });
-    if (routeConfig?.path) {
+    if (typeof routeConfig?.path === 'string') {
       const resourceLocaleConfig = this.resourceConfig && this.resourceConfig[locale]
         ? this.resourceConfig[locale]
         : { id: null, slug: null };
