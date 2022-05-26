@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 For each commit add a description under the Unreleased section under the correspondig section and library (Muruca, Arianna, Dataviz)
 
+## [Unreleased]
+
+### Fixed
+Muruca
+ - Fix map and timeline layout state
+ - Fix map and timeline layout locale handler 
+ - Fix menu service update
+ - Fix footer service update
+ - Fix locale service path check
+
 ## [v3.4.0]
 
 ### Added 
