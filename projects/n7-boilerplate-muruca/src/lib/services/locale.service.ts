@@ -53,10 +53,22 @@ export class MrLocaleService {
       const resourceLocaleConfig = this.resourceConfig && this.resourceConfig[locale]
         ? this.resourceConfig[locale]
         : { id: null, slug: null };
+      let idParam = '';
+      let slugParam = '';
+      if (id) {
+        idParam = `/${id}`;
+      } else if (resourceLocaleConfig.id) {
+        idParam = `/${resourceLocaleConfig.id}`;
+      }
+      if (slug) {
+        slugParam = `/${slug}`;
+      } else if (resourceLocaleConfig.slug) {
+        slugParam = `/${resourceLocaleConfig.slug}`;
+      }
       const href = routeConfig.path
-        .replace(':id', id || resourceLocaleConfig.id)
-        .replace(':slug', slug || resourceLocaleConfig.slug);
-      return `/${href}`;
+        .replace('/:id', idParam)
+        .replace('/:slug', slugParam);
+      return href.indexOf('/') === 0 ? `${href}` : `/${href}`;
     }
     console.warn('LocaleService link not found', locale, routeId);
     return '';
