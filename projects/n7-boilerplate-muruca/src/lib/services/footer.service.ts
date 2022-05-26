@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { tap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { ConfigurationService } from '@net7/boilerplate-common';
+import { ConfigurationService, MainStateService } from '@net7/boilerplate-common';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +15,7 @@ export class MrFooterService {
   constructor(
     private http: HttpClient,
     private configuration: ConfigurationService,
+    private mainState: MainStateService,
   ) {}
 
   load(locale = null): Promise<any> {
@@ -47,6 +48,9 @@ export class MrFooterService {
   private _handleResponse(response) {
     if (response) {
       this.configuration.set('footer', response);
+
+      // update state
+      this.mainState.update('footer', response);
     }
   }
 }

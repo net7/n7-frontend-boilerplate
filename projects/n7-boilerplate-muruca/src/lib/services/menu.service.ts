@@ -5,6 +5,7 @@ import { of } from 'rxjs';
 import { Anchor } from '@net7/components';
 import { ConfigurationService } from '@net7/boilerplate-common';
 import linksHelper from '../helpers/links-helper';
+import { MrLocaleService } from './locale.service';
 
 type MenuItem = {
   text: string;
@@ -27,6 +28,7 @@ export class MrMenuService {
   constructor(
     private http: HttpClient,
     private configuration: ConfigurationService,
+    private localeService: MrLocaleService,
   ) {}
 
   load(locale = null): Promise<any> {
@@ -49,14 +51,14 @@ export class MrMenuService {
         catchError(() => of(null)),
         tap((response) => {
           this.cache[locale] = response;
-          this._handleResponse(response);
+          this._handleResponse(response, locale);
         }),
       ).toPromise();
     }
     return of(null).toPromise();
   }
 
-  private _handleResponse(response) {
+  private _handleResponse(response, locale?: string) {
     if (response) {
       const headerConfig = this.configuration.get('header');
       headerConfig.nav.items = response.map(({
@@ -102,6 +104,12 @@ export class MrMenuService {
         }
         return item;
       });
+      if (locale) {
+        const href = this.localeService.getLink(locale, 'home');
+        if (href) {
+          headerConfig.logo.anchor = { href };
+        }
+      }
       this.configuration.set('header', headerConfig);
     }
   }
