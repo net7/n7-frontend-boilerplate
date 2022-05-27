@@ -60,6 +60,17 @@
     }
 }
 
+/* ------------------------------------ *\
+   #LANGUAGE SELECTOR
+\* ------------------------------------ */
+.n7-footer {
+    .n7-footer__column-selects {
+        label {
+          margin-bottom: $space;
+          font-size: $font-size-xs;
+          color: $color-text-inverse;
+    }
+}
 
 /* ------------------------------------ *\
    #MURUCA-PROMO
