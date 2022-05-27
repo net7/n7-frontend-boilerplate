@@ -43,7 +43,7 @@ export class AwExtendedTreeDS extends DataSource {
       },
       actions: {
         search: {
-          placeholder: 'Search',
+          placeholder: 'Cerca negli oggetti culturali',
           payload: 'search-input',
           button: null
         },

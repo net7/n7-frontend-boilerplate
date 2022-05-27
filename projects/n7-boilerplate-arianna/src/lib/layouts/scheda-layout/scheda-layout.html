@@ -36,6 +36,10 @@
                     </a>
                 </div>
                 <div class="aw-scheda__title">
+                    <div *ngIf="lb.dataSource.documentType as documentType" class="aw-scheda__document-type">
+                        <span class="aw-scheda__document-type-icon {{ documentType.icon }}"></span>
+                        <span class="aw-scheda__document-type-label">{{ documentType.label }}</span>
+                    </div>
                     <n7-inner-title [data]="lb.widgets['aw-scheda-inner-title'].ds.out$ | async">
                     </n7-inner-title>
                 </div>
@@ -245,6 +249,9 @@
 
     <!-- Extended Tree -->
     <section *ngIf="lb.dataSource.hasExtendedTree" id="extended-tree-container" class="aw-scheda__section">
+        <div class="aw-scheda__section-extended-tree-loader" *ngIf="!(lb.widgets['aw-extended-tree'].ds.out$ | async)">
+            <n7-loader></n7-loader>
+        </div>
         <aw-extended-tree
         [data]="lb.widgets['aw-extended-tree'].ds.out$ | async"
         [emit]="lb.widgets['aw-extended-tree'].emit"

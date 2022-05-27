@@ -9,6 +9,13 @@
         padding: $space * 1.8 0 ;
         border-bottom: 1px solid $color-border-light;
         cursor: pointer;
+        color: $color-gray-05;
+
+        &:hover {
+            .aw-extended-tree__item-label {
+                color: $color-text-link;
+            }
+        }
     }
 
     &__item-image img {
@@ -18,7 +25,7 @@
         height: $tree-image-size;
     }
 
-    &__header, &__content, &__footer, &__loader {
+    &__content, &__footer, &__loader {
         padding: 0 $aw-scheda-content-padding $aw-scheda-content-padding $aw-scheda-content-padding;
     }
 
@@ -61,6 +68,30 @@
             margin-left: $space;
         }
     }
+
+    .n7-inner-title {
+        padding: 0;
+
+        .n7-inner-title__title {
+            font-size: $font-size-xxl;
+            font-weight: $font-weight-normal;
+        }
+    
+        .n7-inner-title__title .aw-extended-tree__total {
+            font-size: $font-size-l;
+            color: $color-gray-04;
+        }
+    
+        .n7-inner-title__subtitle {
+            font-size: $font-size-m;
+            color: $color-gray-04;
+        }
+    }
+
+    .n7-inner-title__search-bar {
+        width: 250px;
+    }
+
 }
 
 

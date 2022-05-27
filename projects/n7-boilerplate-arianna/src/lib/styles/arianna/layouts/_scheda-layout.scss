@@ -226,14 +226,15 @@
         cursor: pointer;
 
         .aw-scheda__inner-title {
+            // padding-top: $space;
             flex-grow: 1;
             font-size: $font-size-xxl;
             font-weight: $font-weight-normal;
         }
 
         .aw-scheda__collapse button {
-            padding: 0 $space 0 0;
             font-size: $font-size-l;
+            color: $color-gray-05;
         }
     }
 
@@ -310,10 +311,41 @@
 
         .aw-scheda__title {
             flex-grow: 1;
+            border-right: 1px solid $color-gray-03;
+            border-left: 1px solid $color-gray-03;
+        }
+
+        .n7-inner-title {
+            padding-top: $space;
         }
 
         .aw-scheda__next span, .aw-scheda__prev span {
             font-size: $font-size-xxl;
+            color: $color-gray-05;
+            opacity: .8;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+
+        .aw-scheda__next.is-disabled span, .aw-scheda__prev.is-disabled span {
+            color: $color-gray-04;
+            opacity: 1;
+        }
+
+        .aw-scheda__document-type {
+            display: flex;
+            align-items: center;
+            padding: $space * 2 $space * 2 0;
+
+            .aw-scheda__document-type-icon {
+                margin-right: $space;
+            }
+
+            .aw-scheda__document-type-label {
+                color: $color-gray-04;
+            }
         }
     }
 
@@ -432,6 +464,15 @@
     .n7-image-viewer__prev,
     .n7-image-viewer__next {
         display: none !important;
+    }
+}
+
+/* extended tree loader */
+.aw-scheda__section-extended-tree-loader {
+    padding: 0 0 $space * 2;
+
+    .n7-loader {
+        margin: 0 auto;
     }
 }
 

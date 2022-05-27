@@ -106,6 +106,11 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     'related-entities': false
   };
 
+  public documentType: {
+    icon: string;
+    label: string;
+  } = null;
+
   onInit({
     configuration, mainState, router, options, titleService, communication,
   }) {
@@ -284,6 +289,9 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       // title prev / next navigation
       this.loadTitleNavigation();
 
+      // document title type (icon, label)
+      this.loadDocumentType();
+
       // update head title
       this.mainState.update('headTitle', `Arianna4View - Patrimonio - ${response.title || response.label}`);
     }
@@ -384,6 +392,19 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
           label: item.label,
         } : null;
     });
+  }
+
+  loadDocumentType() {
+    const configKeys = this.configuration.get('config-keys');
+    const { document_type: type } = this.lastResponse;
+    if (configKeys[type]) {
+      this.documentType = {
+        icon: configKeys[type].icon,
+        label: configKeys[type]['singular-label']
+      };
+    } else {
+      this.documentType = null;
+    }
   }
 
   /**
