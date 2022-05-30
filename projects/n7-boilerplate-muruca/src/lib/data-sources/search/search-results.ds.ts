@@ -97,7 +97,6 @@ export class MrSearchResultsDS extends DataSource {
         anchor = {
           href: linksHelper.getRouterLink(item.link),
           queryParams: linksHelper.getQueryParams(item.link),
-          target: '_blank'
         };
       } else if (item.payload) {
         anchor = {
@@ -105,6 +104,10 @@ export class MrSearchResultsDS extends DataSource {
             ...item.payload
           }
         };
+      }
+
+      if (item.routeId || item.link) {
+        anchor.target = itemPreview?.linkTarget || '_blank';
       }
 
       /*
