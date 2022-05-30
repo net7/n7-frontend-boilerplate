@@ -25,7 +25,7 @@ jobs:
         uses: devmasx/merge-branch@v1.4.0
         with:
           type: now
-          message: Merge branch 'develop' into master
+          # message: Merge branch 'develop' into master
           from_branch: develop
           target_branch: master
           github_token: ${{ github.token }}
@@ -73,7 +73,7 @@ jobs:
         uses: devmasx/merge-branch@v1.4.0
         with:
           type: now
-          message: Merge branch 'master' into develop
+          # message: Merge branch 'master' into develop
           from_branch: master
           target_branch: develop
           github_token: ${{ github.token }}
