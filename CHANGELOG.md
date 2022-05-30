@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 For each commit add a description under the Unreleased section under the correspondig section and library (Muruca, Arianna, Dataviz)
 
+## [Unreleased]
+
+### Fixed
+Muruca
+ - Fix language selector label color in footer
+ - Fix itinerary layout locale
+ - Fix search links target option
+ 
 ## [v3.4.1]
 
 ### Fixed

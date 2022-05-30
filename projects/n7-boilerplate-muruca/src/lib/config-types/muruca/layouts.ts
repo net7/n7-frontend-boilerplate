@@ -92,6 +92,8 @@ type SearchPaginationConfig = {
 type SearchItemPreviewConfig = {
   /** aditional css classes */
   classes: string;
+  /** link target <a target="{target}">  */
+  linkTarget?: '_blank' | '_self' | '_parent' | '_top';
 }
 
 type SearchFallbackConfig = {
