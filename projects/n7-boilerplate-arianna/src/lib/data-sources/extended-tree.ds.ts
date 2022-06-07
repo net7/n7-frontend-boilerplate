@@ -28,7 +28,9 @@ export class AwExtendedTreeDS extends DataSource {
     { parent: ParentResponse; nodes: NodesResponse }
   ): ExtendedTreeData => {
     const { totalCount } = nodes;
-    const { title, params, basePath } = this.options;
+    const {
+      title, params, basePath, lite
+    } = this.options;
     const page = params.page ? +params.page : 1;
     const limit = params.limit ? +params.limit : 10;
     // header
@@ -52,7 +54,7 @@ export class AwExtendedTreeDS extends DataSource {
     // items
     const items = nodes.results.items.map(({ thumbnail, label, id }) => ({
       icon: 'n7-icon-file3',
-      thumbnail,
+      thumbnail: lite ? null : thumbnail,
       label,
       anchor: {
         href: `${basePath}/${id}/${helpers.slugify(label)}`

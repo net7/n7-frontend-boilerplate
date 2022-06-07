@@ -37,7 +37,7 @@
                 </div>
                 <div class="aw-scheda__title">
                     <div *ngIf="lb.dataSource.documentType as documentType" class="aw-scheda__document-type">
-                        <span class="aw-scheda__document-type-icon {{ documentType.icon }}"></span>
+                        <span *ngIf="documentType.icon" class="aw-scheda__document-type-icon {{ documentType.icon }}"></span>
                         <span class="aw-scheda__document-type-label">{{ documentType.label }}</span>
                     </div>
                     <n7-inner-title [data]="lb.widgets['aw-scheda-inner-title'].ds.out$ | async">

@@ -322,11 +322,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   loadExtendedTree() {
     const parentResponse = this.lastResponse;
 
-    // FIXME: togliere
-    parentResponse.hasChildNodes = true;
-
-    if (this.layoutConfig['extended-tree'] && parentResponse.hasChildNodes) {
-      this.hasExtendedTree = true;
+    if (this.layoutConfig['extended-tree']) {
       const widgetOptions = this.layoutConfig['extended-tree'];
       const params = {
         page: 1,
@@ -335,7 +331,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
         ...this.extendedTreeParams,
       };
       const basePath = this.configuration.get('paths').schedaBasePath;
-      // TODO: request
+      // FIXME: request
       // const request$ = this.communication.request$('getNodeChilds', {
       //   params,
       //   onError: (error) => console.error(error),
@@ -344,6 +340,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
         delay(Math.random() * 3000)
       );
       request$.subscribe((nodesResponse) => {
+        this.hasExtendedTree = !!nodesResponse?.results?.items?.length;
         this.one('aw-extended-tree').updateOptions({
           params,
           basePath,
@@ -369,7 +366,13 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   }
 
   loadTitleNavigation() {
-    const hasTitleNav = !!this.layoutConfig['title-nav']?.enabled;
+    // reset
+    this.titleNavigation = null;
+
+    const hasTitleNav = (
+      !!this.layoutConfig['title-nav']?.enabled
+      && this.lastResponse.document_type === 'oggetto-culturale'
+    );
     if (!hasTitleNav) return;
 
     // FIXME: togliere
@@ -396,10 +399,18 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
   loadDocumentType() {
     const configKeys = this.configuration.get('config-keys');
-    const { document_type: type } = this.lastResponse;
+    const { document_type: type, document_classification: classification } = this.lastResponse;
+    let icon = configKeys[type] ? configKeys[type].icon : null;
+    const lastSegment = /.*\.(\w+)$/;
+    if (classification && lastSegment.test(classification)) {
+      const classID = classification
+        .match(lastSegment)[1] // get classification characters
+        .toUpperCase(); // normalize
+      icon = configKeys[type].classifications[classID].icon;
+    }
     if (configKeys[type]) {
       this.documentType = {
-        icon: configKeys[type].icon,
+        icon,
         label: configKeys[type]['singular-label']
       };
     } else {

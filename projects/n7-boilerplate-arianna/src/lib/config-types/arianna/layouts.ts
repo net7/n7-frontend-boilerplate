@@ -111,6 +111,8 @@ export interface ConfigAriannaSchedaLayout {
     search: {
       placeholder: string;
     }
+    /** extended tree lite version? */
+    lite?: boolean;
   };
   /** title prev/next navigation */
   'title-nav'?: {

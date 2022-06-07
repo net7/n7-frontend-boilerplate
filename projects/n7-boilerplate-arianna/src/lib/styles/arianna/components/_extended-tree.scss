@@ -18,8 +18,11 @@
         }
     }
 
+    &__item-icon {
+        margin-right: $space;
+    }
+
     &__item-image img {
-        margin-left: $space;
         margin-right: $space;
         width: $tree-image-size;
         height: $tree-image-size;
