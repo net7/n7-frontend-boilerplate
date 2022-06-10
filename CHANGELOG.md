@@ -15,6 +15,12 @@ Muruca
 
 -   Added advanced search dynamic options
 
+### Fixed
+
+Muruca
+
+- Fix TextViewer TeiPublisher endpoint
+
 ## [v3.4.2] - 2022-05-30
 
 ### Fixed
