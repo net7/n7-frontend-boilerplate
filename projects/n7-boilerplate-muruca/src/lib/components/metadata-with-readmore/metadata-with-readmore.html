@@ -1,0 +1,40 @@
+<div *ngIf="data"
+     class="n7-metadata-viewer">
+    <!-- Metadata groups wrapper -->
+    <div class="n7-metadata-viewer__wrapper {{ data.classes  || ''}}"
+         *ngFor="let grp of data.group">
+        <!-- For each data group, render it -->
+        <ng-container *ngTemplateOutlet="group; context:{$implicit: grp}"></ng-container>
+    </div>
+</div>
+
+<!-- Template for Metadata.group -->
+<ng-template #group
+             let-grp>
+    <div *ngIf="grp.title || grp.items"
+         class="n7-metadata-viewer__group {{ grp.classes || '' }}">
+        <div class="n7-metadata-viewer__group-title"
+             *ngIf="grp.title">{{grp.title}}</div>
+        <div class="n7-metadata-viewer__group-content"
+             *ngIf="grp.items">
+            <div class="n7-metadata-viewer__item"
+                 *ngFor="let i of grp.items">
+                <span *ngIf="i.label"
+                      class="n7-metadata-viewer__item-label">{{ i.label }}</span>
+                    <mr-read-more [data]="{ height: 300, labels: { more: 'more', less: 'less' } }">
+                        <span *ngIf="i.value"
+                            class="n7-metadata-viewer__item-value"
+                            [innerHTML]="i.value">
+                        </span>
+                    </mr-read-more>
+            </div>
+        </div>
+    </div>
+    <!-- Render all child groups -->
+    <div *ngIf="grp.group">
+        <div class="n7-metadata-viewer__group-wrapper"
+             *ngFor="let grp of grp.group">
+            <ng-container *ngTemplateOutlet="group; context:{$implicit: grp}"></ng-container>
+        </div>
+    </div>
+</ng-template>
