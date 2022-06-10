@@ -1,8 +1,10 @@
 import { Data, Router } from '@angular/router';
 import { LayoutDataSource, _t } from '@net7/core';
 import { cloneDeep, isEmpty } from 'lodash';
-import { ConfigurationService, MainStateService } from '@net7/boilerplate-common';
+import { CommunicationService, ConfigurationService, MainStateService } from '@net7/boilerplate-common';
 import { InputCheckboxData, InputSelectData, InputTextData } from '@net7/components';
+import { Observable, of } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { MrFormModel } from '../../models/form.model';
 import { MrLocaleService } from '../../services/locale.service';
 
@@ -10,6 +12,8 @@ export class MrAdvancedSearchLayoutDS extends LayoutDataSource {
   protected router: Router;
 
   protected configuration: ConfigurationService;
+
+  protected communication: CommunicationService;
 
   protected mainState: MainStateService;
 
@@ -26,6 +30,7 @@ export class MrAdvancedSearchLayoutDS extends LayoutDataSource {
   onInit(payload) {
     this.router = payload.router;
     this.configuration = payload.configuration;
+    this.communication = payload.communication;
     this.mainState = payload.mainState;
     this.routeData = payload.routeData;
     this.localeService = payload.localeService;
@@ -34,15 +39,31 @@ export class MrAdvancedSearchLayoutDS extends LayoutDataSource {
     // add translations
     this.addTranslations(this.pageConfig);
 
-    // init form
-    this.form = new MrFormModel();
-    // form init
-    this.form.init(this.pageConfig.formConfig);
-    // set initial state
-    this.initialState = cloneDeep(this.form.getState());
+    let optionsReq$: Observable<unknown> = of(true);
+    if (this.pageConfig.hasDynamicOptions) {
+      const dynamicReq$ = this.communication.request$('advancedSearchOptions', {
+        onError: (err) => {
+          console.warn('Request error', err);
+        }
+      });
+      optionsReq$ = dynamicReq$.pipe(
+        tap(this.handleOptionsRequest)
+      );
+    }
 
-    this.one('mr-form-wrapper-accordion').update({
-      form: this.form
+    optionsReq$.subscribe({
+      complete: () => {
+        // init form
+        this.form = new MrFormModel();
+        // form init
+        this.form.init(this.pageConfig.formConfig);
+        // set initial state
+        this.initialState = cloneDeep(this.form.getState());
+
+        this.one('mr-form-wrapper-accordion').update({
+          form: this.form
+        });
+      }
     });
 
     // update head title
@@ -83,6 +104,22 @@ export class MrAdvancedSearchLayoutDS extends LayoutDataSource {
       this.form.getInput(key).setState(inputState);
     });
   }
+
+  protected handleOptionsRequest = (response) => {
+    const { formConfig } = this.pageConfig;
+    Object.keys(response).forEach((key) => {
+      formConfig.sections.forEach(({ inputs }) => {
+        inputs.forEach((input) => {
+          if (input.id === key) {
+            input.data = {
+              ...input.data,
+              ...response[key]
+            };
+          }
+        });
+      });
+    });
+  };
 
   protected addTranslations(pageConfig) {
     const { formConfig } = pageConfig;
