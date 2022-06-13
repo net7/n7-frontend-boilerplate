@@ -21,7 +21,7 @@
                  *ngFor="let i of grp.items">
                 <span *ngIf="i.label"
                       class="n7-metadata-viewer__item-label">{{ i.label }}</span>
-                    <mr-read-more [data]="{ height: 300, labels: { more: 'more', less: 'less' } }">
+                    <mr-read-more [data]="grp.readmore">
                         <span *ngIf="i.value"
                             class="n7-metadata-viewer__item-value"
                             [innerHTML]="i.value">
