@@ -340,25 +340,27 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
         onError: (error) => console.error(error),
       });
       request$.subscribe((nodesResponse) => {
-        this.hasExtendedTree = !!nodesResponse?.results?.items?.length;
-        this.one('aw-extended-tree').updateOptions({
-          params,
-          basePath,
-          configKeys,
-          ...widgetOptions,
-        });
-        this.one('aw-extended-tree').update({
-          parent: parentResponse,
-          nodes: nodesResponse
-        });
-
-        // fix query input update
-        if (params.query) {
-          setTimeout(() => {
-            const queryInput: HTMLInputElement = document
-              .querySelector('.aw-extended-tree__header .n7-inner-title__search-bar');
-            queryInput.value = params.query || '';
+        this.hasExtendedTree = !!nodesResponse?.items?.length;
+        if (this.hasExtendedTree) {
+          this.one('aw-extended-tree').updateOptions({
+            params,
+            basePath,
+            configKeys,
+            ...widgetOptions,
           });
+          this.one('aw-extended-tree').update({
+            parent: parentResponse,
+            nodes: nodesResponse
+          });
+
+          // fix query input update
+          if (params.query) {
+            setTimeout(() => {
+              const queryInput: HTMLInputElement = document
+                .querySelector('.aw-extended-tree__header .n7-inner-title__search-bar');
+              queryInput.value = params.query || '';
+            });
+          }
         }
       });
     } else {

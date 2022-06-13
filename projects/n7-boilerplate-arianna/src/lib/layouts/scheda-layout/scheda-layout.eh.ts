@@ -2,9 +2,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { EventHandler } from '@net7/core';
 import { clone, isEmpty, isNumber } from 'lodash';
 import {
-  forkJoin, from, of, Subject, timer
+  forkJoin, from, of, ReplaySubject, Subject, timer
 } from 'rxjs';
-import { debounce, filter, switchMap } from 'rxjs/operators';
+import {
+  debounce, filter, first, switchMap
+} from 'rxjs/operators';
 import { ConfigurationService } from '@net7/boilerplate-common';
 import { AwSchedaLayoutDS } from './scheda-layout.ds';
 
@@ -18,6 +20,8 @@ export class AwSchedaLayoutEH extends EventHandler {
   private route: ActivatedRoute;
 
   private router: Router;
+
+  private treeLoaded$: ReplaySubject<void> = new ReplaySubject();
 
   private extendedTreeChanged$: Subject<{
     key: string;
@@ -135,6 +139,7 @@ export class AwSchedaLayoutEH extends EventHandler {
           if (response) {
             this.dataSource.loadContent(response);
             this.dataSource.loadExtendedTree();
+            this.checkTreeItems(response);
           }
         });
       }
@@ -207,6 +212,9 @@ export class AwSchedaLayoutEH extends EventHandler {
           currentItem: selectedItem,
           basePath: this.configuration.get('paths').schedaBasePath,
         });
+
+        // emit signal
+        this.treeLoaded$.next();
       }
     });
   }
@@ -280,5 +288,17 @@ export class AwSchedaLayoutEH extends EventHandler {
       });
     }
     return iiifImages;
+  }
+
+  private checkTreeItems(response) {
+    this.treeLoaded$.pipe(
+      first()
+    ).subscribe(() => {
+      const treeDS = this.dataSource.getWidgetDataSource('aw-tree');
+      const { items } = treeDS.output;
+      if (!items.length && response.lastAl?.id) {
+        this.emitOuter('selectParent', response.lastAl.id);
+      }
+    });
   }
 }

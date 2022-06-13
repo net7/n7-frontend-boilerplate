@@ -342,6 +342,10 @@ export default (treeDepth) => ({
               id
               label
             }
+            lastAl {
+              id
+              label
+            }
             digitalObjects {
               label
               type
