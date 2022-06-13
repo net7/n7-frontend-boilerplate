@@ -218,7 +218,11 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
       const metadataFields = this.getFields(response);
       this.hasMetadata = !!(Array.isArray(metadataFields) && metadataFields.length);
-      this.hasSimilarItems = Array.isArray(response.relatedItems) && response.relatedItems.length;
+      this.hasSimilarItems = (
+        !this.layoutConfig['extended-tree']
+        && Array.isArray(response.relatedItems)
+        && response.relatedItems.length
+      );
       this.hasBreadcrumb = Array.isArray(response.breadcrumbs) && response.breadcrumbs.length;
       this.hasDigitalObjects = (
         Array.isArray(response.digitalObjects)
@@ -327,20 +331,29 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     if (this.layoutConfig['extended-tree']) {
       const configKeys = this.configuration.get('config-keys');
       const widgetOptions = this.layoutConfig['extended-tree'];
-      const params = {
+      const params: any = {
         id: parentResponse.id,
         page: 1,
         limit: 12,
         query: null,
         ...this.extendedTreeParams,
       };
+
+      // normalize params
+      params.offset = (params.page - 1) * params.limit;
+      delete params.page;
+
       const basePath = this.configuration.get('paths').schedaBasePath;
       const request$ = this.communication.request$('getNodeChildren', {
         params,
         onError: (error) => console.error(error),
       });
       request$.subscribe((nodesResponse) => {
-        this.hasExtendedTree = !!nodesResponse?.items?.length;
+        this.hasExtendedTree = (
+          params.query
+          || params.page > 1
+          || !!nodesResponse?.items?.length
+        );
         if (this.hasExtendedTree) {
           this.one('aw-extended-tree').updateOptions({
             params,
