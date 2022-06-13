@@ -9,6 +9,8 @@ export interface ConfigMurucaAdvancedSearchLayout extends ConfigMurucaLayout {
   resultsUrl: string | {
     [locale: string]: string;
   };
+  /** dynamic options (from API) */
+  hasDynamicOptions?: boolean;
   formConfig: {
     /** form submit button  */
     submitButton: {

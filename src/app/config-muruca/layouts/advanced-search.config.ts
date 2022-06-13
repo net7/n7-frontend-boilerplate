@@ -3,6 +3,7 @@ import { ConfigMurucaAdvancedSearchLayout } from '@net7/boilerplate-muruca';
 const config: ConfigMurucaAdvancedSearchLayout = {
   title: 'advancedsearch#page_title',
   resultsUrl: '/advanced-results',
+  hasDynamicOptions: true,
   formConfig: {
     submitButton: {
       label: 'advancedsearch#submit',

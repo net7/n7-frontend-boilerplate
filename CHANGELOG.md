@@ -9,9 +9,12 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
-Muruca 
+Muruca
 
-- Add "readmore" option for resource metadata section groups
+### Added
+
+-   Add "Readmore" option for resource metadata section groups
+-   Add advanced search dynamic options
 
 ## [v3.4.2] - 2022-05-30
 
