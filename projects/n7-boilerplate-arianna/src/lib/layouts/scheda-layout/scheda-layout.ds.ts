@@ -2,11 +2,11 @@ import { LayoutDataSource } from '@net7/core';
 import {
   fromEvent, Subject, of, merge,
 } from 'rxjs';
-import { delay, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { get as _get } from 'lodash';
 import { helpers } from '@net7/boilerplate-common';
 import metadataHelper from '../../helpers/metadata.helper';
-import mock from './extended-tree.mock';
+import nodeHelper from '../../helpers/node.helper';
 
 const LOCAL_STORAGE_PREFIX = 'aw.scheda';
 
@@ -175,13 +175,15 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     return metadataConfig.title || null;
   }
 
-  getNavigation(id) {
+  getNavigation() {
     if (AwSchedaLayoutDS.tree) {
       return of(AwSchedaLayoutDS.tree);
     }
     return this.communication.request$(this.getTreeQuery, {
       onError: (error) => console.error(error),
-      params: { treeId: id },
+      params: {
+        onlyAl: !!this.layoutConfig['extended-tree']
+      },
     });
   }
 
@@ -323,27 +325,26 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     const parentResponse = this.lastResponse;
 
     if (this.layoutConfig['extended-tree']) {
+      const configKeys = this.configuration.get('config-keys');
       const widgetOptions = this.layoutConfig['extended-tree'];
       const params = {
+        id: parentResponse.id,
         page: 1,
         limit: 12,
         query: null,
         ...this.extendedTreeParams,
       };
       const basePath = this.configuration.get('paths').schedaBasePath;
-      // FIXME: request
-      // const request$ = this.communication.request$('getNodeChilds', {
-      //   params,
-      //   onError: (error) => console.error(error),
-      // });
-      const request$ = of(mock(params)).pipe(
-        delay(Math.random() * 3000)
-      );
+      const request$ = this.communication.request$('getNodeChildren', {
+        params,
+        onError: (error) => console.error(error),
+      });
       request$.subscribe((nodesResponse) => {
         this.hasExtendedTree = !!nodesResponse?.results?.items?.length;
         this.one('aw-extended-tree').updateOptions({
           params,
           basePath,
+          configKeys,
           ...widgetOptions,
         });
         this.one('aw-extended-tree').update({
@@ -375,16 +376,6 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     );
     if (!hasTitleNav) return;
 
-    // FIXME: togliere
-    this.lastResponse.prev = {
-      id: 'd6d1558d-fb78-4287-895e-921d8e35bbf8',
-      label: '1: fondo - Fondo Export UNIFI 1'
-    };
-    this.lastResponse.next = {
-      id: 'ae66b736-3397-43b5-a440-04a97e7674ee',
-      label: '10: Fascicolo di Anna Fuggi (1970 - 1975)'
-    };
-
     this.titleNavigation = { prev: null, next: null };
     const basePath = this.configuration.get('paths').schedaBasePath;
     ['prev', 'next'].forEach((key) => {
@@ -399,15 +390,8 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
   loadDocumentType() {
     const configKeys = this.configuration.get('config-keys');
-    const { document_type: type, document_classification: classification } = this.lastResponse;
-    let icon = configKeys[type] ? configKeys[type].icon : null;
-    const lastSegment = /.*\.(\w+)$/;
-    if (classification && lastSegment.test(classification)) {
-      const classID = classification
-        .match(lastSegment)[1] // get classification characters
-        .toUpperCase(); // normalize
-      icon = configKeys[type].classifications[classID].icon;
-    }
+    const { document_type: type } = this.lastResponse;
+    const icon = nodeHelper.getNodeIcon(configKeys, this.lastResponse);
     if (configKeys[type]) {
       this.documentType = {
         icon,

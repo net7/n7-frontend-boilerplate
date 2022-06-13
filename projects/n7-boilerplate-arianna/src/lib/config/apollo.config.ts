@@ -69,7 +69,7 @@ export default (treeDepth) => ({
     queryName: 'getTreeOfItems',
     queryBody: `
       {
-        getTreeOfItems{
+        getTreeOfItems(__PARAMS__){
           ${getTreeBranches(treeDepth, false)}
         }
       }
@@ -79,7 +79,7 @@ export default (treeDepth) => ({
     queryName: 'getTreeOfItems',
     queryBody: `
       {
-        getTreeOfItems{
+        getTreeOfItems(__PARAMS__){
           ${getTreeBranches(treeDepth)}
         }
       }
@@ -308,6 +308,22 @@ export default (treeDepth) => ({
         }
       }`,
   },
+  getNodeChildren: {
+    queryName: 'getNodeChildren',
+    queryBody: `{
+      getNodeChildren(__PARAMS__) {
+        items {
+          id
+          label
+          icon
+          img
+          document_type
+          document_classification
+        }
+        totalCount
+      }
+    }`
+  },
   getNode: {
     queryName: 'getNode',
     queryBody: `{
@@ -318,6 +334,14 @@ export default (treeDepth) => ({
             title
             subTitle
             image
+            prev {
+              id
+              label
+            }
+            next {
+              id
+              label
+            }
             digitalObjects {
               label
               type

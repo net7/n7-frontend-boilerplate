@@ -198,7 +198,7 @@ export class AwSchedaLayoutEH extends EventHandler {
 
   private loadNavigation(selectedItem) {
     this.dataSource.updateNavigation('Caricamento in corso...');
-    this.dataSource.getNavigation('patrimonio').subscribe((response) => {
+    this.dataSource.getNavigation().subscribe((response) => {
       if (response) {
         this.dataSource.setTree(response);
         this.dataSource.updateNavigation(this.dataSource.getTree().label);

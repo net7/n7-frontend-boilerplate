@@ -4,19 +4,20 @@ import {
 import { DataSource } from '@net7/core';
 import { helpers } from '@net7/boilerplate-common';
 import { ExtendedTreeData } from '../components/extended-tree/extended-tree';
+import nodeHelper from '../helpers/node.helper';
 
 type ParentResponse = {
   label: string;
 }
 
 type NodesResponse = {
-  results: {
-    items: {
-      thumbnail?: string;
-      label: string;
-      id: string;
-    }[];
-  };
+  items: {
+    img?: string;
+    label: string;
+    id: string;
+    document_type: string;
+    document_classification: string;
+  }[];
   totalCount: number;
 }
 
@@ -29,7 +30,7 @@ export class AwExtendedTreeDS extends DataSource {
   ): ExtendedTreeData => {
     const { totalCount } = nodes;
     const {
-      title, params, basePath, lite
+      title, params, basePath, lite, configKeys
     } = this.options;
     const page = params.page ? +params.page : 1;
     const limit = params.limit ? +params.limit : 10;
@@ -52,12 +53,12 @@ export class AwExtendedTreeDS extends DataSource {
       }
     };
     // items
-    const items = nodes.results.items.map(({ thumbnail, label, id }) => ({
-      icon: 'n7-icon-file3',
-      thumbnail: lite ? null : thumbnail,
-      label,
+    const items = (nodes.items || []).map((item) => ({
+      icon: nodeHelper.getNodeIcon(configKeys, item),
+      thumbnail: lite ? null : item.img,
+      label: item.label,
       anchor: {
-        href: `${basePath}/${id}/${helpers.slugify(label)}`
+        href: `${basePath}/${item.id}/${helpers.slugify(item.label)}`
       }
     }));
     // pagination
