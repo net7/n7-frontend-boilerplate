@@ -33,6 +33,16 @@ const config: ConfigAriannaSchedaLayout = {
       }
     ]
   },
+  'extended-tree': {
+    // lite: true,
+    title: 'Oggetti culturali',
+    search: {
+      placeholder: 'Cerca negli oggetti culturali'
+    }
+  },
+  'title-nav': {
+    enabled: true
+  },
   'image-viewer': {
     'context-menu': false
   },

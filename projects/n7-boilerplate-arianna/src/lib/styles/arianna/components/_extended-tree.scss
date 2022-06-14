@@ -1,0 +1,115 @@
+/**
+ * EXTENDED TREE
+ */
+
+.aw-extended-tree {
+    &__item a {
+        display: flex;
+        align-items: center;
+        padding: $space * 1.8 0 ;
+        border-bottom: 1px solid $color-border-light;
+        cursor: pointer;
+        color: $color-gray-05;
+
+        &:hover {
+            .aw-extended-tree__item-label {
+                color: $color-text-link;
+            }
+        }
+    }
+
+    &__item-icon {
+        margin-right: $space;
+    }
+
+    &__item-image img {
+        margin-right: $space;
+        width: $tree-image-size;
+        height: $tree-image-size;
+    }
+
+    &__content, &__footer, &__loader {
+        padding: 0 $aw-scheda-content-padding $aw-scheda-content-padding $aw-scheda-content-padding;
+    }
+
+    &__loader {
+        .n7-loader {
+            margin: 0 auto;
+        }
+    }
+
+    &__footer {
+        display: flex;
+    }
+
+    &__page-input {
+        flex-grow: 1;
+        margin-left: $space * 2;
+
+        .n7-input-text {
+            display: inline-block;
+        }
+
+        input.n7-input-text__text[type=number] {
+            width: 60px;
+            height: $pagination-item-height;
+        }
+
+        button.n7-btn {
+            margin-left: $space;
+            width: $pagination-item-width;
+            height: $pagination-item-height;
+        }
+    }
+
+    &__limit-select {
+        label {
+            font-size: $font-size-m;
+        }
+
+        select {
+            margin-left: $space;
+        }
+    }
+
+    .n7-inner-title {
+        padding: 0;
+
+        .n7-inner-title__title {
+            font-size: $font-size-xxl;
+            font-weight: $font-weight-normal;
+        }
+    
+        .n7-inner-title__title .aw-extended-tree__total {
+            font-size: $font-size-l;
+            color: $color-gray-04;
+        }
+    
+        .n7-inner-title__subtitle {
+            font-size: $font-size-m;
+            color: $color-gray-04;
+        }
+    }
+
+    .n7-inner-title__search-bar {
+        width: 250px;
+    }
+
+}
+
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: $breakpoint-laptop) {
+}
+
+@media all and (max-width: $breakpoint-ipad-portrait) {
+}
+
+@media all and (max-width: $breakpoint-smartphone-landscape) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}

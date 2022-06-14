@@ -12,8 +12,10 @@ For each commit add a description under the Unreleased section under the corresp
 ### Added
 
 Muruca
-
 -   Added advanced search dynamic options
+Arianna 
+- New tree version: extended-tree
+
 
 ## [v3.4.2] - 2022-05-30
 
