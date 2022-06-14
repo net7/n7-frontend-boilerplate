@@ -14,6 +14,7 @@ Muruca
 - Style: added rule for item-preview's border as last element in grid
 
 Arianna 
+- New tree version: extended-tree
 
 Dataviz
 
