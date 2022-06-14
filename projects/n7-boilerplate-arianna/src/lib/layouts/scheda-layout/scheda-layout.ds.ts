@@ -3,7 +3,7 @@ import {
   fromEvent, Subject, of, merge,
 } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { get as _get } from 'lodash';
+import { clone, get as _get } from 'lodash';
 import { helpers } from '@net7/boilerplate-common';
 import metadataHelper from '../../helpers/metadata.helper';
 import nodeHelper from '../../helpers/node.helper';
@@ -338,10 +338,13 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
         query: null,
         ...this.extendedTreeParams,
       };
+      const widgetParams = clone(params);
 
       // normalize params
       params.offset = (params.page - 1) * params.limit;
       delete params.page;
+
+      console.log('params----->', params, widgetParams);
 
       const basePath = this.configuration.get('paths').schedaBasePath;
       const request$ = this.communication.request$('getNodeChildren', {
@@ -356,9 +359,9 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
         );
         if (this.hasExtendedTree) {
           this.one('aw-extended-tree').updateOptions({
-            params,
             basePath,
             configKeys,
+            params: widgetParams,
             ...widgetOptions,
           });
           this.one('aw-extended-tree').update({
