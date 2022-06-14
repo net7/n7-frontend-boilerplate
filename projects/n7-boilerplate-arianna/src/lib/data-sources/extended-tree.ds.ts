@@ -62,7 +62,7 @@ export class AwExtendedTreeDS extends DataSource {
       }
     }));
     // pagination
-    const pagination: PaginationData = this.getPagination(page, totalCount);
+    const pagination: PaginationData = this.getPagination(page, totalCount, limit);
     // page input
     const pageInput: InputTextData = {
       id: 'page-input',
@@ -97,12 +97,11 @@ export class AwExtendedTreeDS extends DataSource {
     this.output.loading = loading;
   }
 
-  private getPagination(page, totalCount): PaginationData {
-    const limit = PAGE_LIMIT;
-    const pages = Math.round(totalCount / limit);
+  private getPagination(page, totalCount, limit): PaginationData {
+    const pages = Math.ceil(totalCount / limit);
 
     return {
-      links: this.getPaginationLinks(page, pages, limit),
+      links: this.getPaginationLinks(page, pages),
       first: {
         anchor: {
           payload: 1,
@@ -130,9 +129,10 @@ export class AwExtendedTreeDS extends DataSource {
     };
   }
 
-  private getPaginationLinks(page, pages, limit): Button[] {
+  private getPaginationLinks(page, pages): Button[] {
     let firstItem = 1;
     const links: Button[] = [];
+    const limit = PAGE_LIMIT;
     let last = limit;
 
     if (pages > limit) {

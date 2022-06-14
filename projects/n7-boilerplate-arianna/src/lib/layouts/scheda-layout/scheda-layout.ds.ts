@@ -334,7 +334,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       const params: any = {
         id: parentResponse.id,
         page: 1,
-        limit: 12,
+        limit: 10,
         query: null,
         ...this.extendedTreeParams,
       };
@@ -344,8 +344,6 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       params.offset = (params.page - 1) * params.limit;
       delete params.page;
 
-      console.log('params----->', params, widgetParams);
-
       const basePath = this.configuration.get('paths').schedaBasePath;
       const request$ = this.communication.request$('getNodeChildren', {
         params,
@@ -354,7 +352,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       request$.subscribe((nodesResponse) => {
         this.hasExtendedTree = (
           params.query
-          || params.page > 1
+          || widgetParams.page > 1
           || !!nodesResponse?.items?.length
         );
         if (this.hasExtendedTree) {
