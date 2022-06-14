@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 For each commit add a description under the Unreleased section under the correspondig section and library (Muruca, Arianna, Dataviz)
 
-## [Unreleased]
+## [v3.5.0] - 2022-06-14
 
 ### Added
 
