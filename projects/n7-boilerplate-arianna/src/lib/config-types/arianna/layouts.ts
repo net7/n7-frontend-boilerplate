@@ -103,6 +103,21 @@ export interface ConfigAriannaSchedaLayout {
     /** how many related items */
     'max-related-items': number;
   };
+  /** extended tree section */
+  'extended-tree'?: {
+    /** extended tree section title */
+    title: string;
+    /** extended tree search input */
+    search: {
+      placeholder: string;
+    }
+    /** extended tree lite version? */
+    lite?: boolean;
+  };
+  /** title prev/next navigation */
+  'title-nav'?: {
+    enabled: boolean;
+  };
   /** metadata section */
   metadata: {
     /** metadata section title */

@@ -4,7 +4,8 @@ import {
   AbstractLayout,
   LayoutsConfigurationService,
   MainStateService,
-  ConfigurationService
+  ConfigurationService,
+  CommunicationService
 } from '@net7/boilerplate-common';
 import { MrLocaleService } from '../../services/locale.service';
 import { MrAdvancedSearchLayoutConfig as config } from './advanced-search-layout.config';
@@ -21,6 +22,7 @@ export class MrAdvancedSearchLayoutComponent extends AbstractLayout implements O
     private activatedRoute: ActivatedRoute,
     private mainState: MainStateService,
     private configuration: ConfigurationService,
+    private communication: CommunicationService,
     public localeService: MrLocaleService,
     layoutsConfiguration: LayoutsConfigurationService,
   ) {
@@ -31,6 +33,7 @@ export class MrAdvancedSearchLayoutComponent extends AbstractLayout implements O
     return {
       routeData: this.routeData,
       configuration: this.configuration,
+      communication: this.communication,
       mainState: this.mainState,
       router: this.router,
       activatedRoute: this.activatedRoute,

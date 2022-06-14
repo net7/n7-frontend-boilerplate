@@ -78,7 +78,7 @@ export class AwTreeDS extends DataSource {
     control(this.output.items);
   }
 
-  private _getCachedData = () => AwTreeDS.dataCache[this.rootId]
+  private _getCachedData = () => AwTreeDS.dataCache[this.rootId];
 
   private _normalize = ({
     id, label, icon, img, branches, document_type: type, document_classification: classification
@@ -93,11 +93,11 @@ export class AwTreeDS extends DataSource {
         this._normalize(data);
       });
     }
-  }
+  };
 
   private _getParent = (id) => this._getCachedData().flatIds
     .filter(([, childId]) => childId === id)
-    .map(([parentId]) => parentId)[0] || null
+    .map(([parentId]) => parentId)[0] || null;
 
   private _getTreePath = (id) => {
     const ids = [id];
@@ -110,7 +110,7 @@ export class AwTreeDS extends DataSource {
       currentId = parentId;
     }
     return ids.reverse();
-  }
+  };
 
   private _getTree = (path) => {
     const tree = {};
@@ -136,7 +136,7 @@ export class AwTreeDS extends DataSource {
     // init
     loadItems(path[0], tree);
     return tree;
-  }
+  };
 
   private _getTreeItem = (id, inPath) => {
     const {
@@ -176,5 +176,5 @@ export class AwTreeDS extends DataSource {
         href: `${this.basePath}/${id}/${helpers.slugify(label)}`,
       },
     };
-  }
+  };
 }

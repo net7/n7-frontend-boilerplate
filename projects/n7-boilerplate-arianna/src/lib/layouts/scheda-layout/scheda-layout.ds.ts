@@ -3,9 +3,12 @@ import {
   fromEvent, Subject, of, merge,
 } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { get as _get } from 'lodash';
+import { clone, get as _get } from 'lodash';
 import { helpers } from '@net7/boilerplate-common';
 import metadataHelper from '../../helpers/metadata.helper';
+import nodeHelper from '../../helpers/node.helper';
+
+const LOCAL_STORAGE_PREFIX = 'aw.scheda';
 
 export class AwSchedaLayoutDS extends LayoutDataSource {
   static tree: any = null;
@@ -50,6 +53,8 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
   public hasSimilarItems: boolean;
 
+  public hasExtendedTree: boolean;
+
   public hasDigitalObjects: boolean;
 
   public digitalObjects: any;
@@ -80,8 +85,31 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
   public hasContextMenu: () => boolean;
 
+  public extendedTreeParams: {
+    [key: string]: string;
+  } = {};
+
+  public lastResponse;
+
   /** Name of query that should be used (chosen in config) */
   private getTreeQuery: 'getTree' | 'getTreeLite' = 'getTree';
+
+  public titleNavigation: {
+    prev: { href: string; label: string; };
+    next: { href: string; label: string; };
+  } = null;
+
+  public sectionCollapseState = {
+    metadata: false,
+    'extended-tree': false,
+    'similar-items': false,
+    'related-entities': false
+  };
+
+  public documentType: {
+    icon: string;
+    label: string;
+  } = null;
 
   onInit({
     configuration, mainState, router, options, titleService, communication,
@@ -126,6 +154,13 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     // pdf viewer options
     this.one('aw-scheda-pdf').updateOptions(this.configuration.get('scheda-layout')['pdf-viewer'] || {});
 
+    // check section collapse state
+    Object.keys(this.sectionCollapseState).forEach((key) => {
+      const storageKey = `${LOCAL_STORAGE_PREFIX}.${key}`;
+      const storageValue = localStorage.getItem(storageKey);
+      this.sectionCollapseState[key] = storageValue ? JSON.parse(storageValue) : false;
+    });
+
     // sidebar sticky control
     this._sidebarStickyControl();
   }
@@ -140,13 +175,15 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     return metadataConfig.title || null;
   }
 
-  getNavigation(id) {
+  getNavigation() {
     if (AwSchedaLayoutDS.tree) {
       return of(AwSchedaLayoutDS.tree);
     }
     return this.communication.request$(this.getTreeQuery, {
       onError: (error) => console.error(error),
-      params: { treeId: id },
+      params: {
+        onlyAl: !!this.layoutConfig['extended-tree']
+      },
     });
   }
 
@@ -173,6 +210,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
    * @param response http response for the tree item
    */
   loadContent(response) {
+    this.lastResponse = response;
     if (response) {
       // reset
       this.currentDigitalObject = null;
@@ -180,7 +218,11 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
       const metadataFields = this.getFields(response);
       this.hasMetadata = !!(Array.isArray(metadataFields) && metadataFields.length);
-      this.hasSimilarItems = Array.isArray(response.relatedItems) && response.relatedItems.length;
+      this.hasSimilarItems = (
+        !this.layoutConfig['extended-tree']
+        && Array.isArray(response.relatedItems)
+        && response.relatedItems.length
+      );
       this.hasBreadcrumb = Array.isArray(response.breadcrumbs) && response.breadcrumbs.length;
       this.hasDigitalObjects = (
         Array.isArray(response.digitalObjects)
@@ -250,6 +292,12 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
         this.one('aw-scheda-breadcrumbs').update(breadcrumbs);
       }
 
+      // title prev / next navigation
+      this.loadTitleNavigation();
+
+      // document title type (icon, label)
+      this.loadDocumentType();
+
       // update head title
       this.mainState.update('headTitle', `Arianna4View - Patrimonio - ${response.title || response.label}`);
     }
@@ -277,6 +325,99 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     });
   }
 
+  loadExtendedTree() {
+    const parentResponse = this.lastResponse;
+
+    if (this.layoutConfig['extended-tree']) {
+      const configKeys = this.configuration.get('config-keys');
+      const widgetOptions = this.layoutConfig['extended-tree'];
+      const params: any = {
+        id: parentResponse.id,
+        page: 1,
+        limit: 10,
+        query: null,
+        ...this.extendedTreeParams,
+      };
+      const widgetParams = clone(params);
+
+      // normalize params
+      params.offset = (params.page - 1) * params.limit;
+      delete params.page;
+
+      const basePath = this.configuration.get('paths').schedaBasePath;
+      const request$ = this.communication.request$('getNodeChildren', {
+        params,
+        onError: (error) => console.error(error),
+      });
+      request$.subscribe((nodesResponse) => {
+        this.hasExtendedTree = (
+          params.query
+          || widgetParams.page > 1
+          || !!nodesResponse?.items?.length
+        );
+        if (this.hasExtendedTree) {
+          this.one('aw-extended-tree').updateOptions({
+            basePath,
+            configKeys,
+            params: widgetParams,
+            ...widgetOptions,
+          });
+          this.one('aw-extended-tree').update({
+            parent: parentResponse,
+            nodes: nodesResponse
+          });
+
+          // fix query input update
+          if (params.query) {
+            setTimeout(() => {
+              const queryInput: HTMLInputElement = document
+                .querySelector('.aw-extended-tree__header .n7-inner-title__search-bar');
+              queryInput.value = params.query || '';
+            });
+          }
+        }
+      });
+    } else {
+      this.hasExtendedTree = false;
+    }
+  }
+
+  loadTitleNavigation() {
+    // reset
+    this.titleNavigation = null;
+
+    const hasTitleNav = (
+      !!this.layoutConfig['title-nav']?.enabled
+      && this.lastResponse.document_type === 'oggetto-culturale'
+    );
+    if (!hasTitleNav) return;
+
+    this.titleNavigation = { prev: null, next: null };
+    const basePath = this.configuration.get('paths').schedaBasePath;
+    ['prev', 'next'].forEach((key) => {
+      const item = this.lastResponse[key];
+      this.titleNavigation[key] = item
+        ? {
+          href: `${basePath}/${item.id}/${helpers.slugify(item.label)}`,
+          label: item.label,
+        } : null;
+    });
+  }
+
+  loadDocumentType() {
+    const configKeys = this.configuration.get('config-keys');
+    const { document_type: type } = this.lastResponse;
+    const icon = nodeHelper.getNodeIcon(configKeys, this.lastResponse);
+    if (configKeys[type]) {
+      this.documentType = {
+        icon,
+        label: configKeys[type]['singular-label']
+      };
+    } else {
+      this.documentType = null;
+    }
+  }
+
   /**
    * Toggle between the tree's collapsed or expanded state.
    */
@@ -285,6 +426,14 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     this.layoutConfig.tree.collapsedByDefault = !this.layoutConfig.tree.collapsedByDefault;
     this.sidebarCollapsed = !this.sidebarCollapsed;
     this.getWidgetDataSource('aw-sidebar-header').toggleSidebar();
+  }
+
+  onSectionCollapse(id: string) {
+    this.sectionCollapseState[id] = !this.sectionCollapseState[id];
+
+    // update storage
+    const storageKey = `${LOCAL_STORAGE_PREFIX}.${id}`;
+    localStorage.setItem(storageKey, this.sectionCollapseState[id]);
   }
 
   private _sidebarStickyControl() {

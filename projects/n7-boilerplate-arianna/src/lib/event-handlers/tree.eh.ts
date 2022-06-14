@@ -1,8 +1,11 @@
 import { EventHandler } from '@net7/core';
 import { first, filter, withLatestFrom } from 'rxjs/operators';
 import { ReplaySubject } from 'rxjs';
+import { AwTreeDS } from '../data-sources';
 
 export class AwTreeEH extends EventHandler {
+  dataSource: AwTreeDS;
+
   private targetOffset = new ReplaySubject();
 
   private targetIsOpen = false;
@@ -61,6 +64,12 @@ export class AwTreeEH extends EventHandler {
           this.targetIsOpen = target.className.indexOf('n7-icon-angle-right') !== -1;
           this.targetOffset.next(targetRect.top);
         } break;
+        case 'aw-scheda-layout.selectParent':
+          this.dataSource.build(payload);
+          this.dataSource.setActive(payload);
+          this.dataSource.highlightActive();
+          this.scrollLeafIntoView();
+          break;
         default:
           break;
       }
@@ -83,7 +92,7 @@ export class AwTreeEH extends EventHandler {
           if (lastExpandedNode) {
             const scrollTreeEl = document.querySelector('.n7-tree') as HTMLElement;
             const wrapperElRect = wrapperEl.getBoundingClientRect();
-            const offsetToAdjust = offset - wrapperElRect.top;
+            const offsetToAdjust = (offset as number) - wrapperElRect.top;
             scrollTreeEl.style.marginBottom = '1000px';
             lastExpandedNode.scrollIntoView();
             wrapperEl.scrollTop -= offsetToAdjust;
@@ -92,7 +101,7 @@ export class AwTreeEH extends EventHandler {
           }
         }, 200);
       });
-  }
+  };
 
   private scrollLeafIntoView = () => {
     setTimeout(() => {

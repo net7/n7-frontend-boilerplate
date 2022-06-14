@@ -1,17 +1,35 @@
+import { ActivatedRoute, Router } from '@angular/router';
 import { EventHandler } from '@net7/core';
-import { isEmpty } from 'lodash';
+import { clone, isEmpty, isNumber } from 'lodash';
 import {
-  forkJoin, from, of, Subject
+  forkJoin, from, of, ReplaySubject, Subject, timer
 } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import {
+  debounce, filter, first, switchMap
+} from 'rxjs/operators';
 import { ConfigurationService } from '@net7/boilerplate-common';
+import { AwSchedaLayoutDS } from './scheda-layout.ds';
 
 export class AwSchedaLayoutEH extends EventHandler {
+  dataSource: AwSchedaLayoutDS;
+
   private destroyed$: Subject<any> = new Subject();
 
   private configuration: ConfigurationService;
 
-  private route: any;
+  private route: ActivatedRoute;
+
+  private router: Router;
+
+  private treeLoaded$: ReplaySubject<void> = new ReplaySubject();
+
+  private extendedTreeChanged$: Subject<{
+    key: string;
+    value: string | number;
+    delay?: number;
+  }> = new Subject();
+
+  private pageInputValue: number;
 
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
@@ -20,11 +38,14 @@ export class AwSchedaLayoutEH extends EventHandler {
           this.dataSource.onInit(payload);
           this.configuration = payload.configuration;
           this.route = payload.route;
+          this.router = payload.router;
           const paramId = this.route.snapshot.params.id || '';
           if (paramId) {
             this.dataSource.currentId = paramId;
           }
           this.listenRoute();
+          this.listenRouteQueryParams();
+          this.listenExtendedTree();
           this.loadNavigation(paramId);
           this.emitOuter('viewleaf');
           // scroll top
@@ -54,6 +75,48 @@ export class AwSchedaLayoutEH extends EventHandler {
         case 'aw-scheda-dropdown.click':
           this.dataSource.changeDigitalObject(payload);
           break;
+        case 'aw-extended-tree.change': {
+          let key: string;
+          let delay: number;
+          if (payload.inputPayload === 'search-input') {
+            key = 'query';
+            delay = 1000;
+          } else if (payload.inputPayload === 'limit-select') {
+            key = 'limit';
+          } else if (payload.inputPayload === 'page-input-change') {
+            this.pageInputValue = payload.value;
+          } else if (payload.inputPayload === 'page-input-enter') {
+            key = 'page';
+          }
+
+          if (key) {
+            this.extendedTreeChanged$.next({
+              key,
+              delay,
+              value: payload.value,
+            });
+          }
+        } break;
+        case 'aw-extended-tree.search':
+          this.extendedTreeChanged$.next({
+            key: 'query',
+            value: payload.value
+          });
+          break;
+        case 'aw-extended-tree.click':
+          this.extendedTreeChanged$.next({
+            key: 'page',
+            value: payload
+          });
+          break;
+        case 'aw-extended-tree.pageinputsubmit':
+          if (isNumber(this.pageInputValue)) {
+            this.extendedTreeChanged$.next({
+              key: 'page',
+              value: this.pageInputValue
+            });
+          }
+          break;
         default:
           break;
       }
@@ -73,7 +136,11 @@ export class AwSchedaLayoutEH extends EventHandler {
           switchMap((response) => this.parseDigitalObjects$(response))
         ).subscribe((response) => {
           this.dataSource.contentIsLoading = false;
-          if (response) this.dataSource.loadContent(response);
+          if (response) {
+            this.dataSource.loadContent(response);
+            this.dataSource.loadExtendedTree();
+            this.checkTreeItems(response);
+          }
         });
       }
       // scroll top
@@ -81,9 +148,62 @@ export class AwSchedaLayoutEH extends EventHandler {
     });
   }
 
+  private listenExtendedTree() {
+    this.extendedTreeChanged$.pipe(
+      filter(({ key, value }) => !(key === 'page' && (!isNumber(+value) || +value < 1))),
+      debounce(({ delay }) => timer(delay || 1)),
+    ).subscribe(({ key, value }) => {
+      const queryParams: {
+        [id: string]: string
+      } = {};
+
+      if (typeof value === 'string') {
+        queryParams[key] = value.trim().length ? value : null;
+      } else {
+        queryParams[key] = `${value}`;
+      }
+
+      // page check
+      if (key !== 'page') {
+        queryParams.page = '1';
+      }
+
+      // reset pageInput value
+      this.pageInputValue = null;
+
+      // update url
+      this.router.navigate([], {
+        queryParams,
+        queryParamsHandling: 'merge'
+      });
+    });
+  }
+
+  private listenRouteQueryParams() {
+    this.route.queryParams.subscribe((params) => {
+      const extendedTreeParams = clone(params);
+      // force numeric
+      ['page', 'limit'].forEach((key) => {
+        if (params[key] && isNumber(+params[key])) {
+          extendedTreeParams[key] = +params[key];
+        } else {
+          delete extendedTreeParams[key];
+        }
+      });
+
+      this.dataSource.extendedTreeParams = extendedTreeParams;
+
+      // has node response
+      if (this.dataSource.lastResponse) {
+        this.emitOuter('extendedtreerequest');
+        this.dataSource.loadExtendedTree();
+      }
+    });
+  }
+
   private loadNavigation(selectedItem) {
     this.dataSource.updateNavigation('Caricamento in corso...');
-    this.dataSource.getNavigation('patrimonio').subscribe((response) => {
+    this.dataSource.getNavigation().subscribe((response) => {
       if (response) {
         this.dataSource.setTree(response);
         this.dataSource.updateNavigation(this.dataSource.getTree().label);
@@ -92,6 +212,9 @@ export class AwSchedaLayoutEH extends EventHandler {
           currentItem: selectedItem,
           basePath: this.configuration.get('paths').schedaBasePath,
         });
+
+        // emit signal
+        this.treeLoaded$.next();
       }
     });
   }
@@ -165,5 +288,17 @@ export class AwSchedaLayoutEH extends EventHandler {
       });
     }
     return iiifImages;
+  }
+
+  private checkTreeItems(response) {
+    this.treeLoaded$.pipe(
+      first()
+    ).subscribe(() => {
+      const treeDS = this.dataSource.getWidgetDataSource('aw-tree');
+      const { items } = treeDS.output;
+      if (!items.length && response.lastAl?.id) {
+        this.emitOuter('selectParent', response.lastAl.id);
+      }
+    });
   }
 }
