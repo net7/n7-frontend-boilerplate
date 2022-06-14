@@ -2,6 +2,9 @@ import { EventHandler } from '@net7/core';
 
 export class FooterEH extends EventHandler {
   public listen() {
-    // no events
+    this.innerEvents$.subscribe(({ type, payload }) => {
+      // redirect event
+      this.emitOuter(type.replace(`${this.hostId}.`, ''), payload);
+    });
   }
 }

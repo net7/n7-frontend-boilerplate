@@ -1,3 +1,4 @@
+import { Data } from '@angular/router';
 import { LayoutDataSource, _t } from '@net7/core';
 import { Observable } from 'rxjs';
 import {
@@ -5,6 +6,7 @@ import {
   CommunicationService,
   MainStateService
 } from '@net7/boilerplate-common';
+import { MrLocaleService } from '../../services/locale.service';
 
 export class MrAdvancedResultsLayoutDS extends LayoutDataSource {
   protected configuration: ConfigurationService;
@@ -13,19 +15,22 @@ export class MrAdvancedResultsLayoutDS extends LayoutDataSource {
 
   protected mainState: MainStateService;
 
-  protected configId: string;
+  protected localeService: MrLocaleService;
+
+  protected routeData: Data;
 
   public pageConfig;
 
   onInit(payload) {
     this.configuration = payload.configuration;
     this.mainState = payload.mainState;
-    this.configId = payload.configId;
+    this.routeData = payload.routeData;
     this.communication = payload.communication;
-    this.pageConfig = this.configuration.get(this.configId);
+    this.localeService = payload.localeService;
+    this.pageConfig = this.configuration.get(this.routeData.configId);
 
     // config
-    this.all().updateOptions({ config: this.pageConfig });
+    this.all().updateOptions({ config: this.pageConfig, localeService: this.localeService });
 
     // manual updates
     this.one('mr-search-page-title').update({});
@@ -55,6 +60,7 @@ export class MrAdvancedResultsLayoutDS extends LayoutDataSource {
   }
 
   request$(params, onError): Observable<any> {
+    const { locale } = this.routeData;
     const { searchId } = this.pageConfig;
     const searchParams = {
       ...params
@@ -86,6 +92,7 @@ export class MrAdvancedResultsLayoutDS extends LayoutDataSource {
           ...resultsParams
         }
       },
+      urlParams: locale ? `?locale=${locale}` : '',
       onError
     });
   }

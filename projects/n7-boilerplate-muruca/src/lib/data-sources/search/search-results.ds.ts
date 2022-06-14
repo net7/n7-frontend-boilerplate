@@ -3,6 +3,7 @@ import { DataSource, _t } from '@net7/core';
 import { merge, clone } from 'lodash';
 import { helpers } from '@net7/boilerplate-common';
 import linksHelper from '../../helpers/links-helper';
+import { MrLocaleService } from '../../services/locale.service';
 
 type HighlightItem = [string, [string]] | {
   link?: {
@@ -10,6 +11,8 @@ type HighlightItem = [string, [string]] | {
     absolute: string;
     /** path relative to the item preview url */
     relative: string;
+    /** url query params */
+    params?: string;
   };
   text?: string;
   label?: string;
@@ -20,6 +23,12 @@ interface MrSearchResult extends ItemPreviewData {
   id: number;
   /** relative path */
   link?: string;
+  /** route config id */
+  routeId?: string;
+  /** link query params */
+  params?: object;
+  /** link slug */
+  slug?: string;
   /** items that matched the search input */
   highlights?: HighlightItem[];
   /** payload for item anchor */
@@ -47,6 +56,7 @@ export class MrSearchResultsDS extends DataSource {
   protected transform(data: MrSearchResponse) {
     const { results } = data;
     const { itemPreview } = this.options.config;
+    const { localeService }: { localeService: MrLocaleService } = this.options;
     const itemPreviewOptions = merge(clone(ITEM_PREVIEW_DEFAULTS), (itemPreview || {}));
 
     return results.map((item) => {
@@ -75,6 +85,31 @@ export class MrSearchResultsDS extends DataSource {
         });
       }
 
+      // link
+      let anchor = null;
+      if (item.routeId) {
+        const routeLink = localeService.getLinkByRouteId(item.routeId, `${item.id}`, item.slug);
+        anchor = {
+          href: routeLink,
+          queryParams: item.params || null,
+        };
+      } else if (item.link) {
+        anchor = {
+          href: linksHelper.getRouterLink(item.link),
+          queryParams: linksHelper.getQueryParams(item.link),
+        };
+      } else if (item.payload) {
+        anchor = {
+          payload: {
+            ...item.payload
+          }
+        };
+      }
+
+      if (item.routeId || item.link) {
+        anchor.target = itemPreview?.linkTarget || '_blank';
+      }
+
       /*
         Add the highlights to the item's metadata with a custom group
       */
@@ -95,7 +130,10 @@ export class MrSearchResultsDS extends DataSource {
           // if it's an object then it should have a custom hyperlink
           } else {
             let href = '';
-            if (highlight.link.absolute) {
+            if (item.routeId && highlight.link) {
+              const routeLink = localeService.getLinkByRouteId(item.routeId, `${item.id}`, item.slug);
+              href = `${routeLink}${highlight.link}`;
+            } else if (highlight.link.absolute) {
               // path is relative to the baseUrl
               href = `${highlight.link.absolute}`;
             } else if (highlight.link) {
@@ -110,22 +148,6 @@ export class MrSearchResultsDS extends DataSource {
           }
         });
         highlights.push(highlightGroup);
-      }
-
-      let anchor = null;
-      if (item.link) {
-        anchor = {
-          href: linksHelper.getRouterLink(item.link),
-          queryParams: linksHelper.getQueryParams(item.link),
-          target: '_blank'
-        };
-      }
-      if (item.payload) {
-        anchor = {
-          payload: {
-            ...item.payload
-          }
-        };
       }
 
       return {

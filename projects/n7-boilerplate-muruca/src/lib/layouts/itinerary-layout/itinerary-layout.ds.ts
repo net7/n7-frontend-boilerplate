@@ -1,3 +1,4 @@
+import { Data } from '@angular/router';
 import { Observable } from 'rxjs';
 import { LayoutDataSource, _t } from '@net7/core';
 import {
@@ -5,17 +6,20 @@ import {
   CommunicationService,
   MainStateService
 } from '@net7/boilerplate-common';
+import { MrLocaleService } from '../../services/locale.service';
 
 export class MrItineraryLayoutDS extends LayoutDataSource {
   private configuration: ConfigurationService;
 
   private communication: CommunicationService;
 
-  private mainState: MainStateService
+  private mainState: MainStateService;
 
-  private configId: string;
+  private routeData: Data;
 
   private pageConfig: any;
+
+  private localeService: MrLocaleService;
 
   public content: string | null;
 
@@ -28,9 +32,10 @@ export class MrItineraryLayoutDS extends LayoutDataSource {
   onInit(payload) {
     this.configuration = payload.configuration;
     this.communication = payload.communication;
+    this.localeService = payload.localeService;
     this.mainState = payload.mainState;
-    this.configId = payload.configId;
-    this.pageConfig = this.configuration.get(this.configId);
+    this.routeData = payload.routeData;
+    this.pageConfig = this.configuration.get(this.routeData.configId);
 
     // add translations
     this.pageConfig.sections = this.pageConfig.sections.map((section) => ({
@@ -40,10 +45,11 @@ export class MrItineraryLayoutDS extends LayoutDataSource {
   }
 
   pageRequest$(id, onError: (err: any) => void): Observable<any> {
+    const { locale } = this.routeData;
     return this.communication.request$('itinerary', {
       onError,
       method: 'GET',
-      urlParams: id
+      urlParams: locale ? `${id}?locale=${locale}` : id
     });
   }
 
@@ -52,6 +58,7 @@ export class MrItineraryLayoutDS extends LayoutDataSource {
     this.updateContent(response);
     this.updateMetadata(response);
     this.initSections(response);
+    this.setLocaleResourceConfig(response);
     this.updateHeadTitle(response);
   }
 
@@ -86,5 +93,13 @@ export class MrItineraryLayoutDS extends LayoutDataSource {
     const appName = this.configuration.get('name');
     const pageTitle = this.pageConfig.title;
     this.mainState.update('headTitle', [appName, _t(pageTitle), itineraryTitle].join(' > '));
+  }
+
+  // set resource locale config
+  // used by language switcher
+  private setLocaleResourceConfig(response) {
+    if (response?.locale) {
+      this.localeService.setResourceConfig(response.locale);
+    }
   }
 }

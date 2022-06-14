@@ -16,14 +16,20 @@ export class MainStateService {
     breadcrumbs: ReplaySubject<any>;
     filters: ReplaySubject<any>;
     header: ReplaySubject<any>;
+    headerEvents: ReplaySubject<any>;
+    footer: ReplaySubject<any>;
+    footerEvents: ReplaySubject<any>;
   } = {
-    headTitle: new ReplaySubject(),
-    pageTitle: new ReplaySubject(),
-    subnav: new ReplaySubject(),
-    breadcrumbs: new ReplaySubject(),
-    filters: new ReplaySubject(),
-    header: new ReplaySubject(),
-  };
+      headTitle: new ReplaySubject(),
+      pageTitle: new ReplaySubject(),
+      subnav: new ReplaySubject(),
+      breadcrumbs: new ReplaySubject(),
+      filters: new ReplaySubject(),
+      header: new ReplaySubject(),
+      headerEvents: new ReplaySubject(),
+      footer: new ReplaySubject(),
+      footerEvents: new ReplaySubject(),
+    };
 
   public get$ = (key: string) => this._get('default', key);
 

@@ -1,6 +1,6 @@
 {
   "name": "n7-boilerplate",
-  "version": "3.0.1-rc.2",
+  "version": "3.4.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -12,7 +12,6 @@
     "build:muruca": "ng build n7-boilerplate-muruca --configuration production",
     "build:arianna": "ng build n7-boilerplate-arianna --configuration production",
     "build:dataviz": "ng build n7-boilerplate-dataviz --configuration production",
-    "preversion": "npm run build",
     "version": "node scripts/sync-version.js && git add projects/*/package.json",
     "test": "ng test",
     "lint": "ng lint",

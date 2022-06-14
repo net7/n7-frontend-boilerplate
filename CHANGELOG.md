@@ -7,123 +7,150 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 For each commit add a description under the Unreleased section under the correspondig section and library (Muruca, Arianna, Dataviz)
 
-## [UNREALEASED]
+## [Unreleased]
 
-### Added 
+### Added
+
 Muruca
-- Style: added rule for item-preview's border as last element in grid
-
+-   Added advanced search dynamic options
 Arianna 
 - New tree version: extended-tree
 
-Dataviz
 
-### Changed
-Muruca
+## [v3.4.2] - 2022-05-30
 
 ### Fixed
+
 Muruca
 
-Arianna 
+-   Fix language selector label color in footer
+-   Fix itinerary layout locale
+-   Fix search links target option
 
-Dataviz
+## [v3.4.1]
 
-### Changed
+### Fixed
 
-Arianna 
+Muruca
 
-Dataviz
+-   Fix map and timeline layout state
+-   Fix map and timeline layout locale handler 
+-   Fix menu service update
+-   Fix footer service update
+-   Fix locale service path check
+
+## [v3.4.0]
+
+### Added
+
+Muruca
+
+-   Style: added rule for item-preview's border as last element in grid
+-   locale and i18n support
 
 ## [v3.3.1]
 
 ### Changed
+
 All
-- update dependencies
-- removed moment library
-- added dayjs
+
+-   update dependencies
+-   removed moment library
+-   added dayjs
 
 ## [v3.3.0]
 
-### Added 
+### Added
+
 Muruca
- - added input info tooltip
+
+-   added input info tooltip
 
 ### Changed
+
 Muruca
- - Space * 0.5
- - Quote style
+
+-   Space \* 0.5
+-   Quote style
 
 ### Fixed
+
 Muruca
- - Fix muruca search config path
- - Fixed highlight link in advanced search item preview
- - timeline-layout-fix 
+
+-   Fix muruca search config path
+-   Fixed highlight link in advanced search item preview
+-   timeline-layout-fix 
 
 ## [v3.2.2]
 
-### Added 
+### Added
+
 Muruca
- - added input info tooltip
-Dataviz
- - 
-Arianna
- -
+
+-   added input info tooltip
+-   added locale and i18n support
 
 ### Changed
+
 Muruca
- - Space * 0.5
- - Quote style
-Dataviz
- - 
-Arianna
- -
+
+-   Space \* 0.5
+-   Quote style
 
 ### Fixed
+
 Muruca
- - Fix muruca search config path
- - Fixed highlight link in advanced search item preview
- - timeline-layout-fix 
-Dataviz
- - 
-Arianna
- -
+
+-   Fix muruca search config path
+-   Fixed highlight link in advanced search item preview
+-   timeline-layout-fix 
 
 ## [v3.2.2]
 
-### Added 
-- Add clickOutside directive
+### Added
 
-## [v3.2.2]
-
-### Changed
-- remove default tilelayer
+-   Add clickOutside directive
 
 ## [v3.2.2]
 
 ### Changed
-- remove default tilelayer
+
+-   remove default tilelayer
+
+## [v3.2.2]
+
+### Changed
+
+-   remove default tilelayer
 
 ## [v3.2.1]
 
 ### Fixed
-- fix-dataviz-dependencies 
+
+-   fix-dataviz-dependencies 
 
 ## [v3.0.0]
 
 ### Changed
-- updated imports with new @net7 scope
-- updated github workflow
-- updated eslint and ts-node packages
 
-
+-   updated imports with new @net7 scope
+-   updated github workflow
+-   updated eslint and ts-node packages
 
 ## [v2.43.0]
 
 ### Added
+
 Muruca
-- stile pagina statica
-- stile mappa
+
+-   stile pagina statica
+-   stile mappa
 
 A4V
-- url configurabili
-- timeline solo anni
+
+-   url configurabili
+-   timeline solo anni
+
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.4.2...HEAD
+
+[v3.4.2]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.4.1...v3.4.2

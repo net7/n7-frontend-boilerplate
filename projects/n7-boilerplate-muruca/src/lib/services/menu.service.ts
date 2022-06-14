@@ -5,6 +5,7 @@ import { of } from 'rxjs';
 import { Anchor } from '@net7/components';
 import { ConfigurationService } from '@net7/boilerplate-common';
 import linksHelper from '../helpers/links-helper';
+import { MrLocaleService } from './locale.service';
 
 type MenuItem = {
   text: string;
@@ -20,28 +21,44 @@ type MenuItem = {
 export class MrMenuService {
   private dynamicPaths: string[] = [];
 
+  private cache: {
+    [locale: string]: boolean;
+  } = {};
+
   constructor(
     private http: HttpClient,
     private configuration: ConfigurationService,
+    private localeService: MrLocaleService,
   ) {}
 
-  load(): Promise<any> {
+  load(locale = null): Promise<any> {
+    if (locale && this.cache[locale]) {
+      this._handleResponse(this.cache[locale]);
+      return Promise.resolve();
+    }
+
     const { defaultProvider, providers } = this.configuration.get('communication');
     const currentProvider = providers[defaultProvider] || {};
     const { baseUrl } = currentProvider;
     const menuPath = currentProvider?.config?.menu;
 
     if (baseUrl && menuPath) {
-      const url = baseUrl + menuPath;
+      let url = baseUrl + menuPath;
+      if (locale) {
+        url += `?locale=${locale}`;
+      }
       return this.http.get(url).pipe(
         catchError(() => of(null)),
-        tap((response) => this._handleResponse(response)),
+        tap((response) => {
+          this.cache[locale] = response;
+          this._handleResponse(response, locale);
+        }),
       ).toPromise();
     }
     return of(null).toPromise();
   }
 
-  private _handleResponse(response) {
+  private _handleResponse(response, locale?: string) {
     if (response) {
       const headerConfig = this.configuration.get('header');
       headerConfig.nav.items = response.map(({
@@ -87,6 +104,12 @@ export class MrMenuService {
         }
         return item;
       });
+      if (locale) {
+        const href = this.localeService.getLink(locale, 'home');
+        if (href) {
+          headerConfig.logo.anchor = { href };
+        }
+      }
       this.configuration.set('header', headerConfig);
     }
   }

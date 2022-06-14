@@ -1,6 +1,5 @@
 import { LayoutDataSource, _t } from '@net7/core';
-import { ItemPreviewData, TimelineData } from '@net7/components';
-import { Location } from '@angular/common';
+import { Anchor, ItemPreviewData, TimelineData } from '@net7/components';
 import { Timeline } from 'vis-timeline';
 import { Subject } from 'rxjs';
 import { first } from 'rxjs/operators';
@@ -9,9 +8,13 @@ import {
   CommunicationService,
   MainStateService,
 } from '@net7/boilerplate-common';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { MrLayoutStateService } from '../../services/layout-state.service';
 import 'leaflet.markercluster';
 import { GetResourceResponse } from './timeline-layout.types';
+import { MrLocaleService } from '../../services/locale.service';
+import linksHelper from '../../helpers/links-helper';
 
 // demo page: http://localhost:4200/timeline/2992/missione-venezia
 
@@ -24,9 +27,13 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
 
   private layoutState: MrLayoutStateService;
 
+  private router: Router;
+
   private configId: string;
 
   private pageConfig;
+
+  private localeService: MrLocaleService;
 
   private location: Location;
 
@@ -88,15 +95,20 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
     this.configuration = payload.configuration;
     this.communication = payload.communication;
     this.route = payload.route;
+    this.router = payload.router;
+    this.localeService = payload.localeService;
     this.location = payload.location;
 
     this.configId = payload.configId;
     this.pageConfig = this.configuration.get(this.configId) || {};
 
+    const locale = this.localeService.getLocale();
+
     // update the timeline
     this.communication
       .request$('timeline', {
         method: 'GET',
+        urlParams: locale ? `?locale=${locale}` : '',
         onError: (e) => console.error(e),
       })
       .subscribe((d) => {
@@ -117,6 +129,7 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
     this.communication
       .request$('timelineDescription', {
         method: 'GET',
+        urlParams: locale ? `?locale=${locale}` : '',
         onError: (e) => console.error(e),
       })
       .subscribe((d) => {
@@ -142,17 +155,23 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
     this.collectionWorksData = undefined;
     this.collectionBooksData = undefined;
     this.collectionGalleryData = undefined;
-    if (navigate) this.location.go('/timeline/');
+    this.collectionData = [];
+    if (navigate) {
+      const href = this.localeService.getLinkByRouteId('timeline');
+      this.location.go(href);
+    }
     this.one('mr-year-header').update({
       title: { main: { text: _t(this.pageConfig.title) } },
     });
   }
 
   updatePageDetails(id) {
+    const locale = this.localeService.getLocale();
     this.communication
       .request$('resource', {
         onError: (e) => console.error(e),
         method: 'POST',
+        urlParams: locale ? `?locale=${locale}` : '',
         params: {
           id,
           type: 'views/time-events',
@@ -183,16 +202,34 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
             if (res.sections[collection].items) {
               collections.push({
                 items: res.sections[collection].items.map(
-                  (type: {
+                  (item: {
+                    id: string;
                     link: string;
                     title: string;
                     type: string;
-                  }): ItemPreviewData => ({
-                    title: type.title,
-                    anchor: {
-                      href: type.link,
-                    },
-                  })
+                    routeId?: string;
+                    params?: object;
+                    slug?: string;
+                  }): ItemPreviewData => {
+                    let anchor: Anchor;
+                    if (item.routeId) {
+                      const routeLink = this.localeService
+                        .getLinkByRouteId(item.routeId, item.id, item.slug);
+                      anchor = {
+                        href: routeLink,
+                        queryParams: item.params || null,
+                      };
+                    } else if (item.link) {
+                      anchor = {
+                        href: linksHelper.getRouterLink(item.link),
+                        queryParams: linksHelper.getQueryParams(item.link),
+                      };
+                    }
+                    return {
+                      title: item.title,
+                      anchor
+                    };
+                  }
                 ),
                 header: res.sections[collection].header,
               });

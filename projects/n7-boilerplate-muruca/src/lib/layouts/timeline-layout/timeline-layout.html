@@ -32,14 +32,15 @@
 
     <div class="mr-timeline__content">
       <!-- DESCRIZIONE -->
-      <div class="mr-content-block mr-content-block-description">
+      <div *ngIf="lb.dataSource.eventDescription" class="mr-content-block mr-content-block-description">
         <p [innerHTML]="lb.dataSource.eventDescription"></p>
         <p></p>
       </div>
 
       <ng-container *ngIf="!lb.dataSource.loading.resourceDetails">
         <!-- GALLERIA -->
-        <div class="mr-content-block n7-grid-6">
+        <div *ngIf="lb.dataSource.collectionGalleryData && lb.dataSource.collectionGalleryData.length" 
+        class="mr-content-block n7-grid-6">
           <ng-container
             *ngFor="let image of lb.dataSource.collectionGalleryData"
           >
