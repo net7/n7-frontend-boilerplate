@@ -1,4 +1,5 @@
 import { LayoutDataSource, _t } from '@net7/core';
+import { Data } from '@angular/router';
 import { isEmpty } from 'lodash';
 import { ConfigurationService, CommunicationService, MainStateService } from '@net7/boilerplate-common';
 import { MrLayoutStateService, LayoutState } from '../../services/layout-state.service';
@@ -12,7 +13,7 @@ export class MrHomeLayoutDS extends LayoutDataSource {
 
   private layoutState: MrLayoutStateService;
 
-  private configId: string;
+  private routeData: Data;
 
   private pageConfig;
 
@@ -25,8 +26,8 @@ export class MrHomeLayoutDS extends LayoutDataSource {
     this.communication = payload.communication;
     this.mainState = payload.mainState;
     this.layoutState = payload.layoutState;
-    this.configId = payload.configId;
-    this.pageConfig = this.configuration.get(this.configId) || {};
+    this.routeData = payload.routeData;
+    this.pageConfig = this.configuration.get(this.routeData.configId) || {};
 
     this.doRequest();
 
@@ -36,13 +37,15 @@ export class MrHomeLayoutDS extends LayoutDataSource {
 
   doRequest() {
     const { sections } = this.pageConfig;
+    const { configId, locale } = this.routeData;
     if (!isEmpty(sections)) {
       this.layoutState.set('content', LayoutState.LOADING);
       this.communication.request$('home', {
         method: 'POST',
         params: sections.map(({ id }) => id),
+        urlParams: locale ? `?locale=${locale}` : '',
         onError: (err) => {
-          console.warn(`Error loading ${this.configId} sections`, err.message);
+          console.warn(`Error loading ${configId} sections`, err.message);
           this.layoutState.set('content', LayoutState.ERROR);
         }
       }).subscribe((response) => {
@@ -50,7 +53,7 @@ export class MrHomeLayoutDS extends LayoutDataSource {
         this.initSections(response);
       });
     } else {
-      console.warn(`There are no sections configured for ${this.configId} layout`);
+      console.warn(`There are no sections configured for ${configId} layout`);
     }
   }
 

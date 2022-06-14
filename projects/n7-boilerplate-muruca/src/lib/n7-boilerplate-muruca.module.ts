@@ -1,18 +1,19 @@
 // MODULES
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { DvComponentsLibModule } from '@net7/components';
-import { N7BoilerplateCommonModule } from '@net7/boilerplate-common';
+import { MainStateService, N7BoilerplateCommonModule } from '@net7/boilerplate-common';
 // SERVICES
 import { MrSearchService } from './services/search.service';
 import { MrLayoutStateService } from './services/layout-state.service';
 import { MrResourceModalService } from './services/resource-modal.service';
+import { MrLocaleService } from './services/locale.service';
 // PIPES
 import { EscapeHtmlPipe } from './pipes/keep-html.pipe';
 // LAYOUTS
 import { MrAdvancedResultsLayoutComponent } from './layouts/advanced-results-layout/advanced-results-layout';
 import { MrAdvancedSearchLayoutComponent } from './layouts/advanced-search-layout/advanced-search-layout';
-import { MrGlossaryLayoutComponent } from './layouts/glossary-layout/glossary-layout';
 import { MrHomeLayoutComponent } from './layouts/home-layout/home-layout';
 import { MrItineraryLayoutComponent } from './layouts/itinerary-layout/itinerary-layout';
 import { MrMapLayoutComponent } from './layouts/map-layout/map-layout';
@@ -35,7 +36,6 @@ const COMPONENTS = [
   // Layout components
   MrAdvancedResultsLayoutComponent,
   MrAdvancedSearchLayoutComponent,
-  MrGlossaryLayoutComponent,
   MrHomeLayoutComponent,
   MrItineraryLayoutComponent,
   MrMapLayoutComponent,
@@ -68,8 +68,29 @@ const COMPONENTS = [
   providers: [
     MrSearchService,
     MrLayoutStateService,
-    MrResourceModalService
+    MrResourceModalService,
+    MrLocaleService
   ],
   exports: COMPONENTS
 })
-export class N7BoilerplateMurucaModule { }
+export class N7BoilerplateMurucaModule {
+  constructor(
+    private localeService: MrLocaleService,
+    private mainState: MainStateService,
+    private router: Router,
+  ) {
+    // listen to locale (language select) change event
+    this.mainState.get$('footerEvents').subscribe(({ type, payload }) => {
+      if (type === 'footer.change' && payload?.inputPayload === 'locale') {
+        const currentLocale = this.localeService.getLocale();
+        const { value } = payload;
+        if (currentLocale !== value) {
+          const href = this.localeService.getLinkByLocale(value);
+          if (href) {
+            this.router.navigate([href]);
+          }
+        }
+      }
+    });
+  }
+}

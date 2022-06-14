@@ -1,0 +1,27 @@
+name: Check pull request
+on: [pull_request]
+
+jobs:
+  remind_changelog:
+    name: Changelog must be updated
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Changelog Enforcerer
+      uses: dangoslen/changelog-enforcer@v3
+      with:
+        missingUpdateErrorMessage: 'Remember to document the changes using CHANGELOG.md'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  build-project:
+    name: Project must build successfully
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
+      - run: npm i
+        name: Install dependencies
+      - run: npm run build
+        name: Build Angular

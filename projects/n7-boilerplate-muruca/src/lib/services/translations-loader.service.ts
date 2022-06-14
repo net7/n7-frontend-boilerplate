@@ -9,12 +9,24 @@ import { ConfigurationService } from '@net7/boilerplate-common';
   providedIn: 'root',
 })
 export class MrTranslationsLoaderService {
+  private loaded: {
+    [locale: string]: boolean;
+  } = {};
+
   constructor(
     private http: HttpClient,
     private configuration: ConfigurationService,
   ) {}
 
   load(langCode: string): Promise<any> {
+    // update translate module
+    translate.setCurrentLang(langCode);
+
+    // locale already loaded check
+    if (this.loaded[langCode]) {
+      this.loaded[langCode] = true;
+      return Promise.resolve();
+    }
     const { defaultProvider, providers } = this.configuration.get('communication');
     const currentProvider = providers[defaultProvider] || {};
     const { baseUrl } = currentProvider;

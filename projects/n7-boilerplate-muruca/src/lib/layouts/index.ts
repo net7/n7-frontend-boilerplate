@@ -13,11 +13,6 @@ export * from './search-facets-layout/search-facets-layout';
 export * from './search-facets-layout/search-facets-layout.ds';
 export * from './search-facets-layout/search-facets-layout.eh';
 export * from './search-facets-layout/search-facets-layout.config';
-// glossary layout
-export * from './glossary-layout/glossary-layout';
-export * from './glossary-layout/glossary-layout.ds';
-export * from './glossary-layout/glossary-layout.eh';
-export * from './glossary-layout/glossary-layout.config';
 // static layout
 export * from './static-layout/static-layout';
 export * from './static-layout/static-layout.ds';

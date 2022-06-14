@@ -2,6 +2,7 @@ import { DataSource } from '@net7/core';
 import { merge } from 'lodash';
 import { helpers } from '@net7/boilerplate-common';
 import linksHelper from '../helpers/links-helper';
+import { MrLocaleService } from '../services/locale.service';
 
 const ITEM_PREVIEW_DEFAULTS = {
   limit: 100,
@@ -15,8 +16,12 @@ type collectionResponse = {
     button?: any;
   };
   items: {
+    id?: string;
     text?: string;
     link?: string;
+    routeId?: string;
+    params?: string;
+    slug?: string;
     title?: string;
     type?: string;
     payload?: any;
@@ -28,6 +33,8 @@ export class MrCollectionDS extends DataSource {
 
   protected transform(data: collectionResponse): any {
     if (!data) return null;
+
+    const { localeService }: { localeService: MrLocaleService } = this.options;
 
     const { header, items } = data;
 
@@ -77,14 +84,21 @@ export class MrCollectionDS extends DataSource {
             item.text = `${item.text.substring(0, itemPreviewOptions.limit)}...`;
           }
         }
-        if (item.link) {
+        // link
+        if (item.routeId) {
+          const routeLink = localeService.getLinkByRouteId(item.routeId, item.id, item.slug);
+          anchor = {
+            href: routeLink,
+            queryParams: item.params || null,
+          };
+        } else if (item.link) {
           anchor = {
             href: linksHelper.getRouterLink(item.link),
             queryParams: linksHelper.getQueryParams(item.link),
           };
-          if (linkTarget) {
-            anchor.target = linkTarget;
-          }
+        }
+        if (anchor && linkTarget) {
+          anchor.target = linkTarget;
         }
         if (item.payload) {
           anchor = {

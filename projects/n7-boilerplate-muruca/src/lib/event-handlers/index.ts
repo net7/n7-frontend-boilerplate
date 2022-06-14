@@ -13,3 +13,5 @@ export * from './search/search-page-description.eh';
 export * from './search/search-results.eh';
 // form wrapper
 export * from './form-wrapper-accordion.eh';
+// map
+export * from './map.eh';

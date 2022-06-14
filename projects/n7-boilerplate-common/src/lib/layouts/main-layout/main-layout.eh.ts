@@ -34,6 +34,17 @@ export class MainLayoutEH extends EventHandler {
       }
     });
 
+    this.outerEvents$.subscribe(({ type, payload }) => {
+      // header events
+      if (type.indexOf('header') === 0) {
+        this.mainState.update('headerEvents', { type, payload });
+      }
+      // footer events
+      if (type.indexOf('footer') === 0) {
+        this.mainState.update('footerEvents', { type, payload });
+      }
+    });
+
     // listen to global events
     EventHandler.globalEvents$.pipe(
       takeUntil(this.destroyed$),

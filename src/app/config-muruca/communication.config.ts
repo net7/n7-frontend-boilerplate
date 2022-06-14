@@ -26,6 +26,7 @@ const config: ConfigCommonCommunication = {
         post: 'get_static_post/',
         search: 'search/results',
         advancedSearch: 'advanced_search',
+        advancedSearchOptions: 'advanced_search_options',
         posts: 'list/posts',
         facets: 'search/facets',
         searchDescription: 'get_search_description/',
