@@ -84,7 +84,7 @@ export class AwSchedaLayoutEH extends EventHandler {
           } else if (payload.inputPayload === 'limit-select') {
             key = 'limit';
           } else if (payload.inputPayload === 'page-input-change') {
-            this.pageInputValue = payload.value;
+            this.pageInputValue = +payload.value;
           } else if (payload.inputPayload === 'page-input-enter') {
             key = 'page';
           }
