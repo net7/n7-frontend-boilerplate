@@ -12,6 +12,7 @@ import {
   TextItem,
   MapItem
 } from '@net7/boilerplate-dataviz';
+import { LoaderComponent } from '@net7/components';
 
 const getTextItem = (label: string): TextItem => {
   getTextItem.counter += 1;
@@ -30,6 +31,11 @@ getTextItem.counter = 0;
 const dataWidgetItem: DataWidgetItem = {
   id: 'item-2',
   type: 'data-widget',
+  stateComponents: {
+    loading: {
+      component: LoaderComponent
+    }
+  },
   initialData: {
     icon: 'n7-icon-earth',
     text: '497 <em>Dipendenti</em>',
@@ -47,6 +53,9 @@ const dataWidgetItem: DataWidgetItem = {
 const pieChartItem: ApexPieChartItem = {
   id: 'item-3',
   type: 'apex-pie-chart',
+  // status: {
+  //   loading: 'n7-loader',
+  // },
   initialData: {
     series: [{
       id: 'serie-1',
@@ -318,9 +327,12 @@ const mapItem: MapItem = {
   id: 'item-11',
   type: 'map',
   initialData: {
+    libOptions: {
+      maxZoom: 8
+    },
     initialView: {
       center: [51.505, -0.09],
-      zoom: 13
+      zoom: 13,
     },
     markers: [
       {
@@ -341,47 +353,49 @@ const mapItem: MapItem = {
 const config: {
   cards: CardData[];
 } = {
-  cards: [{
-    header: {
-      sections: [{
-        items: [getTextItem('Card 1')]
-      }]
-    },
-    content: {
-      sections: [
-        {
-          items: [getTextItem('Data Widget'), dataWidgetItem]
-        },
-        {
-          items: [getTextItem('Line Chart'), lineChartItem]
-        },
-        {
-          items: [getTextItem('Pie Chart'), pieChartItem]
-        },
-        {
-          items: [getTextItem('Bar Chart'), barChartItem]
-        },
-        {
-          items: [getTextItem('Radial Chart'), radialBarChartItem]
-        },
-        {
-          items: [getTextItem('Radar Chart'), radarBarChartItem]
-        },
-        {
-          items: [getTextItem('Select'), selectItem]
-        },
-        {
-          items: [getTextItem('Inner title'), buttonToggleItem]
-        },
-        {
-          items: [getTextItem('Table'), tableItem]
-        },
-        {
-          items: [getTextItem('Map'), mapItem]
-        },
-      ]
-    }
-  }]
+  cards: [
+    {
+      id: 'first-card',
+      header: {
+        sections: [{
+          items: [getTextItem('Card 1')]
+        }]
+      },
+      content: {
+        sections: [
+          {
+            items: [getTextItem('Data Widget'), dataWidgetItem]
+          },
+          {
+            items: [getTextItem('Line Chart'), lineChartItem]
+          },
+          {
+            items: [getTextItem('Pie Chart'), pieChartItem]
+          },
+          {
+            items: [getTextItem('Bar Chart'), barChartItem]
+          },
+          {
+            items: [getTextItem('Radial Chart'), radialBarChartItem]
+          },
+          {
+            items: [getTextItem('Radar Chart'), radarBarChartItem]
+          },
+          {
+            items: [getTextItem('Select'), selectItem]
+          },
+          {
+            items: [getTextItem('Inner title'), buttonToggleItem]
+          },
+          {
+            items: [getTextItem('Table'), tableItem]
+          },
+          {
+            items: [getTextItem('Map'), mapItem]
+          },
+        ]
+      }
+    }]
 };
 
 export default config;

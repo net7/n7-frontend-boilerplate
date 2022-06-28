@@ -7,6 +7,7 @@ import { N7BoilerplateCommonModule } from '@net7/boilerplate-common';
 import { DataWidgetWrapperComponent } from './components/data-widget-wrapper/data-widget-wrapper';
 import { DatepickerWrapperComponent } from './components/datepicker-wrapper/datepicker-wrapper';
 import { CardComponent } from './components/card/card';
+import { CardStateWrapperComponent } from './components/card-state-wrapper/card-state-wrapper';
 import { CardTextItemComponent } from './components/card-text-item/card-text-item';
 // LAYOUTS
 import { DvExampleLayoutComponent } from './layout/example-layout/example-layout';
@@ -16,6 +17,7 @@ const COMPONENTS = [
   DataWidgetWrapperComponent,
   DatepickerWrapperComponent,
   CardComponent,
+  CardStateWrapperComponent,
   CardTextItemComponent,
   DvExampleLayoutComponent,
   DvCardExampleLayoutComponent
