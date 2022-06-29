@@ -116,7 +116,9 @@ export class CardLoader {
   private updateState(ids: string[], newState: CardState) {
     const updates = forkJoin(ids.map((id) => this.state$[id]));
     ids.forEach((id) => {
-      this.state$[id].next(newState);
+      if (this.state$[id]) {
+        this.state$[id].next(newState);
+      }
     });
     return updates;
   }
