@@ -55,6 +55,7 @@ export type CardActionList = {
 export type CardAction = CardActionButton | CardActionList;
 
 export type CardSection = {
+  id: string;
   items: CardItemTypes[];
   columns?: number;
   classes?: string;

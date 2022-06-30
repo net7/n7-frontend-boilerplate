@@ -5,10 +5,13 @@
         <ng-container *ngFor="let area of ['header', 'content', 'footer']">
             <div *ngIf="data[area]"
                  class="dv-card__{{ area }}">
-                <section *ngFor="let section of data[area].sections"
-                         class="dv-card__section {{ section.classes || '' }}">
-                    <ng-container *ngTemplateOutlet="blocks; context: { $implicit: section.items }"></ng-container>
-                </section>
+                <ng-container *ngFor="let section of data[area].sections">
+                    <dv-card-state-wrapper [state$]="data.state$[section.id]">
+                        <section class="dv-card__section {{ section.classes || '' }}">
+                            <ng-container *ngTemplateOutlet="blocks; context: { $implicit: section.items }"></ng-container>
+                        </section>
+                    </dv-card-state-wrapper>
+                </ng-container>
             </div>
         </ng-container>
     </dv-card-state-wrapper>

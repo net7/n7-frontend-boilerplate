@@ -368,39 +368,50 @@ const config: {
       id: 'first-card',
       header: {
         sections: [{
+          id: 'section-01',
           items: [getTextItem('Card 1')]
         }]
       },
       content: {
         sections: [
           {
+            id: 'section-02',
             items: [getTextItem('Data Widget'), dataWidgetItem]
           },
           {
+            id: 'section-03',
             items: [getTextItem('Line Chart'), lineChartItem]
           },
           {
+            id: 'section-04',
             items: [getTextItem('Pie Chart'), pieChartItem]
           },
           {
+            id: 'section-05',
             items: [getTextItem('Bar Chart'), barChartItem]
           },
           {
+            id: 'section-06',
             items: [getTextItem('Radial Chart'), radialBarChartItem]
           },
           {
+            id: 'section-07',
             items: [getTextItem('Radar Chart'), radarBarChartItem]
           },
           {
+            id: 'section-08',
             items: [getTextItem('Select'), selectItem]
           },
           {
+            id: 'section-09',
             items: [getTextItem('Inner title'), buttonToggleItem]
           },
           {
+            id: 'section-10',
             items: [getTextItem('Table'), tableItem]
           },
           {
+            id: 'section-11',
             items: [getTextItem('Map'), mapItem]
           },
         ]

@@ -70,7 +70,8 @@ export class CardLoader {
         };
         const cardStateComponents = {};
 
-        cardSections.forEach(({ items }) => {
+        cardSections.forEach(({ id: sectionID, items }) => {
+          state$[sectionID] = new BehaviorSubject(CardState.Idle);
           items.forEach(({
             id: widgetID, type: itemType, initialData, stateComponents
           }) => {
