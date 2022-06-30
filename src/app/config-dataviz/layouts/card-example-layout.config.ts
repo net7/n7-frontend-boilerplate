@@ -12,7 +12,7 @@ import {
   TextItem,
   MapItem
 } from '@net7/boilerplate-dataviz';
-import { LoaderComponent } from '@net7/components';
+import { ContentPlaceholderComponent, ContentPlaceholderData, LoaderComponent } from '@net7/components';
 
 const getTextItem = (label: string): TextItem => {
   getTextItem.counter += 1;
@@ -74,6 +74,16 @@ const pieChartItem: ApexPieChartItem = {
 const lineChartItem: ApexLineChartItem = {
   id: 'item-4',
   type: 'apex-line-chart',
+  stateComponents: {
+    loading: {
+      component: ContentPlaceholderComponent,
+      data: {
+        blocks: [
+            {classes:"placeholder-1"}
+        ]
+      } as ContentPlaceholderData
+    }
+  },
   initialData: {
     series: [{
       id: 'serie-desktops',

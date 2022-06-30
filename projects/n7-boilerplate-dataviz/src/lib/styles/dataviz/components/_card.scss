@@ -5,29 +5,98 @@
  */
 
 /* ------------------------------------ *\
+    #CARD
+\* ------------------------------------ */
+.dv-card {
+    padding: $space * 2;
+    background-color: $color-background-base;
+    border-radius: $card-border-radius;
+    box-shadow: $card-box-shadow;
+    border: $card-border;
+}
+
+/* ------------------------------------ *\
+    #CARD-HEADER
+\* ------------------------------------ */
+.dv-card {
+    &__header {
+        margin-bottom: $space * 2;
+        padding-bottom: $space * 1.75;
+        border-bottom: 1px solid $color-border-normal;
+
+        .dv-card-text-item {
+            font-size: $font-size-m;
+            color: $card-header-color;
+            line-height: 1.4;
+        }
+    }
+
+    &__section {
+        padding: 0;
+    }
+
+    &__item {
+        margin: 0;
+    }
+}
+
+/* ------------------------------------ *\
+    #CARD-CONTENT
+\* ------------------------------------ */
+.dv-card {
+    &__content {
+        display: flex;
+        flex-direction: column;
+
+        .dv-card__section:not(:last-child) {
+            margin-bottom: $space * 2;
+        }
+
+        .dv-card-text-item {
+            margin-bottom: $space * 2;
+            font-size: $font-size-s;
+            color: $color-text;
+            line-height: 1.4;
+        }
+
+        // Section.
+        .dv-card__section {
+            flex-grow: 1;
+            border: 1px solid $color-border-normal;
+            display: flex;
+            flex-direction: column;
+            // align-items: center;
+            justify-content: center;
+            border-radius: $border-radius;
+            padding: $space * 2;
+        }
+    }
+}
+
+/* ------------------------------------ *\
    #CARD
 \* ------------------------------------ */
 .dv-card {
-    display: flex;
-    flex-direction: column;
-    // padding: $space;
-    margin-bottom: $space*2;
-    background-color: $color-background-base;
-    border-radius: $border-radius;
-    box-shadow: 0 30px 30px -20px rgba(0,0,0,0.10);
-    font-family: $font-family-main;
+    // display: flex;
+    // flex-direction: column;
+    // // padding: $space;
+    // margin-bottom: $space * 2;
+    // background-color: $color-background-base;
+    // border-radius: $border-radius;
+    // box-shadow: 0 30px 30px -20px rgba(0, 0, 0, 0.1);
+    // font-family: $font-family-main;
 
     /* Header */
     &__header {
-        display: flex;
-        flex-wrap: nowrap;
-        align-content: stretch;
-        width: 100%;
+        // display: flex;
+        // flex-wrap: nowrap;
+        // align-content: stretch;
+        // width: 100%;
     }
 
     &__title-wrapper {
         flex-grow: 1;
-        padding: $space $space*2;
+        padding: $space $space * 2;
     }
 
     &__title {
@@ -56,7 +125,6 @@
         margin: 0 $space;
     }
 }
-
 
 /* ------------------------------------ *\
    #MAP ITEM
