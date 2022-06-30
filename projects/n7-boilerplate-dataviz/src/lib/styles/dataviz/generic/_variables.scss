@@ -16,7 +16,10 @@ $page-min-width: 960px;
 $card-border-radius: $border-radius;
 $card-box-shadow: none;
 $card-border: 1px solid $color-border-normal;
-$card-header-color: $color-text;
+$card-header-title-color: $color-text;
+$card-header-title-size: $font-size-m;
+$card-text-color: $color-text;
+$card-text-size: $font-size-s;
 
 // ------------------------------------ //
 // #GRIDS
