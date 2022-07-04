@@ -10,7 +10,6 @@ export class DvCardExampleLayoutDS extends LayoutDataSource {
   onInit(payload) {
     this.cardLoader = payload.cardLoader;
     this.cards = this.cardLoader.getCards();
-    this.cardLoader.setState('first-card', CardState.Loading);
 
     setTimeout(() => {
       this.cardLoader.setAllStates(CardState.Success);
@@ -28,7 +27,6 @@ export class DvCardExampleLayoutDS extends LayoutDataSource {
       //   payload: 'view earth tooltip',
       //   classes: 'is-negative'
       // });
-      this.cardLoader.setState('item-2', CardState.Loading);
       // this.getWidgetDataSource('item-2').status$.next('loading');
       // (this.one('item-2') as any).status$.next('loading');
       this.one('item-3').update({
@@ -67,8 +65,9 @@ export class DvCardExampleLayoutDS extends LayoutDataSource {
     }, 3000);
 
     setTimeout(() => {
-      this.cardLoader.setState('item-2', CardState.Success);
-      this.cardLoader.setSomeStates(['item-4', 'text-3', 'section-04'], CardState.Empty);
+      this.cardLoader.setState('section-01', CardState.Loading);
+      this.cardLoader.setState('item-4', CardState.Loading);
+      // this.cardLoader.setSomeStates(['item-4', 'text-3', 'section-04'], CardState.Empty);
     }, 4000);
   }
 

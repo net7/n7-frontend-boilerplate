@@ -79,7 +79,7 @@ const lineChartItem: ApexLineChartItem = {
       component: ContentPlaceholderComponent,
       data: {
         blocks: [
-            {classes:"placeholder-1"}
+          { classes: 'placeholder-1' }
         ]
       } as ContentPlaceholderData
     }
@@ -369,6 +369,16 @@ const config: {
       header: {
         sections: [{
           id: 'section-01',
+          stateComponents: {
+            loading: {
+              component: ContentPlaceholderComponent,
+              data: {
+                blocks: [{
+                  classes: 'first-block'
+                }]
+              } as ContentPlaceholderData,
+            }
+          },
           items: [getTextItem('Card 1')]
         }]
       },

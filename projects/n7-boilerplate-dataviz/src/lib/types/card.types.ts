@@ -56,6 +56,7 @@ export type CardAction = CardActionButton | CardActionList;
 
 export type CardSection = {
   id: string;
+  stateComponents?: CardStateComponents;
   items: CardItemTypes[];
   columns?: number;
   classes?: string;
