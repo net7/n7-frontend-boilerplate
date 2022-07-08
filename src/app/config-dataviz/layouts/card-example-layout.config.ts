@@ -386,6 +386,16 @@ const config: {
         sections: [
           {
             id: 'section-02',
+            stateComponents: {
+              loading: {
+                component: ContentPlaceholderComponent,
+                data: {
+                  blocks: [{
+                    classes: 'first-block'
+                  }]
+                } as ContentPlaceholderData,
+              }
+            },
             items: [getTextItem('Data Widget'), dataWidgetItem]
           },
           {

@@ -65,7 +65,7 @@ export class DvCardExampleLayoutDS extends LayoutDataSource {
     }, 3000);
 
     setTimeout(() => {
-      this.cardLoader.setState('section-01', CardState.Loading);
+      this.cardLoader.setState('section-02', CardState.Loading);
       this.cardLoader.setState('item-4', CardState.Loading);
       // this.cardLoader.setSomeStates(['item-4', 'text-3', 'section-04'], CardState.Empty);
     }, 4000);
