@@ -9,10 +9,11 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
-### Added
-
 Muruca
 - Added advanced search dynamic options
+-   Add "Readmore" option for resource metadata section groups
+-   Add advanced search dynamic options
+
 Arianna 
 - New tree version: extended-tree
 
