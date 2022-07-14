@@ -13,6 +13,7 @@ Muruca
 - Added advanced search dynamic options
 -   Add "Readmore" option for resource metadata section groups
 -   Add advanced search dynamic options
+- Home "Miseria": better style for homepage with few contents and viewed on large screens.
 
 Arianna 
 - New tree version: extended-tree
