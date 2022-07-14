@@ -64,7 +64,7 @@ export class MrMenuService {
       headerConfig.nav.items = response.map(({
         label, slug, isStatic, subpages, classes
       }) => {
-        const href = slug ? `/${slug}` : null;
+        const href = this.getHref(slug);
         // dynamic path control
         if (!isStatic) {
           this.dynamicPaths.push(href);
@@ -85,7 +85,7 @@ export class MrMenuService {
         if (subpages !== undefined) {
           item.subnav = [];
           subpages.forEach((el) => {
-            const subHref = el.slug ? `/${el.slug}` : null;
+            const subHref = this.getHref(el.slug);
             if (!el.isStatic) {
               this.dynamicPaths.push(subHref);
             }
@@ -115,4 +115,12 @@ export class MrMenuService {
   }
 
   public isDynamicPath = (path: string) => this.dynamicPaths.includes(path);
+
+  private getHref(link: string) {
+    let href = link || null;
+    if (href && !linksHelper.isExternalLink(href)) {
+      href = `/${href}`;
+    }
+    return href;
+  }
 }
