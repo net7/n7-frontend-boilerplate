@@ -39,6 +39,7 @@ export class MrMetadataDS extends DataSource {
               result.group.push({
                 group: [{
                   title: _t(itemLabel),
+                  classes: `mrc-${itemLabel}`,
                   ...this.getItemGroup(value)
                 }]
               });
@@ -47,6 +48,7 @@ export class MrMetadataDS extends DataSource {
                 group: [{
                   // use default values if not specified
                   readmore: merge({ ...defaults }, readmore),
+                  classes: `mrc-${itemLabel}`,
                   items: value ? [{
                     label: _t(itemLabel),
                     value: this.getItemValue(value)

@@ -15,9 +15,11 @@ Arianna
 ## [v3.5.0] - 2022-06-14
 
 Muruca
-- Added advanced search dynamic options
+-   Added advanced search dynamic options
 -   Add "Readmore" option for resource metadata section groups
 -   Add advanced search dynamic options
+-   Fix menu external links
+-   Add metadata group classes
 
 Arianna 
 - New tree version: extended-tree
