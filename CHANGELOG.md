@@ -13,6 +13,7 @@ Muruca
 -   Added advanced search dynamic options
 -   Add "Readmore" option for resource metadata section groups
 -   Add advanced search dynamic options
+-   Fix menu external links
 -   Add metadata group classes
 
 Arianna 
