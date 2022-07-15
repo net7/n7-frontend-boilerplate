@@ -14,6 +14,7 @@ Muruca
 -   Add "Readmore" option for resource metadata section groups
 -   Add advanced search dynamic options
 -   Fix menu external links
+-   Add metadata group classes
 
 Arianna 
 - New tree version: extended-tree
