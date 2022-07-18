@@ -10,10 +10,12 @@ For each commit add a description under the Unreleased section under the corresp
 ## [Unreleased]
 
 Muruca
-- Added advanced search dynamic options
+-   Added advanced search dynamic options
 -   Add "Readmore" option for resource metadata section groups
 -   Add advanced search dynamic options
-- Home "Miseria": better style for homepage with few contents and viewed on large screens.
+-   Home "Miseria": better style for homepage with few contents and viewed on large screens.
+-   Fix menu external links
+-   Add metadata group classes
 
 Arianna 
 - New tree version: extended-tree
