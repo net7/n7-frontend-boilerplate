@@ -16,6 +16,8 @@ Muruca
 -   Home "Miseria": better style for homepage with few contents and viewed on large screens.
 -   Fix menu external links
 -   Add metadata group classes
+- Improved style for static page (contents of wp-block-media-text)
+
 
 Arianna 
 - New tree version: extended-tree

@@ -8,15 +8,28 @@
    #WP-CONTENT
 \* ------------------------------------ */
 .mr-wp-content {
-    /* Paragraph */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ------------------------------------ *\
+   #PARAGRAPH
+\* ------------------------------------ */
+.mr-wp-content {
     p {
+        width: 100%;
         max-width: $page-readable-width;
-        margin: 0 auto $space * 3;
+        margin: 0 0 $space * 3 0;
         font-family: $font-family-text;
         font-size: $font-size-l-xl;
     }
+}
 
-    /* Headings */
+/* ------------------------------------ *\
+   HEADING
+\* ------------------------------------ */
+.mr-wp-content {
     h2,
     h2,
     h3 {
@@ -24,8 +37,12 @@
         margin: $space * 3 auto $space * 6;
         font-family: $font-family-headings;
     }
+}
 
-    /* List */
+/* ------------------------------------ *\
+   LIST
+\* ------------------------------------ */
+.mr-wp-content {
     ul,
     ol {
         max-width: $page-readable-width;
@@ -33,8 +50,12 @@
         font-family: $font-family-text;
         font-size: $font-size-l-xl;
     }
+}
 
-    /* Quote */
+/* ------------------------------------ *\
+   QUOTE
+\* ------------------------------------ */
+.mr-wp-content {
     blockquote {
         position: relative;
         padding: $space * 4;
@@ -94,11 +115,14 @@
             color: $color-text-light;
         }
     }
+}
 
-    /* Images */
+/* ------------------------------------ *\
+   IMAGE
+\* ------------------------------------ */
+.mr-wp-content {
     .wp-block-image {
         max-width: $page-max-width;
-        // margin: $space * 3 auto $space * 6;
         margin: 0 auto $space * 3;
 
         img {
@@ -148,24 +172,98 @@
             }
         }
     }
+}
 
-    /* Block with media (image) and text on the side */
+/* ------------------------------------ *\
+   MEDIA AND IMAGE
+\* ------------------------------------ */
+.mr-wp-content {
     .wp-block-media-text {
-        display: flex;
+        display: grid;
+        grid-template-columns: fit-content(33%) 1fr !important;
+        gap: $space * 5;
         max-width: $page-readable-width;
         margin: 0 auto $space * 3;
-    }
 
-    .wp-block-media-text__media {
-        margin: 0 $space * 2 0 0;
+        // Image on the right.
+        &.has-media-on-the-right {
+            grid-template-columns: 1fr fit-content(33%) !important;
+        }
 
+        &.has-media-on-the-right .wp-block-media-text__media {
+            /*!rtl:begin:ignore*/
+            grid-column: 2;
+            grid-row: 1;
+            /*!rtl:end:ignore*/
+        }
+
+        &.has-media-on-the-right .wp-block-media-text__content {
+            /*!rtl:begin:ignore*/
+            grid-column: 1;
+            grid-row: 1;
+            /*!rtl:end:ignore*/
+        }
+
+        // Wide.
+        &.alignwide {
+            max-width: $page-readable-width-wide;
+            grid-template-columns: fit-content(50%) 1fr !important;
+        }
+
+        // Image on the right, wide.
+        &.has-media-on-the-right.alignwide {
+            grid-template-columns: 1fr fit-content(50%) !important;
+        }
+
+        // Style of the image.
         [class^="wp-image"] {
-            max-width: 160px;
+            max-width: 100% !important;
+            max-height: 80vh !important;
             height: auto;
+            width: auto !important;
+            vertical-align: middle;
+        }
+
+        .wp-block-media-text__media {
+            margin: 0;
+        }
+
+        .wp-block-media-text__content {
+            padding: 0;
+            p {
+                max-width: none;
+                margin: 0 auto;
+            }
+        }
+
+        // Vertical alignment.
+        &.is-vertically-aligned-top {
+            .wp-block-media-text__content,
+            .wp-block-media-text__media {
+                align-self: start;
+            }
+        }
+        &,
+        &.is-vertically-aligned-center {
+            .wp-block-media-text__content,
+            .wp-block-media-text__media {
+                align-self: center;
+            }
+        }
+
+        &.is-vertically-aligned-bottom {
+            .wp-block-media-text__content,
+            .wp-block-media-text__media {
+                align-self: end;
+            }
         }
     }
+}
 
-    /* Gallery */
+/* ------------------------------------ *\
+   GALLERY
+\* ------------------------------------ */
+.mr-wp-content {
     .wp-block-gallery {
         display: flex;
         @include consistent;
@@ -298,8 +396,12 @@
             }
         }
     }
+}
 
-    /* Table */
+/* ------------------------------------ *\
+   TABLE
+\* ------------------------------------ */
+.mr-wp-content {
     .wp-block-table {
         margin: $space * 3 auto $space * 6 auto;
         max-width: $page-readable-width;
@@ -322,8 +424,12 @@
             max-width: $page-max-width;
         }
     }
+}
 
-    /* Caption */
+/* ------------------------------------ *\
+   CAPTION
+\* ------------------------------------ */
+.mr-wp-content {
     figcaption {
         margin-top: $space;
         color: $color-text-light;
@@ -331,8 +437,12 @@
         font-family: $font-family-main;
         text-align: center;
     }
+}
 
-    /* Video */
+/* ------------------------------------ *\
+   VIDEO
+\* ------------------------------------ */
+.mr-wp-content {
     .wp-block-video {
         width: $page-readable-width;
         margin: 0 auto $space * 3;
@@ -341,8 +451,12 @@
             width: $page-readable-width;
         }
     }
+}
 
-    /* HR */
+/* ------------------------------------ *\
+   HR
+\* ------------------------------------ */
+.mr-wp-content {
     .wp-block-separator {
         max-width: $page-readable-width;
         margin: 0 auto $space * 3;
@@ -359,6 +473,34 @@
 }
 
 @media all and (max-width: $breakpoint-ipad-portrait) {
+    .mr-wp-content {
+        .wp-block-media-text {
+            display: block;
+
+            // Image on the right.
+            &.has-media-on-the-right {
+                grid-template-columns: 1fr fit-content(50%) !important;
+            }
+
+            // Style of the image.
+            [class^="wp-image"] {
+                width: 100% !important;
+                height: auto !important;
+            }
+
+            .wp-block-media-text__media {
+                margin-bottom: $space * 2;
+            }
+
+            .wp-block-media-text__content {
+                padding: 0;
+                p {
+                    max-width: none;
+                    margin: 0 auto;
+                }
+            }
+        }
+    }
 }
 
 @media all and (max-width: $footer-breakpoint-mobile) {
