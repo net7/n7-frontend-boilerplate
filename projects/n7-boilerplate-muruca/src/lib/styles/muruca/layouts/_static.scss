@@ -9,7 +9,7 @@
    #STATIC
 \* ------------------------------------ */
 .mr-static {
-    padding-bottom: $space * 8;
+    padding: 0 $space * 3 $space * 8 $space * 3;
 
     &__top {
         max-width: $page-readable-width;
@@ -76,104 +76,110 @@
     }
 }
 
+/* ------------------------------------ *\
+   #WORDPRESS CONTENT
+\* ------------------------------------ */
+// ! For styles of WordPress elements refer to this file: projects/n7-boilerplate-muruca/src/lib/styles/muruca/components/_wp-content.scss
+// ! The code below is left for reference
+
 .wp-block-media-text {
     // This block's direction should not be manipulated by rtl, as the mediaPosition control does.
     /*!rtl:begin:ignore*/
-    direction: ltr;
+    // direction: ltr;
     /*!rtl:end:ignore*/
-    display: grid;
-    margin: 0 auto;
-    width: 50%;
-    grid-template-columns: 50% 1fr;
-    grid-template-rows: auto;
+    // display: grid;
+    // margin: 0 auto;
+    // width: 50%;
+    // grid-template-columns: 50% 1fr;
+    // grid-template-rows: auto;
 
     &.has-media-on-the-right {
-        grid-template-columns: 1fr 50%;
+        // grid-template-columns: 1fr 50%;
     }
 }
 
 .wp-block-media-text.is-vertically-aligned-top {
     .wp-block-media-text__content,
     .wp-block-media-text__media {
-        align-self: start;
+        // align-self: start;
     }
 }
 .wp-block-media-text,
 .wp-block-media-text.is-vertically-aligned-center {
     .wp-block-media-text__content,
     .wp-block-media-text__media {
-        align-self: center;
+        // align-self: center;
     }
 }
 
 .wp-block-media-text.is-vertically-aligned-bottom {
     .wp-block-media-text__content,
     .wp-block-media-text__media {
-        align-self: end;
+        // align-self: end;
     }
 }
 
 .wp-block-media-text .wp-block-media-text__media {
     /*!rtl:begin:ignore*/
-    grid-column: 1;
-    grid-row: 1;
+    // grid-column: 1;
+    // grid-row: 1;
     /*!rtl:end:ignore*/
-    margin: 0;
+    // margin: 0;
 }
 
 .wp-block-media-text .wp-block-media-text__content {
-    direction: ltr;
+    // direction: ltr;
     /*!rtl:begin:ignore*/
-    grid-column: 2;
-    grid-row: 1;
+    // grid-column: 2;
+    // grid-row: 1;
     /*!rtl:end:ignore*/
-    padding: 0 8% 0 8%;
-    word-break: break-word;
+    // padding: 0 8% 0 8%;
+    // word-break: break-word;
 }
 
 .wp-block-media-text.has-media-on-the-right .wp-block-media-text__media {
     /*!rtl:begin:ignore*/
-    grid-column: 2;
-    grid-row: 1;
+    // grid-column: 2;
+    // grid-row: 1;
     /*!rtl:end:ignore*/
 }
 
 .wp-block-media-text.has-media-on-the-right .wp-block-media-text__content {
     /*!rtl:begin:ignore*/
-    grid-column: 1;
-    grid-row: 1;
+    // grid-column: 1;
+    // grid-row: 1;
     /*!rtl:end:ignore*/
 }
 
 .wp-block-media-text__media img,
 .wp-block-media-text__media video {
-    height: auto;
-    max-width: unset;
-    width: 100%;
-    vertical-align: middle;
+    // height: auto;
+    // max-width: unset;
+    // width: 100%;
+    // vertical-align: middle;
 }
 
 .wp-block-media-text.is-image-fill .wp-block-media-text__media {
-    height: 100%;
-    min-height: 250px;
-    background-size: cover;
+    // height: 100%;
+    // min-height: 250px;
+    // background-size: cover;
 }
 
 .wp-block-media-text.is-image-fill .wp-block-media-text__media > a {
-    display: block;
-    height: 100%;
+    // display: block;
+    // height: 100%;
 }
 
 .wp-block-media-text.is-image-fill .wp-block-media-text__media img {
     // The image is visually hidden but accessible to assistive technologies.
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    border: 0;
+    // position: absolute;
+    // width: 1px;
+    // height: 1px;
+    // padding: 0;
+    // margin: -1px;
+    // overflow: hidden;
+    // clip: rect(0, 0, 0, 0);
+    // border: 0;
 }
 /*
 * Here we here not able to use a mobile first CSS approach.
