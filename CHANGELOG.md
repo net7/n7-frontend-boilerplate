@@ -29,6 +29,12 @@ Arianna
 -   Fix extended tree pagination submit
 
 
+### Fixed
+
+Muruca
+
+- Fix TextViewer TeiPublisher endpoint
+
 ## [v3.4.2] - 2022-05-30
 
 ### Fixed
