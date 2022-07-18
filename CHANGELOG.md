@@ -15,6 +15,8 @@ Muruca
 -   Add advanced search dynamic options
 -   Fix menu external links
 -   Add metadata group classes
+- Improved style for static page (contents of wp-block-media-text)
+
 
 Arianna 
 - New tree version: extended-tree
