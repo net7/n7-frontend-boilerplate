@@ -10,10 +10,13 @@ For each commit add a description under the Unreleased section under the corresp
 ## [Unreleased]
 
 Muruca
-- Added advanced search dynamic options
-- Add "Readmore" option for resource metadata section groups
-- Add advanced search dynamic options
+-   Added advanced search dynamic options
+-   Add "Readmore" option for resource metadata section groups
+-   Add advanced search dynamic options
+-   Fix menu external links
+-   Add metadata group classes
 - Improved style for static page (contents of wp-block-media-text)
+
 
 Arianna 
 - New tree version: extended-tree
