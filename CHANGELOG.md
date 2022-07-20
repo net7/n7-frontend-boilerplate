@@ -9,6 +9,8 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [3.6.0] - 2022-07-20
+
 Muruca
 
 -   Add "Readmore" option for resource metadata section groups
@@ -175,6 +177,8 @@ A4V
 -   timeline solo anni
 
 [Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.6.0...HEAD
+
+[3.6.0]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.6.0...v3.6.0
 
 [3.6.0]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.6.0...v3.6.0
 
