@@ -24,13 +24,14 @@ import { MrSearchLayoutComponent } from './layouts/search-layout/search-layout';
 import { MrStaticLayoutComponent } from './layouts/static-layout/static-layout';
 import { MrTimelineLayoutComponent } from './layouts/timeline-layout/timeline-layout';
 // COMPONENTS
-import { ReadMoreComponent } from './components/read-more/read-more';
 import { MrAdvancedResultComponent } from './components/advanced-result/advanced-result';
 import { MrFormComponent } from './components/form/form';
 import { MrFormWrapperAccordionComponent } from './components/form-wrapper-accordion/form-wrapper-accordion';
-import { MrSearchPageDescriptionComponent } from './components/search-page-description/search-page-description';
-import { MrResourceModalComponent } from './components/resource-modal/resource-modal';
 import { MrGalleryComponent } from './components/gallery/gallery';
+import { MrMetadataReadmoreComponent } from './components/metadata-with-readmore/metadata-with-readmore';
+import { MrResourceModalComponent } from './components/resource-modal/resource-modal';
+import { MrSearchPageDescriptionComponent } from './components/search-page-description/search-page-description';
+import { ReadMoreComponent } from './components/read-more/read-more';
 
 const COMPONENTS = [
   // Layout components
@@ -39,6 +40,7 @@ const COMPONENTS = [
   MrHomeLayoutComponent,
   MrItineraryLayoutComponent,
   MrMapLayoutComponent,
+  MrMetadataReadmoreComponent,
   MrPostsLayoutComponent,
   MrResourceLayoutComponent,
   MrSearchFacetsLayoutComponent,

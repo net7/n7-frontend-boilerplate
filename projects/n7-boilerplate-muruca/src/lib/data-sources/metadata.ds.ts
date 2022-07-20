@@ -1,22 +1,31 @@
 import { DataSource, _t } from '@net7/core';
-import { isObject } from 'lodash';
+import { isObject, merge } from 'lodash';
 
 export class MrMetadataDS extends DataSource {
   /** Test if a string is a valid URL */
-  isUrl = /^(?:http(s)?:\/\/)[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/
+  isUrl = /^(?:http(s)?:\/\/)[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/;
 
   /** Turn a string into an anchor element */
-  toUrl = (string: string) => `<a href="${string}" target="_blank">${string}<a>`
+  toUrl = (string: string) => `<a href="${string}" target="_blank">${string}<a>`;
 
   protected transform(data: any): any {
     if (!data) return null;
 
-    const { hideLabels } = this.options;
+    const { hideLabels, readmore } = this.options;
     const { group } = data;
 
     if (!(group || []).length) {
       return null;
     }
+
+    // default fallback settings
+    const defaults = {
+      height: 300,
+      labels: {
+        more: _t('global#readmore'),
+        less: _t('global#readless')
+      }
+    };
 
     const result = { group: [] };
     group
@@ -30,12 +39,16 @@ export class MrMetadataDS extends DataSource {
               result.group.push({
                 group: [{
                   title: _t(itemLabel),
+                  classes: `mrc-${itemLabel}`,
                   ...this.getItemGroup(value)
                 }]
               });
             } else {
               result.group.push({
                 group: [{
+                  // use default values if not specified
+                  readmore: merge({ ...defaults }, readmore),
+                  classes: `mrc-${itemLabel}`,
                   items: value ? [{
                     label: _t(itemLabel),
                     value: this.getItemValue(value)

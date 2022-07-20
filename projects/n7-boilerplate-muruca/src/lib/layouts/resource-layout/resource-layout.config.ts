@@ -6,7 +6,8 @@ import * as EH from '../../event-handlers';
 export const MrResourceLayoutConfig = {
   layoutId: 'mr-resource-layout',
   widgets: [
-    { id: 'mr-read-more' }
+    { id: 'mr-read-more' },
+    { id: 'mr-metadata-readmore' }
   ],
   layoutDS: MrResourceLayoutDS,
   layoutEH: MrResourceLayoutEH,

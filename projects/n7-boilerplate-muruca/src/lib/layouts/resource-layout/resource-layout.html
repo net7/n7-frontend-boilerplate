@@ -83,9 +83,18 @@
                         </h3>
                         <div class="mr-content-block__content">
                             <mr-read-more [data]="section.readmore">
-                                <n7-metadata-viewer [data]="lb.widgets[section.id].ds.out$ | async"
-                                    [emit]="lb.widgets[section.id].emit">
-                                </n7-metadata-viewer>
+                                <ng-container *ngIf="section?.options?.readmore; else wihoutReadmore">
+                                    <mr-metadata-readmore
+                                        [data]="lb.widgets['metadata'].ds.out$ | async"
+                                        [emit]="lb.widgets['metadata'].emit">
+                                    </mr-metadata-readmore>
+                                </ng-container>
+                                <ng-template #wihoutReadmore>
+                                    <n7-metadata-viewer
+                                        [data]="lb.widgets['metadata'].ds.out$ | async"
+                                        [emit]="lb.widgets['metadata'].emit">
+                                    </n7-metadata-viewer>
+                                </ng-template>
                             </mr-read-more>
                         </div>
                     </div>

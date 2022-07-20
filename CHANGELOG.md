@@ -14,13 +14,25 @@ Arianna
 
 ## [v3.5.0] - 2022-06-14
 
-### Added
-
 Muruca
-- Added advanced search dynamic options
+-   Added advanced search dynamic options
+-   Add "Readmore" option for resource metadata section groups
+-   Add advanced search dynamic options
+-   Home "Miseria": better style for homepage with few contents and viewed on large screens.
+-   Fix menu external links
+-   Add metadata group classes
+- Improved style for static page (contents of wp-block-media-text)
+
+
 Arianna 
 - New tree version: extended-tree
 
+
+### Fixed
+
+Muruca
+
+- Fix TextViewer TeiPublisher endpoint
 
 ## [v3.4.2] - 2022-05-30
 
