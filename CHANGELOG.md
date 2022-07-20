@@ -6,6 +6,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 For each commit add a description under the Unreleased section under the correspondig section and library (Muruca, Arianna, Dataviz)
+
+## [Unreleased]
+
+Muruca
+-   Add "Readmore" option for resource metadata section groups
+-   Add advanced search dynamic options
+-   Home "Miseria": better style for homepage with few contents and viewed on large screens.
+-   Fix menu external links
+-   Add metadata group classes
+-   Improved style for static page (contents of wp-block-media-text)
+
+### Fixed
+
+Muruca
+-   Fix TextViewer TeiPublisher endpoint
+
 ## [v3.5.1] - 2022-06-24
 Arianna
 
@@ -14,25 +30,13 @@ Arianna
 
 ## [v3.5.0] - 2022-06-14
 
+### Added
+
 Muruca
--   Added advanced search dynamic options
--   Add "Readmore" option for resource metadata section groups
--   Add advanced search dynamic options
--   Home "Miseria": better style for homepage with few contents and viewed on large screens.
--   Fix menu external links
--   Add metadata group classes
-- Improved style for static page (contents of wp-block-media-text)
-
-
+- Added advanced search dynamic options
 Arianna 
 - New tree version: extended-tree
 
-
-### Fixed
-
-Muruca
-
-- Fix TextViewer TeiPublisher endpoint
 
 ## [v3.4.2] - 2022-05-30
 
