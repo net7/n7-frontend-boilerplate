@@ -48,17 +48,22 @@ jobs:
           git commit -m "Update changelog to ${{ github.event.inputs.version }}"
           git push
 
-  publish-boilerplate:
-    name: Update package on NPM.js
+  push-to-npm:
     runs-on: ubuntu-latest
     needs: bump-version
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
           node-version: 14
           registry-url: https://registry.npmjs.org/
-      - run: npm publish dist/n7-boilerplate-common --access public
+      - run: |
+          npm install
+          npm run build
+          npm publish dist/n7-boilerplate-common --access public
+          npm publish dist/n7-boilerplate-muruca --access public
+          npm publish dist/n7-boilerplate-arianna --access public
+          npm publish dist/n7-boilerplate-dataviz --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
