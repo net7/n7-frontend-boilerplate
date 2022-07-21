@@ -5,7 +5,7 @@ import { Component, Input } from '@angular/core';
   templateUrl: './grid.html',
 })
 
-export class SmartPaginationComponent {
+export class GridComponent {
   /**
    * Sets the grid-template-column css attribute
    * defines the width of each column.
