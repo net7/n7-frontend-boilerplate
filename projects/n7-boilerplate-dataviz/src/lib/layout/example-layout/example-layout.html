@@ -48,32 +48,77 @@
     <div class="n7-grid__item">
       <grid templateColumns="1fr 1fr 1fr 1fr" classes="custom-grid">
         <div class="n7-grid__item">
-          <img src="http://placekitten.com/300/200" />
+          <img src="http://placekitten.com/200/200" />
         </div>
         <div class="n7-grid__item">
-          <img src="http://placekitten.com/300/201" />
+          <img src="http://placekitten.com/200/201" />
         </div>
         <div class="n7-grid__item">
-          <img src="http://placekitten.com/300/199" />
+          <img src="http://placekitten.com/200/199" />
         </div>
         <div class="n7-grid__item">
-          <img src="http://placekitten.com/300/198" />
+          <img src="http://placekitten.com/200/198" />
         </div>
         <div class="n7-grid__item">
-          <img src="http://placekitten.com/300/197" />
+          <img src="http://placekitten.com/200/197" />
         </div>
         <div class="n7-grid__item">
-          <img src="http://placekitten.com/300/195" />
+          <img src="http://placekitten.com/200/195" />
         </div>
         <div class="n7-grid__item">
-          <img src="http://placekitten.com/300/203" />
+          <img src="http://placekitten.com/200/203" />
         </div>
         <div class="n7-grid__item">
-          <img src="http://placekitten.com/300/204" />
+          <img src="http://placekitten.com/200/204" />
         </div>
       </grid>
     </div>
   </grid>
+
+  <h2>Container component</h2>
+  <p>Full width container</p>
+  <container classes="big-container-class">Container content</container>
+  <container classes="big-container-class" fluid="true"
+    >Container fluid content</container
+  >
+
+  <h2>Combined components</h2>
+  <p>Container with grids inside</p>
+  <container classes="big-container-class">
+    <grid templateColumns="33% 1fr" classes="custom-grid">
+      <div class="n7-grid__item">
+        <img src="http://placekitten.com/300/500" />
+      </div>
+      <div class="n7-grid__item">
+        <grid templateColumns="1fr 1fr 1fr 1fr" classes="custom-grid">
+          <div class="n7-grid__item">
+            <img src="http://placekitten.com/200/200" />
+          </div>
+          <div class="n7-grid__item">
+            <img src="http://placekitten.com/200/201" />
+          </div>
+          <div class="n7-grid__item">
+            <img src="http://placekitten.com/200/199" />
+          </div>
+          <div class="n7-grid__item">
+            <img src="http://placekitten.com/200/198" />
+          </div>
+          <div class="n7-grid__item">
+            <img src="http://placekitten.com/200/197" />
+          </div>
+          <div class="n7-grid__item">
+            <img src="http://placekitten.com/200/195" />
+          </div>
+          <div class="n7-grid__item">
+            <img src="http://placekitten.com/200/203" />
+          </div>
+          <div class="n7-grid__item">
+            <img src="http://placekitten.com/200/204" />
+          </div>
+        </grid>
+      </div>
+    </grid>
+  </container>
 
   <!-- Data widget wrapper with not-fixed height, two rows -->
   <!-- <dv-data-widget-wrapper>
