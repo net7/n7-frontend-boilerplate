@@ -15,7 +15,7 @@ export class GridComponent {
   @Input() templateColumns: string;
 
   /**
-   * Sets the amount of columns to render.
+   * Additional classes for the root element.
    */
-  @Input() columns: number;
+  @Input() classes: string;
 }

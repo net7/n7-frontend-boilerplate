@@ -1,3 +1,6 @@
-<div class="n7-grid">
-  <ng-content>
+<div
+  class="n7-grid {{classes || ''}}"
+  [ngStyle]="{'grid-template-columns': templateColumns}"
+>
+  <ng-content></ng-content>
 </div>
