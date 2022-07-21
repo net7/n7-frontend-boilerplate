@@ -9,6 +9,8 @@
 \* ------------------------------------ */
 .n7-grid {
     display: grid;
+    grid-column-gap: $grid-gutter-h;
+    grid-row-gap: $grid-gutter-v;
 }
 
 /* ------------------------------------ *\
