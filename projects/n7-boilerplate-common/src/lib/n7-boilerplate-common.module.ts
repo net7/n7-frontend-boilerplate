@@ -18,12 +18,16 @@ import { SmartPaginationComponent } from './components/smart-pagination/smart-pa
 
 // directives
 import { ClickOutsideDirective } from './directives/click-outside.directive';
+import { GridComponent } from './components/grid/grid';
+import { SideScrollerComponent } from './components/side-scroller/side-scroller';
 
 const DECLARATIONS = [
   MainLayoutComponent,
   Page404LayoutComponent,
   SmartPaginationComponent,
   ClickOutsideDirective,
+  GridComponent,
+  SideScrollerComponent,
 ];
 
 @NgModule({
