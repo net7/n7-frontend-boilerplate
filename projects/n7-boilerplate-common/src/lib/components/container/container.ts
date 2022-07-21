@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'container',
@@ -10,10 +10,10 @@ export class ContainerComponent {
    * When true, enables responsiveness
    * and fills the available space
    */
-  fluid: boolean;
+  @Input() fluid: boolean;
 
   /**
    * Additional classes for the container element
    */
-  classes: string;
+  @Input() classes: string;
 }
