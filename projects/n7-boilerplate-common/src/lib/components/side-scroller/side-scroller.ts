@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'side-scroller',
@@ -6,6 +6,8 @@ import { Component } from '@angular/core';
 })
 
 export class SideScrollerComponent {
-  // @Input() data: any;
-  // @Input() columns: number;
+  /**
+   * Additional classes for the root element.
+   */
+   @Input() classes: string;
 }
