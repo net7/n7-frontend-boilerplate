@@ -9,6 +9,8 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+-   Add card-component state management
+
 ## [3.6.0] - 2022-07-22
 
 ## [3.6.0-rc.2] - 2022-07-22
