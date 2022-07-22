@@ -23,19 +23,21 @@ jobs:
           git merge origin/develop --ff-only
           git push
 
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 14
-
       - name: Initialize mandatory git config
         run: |
           git config user.name "github-actions[bot]"
           git config user.email noreply@github.com
 
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
+          registry-url: https://registry.npmjs.org/
+          
       - name: npm version
         run: |
           npm install
           npm version ${{ github.event.inputs.version }}
+          git push origin ${{ github.event.inputs.version }}
 
       - name: Update changelog
         uses: thomaseizinger/keep-a-changelog-new-release@1.3.0
@@ -48,17 +50,14 @@ jobs:
           git commit -m "Update changelog to ${{ github.event.inputs.version }}"
           git push
 
-  publish-boilerplate:
-    name: Update package on NPM.js
-    runs-on: ubuntu-latest
-    needs: bump-version
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 14
-          registry-url: https://registry.npmjs.org/
-      - run: npm publish dist/n7-boilerplate-common --access public
+      - name: Push to npm
+        run: |
+          npm install
+          npm run build
+          npm publish dist/n7-boilerplate-common --access public
+          npm publish dist/n7-boilerplate-muruca --access public
+          npm publish dist/n7-boilerplate-arianna --access public
+          npm publish dist/n7-boilerplate-dataviz --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
@@ -66,7 +65,7 @@ jobs:
   sync-develop:
     name: Sync the new version to develop
     runs-on: ubuntu-latest
-    needs: publish-boilerplate
+    needs: bump-version
     steps:
       - uses: actions/checkout@v3
         with:
