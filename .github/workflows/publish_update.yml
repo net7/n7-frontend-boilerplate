@@ -23,15 +23,16 @@ jobs:
           git merge origin/develop --ff-only
           git push
 
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 14
-
       - name: Initialize mandatory git config
         run: |
           git config user.name "github-actions[bot]"
           git config user.email noreply@github.com
 
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
+          registry-url: https://registry.npmjs.org/
+          
       - name: npm version
         run: |
           npm install
@@ -47,12 +48,7 @@ jobs:
         run: |
           git add .
           git commit -m "Update changelog to ${{ github.event.inputs.version }}"
-          git push          
-
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 14
-          registry-url: https://registry.npmjs.org/
+          git push
 
       - name: Push to npm
         run: |

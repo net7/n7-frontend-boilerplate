@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Workflow
+
+-   Cleanup node setup
+
 ## [3.6.0-rc.1] - 2022-07-22
 
 Muruca
