@@ -6,6 +6,7 @@ import {
   TableData
 } from '@net7/components';
 import { CardTextItemData } from '../components/card-text-item/card-text-item';
+import { CardStateComponents } from './card.types';
 import { ChartResponseData } from './response.types';
 
 export interface CardSectionItem {
@@ -13,6 +14,7 @@ export interface CardSectionItem {
   type: string;
   options?: object;
   classes?: string;
+  stateComponents?: CardStateComponents;
 }
 
 export interface TextItem extends CardSectionItem {

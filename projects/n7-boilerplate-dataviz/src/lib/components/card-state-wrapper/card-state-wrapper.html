@@ -1,0 +1,18 @@
+<ng-container *ngIf="(state$ | async) as state">
+    <ng-container [ngSwitch]="state">
+        <ng-container *ngSwitchCase="'idle'">
+            <ng-container #idle></ng-container>
+        </ng-container>
+        <ng-container *ngSwitchCase="'loading'">
+            <ng-container #loading></ng-container>
+        </ng-container>
+        <ng-container *ngSwitchCase="'empty'">
+            <ng-container #empty></ng-container>
+        </ng-container>
+        <ng-container *ngSwitchCase="'success'">
+            <!-- card content -->
+            <ng-content></ng-content>
+            <!-- ------------ -->
+        </ng-container>
+    </ng-container>
+</ng-container>

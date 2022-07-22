@@ -1,4 +1,8 @@
-import { CardData, CardDataWithWidgets } from '../types/card.types';
+import { BehaviorSubject, forkJoin } from 'rxjs';
+import { filter, first } from 'rxjs/operators';
+import {
+  CardData, CardDataWithWidgets, CardState
+} from '../types/card.types';
 import {
   TextItemDS,
   DataWidgetItemDS,
@@ -36,6 +40,14 @@ export class CardLoader {
     this.addLayoutWidgets();
   }
 
+  /**
+   * Holds the state of all the internal widgets and sections
+   * of the cards.
+   */
+  private state$: {
+    [id: string]: BehaviorSubject<CardState>
+  } = {};
+
   public getCards(): CardDataWithWidgets[] {
     const { cards } = this.config;
     const cardsWithWidgets = [] as CardDataWithWidgets[];
@@ -43,23 +55,44 @@ export class CardLoader {
     if (cards && !this.itemsInitialized) {
       const { widgets } = this.layout.lb;
       this.itemsInitialized = true;
-      cards.forEach(({ header, content, footer }, index) => {
+      cards.forEach(({
+        id, header, content, footer
+      }, index) => {
         const cardWidgets = {};
         const cardSections = content.sections
           .concat(header?.sections || [])
           .concat(footer?.sections || []);
+        const state$ = {
+          [id]: new BehaviorSubject(CardState.Idle),
+          [`${id}.content`]: new BehaviorSubject(CardState.Idle),
+          [`${id}.header`]: new BehaviorSubject(CardState.Idle),
+          [`${id}.footer`]: new BehaviorSubject(CardState.Idle),
+        };
+        const cardStateComponents = {};
 
-        cardSections.forEach(({ items }) => {
-          items.forEach(({ id, type: itemType, initialData }) => {
-            const { ds } = widgets[id];
-            const { eh } = widgets[id];
-            ds.id = id;
+        cardSections.forEach(({ id: sectionID, items }) => {
+          state$[sectionID] = new BehaviorSubject(CardState.Idle);
+          items.forEach(({
+            id: widgetID, type: itemType, initialData, stateComponents
+          }) => {
+            const { ds } = widgets[widgetID];
+            const { eh } = widgets[widgetID];
+            ds.id = widgetID;
             ds.type = itemType;
             const emit = (type: string, payload?: any) => eh.emitInner(type, payload);
-            cardWidgets[id] = { ds, emit };
+            // setup card status stream
+            // widgets[id].ds.status$ = new BehaviorSubject<Status>(CardState.Idle);
+            state$[widgetID] = new BehaviorSubject(CardState.Idle);
+            cardStateComponents[widgetID] = stateComponents;
+            cardWidgets[widgetID] = { ds, emit };
             // with initialData
             if (initialData) {
-              ds.update(initialData);
+              state$[widgetID].pipe(
+                filter((stateID) => stateID === CardState.Success),
+                first()
+              ).subscribe({
+                next: () => ds.update(initialData)
+              });
             }
           });
         });
@@ -67,12 +100,40 @@ export class CardLoader {
         // add widgets to card
         cardsWithWidgets[index] = {
           ...cards[index],
-          widgets: cardWidgets
+          widgets: cardWidgets,
+          state$,
+          stateComponents: cardStateComponents,
+        };
+        // merge the new states with the existing ones
+        this.state$ = {
+          ...this.state$,
+          ...state$,
         };
       });
     }
-
     return cardsWithWidgets;
+  }
+
+  private updateState(ids: string[], newState: CardState) {
+    const updates = forkJoin(ids.map((id) => this.state$[id]));
+    ids.forEach((id) => {
+      if (this.state$[id]) {
+        this.state$[id].next(newState);
+      }
+    });
+    return updates;
+  }
+
+  public setState(id: string, newState: CardState) {
+    return this.updateState([id], newState);
+  }
+
+  public setAllStates(newState: CardState) {
+    return this.updateState(Object.keys(this.state$), newState);
+  }
+
+  public setSomeStates(ids: string[], newState: CardState) {
+    return this.updateState(ids, newState);
   }
 
   private addLayoutWidgets() {
