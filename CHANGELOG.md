@@ -9,6 +9,12 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+### Fixed
+
+Muruca
+
+-   Fix metadata group resource layout
+
 ## [3.6.1] - 2022-07-22
 
 -   Add card-component state management
