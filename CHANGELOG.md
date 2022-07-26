@@ -9,6 +9,8 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [3.6.2] - 2022-07-26
+
 ### Fixed
 
 Muruca
@@ -194,7 +196,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.6.1...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.6.2...HEAD
+
+[3.6.2]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.6.1...v3.6.2
 
 [3.6.1]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.6.0...v3.6.1
 
