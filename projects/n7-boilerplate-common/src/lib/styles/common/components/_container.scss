@@ -1,0 +1,38 @@
+/**
+ * CONTAINER
+ *
+ * Style for Container structural component.
+ */
+
+// ! These variables should be moved, but where?
+$container-top-margin: $space * 4;
+$container-bottom-margin: $space * 4;
+$container-mobile-side-margin: $space * 2;
+
+/* ------------------------------------ *\
+    #CONTAINER
+\* ------------------------------------ */
+.n7-container {
+    max-width: $page-max-width;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: $container-top-margin;
+    margin-bottom: $container-bottom-margin;
+}
+
+/* ------------------------------------ *\
+    #FLUID (FULL WIDTH) VERSION
+\* ------------------------------------ */
+.n7-container.is-fluid {
+    max-width: none;
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: calc(#{$page-max-width} + #{$container-mobile-side-margin}*4)) {
+    .n7-container:not(.is-fluid) {
+        margin-left: $container-mobile-side-margin;
+        margin-right: $container-mobile-side-margin;
+    }
+}

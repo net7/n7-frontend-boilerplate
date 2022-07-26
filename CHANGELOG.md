@@ -9,6 +9,12 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+### Added
+
+Common
+
+-   Structural components
+
 ## [3.6.2] - 2022-07-26
 
 ### Fixed

@@ -1,7 +1,155 @@
 <div class="dv-example-layout" id="example-layout">
+  <h2>Grid component</h2>
+  <p>Four columns equal width</p>
+  <grid templateColumns="1fr 1fr 1fr 1fr" classes="custom-grid">
+    <div class="n7-grid__item">
+      <img src="http://placekitten.com/300/200" />
+    </div>
+    <div class="n7-grid__item">
+      <img src="http://placekitten.com/300/201" />
+    </div>
+    <div class="n7-grid__item">
+      <img src="http://placekitten.com/300/199" />
+    </div>
+    <div class="n7-grid__item">
+      <img src="http://placekitten.com/300/198" />
+    </div>
+    <div class="n7-grid__item">
+      <img src="http://placekitten.com/300/197" />
+    </div>
+    <div class="n7-grid__item">
+      <img src="http://placekitten.com/300/195" />
+    </div>
+    <div class="n7-grid__item">
+      <img src="http://placekitten.com/300/203" />
+    </div>
+    <div class="n7-grid__item">
+      <img src="http://placekitten.com/300/204" />
+    </div>
+  </grid>
 
-    <!-- Data widget wrapper with not-fixed height, two rows -->
-    <dv-data-widget-wrapper>
+  <br />
+
+  <p>Two columns, first is 33%</p>
+  <grid templateColumns="33% 1fr" classes="custom-grid">
+    <div class="n7-grid__item">
+      <img src="http://placekitten.com/300/600" />
+    </div>
+    <div class="n7-grid__item">
+      <img src="http://placekitten.com/600/600" />
+    </div>
+  </grid>
+
+  <p>Nested grids</p>
+  <grid templateColumns="33% 1fr" classes="custom-grid">
+    <div class="n7-grid__item">
+      <img src="http://placekitten.com/300/500" />
+    </div>
+    <div class="n7-grid__item">
+      <grid templateColumns="1fr 1fr 1fr 1fr" classes="custom-grid">
+        <div class="n7-grid__item">
+          <img src="http://placekitten.com/200/200" />
+        </div>
+        <div class="n7-grid__item">
+          <img src="http://placekitten.com/200/201" />
+        </div>
+        <div class="n7-grid__item">
+          <img src="http://placekitten.com/200/199" />
+        </div>
+        <div class="n7-grid__item">
+          <img src="http://placekitten.com/200/198" />
+        </div>
+        <div class="n7-grid__item">
+          <img src="http://placekitten.com/200/197" />
+        </div>
+        <div class="n7-grid__item">
+          <img src="http://placekitten.com/200/195" />
+        </div>
+        <div class="n7-grid__item">
+          <img src="http://placekitten.com/200/203" />
+        </div>
+        <div class="n7-grid__item">
+          <img src="http://placekitten.com/200/204" />
+        </div>
+      </grid>
+    </div>
+  </grid>
+
+  <h2>Container component</h2>
+  <p>Full width container</p>
+  <container classes="big-container-class">Container content</container>
+  <container classes="big-container-class" fluid="true">
+    Container fluid content
+  </container>
+
+  <h2>Combined components</h2>
+  <p>Container with grids inside</p>
+  <container classes="big-container-class">
+    <grid templateColumns="33% 1fr" classes="custom-grid">
+      <div class="n7-grid__item">
+        <img src="http://placekitten.com/300/500" />
+      </div>
+      <div class="n7-grid__item">
+        <grid templateColumns="1fr 1fr 1fr 1fr" classes="custom-grid">
+          <div class="n7-grid__item">
+            <img src="http://placekitten.com/200/200" />
+          </div>
+          <div class="n7-grid__item">
+            <img src="http://placekitten.com/200/201" />
+          </div>
+          <div class="n7-grid__item">
+            <img src="http://placekitten.com/200/199" />
+          </div>
+          <div class="n7-grid__item">
+            <img src="http://placekitten.com/200/198" />
+          </div>
+          <div class="n7-grid__item">
+            <img src="http://placekitten.com/200/197" />
+          </div>
+          <div class="n7-grid__item">
+            <img src="http://placekitten.com/200/195" />
+          </div>
+          <div class="n7-grid__item">
+            <img src="http://placekitten.com/200/203" />
+          </div>
+          <div class="n7-grid__item">
+            <img src="http://placekitten.com/200/204" />
+          </div>
+        </grid>
+      </div>
+    </grid>
+  </container>
+
+
+  <h2>Side scroller component</h2>
+  
+  <container classes="big-container-class" fluid="true">
+    <side-scroller>
+      <img src="http://placekitten.com/200/204" />
+      <img src="http://placekitten.com/200/204" />
+      <img src="http://placekitten.com/200/204" />
+      <img src="http://placekitten.com/200/204" />
+      <img src="http://placekitten.com/200/204" />
+      <img src="http://placekitten.com/200/204" />
+      <img src="http://placekitten.com/200/204" />
+      <img src="http://placekitten.com/200/204" />
+      <img src="http://placekitten.com/200/204" />
+      <img src="http://placekitten.com/200/204" />
+      <img src="http://placekitten.com/200/204" />
+      <img src="http://placekitten.com/200/204" />
+      <img src="http://placekitten.com/200/204" />
+      <img src="http://placekitten.com/200/204" />
+      <img src="http://placekitten.com/200/204" />
+      <img src="http://placekitten.com/200/204" />
+      <img src="http://placekitten.com/200/204" />
+      <img src="http://placekitten.com/200/204" />
+      <img src="http://placekitten.com/200/204" />
+      <img src="http://placekitten.com/200/204" />
+    </side-scroller>
+  </container>
+
+  <!-- Data widget wrapper with not-fixed height, two rows -->
+  <!-- <dv-data-widget-wrapper>
         <div class="dv-data-widget-wrapper__title">
             <n7-inner-title
                 [data]="lb.widgets['dv-inner-title'].ds.out$ | async">
@@ -19,45 +167,44 @@
                 </n7-chart>
             </div>
         </div>
-    </dv-data-widget-wrapper>
+    </dv-data-widget-wrapper> -->
 
-    <!-- Data widget wrapper with fixed height, two rows -->
-    <dv-data-widget-wrapper [data]="{ classes: 'dv-data-widget-wrapper-fixed-height' }">
-        <div class="dv-data-widget-wrapper__title">
-            <n7-inner-title
-                [data]="lb.widgets['dv-inner-title'].ds.out$ | async">
-            </n7-inner-title>
-        </div>
-        <div class="dv-data-widget-wrapper__content">
-            <div class="dv-data-widget-wrapper__content-row">
-                <n7-data-widget
-                    [data]="lb.widgets['dv-widget'].ds.out$ | async">
-                </n7-data-widget>
-            </div>
-            <div class="dv-data-widget-wrapper__content-row">
-                Row content
-            </div>
-        </div>
-    </dv-data-widget-wrapper>
+  <!-- Data widget wrapper with fixed height, two rows -->
+  <!-- <dv-data-widget-wrapper
+    [data]="{ classes: 'dv-data-widget-wrapper-fixed-height' }"
+  >
+    <div class="dv-data-widget-wrapper__title">
+      <n7-inner-title [data]="lb.widgets['dv-inner-title'].ds.out$ | async">
+      </n7-inner-title>
+    </div>
+    <div class="dv-data-widget-wrapper__content">
+      <div class="dv-data-widget-wrapper__content-row">
+        <n7-data-widget [data]="lb.widgets['dv-widget'].ds.out$ | async">
+        </n7-data-widget>
+      </div>
+      <div class="dv-data-widget-wrapper__content-row">Row content</div>
+    </div>
+  </dv-data-widget-wrapper> -->
 
-    <!-- Data widget wrapper with fixed height, one row -->
-    <dv-data-widget-wrapper [data]="{ classes: 'dv-data-widget-wrapper-fixed-height' }">
-        <div class="dv-data-widget-wrapper__title">
-            <n7-inner-title
-                [data]="lb.widgets['dv-inner-title'].ds.out$ | async">
-            </n7-inner-title>
-        </div>
-        <div class="dv-data-widget-wrapper__content">
-            <div class="dv-data-widget-wrapper__content-row">
-                <n7-data-widget
-                    [data]="lb.widgets['dv-widget'].ds.out$ | async">
-                </n7-data-widget>
-            </div>
-        </div>
-    </dv-data-widget-wrapper>
-    
-    <dv-datepicker-wrapper 
-        [data]="lb.widgets['dv-datepicker-wrapper'].ds.out$ | async"
-        [emit]="lb.widgets['dv-datepicker-wrapper'].emit">
-    </dv-datepicker-wrapper>
+  <!-- Data widget wrapper with fixed height, one row -->
+  <!-- <dv-data-widget-wrapper
+    [data]="{ classes: 'dv-data-widget-wrapper-fixed-height' }"
+  >
+    <div class="dv-data-widget-wrapper__title">
+      <n7-inner-title [data]="lb.widgets['dv-inner-title'].ds.out$ | async">
+      </n7-inner-title>
+    </div>
+    <div class="dv-data-widget-wrapper__content">
+      <div class="dv-data-widget-wrapper__content-row">
+        <n7-data-widget [data]="lb.widgets['dv-widget'].ds.out$ | async">
+        </n7-data-widget>
+      </div>
+    </div>
+  </dv-data-widget-wrapper>
+
+  <dv-datepicker-wrapper
+    [data]="lb.widgets['dv-datepicker-wrapper'].ds.out$ | async"
+    [emit]="lb.widgets['dv-datepicker-wrapper'].emit"
+  >
+  </dv-datepicker-wrapper> -->
 </div>

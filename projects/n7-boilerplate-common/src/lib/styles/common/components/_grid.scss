@@ -1,0 +1,20 @@
+/**
+ * GRID
+ *
+ * Style for Grid structural component.
+ */
+
+/* ------------------------------------ *\
+    #GRID
+\* ------------------------------------ */
+.n7-grid {
+    display: grid;
+    grid-column-gap: $grid-gutter-h;
+    grid-row-gap: $grid-gutter-v;
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: breakpoint-desktop) {
+}
