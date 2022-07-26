@@ -9,31 +9,56 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+### Fixed
+
 Muruca
--   Added advanced search dynamic options
+
+-   Fix metadata group resource layout
+
+## [3.6.1] - 2022-07-22
+
+-   Add card-component state management
+
+## [3.6.0] - 2022-07-22
+
+## [3.6.0-rc.2] - 2022-07-22
+
+Workflow
+
+-   Cleanup node setup
+
+## [3.6.0-rc.1] - 2022-07-22
+
+Muruca
+
 -   Add "Readmore" option for resource metadata section groups
 -   Add advanced search dynamic options
 -   Home "Miseria": better style for homepage with few contents and viewed on large screens.
 -   Fix menu external links
 -   Add metadata group classes
-- Improved style for static page (contents of wp-block-media-text)
-
-
-Arianna 
-- New tree version: extended-tree
-
-### Fixed
-
-Arianna
-
--   Fix extended tree pagination submit
-
+-   Improved style for static page (contents of wp-block-media-text)
 
 ### Fixed
 
 Muruca
 
-- Fix TextViewer TeiPublisher endpoint
+-   Fix TextViewer TeiPublisher endpoint
+
+## [v3.5.1] - 2022-06-24
+
+Arianna
+
+-   Fix extended tree pagination submit
+
+## [v3.5.0] - 2022-06-14
+
+### Added
+
+Muruca
+
+-   Added advanced search dynamic options
+    Arianna 
+-   New tree version: extended-tree
 
 ## [v3.4.2] - 2022-05-30
 
@@ -169,6 +194,14 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.4.2...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.6.1...HEAD
+
+[3.6.1]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.6.0...v3.6.1
+
+[3.6.0]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.6.0-rc.2...v3.6.0
+
+[3.6.0-rc.2]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.6.0-rc.1...v3.6.0-rc.2
+
+[3.6.0-rc.1]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.4.2...v3.6.0-rc.1
 
 [v3.4.2]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.4.1...v3.4.2
