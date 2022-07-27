@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Common
+
+- Add "n7-" prefix on structural components tags
+
 ## [3.7.1] - 2022-07-27
 
 Common
