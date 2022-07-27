@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'container',
+  selector: 'n7-container',
   templateUrl: './container.html',
 })
 
