@@ -9,9 +9,11 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [3.7.1] - 2022-07-27
+
 Common
 
-- Fix error when clearing cardStates
+-   Fix error when clearing cardStates
 
 ## [3.7.0] - 2022-07-26
 
@@ -208,7 +210,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.7.0...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.7.1...HEAD
+
+[3.7.1]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.7.0...v3.7.1
 
 [3.7.0]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.6.2...v3.7.0
 
