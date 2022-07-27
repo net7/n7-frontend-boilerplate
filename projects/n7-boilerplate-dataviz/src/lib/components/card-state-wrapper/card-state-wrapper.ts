@@ -11,10 +11,11 @@ import { CardState, CardStateComponents } from '../../types/card.types';
 })
 
 export class CardStateWrapperComponent implements OnInit {
-  // @Input() data: BehaviorSubject<CardState>;
   @Input() state$: BehaviorSubject<CardState>;
 
   @Input() stateComponents: CardStateComponents;
+
+  // Possible card states:
 
   @ViewChild('loading', { read: ViewContainerRef }) loading: ViewContainerRef;
 
@@ -35,7 +36,11 @@ export class CardStateWrapperComponent implements OnInit {
       .subscribe({
         next: (stateID) => {
           if (this.stateComponents && this.stateComponents[stateID]) {
-            this[stateID].clear();
+            // only clear the state if the view exists
+            if (this[stateID]) {
+              // this[stateID] will be one of the states declared as @ViewChild
+              this[stateID].clear();
+            }
             const { component, data } = this.stateComponents[stateID];
             if (component) {
               this.componentRef[stateID] = this[stateID].createComponent(component);

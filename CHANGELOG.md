@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Common
+
+- Fix error when clearing cardStates
+
 ## [3.7.0] - 2022-07-26
 
 ### Added
