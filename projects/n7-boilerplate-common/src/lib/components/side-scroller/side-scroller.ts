@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'side-scroller',
+  selector: 'n7-side-scroller',
   templateUrl: './side-scroller.html',
 })
 
