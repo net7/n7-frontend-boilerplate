@@ -9,6 +9,8 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [3.7.3] - 2022-07-29
+
 Arianna
 
 -   Fix extended tree visibility
@@ -220,7 +222,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.7.2...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.7.3...HEAD
+
+[3.7.3]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.7.2...v3.7.3
 
 [3.7.2]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.7.1...v3.7.2
 
