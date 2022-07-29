@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Arianna
+
+-   Fix extended tree visibility
+
 ## [3.7.2] - 2022-07-27
 
 Common

@@ -118,7 +118,12 @@ const config: ConfigAriannaKeys = {
     label: 'Fondi',
     'singular-label': 'Fondo',
     'input-placeholder': '',
-    'class-name': 'aggregazione-logica'
+    'class-name': 'aggregazione-logica',
+    classifications: {
+      AL: {
+        icon: 'n7-icon-file3'
+      }
+    }
   },
   famiglia: {
     color: {
