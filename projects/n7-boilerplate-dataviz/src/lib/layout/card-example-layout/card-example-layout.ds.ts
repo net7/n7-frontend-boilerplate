@@ -1,5 +1,5 @@
 import { LayoutDataSource } from '@net7/core';
-import { CardData } from '../../types/card.types';
+import { CardData, CardState } from '../../types/card.types';
 import { CardLoader } from '../../models/card-loader';
 
 export class DvCardExampleLayoutDS extends LayoutDataSource {
@@ -12,19 +12,23 @@ export class DvCardExampleLayoutDS extends LayoutDataSource {
     this.cards = this.cardLoader.getCards();
 
     setTimeout(() => {
+      this.cardLoader.setAllStates(CardState.Success);
+      // this.cardLoader.setState('first-card', CardState.Success);
       this.one('item-1').update('<b>Hola</b> <i>mundo</i>!!!');
-      this.one('item-2').update({
-        icon: 'n7-icon-earth',
-        text: '197 <em>Dipendenti</em>',
-        subtitle: {
-          text: 'Going down...',
-          icon: 'n7-icon-caret-down',
-          value: '-49%',
-          payload: 'view percent tooltip'
-        },
-        payload: 'view earth tooltip',
-        classes: 'is-negative'
-      });
+      // this.one('item-2').update({
+      //   icon: 'n7-icon-earth',
+      //   text: '197 <em>Dipendenti</em>',
+      //   subtitle: {
+      //     text: 'Going down...',
+      //     icon: 'n7-icon-caret-down',
+      //     value: '-49%',
+      //     payload: 'view percent tooltip'
+      //   },
+      //   payload: 'view earth tooltip',
+      //   classes: 'is-negative'
+      // });
+      // this.getWidgetDataSource('item-2').status$.next('loading');
+      // (this.one('item-2') as any).status$.next('loading');
       this.one('item-3').update({
         series: [{
           id: 'serie-1',
@@ -58,7 +62,13 @@ export class DvCardExampleLayoutDS extends LayoutDataSource {
         }],
         categories: ['South Korea', 'Canada', 'United Kingdom', 'Netherlands', 'Italy', 'France', 'Japan', 'United States', 'China', 'Germany'],
       });
-    }, 5000);
+    }, 3000);
+
+    setTimeout(() => {
+      this.cardLoader.setState('section-02', CardState.Loading);
+      this.cardLoader.setState('item-4', CardState.Loading);
+      // this.cardLoader.setSomeStates(['item-4', 'text-3', 'section-04'], CardState.Empty);
+    }, 4000);
   }
 
   onDestroy() {

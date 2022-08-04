@@ -62,8 +62,10 @@
                 <ng-container *ngTemplateOutlet="content"></ng-container>
             </ng-container>
 
-        </div>
+            <!-- Extended tree -->
+            <ng-container *ngTemplateOutlet="extendedtree"></ng-container>
 
+        </div>
     </div>
 </div>
 
@@ -246,7 +248,21 @@
         </div>
     </section>
     <!-- END // Similar Objects -->
+</ng-template>
 
+<ng-template #collapse let-id>
+    <div class="aw-scheda__collapse">
+        <button class="n7-btn n7-btn-light">
+            <span class="n7-icon-angle-right"
+            [ngClass]="{
+                'n7-icon-angle-right': !!lb.dataSource.sectionCollapseState[id],
+                'n7-icon-angle-down': !lb.dataSource.sectionCollapseState[id]
+            }"></span>
+        </button>
+    </div>
+</ng-template>
+
+<ng-template #extendedtree>
     <!-- Extended Tree -->
     <section *ngIf="lb.dataSource.hasExtendedTree" id="extended-tree-container" class="aw-scheda__section">
         <div class="aw-scheda__section-extended-tree-loader" *ngIf="!(lb.widgets['aw-extended-tree'].ds.out$ | async)">
@@ -260,16 +276,4 @@
         </aw-extended-tree>
     </section>
     <!-- END // Extended Tree -->
-</ng-template>
-
-<ng-template #collapse let-id>
-    <div class="aw-scheda__collapse">
-        <button class="n7-btn n7-btn-light">
-            <span class="n7-icon-angle-right"
-            [ngClass]="{
-                'n7-icon-angle-right': !!lb.dataSource.sectionCollapseState[id],
-                'n7-icon-angle-down': !lb.dataSource.sectionCollapseState[id]
-            }"></span>
-        </button>
-    </div>
 </ng-template>

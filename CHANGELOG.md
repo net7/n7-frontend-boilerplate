@@ -6,24 +6,87 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 For each commit add a description under the Unreleased section under the correspondig section and library (Muruca, Arianna, Dataviz)
+
+## [Unreleased]
+
+## [3.7.3] - 2022-07-29
+
+Arianna
+
+-   Fix extended tree visibility
+
+## [3.7.2] - 2022-07-27
+
+Common
+
+-   Add "n7-" prefix on structural components tags
+
+## [3.7.1] - 2022-07-27
+
+Common
+
+-   Fix error when clearing cardStates
+
+## [3.7.0] - 2022-07-26
+
+### Added
+
+Common
+
+-   Structural components
+
+## [3.6.2] - 2022-07-26
+
+### Fixed
+
+Muruca
+
+-   Fix metadata group resource layout
+
+## [3.6.1] - 2022-07-22
+
+-   Add card-component state management
+
+## [3.6.0] - 2022-07-22
+
+## [3.6.0-rc.2] - 2022-07-22
+
+Workflow
+
+-   Cleanup node setup
+
+## [3.6.0-rc.1] - 2022-07-22
+
+Muruca
+
+-   Add "Readmore" option for resource metadata section groups
+-   Add advanced search dynamic options
+-   Home "Miseria": better style for homepage with few contents and viewed on large screens.
+-   Fix menu external links
+-   Add metadata group classes
+-   Improved style for static page (contents of wp-block-media-text)
+
+### Fixed
+
+Muruca
+
+-   Fix TextViewer TeiPublisher endpoint
+
 ## [v3.5.1] - 2022-06-24
+
 Arianna
 
 -   Fix extended tree pagination submit
 
-
 ## [v3.5.0] - 2022-06-14
 
+### Added
+
 Muruca
+
 -   Added advanced search dynamic options
--   Add "Readmore" option for resource metadata section groups
--   Add advanced search dynamic options
--   Fix menu external links
--   Add metadata group classes
-
-Arianna 
-- New tree version: extended-tree
-
+    Arianna 
+-   New tree version: extended-tree
 
 ## [v3.4.2] - 2022-05-30
 
@@ -159,6 +222,24 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.4.2...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.7.3...HEAD
+
+[3.7.3]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.7.2...v3.7.3
+
+[3.7.2]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.7.1...v3.7.2
+
+[3.7.1]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.7.0...v3.7.1
+
+[3.7.0]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.6.2...v3.7.0
+
+[3.6.2]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.6.1...v3.6.2
+
+[3.6.1]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.6.0...v3.6.1
+
+[3.6.0]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.6.0-rc.2...v3.6.0
+
+[3.6.0-rc.2]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.6.0-rc.1...v3.6.0-rc.2
+
+[3.6.0-rc.1]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.4.2...v3.6.0-rc.1
 
 [v3.4.2]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.4.1...v3.4.2

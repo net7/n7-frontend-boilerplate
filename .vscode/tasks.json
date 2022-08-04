@@ -22,6 +22,16 @@
       }
     },
     {
+      "label": "Launch Dataviz",
+      "type": "npm",
+      "script": "dataviz",
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
       "label": "ng test",
       "type": "npm",
       "script": "test",
