@@ -1,10 +1,12 @@
 import { DataSource } from '@net7/core';
 import { ImageViewerData } from '@net7/components';
-import { interval } from 'rxjs';
+import { interval, Subject } from 'rxjs';
 import { filter, first } from 'rxjs/operators';
 
 export class AwSchedaImageDS extends DataSource {
   private instance;
+
+  public instanceLoaded$: Subject<any> = new Subject();
 
   protected transform(data): ImageViewerData {
     const tileSources = this.getTileSources(data.items);
@@ -21,6 +23,8 @@ export class AwSchedaImageDS extends DataSource {
       },
       _setViewer: (viewer) => {
         this.instance = viewer;
+
+        this.instanceLoaded$.next(this.instance);
 
         if (data.hasNavigation$) {
           const { nextButton } = this.instance;

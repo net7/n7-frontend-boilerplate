@@ -23,6 +23,7 @@ import { PdfViewerComponent } from './components/pdf-viewer/pdf-viewer';
 import { SchedaDropdownComponent } from './components/scheda-dropdown/scheda-dropdown';
 import { SmartBreadcrumbsComponent } from './components/smart-breadcrumbs/smart-breadcrumbs';
 import { ExtendedTreeComponent } from './components/extended-tree/extended-tree';
+import { SchedaImageNavigatorComponent } from './components/scheda-image-navigator/scheda-image-navigator';
 // LIBS
 
 import apolloConfig from './config/apollo.config';
@@ -43,6 +44,7 @@ const COMPONENTS = [
   SchedaDropdownComponent,
   SmartBreadcrumbsComponent,
   ExtendedTreeComponent,
+  SchedaImageNavigatorComponent,
 ];
 
 @NgModule({

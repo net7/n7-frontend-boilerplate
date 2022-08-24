@@ -1,0 +1,15 @@
+<div *ngIf="data" class="aw-scheda-image-navigator" [ngClass]="data.classes">
+    <div class="aw-scheda-image-navigator__input">
+        <n7-input-text 
+        [data]="data.input"
+        [emit]="this.emit"></n7-input-text>
+    </div>
+    <div *ngIf="data.button as button" class="aw-scheda-image-navigator__button">
+        <button class="n7-btn"
+        [ngClass]="{
+            'is-disabled': button.disabled
+        }"
+        [disabled]="button.disabled"
+        (click)="onSubmit()">{{ button.label }}</button>
+    </div>
+</div>
