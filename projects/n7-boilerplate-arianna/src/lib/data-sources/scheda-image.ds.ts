@@ -21,6 +21,11 @@ export class AwSchedaImageDS extends DataSource {
       },
       _setViewer: (viewer) => {
         this.instance = viewer;
+
+        if (data.hasNavigation$) {
+          const { nextButton } = this.instance;
+          data.hasNavigation$.next(!!(nextButton && !nextButton.element?.disabled));
+        }
       }
     };
   }

@@ -124,7 +124,7 @@
     <section *ngIf="lb.dataSource.currentDigitalObject as $do" 
         class="aw-scheda__media aw-scheda__{{ $do.type }}"
         [ngClass]="{ 
-            'navigation-hidden': !$do.hasNavigation
+            'navigation-hidden': !($do.hasNavigation$ | async)
         }">
         <ng-container [ngSwitch]="$do.type">
             <!-- IMAGE VIEWER (IIP) -->
