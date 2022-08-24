@@ -11,6 +11,7 @@ For each commit add a description under the Unreleased section under the corresp
 
 Arianna
 
+-   Added scheda image viewer navigator component (go to page feature)
 -   Fix image viewer navigation visibility
 
 ## [3.7.3] - 2022-07-29
