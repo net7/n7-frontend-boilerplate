@@ -40,6 +40,11 @@ const config: ConfigAriannaSchedaLayout = {
       placeholder: 'Cerca negli oggetti culturali'
     }
   },
+  'image-viewer-nav': {
+    enabled: true,
+    label: 'Immagine {current} di {total}',
+    buttonText: 'VAI',
+  },
   'title-nav': {
     enabled: true
   },

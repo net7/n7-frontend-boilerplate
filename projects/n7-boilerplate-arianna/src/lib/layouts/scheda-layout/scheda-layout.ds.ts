@@ -2,7 +2,7 @@ import { LayoutDataSource } from '@net7/core';
 import {
   fromEvent, Subject, of, merge,
 } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { first, takeUntil } from 'rxjs/operators';
 import { clone, get as _get } from 'lodash';
 import { helpers } from '@net7/boilerplate-common';
 import metadataHelper from '../../helpers/metadata.helper';
@@ -507,6 +507,17 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
           } else {
             this.one('aw-scheda-image').update(this.currentDigitalObject);
           }
+
+          // image viewer navigator
+          const navigatorConfig = this.layoutConfig['image-viewer-nav'];
+          if (navigatorConfig?.enabled) {
+            schedaImageDS.instanceLoaded$.pipe(
+              first()
+            ).subscribe((viewer) => {
+              this.one('aw-scheda-image-navigator').updateOptions(navigatorConfig);
+              this.one('aw-scheda-image-navigator').update(viewer);
+            });
+          }
         } else if (this.currentDigitalObject.type === 'pdf') {
           this.one('aw-scheda-pdf').update(this.currentDigitalObject);
         }
@@ -521,7 +532,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
           id: 'scheda-layout-viewer',
           type: $do.type,
           label: $do.label,
-          hasNavigation: $do.items.length > 1,
+          hasNavigation$: new Subject(),
           items: $do.items.map(({ url, iiifImages }) => ({
             url,
             iiifImages,
