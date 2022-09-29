@@ -9,6 +9,8 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [3.8.0] - 2022-09-29
+
 Arianna
 
 -   Added scheda image viewer navigator component (go to page feature)
@@ -227,7 +229,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.7.3...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.8.0...HEAD
+
+[3.8.0]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.7.3...v3.8.0
 
 [3.7.3]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.7.2...v3.7.3
 
