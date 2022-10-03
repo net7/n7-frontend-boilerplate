@@ -14,7 +14,10 @@ const config: ConfigMurucaResourceLayout = {
     content: [
       {
         id: 'text-viewer',
-        type: 'text'
+        type: 'text',
+        options: {
+          enableListeners: true,
+        }
       },
       {
         id: 'metadata',
