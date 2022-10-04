@@ -9,7 +9,13 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+
 ## [3.8.0] - 2022-09-29
+=======
+Common
+
+- fix leaflet version on package
+
 
 Arianna
 
