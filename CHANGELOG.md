@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Common
+
+- fix leaflet version on package
+
 Arianna
 
 -   Added scheda image viewer navigator component (go to page feature)
