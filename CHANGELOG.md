@@ -9,13 +9,14 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [3.8.1] - 2022-10-04
 
 ## [3.8.0] - 2022-09-29
+
 =======
 Common
 
-- fix leaflet version on package
-
+-   fix leaflet version on package
 
 Arianna
 
@@ -235,7 +236,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.8.0...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.8.1...HEAD
+
+[3.8.1]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.8.0...v3.8.1
 
 [3.8.0]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.7.3...v3.8.0
 
