@@ -22,7 +22,7 @@ export class MrTextViewerDS extends DataSource {
 
     if (data.docs[0]?.view === 'page' && id) {
       data.docs[0].view = 'div';
-      document.addEventListener('pb-start-update', function _listener() {
+      document.addEventListener('pb-start-update', () => {
         setTimeout(() => {
           document.dispatchEvent(
             new CustomEvent('pb-toggle', {
@@ -36,9 +36,7 @@ export class MrTextViewerDS extends DataSource {
             })
           );
         }, 500);
-
-        document.removeEventListener('pb-start-update', _listener, true);
-      }, true);
+      }, { once: true });
     }
 
     if (enableClickOnEntities) {
