@@ -5,6 +5,7 @@ export * from './timeline.eh';
 export * from './year-header.eh';
 export * from './gallery.eh';
 export * from './collection.eh';
+export * from './text-viewer.eh';
 // search
 export * from './search/search-tags.eh';
 export * from './search/search-results-title.eh';
