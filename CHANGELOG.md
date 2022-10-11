@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+-   Added text viewer events logic to event handler and data source
+
 Arianna
 
 -   Added scheda image viewer navigator component (go to page feature)
