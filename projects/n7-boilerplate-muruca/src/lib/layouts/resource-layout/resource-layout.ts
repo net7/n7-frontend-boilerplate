@@ -11,6 +11,7 @@ import { MrLayoutStateService } from '../../services/layout-state.service';
 import { MrResourceModalService } from '../../services/resource-modal.service';
 import { MrResourceLayoutConfig as config } from './resource-layout.config';
 import { MrImageViewerEH } from '../../event-handlers/image-viewer.eh';
+import { MrTextViewerEH } from '../../event-handlers/text-viewer.eh';
 import { MrImageViewerToolsEH } from '../../event-handlers/image-viewer-tools.eh';
 import { MrCollectionEH } from '../../event-handlers/collection.eh';
 import {
@@ -46,6 +47,7 @@ const DATASOURCE_MAP = {
 const EVENTHANDLER_MAP = {
   viewer: MrImageViewerEH,
   'viewer-tools': MrImageViewerToolsEH,
+  'text-viewer': MrTextViewerEH,
   collection: MrCollectionEH,
   // map: MrMapEH
 };
