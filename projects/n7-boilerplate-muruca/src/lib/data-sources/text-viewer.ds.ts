@@ -50,8 +50,6 @@ export class MrTextViewerDS extends DataSource {
     return data;
   }
 
-  isDisplayed = false;
-
   displayIndex() {
     if (this.output.toggleColumn) {
       this.output.toggleColumn = false;
@@ -62,15 +60,7 @@ export class MrTextViewerDS extends DataSource {
 
   onClick(payload) {
     if (this.output.toggleColumn === false) {
-      let target;
-      let i = 0;
-      while (!target && i < payload.path.length - 1) {
-        if (payload.path[i].tagName === 'PB-HIGHLIGHT') {
-          target = payload.path[i];
-        } else {
-          i += 1;
-        }
-      }
+      const target = payload.path.find(({ tagName }) => tagName === 'PB-HIGHLIGHT');
       if (
         target.__key
         && (target.className.includes('person')
