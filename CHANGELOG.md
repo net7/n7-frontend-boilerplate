@@ -9,6 +9,7 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+- build error. Same as 3.9.0
 ## [3.9.0] - 2022-10-12
 
 Muruca
@@ -17,6 +18,8 @@ Muruca
 -   Added text viewer events logic to event handler and data source
 
 ## [3.8.1] - 2022-10-04
+
+- build error. Same as 3.8.0
 
 ## [3.8.0] - 2022-09-29
 
