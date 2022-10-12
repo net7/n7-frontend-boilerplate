@@ -9,6 +9,8 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [3.9.0] - 2022-10-12
+
 Muruca
 
 -   Added toggle columns option in data source
@@ -240,7 +242,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.8.1...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.9.0...HEAD
+
+[3.9.0]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.8.1...v3.9.0
 
 [3.8.1]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.8.0...v3.8.1
 
