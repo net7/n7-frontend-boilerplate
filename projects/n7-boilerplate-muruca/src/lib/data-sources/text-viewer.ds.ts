@@ -5,7 +5,8 @@ export class MrTextViewerDS extends DataSource {
   id: string;
 
   protected transform(data: TextViewerData): TextViewerData {
-    const { enableClickOnEntities } = this.options || {};
+    const { enableClickOnEntities, toggleColumn } = this.options || {};
+    data.toggleColumn = toggleColumn;
 
     // force tei publisher endpoint value
     document.addEventListener(
@@ -22,21 +23,25 @@ export class MrTextViewerDS extends DataSource {
 
     if (data.docs[0]?.view === 'page' && id) {
       data.docs[0].view = 'div';
-      document.addEventListener('pb-start-update', () => {
-        setTimeout(() => {
-          document.dispatchEvent(
-            new CustomEvent('pb-toggle', {
-              detail: {
-                properties: {
-                  view: 'page',
+      document.addEventListener(
+        'pb-start-update',
+        () => {
+          setTimeout(() => {
+            document.dispatchEvent(
+              new CustomEvent('pb-toggle', {
+                detail: {
+                  properties: {
+                    view: 'page',
+                  },
+                  action: 'refresh',
+                  key: 'transcription',
                 },
-                action: 'refresh',
-                key: 'transcription',
-              },
-            })
-          );
-        }, 500);
-      }, { once: true });
+              })
+            );
+          }, 500);
+        },
+        { once: true }
+      );
     }
 
     if (enableClickOnEntities) {
@@ -58,7 +63,9 @@ export class MrTextViewerDS extends DataSource {
 
   onClick(payload) {
     if (this.output.toggleColumn === false) {
-      const target = payload.path.find(({ tagName }) => tagName === 'PB-HIGHLIGHT');
+      const target = payload.path.find(
+        ({ tagName }) => tagName === 'PB-HIGHLIGHT'
+      );
       if (
         target.__key
         && (target.className.includes('person')
@@ -71,26 +78,35 @@ export class MrTextViewerDS extends DataSource {
   }
 
   viewListenerUpdate() {
-    document.addEventListener('pb-start-update', function _listener() {
-      document.removeEventListener('pb-start-update', _listener, true);
-    }, true);
+    document.addEventListener(
+      'pb-start-update',
+      function _listener() {
+        document.removeEventListener('pb-start-update', _listener, true);
+      },
+      true
+    );
   }
 
   changeView(view, refresh) {
-    setTimeout((v, r) => {
-      // console.log(`TEST CHANGE VIEW: ${view}`);
-      document.dispatchEvent(
-        new CustomEvent('pb-toggle', {
-          detail: {
-            properties: {
-              view: v,
+    setTimeout(
+      (v, r) => {
+        // console.log(`TEST CHANGE VIEW: ${view}`);
+        document.dispatchEvent(
+          new CustomEvent('pb-toggle', {
+            detail: {
+              properties: {
+                view: v,
+              },
+              action: r ? 'refresh' : '',
+              key: 'transcription',
             },
-            action: r ? 'refresh' : '',
-            key: 'transcription',
-          },
-        })
-      );
-    }, 600, view, refresh);
+          })
+        );
+      },
+      600,
+      view,
+      refresh
+    );
   }
 
   scrollElementsIntoView(target, type, view) {
