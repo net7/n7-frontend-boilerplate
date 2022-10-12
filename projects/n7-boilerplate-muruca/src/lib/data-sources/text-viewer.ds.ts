@@ -6,7 +6,7 @@ export class MrTextViewerDS extends DataSource {
 
   protected transform(data: TextViewerData): TextViewerData {
     const { enableClickOnEntities, toggleColumn } = this.options || {};
-    data.toggleColumn = toggleColumn;
+    data['toggleColumn'] = toggleColumn;
 
     // force tei publisher endpoint value
     document.addEventListener(
