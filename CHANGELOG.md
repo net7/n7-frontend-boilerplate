@@ -13,6 +13,7 @@ For each commit add a description under the Unreleased section under the corresp
 
 Muruca
 
+-   Added toggle columns option in data source
 -   Added text viewer events logic to event handler and data source
 
 ## [3.8.1] - 2022-10-04
