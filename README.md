@@ -8,7 +8,7 @@ The Boilerplate is built with **Angular 8.2.5**: the projects that include the B
 
 ## Node version
 
- We suggest to use Node **v10.xx.xx**.
+ We suggest to use Node **v14.xx.xx**.
 
 ## Layout naming prefix guidelines
 
