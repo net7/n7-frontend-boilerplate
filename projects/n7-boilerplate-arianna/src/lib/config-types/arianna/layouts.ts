@@ -114,6 +114,12 @@ export interface ConfigAriannaSchedaLayout {
     /** extended tree lite version? */
     lite?: boolean;
   };
+  /** image viewer navigation */
+  'image-viewer-nav'?: {
+    enabled: boolean;
+    label: string;
+    buttonText: string;
+  };
   /** title prev/next navigation */
   'title-nav'?: {
     enabled: boolean;

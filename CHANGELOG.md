@@ -9,6 +9,34 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+- Edited README.md
+
+## [3.9.1] - 2022-10-12
+
+-   build error. Same as 3.9.0
+
+## [3.9.0] - 2022-10-12
+
+Muruca
+
+-   Added toggle columns option in data source
+-   Added text viewer events logic to event handler and data source
+
+## [3.8.1] - 2022-10-04
+
+-   build error. Same as 3.8.0
+
+## [3.8.0] - 2022-09-29
+
+Common
+
+-   fix leaflet version on package
+
+Arianna
+
+-   Added scheda image viewer navigator component (go to page feature)
+-   Fix image viewer navigation visibility
+
 ## [3.7.3] - 2022-07-29
 
 Arianna
@@ -222,7 +250,15 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.7.3...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.9.1...HEAD
+
+[3.9.1]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.9.0...v3.9.1
+
+[3.9.0]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.8.1...v3.9.0
+
+[3.8.1]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.8.0...v3.8.1
+
+[3.8.0]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.7.3...v3.8.0
 
 [3.7.3]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.7.2...v3.7.3
 

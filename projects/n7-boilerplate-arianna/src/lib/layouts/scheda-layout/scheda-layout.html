@@ -124,11 +124,14 @@
     <section *ngIf="lb.dataSource.currentDigitalObject as $do" 
         class="aw-scheda__media aw-scheda__{{ $do.type }}"
         [ngClass]="{ 
-            'navigation-hidden': !$do.hasNavigation
+            'navigation-hidden': !($do.hasNavigation$ | async)
         }">
         <ng-container [ngSwitch]="$do.type">
             <!-- IMAGE VIEWER (IIP) -->
             <ng-container *ngSwitchCase="'images-iip'">
+                <aw-scheda-image-navigator 
+                [data]="lb.widgets['aw-scheda-image-navigator'].ds.out$ | async"
+                [emit]="lb.widgets['aw-scheda-image-navigator'].emit"></aw-scheda-image-navigator>
                 <n7-image-viewer 
                 (contextmenu)="lb.dataSource.hasContextMenu()" 
                 [data]="lb.widgets['aw-scheda-image'].ds.out$ | async">
@@ -137,6 +140,9 @@
 
             <!-- IMAGE VIEWER (IIIF) -->
             <ng-container *ngSwitchCase="'images-iiif'">
+                <aw-scheda-image-navigator 
+                [data]="lb.widgets['aw-scheda-image-navigator'].ds.out$ | async"
+                [emit]="lb.widgets['aw-scheda-image-navigator'].emit"></aw-scheda-image-navigator>
                 <n7-image-viewer 
                 (contextmenu)="lb.dataSource.hasContextMenu()" 
                 [data]="lb.widgets['aw-scheda-image'].ds.out$ | async">
@@ -145,6 +151,9 @@
 
             <!-- IMAGE VIEWER (Simple: jpg, png) -->
             <ng-container *ngSwitchCase="'images-simple'">
+                <aw-scheda-image-navigator 
+                [data]="lb.widgets['aw-scheda-image-navigator'].ds.out$ | async"
+                [emit]="lb.widgets['aw-scheda-image-navigator'].emit"></aw-scheda-image-navigator>
                 <n7-image-viewer 
                 (contextmenu)="lb.dataSource.hasContextMenu()"
                 [data]="lb.widgets['aw-scheda-image'].ds.out$ | async">

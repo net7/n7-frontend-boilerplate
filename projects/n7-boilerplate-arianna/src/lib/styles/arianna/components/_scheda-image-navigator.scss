@@ -1,0 +1,51 @@
+/**
+ * SCHEDA IMAGE NAVIGATOR
+ */
+
+.aw-scheda-image-navigator {
+    display: flex;
+    align-items: center;
+    margin: $space;
+    justify-content: end;
+    
+    .n7-input-text {
+        display: flex;
+        align-items: center;
+
+        .n7-input-text__label {
+            margin-bottom: 0;
+        }
+
+        input.n7-input-text__text[type=number] {
+            width: 60px;
+            margin-left: $space;
+            height: $pagination-item-height;
+        }
+    }
+
+    &__button {
+        button.n7-btn {
+            margin-left: $space;
+            width: $pagination-item-width;
+            height: $pagination-item-height;
+        }
+    }
+    
+}
+
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: $breakpoint-laptop) {
+}
+
+@media all and (max-width: $breakpoint-ipad-portrait) {
+}
+
+@media all and (max-width: $breakpoint-smartphone-landscape) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}

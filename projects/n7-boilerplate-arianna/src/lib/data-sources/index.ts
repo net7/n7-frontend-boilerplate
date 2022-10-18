@@ -28,6 +28,7 @@ export * from './scheda-metadata.ds';
 export * from './scheda-pdf.ds';
 export * from './tree.ds';
 export * from './extended-tree.ds';
+export * from './scheda-image-navigator.ds';
 
 // Search layout
 export * from './search-layout-tabs.ds';
