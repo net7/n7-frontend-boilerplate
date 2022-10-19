@@ -21,9 +21,6 @@ export class AwSchedaImageNavigatorDS extends DataSource {
     // listen viewer
     this.listenViewer();
 
-    // force input value
-    this.forceInputValue();
-
     return {
       input: {
         id: 'scheda-image-navigator-input',
@@ -96,16 +93,6 @@ export class AwSchedaImageNavigatorDS extends DataSource {
 
         // update label
         this.updateLabel();
-      }
-    });
-  }
-
-  private forceInputValue() {
-    setTimeout(() => {
-      const { id } = this.output.input;
-      const inputEl = document.getElementById(id) as HTMLInputElement;
-      if (inputEl) {
-        inputEl.value = this.current;
       }
     });
   }

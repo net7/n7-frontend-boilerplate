@@ -2,7 +2,7 @@ import { LayoutDataSource } from '@net7/core';
 import {
   fromEvent, Subject, of, merge,
 } from 'rxjs';
-import { first, takeUntil } from 'rxjs/operators';
+import { delay, first, takeUntil } from 'rxjs/operators';
 import { clone, get as _get } from 'lodash';
 import { helpers } from '@net7/boilerplate-common';
 import metadataHelper from '../../helpers/metadata.helper';
@@ -512,7 +512,8 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
           const navigatorConfig = this.layoutConfig['image-viewer-nav'];
           if (navigatorConfig?.enabled) {
             schedaImageDS.instanceLoaded$.pipe(
-              first()
+              first(),
+              delay(100) // waiting for viewer instance to update
             ).subscribe((viewer) => {
               this.one('aw-scheda-image-navigator').updateOptions(navigatorConfig);
               this.one('aw-scheda-image-navigator').update(viewer);
