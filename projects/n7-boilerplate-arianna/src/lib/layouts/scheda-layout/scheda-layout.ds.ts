@@ -533,7 +533,6 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
           id: 'scheda-layout-viewer',
           type: $do.type,
           label: $do.label,
-          hasNavigation$: new Subject(),
           items: $do.items.map(({ url, iiifImages }) => ({
             url,
             iiifImages,
