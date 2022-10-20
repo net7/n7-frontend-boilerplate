@@ -13,9 +13,13 @@ Arianna
 
 -   Fix image viewer navigation refresh
 
-Common
+Muruca
 
--   Edited README.md
+- add style for advanced results
+
+Common 
+
+- Edited README.md
 
 ## [3.9.1] - 2022-10-12
 

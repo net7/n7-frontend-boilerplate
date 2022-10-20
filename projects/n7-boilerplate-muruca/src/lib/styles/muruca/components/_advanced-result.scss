@@ -71,6 +71,12 @@
         font-size: $font-size-xs;
         color: $color-text-light;
     }
+    
+    .mrc__text-attr_value {
+        background-color: $color-gray-02;
+        padding: 0 5px;
+        border-radius: 5px;
+    }
 
     .mrc__text-emph-attribute {
         color: $color-text-light;
