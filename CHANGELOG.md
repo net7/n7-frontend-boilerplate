@@ -9,7 +9,13 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
-- Edited README.md
+Arianna
+
+-   Fix image viewer navigation refresh
+
+Common
+
+-   Edited README.md
 
 ## [3.9.1] - 2022-10-12
 
