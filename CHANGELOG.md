@@ -9,6 +9,12 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+- add style for advanced results
+
+Common 
+
 - Edited README.md
 
 ## [3.9.1] - 2022-10-12
