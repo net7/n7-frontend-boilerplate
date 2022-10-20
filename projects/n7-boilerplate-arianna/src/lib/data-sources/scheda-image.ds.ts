@@ -24,6 +24,7 @@ export class AwSchedaImageDS extends DataSource {
       _setViewer: (viewer) => {
         this.instance = viewer;
 
+        // emit signal
         this.instanceLoaded$.next(this.instance);
 
         if (data.hasNavigation$) {
@@ -51,6 +52,9 @@ export class AwSchedaImageDS extends DataSource {
       setTimeout(() => {
         const images = this.getTileSources(data.items);
         this.instance.open(images);
+
+        // emit signal
+        this.instanceLoaded$.next(this.instance);
       });
     });
   }
