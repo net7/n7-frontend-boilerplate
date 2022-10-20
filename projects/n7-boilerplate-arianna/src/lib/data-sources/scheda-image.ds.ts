@@ -24,12 +24,7 @@ export class AwSchedaImageDS extends DataSource {
       _setViewer: (viewer) => {
         this.instance = viewer;
 
-        this.instanceLoaded$.next(this.instance);
-
-        if (data.hasNavigation$) {
-          const { nextButton } = this.instance;
-          data.hasNavigation$.next(!!(nextButton && !nextButton.element?.disabled));
-        }
+        this.onRender();
       }
     };
   }
@@ -51,6 +46,8 @@ export class AwSchedaImageDS extends DataSource {
       setTimeout(() => {
         const images = this.getTileSources(data.items);
         this.instance.open(images);
+
+        this.onRender();
       });
     });
   }
@@ -78,5 +75,15 @@ export class AwSchedaImageDS extends DataSource {
       }
     });
     return tileSources;
+  }
+
+  private onRender() {
+    // emit signal
+    this.instanceLoaded$.next(this.instance);
+
+    // update navigation classes
+    const { nextButton } = this.instance;
+    const hasNavigation = !!(nextButton && !nextButton.element?.disabled);
+    this.output.classes = hasNavigation ? 'has-navigation' : 'navigation-hidden';
   }
 }

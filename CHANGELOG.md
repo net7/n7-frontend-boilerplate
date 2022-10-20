@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Arianna
+
+-   Fix image viewer navigation refresh
+
 Muruca
 
 - add style for advanced results
