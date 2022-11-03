@@ -17,7 +17,9 @@ export class AwHomeFacetsWrapperDS extends DataSource {
     this.lastData = data;
     const headers: any[] = [];
     const inputs: any[] = [];
+    const links: any[] = [];
     const facetData = data;
+    const { pageConfig, paths } = this.options || {};
     const { lockedFacets } = this; // locked means that the eye cannot be closed
     const { closedEyes } = this; // list of closed eyes
 
@@ -123,10 +125,20 @@ export class AwHomeFacetsWrapperDS extends DataSource {
           },
         ],
       });
+      if (pageConfig?.['view-all-links']?.enabled) {
+        const { label } = pageConfig['view-all-links'];
+        links.push({
+          label: label || 'Visualizza tutti',
+          path: paths.searchBasePath,
+          queryParams: {
+            'query-links': facet.type.replace(/ /g, '-')
+          }
+        });
+      }
     });
 
     // zipping arrays to render widgets with separate data (see home-layout.html)
-    return headers.map((h, i) => ({ header: h, input: inputs[i] }));
+    return headers.map((h, i) => ({ header: h, input: inputs[i], link: links[i] || null }));
   }
 
   public tippyMaker = (id) => {
@@ -169,7 +181,7 @@ export class AwHomeFacetsWrapperDS extends DataSource {
     if (ac.tippy) {
       ac.tippy.show();
     }
-  }
+  };
 
   public tippyClose = (id) => {
     const newId = id.replace(/ /g, '-');
@@ -179,5 +191,5 @@ export class AwHomeFacetsWrapperDS extends DataSource {
         ac.tippy.hide();
       }
     }
-  }
+  };
 }
