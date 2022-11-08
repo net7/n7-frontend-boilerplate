@@ -1,0 +1,43 @@
+<div *ngIf="data" class="aw-scheda-search">
+    <div class="aw-scheda__section-title-wrapper">
+        <div *ngIf="data.header as header" class="aw-scheda__inner-title aw-scheda-search__header">
+            <n7-inner-title [data]="header"></n7-inner-title>
+        </div>
+    </div>
+    <div *ngIf="data.input as input" class="aw-scheda__input aw-scheda-search__input">
+        <n7-input-text [data]="input" [emit]="this.emit"></n7-input-text>
+    </div>
+    <div>
+        <ng-container *ngIf="data.loading">
+            <div class="aw-scheda-search__loader">
+                <n7-loader></n7-loader>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="!data.loading && data.items">
+            <div class="aw-scheda-search__results-wrapper">
+                <div class="aw-item-preview-list">
+                    <ng-container *ngFor="let preview of data.items.previews">
+                        <div class="aw-item-preview-wrapper">
+                            <n7-smart-breadcrumbs [data]="preview.breadcrumbs">
+                            </n7-smart-breadcrumbs>
+                            <n7-item-preview [data]="preview" [emit]="this.emit">
+                            </n7-item-preview>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+            <div *ngIf="data.pagination as pagination" class="aw-scheda-search__footer">
+                <div *ngIf="data.pagination as pagination" class="aw-scheda-search__pagination">
+                    <n7-pagination 
+                    [data]="pagination"
+                    [emit]="this.emit"></n7-pagination>
+                </div>
+                <div *ngIf="data.limitSelect as limitSelect" class="aw-scheda-search__limit-select">
+                    <n7-input-select 
+                    [data]="limitSelect"
+                    [emit]="this.emit"></n7-input-select>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>

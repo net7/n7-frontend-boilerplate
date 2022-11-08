@@ -114,6 +114,15 @@ export interface ConfigAriannaSchedaLayout {
     /** extended tree lite version? */
     lite?: boolean;
   };
+  /** internal search section */
+  'internal-search'?: {
+    /** internal search section title */
+    title: string;
+    /** internal search search input */
+    search: {
+      placeholder: string;
+    }
+  };
   /** image viewer navigation */
   'image-viewer-nav'?: {
     enabled: boolean;

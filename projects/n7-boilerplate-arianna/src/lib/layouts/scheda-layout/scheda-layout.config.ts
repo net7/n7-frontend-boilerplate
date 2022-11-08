@@ -23,6 +23,7 @@ export const AwPatrimonioLayoutConfig = {
     { id: 'aw-chart-tippy' },
     { id: 'aw-linked-objects' },
     { id: 'aw-extended-tree' },
+    { id: 'aw-scheda-search' },
   ],
   layoutDS: AwSchedaLayoutDS,
   layoutEH: AwSchedaLayoutEH,

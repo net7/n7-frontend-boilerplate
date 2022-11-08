@@ -40,6 +40,12 @@ const config: ConfigAriannaSchedaLayout = {
       placeholder: 'Cerca negli oggetti culturali'
     }
   },
+  'internal-search': {
+    title: 'Cerca nelle Aggregazioni Logiche',
+    search: {
+      placeholder: 'Cerca...'
+    }
+  },
   'image-viewer-nav': {
     enabled: true,
     label: 'Immagine {current} di {total}',

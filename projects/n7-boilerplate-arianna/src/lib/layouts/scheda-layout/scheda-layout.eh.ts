@@ -29,6 +29,12 @@ export class AwSchedaLayoutEH extends EventHandler {
     delay?: number;
   }> = new Subject();
 
+  private schedaSearchChanged$: Subject<{
+    key: string;
+    value: string | number;
+    delay?: number;
+  }> = new Subject();
+
   private pageInputValue: number;
 
   public listen() {
@@ -46,6 +52,7 @@ export class AwSchedaLayoutEH extends EventHandler {
           this.listenRoute();
           this.listenRouteQueryParams();
           this.listenExtendedTree();
+          this.listenSchedaSearch();
           this.loadNavigation(paramId);
           this.emitOuter('viewleaf');
           // scroll top
@@ -75,6 +82,10 @@ export class AwSchedaLayoutEH extends EventHandler {
         case 'aw-scheda-dropdown.click':
           this.dataSource.changeDigitalObject(payload);
           break;
+
+        /**
+         * EXTENDED TREE EVENTS
+         * ---------------------------------------------------> */
         case 'aw-extended-tree.change': {
           let key: string;
           let delay: number;
@@ -117,6 +128,36 @@ export class AwSchedaLayoutEH extends EventHandler {
             });
           }
           break;
+
+        /**
+         * SCHEDA (INTERNAL) SEARCH EVENTS
+         * ---------------------------------------------------> */
+        case 'aw-scheda-search.change': {
+          let key: string;
+          let delay: number;
+          if (payload.inputPayload === 'input-change') {
+            key = 'query';
+            delay = 1000;
+          } else if (payload.inputPayload === 'input-enter') {
+            key = 'query';
+          } else if (payload.inputPayload === 'limit-select') {
+            key = 'limit';
+          }
+
+          if (key) {
+            this.schedaSearchChanged$.next({
+              key,
+              delay,
+              value: payload.value,
+            });
+          }
+        } break;
+        case 'aw-scheda-search.click':
+          this.schedaSearchChanged$.next({
+            key: 'page',
+            value: payload
+          });
+          break;
         default:
           break;
       }
@@ -139,6 +180,7 @@ export class AwSchedaLayoutEH extends EventHandler {
           if (response) {
             this.dataSource.loadContent(response);
             this.dataSource.loadExtendedTree();
+            this.dataSource.loadInternalSearch();
             this.checkTreeItems(response);
           }
         });
@@ -179,24 +221,72 @@ export class AwSchedaLayoutEH extends EventHandler {
     });
   }
 
+  private listenSchedaSearch() {
+    this.schedaSearchChanged$.pipe(
+      filter(({ key, value }) => !(key === 'page' && (!isNumber(+value) || +value < 1))),
+      debounce(({ delay }) => timer(delay || 1)),
+    ).subscribe(({ key, value }) => {
+      const queryParams: {
+        [id: string]: string
+      } = {};
+
+      if (typeof value === 'string') {
+        queryParams[`search-${key}`] = value.trim().length ? value : null;
+      } else {
+        queryParams[`search-${key}`] = `${value}`;
+      }
+
+      // page check
+      if (key !== 'page') {
+        queryParams['search-page'] = '1';
+      }
+
+      // update url
+      this.router.navigate([], {
+        queryParams,
+        queryParamsHandling: 'merge'
+      });
+    });
+  }
+
   private listenRouteQueryParams() {
     this.route.queryParams.subscribe((params) => {
+      const isSchedaSerch = !!Object.keys(params).find((key) => key.includes('search-'));
       const extendedTreeParams = clone(params);
-      // force numeric
-      ['page', 'limit'].forEach((key) => {
-        if (params[key] && isNumber(+params[key])) {
-          extendedTreeParams[key] = +params[key];
-        } else {
-          delete extendedTreeParams[key];
+      const internalSearchParams = clone(params);
+      // scheda search changed
+      if (isSchedaSerch) {
+        // scheda (internal) search force numeric
+        ['search-page', 'search-limit'].forEach((key) => {
+          if (params[key] && isNumber(+params[key])) {
+            internalSearchParams[key] = +params[key];
+          } else {
+            delete internalSearchParams[key];
+          }
+        });
+        this.dataSource.internalSearchParams = internalSearchParams;
+        // has node response
+        if (this.dataSource.lastResponse) {
+          this.emitOuter('schedasearchrequest');
+          this.dataSource.loadInternalSearch();
         }
-      });
 
-      this.dataSource.extendedTreeParams = extendedTreeParams;
-
-      // has node response
-      if (this.dataSource.lastResponse) {
-        this.emitOuter('extendedtreerequest');
-        this.dataSource.loadExtendedTree();
+      // extended tree changed
+      } else {
+        // extended tree force numeric
+        ['page', 'limit'].forEach((key) => {
+          if (params[key] && isNumber(+params[key])) {
+            extendedTreeParams[key] = +params[key];
+          } else {
+            delete extendedTreeParams[key];
+          }
+        });
+        this.dataSource.extendedTreeParams = extendedTreeParams;
+        // has node response
+        if (this.dataSource.lastResponse) {
+          this.emitOuter('extendedtreerequest');
+          this.dataSource.loadExtendedTree();
+        }
       }
     });
   }
