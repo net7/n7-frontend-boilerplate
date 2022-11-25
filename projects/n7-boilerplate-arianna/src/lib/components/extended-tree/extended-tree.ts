@@ -14,6 +14,7 @@ export type ExtendedTreeData = {
   pagination: PaginationData;
   limitSelect?: InputSelectData;
   pageInput?: InputTextData;
+  fallback?: string;
   loading?: boolean;
 }
 

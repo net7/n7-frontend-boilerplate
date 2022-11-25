@@ -10,7 +10,6 @@ import { helpers } from '@net7/boilerplate-common';
 import { Params } from '@angular/router';
 import metadataHelper from '../../helpers/metadata.helper';
 import nodeHelper from '../../helpers/node.helper';
-import mock from './scheda-search.mock';
 
 const LOCAL_STORAGE_PREFIX = 'aw.scheda';
 
@@ -404,6 +403,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
         'search-page': 1,
         'search-limit': 10,
         'search-query': null,
+        // ancestor: true,
         ...this.internalSearchParams,
       };
 
@@ -422,11 +422,10 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       const basePath = this.configuration.get('paths').schedaBasePath;
       let request$: Observable<any> = of(null);
       if (params.query) {
-        // request$ = this.communication.request$('getNodeChildren', {
-        //   params,
-        //   onError: (error) => console.error(error),
-        // });
-        request$ = of(mock(params));
+        request$ = this.communication.request$('getNodeChildren', {
+          params,
+          onError: (error) => console.error(error),
+        });
       }
 
       request$.subscribe((nodesResponse) => {

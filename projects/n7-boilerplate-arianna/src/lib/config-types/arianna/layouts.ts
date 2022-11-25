@@ -113,6 +113,8 @@ export interface ConfigAriannaSchedaLayout {
     }
     /** extended tree lite version? */
     lite?: boolean;
+    /** extended tree empty state fallback text */
+    fallback?: string;
   };
   /** internal search section */
   'internal-search'?: {
@@ -124,6 +126,8 @@ export interface ConfigAriannaSchedaLayout {
     }
     /** internal search lite version? */
     lite?: boolean;
+    /** internal search empty state fallback text */
+    fallback?: string;
   };
   /** image viewer navigation */
   'image-viewer-nav'?: {

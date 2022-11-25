@@ -12,7 +12,13 @@ const PAGE_LIMIT = 5;
 export class AwSchedaSearchDS extends DataSource {
   protected transform = (nodes: NodesResponse): SchedaSearchData => {
     const {
-      placeholder, title, params, basePath, lite, configKeys
+      placeholder,
+      title,
+      params,
+      basePath,
+      lite,
+      configKeys,
+      fallback,
     } = this.options || {};
     const { totalCount } = nodes || {};
     const page = params.page ? +params.page : 1;
@@ -81,6 +87,7 @@ export class AwSchedaSearchDS extends DataSource {
       items,
       pagination,
       limitSelect,
+      fallback: nodes ? fallback : null,
       loading: false,
     };
   };

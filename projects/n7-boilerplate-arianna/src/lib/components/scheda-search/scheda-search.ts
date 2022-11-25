@@ -21,6 +21,7 @@ export type SchedaSearchData = {
   }[];
   pagination: PaginationData;
   limitSelect?: InputSelectData;
+  fallback?: string;
   loading?: boolean;
 }
 

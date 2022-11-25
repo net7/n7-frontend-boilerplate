@@ -14,37 +14,44 @@
             </div>
         </ng-container>
         <ng-container *ngIf="!data.loading && data.items">
-            <div *ngIf="data.items as items" class="aw-scheda-search__content">
-                <div *ngFor="let item of data.items" class="aw-scheda-search__item">
-                    <n7-anchor-wrapper [classes]="'aw-scheda-search__item-link'" [data]="item.anchor">
-                        <div class="aw-scheda-search__item-top">
-                            <n7-smart-breadcrumbs [data]="item.breadcrumbs">
-                            </n7-smart-breadcrumbs>
-                        </div>
-                        <div class="aw-scheda-search__item-bottom">
-                            <div *ngIf="item.icon" class="aw-scheda-search__item-icon">
-                                <span class="{{ item.icon }}"></span>
+            <ng-container *ngIf="!data.items?.length && data.fallback">
+                <div class="aw-scheda-search__content">
+                    <p>{{ data.fallback }}</p>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="data.items?.length">
+                <div *ngIf="data.items as items" class="aw-scheda-search__content">
+                    <div *ngFor="let item of data.items" class="aw-scheda-search__item">
+                        <n7-anchor-wrapper [classes]="'aw-scheda-search__item-link'" [data]="item.anchor">
+                            <div class="aw-scheda-search__item-top">
+                                <n7-smart-breadcrumbs [data]="item.breadcrumbs">
+                                </n7-smart-breadcrumbs>
                             </div>
-                            <div *ngIf="item.thumbnail" class="aw-scheda-search__item-image">
-                                <img src="{{ item.thumbnail }}" alt="{{ item.label }}">
+                            <div class="aw-scheda-search__item-bottom">
+                                <div *ngIf="item.icon" class="aw-scheda-search__item-icon">
+                                    <span class="{{ item.icon }}"></span>
+                                </div>
+                                <div *ngIf="item.thumbnail" class="aw-scheda-search__item-image">
+                                    <img src="{{ item.thumbnail }}" alt="{{ item.label }}">
+                                </div>
+                                <div *ngIf="item.label" class="aw-scheda-search__item-label">{{ item.label }}</div>
                             </div>
-                            <div *ngIf="item.label" class="aw-scheda-search__item-label">{{ item.label }}</div>
-                        </div>
-                    </n7-anchor-wrapper>
+                        </n7-anchor-wrapper>
+                    </div>
                 </div>
-            </div>
-            <div *ngIf="data.pagination as pagination" class="aw-scheda-search__footer">
-                <div *ngIf="data.pagination as pagination" class="aw-scheda-search__pagination">
-                    <n7-pagination 
-                    [data]="pagination"
-                    [emit]="this.emit"></n7-pagination>
+                <div *ngIf="data.pagination as pagination" class="aw-scheda-search__footer">
+                    <div *ngIf="data.pagination as pagination" class="aw-scheda-search__pagination">
+                        <n7-pagination 
+                        [data]="pagination"
+                        [emit]="this.emit"></n7-pagination>
+                    </div>
+                    <div *ngIf="data.limitSelect as limitSelect" class="aw-scheda-search__limit-select">
+                        <n7-input-select 
+                        [data]="limitSelect"
+                        [emit]="this.emit"></n7-input-select>
+                    </div>
                 </div>
-                <div *ngIf="data.limitSelect as limitSelect" class="aw-scheda-search__limit-select">
-                    <n7-input-select 
-                    [data]="limitSelect"
-                    [emit]="this.emit"></n7-input-select>
-                </div>
-            </div>
+            </ng-container>
         </ng-container>
     </div>
 </div>

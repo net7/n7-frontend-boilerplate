@@ -34,7 +34,12 @@ export class AwExtendedTreeDS extends DataSource {
   ): ExtendedTreeData => {
     const { totalCount } = nodes;
     const {
-      title, params, basePath, lite, configKeys
+      title,
+      params,
+      basePath,
+      lite,
+      configKeys,
+      fallback,
     } = this.options;
     const page = params.page ? +params.page : 1;
     const limit = params.limit ? +params.limit : 10;
@@ -93,6 +98,7 @@ export class AwExtendedTreeDS extends DataSource {
       pagination,
       pageInput,
       limitSelect,
+      fallback: nodes ? fallback : null,
       loading: false,
     };
   };
