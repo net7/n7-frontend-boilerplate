@@ -438,11 +438,11 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
         this.one('aw-scheda-search').update(nodesResponse);
 
         // fix query input update
-        if (params['search-query']) {
+        if (params.query) {
           setTimeout(() => {
             const queryInput: HTMLInputElement = document
               .querySelector('.aw-scheda-search__input input[type="text"]');
-            queryInput.value = params['search-query'] || '';
+            queryInput.value = params.query || '';
           });
         }
       });

@@ -1,6 +1,8 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventHandler } from '@net7/core';
-import { clone, isEmpty, isNumber } from 'lodash';
+import {
+  isEmpty, isEqual, isNumber
+} from 'lodash';
 import {
   forkJoin, from, of, ReplaySubject, Subject, timer
 } from 'rxjs';
@@ -251,19 +253,37 @@ export class AwSchedaLayoutEH extends EventHandler {
 
   private listenRouteQueryParams() {
     this.route.queryParams.subscribe((params) => {
-      const isSchedaSerch = !!Object.keys(params).find((key) => key.includes('search-'));
-      const extendedTreeParams = clone(params);
-      const internalSearchParams = clone(params);
-      // scheda search changed
-      if (isSchedaSerch) {
-        // scheda (internal) search force numeric
-        ['search-page', 'search-limit'].forEach((key) => {
-          if (params[key] && isNumber(+params[key])) {
-            internalSearchParams[key] = +params[key];
+      const extendedTreeParams = {};
+      const internalSearchParams = {};
+      Object.keys(params).forEach((key) => {
+        const treeAllowed = ['query', 'page', 'limit'];
+        const internalAllowed = treeAllowed.map((item) => `search-${item}`);
+        if (treeAllowed.includes(key)) {
+          let value;
+          if (key !== 'query') {
+            value = isNumber(+params[key]) ? +params[key] : null;
           } else {
-            delete internalSearchParams[key];
+            value = params[key];
           }
-        });
+          if (value) {
+            extendedTreeParams[key] = value;
+          }
+        }
+        if (internalAllowed.includes(key)) {
+          let value;
+          if (key !== 'search-query') {
+            value = isNumber(+params[key]) ? +params[key] : null;
+          } else {
+            value = params[key];
+          }
+          if (value) {
+            internalSearchParams[key] = value;
+          }
+        }
+      });
+
+      // scheda search changed
+      if (!isEqual(this.dataSource.internalSearchParams, internalSearchParams)) {
         this.dataSource.internalSearchParams = internalSearchParams;
         // has node response
         if (this.dataSource.lastResponse) {
@@ -272,15 +292,8 @@ export class AwSchedaLayoutEH extends EventHandler {
         }
 
       // extended tree changed
-      } else {
-        // extended tree force numeric
-        ['page', 'limit'].forEach((key) => {
-          if (params[key] && isNumber(+params[key])) {
-            extendedTreeParams[key] = +params[key];
-          } else {
-            delete extendedTreeParams[key];
-          }
-        });
+      }
+      if (!isEqual(this.dataSource.extendedTreeParams, extendedTreeParams)) {
         this.dataSource.extendedTreeParams = extendedTreeParams;
         // has node response
         if (this.dataSource.lastResponse) {
