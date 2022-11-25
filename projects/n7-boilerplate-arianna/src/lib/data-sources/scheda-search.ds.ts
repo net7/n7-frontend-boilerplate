@@ -1,15 +1,20 @@
+import { helpers } from '@net7/boilerplate-common';
 import {
   Button, InnerTitleData, InputSelectData, InputTextData, PaginationData
 } from '@net7/components';
 import { DataSource } from '@net7/core';
 import { SchedaSearchData } from '../components/scheda-search/scheda-search';
+import nodeHelper from '../helpers/node.helper';
+import { NodesResponse } from './extended-tree.ds';
 
 const PAGE_LIMIT = 5;
 
 export class AwSchedaSearchDS extends DataSource {
-  protected transform = (data): SchedaSearchData => {
-    const { placeholder, title, params } = this.options || {};
-    const { totalCount, items } = data || {};
+  protected transform = (nodes: NodesResponse): SchedaSearchData => {
+    const {
+      placeholder, title, params, basePath, lite, configKeys
+    } = this.options || {};
+    const { totalCount } = nodes || {};
     const page = params.page ? +params.page : 1;
     const limit = params.limit ? +params.limit : 10;
 
@@ -31,8 +36,33 @@ export class AwSchedaSearchDS extends DataSource {
       inputPayload: 'input-change'
     };
 
+    // items
+    const items = (nodes?.items || []).map((item) => {
+      // breadcrumbs
+      const breadcrumbs = {
+        items: []
+      };
+      if (item.breadcrumbs) {
+        breadcrumbs.items = item.breadcrumbs.map(({ label, link: href }) => ({
+          label,
+          anchor: { href },
+        }));
+      }
+      return {
+        icon: nodeHelper.getNodeIcon(configKeys, item),
+        thumbnail: lite ? null : item.img,
+        label: item.label,
+        anchor: {
+          href: `${basePath}/${item.id}/${helpers.slugify(item.label)}`
+        },
+        breadcrumbs
+      };
+    });
+
     // pagination
-    const pagination: PaginationData = data ? this.getPagination(page, totalCount, limit) : null;
+    const pagination: PaginationData = nodes?.items?.length
+      ? this.getPagination(page, totalCount, limit)
+      : null;
 
     // results limit select
     const limitSelect: InputSelectData = {

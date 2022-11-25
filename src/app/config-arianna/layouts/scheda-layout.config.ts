@@ -41,6 +41,7 @@ const config: ConfigAriannaSchedaLayout = {
     }
   },
   'internal-search': {
+    // lite: true,
     title: 'Cerca nelle Aggregazioni Logiche',
     search: {
       placeholder: 'Cerca...'

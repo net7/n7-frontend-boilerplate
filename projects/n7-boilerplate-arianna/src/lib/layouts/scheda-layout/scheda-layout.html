@@ -291,7 +291,7 @@
 
 <ng-template #internalsearch>
     <!-- Internal search -->
-    <section *ngIf="lb.dataSource.hasInternalSearch" id="internal-search-container" class="aw-scheda__section">
+    <section *ngIf="lb.dataSource.hasInternalSearch" id="internal-search-container" class="aw-scheda__section aw-scheda__section-internal-search">
         <aw-scheda-search
         [data]="lb.widgets['aw-scheda-search'].ds.out$ | async"
         [emit]="lb.widgets['aw-scheda-search'].emit"></aw-scheda-search>

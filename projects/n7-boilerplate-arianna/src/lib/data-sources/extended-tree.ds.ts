@@ -10,13 +10,17 @@ type ParentResponse = {
   label: string;
 }
 
-type NodesResponse = {
+export type NodesResponse = {
   items: {
     img?: string;
     label: string;
     id: string;
     document_type: string;
     document_classification: string;
+    breadcrumbs?: {
+      label: string;
+      link: string;
+    }[];
   }[];
   totalCount: number;
 }

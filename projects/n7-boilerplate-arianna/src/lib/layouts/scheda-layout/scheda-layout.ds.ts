@@ -1,15 +1,15 @@
 import { LayoutDataSource } from '@net7/core';
 import {
-  fromEvent, Subject, of, merge, Observable, forkJoin, combineLatest,
+  fromEvent, Subject, of, merge, Observable
 } from 'rxjs';
 import {
-  delay, first, switchMap, takeUntil
+  delay, first, takeUntil
 } from 'rxjs/operators';
 import { clone, get as _get } from 'lodash';
 import { helpers } from '@net7/boilerplate-common';
+import { Params } from '@angular/router';
 import metadataHelper from '../../helpers/metadata.helper';
 import nodeHelper from '../../helpers/node.helper';
-import { AwLinkedObjectsDS } from '../../data-sources/linked-objects.ds';
 import mock from './scheda-search.mock';
 
 const LOCAL_STORAGE_PREFIX = 'aw.scheda';
@@ -399,54 +399,44 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       this.hasInternalSearch = true;
       const configKeys = this.configuration.get('config-keys');
       const widgetOptions = this.layoutConfig['internal-search'];
-      const params: any = {
+      const rawParams: any = {
         id: parentResponse.id,
         'search-page': 1,
         'search-limit': 10,
         'search-query': null,
         ...this.internalSearchParams,
       };
+
+      // set params object without "search-" prefix
+      const params: Params = {};
+      Object.keys(rawParams).forEach((paramKey) => {
+        params[paramKey.replace('search-', '')] = rawParams[paramKey];
+      });
+
       const widgetParams = clone(params);
 
       // normalize params
-      params.offset = (params['search-page'] - 1) * params['search-limit'];
-      delete params['search-page'];
+      params.offset = (params.page - 1) * params.limit;
+      delete params.page;
 
       const basePath = this.configuration.get('paths').schedaBasePath;
       let request$: Observable<any> = of(null);
-      if (params['search-query']) {
+      if (params.query) {
         // request$ = this.communication.request$('getNodeChildren', {
         //   params,
         //   onError: (error) => console.error(error),
-        // })
-        request$ = of(mock(params)).pipe(
-          switchMap(({ results, totalCount }) => {
-            const linkedObjectsDS = new AwLinkedObjectsDS();
-            linkedObjectsDS.update({
-              items: this._normalizeItems(results.items)
-            }, {
-              context: 'search',
-              config: this.configuration,
-            });
-            return combineLatest([
-              linkedObjectsDS.out$,
-              of(totalCount)
-            ]);
-          })
-        );
+        // });
+        request$ = of(mock(params));
       }
 
-      request$.subscribe((response) => {
+      request$.subscribe((nodesResponse) => {
         this.one('aw-scheda-search').updateOptions({
           basePath,
           configKeys,
           params: widgetParams,
           ...widgetOptions,
         });
-        this.one('aw-scheda-search').update(response ? {
-          items: response[0],
-          totalCount: response[1]
-        } : null);
+        this.one('aw-scheda-search').update(nodesResponse);
 
         // fix query input update
         if (params['search-query']) {

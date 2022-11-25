@@ -1,12 +1,24 @@
 import { Component, Input } from '@angular/core';
 import {
+  Anchor,
   InnerTitleData, InputSelectData, InputTextData, PaginationData
 } from '@net7/components';
 
 export type SchedaSearchData = {
   header: InnerTitleData;
   input: InputTextData;
-  items: any;
+  items: {
+    icon: string;
+    thumbnail?: string;
+    label: string;
+    anchor: Anchor;
+    breadcrumbs?: {
+      items: {
+        label: string;
+        anchor: Anchor;
+      }[];
+    }
+  }[];
   pagination: PaginationData;
   limitSelect?: InputSelectData;
   loading?: boolean;

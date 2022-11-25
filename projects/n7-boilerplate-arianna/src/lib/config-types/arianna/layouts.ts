@@ -122,6 +122,8 @@ export interface ConfigAriannaSchedaLayout {
     search: {
       placeholder: string;
     }
+    /** internal search lite version? */
+    lite?: boolean;
   };
   /** image viewer navigation */
   'image-viewer-nav'?: {

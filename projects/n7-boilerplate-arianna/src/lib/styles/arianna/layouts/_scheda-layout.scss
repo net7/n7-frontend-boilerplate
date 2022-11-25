@@ -251,6 +251,9 @@
             border-bottom: 0;
         }
     }
+    .aw-scheda__section.aw-scheda__section-internal-search {
+        background-color: $breadcrumbs-background;
+    }
 
     .aw-scheda__section.aw-scheda__empty {
         padding-bottom: $space * 3;

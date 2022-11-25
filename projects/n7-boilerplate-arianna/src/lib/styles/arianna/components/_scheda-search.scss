@@ -3,9 +3,47 @@
  */
 
 .aw-scheda-search {
+    padding-bottom: $space * 2;
 
-    &__results-wrapper, &__footer, &__input, &__loader {
-        padding: 0 $aw-scheda-content-padding $aw-scheda-content-padding $aw-scheda-content-padding;
+    &__item-link {
+        display: block;
+        padding: $space * 1.8 0 ;
+        border-bottom: 1px solid $color-border-normal;
+        cursor: pointer;
+        color: $color-gray-05;
+
+        &:hover {
+            .aw-scheda-search__item-label {
+                color: $color-text-link;
+            }
+        }
+    }
+
+    &__item:last-child .aw-scheda-search__item-link {
+        border-bottom: none;
+    }
+
+    &__item-bottom {
+        display: flex;
+        align-items: center;
+    }
+
+    &__item-icon {
+        margin-right: $space;
+    }
+
+    &__item-label {
+        font-weight: $font-weight-bold;
+    }
+
+    &__item-image img {
+        margin-right: $space;
+        width: $tree-image-size;
+        height: $tree-image-size;
+    }
+
+    &__content, &__footer, &__input, &__loader {
+        padding: 0 $aw-scheda-content-padding $aw-scheda-content-padding * 0.5 $aw-scheda-content-padding;
     }
 
     &__loader {
@@ -55,18 +93,10 @@
         }
     }
 
-    &__results-wrapper {
+    &__content {
         /* Hover on breadcrumbs */
         n7-smart-breadcrumbs {
             cursor: pointer;
-
-            &:hover {
-                + n7-item-preview {
-                    .n7-item-preview__title {
-                        color: $color-main;
-                    }
-                }
-            }
         }
     }
 }

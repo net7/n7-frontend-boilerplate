@@ -14,16 +14,23 @@
             </div>
         </ng-container>
         <ng-container *ngIf="!data.loading && data.items">
-            <div class="aw-scheda-search__results-wrapper">
-                <div class="aw-item-preview-list">
-                    <ng-container *ngFor="let preview of data.items.previews">
-                        <div class="aw-item-preview-wrapper">
-                            <n7-smart-breadcrumbs [data]="preview.breadcrumbs">
+            <div *ngIf="data.items as items" class="aw-scheda-search__content">
+                <div *ngFor="let item of data.items" class="aw-scheda-search__item">
+                    <n7-anchor-wrapper [classes]="'aw-scheda-search__item-link'" [data]="item.anchor">
+                        <div class="aw-scheda-search__item-top">
+                            <n7-smart-breadcrumbs [data]="item.breadcrumbs">
                             </n7-smart-breadcrumbs>
-                            <n7-item-preview [data]="preview" [emit]="this.emit">
-                            </n7-item-preview>
                         </div>
-                    </ng-container>
+                        <div class="aw-scheda-search__item-bottom">
+                            <div *ngIf="item.icon" class="aw-scheda-search__item-icon">
+                                <span class="{{ item.icon }}"></span>
+                            </div>
+                            <div *ngIf="item.thumbnail" class="aw-scheda-search__item-image">
+                                <img src="{{ item.thumbnail }}" alt="{{ item.label }}">
+                            </div>
+                            <div *ngIf="item.label" class="aw-scheda-search__item-label">{{ item.label }}</div>
+                        </div>
+                    </n7-anchor-wrapper>
                 </div>
             </div>
             <div *ngIf="data.pagination as pagination" class="aw-scheda-search__footer">
