@@ -16,6 +16,7 @@ Arianna
 Muruca
 
 - add style for advanced results
+- advanced results - added logic to add query params to link
 
 Common 
 

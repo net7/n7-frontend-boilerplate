@@ -21,7 +21,9 @@
                     </span>
                     <!-- VALUE W/ HREF -->
                     <a *ngIf="item.href"
-                    [href]="item.href">
+                    [href]="item.href"
+                    [target]="item.target"
+                    >
                         <span class="mr-advanced-result__value"
                             *ngIf="item.value"
                             [innerHTML]="item.value">
