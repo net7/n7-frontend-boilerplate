@@ -190,7 +190,7 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
     if (this.value !== value) {
       this.value = value;
     }
-    this.isUpdate = update || this.value === [];
+    this.isUpdate = update || this.value?.length === 0;
 
     if (update && this.input) {
       const { links } = this.input;
@@ -219,13 +219,13 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
     if (this.value.includes(id)) return this.MARKER_ICON_SELECTED;
     if (counter > 0) return this.MARKER_ICON;
     return this.MARKER_ICON_UNAVAILABLE;
-  }
+  };
 
   getZindex = (id: string, counter: number) => {
     if (this.value.includes(id)) return 19999;
     if (counter > 0) return 9999;
     return null;
-  }
+  };
 
   toggleValue(value: string) {
     const exists = this.value.includes(value);
