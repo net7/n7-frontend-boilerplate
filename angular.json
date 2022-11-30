@@ -68,7 +68,18 @@
             "buildOptimizer": false,
             "sourceMap": true,
             "optimization": false,
-            "namedChunks": true
+            "namedChunks": true,
+            "allowedCommonJsDependencies": [
+              "apexcharts/dist/apexcharts.common.js",
+              "dayjs",
+              "latte-carousel",
+              "leaflet.markercluster",
+              "leaflet",
+              "lodash",
+              "moment",
+              "openseadragon",
+              "slugify"
+            ]
           },
           "configurations": {
             "production": {

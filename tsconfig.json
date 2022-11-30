@@ -15,8 +15,9 @@
     "module": "esnext",
     "moduleResolution": "node",
     "experimentalDecorators": true,
-    "target": "es5", // "target": "es2015",
+    "target": "es2020", // "target": "es2015",
     "allowSyntheticDefaultImports" : true,
+    "skipLibCheck": true,
     "typeRoots": [
       "node_modules/@types"
     ],
