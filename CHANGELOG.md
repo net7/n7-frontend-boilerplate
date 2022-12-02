@@ -17,6 +17,7 @@ Muruca
 
 - add style for advanced results
 - advanced results - added logic to add query params to link
+- text viewer - added function to handle highlight API and positioning
 
 Common 
 
