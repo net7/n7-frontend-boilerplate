@@ -82,7 +82,7 @@ export class MrResourceLayoutDS extends LayoutDataSource {
   private initSections(response) {
     const { top, content } = this.pageConfig.sections;
     const sections = top.concat(content);
-    sections.forEach(({ id, type, tools }) => {
+    sections.forEach(({ id, type, tools, options }) => {
       // update section datasource
       const widgetDataSource = this.getWidgetDataSource(id);
       if (!widgetDataSource) return;
@@ -96,13 +96,12 @@ export class MrResourceLayoutDS extends LayoutDataSource {
       }
 
       if (type === 'text-viewer') {
-        const { defaultProvider, providers } = this.configuration.get('communication');
-        const currentProvider = providers[defaultProvider] || {};
-        const { baseUrl } = currentProvider;
-        responseSection.searchApi = {
-          url: baseUrl + currentProvider.config.xmlSearch,
-          'resource-id': this.id
+        const searchApi = {
+            url: this.communication.getUrl("xmlSearch"),
+            'resource-id': this.id
         };
+        options["searchApi"] = searchApi;
+        this.one(id).updateOptions( options );
       }
       // update data
       if (responseSection && !helpers.isEmpty(responseSection)) {

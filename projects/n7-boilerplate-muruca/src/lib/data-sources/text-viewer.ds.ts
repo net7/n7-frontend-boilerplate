@@ -5,9 +5,8 @@ export class MrTextViewerDS extends DataSource {
   id: string;
 
   protected transform(data: TextViewerData): TextViewerData {
-    const { enableClickOnEntities, toggleColumn, searchId } = this.options || {};
+    const { enableClickOnEntities, toggleColumn, searchId, searchApi } = this.options || {};
     data.toggleColumn = toggleColumn;
-
     // force tei publisher endpoint value
     document.addEventListener(
       'pb-page-ready',
@@ -51,15 +50,15 @@ export class MrTextViewerDS extends DataSource {
     }
 
     if (params.get('hq')) {
-      if (data.searchApi) {
-        const xmlQueryUrl = `${data.searchApi.url
-        }?resource-id=${data.searchApi['resource-id']
+      if (searchApi) {
+        const xmlQueryUrl = `${searchApi.url
+        }?resource-id=${searchApi['resource-id']
         }&searchId=${searchId
         }&xml=${data.docs[0]?.xml
         }&${params.toString()}`;
         data.docs[0].url = xmlQueryUrl;
         data.docs[0].rootPath = 'api/mrcparts';
-      }
+    }
       document.addEventListener('pb-end-update', (ev: any) => {
         this.scrollElementsIntoView(ev.detail, 'hq', '#view0');
       });
@@ -153,8 +152,6 @@ export class MrTextViewerDS extends DataSource {
         element = document
           .querySelector(`.n7-text-viewer ${view}`)
           .shadowRoot.querySelector('.tei-em');
-        console.log('scrooolll');
-        console.log(element);
       }
 
       const container = document.querySelector(`.n7-text-viewer ${view}`);

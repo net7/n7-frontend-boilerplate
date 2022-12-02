@@ -22,6 +22,7 @@ Muruca
 Common 
 
 - Edited README.md
+- Added getUrl function to communication service
 
 ## [3.9.1] - 2022-10-12
 
