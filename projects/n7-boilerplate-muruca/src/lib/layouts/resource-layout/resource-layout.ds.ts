@@ -95,6 +95,15 @@ export class MrResourceLayoutDS extends LayoutDataSource {
         this.one(id).updateOptions({ tools });
       }
 
+      if (type === 'text-viewer') {
+        const { defaultProvider, providers } = this.configuration.get('communication');
+        const currentProvider = providers[defaultProvider] || {};
+        const { baseUrl } = currentProvider;
+        responseSection.searchApi = {
+          url: baseUrl + currentProvider.config.xmlSearch,
+          'resource-id': this.id
+        };
+      }
       // update data
       if (responseSection && !helpers.isEmpty(responseSection)) {
         this.one(id).update(responseSection);

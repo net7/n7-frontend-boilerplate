@@ -25,7 +25,7 @@ export default {
     });
 
     if (params !== '') {
-      return href.split('?')[1] ? `&${params}` : `?${params}`;
+      return href.split('?')[1] ? `${href}&${params}` : `${href}?${params}`;
     }
     return href;
   }
