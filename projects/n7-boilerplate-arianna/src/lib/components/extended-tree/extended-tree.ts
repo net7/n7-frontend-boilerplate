@@ -36,7 +36,7 @@ export class ExtendedTreeComponent {
   }
 
   onCollapseClick(type) {
-    if (type === 'text') return;
+    if (['text', 'submit'].includes(type)) return;
 
     this.lb.dataSource.onSectionCollapse('extended-tree');
   }

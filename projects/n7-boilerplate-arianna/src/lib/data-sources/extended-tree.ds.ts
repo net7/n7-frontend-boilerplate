@@ -27,7 +27,11 @@ export type NodesResponse = {
 
 const PAGE_LIMIT = 5;
 
+const SEARCH_OPEN_CLASS = 'search-is-open';
+
 export class AwExtendedTreeDS extends DataSource {
+  private searchIsOpen = false;
+
   protected transform = (
     { parent, nodes }:
     { parent: ParentResponse; nodes: NodesResponse }
@@ -43,6 +47,10 @@ export class AwExtendedTreeDS extends DataSource {
     } = this.options;
     const page = params.page ? +params.page : 1;
     const limit = params.limit ? +params.limit : 10;
+    this.searchIsOpen = (
+      this.searchIsOpen
+      || (typeof params.query === 'string' && params.query.trim())
+    );
     // header
     const header: InnerTitleData = {
       title: {
@@ -57,9 +65,13 @@ export class AwExtendedTreeDS extends DataSource {
         search: {
           placeholder: 'Cerca negli oggetti culturali',
           payload: 'search-input',
-          button: null
+          button: {
+            text: '',
+            payload: 'search-button'
+          }
         },
-      }
+      },
+      classes: this.searchIsOpen ? SEARCH_OPEN_CLASS : ''
     };
     // items
     const items = (nodes.items || []).map((item) => ({
@@ -105,6 +117,21 @@ export class AwExtendedTreeDS extends DataSource {
 
   public setLoading(loading: boolean) {
     this.output.loading = loading;
+  }
+
+  public toggleSearch() {
+    this.searchIsOpen = !this.searchIsOpen;
+
+    const { header } = this.output;
+    header.classes = this.searchIsOpen ? SEARCH_OPEN_CLASS : '';
+
+    // trigger focus
+    if (this.searchIsOpen) {
+      setTimeout(() => {
+        const inputEl: HTMLInputElement = document.querySelector('.aw-extended-tree input.n7-inner-title__search-bar');
+        inputEl.focus();
+      }, 500);
+    }
   }
 
   private getPagination(page, totalCount, limit): PaginationData {
