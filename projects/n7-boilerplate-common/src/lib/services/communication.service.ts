@@ -57,4 +57,20 @@ export class CommunicationService {
 
     return empty();
   }
+  
+    getUrl(requestId, provider?){
+        const activeProvider = provider || this.defaultProvider;
+        const activeProviderConfig = this.communicationConfig.providers[activeProvider];
+
+        if (!activeProviderConfig) {
+            throw Error(`There is no config for "${activeProvider}" provider`);
+        }   
+        
+        const baseUrl = activeProviderConfig.baseUrl;
+        
+        if (!activeProviderConfig.config[requestId]) {
+            throw Error(`There is no config for "${requestId}" `);
+        }
+        return baseUrl + activeProviderConfig.config[requestId]    
+    }
 }
