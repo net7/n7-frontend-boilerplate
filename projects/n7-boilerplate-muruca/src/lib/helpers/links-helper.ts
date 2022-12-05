@@ -17,5 +17,16 @@ export default {
   },
   isExternalLink(href: string) {
     return /^http(?:s)?:\/{2}\S+$/.test(href);
+  },
+  joinQueryParams(href: string, queryParams: string[]) {
+    let params = '';
+    queryParams.forEach((par) => {
+      params += params === '' ? par.replace('?', '') : `&${par.replace('?', '')}`;
+    });
+
+    if (params !== '') {
+      return href.split('?')[1] ? `${href}&${params}` : `${href}?${params}`;
+    }
+    return href;
   }
 };

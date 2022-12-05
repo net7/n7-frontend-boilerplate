@@ -17,11 +17,17 @@ Arianna
 
 Muruca
 
--   add style for advanced results
+- add style for advanced results
+- advanced results - added logic to add query params to link
+- text viewer - added function to handle highlight API and positioning
 
 Common 
 
+- Edited README.md
+- Added getUrl function to communication service
+-   add style for advanced results
 -   Edited README.md
+
 
 ## [3.9.1] - 2022-10-12
 

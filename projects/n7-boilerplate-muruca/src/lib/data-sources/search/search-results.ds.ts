@@ -11,8 +11,10 @@ type HighlightItem = [string, [string]] | {
     absolute: string;
     /** path relative to the item preview url */
     relative: string;
-    /** url query params */
+    /** url query params in format key="value"&key2="value" */
     params?: string;
+    /** include current url query params */
+    query_string?: boolean;
   };
   text?: string;
   label?: string;
@@ -136,13 +138,28 @@ export class MrSearchResultsDS extends DataSource {
             } else if (highlight.link.absolute) {
               // path is relative to the baseUrl
               href = `${highlight.link.absolute}`;
-            } else if (highlight.link) {
+            } else if (highlight.link.relative) {
+              // path is relative to the baseUrl
+              href = `${item.link}${highlight.link.relative}`;
+            } else if (highlight.link && typeof highlight.link === 'string') {
               // path is relative to the item-preview url
               href = `${item.link}${highlight.link}`;
+            } else if (highlight.link) {
+              href = `${item.link}`;
             }
+
+            const params = highlight.link.params ? [highlight.link.params] : [];
+
+            if (highlight.link.query_string) {
+              params.push(document.location.search);
+            }
+            console.log(href);
+            href = linksHelper.joinQueryParams(href, params);
+
             highlightGroup.items.push({
               label: highlight.label ? _t(highlight.label) : undefined,
               value: highlight.text ?? '',
+              target: itemPreview?.linkTarget || '_blank',
               href, // custom hyperlink
             });
           }
