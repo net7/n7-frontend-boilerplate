@@ -9,6 +9,8 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [3.9.2] - 2022-10-20
+
 Arianna
 
 -   Fix image viewer navigation refresh
@@ -23,6 +25,9 @@ Common
 
 - Edited README.md
 - Added getUrl function to communication service
+-   add style for advanced results
+-   Edited README.md
+
 
 ## [3.9.1] - 2022-10-12
 
@@ -263,7 +268,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.9.1...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.9.2...HEAD
+
+[3.9.2]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.9.1...v3.9.2
 
 [3.9.1]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.9.0...v3.9.1
 
