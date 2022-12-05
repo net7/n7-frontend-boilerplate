@@ -9,6 +9,8 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+- upgrade angular to v14x and node to v18x 
+
 ## [3.9.2] - 2022-10-20
 
 Arianna

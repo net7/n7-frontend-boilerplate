@@ -2,15 +2,15 @@
   "name": "@net7/boilerplate-arianna",
   "version": "3.9.2",
   "peerDependencies": {
-    "@angular/common": "~13.2.0",
-    "@angular/core": "~13.2.0"
+    "@angular/common": "^14.2.12",
+    "@angular/core": "^14.2.12"
   },
   "dependencies": {
     "lodash": "^4.17.15",
     "dayjs": "^1.11.1",
     "slugify": "^1.4.0",
     "tippy.js": "^5.1.2",
-    "ngx-extended-pdf-viewer": "^11.1.2",
+    "ngx-extended-pdf-viewer": "^14.5.3",
     "tslib": "^2.3.0"
   }
 }
