@@ -15,6 +15,9 @@ export class AwExtendedTreeEH extends EventHandler {
     });
 
     this.outerEvents$.subscribe(({ type }) => {
+      if (type === 'aw-scheda-layout.routechanged') {
+        this.dataSource.searchIsOpen = false;
+      }
       if (type === 'aw-scheda-layout.extendedtreerequest') {
         this.dataSource.setLoading(true);
       }

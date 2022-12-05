@@ -377,13 +377,13 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
           });
 
           // fix query input update
-          if (params.query) {
-            setTimeout(() => {
-              const queryInput: HTMLInputElement = document
-                .querySelector('.aw-extended-tree__header .n7-inner-title__search-bar');
+          setTimeout(() => {
+            const queryInput: HTMLInputElement = document
+              .querySelector('.aw-extended-tree__header .n7-inner-title__search-bar');
+            if (queryInput) {
               queryInput.value = params.query || '';
-            });
-          }
+            }
+          });
         }
       });
     } else {
@@ -438,13 +438,13 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
         this.one('aw-scheda-search').update(nodesResponse);
 
         // fix query input update
-        if (params.query) {
-          setTimeout(() => {
-            const queryInput: HTMLInputElement = document
-              .querySelector('.aw-scheda-search__input input[type="text"]');
+        setTimeout(() => {
+          const queryInput: HTMLInputElement = document
+            .querySelector('.aw-scheda-search__input input[type="text"]');
+          if (queryInput) {
             queryInput.value = params.query || '';
-          });
-        }
+          }
+        });
       });
     } else {
       this.hasInternalSearch = false;
