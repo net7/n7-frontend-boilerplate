@@ -30,7 +30,7 @@ const PAGE_LIMIT = 5;
 const SEARCH_OPEN_CLASS = 'search-is-open';
 
 export class AwExtendedTreeDS extends DataSource {
-  private searchIsOpen = false;
+  public searchIsOpen = false;
 
   protected transform = (
     { parent, nodes }:
