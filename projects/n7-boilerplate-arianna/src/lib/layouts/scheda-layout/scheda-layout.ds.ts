@@ -403,7 +403,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
         'search-page': 1,
         'search-limit': 10,
         'search-query': null,
-        // ancestor: true,
+        ancestor: true,
         ...this.internalSearchParams,
       };
 
