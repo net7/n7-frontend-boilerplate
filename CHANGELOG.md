@@ -12,6 +12,7 @@ For each commit add a description under the Unreleased section under the corresp
 Arianna
 
 -   Fix image viewer navigation refresh
+- added configuration in `home-layout.config.ts` to enable "view all" on entitites in bubble chart
 
 Muruca
 
