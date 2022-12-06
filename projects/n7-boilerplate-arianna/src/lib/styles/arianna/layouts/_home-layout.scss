@@ -33,7 +33,7 @@
             padding-right: $space * 2;
             padding-left: $space * 2;
             border-radius: $top-hero-input-border-radius 0 0
-                $top-hero-input-border-radius;
+            $top-hero-input-border-radius;
             box-shadow: $top-hero-input-box-shadow;
             line-height: $top-hero-input-height;
             font-size: $font-size-l;
@@ -46,7 +46,7 @@
         &__btn {
             height: $top-hero-button-height;
             border-radius: 0 $top-hero-input-border-radius
-                $top-hero-input-border-radius 0;
+            $top-hero-input-border-radius 0;
             border: none;
             font-size: $font-size-l;
         }
@@ -191,6 +191,18 @@
 
         &:last-child {
             border-bottom: 0;
+        }
+    }
+
+    .aw-home__facet-link {
+        display: flex;
+        align-items: center;
+        font-weight: $font-weight-normal;
+        width: fit-content !important;
+        height: $space * 3;
+
+        .aw-home__facet-link-label {
+            margin-left: $space;
         }
     }
 
@@ -412,8 +424,8 @@
         &-loading {
             flex: 0 0 auto;
             width: calc(
-                100% - #{$facets-wrapper-width} - #{$results-wrapper-width}
-            );
+            100% - #{$facets-wrapper-width} - #{$results-wrapper-width}
+        );
         }
     }
 

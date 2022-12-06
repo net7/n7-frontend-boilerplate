@@ -31,6 +31,11 @@ export interface ConfigAriannaHomeLayout {
   'autocomplete-fallback': string;
   /** item preview (right sidebar) fallback text */
   'linked-objects-fallback': string;
+  /** facets view all links */
+  'view-all-links'?: {
+    label?: string;
+    enabled?: boolean;
+  };
 }
 
 type StringLimitConfig = {

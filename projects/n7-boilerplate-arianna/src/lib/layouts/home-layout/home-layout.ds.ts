@@ -50,13 +50,13 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   // ===== BUBBLE CHART =====
   public bubblesEnabled = false; // true if this Arianna Web project has the bubble chart module
 
-  public selectedBubbles: any[] = [] // array of IDs
+  public selectedBubbles: any[] = []; // array of IDs
 
   // store last bubble response to refresh the graph with the same data
-  public lastBubbleResponse: any
+  public lastBubbleResponse: any;
 
   // store the first array of bubbles, to find them in case of no results.
-  public firstBubbleResponse: any
+  public firstBubbleResponse: any;
   // ========================
 
   onInit({
@@ -113,7 +113,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       this.one(id).updateOptions(options);
     }
     this.one(id).update(data);
-  }
+  };
 
   initialFilterRequest() {
     return this.communication.request$('globalFilter', {
@@ -135,6 +135,10 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         locked: false,
         ...TOEconfigData,
       });
+    });
+    this.one('aw-home-facets-wrapper').updateOptions({
+      pageConfig: this.configuration.get('home-layout'),
+      paths: this.configuration.get('paths')
     });
     this.one('aw-home-facets-wrapper').update(facetData);
   }

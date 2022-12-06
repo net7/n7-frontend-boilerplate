@@ -28,6 +28,11 @@
                 *ngFor="let widgetData of lb.widgets['aw-home-facets-wrapper'].ds.out$ | async;">
                 <n7-facet-header [data]="widgetData.header" [emit]="lb.widgets['aw-home-facets-wrapper'].emit">
                 </n7-facet-header>
+                <a *ngIf="widgetData.link as link" class="aw-home__facet-link n7-btn"
+                [routerLink]="[link.path]" [queryParams]="link.queryParams">
+                    <span class="n7-icon n7-icon-list"></span>
+                    <span class="aw-home__facet-link-label">{{ link.label }}</span>
+                </a>
                 <n7-facet [data]="widgetData.input" [emit]="lb.widgets['aw-home-facets-wrapper'].emit">
                 </n7-facet>
             </span>
