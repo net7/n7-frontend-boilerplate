@@ -5,9 +5,8 @@ export class MrTextViewerDS extends DataSource {
   id: string;
 
   protected transform(data: TextViewerData): TextViewerData {
-    const { enableClickOnEntities, toggleColumn } = this.options || {};
-    data['toggleColumn'] = toggleColumn;
-
+    const { enableClickOnEntities, toggleColumn, searchId, searchApi } = this.options || {};
+    data.toggleColumn = toggleColumn;
     // force tei publisher endpoint value
     document.addEventListener(
       'pb-page-ready',
@@ -50,6 +49,20 @@ export class MrTextViewerDS extends DataSource {
       });
     }
 
+    if (params.get('hq')) {
+      if (searchApi) {
+        const xmlQueryUrl = `${searchApi.url
+        }?resource-id=${searchApi['resource-id']
+        }&searchId=${searchId
+        }&xml=${data.docs[0]?.xml
+        }&${params.toString()}`;
+        data.docs[0].url = xmlQueryUrl;
+        data.docs[0].rootPath = 'api/mrcparts';
+    }
+      document.addEventListener('pb-end-update', (ev: any) => {
+        this.scrollElementsIntoView(ev.detail, 'hq', '#view0');
+      });
+    }
     return data;
   }
 
@@ -135,6 +148,10 @@ export class MrTextViewerDS extends DataSource {
         element = document
           .querySelector(`.n7-text-viewer ${view}`)
           .shadowRoot.querySelector(`#${key}`);
+      } else if (type === 'hq') {
+        element = document
+          .querySelector(`.n7-text-viewer ${view}`)
+          .shadowRoot.querySelector('.tei-em');
       }
 
       const container = document.querySelector(`.n7-text-viewer ${view}`);

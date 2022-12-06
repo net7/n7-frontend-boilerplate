@@ -9,6 +9,12 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [4.0.0] - 2022-12-05
+
+-   upgrade angular to v14x and node to v18x 
+
+## [3.9.2] - 2022-10-20
+
 Arianna
 
 -   Fix image viewer navigation refresh
@@ -16,11 +22,16 @@ Arianna
 
 Muruca
 
-- add style for advanced results
+-   add style for advanced results
+-   advanced results - added logic to add query params to link
+-   text viewer - added function to handle highlight API and positioning
 
 Common 
 
-- Edited README.md
+-   Edited README.md
+-   Added getUrl function to communication service
+-   add style for advanced results
+-   Edited README.md
 
 ## [3.9.1] - 2022-10-12
 
@@ -261,7 +272,11 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.9.1...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.0.0...HEAD
+
+[4.0.0]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.9.2...v4.0.0
+
+[3.9.2]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.9.1...v3.9.2
 
 [3.9.1]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.9.0...v3.9.1
 

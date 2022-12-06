@@ -35,7 +35,8 @@ const config: ConfigCommonCommunication = {
         timeline: 'get_timeline/time-events',
         map: 'get_map/places',
         timelineDescription: 'get_search_description/timeline',
-        itinerary: 'get_itinerary/'
+        itinerary: 'get_itinerary/',
+        xmlSearch: 'search_text_hl/',
       }
     }
   }
