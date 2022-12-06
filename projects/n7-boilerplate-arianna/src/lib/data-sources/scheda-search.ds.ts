@@ -1,98 +1,75 @@
+import { helpers } from '@net7/boilerplate-common';
 import {
   Button, InnerTitleData, InputSelectData, InputTextData, PaginationData
 } from '@net7/components';
 import { DataSource } from '@net7/core';
-import { helpers } from '@net7/boilerplate-common';
-import { ExtendedTreeData } from '../components/extended-tree/extended-tree';
+import { SchedaSearchData } from '../components/scheda-search/scheda-search';
 import nodeHelper from '../helpers/node.helper';
-
-type ParentResponse = {
-  label: string;
-}
-
-export type NodesResponse = {
-  items: {
-    img?: string;
-    label: string;
-    id: string;
-    document_type: string;
-    document_classification: string;
-    breadcrumbs?: {
-      label: string;
-      link: string;
-    }[];
-  }[];
-  totalCount: number;
-}
+import { NodesResponse } from './extended-tree.ds';
 
 const PAGE_LIMIT = 5;
 
-const SEARCH_OPEN_CLASS = 'search-is-open';
-
-export class AwExtendedTreeDS extends DataSource {
-  public searchIsOpen = false;
-
-  protected transform = (
-    { parent, nodes }:
-    { parent: ParentResponse; nodes: NodesResponse }
-  ): ExtendedTreeData => {
-    const { totalCount } = nodes;
+export class AwSchedaSearchDS extends DataSource {
+  protected transform = (nodes: NodesResponse): SchedaSearchData => {
     const {
+      placeholder,
       title,
       params,
       basePath,
       lite,
       configKeys,
       fallback,
-    } = this.options;
+    } = this.options || {};
+    const { totalCount } = nodes || {};
     const page = params.page ? +params.page : 1;
     const limit = params.limit ? +params.limit : 10;
-    this.searchIsOpen = (
-      this.searchIsOpen
-      || (typeof params.query === 'string' && params.query.trim())
-    );
+
     // header
     const header: InnerTitleData = {
       title: {
         main: {
-          text: `${title} <span class="aw-extended-tree__total">(${totalCount})</span>`,
-        },
-        secondary: {
-          text: `In: "${parent.label}"`
+          text: title || 'Cerca nelle Aggregazioni Logiche',
         }
-      },
-      actions: {
-        search: {
-          placeholder: 'Cerca negli oggetti culturali',
-          payload: 'search-input',
-          button: {
-            text: '',
-            payload: 'search-button'
-          }
-        },
-      },
-      classes: this.searchIsOpen ? SEARCH_OPEN_CLASS : ''
-    };
-    // items
-    const items = (nodes.items || []).map((item) => ({
-      icon: nodeHelper.getNodeIcon(configKeys, item),
-      thumbnail: lite ? null : item.img,
-      label: item.label,
-      anchor: {
-        href: `${basePath}/${item.id}/${helpers.slugify(item.label)}`
       }
-    }));
-    // pagination
-    const pagination: PaginationData = this.getPagination(page, totalCount, limit);
-    // page input
-    const pageInput: InputTextData = {
-      id: 'page-input',
-      type: 'number',
-      // value: page,
-      placeholder: 'pag',
-      inputPayload: 'page-input-change',
-      enterPayload: 'page-input-enter',
     };
+
+    // input
+    const input: InputTextData = {
+      id: 'scheda-search-input',
+      placeholder: placeholder || 'Cerca...',
+      icon: 'n7-icon-search',
+      enterPayload: 'input-enter',
+      inputPayload: 'input-change'
+    };
+
+    // items
+    const items = (nodes?.items || []).map((item) => {
+      // breadcrumbs
+      const breadcrumbs = {
+        items: []
+      };
+      if (item.breadcrumbs) {
+        breadcrumbs.items = item.breadcrumbs.map(({ label, link: href }) => ({
+          label,
+          anchor: { href },
+        }));
+      }
+      return {
+        icon: nodeHelper.getNodeIcon(configKeys, item),
+        thumbnail: lite ? null : item.img,
+        label: item.label,
+        anchor: {
+          href: `${basePath}/${item.id}/${helpers.slugify(item.label)}`
+        },
+        breadcrumbs
+      };
+    });
+
+    // pagination
+    const pagination: PaginationData = nodes?.items?.length
+      ? this.getPagination(page, totalCount, limit)
+      : null;
+
     // results limit select
     const limitSelect: InputSelectData = {
       id: 'limit-select',
@@ -106,9 +83,9 @@ export class AwExtendedTreeDS extends DataSource {
     };
     return {
       header,
+      input,
       items,
       pagination,
-      pageInput,
       limitSelect,
       fallback: nodes ? fallback : null,
       loading: false,
@@ -117,21 +94,6 @@ export class AwExtendedTreeDS extends DataSource {
 
   public setLoading(loading: boolean) {
     this.output.loading = loading;
-  }
-
-  public toggleSearch() {
-    this.searchIsOpen = !this.searchIsOpen;
-
-    const { header } = this.output;
-    header.classes = this.searchIsOpen ? SEARCH_OPEN_CLASS : '';
-
-    // trigger focus
-    if (this.searchIsOpen) {
-      setTimeout(() => {
-        const inputEl: HTMLInputElement = document.querySelector('.aw-extended-tree input.n7-inner-title__search-bar');
-        inputEl.focus();
-      }, 500);
-    }
   }
 
   private getPagination(page, totalCount, limit): PaginationData {

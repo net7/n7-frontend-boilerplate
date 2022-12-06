@@ -14,6 +14,7 @@ export type ExtendedTreeData = {
   pagination: PaginationData;
   limitSelect?: InputSelectData;
   pageInput?: InputTextData;
+  fallback?: string;
   loading?: boolean;
 }
 
@@ -35,7 +36,7 @@ export class ExtendedTreeComponent {
   }
 
   onCollapseClick(type) {
-    if (type === 'text') return;
+    if (['text', 'submit'].includes(type)) return;
 
     this.lb.dataSource.onSectionCollapse('extended-tree');
   }

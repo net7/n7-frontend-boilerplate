@@ -6,3 +6,4 @@ export * from './pdf-viewer/pdf-viewer';
 export * from './scheda-dropdown/scheda-dropdown';
 export * from './extended-tree/extended-tree';
 export * from './scheda-image-navigator/scheda-image-navigator';
+export * from './scheda-search/scheda-search';

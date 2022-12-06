@@ -91,8 +91,41 @@
         }
     }
 
-    .n7-inner-title__search-bar {
-        width: 250px;
+    // inner title search
+    .n7-inner-title {
+        .n7-inner-title__search-button {
+            content: '';
+        }
+
+        .n7-inner-title__search-button:before {
+            font-family: n7-icon!important;
+            content: "\e9c6";
+        }
+
+        .n7-inner-title__search {
+            border: 1px solid $color-border-light;
+        }
+
+        input[type=text] {
+            transition: width .2s ease-in-out;
+            padding: 0 0;
+            width: 1px;
+            margin-right: -1px;
+            border: none;
+            visibility: hidden;
+        }
+        
+        button.n7-btn {
+            border: none;
+            background-color: transparent;
+        }
+
+        &.search-is-open input[type=text] {
+            visibility: visible;
+            padding: 0 $space;
+            width: 250px;
+            margin-right: 0;
+        }
     }
 
 }

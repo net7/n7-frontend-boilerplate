@@ -108,7 +108,7 @@
         display: none;
     }
 
-    .n7-breadcrumbs {
+    .aw-scheda____breadcrumbs-wrapper .n7-breadcrumbs {
         margin-left: $sidebar-header-height;
     }
 }
@@ -163,7 +163,7 @@
     }
 
     /* Breadcrumbs */
-    .n7-breadcrumbs {
+    .aw-scheda____breadcrumbs-wrapper .n7-breadcrumbs {
         height: $sidebar-header-height;
         overflow: hidden;
         padding-left: $space * 2;
@@ -250,6 +250,9 @@
             margin-bottom: 0;
             border-bottom: 0;
         }
+    }
+    .aw-scheda__section.aw-scheda__section-internal-search {
+        background-color: $breadcrumbs-background;
     }
 
     .aw-scheda__section.aw-scheda__empty {

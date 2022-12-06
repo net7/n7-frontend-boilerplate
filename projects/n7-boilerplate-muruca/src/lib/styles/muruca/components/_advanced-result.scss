@@ -72,6 +72,12 @@
         color: $color-text-light;
     }
     
+    .mrc__text-divider {
+        display: block;
+        border-bottom: 1px dotted $color-gray-02;
+        padding: calc($space * 0.5);
+    }
+    
     .mrc__text-attr_value {
         background-color: $color-gray-02;
         padding: 0 5px;

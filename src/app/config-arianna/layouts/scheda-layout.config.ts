@@ -38,7 +38,16 @@ const config: ConfigAriannaSchedaLayout = {
     title: 'Oggetti culturali',
     search: {
       placeholder: 'Cerca negli oggetti culturali'
-    }
+    },
+    fallback: 'La tua ricerca non ha dato risultati. Prova a cambiare i parametri.',
+  },
+  'internal-search': {
+    // lite: true,
+    title: 'Cerca nelle Aggregazioni Logiche',
+    search: {
+      placeholder: 'Cerca...'
+    },
+    fallback: 'La tua ricerca non ha dato risultati. Prova a cambiare i parametri.',
   },
   'image-viewer-nav': {
     enabled: true,

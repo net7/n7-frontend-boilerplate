@@ -16,6 +16,7 @@ export * from './scheda-dropdown.eh';
 export * from './scheda-pdf.eh';
 export * from './extended-tree.eh';
 export * from './scheda-image-navigator.eh';
+export * from './scheda-search.eh';
 
 // Search layout
 export * from './search-layout-tabs.eh';
