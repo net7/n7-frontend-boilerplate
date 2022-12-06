@@ -1,10 +1,13 @@
 import { LayoutDataSource } from '@net7/core';
 import {
-  fromEvent, Subject, of, merge,
+  fromEvent, Subject, of, merge, Observable
 } from 'rxjs';
-import { delay, first, takeUntil } from 'rxjs/operators';
+import {
+  delay, first, takeUntil
+} from 'rxjs/operators';
 import { clone, get as _get } from 'lodash';
 import { helpers } from '@net7/boilerplate-common';
+import { Params } from '@angular/router';
 import metadataHelper from '../../helpers/metadata.helper';
 import nodeHelper from '../../helpers/node.helper';
 
@@ -55,6 +58,8 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
   public hasExtendedTree: boolean;
 
+  public hasInternalSearch: boolean;
+
   public hasDigitalObjects: boolean;
 
   public digitalObjects: any;
@@ -86,6 +91,10 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   public hasContextMenu: () => boolean;
 
   public extendedTreeParams: {
+    [key: string]: string;
+  } = {};
+
+  public internalSearchParams: {
     [key: string]: string;
   } = {};
 
@@ -368,17 +377,77 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
           });
 
           // fix query input update
-          if (params.query) {
-            setTimeout(() => {
-              const queryInput: HTMLInputElement = document
-                .querySelector('.aw-extended-tree__header .n7-inner-title__search-bar');
+          setTimeout(() => {
+            const queryInput: HTMLInputElement = document
+              .querySelector('.aw-extended-tree__header .n7-inner-title__search-bar');
+            if (queryInput) {
               queryInput.value = params.query || '';
-            });
-          }
+            }
+          });
         }
       });
     } else {
       this.hasExtendedTree = false;
+    }
+  }
+
+  loadInternalSearch() {
+    const parentResponse = this.lastResponse;
+
+    if (this.layoutConfig['internal-search']) {
+      this.hasInternalSearch = true;
+      const configKeys = this.configuration.get('config-keys');
+      const widgetOptions = this.layoutConfig['internal-search'];
+      const rawParams: any = {
+        id: parentResponse.id,
+        'search-page': 1,
+        'search-limit': 10,
+        'search-query': null,
+        ancestor: true,
+        ...this.internalSearchParams,
+      };
+
+      // set params object without "search-" prefix
+      const params: Params = {};
+      Object.keys(rawParams).forEach((paramKey) => {
+        params[paramKey.replace('search-', '')] = rawParams[paramKey];
+      });
+
+      const widgetParams = clone(params);
+
+      // normalize params
+      params.offset = (params.page - 1) * params.limit;
+      delete params.page;
+
+      const basePath = this.configuration.get('paths').schedaBasePath;
+      let request$: Observable<any> = of(null);
+      if (params.query) {
+        request$ = this.communication.request$('getNodeChildren', {
+          params,
+          onError: (error) => console.error(error),
+        });
+      }
+
+      request$.subscribe((nodesResponse) => {
+        this.one('aw-scheda-search').updateOptions({
+          basePath,
+          configKeys,
+          params: widgetParams,
+          ...widgetOptions,
+        });
+        this.one('aw-scheda-search').update(nodesResponse);
+
+        // fix query input update
+        setTimeout(() => {
+          const queryInput: HTMLInputElement = document
+            .querySelector('.aw-scheda-search__input input[type="text"]');
+          if (queryInput) {
+            queryInput.value = params.query || '';
+          }
+        });
+      });
+    } else {
+      this.hasInternalSearch = false;
     }
   }
 
@@ -542,5 +611,9 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       }
       return $do;
     });
+  }
+
+  private _normalizeItems(items) {
+    return items.map((singleItem) => ({ item: { ...singleItem } }));
   }
 }

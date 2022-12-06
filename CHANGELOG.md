@@ -18,6 +18,7 @@ For each commit add a description under the Unreleased section under the corresp
 Arianna
 
 -   Fix image viewer navigation refresh
+- Added internal search in scheda layout
 
 Muruca
 

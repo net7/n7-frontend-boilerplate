@@ -8,10 +8,12 @@
         <div class="aw-scheda__scheda-wrapper"
              [hidden]="lb.dataSource.contentIsLoading">
 
-            <n7-smart-breadcrumbs *ngIf="lb.dataSource.hasBreadcrumb"
-                                  [data]="lb.widgets['aw-scheda-breadcrumbs'].ds.out$ | async"
-                                  [emit]="lb.widgets['aw-scheda-breadcrumbs'].emit">
-            </n7-smart-breadcrumbs>
+             <div class="aw-scheda__breadcrumbs-wrapper">
+                 <n7-smart-breadcrumbs *ngIf="lb.dataSource.hasBreadcrumb"
+                                       [data]="lb.widgets['aw-scheda-breadcrumbs'].ds.out$ | async"
+                                       [emit]="lb.widgets['aw-scheda-breadcrumbs'].emit">
+                 </n7-smart-breadcrumbs>
+             </div>
 
             <div *ngIf="!lb.dataSource.hasBreadcrumb"
                  class="aw-scheda__fake-breadcrumbs"
@@ -51,6 +53,9 @@
                     </a>
                 </div>
             </div>
+
+            <!-- Internal search -->
+            <ng-container *ngTemplateOutlet="internalsearch"></ng-container>
 
             <!-- Empty state -->
             <ng-container *ngIf="!lb.dataSource.hasContent">
@@ -282,4 +287,14 @@
         </aw-extended-tree>
     </section>
     <!-- END // Extended Tree -->
+</ng-template>
+
+<ng-template #internalsearch>
+    <!-- Internal search -->
+    <section *ngIf="lb.dataSource.hasInternalSearch" id="internal-search-container" class="aw-scheda__section aw-scheda__section-internal-search">
+        <aw-scheda-search
+        [data]="lb.widgets['aw-scheda-search'].ds.out$ | async"
+        [emit]="lb.widgets['aw-scheda-search'].emit"></aw-scheda-search>
+    </section>
+    <!-- END // Internal search -->
 </ng-template>

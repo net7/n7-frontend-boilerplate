@@ -319,6 +319,10 @@ export default (treeDepth) => ({
           img
           document_type
           document_classification
+          breadcrumbs {
+            label
+            link
+          }
         }
         totalCount
       }
