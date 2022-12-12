@@ -156,4 +156,8 @@ export class MrAdvancedResultsLayoutDS extends LayoutDataSource {
       },
     };
   }
+
+  public getAdvancedSearchUrl() {
+    return this.communication.getUrl('advancedSearch', true);
+  }
 }

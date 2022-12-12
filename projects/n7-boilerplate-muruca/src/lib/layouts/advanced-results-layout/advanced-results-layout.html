@@ -69,12 +69,12 @@
                                 <p class="mr-advanced-results__feedback-text">
                                     {{ lb.dataSource.pageConfig.fallback.text }}
                                 </p>
-                                <!-- <div class="mr-advanced-results__buttons">
+                                <div class="mr-advanced-results__buttons">
                                     <button class="n7-btn n7-btn-xl mr-advanced-results__results-fallback-button"
-                                    (click)="lb.eventHandler.emitInner('searchreset')">
+                                    (click)="lb.eventHandler.emitInner('searchreset', lb.dataSource.pageConfig.fallback.payload)">
                                         {{ lb.dataSource.pageConfig.fallback.button }}
                                     </button>
-                                </div> -->
+                                </div>
                             </div>
                         </ng-container>
 

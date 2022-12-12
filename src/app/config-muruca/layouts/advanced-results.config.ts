@@ -48,7 +48,8 @@ const config: ConfigMurucaLayoutAdvancedResults = {
   // },
   fallback: {
     text: 'search#fallback_text',
-    button: 'search#fallback_button'
+    button: 'search#fallback_button',
+    payload: '\ricerca-avanzata'
   },
   ko: {
     text: 'search#ko_text',

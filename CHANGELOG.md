@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+- advanced result layout, enabled reset search button
+
 ## [4.0.0] - 2022-12-05
 
 -   upgrade angular to v14x and node to v18x 
