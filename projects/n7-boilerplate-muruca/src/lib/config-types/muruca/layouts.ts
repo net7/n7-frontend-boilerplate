@@ -102,7 +102,7 @@ type SearchFallbackConfig = {
   /** button text */
   button: string;
   /** button payload */
-  redirectUrl?: string;
+  payload?: object;
 }
 
 export interface ConfigMurucaSearchLayout extends ConfigMurucaLayout {

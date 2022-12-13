@@ -43,8 +43,8 @@ export class MrAdvancedResultsLayoutEH extends EventHandler {
           this.destroy$.next();
           break;
         case 'mr-advanced-results-layout.searchreset':
-          if (payload) {
-            this.router.navigate([payload], {});
+          if (payload && payload?.action === 'redirect') {
+            this.router.navigate([payload.url], {});
           }
           break;
         default:
