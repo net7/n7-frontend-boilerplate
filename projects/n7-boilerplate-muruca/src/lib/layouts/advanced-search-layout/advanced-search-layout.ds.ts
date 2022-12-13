@@ -178,6 +178,7 @@ export class MrAdvancedSearchLayoutDS extends LayoutDataSource {
         // info tooltip
         if (input.info && input.data.label && ['text', 'select'].includes(input.type)) {
           const inputData = input.data as InputTextData | InputSelectData;
+          if (/n7-icon/.test(input.data.label)) return;
           (input.data as InputTextData | InputSelectData).label = [
             `<span>${inputData.label}</span>`,
             `<span class="mr-input-info n7-icon n7-icon-info-circle" alt="${_t(input.info)}"></span>`
@@ -185,6 +186,7 @@ export class MrAdvancedSearchLayoutDS extends LayoutDataSource {
         }
         if (input.info && input.data.legend && input.type === 'checkbox') {
           const inputData = input.data as InputCheckboxData;
+          if (/n7-icon/.test(input.data.label)) return;
           (input.data as InputCheckboxData).legend = [
             `<span>${inputData.legend}</span>`,
             `<span class="mr-input-info n7-icon n7-icon-info-circle" alt="${_t(input.info)}"></span>`
