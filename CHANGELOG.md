@@ -9,6 +9,8 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [4.1.0] - 2022-12-06
+
 ## [4.0.0] - 2022-12-05
 
 -   upgrade angular to v14x and node to v18x 
@@ -18,8 +20,8 @@ For each commit add a description under the Unreleased section under the corresp
 Arianna
 
 -   Fix image viewer navigation refresh
-- added configuration in `home-layout.config.ts` to enable "view all" on entitites in bubble chart
-- Added internal search in scheda layout
+-   added configuration in `home-layout.config.ts` to enable "view all" on entitites in bubble chart
+-   Added internal search in scheda layout
 
 Muruca
 
@@ -273,7 +275,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.0.0...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.1.0...HEAD
+
+[4.1.0]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.0.0...v4.1.0
 
 [4.0.0]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.9.2...v4.0.0
 
