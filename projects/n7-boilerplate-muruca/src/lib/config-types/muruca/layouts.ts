@@ -101,6 +101,8 @@ type SearchFallbackConfig = {
   text: string;
   /** button text */
   button: string;
+  /** button payload */
+  payload?: object;
 }
 
 export interface ConfigMurucaSearchLayout extends ConfigMurucaLayout {

@@ -9,7 +9,16 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+- advanced result layout, enabled reset search button
+
 ## [4.1.0] - 2022-12-06
+
+Arianna
+
+-   added configuration in `home-layout.config.ts` to enable "view all" on entitites in bubble chart
+-   Added internal search in scheda layout
 
 ## [4.0.0] - 2022-12-05
 
@@ -20,8 +29,6 @@ For each commit add a description under the Unreleased section under the corresp
 Arianna
 
 -   Fix image viewer navigation refresh
--   added configuration in `home-layout.config.ts` to enable "view all" on entitites in bubble chart
--   Added internal search in scheda layout
 
 Muruca
 

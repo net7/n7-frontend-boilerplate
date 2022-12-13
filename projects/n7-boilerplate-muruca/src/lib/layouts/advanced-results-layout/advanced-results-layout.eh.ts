@@ -42,7 +42,11 @@ export class MrAdvancedResultsLayoutEH extends EventHandler {
         case 'mr-advanced-results-layout.destroy':
           this.destroy$.next();
           break;
-
+        case 'mr-advanced-results-layout.searchreset':
+          if (payload && payload?.action === 'redirect') {
+            this.router.navigate([payload.url], {});
+          }
+          break;
         default:
           console.warn('unhandled inner event of type', type);
           break;
