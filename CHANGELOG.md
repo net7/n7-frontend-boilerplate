@@ -13,6 +13,13 @@ Muruca
 
 - advanced result layout, enabled reset search button
 
+## [4.1.0] - 2022-12-06
+
+Arianna
+
+-   added configuration in `home-layout.config.ts` to enable "view all" on entitites in bubble chart
+-   Added internal search in scheda layout
+
 ## [4.0.0] - 2022-12-05
 
 -   upgrade angular to v14x and node to v18x 
@@ -22,8 +29,6 @@ Muruca
 Arianna
 
 -   Fix image viewer navigation refresh
-- added configuration in `home-layout.config.ts` to enable "view all" on entitites in bubble chart
-- Added internal search in scheda layout
 
 Muruca
 
@@ -277,7 +282,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.0.0...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.1.0...HEAD
+
+[4.1.0]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.0.0...v4.1.0
 
 [4.0.0]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.9.2...v4.0.0
 
