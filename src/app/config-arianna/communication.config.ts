@@ -10,9 +10,9 @@ const config: ConfigCommonCommunication = {
       // baseUrl: 'http://asve-graphql.arianna4.cloud/', // archivio di venezia
       // baseUrl: 'http://graphql.archiviodistatotrieste.it/', // archivio di trieste
       // baseUrl: 'https://asve.arianna4.cloud/', // asve
-      // baseUrl: 'http://localhost:4000/',
+      baseUrl: 'http://localhost:4000/',
       // baseUrl: 'https://demo.arianna4.cloud/apollo',
-      baseUrl: 'https://asve.arianna4.cloud/apollo',
+      // baseUrl: 'https://asve.arianna4.cloud/apollo',
 
       // config is loaded through arianna-web core module
       // beacause all installations have the same config
