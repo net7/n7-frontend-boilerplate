@@ -9,6 +9,9 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+- advanced search, bugfix info icon duplicated
 ## [4.2.0] - 2022-12-13
 
 Muruca
