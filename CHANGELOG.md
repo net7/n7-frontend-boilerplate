@@ -9,9 +9,12 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [4.2.1] - 2022-12-14
+
 Muruca
 
-- advanced search, bugfix info icon duplicated
+-   advanced search, bugfix info icon duplicated
+
 ## [4.2.0] - 2022-12-13
 
 Muruca
@@ -287,7 +290,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.2.0...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.2.1...HEAD
+
+[4.2.1]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.2.0...v4.2.1
 
 [4.2.0]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.1.0...v4.2.0
 
