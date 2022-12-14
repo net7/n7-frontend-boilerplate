@@ -9,9 +9,11 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [4.2.0] - 2022-12-13
+
 Muruca
 
-- advanced result layout, enabled reset search button
+-   advanced result layout, enabled reset search button
 
 ## [4.1.0] - 2022-12-06
 
@@ -282,7 +284,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.1.0...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.2.0...HEAD
+
+[4.2.0]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.1.0...v4.2.0
 
 [4.1.0]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.0.0...v4.1.0
 
