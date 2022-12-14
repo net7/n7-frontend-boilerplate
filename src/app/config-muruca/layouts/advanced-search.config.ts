@@ -36,6 +36,7 @@ const config: ConfigMurucaAdvancedSearchLayout = {
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
       inputs: [{
         id: 'query',
+        info: 'advancedsearch#querytext_authority_info',
         type: 'text',
         data: {
           id: 'query',
@@ -71,7 +72,9 @@ const config: ConfigMurucaAdvancedSearchLayout = {
       }, {
         id: 'checkbox-1',
         type: 'checkbox',
+        info: 'info tooltip',
         data: {
+          legend: 'checkbox legend',
           id: 'checkbox-1',
           checkboxes: [{
             id: 'checkbox-1-1',
