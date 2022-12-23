@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Arianna
+
+-   fix internal search config
+
 Muruca
 
 -   advanced search, bugfix info icon duplicated
