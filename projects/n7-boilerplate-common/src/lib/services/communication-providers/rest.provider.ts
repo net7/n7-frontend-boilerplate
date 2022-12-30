@@ -29,18 +29,34 @@ export class RestProvider implements CommunicationProvider {
     if (!point) {
       throw Error(`No config found for requestId "${requestId}"`);
     }
+
+    const formattedUrl = this.getFormattedUrl(providerConfig.baseUrl, point, urlParams);
     if (['POST', 'PUT', 'PATCH'].includes(method)) {
       return this.http[method.toLowerCase()](
-        providerConfig.baseUrl + point + urlParams,
+        formattedUrl,
         params,
         httpOptions
       );
     } if (['GET', 'DELETE'].includes(method)) {
       return this.http[method.toLowerCase()](
-        providerConfig.baseUrl + point + urlParams,
+        formattedUrl,
         httpOptions
       );
     }
     throw Error(`Rest method ${method} not supported`);
+  }
+
+  private getFormattedUrl(baseUrl: string, point: string, urlParams: string | object) {
+    if (typeof urlParams === 'string') {
+      return baseUrl + point + urlParams;
+    }
+    return baseUrl + this.parseUrlPlaceholders(point, urlParams);
+  }
+
+  private parseUrlPlaceholders(source: string, placeholders: object) {
+    return source.replace(/{\s*\w+\s*}/g, (match) => {
+      const key = match.replace(/{|}/g, '').trim();
+      return placeholders[key] || match;
+    });
   }
 }
