@@ -11,6 +11,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [4.2.2] - 2022-12-14
 
+Arianna
+
+-   fix internal search config
+
 Muruca
 
 -   advanced search, bugfix info icon duplicated

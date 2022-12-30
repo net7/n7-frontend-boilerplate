@@ -12,7 +12,7 @@ const PAGE_LIMIT = 5;
 export class AwSchedaSearchDS extends DataSource {
   protected transform = (nodes: NodesResponse): SchedaSearchData => {
     const {
-      placeholder,
+      search,
       title,
       params,
       basePath,
@@ -36,7 +36,7 @@ export class AwSchedaSearchDS extends DataSource {
     // input
     const input: InputTextData = {
       id: 'scheda-search-input',
-      placeholder: placeholder || 'Cerca...',
+      placeholder: search?.placeholder || 'Cerca...',
       icon: 'n7-icon-search',
       enterPayload: 'input-enter',
       inputPayload: 'input-change'

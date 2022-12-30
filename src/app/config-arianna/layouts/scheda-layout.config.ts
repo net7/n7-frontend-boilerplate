@@ -45,7 +45,7 @@ const config: ConfigAriannaSchedaLayout = {
     // lite: true,
     title: 'Cerca nelle Aggregazioni Logiche',
     search: {
-      placeholder: 'Cerca...'
+      placeholder: 'Cercando...'
     },
     fallback: 'La tua ricerca non ha dato risultati. Prova a cambiare i parametri.',
   },
