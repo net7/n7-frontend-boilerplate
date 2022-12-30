@@ -1,9 +1,28 @@
 import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs/operators';
-import { Observable, empty } from 'rxjs';
+import { Observable, EMPTY } from 'rxjs';
+import { HttpContext, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ConfigurationService } from './configuration.service';
 import { ApolloProvider } from './communication-providers/apollo.provider';
 import { RestProvider } from './communication-providers/rest.provider';
+
+export type CommunicationHttpOptions = {
+  body?: any;
+  context?: HttpContext;
+  responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
+  withCredentials?: boolean;
+  headers?: HttpHeaders | {
+      [header: string]: string | string[];
+  };
+}
+
+export type CommunicationOptions<T> = {
+  method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+  params?: T;
+  urlParams?: string | object;
+  httpOptions?: CommunicationHttpOptions;
+  onError?: (err) => void;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +45,11 @@ export class CommunicationService {
     }
   }
 
-  request$(requestId, options: any = {}, provider?) {
+  request$<T = object, U = object>(
+    requestId: string,
+    options?: CommunicationOptions<T>,
+    provider?: string
+  ): Observable<HttpResponse<U>> {
     const activeProvider = provider || this.defaultProvider;
     const activeProviderConfig = this.communicationConfig.providers[activeProvider];
 
@@ -41,8 +64,8 @@ export class CommunicationService {
       throw Error(`There is no "${activeProviderType}" provider type`);
     }
 
-    const { onError } = options;
-    return this[activeProviderType].request$(activeProviderConfig, requestId, options)
+    const { onError } = options || {};
+    return this[activeProviderType].request$(activeProviderConfig, requestId, options || {})
       .pipe(
         catchError((error) => this.handleError(error, onError)),
       );
@@ -55,22 +78,22 @@ export class CommunicationService {
       console.warn('No error handler for communication request', error);
     }
 
-    return empty();
+    return EMPTY;
   }
-  
-    getUrl(requestId, provider?){
-        const activeProvider = provider || this.defaultProvider;
-        const activeProviderConfig = this.communicationConfig.providers[activeProvider];
 
-        if (!activeProviderConfig) {
-            throw Error(`There is no config for "${activeProvider}" provider`);
-        }   
-        
-        const baseUrl = activeProviderConfig.baseUrl;
-        
-        if (!activeProviderConfig.config[requestId]) {
-            throw Error(`There is no config for "${requestId}" `);
-        }
-        return baseUrl + activeProviderConfig.config[requestId]    
+  getUrl(requestId, provider?) {
+    const activeProvider = provider || this.defaultProvider;
+    const activeProviderConfig = this.communicationConfig.providers[activeProvider];
+
+    if (!activeProviderConfig) {
+      throw Error(`There is no config for "${activeProvider}" provider`);
     }
+
+    const { baseUrl } = activeProviderConfig;
+
+    if (!activeProviderConfig.config[requestId]) {
+      throw Error(`There is no config for "${requestId}" `);
+    }
+    return baseUrl + activeProviderConfig.config[requestId];
+  }
 }

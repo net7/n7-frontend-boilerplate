@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommunicationProvider } from './communication-provider.interface';
+import { CommunicationOptions } from '../communication.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,7 @@ export class RestProvider implements CommunicationProvider {
     private http: HttpClient,
   ) {}
 
-  request$(providerConfig, requestId, options: any = {}) {
+  request$<T>(providerConfig, requestId, options: CommunicationOptions<T>) {
     const {
       params, httpOptions, urlParams = '',
     } = options;
@@ -28,13 +29,16 @@ export class RestProvider implements CommunicationProvider {
     if (!point) {
       throw Error(`No config found for requestId "${requestId}"`);
     }
-    if (method === 'POST' || method === 'PUT') {
+    if (['POST', 'PUT', 'PATCH'].includes(method)) {
       return this.http[method.toLowerCase()](
-        providerConfig.baseUrl + point + urlParams, params, httpOptions,
+        providerConfig.baseUrl + point + urlParams,
+        params,
+        httpOptions
       );
-    } if (method === 'GET' || method === 'DELETE') {
+    } if (['GET', 'DELETE'].includes(method)) {
       return this.http[method.toLowerCase()](
-        providerConfig.baseUrl + point + urlParams, httpOptions,
+        providerConfig.baseUrl + point + urlParams,
+        httpOptions
       );
     }
     throw Error(`Rest method ${method} not supported`);
