@@ -6,16 +6,18 @@ const communication: ConfigCommonCommunication = {
   providers: {
     rest: {
       type: 'rest',
-      baseUrl: '//jsonplaceholder.typicode.com/',
+      baseUrl: 'https://jsonplaceholder.typicode.com/',
       config: {
         posts: 'posts',
       }
     },
     'rest-local': {
       type: 'rest',
-      baseUrl: '//jsonplaceholder.typicode.com/',
+      baseUrl: 'https://jsonplaceholder.typicode.com/',
       config: {
         posts: 'posts',
+        firstPost: 'posts/1',
+        dynamic: '{root}/{id}'
       }
     }
   }
