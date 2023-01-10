@@ -69,7 +69,7 @@ export class CommunicationService {
         const baseUrl = activeProviderConfig.baseUrl;
         
         if (!activeProviderConfig.config[requestId]) {
-            throw Error(`There is no config for "${requestId}" `);
+            return "";
         }
         return baseUrl + activeProviderConfig.config[requestId]    
     }
