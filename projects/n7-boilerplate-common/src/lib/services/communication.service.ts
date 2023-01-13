@@ -1,25 +1,33 @@
 import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs/operators';
 import { Observable, EMPTY } from 'rxjs';
-import { HttpContext, HttpHeaders, HttpResponse } from '@angular/common/http';
+import {
+  HttpContext, HttpHeaders, HttpParams, HttpResponse
+} from '@angular/common/http';
 import { ConfigurationService } from './configuration.service';
 import { ApolloProvider } from './communication-providers/apollo.provider';
 import { RestProvider } from './communication-providers/rest.provider';
+
+export type CommunicationQueryParams = HttpParams | {
+  [param: string]: string | number | boolean | ReadonlyArray<string | number | boolean>;
+};
 
 export type CommunicationHttpOptions = {
   body?: any;
   context?: HttpContext;
   responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
   withCredentials?: boolean;
+  params?: CommunicationQueryParams;
   headers?: HttpHeaders | {
       [header: string]: string | string[];
   };
 }
 
-export type CommunicationOptions<T> = {
+export type CommunicationOptions<U> = {
   method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
-  params?: T;
+  params?: U;
   urlParams?: string | object;
+  queryParams?: CommunicationQueryParams;
   httpOptions?: CommunicationHttpOptions;
   onError?: (err) => void;
 }
@@ -45,11 +53,11 @@ export class CommunicationService {
     }
   }
 
-  request$<T = object, U = object>(
+  request$<T = any, U = any>(
     requestId: string,
-    options?: CommunicationOptions<T>,
+    options?: CommunicationOptions<U>,
     provider?: string
-  ): Observable<HttpResponse<U>> {
+  ): Observable<HttpResponse<T>> {
     const activeProvider = provider || this.defaultProvider;
     const activeProviderConfig = this.communicationConfig.providers[activeProvider];
 
@@ -57,15 +65,26 @@ export class CommunicationService {
       throw Error(`There is no config for "${activeProvider}" provider`);
     }
 
-    // provider.type control for retrocompatibility
+    // provider.type check for retrocompatibility
     const activeProviderType = activeProviderConfig.type || activeProvider;
 
     if (!this[activeProviderType]) {
       throw Error(`There is no "${activeProviderType}" provider type`);
     }
 
+    const requestOptions = options || {};
+
+    // adding query params
+    // to http client httpoptions params
+    if (requestOptions.queryParams) {
+      requestOptions.httpOptions = {
+        ...(requestOptions.httpOptions || {}),
+        params: requestOptions.queryParams
+      };
+    }
+
     const { onError } = options || {};
-    return this[activeProviderType].request$(activeProviderConfig, requestId, options || {})
+    return this[activeProviderType].request$(activeProviderConfig, requestId, requestOptions)
       .pipe(
         catchError((error) => this.handleError(error, onError)),
       );

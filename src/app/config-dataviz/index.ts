@@ -16,7 +16,8 @@ const communication: ConfigCommonCommunication = {
       baseUrl: 'https://jsonplaceholder.typicode.com/',
       config: {
         posts: 'posts',
-        firstPost: 'posts/1',
+        post: 'posts/{id}',
+        comments: 'posts/{id}/comments',
         dynamic: '{root}/{id}'
       }
     }
