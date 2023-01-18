@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs/operators';
 import { Observable, EMPTY } from 'rxjs';
 import {
-  HttpContext, HttpHeaders, HttpParams, HttpResponse
+  HttpContext, HttpHeaders, HttpParams
 } from '@angular/common/http';
 import { ConfigurationService } from './configuration.service';
 import { ApolloProvider } from './communication-providers/apollo.provider';
 import { RestProvider } from './communication-providers/rest.provider';
+import { ConfigCommonCommunication } from '../config-types';
 
 export type CommunicationQueryParams = HttpParams | {
   [param: string]: string | number | boolean | ReadonlyArray<string | number | boolean>;
@@ -23,9 +24,9 @@ export type CommunicationHttpOptions = {
   };
 }
 
-export type CommunicationOptions<U> = {
+export type CommunicationOptions = {
   method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
-  params?: U;
+  params?: any;
   urlParams?: string | object;
   queryParams?: CommunicationQueryParams;
   httpOptions?: CommunicationHttpOptions;
@@ -38,7 +39,7 @@ export type CommunicationOptions<U> = {
 export class CommunicationService {
   private defaultProvider: string;
 
-  private communicationConfig: any;
+  private communicationConfig: ConfigCommonCommunication;
 
   constructor(
     private config: ConfigurationService,
@@ -53,11 +54,11 @@ export class CommunicationService {
     }
   }
 
-  request$<T = any, U = any>(
+  request$(
     requestId: string,
-    options?: CommunicationOptions<U>,
+    options?: CommunicationOptions,
     provider?: string
-  ): Observable<HttpResponse<T>> {
+  ) {
     const activeProvider = provider || this.defaultProvider;
     const activeProviderConfig = this.communicationConfig.providers[activeProvider];
 
@@ -100,7 +101,7 @@ export class CommunicationService {
     return EMPTY;
   }
 
-  getUrl(requestId, provider?) {
+  getUrl(requestId: string, provider? : string) {
     const activeProvider = provider || this.defaultProvider;
     const activeProviderConfig = this.communicationConfig.providers[activeProvider];
 
@@ -111,7 +112,7 @@ export class CommunicationService {
     const { baseUrl } = activeProviderConfig;
 
     if (!activeProviderConfig.config[requestId]) {
-      throw Error(`There is no config for "${requestId}" `);
+      throw Error(`There is no config for "${requestId}"`);
     }
     return baseUrl + activeProviderConfig.config[requestId];
   }

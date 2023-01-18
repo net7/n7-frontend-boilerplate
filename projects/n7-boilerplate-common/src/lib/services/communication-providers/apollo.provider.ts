@@ -17,7 +17,7 @@ export class ApolloProvider implements CommunicationProvider {
     private configuration: ConfigurationService,
   ) {}
 
-  request$<T>(providerConfig, requestId: string, options: CommunicationOptions<T>) {
+  request$(providerConfig, requestId: string, options: CommunicationOptions) {
     const { params, method, httpOptions } = options;
     const treeDepth = this.configuration.get('treeDepth') || DEFAULT_TREE_DEPTH;
     const config = providerConfig.config ? providerConfig.config(treeDepth) : {};
