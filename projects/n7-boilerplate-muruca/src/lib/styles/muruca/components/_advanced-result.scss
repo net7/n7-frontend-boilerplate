@@ -100,6 +100,18 @@
             margin-bottom: 0;
         }
     }
+
+    // highlights header
+    &__header {
+        display: flex;
+        cursor: pointer;
+        font-family: $font-family-text;
+        padding-bottom: $space * 1.5 0;
+    }
+
+    &__header-label {
+        flex-grow: 1;
+    }
 }
 
 /* ------------------------------------ *\

@@ -16,6 +16,8 @@ export interface LinkedMetadataData extends MetadataData {
  */
 interface AdvancedResultsData extends ItemPreviewData {
   highlights: LinkedMetadataData[];
+  highlightsTitle?: string;
+  highlightsHidden?: boolean;
 }
 
 @Component({
@@ -36,5 +38,9 @@ export class MrAdvancedResultComponent {
   onClick(payload) {
     if (!this.emit) return;
     this.emit('click', payload);
+  }
+
+  onHeaderClick(data) {
+    data.highlightsHidden = !data.highlightsHidden;
   }
 }
