@@ -11,7 +11,7 @@ export class RestProvider implements CommunicationProvider {
     private http: HttpClient,
   ) {}
 
-  request$(providerConfig, requestId, options: CommunicationOptions) {
+  request$<T>(providerConfig, requestId, options: CommunicationOptions<T>) {
     const {
       params, httpOptions, urlParams = '',
     } = options;

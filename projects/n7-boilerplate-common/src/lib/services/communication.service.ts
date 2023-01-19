@@ -24,9 +24,9 @@ export type CommunicationHttpOptions = {
   };
 }
 
-export type CommunicationOptions = {
+export type CommunicationOptions<U> = {
   method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
-  params?: any;
+  params?: U;
   urlParams?: string | object;
   queryParams?: CommunicationQueryParams;
   httpOptions?: CommunicationHttpOptions;
@@ -54,11 +54,11 @@ export class CommunicationService {
     }
   }
 
-  request$(
+  request$<T = any, U = any>(
     requestId: string,
-    options?: CommunicationOptions,
+    options?: CommunicationOptions<U>,
     provider?: string
-  ) {
+  ): Observable<T> {
     const activeProvider = provider || this.defaultProvider;
     const activeProviderConfig = this.communicationConfig.providers[activeProvider];
 
@@ -85,7 +85,7 @@ export class CommunicationService {
     }
 
     const { onError } = options || {};
-    return this[activeProviderType].request$(activeProviderConfig, requestId, requestOptions)
+    return this[activeProviderType].request$<T>(activeProviderConfig, requestId, requestOptions)
       .pipe(
         catchError((error) => this.handleError(error, onError)),
       );
