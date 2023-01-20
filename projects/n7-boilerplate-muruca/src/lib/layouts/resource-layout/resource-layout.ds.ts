@@ -96,10 +96,19 @@ export class MrResourceLayoutDS extends LayoutDataSource {
       }
 
       if (type === 'text-viewer') {
+        
+        let url;
+        try {
+            url = this.communication.getUrl("xmlSearch");
+        } catch(e) {
+            url = "";
+            // do nothing
+        }
         const searchApi = {
-            url: this.communication.getUrl("xmlSearch"),
+            url: url,
             'resource-id': this.id
         };
+        
         options["searchApi"] = searchApi;
         this.one(id).updateOptions( options );
       }
