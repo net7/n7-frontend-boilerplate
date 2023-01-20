@@ -58,7 +58,7 @@ export class CommunicationService {
     return empty();
   }
   
-    getUrl(requestId, provider?){
+    getUrl(requestId?, provider?){
         const activeProvider = provider || this.defaultProvider;
         const activeProviderConfig = this.communicationConfig.providers[activeProvider];
 
@@ -68,8 +68,12 @@ export class CommunicationService {
         
         const baseUrl = activeProviderConfig.baseUrl;
         
+        if( !requestId ){
+            return baseUrl;
+        }
+        
         if (!activeProviderConfig.config[requestId]) {
-            return "";
+            throw Error(`There is no config for "${requestId}" `);
         }
         return baseUrl + activeProviderConfig.config[requestId]    
     }
