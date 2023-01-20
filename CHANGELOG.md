@@ -14,6 +14,8 @@ Muruca
 -   text viewer, fixed issue on chromium  "'Event.path' is deprecated"
 -   communication remove exception
 
+## [4.2.3] - 2023-01-13
+
 ## [4.2.2] - 2022-12-14
 
 Arianna
@@ -305,7 +307,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.2.2...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.2.3...HEAD
+
+[4.2.3]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.2.2...v4.2.3
 
 [4.2.2]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.2.1...v4.2.2
 
