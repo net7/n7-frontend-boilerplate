@@ -39,6 +39,6 @@ export class MrFormWrapperAccordionDS extends DataSource {
       tippy(document.querySelectorAll('.mr-input-info'), {
         content: (reference) => reference.getAttribute('alt'),
       });
-    });
+    }, 1000);
   }
 }
