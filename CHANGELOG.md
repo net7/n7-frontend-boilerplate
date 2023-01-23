@@ -14,6 +14,7 @@ Muruca
 -   text viewer, fixed issue on chromium  "'Event.path' is deprecated"
 -   communication remove exception
 -   added tooltip timeout
+-   added advanced search highlights toggle
 
 ## [4.2.3] - 2023-01-13
 

@@ -46,6 +46,10 @@ const config: ConfigMurucaLayoutAdvancedResults = {
   // itemPreview: {
   //   classes: 'is-vertical'
   // },
+  // highlights: {
+  //   hasToggle: true,
+  //   hidden: true
+  // },
   fallback: {
     text: 'search#fallback_text',
     button: 'search#fallback_button',
