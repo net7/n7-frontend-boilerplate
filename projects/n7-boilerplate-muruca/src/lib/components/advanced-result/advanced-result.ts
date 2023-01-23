@@ -18,6 +18,7 @@ interface AdvancedResultsData extends ItemPreviewData {
   highlights: LinkedMetadataData[];
   highlightsTitle?: string;
   highlightsHidden?: boolean;
+  highlightsHasToggle?: boolean;
 }
 
 @Component({
@@ -41,6 +42,8 @@ export class MrAdvancedResultComponent {
   }
 
   onHeaderClick(data) {
+    if (!data.highlightsHasToggle) return;
+
     data.highlightsHidden = !data.highlightsHidden;
   }
 }

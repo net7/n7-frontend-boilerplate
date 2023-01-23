@@ -4,10 +4,13 @@
     <n7-item-preview [data]="data"></n7-item-preview>
     <!-- RESULT HIGHLIGHTS SECTION -->
     <ng-container *ngIf="hasHighlights()">
-        <div class="mr-advanced-result__header"
+        <div *ngIf="data?.highlightsTitle" class="mr-advanced-result__header"
+        [ngClass]="{
+            'has-toggle': !!data.highlightsHasToggle
+        }"
         (click)="onHeaderClick(data)">
             <span class="mr-advanced-result__header-label">
-                {{ data.highlightsTitle || 'Highlights' }}
+                {{ data.highlightsTitle }}
             </span>
             <span class="mr-advanced-result__header-icon"
             [ngClass]="{
@@ -16,7 +19,8 @@
             }">
             </span>
         </div>
-        <div [hidden]="data.highlightsHidden" class="mr-advanced-result__content"
+        <div [hidden]="(data.highlightsHasToggle && data.highlightsHidden)" 
+        class="mr-advanced-result__content"
             *ngFor="let highlightGroup of data.highlights">
             <div class="mr-advanced-result__content-group">
                 <!-- METADATA ITEM -->
