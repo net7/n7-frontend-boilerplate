@@ -13,12 +13,15 @@ For each commit add a description under the Unreleased section under the corresp
 
 Muruca
 
--   text viewer, fixed issue on chromium  "'Event.path' is deprecated"
--   communication remove exception
--   added tooltip timeout
 -   added advanced search highlights toggle
 
 ## [4.2.3] - 2023-01-13
+
+Muruca
+
+-   text viewer, fixed issue on chromium  "'Event.path' is deprecated"
+-   communication remove exception
+-   added tooltip timeout
 
 ## [4.2.2] - 2022-12-14
 
