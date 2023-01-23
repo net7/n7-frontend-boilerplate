@@ -178,6 +178,10 @@ export interface ConfigMurucaLayoutAdvancedResults extends ConfigMurucaLayout {
   sort?: SearchSortConfig;
   pagination: SearchPaginationConfig;
   itemPreview?: SearchItemPreviewConfig;
+  highlights?: {
+    hasToggle?: boolean;
+    hidden?: boolean;
+  };
   fallback: SearchFallbackConfig;
   ko: SearchFallbackConfig;
 }

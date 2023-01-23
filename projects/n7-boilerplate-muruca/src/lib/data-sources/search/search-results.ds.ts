@@ -33,6 +33,8 @@ interface MrSearchResult extends ItemPreviewData {
   slug?: string;
   /** items that matched the search input */
   highlights?: HighlightItem[];
+  /** highlights title */
+  highlightsTitle?: string;
   /** payload for item anchor */
   payload?: {
     action: string;
@@ -57,7 +59,7 @@ type MrSearchResponse = {
 export class MrSearchResultsDS extends DataSource {
   protected transform(data: MrSearchResponse) {
     const { results } = data;
-    const { itemPreview } = this.options.config;
+    const { itemPreview, highlights: highlightsOptions } = this.options.config;
     const { localeService }: { localeService: MrLocaleService } = this.options;
     const itemPreviewOptions = merge(clone(ITEM_PREVIEW_DEFAULTS), (itemPreview || {}));
 
@@ -172,6 +174,8 @@ export class MrSearchResultsDS extends DataSource {
         metadata,
         anchor,
         highlights,
+        highlightsHidden: !!highlightsOptions?.hidden,
+        highlightsHasToggle: !!highlightsOptions?.hasToggle,
         classes: itemPreviewOptions.classes,
       };
     });

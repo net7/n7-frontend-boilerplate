@@ -100,6 +100,29 @@
             margin-bottom: 0;
         }
     }
+
+    // highlights header
+    &__header {
+        display: flex;
+        font-family: $font-family-text;
+        padding-bottom: $space * 1.5 0;
+
+        .mr-advanced-result__header-icon {
+            display: none;
+        }
+    }
+    
+    &__header.has-toggle {
+        cursor: pointer;
+        
+        .mr-advanced-result__header-icon {
+            display: inherit;
+        }
+    }
+
+    &__header-label {
+        flex-grow: 1;
+    }
 }
 
 /* ------------------------------------ *\
