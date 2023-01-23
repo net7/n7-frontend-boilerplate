@@ -9,6 +9,8 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [4.2.4] - 2023-01-20
+
 Muruca
 
 -   added advanced search highlights toggle
@@ -312,7 +314,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.2.3...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.2.4...HEAD
+
+[4.2.4]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.2.3...v4.2.4
 
 [4.2.3]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.2.2...v4.2.3
 
