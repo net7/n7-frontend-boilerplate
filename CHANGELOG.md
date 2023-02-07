@@ -9,6 +9,11 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+-   facet map: removed hardcoded maxBounds and added libConfig from layout configuration
+-   facet map: added autoCenter configuration
+ 
 ## [4.3.0] - 2023-01-23
 
 Muruca
