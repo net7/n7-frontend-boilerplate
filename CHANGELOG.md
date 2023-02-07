@@ -9,11 +9,13 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [4.4.0] - 2023-02-07
+
 Muruca
 
 -   facet map: removed hardcoded maxBounds and added libConfig from layout configuration
 -   facet map: added autoCenter configuration
- 
+
 ## [4.3.0] - 2023-01-23
 
 Muruca
@@ -321,7 +323,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.3.0...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.4.0...HEAD
+
+[4.4.0]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.3.0...v4.4.0
 
 [4.3.0]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.2.4...v4.3.0
 
