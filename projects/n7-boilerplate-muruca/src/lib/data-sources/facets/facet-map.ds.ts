@@ -4,6 +4,7 @@ import * as L from 'leaflet';
 import 'leaflet.markercluster';
 import { Subject } from 'rxjs';
 import { FacetDataSource } from './facet-datasource';
+import mapHelper from '../../helpers/map-helper';
 // leaflet is already present in the window,
 // a double import results in errors with tooltips.
 // declare const L;
@@ -103,9 +104,8 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
       containerId: 'map-canvas',
       libOptions: {
         attributionControl: false,
-        minZoom: mapConfig.minZoom ?? 8,
-        maxZoom: mapConfig.maxZoom ?? undefined,
-        maxBounds: [[46.8505, 10.3393], [45.6635, 12.2429]]
+        minZoom: 8,
+        ...mapConfig
       },
       tileLayers: [{
         // url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -120,6 +120,14 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
       _setInstance: (map) => {
         this.mapInstance = map;
         this.buildMarkers(markers);
+
+        if (mapConfig.autoCenter) {
+          const bounds = new L
+            .LatLngBounds(markers
+              .map((d) => ({ lat: d.coords[0], lon: d.coords[1] }))
+              .filter((d) => mapHelper.isValidMarker(d)));
+          this.mapInstance.fitBounds(bounds);
+        }
       },
     };
   }
