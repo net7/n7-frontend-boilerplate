@@ -134,28 +134,25 @@ export class MrSearchResultsDS extends DataSource {
           // if it's an object then it should have a custom hyperlink
           } else {
             let href = '';
-            if (item.routeId && highlight.link) {
-              const routeLink = localeService.getLinkByRouteId(item.routeId, `${item.id}`, item.slug);
-              href = `${routeLink}${highlight.link}`;
-            } else if (highlight.link.absolute) {
-              // path is relative to the baseUrl
+            if (highlight.link.absolute) {
+              // path is absolute
               href = `${highlight.link.absolute}`;
-            } else if (highlight.link.relative) {
-              // path is relative to the baseUrl
-              href = `${item.link}${highlight.link.relative}`;
-            } else if (highlight.link && typeof highlight.link === 'string') {
-              // path is relative to the item-preview url
-              href = `${item.link}${highlight.link}`;
-            } else if (highlight.link) {
-              href = `${item.link}`;
+            } else if (anchor.href) {
+              href = anchor.href;
             }
 
+            // path is relative to the item-preview url
+            if (highlight.link && typeof highlight.link === 'string') {
+              href += `${highlight.link}`;
+            } else if (highlight.link.relative) {
+              href += `${highlight.link.relative}`;
+            }
             const params = highlight.link.params ? [highlight.link.params] : [];
-
+            // includes current query _string
             if (highlight.link.query_string) {
               params.push(document.location.search);
             }
-            console.log(href);
+
             href = linksHelper.joinQueryParams(href, params);
 
             highlightGroup.items.push({
