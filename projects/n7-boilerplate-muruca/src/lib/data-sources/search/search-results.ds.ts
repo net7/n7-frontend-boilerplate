@@ -173,7 +173,7 @@ export class MrSearchResultsDS extends DataSource {
     return this.getHighlightParams(highlight.link, href);
   }
 
-  public getHighlightRelativeUrl(highlightLink, href) {
+  private getHighlightRelativeUrl(highlightLink, href) {
     if (!highlightLink) {
       return '';
     }
@@ -186,7 +186,7 @@ export class MrSearchResultsDS extends DataSource {
     return href;
   }
 
-  public getHighlightParams(highlightLink, href) {
+  private getHighlightParams(highlightLink, href) {
     const params = highlightLink.params ? [highlightLink.params] : [];
     // includes current query _string
     if (highlightLink.query_string) {

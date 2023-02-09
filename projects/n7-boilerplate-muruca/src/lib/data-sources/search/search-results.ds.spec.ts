@@ -4,15 +4,20 @@ import { MrSearchResultsDS } from './search-results.ds';
 describe('MrSearchResultsDS', () => {
   const dataSource = new MrSearchResultsDS();
   let mockDataSource: jasmine.SpyObj<MrSearchResultsDS>;
-  const hlParams = {
+  const hlParamsQs = {
     link: {
       params: 'root=1.4.2.46&hq=1',
       query_string: true
     }
   };
+  const hlParams = {
+    link: {
+      params: 'root=1.4.2.46&hq=1',
+    }
+  };
   const hlNoParams = {
     link: {
-      absolute: 'http://wwww.domain.tld'
+
     }
   };
   const hlRelativeNoParams = {
@@ -50,41 +55,36 @@ describe('MrSearchResultsDS', () => {
   });
 
   it('should be link empty', () => {
-    const href = dataSource.getHighlightRelativeUrl(null, 'http://wwww.domain.tld');
+    const href = dataSource.getHighlightLink({}, 'http://wwww.domain.tld');
     expect(href).toEqual('');
   });
 
   it('should be relative url with string parameter', () => {
-    const hl = '/path/to/resource';
-    const href = dataSource.getHighlightRelativeUrl(hl, 'http://wwww.domain.tld');
+    const hl = { link: '/path/to/resource' };
+    const href = dataSource.getHighlightLink(hl, 'http://wwww.domain.tld');
     expect(href).toEqual('http://wwww.domain.tld/path/to/resource');
   });
 
   it('should be relative url with relative param', () => {
-    const href = dataSource.getHighlightRelativeUrl(hlRelativeNoParams.link, 'http://wwww.domain.tld');
+    const href = dataSource.getHighlightLink(hlRelativeNoParams, 'http://wwww.domain.tld');
     expect(href).toEqual('http://wwww.domain.tld/path/to/resource');
   });
 
-  it('should be base url without relative path', () => {
-    const href = dataSource.getHighlightRelativeUrl(hlParams.link, '/work/1661/de-viris-illustribus-i');
-    expect(href).toEqual('/work/1661/de-viris-illustribus-i');
+  it('should be base url with params', () => {
+    const href = dataSource.getHighlightLink(hlParams, '/work/1661/de-viris-illustribus-i');
+    expect(href).toEqual('/work/1661/de-viris-illustribus-i?root=1.4.2.46&hq=1');
   });
 
-  it('should be base url with params', () => {
-    const href = dataSource.getHighlightParams(hlParams.link, '/work/1661/de-viris-illustribus-i');
+  it('should be base url with params and q-params', () => {
+    const href = dataSource.getHighlightLink(hlParamsQs, '/work/1661/de-viris-illustribus-i');
     expect(href).toEqual('/work/1661/de-viris-illustribus-i?root=1.4.2.46&hq=1&');
   });
 
-  it('should be base url with empty params', () => {
-    const href = dataSource.getHighlightParams(hlNoParams.link, '/work/1661/de-viris-illustribus-i');
-    expect(href).toEqual('/work/1661/de-viris-illustribus-i');
-  });
-
   it('should be base url without query string', () => {
-    const href = dataSource.getHighlightParams(hlNoParams.link, '/work/1661/de-viris-illustribus-i');
+    const href = dataSource.getHighlightLink(hlNoParams, '/work/1661/de-viris-illustribus-i');
     expect(href).toEqual('/work/1661/de-viris-illustribus-i');
   });
-  it('should be absolute url ', () => {
+  it('should be absolute url with params ', () => {
     const href = dataSource.getHighlightLink(hlAbsParams, '/work/1661/de-viris-illustribus-i');
     expect(href).toEqual('http://wwww.domain.tld?root=1.4.2.46&hq=1');
   });
