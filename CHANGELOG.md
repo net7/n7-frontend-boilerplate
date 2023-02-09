@@ -9,6 +9,11 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+-  seach results highlight: refactor link with TEST
+
+
 ## [4.4.0] - 2023-02-07
 
 Muruca

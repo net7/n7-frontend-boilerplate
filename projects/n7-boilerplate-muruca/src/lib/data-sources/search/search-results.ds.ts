@@ -8,9 +8,9 @@ import { MrLocaleService } from '../../services/locale.service';
 type HighlightItem = [string, [string]] | {
   link?: {
     /** from the baseUrl of the application */
-    absolute: string;
+    absolute?: string;
     /** path relative to the item preview url */
-    relative: string;
+    relative?: string;
     /** url query params in format key="value"&key2="value" */
     params?: string;
     /** include current url query params */
@@ -131,29 +131,9 @@ export class MrSearchResultsDS extends DataSource {
               label: _t(highlight[0]),
               value: _t(highlight[1][0])
             });
-          // if it's an object then it should have a custom hyperlink
+            // if it's an object then it should have a custom hyperlink
           } else {
-            let href = '';
-            if (highlight.link.absolute) {
-              // path is absolute
-              href = `${highlight.link.absolute}`;
-            } else if (anchor.href) {
-              href = anchor.href;
-            }
-
-            // path is relative to the item-preview url
-            if (highlight.link && typeof highlight.link === 'string') {
-              href += `${highlight.link}`;
-            } else if (highlight.link.relative) {
-              href += `${highlight.link.relative}`;
-            }
-            const params = highlight.link.params ? [highlight.link.params] : [];
-            // includes current query _string
-            if (highlight.link.query_string) {
-              params.push(document.location.search);
-            }
-
-            href = linksHelper.joinQueryParams(href, params);
+            const href = this.getHighlightLink(highlight, anchor.href);
 
             highlightGroup.items.push({
               label: highlight.label ? _t(highlight.label) : undefined,
@@ -176,5 +156,42 @@ export class MrSearchResultsDS extends DataSource {
         classes: itemPreviewOptions.classes,
       };
     });
+  }
+
+  public getHighlightLink(highlight, itemLink) {
+    let href = '';
+    if (!highlight.link) {
+      return href;
+    }
+    if (highlight.link.absolute) {
+      // path is absolute
+      href = `${highlight.link.absolute}`;
+    } else {
+      href = this.getHighlightRelativeUrl(highlight.link, itemLink);
+      // path is relative to the item-preview url
+    }
+    return this.getHighlightParams(highlight.link, href);
+  }
+
+  public getHighlightRelativeUrl(highlightLink, href) {
+    if (!highlightLink) {
+      return '';
+    }
+    if (typeof highlightLink === 'string') {
+      return `${href}${highlightLink}`;
+    }
+    if (highlightLink.relative) {
+      return `${href}${highlightLink.relative}`;
+    }
+    return href;
+  }
+
+  public getHighlightParams(highlightLink, href) {
+    const params = highlightLink.params ? [highlightLink.params] : [];
+    // includes current query _string
+    if (highlightLink.query_string) {
+      params.push(document.location.search);
+    }
+    return linksHelper.joinQueryParams(href, params);
   }
 }
