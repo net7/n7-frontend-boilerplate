@@ -8,9 +8,9 @@ import { MrLocaleService } from '../../services/locale.service';
 type HighlightItem = [string, [string]] | {
   link?: {
     /** from the baseUrl of the application */
-    absolute: string;
+    absolute?: string;
     /** path relative to the item preview url */
-    relative: string;
+    relative?: string;
     /** url query params in format key="value"&key2="value" */
     params?: string;
     /** include current url query params */
@@ -60,7 +60,6 @@ export class MrSearchResultsDS extends DataSource {
   protected transform(data: MrSearchResponse) {
     const { results } = data;
     const { itemPreview, highlights: highlightsOptions } = this.options.config;
-    const { localeService }: { localeService: MrLocaleService } = this.options;
     const itemPreviewOptions = merge(clone(ITEM_PREVIEW_DEFAULTS), (itemPreview || {}));
 
     return results.map((item) => {
@@ -90,29 +89,7 @@ export class MrSearchResultsDS extends DataSource {
       }
 
       // link
-      let anchor = null;
-      if (item.routeId) {
-        const routeLink = localeService.getLinkByRouteId(item.routeId, `${item.id}`, item.slug);
-        anchor = {
-          href: routeLink,
-          queryParams: item.params || null,
-        };
-      } else if (item.link) {
-        anchor = {
-          href: linksHelper.getRouterLink(item.link),
-          queryParams: linksHelper.getQueryParams(item.link),
-        };
-      } else if (item.payload) {
-        anchor = {
-          payload: {
-            ...item.payload
-          }
-        };
-      }
-
-      if (item.routeId || item.link) {
-        anchor.target = itemPreview?.linkTarget || '_blank';
-      }
+      const anchor = this.getItemPreviewAnchor(item, itemPreview?.linkTarget);
 
       /*
         Add the highlights to the item's metadata with a custom group
@@ -131,32 +108,9 @@ export class MrSearchResultsDS extends DataSource {
               label: _t(highlight[0]),
               value: _t(highlight[1][0])
             });
-          // if it's an object then it should have a custom hyperlink
+            // if it's an object then it should have a custom hyperlink
           } else {
-            let href = '';
-            if (item.routeId && highlight.link) {
-              const routeLink = localeService.getLinkByRouteId(item.routeId, `${item.id}`, item.slug);
-              href = `${routeLink}${highlight.link}`;
-            } else if (highlight.link.absolute) {
-              // path is relative to the baseUrl
-              href = `${highlight.link.absolute}`;
-            } else if (highlight.link.relative) {
-              // path is relative to the baseUrl
-              href = `${item.link}${highlight.link.relative}`;
-            } else if (highlight.link && typeof highlight.link === 'string') {
-              // path is relative to the item-preview url
-              href = `${item.link}${highlight.link}`;
-            } else if (highlight.link) {
-              href = `${item.link}`;
-            }
-
-            const params = highlight.link.params ? [highlight.link.params] : [];
-
-            if (highlight.link.query_string) {
-              params.push(document.location.search);
-            }
-            console.log(href);
-            href = linksHelper.joinQueryParams(href, params);
+            const href = this.getHighlightLink(highlight, anchor.href);
 
             highlightGroup.items.push({
               label: highlight.label ? _t(highlight.label) : undefined,
@@ -179,5 +133,71 @@ export class MrSearchResultsDS extends DataSource {
         classes: itemPreviewOptions.classes,
       };
     });
+  }
+
+  public getItemPreviewAnchor(item, target = '') {
+    const { localeService }: { localeService: MrLocaleService } = this.options;
+    let anchor = null;
+    if (item.routeId) {
+      const routeLink = localeService.getLinkByRouteId(item.routeId, `${item.id}`, item.slug);
+      anchor = {
+        href: routeLink,
+        queryParams: item.params || null,
+      };
+    } else if (item.link) {
+      anchor = {
+        href: linksHelper.getRouterLink(item.link),
+        queryParams: linksHelper.getQueryParams(item.link),
+      };
+    } else if (item.payload) {
+      anchor = {
+        payload: {
+          ...item.payload
+        }
+      };
+    }
+
+    if (item.routeId || item.link) {
+      anchor.target = target || '_blank';
+    }
+
+    return anchor;
+  }
+
+  public getHighlightLink(highlight, itemLink) {
+    let href = '';
+    if (!highlight.link) {
+      return href;
+    }
+    if (highlight.link.absolute) {
+      // path is absolute
+      href = `${highlight.link.absolute}`;
+    } else {
+      href = this.getHighlightRelativeUrl(highlight.link, itemLink);
+      // path is relative to the item-preview url
+    }
+    return this.getHighlightParams(highlight.link, href);
+  }
+
+  private getHighlightRelativeUrl(highlightLink, href) {
+    if (!highlightLink) {
+      return '';
+    }
+    if (typeof highlightLink === 'string') {
+      return `${href}${highlightLink}`;
+    }
+    if (highlightLink.relative) {
+      return `${href}${highlightLink.relative}`;
+    }
+    return href;
+  }
+
+  private getHighlightParams(highlightLink, href) {
+    const params = highlightLink.params ? [highlightLink.params] : [];
+    // includes current query _string
+    if (highlightLink.query_string) {
+      params.push(document.location.search);
+    }
+    return linksHelper.joinQueryParams(href, params);
   }
 }
