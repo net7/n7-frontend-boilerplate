@@ -60,7 +60,6 @@ export class MrSearchResultsDS extends DataSource {
   protected transform(data: MrSearchResponse) {
     const { results } = data;
     const { itemPreview, highlights: highlightsOptions } = this.options.config;
-    const { localeService }: { localeService: MrLocaleService } = this.options;
     const itemPreviewOptions = merge(clone(ITEM_PREVIEW_DEFAULTS), (itemPreview || {}));
 
     return results.map((item) => {
@@ -90,29 +89,7 @@ export class MrSearchResultsDS extends DataSource {
       }
 
       // link
-      let anchor = null;
-      if (item.routeId) {
-        const routeLink = localeService.getLinkByRouteId(item.routeId, `${item.id}`, item.slug);
-        anchor = {
-          href: routeLink,
-          queryParams: item.params || null,
-        };
-      } else if (item.link) {
-        anchor = {
-          href: linksHelper.getRouterLink(item.link),
-          queryParams: linksHelper.getQueryParams(item.link),
-        };
-      } else if (item.payload) {
-        anchor = {
-          payload: {
-            ...item.payload
-          }
-        };
-      }
-
-      if (item.routeId || item.link) {
-        anchor.target = itemPreview?.linkTarget || '_blank';
-      }
+      const anchor = this.getItemPreviewAnchor(item, itemPreview?.linkTarget);
 
       /*
         Add the highlights to the item's metadata with a custom group
@@ -156,6 +133,35 @@ export class MrSearchResultsDS extends DataSource {
         classes: itemPreviewOptions.classes,
       };
     });
+  }
+
+  public getItemPreviewAnchor(item, target = '') {
+    const { localeService }: { localeService: MrLocaleService } = this.options;
+    let anchor = null;
+    if (item.routeId) {
+      const routeLink = localeService.getLinkByRouteId(item.routeId, `${item.id}`, item.slug);
+      anchor = {
+        href: routeLink,
+        queryParams: item.params || null,
+      };
+    } else if (item.link) {
+      anchor = {
+        href: linksHelper.getRouterLink(item.link),
+        queryParams: linksHelper.getQueryParams(item.link),
+      };
+    } else if (item.payload) {
+      anchor = {
+        payload: {
+          ...item.payload
+        }
+      };
+    }
+
+    if (item.routeId || item.link) {
+      anchor.target = target || '_blank';
+    }
+
+    return anchor;
   }
 
   public getHighlightLink(highlight, itemLink) {
