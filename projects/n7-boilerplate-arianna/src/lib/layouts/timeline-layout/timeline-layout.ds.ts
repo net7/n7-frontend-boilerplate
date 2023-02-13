@@ -3,6 +3,7 @@ import { LayoutDataSource } from '@net7/core';
 import { isNull } from 'lodash';
 import { BehaviorSubject } from 'rxjs';
 import { helpers } from '@net7/boilerplate-common';
+import { getHeadTitle } from '../../helpers/title.helper';
 
 type LayoutState = 'LOADING' | 'EMPTY' | 'SUCCESS';
 
@@ -12,6 +13,8 @@ export class AwTimelineLayoutDS extends LayoutDataSource {
   protected mainState: any;
 
   protected titleService: any;
+
+  public configId = 'timeline-layout';
 
   public options: any;
 
@@ -39,7 +42,9 @@ export class AwTimelineLayoutDS extends LayoutDataSource {
     this.mainState = mainState;
     this.options = options;
     this.titleService = titleService;
-    this.mainState.update('headTitle', 'Arianna4View - Timeline');
+
+    // head title
+    this.setHeadTitle();
 
     // navigation update
     this.mainState.updateCustom('currentNav', 'timeline');
@@ -51,7 +56,7 @@ export class AwTimelineLayoutDS extends LayoutDataSource {
       }
     }).subscribe((response) => {
       this.one('aw-timeline').updateOptions({
-        configuration: this.configuration.get('timeline-layout')?.timeline
+        configuration: this.configuration.get(this.configId)?.timeline
       });
       this.one('aw-timeline').update(response);
     });
@@ -163,5 +168,13 @@ export class AwTimelineLayoutDS extends LayoutDataSource {
         active: this.pageSize,
       },
     });
+  }
+
+  private setHeadTitle() {
+    this.mainState.update('headTitle', getHeadTitle({
+      name: this.configuration.get('customer'),
+      pageName: this.configuration.get(this.configId)?.pageName,
+      pageDefault: 'Timeline',
+    }));
   }
 }

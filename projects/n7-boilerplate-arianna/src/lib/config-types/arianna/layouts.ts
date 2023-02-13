@@ -12,7 +12,11 @@ interface HomeHeroData extends Omit<HeroData, 'input'> {
   };
 }
 
-export interface ConfigAriannaHomeLayout {
+export interface ConfigAriannaLayout {
+  pageName?: string;
+}
+
+export interface ConfigAriannaHomeLayout extends ConfigAriannaLayout {
   /** home top hero */
   'top-hero'?: HomeHeroData;
   /** home bottom hero */
@@ -45,7 +49,7 @@ type StringLimitConfig = {
   char?: string;
 }
 
-export interface ConfigAriannaCollectionLayout {
+export interface ConfigAriannaCollectionLayout extends ConfigAriannaLayout {
   /** page header */
   header: StringLimitConfig;
   /** page description */
@@ -61,7 +65,7 @@ export interface ConfigAriannaCollectionLayout {
   };
 }
 
-export interface ConfigAriannaEntitaLayout {
+export interface ConfigAriannaEntitaLayout extends ConfigAriannaLayout {
   /** overview tab */
   overview: {
     /** allowed metadata keys */
@@ -77,11 +81,11 @@ export interface ConfigAriannaEntitaLayout {
   'metadata-to-show': string[];
 }
 
-export interface ConfigAriannaMapLayout {
+export interface ConfigAriannaMapLayout extends ConfigAriannaLayout {
   // nothing here!
 }
 
-export interface ConfigAriannaTimelineLayout {
+export interface ConfigAriannaTimelineLayout extends ConfigAriannaLayout {
   /** Options for the timeline component */
   timeline: {
     /** Forces the timeline to render all dates as single moments */
@@ -89,7 +93,7 @@ export interface ConfigAriannaTimelineLayout {
   };
 }
 
-export interface ConfigAriannaSchedaLayout {
+export interface ConfigAriannaSchedaLayout extends ConfigAriannaLayout {
   /** no item information fallback text */
   'empty-html': string;
   /** initial page text no item selected */
@@ -201,7 +205,7 @@ export interface ConfigAriannaSchedaLayout {
   };
 }
 
-export interface ConfigAriannaSearchLayout {
+export interface ConfigAriannaSearchLayout extends ConfigAriannaLayout {
   /** page title */
   title: string;
   /** results labels: 0 items | 1 item | n items */

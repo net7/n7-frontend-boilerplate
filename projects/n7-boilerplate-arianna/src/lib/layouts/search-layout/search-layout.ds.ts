@@ -11,6 +11,7 @@ import facetsConfig from './search-facets.config';
 import { AwSearchService } from '../../search/aw-search.service';
 import { AwSearchModel } from '../../search/aw-search.model';
 import entityLinksHelper from '../../search/entity-links.helper';
+import { getHeadTitle } from '../../helpers/title.helper';
 
 export class AwSearchLayoutDS extends LayoutDataSource {
   public layoutId = 'aw-search-layout';
@@ -19,7 +20,7 @@ export class AwSearchLayoutDS extends LayoutDataSource {
 
   public currentNav = 'ricerca';
 
-  public headTitle = 'Arianna4View - Ricerca';
+  public pageNameDefault = 'Ricerca';
 
   public facetsConfig: any = facetsConfig;
 
@@ -122,7 +123,9 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     }
     this._sidebarStickyControl();
     this.mainState.updateCustom('currentNav', this.currentNav);
-    this.mainState.update('headTitle', this.headTitle);
+
+    // set head title
+    this.setHeadTitle();
   }
 
   onDestroy() {
@@ -195,7 +198,7 @@ export class AwSearchLayoutDS extends LayoutDataSource {
         active: this.pageSize,
       },
     });
-  }
+  };
 
   resetPagination() {
     this._updateSearchPage(1);
@@ -376,5 +379,13 @@ export class AwSearchLayoutDS extends LayoutDataSource {
       href,
       queryParams,
     };
+  }
+
+  private setHeadTitle() {
+    this.mainState.update('headTitle', getHeadTitle({
+      name: this.configuration.get('customer'),
+      pageName: this.configuration.get(this.configId)?.pageName,
+      pageDefault: this.pageNameDefault,
+    }));
   }
 }

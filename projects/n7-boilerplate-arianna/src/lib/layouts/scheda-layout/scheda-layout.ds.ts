@@ -10,6 +10,7 @@ import { helpers } from '@net7/boilerplate-common';
 import { Params } from '@angular/router';
 import metadataHelper from '../../helpers/metadata.helper';
 import nodeHelper from '../../helpers/node.helper';
+import { getHeadTitle } from '../../helpers/title.helper';
 
 const LOCAL_STORAGE_PREFIX = 'aw.scheda';
 
@@ -29,6 +30,8 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   protected router: any;
 
   protected titleService: any;
+
+  public configId = 'scheda-layout';
 
   public options: any;
 
@@ -125,7 +128,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   }) {
     if (configuration) {
       this.configuration = configuration;
-      this.layoutConfig = this.configuration.get('scheda-layout');
+      this.layoutConfig = this.configuration.get(this.configId);
     }
     this.mainState = mainState;
     this.router = router;
@@ -152,16 +155,18 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       this.getTreeQuery = 'getTreeLite';
     }
 
-    this.mainState.update('headTitle', 'Arianna4View - Patrimonio');
     this.mainState.update('pageTitle', 'Arianna4View - Patrimonio');
     this.mainState.updateCustom('currentNav', 'patrimonio');
 
+    // head title
+    this.setHeadTitle();
+
     // image viewer context-menu check
-    const imageViewerConfig = this.configuration.get('scheda-layout')['image-viewer'] || {};
+    const imageViewerConfig = this.configuration.get(this.configId)['image-viewer'] || {};
     this.hasContextMenu = () => !!imageViewerConfig['context-menu'];
 
     // pdf viewer options
-    this.one('aw-scheda-pdf').updateOptions(this.configuration.get('scheda-layout')['pdf-viewer'] || {});
+    this.one('aw-scheda-pdf').updateOptions(this.configuration.get(this.configId)['pdf-viewer'] || {});
 
     // check section collapse state
     Object.keys(this.sectionCollapseState).forEach((key) => {
@@ -179,7 +184,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   }
 
   getMetadataSectionTitle() {
-    const layoutConfig = this.configuration.get('scheda-layout');
+    const layoutConfig = this.configuration.get(this.configId);
     const metadataConfig = layoutConfig.metadata || {};
     return metadataConfig.title || null;
   }
@@ -207,7 +212,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
   }
 
   loadItem(id) {
-    const maxSimilarItems = this.configuration.get('scheda-layout')['related-items']['max-related-items'];
+    const maxSimilarItems = this.configuration.get(this.configId)['related-items']['max-related-items'];
     return this.communication.request$('getNode', {
       onError: (error) => console.error(error),
       params: { id, maxSimilarItems },
@@ -308,7 +313,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       this.loadDocumentType();
 
       // update head title
-      this.mainState.update('headTitle', `Arianna4View - Patrimonio - ${response.title || response.label}`);
+      this.setHeadTitle(response.title || response.label);
     }
 
     if (response.relatedItems) {
@@ -546,7 +551,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     const labels = this.configuration.get('labels');
     const dcSegments = typeof dc === 'string' ? dc.split('.') : [];
     const dcLastSegment = dcSegments[dcSegments.length - 1];
-    let metadataToShow = _get(this.configuration.get('scheda-layout'), 'metadata-to-show', {});
+    let metadataToShow = _get(this.configuration.get(this.configId), 'metadata-to-show', {});
     metadataToShow = metadataToShow[dcLastSegment] || metadataToShow[dt] || [];
 
     return metadataHelper.normalize({
@@ -615,5 +620,14 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
   private _normalizeItems(items) {
     return items.map((singleItem) => ({ item: { ...singleItem } }));
+  }
+
+  private setHeadTitle(label?: string) {
+    this.mainState.update('headTitle', getHeadTitle({
+      label,
+      name: this.configuration.get('customer'),
+      pageName: this.configuration.get(this.configId)?.pageName,
+      pageDefault: 'Patrimonio',
+    }));
   }
 }

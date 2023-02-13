@@ -4,7 +4,8 @@ import {
   ConfigurationService,
   AbstractLayout,
   CommunicationService,
-  LayoutsConfigurationService
+  LayoutsConfigurationService,
+  MainStateService
 } from '@net7/boilerplate-common';
 import { AwCollectionLayoutConfig as config } from './collection-layout.config';
 
@@ -18,6 +19,7 @@ export class AwCollectionLayoutComponent extends AbstractLayout implements OnIni
     private layoutsConfiguration: LayoutsConfigurationService,
     private configuration: ConfigurationService,
     private route: ActivatedRoute,
+    private mainState: MainStateService,
   ) {
     super(config);
   }
@@ -27,7 +29,8 @@ export class AwCollectionLayoutComponent extends AbstractLayout implements OnIni
       communication: this.communication,
       layoutsConfiguration: this.layoutsConfiguration,
       configuration: this.configuration,
-      route: this.route
+      route: this.route,
+      mainState: this.mainState,
     };
   }
 
