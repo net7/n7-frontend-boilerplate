@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Arianna
+
+-  added head title configuration
+
 Muruca
 
 -  seach results highlight: refactor link with TEST
