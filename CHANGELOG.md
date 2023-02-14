@@ -13,10 +13,11 @@ Arianna
 
 -  added head title configuration
 
+## [4.4.1] - 2023-02-09
+
 Muruca
 
--  seach results highlight: refactor link with TEST
-
+-   seach results highlight: refactor link with TEST
 
 ## [4.4.0] - 2023-02-07
 
@@ -332,7 +333,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.4.0...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.4.1...HEAD
+
+[4.4.1]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.4.0...v4.4.1
 
 [4.4.0]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.3.0...v4.4.0
 
