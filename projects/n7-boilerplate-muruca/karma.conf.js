@@ -1,9 +1,11 @@
+/* eslint-disable global-require */
+/* eslint-disable @typescript-eslint/no-var-requires */
 // Karma configuration file, see link for more information
 // https://karma-runner.github.io/1.0/config/configuration-file.html
 
 process.env.CHROME_BIN = require('puppeteer').executablePath();
 
-module.exports = function (config) {
+module.exports = (config) => {
   config.set({
     basePath: '',
     frameworks: ['jasmine', '@angular-devkit/build-angular'],
@@ -40,7 +42,7 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['Firefox', 'ChromeHeadless'],
+    browsers: ['Firefox', 'Chrome', 'ChromeHeadless'],
     singleRun: false,
     restartOnFileChange: true
   });

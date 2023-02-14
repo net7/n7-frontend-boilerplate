@@ -9,9 +9,13 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Common
+
+-   added communication service types and spec file
+
 Arianna
 
--  added head title configuration
+-   added head title configuration
 
 ## [4.4.1] - 2023-02-09
 

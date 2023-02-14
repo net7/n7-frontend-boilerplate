@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AbstractLayout } from '@net7/boilerplate-common';
+import { AbstractLayout, CommunicationService } from '@net7/boilerplate-common';
 import { DvExampleLayoutConfig as config } from './example-layout.config';
 
 @Component({
@@ -8,12 +8,16 @@ import { DvExampleLayoutConfig as config } from './example-layout.config';
   templateUrl: './example-layout.html',
 })
 export class DvExampleLayoutComponent extends AbstractLayout implements OnInit, OnDestroy {
-  constructor() {
+  constructor(
+    private communication: CommunicationService
+  ) {
     super(config);
   }
 
   initPayload() {
-    return {};
+    return {
+      communication: this.communication
+    };
   }
 
   ngOnInit() {

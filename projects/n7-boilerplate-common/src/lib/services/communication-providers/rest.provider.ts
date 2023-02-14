@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommunicationProvider } from './communication-provider.interface';
+import { CommunicationOptions } from '../communication.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,7 @@ export class RestProvider implements CommunicationProvider {
     private http: HttpClient,
   ) {}
 
-  request$(providerConfig, requestId, options: any = {}) {
+  request$<T>(providerConfig, requestId, options: CommunicationOptions<T>) {
     const {
       params, httpOptions, urlParams = '',
     } = options;
@@ -28,15 +29,34 @@ export class RestProvider implements CommunicationProvider {
     if (!point) {
       throw Error(`No config found for requestId "${requestId}"`);
     }
-    if (method === 'POST' || method === 'PUT') {
+
+    const formattedUrl = this.getFormattedUrl(providerConfig.baseUrl, point, urlParams);
+    if (['POST', 'PUT', 'PATCH'].includes(method)) {
       return this.http[method.toLowerCase()](
-        providerConfig.baseUrl + point + urlParams, params, httpOptions,
+        formattedUrl,
+        params,
+        httpOptions
       );
-    } if (method === 'GET' || method === 'DELETE') {
+    } if (['GET', 'DELETE'].includes(method)) {
       return this.http[method.toLowerCase()](
-        providerConfig.baseUrl + point + urlParams, httpOptions,
+        formattedUrl,
+        httpOptions
       );
     }
     throw Error(`Rest method ${method} not supported`);
+  }
+
+  private getFormattedUrl(baseUrl: string, point: string, urlParams: string | object) {
+    if (typeof urlParams === 'string') {
+      return baseUrl + point + urlParams;
+    }
+    return baseUrl + this.parseUrlPlaceholders(point, urlParams);
+  }
+
+  private parseUrlPlaceholders(source: string, placeholders: object) {
+    return source.replace(/{\s*\w+\s*}/g, (match) => {
+      const key = match.replace(/{|}/g, '').trim();
+      return placeholders[key] || match;
+    });
   }
 }
