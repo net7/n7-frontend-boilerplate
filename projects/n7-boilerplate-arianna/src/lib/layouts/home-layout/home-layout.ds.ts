@@ -80,7 +80,6 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     this.one('aw-home-hero-patrimonio').update(this.configuration.get(this.configId)['bottom-hero']);
     // update streams
     this.mainState.updateCustom('currentNav', 'home');
-    this.mainState.update('pageTitle', 'Arianna4View - Homepage');
     this.setHeadTitle();
     // listen autocomplete changes
     this._listenAutoCompleteChanges();

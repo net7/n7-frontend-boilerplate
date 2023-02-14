@@ -155,7 +155,6 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       this.getTreeQuery = 'getTreeLite';
     }
 
-    this.mainState.update('pageTitle', 'Arianna4View - Patrimonio');
     this.mainState.updateCustom('currentNav', 'patrimonio');
 
     // head title
