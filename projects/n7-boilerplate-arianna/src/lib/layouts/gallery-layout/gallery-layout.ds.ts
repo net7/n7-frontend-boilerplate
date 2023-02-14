@@ -8,7 +8,7 @@ export class AwGalleryLayoutDS extends AwSearchLayoutDS {
 
   public currentNav = 'galleria';
 
-  public headTitle = 'Arianna4View - Galleria';
+  public pageNameDefault = 'Galleria';
 
   public facetsConfig = facetsConfig;
 

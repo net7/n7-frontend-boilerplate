@@ -2,6 +2,7 @@ import { InnerTitleData } from '@net7/components';
 import { LayoutDataSource } from '@net7/core';
 import { BehaviorSubject } from 'rxjs';
 import { helpers } from '@net7/boilerplate-common';
+import { getHeadTitle } from '../../helpers/title.helper';
 
 type LayoutState = 'LOADING' | 'EMPTY' | 'SUCCESS';
 
@@ -11,6 +12,8 @@ export class AwMapLayoutDS extends LayoutDataSource {
   protected mainState: any;
 
   protected titleService: any;
+
+  public configId = 'map-layout';
 
   public options: any;
 
@@ -36,7 +39,9 @@ export class AwMapLayoutDS extends LayoutDataSource {
     this.mainState = mainState;
     this.options = options;
     this.titleService = titleService;
-    this.mainState.update('headTitle', 'Arianna4View - Mappa');
+
+    // head title
+    this.setHeadTitle();
 
     // navigation update
     this.mainState.updateCustom('currentNav', 'mappa');
@@ -141,5 +146,13 @@ export class AwMapLayoutDS extends LayoutDataSource {
         active: this.pageSize,
       },
     });
+  }
+
+  private setHeadTitle() {
+    this.mainState.update('headTitle', getHeadTitle({
+      name: this.configuration.get('customer'),
+      pageName: this.configuration.get(this.configId)?.pageName,
+      pageDefault: 'Mappa',
+    }));
   }
 }

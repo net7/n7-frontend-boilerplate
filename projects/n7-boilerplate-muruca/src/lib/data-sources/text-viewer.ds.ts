@@ -5,7 +5,9 @@ export class MrTextViewerDS extends DataSource {
   id: string;
 
   protected transform(data: TextViewerData): TextViewerData {
-    const { enableClickOnEntities, toggleColumn, searchId, searchApi } = this.options || {};
+    const {
+      enableClickOnEntities, toggleColumn, searchId, searchApi
+    } = this.options || {};
     data.toggleColumn = toggleColumn;
     // force tei publisher endpoint value
     document.addEventListener(
@@ -58,7 +60,7 @@ export class MrTextViewerDS extends DataSource {
         }&${params.toString()}`;
         data.docs[0].url = xmlQueryUrl;
         data.docs[0].rootPath = 'api/mrcparts';
-    }
+      }
       document.addEventListener('pb-end-update', (ev: any) => {
         this.scrollElementsIntoView(ev.detail, 'hq', '#view0');
       });
@@ -76,9 +78,17 @@ export class MrTextViewerDS extends DataSource {
 
   onClick(payload) {
     if (this.output.toggleColumn === false) {
-      const target = payload.path.find(
-        ({ tagName }) => tagName === 'PB-HIGHLIGHT'
-      );
+      let target = null;
+      if (payload.path) {
+        target = payload.path.find(
+          ({ tagName }) => tagName === 'PB-HIGHLIGHT'
+        );
+      } else {
+        target = payload.composedPath().find(
+          ({ tagName }) => tagName === 'PB-HIGHLIGHT'
+        );
+      }
+
       if (
         target.__key
         && (target.className.includes('person')

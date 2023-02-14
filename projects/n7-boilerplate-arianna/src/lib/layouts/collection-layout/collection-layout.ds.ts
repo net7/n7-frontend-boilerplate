@@ -3,8 +3,9 @@ import { LayoutDataSource } from '@net7/core';
 import { BehaviorSubject } from 'rxjs';
 import { first, map } from 'rxjs/operators';
 import slugify from 'slugify';
-import { ConfigurationService, CommunicationService } from '@net7/boilerplate-common';
+import { ConfigurationService, CommunicationService, MainStateService } from '@net7/boilerplate-common';
 import { CollectionItem, GetCollectionParams, GetCollectionResponse } from './collection-layout.types';
+import { getHeadTitle } from '../../helpers/title.helper';
 
 export class AwCollectionLayoutDS extends LayoutDataSource {
   private communication: CommunicationService;
@@ -14,6 +15,10 @@ export class AwCollectionLayoutDS extends LayoutDataSource {
   private layoutOptions;
 
   private route;
+
+  private mainState: MainStateService;
+
+  public configId = 'collection-layout';
 
   public collectionID: string;
 
@@ -29,11 +34,11 @@ export class AwCollectionLayoutDS extends LayoutDataSource {
     rmmus: 'materiale-musicale',
     ua: 'unita-archivistica',
     oac300: 'opera-arte-contemporanea',
-  }
+  };
 
   innerTitleData = new BehaviorSubject<InnerTitleData>({
     title: { main: { text: '' } },
-  })
+  });
 
   collectionDescription = new BehaviorSubject<string>('');
 
@@ -56,9 +61,13 @@ export class AwCollectionLayoutDS extends LayoutDataSource {
     this.communication = payload.communication;
     this.route = payload.route;
     this.configuration = payload.configuration;
+    this.mainState = payload.mainState;
     this.loadedCollections = new BehaviorSubject([]);
-    this.layoutOptions = this.configuration.get('collection-layout');
+    this.layoutOptions = this.configuration.get(this.configId);
     this.pageSizeList = new Array(this.pageSize);
+
+    // head title
+    this.setHeadTitle();
   }
 
   /**
@@ -199,5 +208,13 @@ export class AwCollectionLayoutDS extends LayoutDataSource {
       }
     }
     return `is-${classification.replace('.', '-')}`;
+  }
+
+  private setHeadTitle() {
+    this.mainState.update('headTitle', getHeadTitle({
+      name: this.configuration.get('customer'),
+      pageName: this.configuration.get(this.configId)?.pageName,
+      pageDefault: 'Collezione',
+    }));
   }
 }

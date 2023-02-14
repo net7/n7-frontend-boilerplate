@@ -20,7 +20,7 @@ export type CommunicationHttpOptions = {
   withCredentials?: boolean;
   params?: CommunicationQueryParams;
   headers?: HttpHeaders | {
-      [header: string]: string | string[];
+    [header: string]: string | string[];
   };
 }
 
@@ -101,7 +101,7 @@ export class CommunicationService {
     return EMPTY;
   }
 
-  getUrl(requestId: string, provider? : string) {
+  getUrl(requestId?, provider?) {
     const activeProvider = provider || this.defaultProvider;
     const activeProviderConfig = this.communicationConfig.providers[activeProvider];
 
@@ -110,6 +110,10 @@ export class CommunicationService {
     }
 
     const { baseUrl } = activeProviderConfig;
+
+    if (!requestId) {
+      return baseUrl;
+    }
 
     if (!activeProviderConfig.config[requestId]) {
       throw Error(`There is no config for "${requestId}"`);
