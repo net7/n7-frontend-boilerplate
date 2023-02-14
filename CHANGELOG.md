@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Arianna
+
+-  added head title configuration
+
 ## [4.4.1] - 2023-02-09
 
 Muruca
