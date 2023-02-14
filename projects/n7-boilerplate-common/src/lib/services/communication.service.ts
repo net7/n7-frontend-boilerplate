@@ -91,7 +91,7 @@ export class CommunicationService {
       );
   }
 
-  handleError(error, onError): Observable<any> {
+  handleError(error, onError: (err) => void): Observable<any> {
     if (onError) {
       onError(error);
     } else {
