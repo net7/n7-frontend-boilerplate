@@ -217,5 +217,5 @@ export interface ConfigAriannaSearchLayout extends ConfigAriannaLayout {
 }
 
 export interface ConfigAriannaGalleryLayout extends ConfigAriannaSearchLayout {
-  // nothing here
+  disableBreadcrumbsTooltip?: boolean;
 }

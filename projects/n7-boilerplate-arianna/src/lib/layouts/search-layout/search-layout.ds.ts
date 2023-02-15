@@ -26,21 +26,21 @@ export class AwSearchLayoutDS extends LayoutDataSource {
 
   public paginationList = [10, 25, 50];
 
-  private destroyed$: Subject<any> = new Subject();
+  protected destroyed$: Subject<any> = new Subject();
 
-  private communication: any;
+  protected communication: any;
 
-  private configuration: any;
+  protected configuration: any;
 
-  private mainState: any;
+  protected mainState: any;
 
-  private search: AwSearchService;
+  protected search: AwSearchService;
 
-  private searchModel: AwSearchModel;
+  protected searchModel: AwSearchModel;
 
-  private prettifyLabels: any;
+  protected prettifyLabels: any;
 
-  private configKeys: any;
+  protected configKeys: any;
 
   public fallback: string;
 

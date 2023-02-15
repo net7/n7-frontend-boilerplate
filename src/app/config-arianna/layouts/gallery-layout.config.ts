@@ -15,6 +15,7 @@ const config: ConfigAriannaGalleryLayout = {
     'cosa-notevole',
     'organizzazione'
   ],
+  disableBreadcrumbsTooltip: false,
   fallback: 'La tua ricerca non ha dato risultati. Prova a cambiare i parametri oppure a resettare la ricerca cliccando sul pulsante sottostante.'
 };
 

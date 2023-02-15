@@ -25,6 +25,7 @@ import { SmartBreadcrumbsComponent } from './components/smart-breadcrumbs/smart-
 import { ExtendedTreeComponent } from './components/extended-tree/extended-tree';
 import { SchedaImageNavigatorComponent } from './components/scheda-image-navigator/scheda-image-navigator';
 import { SchedaSearchComponent } from './components/scheda-search/scheda-search';
+import { GalleryBreadcrumbsTooltipComponent } from './components/gallery-breadcrumbs-tooltip/gallery-breadcrumbs-tooltip';
 // LIBS
 
 import apolloConfig from './config/apollo.config';
@@ -47,6 +48,7 @@ const COMPONENTS = [
   ExtendedTreeComponent,
   SchedaImageNavigatorComponent,
   SchedaSearchComponent,
+  GalleryBreadcrumbsTooltipComponent,
 ];
 
 @NgModule({
