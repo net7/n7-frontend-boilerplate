@@ -1,6 +1,6 @@
-import { AwLinkedObjectsDS } from 'dist/n7-boilerplate-arianna';
 import { delay, filter } from 'rxjs/operators';
 import tippy, { hideAll } from 'tippy.js';
+import { AwLinkedObjectsDS } from '../../data-sources/linked-objects.ds';
 import { AwSearchLayoutDS } from '../search-layout/search-layout.ds';
 import facetsConfig from './gallery-facets.config';
 
