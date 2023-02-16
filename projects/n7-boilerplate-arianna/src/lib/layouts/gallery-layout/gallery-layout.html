@@ -81,7 +81,7 @@
                     <div *ngFor="let preview of (lb.widgets['aw-linked-objects'].ds.out$ | async)?.previews; let $i = index">
                         
                         <!-- BREADCRUMBS WITH TOOLTIP -->
-                        <div *ngIf="!ds.disableBreadcrumbsTooltip" class="aw-gallery__breadcrumbs">
+                        <div *ngIf="!ds.breadcrumbsTooltip?.disable" class="aw-gallery__breadcrumbs">
                             <a class="aw-gallery__breadcrumbs-icon tooltip-trigger" [attr.data-template]="'breadcrumbs-tooltip-' + $i">
                                 <span class="n7-icon n7-icon-tree-icon"></span>
                             </a>
@@ -93,7 +93,7 @@
                         </div>
 
                         <!-- NORMAL BREADCRUMBS -->
-                        <n7-smart-breadcrumbs  *ngIf="ds.disableBreadcrumbsTooltip" [data]="preview.breadcrumbs">
+                        <n7-smart-breadcrumbs  *ngIf="ds.breadcrumbsTooltip?.disable" [data]="preview.breadcrumbs">
                         </n7-smart-breadcrumbs>
                         
                         <!-- ITEMPREVIEW -->

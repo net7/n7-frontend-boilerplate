@@ -19,17 +19,17 @@ export class AwGalleryLayoutDS extends AwSearchLayoutDS {
 
   public pageSize = 12; // linked objects page size
 
-  public disableBreadcrumbsTooltip = false;
+  public breadcrumbsTooltip;
 
   onInit(payload) {
     super.onInit(payload);
 
-    this.disableBreadcrumbsTooltip = !!(
-      this.configuration.get(this.configId)?.disableBreadcrumbsTooltip
-    );
+    this.breadcrumbsTooltip = (
+      this.configuration.get(this.configId)?.breadcrumbsTooltip
+    ) || {};
 
     // load breadcrumbs tooltips
-    if (!this.disableBreadcrumbsTooltip) {
+    if (!this.breadcrumbsTooltip?.disable) {
       this.loadTooltips();
     }
   }
@@ -49,12 +49,14 @@ export class AwGalleryLayoutDS extends AwSearchLayoutDS {
         interactive: true,
         trigger: 'click',
         theme: 'light-border no-padding',
-        placement: 'bottom',
+        placement: 'bottom-start',
+        hideOnClick: 'toggle',
         content(reference) {
           const id = reference.getAttribute('data-template');
           const template = document.getElementById(id);
           return template.innerHTML;
         },
+        ...(this.breadcrumbsTooltip?.libOptions || {})
       });
     });
   }
