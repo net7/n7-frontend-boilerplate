@@ -37,7 +37,7 @@ export class AwGalleryLayoutDS extends AwSearchLayoutDS {
   loadTooltips() {
     const linkedObjectsDS: AwLinkedObjectsDS = this.getWidgetDataSource('aw-linked-objects');
     linkedObjectsDS.out$.pipe(
-      filter((data) => data),
+      filter((data) => !!data),
       delay(1000) // symbolic timeout
     ).subscribe(() => {
       // clear first
