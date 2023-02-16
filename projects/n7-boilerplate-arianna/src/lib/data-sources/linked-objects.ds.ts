@@ -38,26 +38,26 @@ export class AwLinkedObjectsDS extends DataSource {
     return this.loadedData;
   }
 
-    public checkForMore = (force?: boolean) => {
-      /*
+  public checkForMore = (force?: boolean) => {
+    /*
         Checks if it is possible to load more item previews.
         Can receive a boolean argument to force the button to be
         enabled or disabled. (Used while data is loading)
       */
-      if (!this.loadedData.actions) {
-        // if not using actions, don't check
-        return;
-      }
-      if (typeof force !== 'undefined') {
-        this.loadedData.actions[1].disabled = !force;
-        return;
-      }
-      if (this.loadedData.result.length >= this.totalObjects) {
-        this.loadedData.actions[1].disabled = true;
-      } else {
-        this.loadedData.actions[1].disabled = false;
-      }
+    if (!this.loadedData.actions) {
+      // if not using actions, don't check
+      return;
     }
+    if (typeof force !== 'undefined') {
+      this.loadedData.actions[1].disabled = !force;
+      return;
+    }
+    if (this.loadedData.result.length >= this.totalObjects) {
+      this.loadedData.actions[1].disabled = true;
+    } else {
+      this.loadedData.actions[1].disabled = false;
+    }
+  };
 
   public handleIncomingData = (incomingData) => {
     /*
@@ -69,7 +69,7 @@ export class AwLinkedObjectsDS extends DataSource {
     this.loadedData.result = this.loadedData.result.concat(newData.result);
     this.checkForMore();
     this.loadedData.isLoading = false;
-  }
+  };
 
   /**
    * Dynamically returns the data object for each HTML component
@@ -235,5 +235,5 @@ export class AwLinkedObjectsDS extends DataSource {
       };
     }
     return { previews: result };
-  }
+  };
 }

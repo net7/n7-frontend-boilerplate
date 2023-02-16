@@ -217,5 +217,10 @@ export interface ConfigAriannaSearchLayout extends ConfigAriannaLayout {
 }
 
 export interface ConfigAriannaGalleryLayout extends ConfigAriannaSearchLayout {
-  // nothing here
+  breadcrumbsTooltip?: {
+    disable?: boolean;
+    libOptions?: {
+      [key: string]: any;
+    };
+  }
 }

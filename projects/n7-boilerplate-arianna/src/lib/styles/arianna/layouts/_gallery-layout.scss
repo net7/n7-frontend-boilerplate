@@ -1,0 +1,34 @@
+/**
+ * GALLERY
+ *
+ * Layout for gallery page
+ */
+
+/* ------------------------------------ *\
+    GALLERY
+\* ------------------------------------ */
+.aw-gallery {
+    &__breadcrumbs {
+        display: flex;
+        align-items: center;
+        background-color: $color-gray-01;
+    }
+
+    &__breadcrumbs-icon {
+        width: 24px;
+        cursor: pointer;
+        margin-left: $space;
+        background-color: $color-gray-00;
+        border-radius: $border-radius;
+        color: $color-gray-05;
+    }
+
+    &__breadcrumbs-separator {
+        width: 16px;
+        color: $color-text-light;
+    }
+
+    n7-smart-breadcrumbs {
+        flex-grow: 1;
+    }
+}

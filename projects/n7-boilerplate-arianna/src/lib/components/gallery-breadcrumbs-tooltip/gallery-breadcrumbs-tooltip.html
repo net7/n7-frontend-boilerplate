@@ -1,0 +1,12 @@
+<div *ngIf="data" class="aw-gallery-breadcrumbs-tooltip">
+    <div class="aw-gallery-breadcrumbs-tooltip__title">{{ title }}</div>
+    <ul class="aw-gallery-breadcrumbs-tooltip__items">
+        <li *ngFor="let item of data.items; let $i = index"
+        class="aw-gallery-breadcrumbs-tooltip__item"
+        [ngClass]="{ 'is-last': isLast($i) }">
+            <span class="aw-gallery-breadcrumbs-tooltip__item-icon n7-icon n7-icon-angle-right"
+            [ngStyle]="{ 'margin-left': getLeftMargin($i) }"></span>
+            <span class="aw-gallery-breadcrumbs-tooltip__item-label">{{ item.label }}</span>
+        </li>
+    </ul>
+</div>
