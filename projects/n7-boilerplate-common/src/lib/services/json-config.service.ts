@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { tap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { merge } from 'lodash';
+import { isObject, merge } from 'lodash';
 import { ConfigurationService } from './configuration.service';
 
 @Injectable({
@@ -24,10 +24,12 @@ export class JsonConfigService {
   private _handleResponse(response) {
     // set loaded json config
     if (response) {
+      // merge config
       Object.keys(response).forEach((key) => {
         const oldValue = this.config.get(key);
         const newValue = response[key];
-        this.config.set(key, merge(oldValue, newValue));
+        const mergeValue = this.mergeConfigKey(oldValue, newValue);
+        this.config.set(key, mergeValue);
       });
 
       // config keys colors
@@ -55,5 +57,12 @@ export class JsonConfigService {
         }
       }
     }
+  }
+
+  public mergeConfigKey(oldValue, newValue) {
+    if (isObject(oldValue) && isObject(newValue)) {
+      return merge(oldValue, newValue);
+    }
+    return newValue || oldValue;
   }
 }
