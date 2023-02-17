@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Common
+
+-   fix json config service merge method
+
 ## [4.5.0] - 2023-02-16
 
 Common
