@@ -17,17 +17,22 @@
              *ngIf="grp.title">{{grp.title}}</div>
         <div class="n7-metadata-viewer__group-content"
              *ngIf="grp.items">
-            <div class="n7-metadata-viewer__item"
-                 *ngFor="let i of grp.items">
-                <span *ngIf="i.label"
-                      class="n7-metadata-viewer__item-label">{{ i.label }}</span>
+            <!-- "read more" enabled on the metadata group -->
+            <mr-read-more [data]="grp.groupReadmore">
+                <div class="n7-metadata-viewer__item"
+                    *ngFor="let i of grp.items">
+                    <span *ngIf="i.label" class="n7-metadata-viewer__item-label">
+                        {{ i.label }}
+                    </span>
+                    <!-- "read more" enabled on the metadata value field -->
                     <mr-read-more [data]="grp.readmore">
                         <span *ngIf="i.value"
                             class="n7-metadata-viewer__item-value"
                             [innerHTML]="i.value">
                         </span>
                     </mr-read-more>
-            </div>
+                </div>
+            </mr-read-more>
         </div>
     </div>
     <!-- Render all child groups -->
