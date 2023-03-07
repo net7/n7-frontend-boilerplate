@@ -28,9 +28,9 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email noreply@github.com
 
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 18
           registry-url: https://registry.npmjs.org/
           
       - name: npm version
