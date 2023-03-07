@@ -9,6 +9,15 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Common
+
+- Add "tranz" Angular pipe, ported from coeso-fe
+
+Muruca
+
+- Add optional "groupReadmore" config for metadata-readmore
+- Add $content-block-max-height variable
+
 ## [4.5.1] - 2023-02-17
 
 Common
