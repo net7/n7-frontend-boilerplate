@@ -2,6 +2,7 @@ import { LayoutDataSource } from '@net7/core';
 import { Subject, forkJoin, fromEvent } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { CommunicationService, helpers } from '@net7/boilerplate-common';
+import { getHeadTitle } from '../../helpers/title.helper';
 
 export class AwHomeLayoutDS extends LayoutDataSource {
   private communication: CommunicationService;
@@ -19,6 +20,8 @@ export class AwHomeLayoutDS extends LayoutDataSource {
   private autocompletePopoverOpen = false;
 
   private autocompleteChanged$: Subject<string> = new Subject();
+
+  public configId = 'home-layout';
 
   public numOfItemsStr: string = null;
 
@@ -67,23 +70,22 @@ export class AwHomeLayoutDS extends LayoutDataSource {
     // this.facetData = [];
     this.mainState = mainState;
     this.tippy = tippy;
-    this.resultsLimit = this.configuration.get('home-layout')['results-limit'];
+    this.resultsLimit = this.configuration.get(this.configId)['results-limit'];
     this.bubblesEnabled = this.configuration.get('features-enabled')?.bubblechart;
     this.carouselEnabled = this.configuration.get('features-enabled')?.carousel;
     if (this.carouselEnabled) {
       this.loadCarousel();
     }
-    this.one('aw-hero').update(this.configuration.get('home-layout')['top-hero']);
-    this.one('aw-home-hero-patrimonio').update(this.configuration.get('home-layout')['bottom-hero']);
+    this.one('aw-hero').update(this.configuration.get(this.configId)['top-hero']);
+    this.one('aw-home-hero-patrimonio').update(this.configuration.get(this.configId)['bottom-hero']);
     // update streams
-    this.mainState.update('headTitle', 'Arianna4View - Homepage');
-    this.mainState.update('pageTitle', 'Arianna4View - Homepage');
     this.mainState.updateCustom('currentNav', 'home');
+    this.setHeadTitle();
     // listen autocomplete changes
     this._listenAutoCompleteChanges();
-    this.outerLinks = this.configuration.get('home-layout')['outer-links'].test;
-    this.outerLinksTitle = this.configuration.get('home-layout')['outer-links'].title;
-    this.outerLinksDescription = this.configuration.get('home-layout')['outer-links'].description;
+    this.outerLinks = this.configuration.get(this.configId)['outer-links'].test;
+    this.outerLinksTitle = this.configuration.get(this.configId)['outer-links'].title;
+    this.outerLinksDescription = this.configuration.get(this.configId)['outer-links'].description;
     this.one('aw-bubble-chart').updateOptions({
       selectable: true,
       config: this.configuration,
@@ -137,7 +139,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       });
     });
     this.one('aw-home-facets-wrapper').updateOptions({
-      pageConfig: this.configuration.get('home-layout'),
+      pageConfig: this.configuration.get(this.configId),
       paths: this.configuration.get('paths')
     });
     this.one('aw-home-facets-wrapper').update(facetData);
@@ -302,7 +304,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
         onError: (error) => console.error(error),
         params: {
           input: value,
-          itemsPagination: { offset: 0, limit: this.configuration.get('home-layout')['results-limit'] },
+          itemsPagination: { offset: 0, limit: this.configuration.get(this.configId)['results-limit'] },
         },
       }).subscribe((response) => {
         this.homeAutocompleteIsLoading = false;
@@ -338,5 +340,13 @@ export class AwHomeLayoutDS extends LayoutDataSource {
       this.autocompletePopover.show();
     }
     this.autocompletePopoverOpen = !this.autocompletePopoverOpen;
+  }
+
+  private setHeadTitle() {
+    this.mainState.update('headTitle', getHeadTitle({
+      name: this.configuration.get('customer'),
+      pageName: this.configuration.get(this.configId)?.pageName,
+      pageDefault: 'Homepage',
+    }));
   }
 }

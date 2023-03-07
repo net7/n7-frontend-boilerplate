@@ -9,6 +9,29 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [4.5.1] - 2023-02-17
+
+Common
+
+-   fix json config service merge method
+
+## [4.5.0] - 2023-02-16
+
+Common
+
+-   added communication service types and spec file
+
+Arianna
+
+-   added head title configuration
+-   added gallery layout breadcrumbs tooltip
+
+## [4.4.1] - 2023-02-09
+
+Muruca
+
+-   seach results highlight: refactor link with TEST
+
 ## [4.4.0] - 2023-02-07
 
 Muruca
@@ -323,7 +346,13 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.4.0...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.5.1...HEAD
+
+[4.5.1]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.5.0...v4.5.1
+
+[4.5.0]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.4.1...v4.5.0
+
+[4.4.1]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.4.0...v4.4.1
 
 [4.4.0]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.3.0...v4.4.0
 

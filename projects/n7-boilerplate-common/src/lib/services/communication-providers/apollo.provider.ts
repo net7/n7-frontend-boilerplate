@@ -4,6 +4,7 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { CommunicationProvider } from './communication-provider.interface';
 import { ConfigurationService } from '../configuration.service';
+import { CommunicationOptions } from '../communication.service';
 
 const DEFAULT_TREE_DEPTH = 15;
 
@@ -16,7 +17,7 @@ export class ApolloProvider implements CommunicationProvider {
     private configuration: ConfigurationService,
   ) {}
 
-  request$(providerConfig, requestId: string, options) {
+  request$<T>(providerConfig, requestId: string, options: CommunicationOptions<T>) {
     const { params, method, httpOptions } = options;
     const treeDepth = this.configuration.get('treeDepth') || DEFAULT_TREE_DEPTH;
     const config = providerConfig.config ? providerConfig.config(treeDepth) : {};
@@ -50,7 +51,10 @@ export class ApolloProvider implements CommunicationProvider {
       source$ = this.http.post(
         providerConfig.baseUrl,
         { query: queryBody },
-        httpOptions,
+        {
+          ...httpOptions,
+          responseType: 'json' // force to json
+        },
       );
     }
 

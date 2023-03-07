@@ -8,6 +8,7 @@ import bubbleChart from './bubble-chart.config';
 import labels from './labels.config';
 
 export default {
+  customer: 'UniBo',
   communication,
   header,
   footer,

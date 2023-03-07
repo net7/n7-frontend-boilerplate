@@ -1,3 +1,6 @@
+import { delay, filter } from 'rxjs/operators';
+import tippy, { hideAll } from 'tippy.js';
+import { AwLinkedObjectsDS } from '../../data-sources/linked-objects.ds';
 import { AwSearchLayoutDS } from '../search-layout/search-layout.ds';
 import facetsConfig from './gallery-facets.config';
 
@@ -8,11 +11,53 @@ export class AwGalleryLayoutDS extends AwSearchLayoutDS {
 
   public currentNav = 'galleria';
 
-  public headTitle = 'Arianna4View - Galleria';
+  public pageNameDefault = 'Galleria';
 
   public facetsConfig = facetsConfig;
 
   public paginationList = [12, 24, 48];
 
   public pageSize = 12; // linked objects page size
+
+  public breadcrumbsTooltip;
+
+  onInit(payload) {
+    super.onInit(payload);
+
+    this.breadcrumbsTooltip = (
+      this.configuration.get(this.configId)?.breadcrumbsTooltip
+    ) || {};
+
+    // load breadcrumbs tooltips
+    if (!this.breadcrumbsTooltip?.disable) {
+      this.loadTooltips();
+    }
+  }
+
+  loadTooltips() {
+    const linkedObjectsDS: AwLinkedObjectsDS = this.getWidgetDataSource('aw-linked-objects');
+    linkedObjectsDS.out$.pipe(
+      filter((data) => !!data),
+      delay(1000) // symbolic timeout
+    ).subscribe(() => {
+      // clear first
+      hideAll();
+
+      // load
+      tippy('.tooltip-trigger', {
+        allowHTML: true,
+        interactive: true,
+        trigger: 'click',
+        theme: 'light-border no-padding',
+        placement: 'bottom-start',
+        hideOnClick: 'toggle',
+        content(reference) {
+          const id = reference.getAttribute('data-template');
+          const template = document.getElementById(id);
+          return template.innerHTML;
+        },
+        ...(this.breadcrumbsTooltip?.libOptions || {})
+      });
+    });
+  }
 }
