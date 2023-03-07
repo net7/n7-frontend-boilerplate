@@ -8,24 +8,25 @@ export class MrMetadataDS extends DataSource {
   /** Turn a string into an anchor element */
   toUrl = (string: string) => `<a href="${string}" target="_blank">${string}<a>`;
 
+  defaultReadmore = {
+    height: 300,
+    labels: {
+      more: _t('global#readmore'),
+      less: _t('global#readless')
+    }
+  };
+
   protected transform(data: any): any {
     if (!data) return null;
 
-    const { hideLabels, readmore } = this.options;
+    // readmore applies to the whole metadata group, while
+    // groupReadmore applies to the nested metadata sub-groups
+    const { hideLabels, readmore, groupReadmore } = this.options;
     const { group } = data;
 
     if (!(group || []).length) {
       return null;
     }
-
-    // default fallback settings
-    const defaults = {
-      height: 300,
-      labels: {
-        more: _t('global#readmore'),
-        less: _t('global#readless')
-      }
-    };
 
     const result = { group: [] };
     group
@@ -40,6 +41,9 @@ export class MrMetadataDS extends DataSource {
                 group: [{
                   title: _t(itemLabel),
                   classes: `mrc-${itemLabel}`,
+                  // use default values if not specified
+                  readmore: merge({ ...this.defaultReadmore }, readmore),
+                  groupReadmore,
                   ...this.getItemGroup(value)
                 }]
               });
@@ -47,7 +51,8 @@ export class MrMetadataDS extends DataSource {
               result.group.push({
                 group: [{
                   // use default values if not specified
-                  readmore: merge({ ...defaults }, readmore),
+                  readmore: merge({ ...this.defaultReadmore }, readmore),
+                  groupReadmore,
                   classes: `mrc-${itemLabel}`,
                   items: value ? [{
                     label: _t(itemLabel),
@@ -62,6 +67,7 @@ export class MrMetadataDS extends DataSource {
   }
 
   private getItemGroup(value) {
+    const { groupReadmore } = this.options;
     if (Array.isArray(value) && Array.isArray(value[0])) {
       return {
         group: value.map((val) => ({
@@ -74,8 +80,10 @@ export class MrMetadataDS extends DataSource {
         .filter((childItem) => !!childItem.value)
         .map((childItem) => ({
           label: _t(childItem.label),
-          value: this.getItemValue(childItem.value)
-        }))
+          value: this.getItemValue(childItem.value),
+        })),
+      // load the optional "readmore" configuration
+      groupReadmore,
     };
   }
 

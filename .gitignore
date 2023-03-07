@@ -42,7 +42,7 @@ testem.log
 Thumbs.db
 
 # package lock
-package-lock.json
+# package-lock.json
 
 # local
 src/assets/app-config.local.json

@@ -2,8 +2,7 @@
   "compileOnSave": false,
   "angularCompilerOptions": { 
     "fullTemplateTypeCheck": true, 
-    "strictInjectionParameters": true, 
-    "enableIvy": false 
+    "strictInjectionParameters": true,
   },
   "compilerOptions": {
     "baseUrl": "./",
@@ -41,12 +40,12 @@
       ],
       // MURUCA PROJECT PATHS
       // ------------------------------------------------------------------->
-      "@mr-routes": ["src/app/app.routes.muruca.ts"],
-      "@mr-config": ["src/app/config-muruca/"],
-      "@mr-config/*": ["src/app/config-muruca/*"],
-      // "@mr-routes": ["../../teatro-caballeresco-fe/src/app/app.routes.ts"],
-      // "@mr-config": ["../../teatro-caballeresco-fe/src/app/config"],
-      // "@mr-config/*": ["../../teatro-caballeresco-fe/src/app/config/*"],
+      // "@mr-routes": ["src/app/app.routes.muruca.ts"],
+      // "@mr-config": ["src/app/config-muruca/"],
+      // "@mr-config/*": ["src/app/config-muruca/*"],
+      "@mr-routes": ["../../memoram-fe/src/app/app.routes.ts"],
+      "@mr-config": ["../../memoram-fe/src/app/config"],
+      "@mr-config/*": ["../../memoram-fe/src/app/config/*"],
       // ARIANNA PROJECT PATHS
       // ------------------------------------------------------------------->
       "@aw-routes": ["src/app/app.routes.arianna.ts"],

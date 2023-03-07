@@ -101,9 +101,9 @@ $color-text-form-placeholder: $color-gray-03;
 // $color-background-dark: $color-gray-03;
 $color-background-layout: $color-background-base;
 $gradient-item-preview-list: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0) 0%,
-    $color-background-layout 100%
+180deg,
+rgba(255, 255, 255, 0) 0%,
+$color-background-layout 100%
 );
 
 // ------------------------------------ //
@@ -208,6 +208,7 @@ $loader-color-back: $color-gray-02;
 $content-block-title-width: 170px;
 $content-block-label-width: 170px;
 $content-block-label-second-level-width: 120px;
+$content-block-max-height: 300px;
 
 // ------------------------------------ //
 // #TABLE

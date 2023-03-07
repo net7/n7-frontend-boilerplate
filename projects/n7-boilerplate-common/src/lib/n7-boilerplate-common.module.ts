@@ -21,6 +21,7 @@ import { ClickOutsideDirective } from './directives/click-outside.directive';
 import { GridComponent } from './components/grid/grid';
 import { ContainerComponent } from './components/container/container';
 import { SideScrollerComponent } from './components/side-scroller/side-scroller';
+import { TranzPipe } from './pipes/trans.pipe';
 
 const DECLARATIONS = [
   MainLayoutComponent,
@@ -30,6 +31,7 @@ const DECLARATIONS = [
   GridComponent,
   ContainerComponent,
   SideScrollerComponent,
+  TranzPipe,
 ];
 
 @NgModule({
