@@ -9,6 +9,9 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+- Advanced results: show highlight if Toggle title is not provided
 ## [4.5.1] - 2023-02-17
 
 Common
