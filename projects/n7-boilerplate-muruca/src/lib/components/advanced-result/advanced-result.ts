@@ -36,6 +36,14 @@ export class MrAdvancedResultComponent {
     // there is at least one group that has highlights
     ?.some((d) => d.items.length > 0);
 
+  isHidden() {
+    if (this.data.highlightsHasToggle) {
+      if (!this.data.highlightsTitle) return false;
+      return this.data.highlightsHidden;
+    }
+    return false;
+  }
+
   onClick(payload) {
     if (!this.emit) return;
     this.emit('click', payload);
@@ -43,7 +51,6 @@ export class MrAdvancedResultComponent {
 
   onHeaderClick(data) {
     if (!data.highlightsHasToggle) return;
-
     data.highlightsHidden = !data.highlightsHidden;
   }
 }

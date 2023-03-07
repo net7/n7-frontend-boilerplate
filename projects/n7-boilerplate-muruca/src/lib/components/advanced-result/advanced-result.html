@@ -19,7 +19,7 @@
             }">
             </span>
         </div>
-        <div [hidden]="(data.highlightsHasToggle && data.highlightsHidden)" 
+        <div [hidden]="isHidden()" 
         class="mr-advanced-result__content"
             *ngFor="let highlightGroup of data.highlights">
             <div class="mr-advanced-result__content-group">
