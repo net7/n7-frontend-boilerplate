@@ -17,8 +17,8 @@ Muruca
 
 - Add optional "groupReadmore" config for metadata-readmore
 - Add $content-block-max-height variable
+- Advanced results: show highlight if Toggle title is not provided
 
-## [4.5.1] - 2023-02-17
 
 Common
 
