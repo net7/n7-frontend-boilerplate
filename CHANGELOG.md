@@ -9,10 +9,6 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
-## [4.6.1-rc.1] - 2023-03-08
-
-## [4.6.0] - 2023-03-07
-
 Common
 
 -   Add "tranz" Angular pipe, ported from coeso-fe
