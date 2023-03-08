@@ -54,10 +54,10 @@ jobs:
         run: |
           npm install
           npm run build
-          npm publish dist/n7-boilerplate-common --access public
-          npm publish dist/n7-boilerplate-muruca --access public
-          npm publish dist/n7-boilerplate-arianna --access public
-          npm publish dist/n7-boilerplate-dataviz --access public
+          npm publish ./dist/n7-boilerplate-common --access public
+          npm publish ./dist/n7-boilerplate-muruca --access public
+          npm publish ./dist/n7-boilerplate-arianna --access public
+          npm publish ./dist/n7-boilerplate-dataviz --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
