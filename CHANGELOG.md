@@ -9,6 +9,8 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [4.6.1] - 2023-03-08
+
 Common
 
 -   Add "tranz" Angular pipe, ported from coeso-fe
@@ -354,7 +356,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.6.1-rc.1...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.6.1...HEAD
+
+[4.6.1]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.6.1-rc.1...v4.6.1
 
 [4.6.1-rc.1]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.6.0...v4.6.1-rc.1
 
