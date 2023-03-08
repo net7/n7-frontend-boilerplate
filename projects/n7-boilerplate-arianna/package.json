@@ -1,6 +1,6 @@
 {
   "name": "@net7/boilerplate-arianna",
-  "version": "4.5.1",
+  "version": "4.6.0",
   "peerDependencies": {
     "@angular/common": "^14.2.12",
     "@angular/core": "^14.2.12"
