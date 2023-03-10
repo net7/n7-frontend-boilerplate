@@ -5,6 +5,7 @@ import {
   ConfigurationService, CommunicationService, MainStateService, helpers
 } from '@net7/boilerplate-common';
 import { MrLocaleService } from '../../services/locale.service';
+import linksHelper from '../../helpers/links-helper';
 
 export class MrResourceLayoutDS extends LayoutDataSource {
   private configuration: ConfigurationService;
@@ -58,6 +59,7 @@ export class MrResourceLayoutDS extends LayoutDataSource {
   /** Request the configured widgets data */
   pageRequest$(id, onError: (err: any) => void): Observable<any> {
     const { locale } = this.routerData;
+    const params = linksHelper.getQueryParams(document.location.search);
     const { top, content } = this.pageConfig.sections;
     const sections = top.concat(content);
     return this.communication.request$('resource', {
@@ -68,6 +70,7 @@ export class MrResourceLayoutDS extends LayoutDataSource {
         type: this.pageConfig.type,
         sections: sections.map((s) => s.id),
       },
+      queryParams: params,
       urlParams: locale ? `?locale=${locale}` : '',
     });
   }
