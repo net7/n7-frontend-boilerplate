@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+-  Resource layout: add additional query params to request from document search parameters
+
+
 ## [4.6.1] - 2023-03-08
 
 Common
