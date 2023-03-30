@@ -316,7 +316,10 @@ export class AwSearchLayoutDS extends LayoutDataSource {
       .forEach((f) => {
         f.data.forEach((dataItem) => {
           const key = dataItem.label;
-          dataItem.label = helpers.prettifySnakeCase(key, this.prettifyLabels[key]);
+          dataItem.label = (
+            this.configKeys[key]?.label
+            || helpers.prettifySnakeCase(key, this.prettifyLabels[key])
+          );
         });
       });
   }
