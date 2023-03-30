@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Arianna
+
+-   Fix search layout facet custom labels
+
 ## [4.7.0] - 2023-03-13
 
 Muruca
