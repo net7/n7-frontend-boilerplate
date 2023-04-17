@@ -1,3 +1,4 @@
+export * from './footer.service';
 export * from './layout-state.service';
 export * from './locale.service';
 export * from './menu.service';
