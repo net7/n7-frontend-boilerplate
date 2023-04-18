@@ -9,6 +9,8 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+- Update exports of guards and services
+
 ## [4.7.1] - 2023-04-07
 
 Arianna
