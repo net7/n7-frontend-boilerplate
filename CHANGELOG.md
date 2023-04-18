@@ -9,7 +9,9 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
-- Update exports of guards and services
+## [4.7.2] - 2023-04-18
+
+-   Update exports of guards and services
 
 ## [4.7.1] - 2023-04-07
 
@@ -370,7 +372,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.7.1...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.7.2...HEAD
+
+[4.7.2]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.7.1...v4.7.2
 
 [4.7.1]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.7.0...v4.7.1
 
