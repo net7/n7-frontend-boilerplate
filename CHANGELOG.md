@@ -9,6 +9,8 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+-   Update visJS dependencies
+
 ## [4.7.2] - 2023-04-18
 
 -   Update exports of guards and services
