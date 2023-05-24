@@ -27,7 +27,6 @@ export class MrTextViewerDS extends DataSource {
       document.addEventListener(
         'pb-end-update',
         () => {
-          console.log('fire');
           setTimeout(() => {
             document.dispatchEvent(
               new CustomEvent('pb-toggle', {
