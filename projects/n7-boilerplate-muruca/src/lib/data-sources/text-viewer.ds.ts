@@ -25,8 +25,9 @@ export class MrTextViewerDS extends DataSource {
     if (data.docs[0]?.view === 'page' && id) {
       data.docs[0].view = 'div';
       document.addEventListener(
-        'pb-start-update',
+        'pb-end-update',
         () => {
+          console.log('fire');
           setTimeout(() => {
             document.dispatchEvent(
               new CustomEvent('pb-toggle', {
@@ -39,7 +40,18 @@ export class MrTextViewerDS extends DataSource {
                 },
               })
             );
-          }, 500);
+            document.dispatchEvent(
+              new CustomEvent('pb-toggle', {
+                detail: {
+                  properties: {
+                    view: 'single',
+                  },
+                  action: 'refresh',
+                  key: 'addChannel',
+                },
+              })
+            );
+          }, 100);
         },
         { once: true }
       );

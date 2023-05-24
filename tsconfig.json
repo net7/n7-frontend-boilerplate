@@ -43,9 +43,9 @@
       // "@mr-routes": ["src/app/app.routes.muruca.ts"],
       // "@mr-config": ["src/app/config-muruca/"],
       // "@mr-config/*": ["src/app/config-muruca/*"],
-      "@mr-routes": ["../../memoram-fe/src/app/app.routes.ts"],
-      "@mr-config": ["../../memoram-fe/src/app/config"],
-      "@mr-config/*": ["../../memoram-fe/src/app/config/*"],
+      "@mr-routes": ["../../muruca-fe/mabrino-fe/src/app/app.routes.ts"],
+      "@mr-config": ["../../muruca-fe/mabrino-fe/src/app/config"],
+      "@mr-config/*": ["../../muruca-fe/mabrino-fe/src/app/config/*"],
       // ARIANNA PROJECT PATHS
       // ------------------------------------------------------------------->
       "@aw-routes": ["src/app/app.routes.arianna.ts"],
