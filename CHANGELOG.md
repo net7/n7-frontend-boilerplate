@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Arianna
+
+-   Bubble chart - fix bubble chart height
+
 ## [4.8.0] - 2023-05-24
 
 Muruca
