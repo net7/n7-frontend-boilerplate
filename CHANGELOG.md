@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+-   Text Viewer - remove document-id from index pb-load
+
 ## [4.8.1] - 2023-05-26
 
 Arianna

@@ -50,6 +50,18 @@ export class MrTextViewerDS extends DataSource {
                 },
               })
             );
+            document.dispatchEvent(
+              new CustomEvent('pb-toggle', {
+                detail: {
+                  properties: {
+                    view: 'single',
+                    id: '',
+                  },
+                  action: 'refresh',
+                  key: 'index',
+                },
+              })
+            );
           }, 100);
         },
         { once: true }
