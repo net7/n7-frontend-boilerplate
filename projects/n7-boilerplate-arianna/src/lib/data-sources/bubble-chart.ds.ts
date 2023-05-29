@@ -1,17 +1,17 @@
 import { DataSource } from '@net7/core';
 
 export class AwBubbleChartDS extends DataSource {
-  public chartData: any = [] // data rendered into the graph
+  public chartData: any = []; // data rendered into the graph
 
   public draw: any = null; // exposed component draw function to update the view
 
-  public selected: string[] = [] // list of selected bubbles
+  public selected: string[] = []; // list of selected bubbles
 
-  public filters: any[] = [] // list of active filters to show only some TypeOfEntity(s)
+  public filters: any[] = []; // list of active filters to show only some TypeOfEntity(s)
 
-  public closedEyes: any[] = [] // array of the activated eye filters
+  public closedEyes: any[] = []; // array of the activated eye filters
 
-  public tippyList: any[] = [] // list of tippy instances
+  public tippyList: any[] = []; // list of tippy instances
 
   protected transform(data) {
     const { config, smallChartSize } = this.options;
@@ -32,7 +32,7 @@ export class AwBubbleChartDS extends DataSource {
       selected: this.selected,
       sizeRange: [0.5, 500],
       fontRendering,
-      height: 500,
+      height: 400,
       width: 500,
       transition,
       shuffle,
@@ -76,7 +76,7 @@ export class AwBubbleChartDS extends DataSource {
       this.output.smallView.data = this.smartSlice(response, this.options.smallChartSize);
       this.draw();
     }
-  }
+  };
 
   smartSlice = (d, length?) => {
     const l = length || this.options.limit;
@@ -84,7 +84,7 @@ export class AwBubbleChartDS extends DataSource {
       return d.slice(0, l);
     }
     return d;
-  }
+  };
 
   handleBubbleClick = (payload) => {
     /*
@@ -96,5 +96,5 @@ export class AwBubbleChartDS extends DataSource {
     } else {
       this.selected.push(id); // add selection
     }
-  }
+  };
 }
