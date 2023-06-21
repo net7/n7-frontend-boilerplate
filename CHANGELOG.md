@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+-   Text Viewer - increment timeout interval in load pb-view
+
 ## [4.8.2] - 2023-05-29
 
 Muruca
