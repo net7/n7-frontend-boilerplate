@@ -9,6 +9,8 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [4.8.2] - 2023-05-29
+
 Muruca
 
 -   Text Viewer - remove document-id from index pb-load
@@ -389,7 +391,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.8.1...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.8.2...HEAD
+
+[4.8.2]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.8.1...v4.8.2
 
 [4.8.1]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.8.0...v4.8.1
 
