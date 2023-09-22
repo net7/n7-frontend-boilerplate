@@ -6,6 +6,7 @@ import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { NavigationStart, Router } from '@angular/router';
 import { isEmpty } from 'lodash';
+import { MrLocaleService } from '../../services/locale.service';
 import { ModalStatus, MrResourceModalService } from '../../services/resource-modal.service';
 
 import {
@@ -45,7 +46,8 @@ export class MrResourceModalComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private modalService: MrResourceModalService
+    private modalService: MrResourceModalService,
+    private localeService: MrLocaleService,
   ) { }
 
   ngOnInit() {
@@ -97,9 +99,10 @@ export class MrResourceModalComponent implements OnInit, OnDestroy {
         };
 
         // update options
-        if (options) {
-          this.widgets[id].ds.options = options;
-        }
+        this.widgets[id].ds.options = {
+          ...(options || {}),
+          localeService: this.localeService
+        };
 
         // update data
         if (data) {
