@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+-   Resource Modal - fix multilingual links
+
 ## [4.8.3] - 2023-06-21
 
 Muruca
