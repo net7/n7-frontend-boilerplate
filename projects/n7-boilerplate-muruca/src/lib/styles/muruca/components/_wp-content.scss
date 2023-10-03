@@ -24,6 +24,10 @@
         font-family: $font-family-text;
         font-size: $font-size-l-xl;
     }
+    
+    .has-text-align-justify {
+        text-align: justify;
+    }
 }
 
 /* ------------------------------------ *\
@@ -128,8 +132,9 @@
         img {
             border-radius: $border-radius;
             box-shadow: 0 1px 1px rgba(0, 0, 0, 0.095),
-                0 5px 25px rgba(0, 0, 0, 0.095);
+            0 5px 25px rgba(0, 0, 0, 0.095);
             max-height: 500px;
+            width: auto;
         }
 
         /* Center alignment, 700px max width */
@@ -288,7 +293,7 @@
                     overflow: hidden;
                     border-radius: $border-radius;
                     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.095),
-                        0 5px 25px rgba(0, 0, 0, 0.095);
+                    0 5px 25px rgba(0, 0, 0, 0.095);
                     transition: all $transition-durations;
 
                     img {
@@ -304,12 +309,12 @@
                 transition: 0.3s ease-in-out;
                 border-radius: $border-radius;
                 box-shadow: 0 1px 1px rgba(0, 0, 0, 0.095),
-                    0 5px 25px rgba(0, 0, 0, 0.095);
+                0 5px 25px rgba(0, 0, 0, 0.095);
             }
 
             figure:hover a {
                 box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2),
-                    0 10px 25px rgba(0, 0, 0, 0.1);
+                0 10px 25px rgba(0, 0, 0, 0.1);
 
                 img {
                     transform: scale(1.1);
