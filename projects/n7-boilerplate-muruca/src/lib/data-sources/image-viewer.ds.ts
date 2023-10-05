@@ -1,5 +1,8 @@
 import { DataSource } from '@net7/core';
 import { Subject } from 'rxjs';
+import { MrImageViewerOverlayModel } from '../models/image-viewer-overlay.model';
+// FIXME: togliere mock
+import mock from '../models/image-viewer-overlay.mock';
 
 export class MrImageViewerDS extends DataSource {
   id: string;
@@ -10,8 +13,12 @@ export class MrImageViewerDS extends DataSource {
 
   protected transform(data: any): any {
     if (!data) return null;
-    const { images, thumbs } = data;
-    const { tools } = (this.options || {});
+    // FIXME: togliere commento
+    // const { images, thumbs } = data;
+    const { images, overlays } = mock;
+    const { thumbs } = data;
+    // FIXME: togliere commento
+    // const { tools } = (this.options || {});
     return {
       images,
       thumbs,
@@ -31,18 +38,29 @@ export class MrImageViewerDS extends DataSource {
 
         /* SEQUENCE */
         sequenceMode: true, // allows having multiple images (as in array of images + zoomed image)
-        showReferenceStrip: tools !== true, // shows the images array (default: horizontally)
+        // showReferenceStrip: tools !== true, // shows the images array (default: horizontally)
+        showReferenceStrip: true, // shows the images array (default: horizontally)
 
         navigationControlAnchor: 'TOP_RIGHT',
       },
       _setViewer: (viewer) => {
         this.viewer = viewer;
         this.viewerLoaded$.next();
+
+        // overlay test
+        if (overlays) {
+          this.loadOverlays();
+        }
       }
     };
   }
 
   public changePage(index) {
     this.viewer.goToPage(index); // call to OpenSeadragon APIs
+  }
+
+  public loadOverlays() {
+    const overlayModel = new MrImageViewerOverlayModel(this.viewer, mock);
+    overlayModel.init();
   }
 }
