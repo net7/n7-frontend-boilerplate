@@ -62,7 +62,7 @@ export class MrTextViewerDS extends DataSource {
                 },
               })
             );
-          }, 100);
+          }, 500);
         },
         { once: true }
       );
