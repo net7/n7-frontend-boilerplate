@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import {
   AbstractLayout,
   CommunicationService,
@@ -15,6 +15,8 @@ import { MrStaticLayoutConfig as config } from './static-layout.config';
   templateUrl: './static-layout.html',
 })
 export class MrStaticLayoutComponent extends AbstractLayout implements OnInit, OnDestroy {
+  private routerData: Data;
+
   constructor(
     private communication: CommunicationService,
     private configuration: ConfigurationService,
@@ -29,6 +31,7 @@ export class MrStaticLayoutComponent extends AbstractLayout implements OnInit, O
 
   protected initPayload() {
     return {
+      routerData: this.routerData,
       communication: this.communication,
       configuration: this.configuration,
       mainState: this.mainState,
@@ -40,8 +43,12 @@ export class MrStaticLayoutComponent extends AbstractLayout implements OnInit, O
   }
 
   ngOnInit() {
-    this.layoutState.add('content');
-    this.onInit();
+    this.route.data.subscribe((routerData) => {
+      this.routerData = routerData;
+      // add layout states
+      this.layoutState.add('content');
+      this.onInit();
+    });
   }
 
   ngOnDestroy() {

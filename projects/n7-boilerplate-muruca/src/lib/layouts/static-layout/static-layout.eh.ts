@@ -1,8 +1,12 @@
-import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
+import {
+  ActivatedRoute, Data, Params, Router, UrlSegment
+} from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { EventHandler } from '@net7/core';
-import { takeUntil, switchMap, tap } from 'rxjs/operators';
+import {
+  takeUntil, switchMap, tap, map
+} from 'rxjs/operators';
 import { MrLayoutStateService, LayoutState } from '../../services/layout-state.service';
 import { MrStaticLayoutDS } from './static-layout.ds';
 
@@ -46,23 +50,36 @@ export class MrStaticLayoutEH extends EventHandler {
   private listenRoute() {
     this.route.url.pipe(
       takeUntil(this.destroy$),
+      map((urlSegments: UrlSegment[]) => ({
+        urlSegments,
+        routerParams: this.route.snapshot.params,
+        routerData: this.route.snapshot.data,
+      })),
       tap(() => {
         this.layoutState.set('content', LayoutState.LOADING);
       }),
-      switchMap((urlSegments: UrlSegment[]) => this.dataSource.pageRequest$(
+      switchMap((
+        { urlSegments, routerParams, routerData }:
+        { urlSegments: UrlSegment[]; routerParams: Params; routerData: Data }
+      ) => this.dataSource.pageRequest$({
         urlSegments,
-        (err: HttpErrorResponse) => {
+        routerParams,
+        onError: (err: HttpErrorResponse) => {
           if (err.status === 404) {
             // getting not found path
             const { config } = this.router;
-            const route404 = config.find(({ data }) => data?.id === 'page-404');
+            let route404 = config.find(({ data }) => data?.id === 'page-404' && data.locale === routerData.locale);
+            if (!route404) {
+              route404 = config.find(({ data }) => data?.id === 'page-404');
+            }
             const path404 = route404?.path || 'page-404';
             this.router.navigate([path404]);
+          } else {
+            console.warn(`Error loading static layout for ${urlSegments}`, err.message);
+            this.layoutState.set('content', LayoutState.ERROR);
           }
-          console.warn(`Error loading static layout for ${urlSegments}`, err.message);
-          this.layoutState.set('content', LayoutState.ERROR);
         }
-      ))
+      }))
     ).subscribe((response) => {
       this.layoutState.set('content', LayoutState.SUCCESS);
       this.dataSource.handleResponse(response);
