@@ -12,6 +12,12 @@ export default {
       url: 'https://openseadragon.github.io/example-images/grand-canyon-landscape-overlooking.jpg',
     },
     width: 5000,
+  }, {
+    tileSource: {
+      type: 'image',
+      url: 'https://openseadragon.github.io/example-images/grand-canyon-landscape-overlooking.jpg',
+    },
+    width: 5000,
   }],
   overlays: [{
     styles: {
@@ -51,7 +57,9 @@ export default {
       detail_image_id: 24,
       detail_image: 'http:\/\/muruca.oc.wshare.net\/wp-content\/uploads\/2023\/09\/ad-space-01-300x250-1.jpg'
     }]
-  }, {
+  }, 
+  {},
+  {
     styles: {
       highlight_color: '#AED6F1',
       highlight_opacity: 0.3,
@@ -67,5 +75,6 @@ export default {
       detail_image_id: 24,
       detail_image: 'http:\/\/muruca.oc.wshare.net\/wp-content\/uploads\/2023\/09\/ad-space-01-300x250-1.jpg'
     }]
-  }]
+  }
+]
 };

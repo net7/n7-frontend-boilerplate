@@ -125,6 +125,7 @@ export class MrImageViewerOverlayModel {
   public init() {
     // listen viewer change
     this._viewer.addHandler('page', this.onPageChange);
+    this._viewer.addHandler('zoom', this.onZoomChange);
 
     // load first overlay
     this.load();
@@ -132,6 +133,7 @@ export class MrImageViewerOverlayModel {
 
   public destroy() {
     this._viewer.removeHandler('page', this.onPageChange);
+    this._viewer.removeHandler('zoom', this.onZoomChange);
   }
 
   private onPageChange = ({ page }) => {
@@ -145,30 +147,45 @@ export class MrImageViewerOverlayModel {
     this._viewer.addHandler('tile-drawn', onTileDrawn);
   };
 
+  private onZoomChange = () => {
+    hideAll();
+  };
+
   private load() {
     // clear first
     this.clear();
     // config
     const currentConfig = this._config.overlays[this._page];
     // set overlay
-    this._overlay = new Overlay(this._viewer);
-    currentConfig.items.forEach((itemConfig) => {
-      switch (itemConfig.shape) {
-        case 'polygon':
-        case 'rectangle':
-          this.loadPolygon(itemConfig);
-          break;
-        case 'circle':
-          this.loadCircle(itemConfig);
-          break;
-        default:
-          console.warn(`Overlay shape ${itemConfig.shape} does not exists`);
-          break;
-      }
-    });
+    if (currentConfig?.items) {
+      this._overlay = new Overlay(this._viewer);
+      currentConfig.items.forEach((itemConfig) => {
+        switch (itemConfig.shape) {
+          case 'polygon':
+          case 'rectangle':
+            this.loadPolygon(itemConfig);
+            break;
+          case 'circle':
+            this.loadCircle(itemConfig);
+            break;
+          default:
+            console.warn(`Overlay shape ${itemConfig.shape} does not exists`);
+            break;
+        }
+      });
 
-    // load tooltips
-    tippy('[data-tippy-content]');
+      // load tooltips
+      setTimeout(() => {
+        this.loadTooltips();
+      }, 1000);
+    }
+  }
+
+  private loadTooltips() {
+    tippy('[data-tippy-content]', {
+      showOnCreate: true,
+      // trigger: 'click'
+    });
   }
 
   private clear() {
