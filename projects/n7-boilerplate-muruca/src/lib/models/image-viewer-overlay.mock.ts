@@ -19,15 +19,15 @@ export default {
     },
     width: 5000,
   }],
-  overlays: [{
-    styles: {
+  overlay_images: [{
+    style: {
       highlight_color: '#0bb384',
       highlight_opacity: 0.7,
       border_color: '#1b5b6d',
       border_opacity: 0.5,
       border_width: 2
     },
-    items: [{
+    hotspots: [{
       coordinates: '961,383,68',
       shape: 'circle',
       title: 'luce faro',
@@ -60,14 +60,14 @@ export default {
   }, 
   {},
   {
-    styles: {
+    style: {
       highlight_color: '#AED6F1',
       highlight_opacity: 0.3,
       border_color: '#3498DB',
       border_opacity: 0.5,
       border_width: 2
     },
-    items: [{
+    hotspots: [{
       coordinates: '0,1625 0,0 1250,0 1250,1625',
       shape: 'polygon',
       title: 'Grand Canyon',

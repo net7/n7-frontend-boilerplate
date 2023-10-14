@@ -155,11 +155,11 @@ export class MrImageViewerOverlayModel {
     // clear first
     this.clear();
     // config
-    const currentConfig = this._config.overlays[this._page];
+    const currentConfig = this._config.overlay_images[this._page];
     // set overlay
-    if (currentConfig?.items) {
+    if (currentConfig?.hotspots) {
       this._overlay = new Overlay(this._viewer);
-      currentConfig.items.forEach((itemConfig) => {
+      currentConfig.hotspots.forEach((itemConfig) => {
         switch (itemConfig.shape) {
           case 'polygon':
           case 'rectangle':
@@ -221,10 +221,10 @@ export class MrImageViewerOverlayModel {
   }
 
   private loadStyles(child) {
-    const currentConfig = this._config.overlays[this._page];
+    const currentConfig = this._config.overlay_images[this._page];
     const styles = {
       ...this._stylesDefaults,
-      ...(currentConfig?.styles || {})
+      ...(currentConfig?.style || {})
     };
     child.setAttribute('fill', styles.highlight_color);
     child.setAttribute('stroke', styles.border_color);

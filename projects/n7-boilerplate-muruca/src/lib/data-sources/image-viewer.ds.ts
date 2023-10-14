@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { DataSource } from '@net7/core';
 import { Subject } from 'rxjs';
 import { MrImageViewerOverlayModel } from '../models/image-viewer-overlay.model';
@@ -15,7 +16,7 @@ export class MrImageViewerDS extends DataSource {
     if (!data) return null;
     // FIXME: togliere commento
     // const { images, thumbs } = data;
-    const { images, overlays } = mock;
+    const { images, overlay_images } = mock;
     const { thumbs } = data;
     // FIXME: togliere commento
     // const { tools } = (this.options || {});
@@ -48,7 +49,7 @@ export class MrImageViewerDS extends DataSource {
         this.viewerLoaded$.next();
 
         // overlay test
-        if (overlays) {
+        if (overlay_images) {
           this.loadOverlays();
         }
       }
