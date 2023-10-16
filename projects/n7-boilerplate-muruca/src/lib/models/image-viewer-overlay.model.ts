@@ -183,9 +183,21 @@ export class MrImageViewerOverlayModel {
 
   private loadTooltips() {
     tippy('[data-tippy-content]', {
-      showOnCreate: true,
-      // trigger: 'click'
-    });
+      // showOnCreate: true,
+      trigger: 'click',
+      placement: 'right-end',
+      popperOptions: {
+        strategy: 'fixed',
+        modifiers: [
+          {
+            name: 'flip',
+            options: {
+              fallbackPlacements: ['left', 'right'],
+            },
+          }
+        ],
+      }
+    } as any);
   }
 
   private clear() {

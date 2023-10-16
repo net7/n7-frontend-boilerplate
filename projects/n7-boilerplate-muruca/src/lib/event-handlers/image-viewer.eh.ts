@@ -46,11 +46,10 @@ export class MrImageViewerEH extends EventHandler {
     this.dataSource.viewerLoaded$.pipe(
       first()
     ).subscribe(() => {
-      // FIXME: togliere commento
-      // const { viewer } = this.dataSource;
-      // viewer.addHandler('page', (eventData) => {
-      //   this.emitOuter('pagechange', eventData);
-      // });
+      const { viewer } = this.dataSource;
+      viewer.addHandler('page', (eventData) => {
+        this.emitOuter('pagechange', eventData);
+      });
     });
   }
 }
