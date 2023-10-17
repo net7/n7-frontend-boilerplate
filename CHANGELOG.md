@@ -9,6 +9,8 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+- Style: readmore overlay
+
 ## [4.8.2] - 2023-05-29
 
 Muruca
