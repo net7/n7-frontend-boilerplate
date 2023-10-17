@@ -9,7 +9,21 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
 - Style: readmore overlay
+
+## [4.8.5] - 2023-09-22
+
+Muruca
+
+-   Resource Modal - fix multilingual links
+
+## [4.8.3] - 2023-06-21
+
+Muruca
+
+-   Text Viewer - increment timeout interval in load pb-view
 
 ## [4.8.2] - 2023-05-29
 
@@ -393,7 +407,11 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.8.2...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.8.5...HEAD
+
+[4.8.5]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.8.3...v4.8.5
+
+[4.8.3]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.8.2...v4.8.3
 
 [4.8.2]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.8.1...v4.8.2
 
