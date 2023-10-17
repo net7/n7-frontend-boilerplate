@@ -11,7 +11,9 @@ For each commit add a description under the Unreleased section under the corresp
 
 Muruca
 
+- Style: readmore overlay
 -   Image viewer - added overlays
+
 
 ## [4.8.5] - 2023-09-22
 
