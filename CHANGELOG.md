@@ -9,6 +9,15 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [4.9.1] - 2023-10-19
+
+## [4.9.0] - 2023-10-17
+
+Muruca
+
+-   Style: readmore overlay
+-   Image viewer - added overlays
+
 ## [4.8.5] - 2023-09-22
 
 Muruca
@@ -403,7 +412,11 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.8.5...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.9.1...HEAD
+
+[4.9.1]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.9.0...v4.9.1
+
+[4.9.0]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.8.5...v4.9.0
 
 [4.8.5]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.8.3...v4.8.5
 
