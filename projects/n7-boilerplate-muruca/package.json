@@ -1,6 +1,6 @@
 {
   "name": "@net7/boilerplate-muruca",
-  "version": "4.9.1",
+  "version": "4.9.2",
   "peerDependencies": {
     "@angular/common": "^14.2.12",
     "@angular/core": "^14.2.12"
