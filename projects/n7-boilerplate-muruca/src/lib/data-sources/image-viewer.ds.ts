@@ -1,5 +1,7 @@
+/* eslint-disable camelcase */
 import { DataSource } from '@net7/core';
 import { Subject } from 'rxjs';
+import { MrImageViewerOverlayModel } from '../models/image-viewer-overlay.model';
 
 export class MrImageViewerDS extends DataSource {
   id: string;
@@ -10,7 +12,7 @@ export class MrImageViewerDS extends DataSource {
 
   protected transform(data: any): any {
     if (!data) return null;
-    const { images, thumbs } = data;
+    const { images, thumbs, overlay_images } = data;
     const { tools } = (this.options || {});
     return {
       images,
@@ -38,11 +40,21 @@ export class MrImageViewerDS extends DataSource {
       _setViewer: (viewer) => {
         this.viewer = viewer;
         this.viewerLoaded$.next();
+
+        // overlay test
+        if (overlay_images) {
+          this.loadOverlays(data);
+        }
       }
     };
   }
 
   public changePage(index) {
     this.viewer.goToPage(index); // call to OpenSeadragon APIs
+  }
+
+  public loadOverlays(data) {
+    const overlayModel = new MrImageViewerOverlayModel(this.viewer, data);
+    overlayModel.init();
   }
 }

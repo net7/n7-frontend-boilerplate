@@ -30,7 +30,7 @@
 
     /* Collapsed content */
     &.is-collapsed {
-        .mr-read-more__content {
+        > .mr-read-more__content {
             position: relative;
 
             &:after {
