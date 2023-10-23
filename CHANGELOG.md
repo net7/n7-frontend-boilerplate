@@ -9,6 +9,11 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+- Added configuration for stati layout
+- Changed static layout routing for multilingual
+
 ## [4.8.5] - 2023-09-22
 
 Muruca
