@@ -9,10 +9,12 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [4.9.2] - 2023-10-23
+
 Muruca
 
-- Added configuration for stati layout
-- Changed static layout routing for multilingual
+-   Added configuration for stati layout
+-   Changed static layout routing for multilingual
 
 ## [4.9.1] - 2023-10-19
 
@@ -417,7 +419,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.9.1...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.9.2...HEAD
+
+[4.9.2]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.9.1...v4.9.2
 
 [4.9.1]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.9.0...v4.9.1
 
