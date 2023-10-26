@@ -69,6 +69,13 @@ export class MrResourceLayoutEH extends EventHandler {
           eventData: payload
         });
       }
+      // image viewer overlay events
+      if (type.includes('overlayclick')) {
+        this.emitOuter('showoverlaydetails', payload);
+      }
+      if (type.includes('overlayclose')) {
+        this.emitOuter('hideoverlaydetails', payload);
+      }
     });
   }
 

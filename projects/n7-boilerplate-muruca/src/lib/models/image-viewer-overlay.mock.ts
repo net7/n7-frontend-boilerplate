@@ -1,5 +1,6 @@
 /* eslint-disable */
 export default {
+  thumbs: null,
   images: [{
     tileSource: {
       type: 'image',
@@ -41,7 +42,7 @@ export default {
     {
       coordinates: '995,566 995,459 1060,459 1060,566',
       shape: 'rectangle',
-      title: 'silos',
+      title: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit',
       action: '',
       description: 'silos del faro',
       detail_image_id: '',

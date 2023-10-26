@@ -124,6 +124,14 @@ export class MrResourceLayoutDS extends LayoutDataSource {
         this.one(id).update(undefined);
       }
 
+      // init viewer overlay details
+      if (type === 'viewer') {
+        const overlayDetailsId = `${id}-overlay-details`;
+        const widgetOverlayDetailsDS = this.getWidgetDataSource(overlayDetailsId);
+        if (!widgetOverlayDetailsDS) return;
+        // set id
+        widgetOverlayDetailsDS.id = overlayDetailsId;
+      }
       // image viewer tools check
       if (type === 'viewer' && tools) {
         const toolsId = `${id}-tools`;

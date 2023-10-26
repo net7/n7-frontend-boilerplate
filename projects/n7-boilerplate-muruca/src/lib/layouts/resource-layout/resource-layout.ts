@@ -14,6 +14,7 @@ import { MrImageViewerEH } from '../../event-handlers/image-viewer.eh';
 import { MrTextViewerEH } from '../../event-handlers/text-viewer.eh';
 import { MrImageViewerToolsEH } from '../../event-handlers/image-viewer-tools.eh';
 import { MrCollectionEH } from '../../event-handlers/collection.eh';
+import { MrImageViewerOverlayDetailsEH } from '../../event-handlers/image-viewer-overlay-details.eh';
 import {
   MrBreadcrumbsDS,
   MrCollectionDS,
@@ -25,6 +26,7 @@ import {
   MrMetadataDS,
   MrTextViewerDS,
   MrResourceTabsDS,
+  MrImageViewerOverlayDetailsDS,
 } from '../../data-sources';
 import { MrMapDS } from '../../data-sources/map.ds';
 import { MrLocaleService } from '../../services/locale.service';
@@ -39,6 +41,7 @@ const DATASOURCE_MAP = {
   title: MrInnerTitleDS,
   viewer: MrImageViewerDS,
   'viewer-tools': MrImageViewerToolsDS,
+  'viewer-overlay-details': MrImageViewerOverlayDetailsDS,
   tabs: MrResourceTabsDS,
   'text-viewer': MrTextViewerDS,
   map: MrMapDS
@@ -47,6 +50,7 @@ const DATASOURCE_MAP = {
 const EVENTHANDLER_MAP = {
   viewer: MrImageViewerEH,
   'viewer-tools': MrImageViewerToolsEH,
+  'viewer-overlay-details': MrImageViewerOverlayDetailsEH,
   'text-viewer': MrTextViewerEH,
   collection: MrCollectionEH,
   // map: MrMapEH
@@ -119,6 +123,16 @@ export class MrResourceLayoutComponent extends AbstractLayout implements OnInit,
           dataSource: DATASOURCE_MAP[type],
           eventHandler: EVENTHANDLER_MAP[type]
         });
+        // image viewer overlay details
+        if (type === 'viewer') {
+          this.widgets.push({
+            id: `${id}-overlay-details`,
+            options: widgetOptions,
+            dataSource: DATASOURCE_MAP[`${type}-overlay-details`],
+            eventHandler: EVENTHANDLER_MAP[`${type}-overlay-details`]
+          });
+        }
+        // image viewer tools
         if (type === 'viewer' && tools) {
           this.widgets.push({
             id: `${id}-tools`,

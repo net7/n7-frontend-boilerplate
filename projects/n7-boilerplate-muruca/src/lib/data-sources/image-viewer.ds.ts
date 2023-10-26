@@ -3,6 +3,9 @@ import { DataSource } from '@net7/core';
 import { Subject } from 'rxjs';
 import { MrImageViewerOverlayModel } from '../models/image-viewer-overlay.model';
 
+// FIXME: togliere mock
+import mock from '../models/image-viewer-overlay.mock';
+
 export class MrImageViewerDS extends DataSource {
   id: string;
 
@@ -10,10 +13,14 @@ export class MrImageViewerDS extends DataSource {
 
   viewerLoaded$: Subject<void> = new Subject();
 
+  overlayEvents$: Subject<{ type: string; payload?: any }> = new Subject();
+
   protected transform(data: any): any {
     if (!data) return null;
-    const { images, thumbs, overlay_images } = data;
-    const { tools } = (this.options || {});
+    // const { images, thumbs, overlay_images } = data;
+    // FIXME: togliere mock
+    const { images, thumbs, overlay_images } = mock;
+    // const { tools } = (this.options || {});
     return {
       images,
       thumbs,
@@ -33,7 +40,8 @@ export class MrImageViewerDS extends DataSource {
 
         /* SEQUENCE */
         sequenceMode: true, // allows having multiple images (as in array of images + zoomed image)
-        showReferenceStrip: tools !== true, // shows the images array (default: horizontally)
+        // showReferenceStrip: tools !== true, // shows the images array (default: horizontally)
+        showReferenceStrip: true, // shows the images array (default: horizontally)
 
         navigationControlAnchor: 'TOP_RIGHT',
       },
@@ -43,7 +51,8 @@ export class MrImageViewerDS extends DataSource {
 
         // overlay test
         if (overlay_images) {
-          this.loadOverlays(data);
+          // FIXME: togliere mock
+          this.loadOverlays(mock);
         }
       }
     };
@@ -54,7 +63,11 @@ export class MrImageViewerDS extends DataSource {
   }
 
   public loadOverlays(data) {
-    const overlayModel = new MrImageViewerOverlayModel(this.viewer, data);
+    const overlayModel = new MrImageViewerOverlayModel({
+      viewer: this.viewer,
+      config: data,
+      overlayEvents$: this.overlayEvents$
+    });
     overlayModel.init();
   }
 }
