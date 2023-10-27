@@ -3,9 +3,6 @@ import { DataSource } from '@net7/core';
 import { Subject } from 'rxjs';
 import { MrImageViewerOverlayModel } from '../models/image-viewer-overlay.model';
 
-// FIXME: togliere mock
-import mock from '../models/image-viewer-overlay.mock';
-
 export class MrImageViewerDS extends DataSource {
   id: string;
 
@@ -19,10 +16,8 @@ export class MrImageViewerDS extends DataSource {
 
   protected transform(data: any): any {
     if (!data) return null;
-    // const { images, thumbs, overlay_images } = data;
-    // FIXME: togliere mock
-    const { images, thumbs, overlay_images } = mock;
-    // const { tools } = (this.options || {});
+    const { images, thumbs, overlay_images } = data;
+    const { tools } = (this.options || {});
     return {
       images,
       thumbs,
@@ -42,8 +37,7 @@ export class MrImageViewerDS extends DataSource {
 
         /* SEQUENCE */
         sequenceMode: true, // allows having multiple images (as in array of images + zoomed image)
-        // showReferenceStrip: tools !== true, // shows the images array (default: horizontally)
-        showReferenceStrip: true, // shows the images array (default: horizontally)
+        showReferenceStrip: tools !== true, // shows the images array (default: horizontally)
 
         navigationControlAnchor: 'TOP_RIGHT',
       },
@@ -54,7 +48,7 @@ export class MrImageViewerDS extends DataSource {
         // overlay test
         if (overlay_images) {
           // FIXME: togliere mock
-          this.loadOverlays(mock);
+          this.loadOverlays(data);
         }
       }
     };
