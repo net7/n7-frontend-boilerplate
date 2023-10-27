@@ -136,9 +136,6 @@ export class MrImageViewerOverlayModel {
     // listen viewer change
     this._viewer.addHandler('page', this.onPageChange);
 
-    // listen overlay external changes
-    this._overlayEvents$.subscribe(this.onOverlayExternalChanges);
-
     // load first overlay
     this.load();
   }
@@ -147,11 +144,17 @@ export class MrImageViewerOverlayModel {
     this._viewer.removeHandler('page', this.onPageChange);
   }
 
+  public resetStyles() {
+    this._children.forEach((child) => {
+      this.loadStyles(child);
+    });
+  }
+
   private onPageChange = ({ page }) => {
     this._page = page;
 
-    // clear details
-    this._overlayEvents$.next({ type: 'close' });
+    // emit signal
+    this._overlayEvents$.next({ type: 'pagechange' });
 
     // load when image finish loading
     const onTileDrawn = () => {
@@ -159,15 +162,6 @@ export class MrImageViewerOverlayModel {
       this._viewer.removeHandler('tile-drawn', onTileDrawn);
     };
     this._viewer.addHandler('tile-drawn', onTileDrawn);
-  };
-
-  private onOverlayExternalChanges = ({ type }) => {
-    if (type === 'resetselected') {
-      // reset
-      this._children.forEach((child) => {
-        this.loadStyles(child);
-      });
-    }
   };
 
   private load() {
@@ -200,6 +194,7 @@ export class MrImageViewerOverlayModel {
       // remove svg overlay
       this._overlay.svg().remove();
       this._overlay = null;
+      this._children = [];
     }
   }
 
@@ -244,9 +239,7 @@ export class MrImageViewerOverlayModel {
 
   private setSelected(selectedChild) {
     // reset
-    this._children.forEach((child) => {
-      this.loadStyles(child);
-    });
+    this.resetStyles();
 
     // selected styles
     this.loadStyles(selectedChild, this._selectedStylesDefaults);

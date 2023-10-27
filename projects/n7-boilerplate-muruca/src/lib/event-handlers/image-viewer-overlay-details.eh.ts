@@ -8,6 +8,7 @@ export class MrImageViewerOverlayDetailsEH extends EventHandler {
     this.outerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
         case 'mr-resource-layout.hideoverlaydetails':
+        case 'mr-resource-layout.overlaycloseclick':
           this.dataSource.hide();
           break;
         case 'mr-resource-layout.showoverlaydetails': {

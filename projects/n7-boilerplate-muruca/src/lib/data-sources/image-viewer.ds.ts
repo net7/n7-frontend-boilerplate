@@ -11,6 +11,8 @@ export class MrImageViewerDS extends DataSource {
 
   viewer: any;
 
+  overlayModel: MrImageViewerOverlayModel;
+
   viewerLoaded$: Subject<void> = new Subject();
 
   overlayEvents$: Subject<{ type: string; payload?: any }> = new Subject();
@@ -62,12 +64,16 @@ export class MrImageViewerDS extends DataSource {
     this.viewer.goToPage(index); // call to OpenSeadragon APIs
   }
 
+  public overlayCloseClick() {
+    this.overlayModel.resetStyles();
+  }
+
   public loadOverlays(data) {
-    const overlayModel = new MrImageViewerOverlayModel({
+    this.overlayModel = new MrImageViewerOverlayModel({
       viewer: this.viewer,
       config: data,
       overlayEvents$: this.overlayEvents$
     });
-    overlayModel.init();
+    this.overlayModel.init();
   }
 }

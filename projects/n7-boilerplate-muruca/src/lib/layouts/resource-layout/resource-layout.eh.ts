@@ -73,7 +73,7 @@ export class MrResourceLayoutEH extends EventHandler {
       if (type.includes('overlayclick')) {
         this.emitOuter('showoverlaydetails', payload);
       }
-      if (type.includes('overlayclose')) {
+      if (type.includes('overlaypagechange')) {
         this.emitOuter('hideoverlaydetails', payload);
       }
     });

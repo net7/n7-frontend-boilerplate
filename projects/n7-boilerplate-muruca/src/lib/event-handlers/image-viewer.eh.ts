@@ -1,5 +1,5 @@
 import { EventHandler } from '@net7/core';
-import { filter, first } from 'rxjs/operators';
+import { first } from 'rxjs/operators';
 import { MrImageViewerDS } from '../data-sources/image-viewer.ds';
 
 export class MrImageViewerEH extends EventHandler {
@@ -32,11 +32,10 @@ export class MrImageViewerEH extends EventHandler {
             this.dataSource.changePage(payload.thumbindex);
           }
           break;
-        case 'mr-resource-layout.pagechange':
-          // Silent
+        case 'mr-resource-layout.overlaycloseclick':
+          this.dataSource.overlayCloseClick();
           break;
-        case 'mr-resource-layout.hideoverlaydetails':
-          this.dataSource.overlayEvents$.next({ type: 'resetselected' });
+        case 'mr-resource-layout.pagechange':
           // Silent
           break;
         default:
@@ -57,9 +56,7 @@ export class MrImageViewerEH extends EventHandler {
       });
     });
 
-    this.dataSource.overlayEvents$.pipe(
-      filter(({ type }) => type !== 'resetselected')
-    ).subscribe(({ type, payload }) => {
+    this.dataSource.overlayEvents$.subscribe(({ type, payload }) => {
       this.emitOuter(`overlay${type}`, {
         targetId: this.dataSource.id,
         ...payload
