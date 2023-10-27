@@ -32,6 +32,9 @@ export class MrImageViewerEH extends EventHandler {
             this.dataSource.changePage(payload.thumbindex);
           }
           break;
+        case 'mr-resource-layout.overlaycloseclick':
+          this.dataSource.overlayCloseClick();
+          break;
         case 'mr-resource-layout.pagechange':
           // Silent
           break;
@@ -43,12 +46,20 @@ export class MrImageViewerEH extends EventHandler {
   }
 
   listenToViewer() {
+    // loaded
     this.dataSource.viewerLoaded$.pipe(
       first()
     ).subscribe(() => {
       const { viewer } = this.dataSource;
       viewer.addHandler('page', (eventData) => {
         this.emitOuter('pagechange', eventData);
+      });
+    });
+
+    this.dataSource.overlayEvents$.subscribe(({ type, payload }) => {
+      this.emitOuter(`overlay${type}`, {
+        targetId: this.dataSource.id,
+        ...payload
       });
     });
   }

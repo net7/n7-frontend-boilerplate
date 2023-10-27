@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+-   Added image viewer overlay details
+
 ## [4.9.2] - 2023-10-23
 
 Muruca

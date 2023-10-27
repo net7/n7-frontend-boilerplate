@@ -1,7 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable max-classes-per-file */
 import OpenSeadragon from 'openseadragon';
-import tippy, { hideAll } from 'tippy.js';
 
 const svgNS = 'http://www.w3.org/2000/svg';
 
@@ -107,25 +106,35 @@ export class MrImageViewerOverlayModel {
 
   private _overlay;
 
+  private _overlayEvents$;
+
+  private _children = [];
+
   private _stylesDefaults = {
     highlight_color: 'red',
     highlight_opacity: 0.5,
     border_color: 'gray',
     border_opacity: 1,
-    border_width: 2
+    border_width: 2,
   };
 
-  constructor(viewer, config) {
+  private _selectedStylesDefaults = {
+    border_color: 'gray',
+    border_opacity: 1,
+    border_width: 5,
+  };
+
+  constructor({ viewer, config, overlayEvents$ }) {
     if (this._viewer) return;
 
     this._viewer = viewer;
     this._config = config;
+    this._overlayEvents$ = overlayEvents$;
   }
 
   public init() {
     // listen viewer change
     this._viewer.addHandler('page', this.onPageChange);
-    this._viewer.addHandler('zoom', this.onZoomChange);
 
     // load first overlay
     this.load();
@@ -133,11 +142,19 @@ export class MrImageViewerOverlayModel {
 
   public destroy() {
     this._viewer.removeHandler('page', this.onPageChange);
-    this._viewer.removeHandler('zoom', this.onZoomChange);
+  }
+
+  public resetStyles() {
+    this._children.forEach((child) => {
+      this.loadStyles(child);
+    });
   }
 
   private onPageChange = ({ page }) => {
     this._page = page;
+
+    // emit signal
+    this._overlayEvents$.next({ type: 'pagechange' });
 
     // load when image finish loading
     const onTileDrawn = () => {
@@ -145,10 +162,6 @@ export class MrImageViewerOverlayModel {
       this._viewer.removeHandler('tile-drawn', onTileDrawn);
     };
     this._viewer.addHandler('tile-drawn', onTileDrawn);
-  };
-
-  private onZoomChange = () => {
-    hideAll();
   };
 
   private load() {
@@ -173,31 +186,7 @@ export class MrImageViewerOverlayModel {
             break;
         }
       });
-
-      // load tooltips
-      setTimeout(() => {
-        this.loadTooltips();
-      }, 1000);
     }
-  }
-
-  private loadTooltips() {
-    tippy('[data-tippy-content]', {
-      // showOnCreate: true,
-      trigger: 'click',
-      placement: 'right-end',
-      popperOptions: {
-        strategy: 'fixed',
-        modifiers: [
-          {
-            name: 'flip',
-            options: {
-              fallbackPlacements: ['left', 'right'],
-            },
-          }
-        ],
-      }
-    } as any);
   }
 
   private clear() {
@@ -205,9 +194,7 @@ export class MrImageViewerOverlayModel {
       // remove svg overlay
       this._overlay.svg().remove();
       this._overlay = null;
-
-      // hide tooltips
-      hideAll();
+      this._children = [];
     }
   }
 
@@ -215,7 +202,10 @@ export class MrImageViewerOverlayModel {
     const child = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
     child.setAttribute('points', config.coordinates);
     this.loadStyles(child);
-    this.loadTooltipContent(child, config);
+    child.addEventListener('click', () => {
+      this.onClick(child, config);
+    });
+    this._children.push(child);
 
     this._overlay.node().appendChild(child);
   }
@@ -227,71 +217,46 @@ export class MrImageViewerOverlayModel {
     child.setAttribute('cy', cy);
     child.setAttribute('r', r);
     this.loadStyles(child);
-    this.loadTooltipContent(child, config);
+    child.addEventListener('click', () => {
+      this.onClick(child, config);
+    });
+    this._children.push(child);
 
     this._overlay.node().appendChild(child);
   }
 
-  private loadStyles(child) {
+  private onClick(child, config) {
+    if (config.action === 'url' && config['action-url-url']) {
+      document.location.href = config['action-url-url'];
+      return;
+    }
+    this.setSelected(child);
+    this._overlayEvents$.next({
+      type: 'click',
+      payload: config
+    });
+  }
+
+  private setSelected(selectedChild) {
+    // reset
+    this.resetStyles();
+
+    // selected styles
+    this.loadStyles(selectedChild, this._selectedStylesDefaults);
+  }
+
+  private loadStyles(child, selectedStyles?) {
     const currentConfig = this._config.overlay_images[this._page];
     const styles = {
       ...this._stylesDefaults,
       ...(currentConfig?.style || {})
     };
     child.setAttribute('fill', styles.highlight_color);
-    child.setAttribute('stroke', styles.border_color);
-    child.setAttribute('stroke-width', styles.border_width);
-    child.setAttribute('style', `fill-opacity: ${styles.highlight_opacity}; stroke-opacity: ${styles.border_opacity};`);
-  }
-
-  private loadTooltipContent(child, config) {
-    const content = [];
-    // title
-    if (config?.title) {
-      content.push(this.getTooltipTitle(config.title));
-    }
-    // image
-    if (config?.detail_image) {
-      content.push(this.getTooltipImage(config.detail_image));
-    }
-    // description
-    if (config?.description) {
-      content.push(this.getTooltipDescription(config.description));
-    }
-    // action
-    if (config?.['action-url-url']) {
-      content.push(this.getTooltipAction(config['action-url-url']));
-    }
-
-    if (content.length) {
-      child.setAttribute(
-        'data-tippy-content',
-        `<div class="tooltip-overlay-wrapper">${content.join('')}</div>`
-      );
-    }
-  }
-
-  private getTooltipTitle(title) {
-    return `<div class="tooltip-overlay-title">${title}</div>`;
-  }
-
-  private getTooltipImage(src) {
-    return `
-      <div class="tooltip-overlay-image">
-        <img src="${src}" />
-      </div>
-    `;
-  }
-
-  private getTooltipDescription(description) {
-    return `<div class="tooltip-overlay-description">${description}</div>`;
-  }
-
-  private getTooltipAction(url) {
-    return `
-      <div class="tooltip-overlay-action">
-        <a href="${url}" class="n7-btn">Action!</a>
-      </div>
-    `;
+    child.setAttribute('stroke', selectedStyles?.border_color || styles.border_color);
+    child.setAttribute('stroke-width', selectedStyles?.border_width || styles.border_width);
+    child.setAttribute('style', `
+      fill-opacity: ${styles.highlight_opacity}; 
+      stroke-opacity: ${selectedStyles?.border_opacity || styles.border_opacity};
+    `);
   }
 }
