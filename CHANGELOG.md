@@ -9,6 +9,8 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [4.9.3] - 2023-10-30
+
 Muruca
 
 -   Added image viewer overlay details
@@ -423,7 +425,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.9.2...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.9.3...HEAD
+
+[4.9.3]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.9.2...v4.9.3
 
 [4.9.2]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.9.1...v4.9.2
 
