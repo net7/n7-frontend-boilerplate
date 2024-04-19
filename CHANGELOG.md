@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+-   Update the math to trigger infinite scroll loading (`search.service.ts`)
+
 ## [4.9.3] - 2023-10-30
 
 Muruca
