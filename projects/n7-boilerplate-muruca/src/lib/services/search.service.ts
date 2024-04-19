@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/camelcase */
+/* eslint-disable camelcase */
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
@@ -32,7 +32,7 @@ export class MrSearchService {
 
   private searchId: string | number;
 
-  private locale: string;
+  private locale: string | null;
 
   private config;
 
@@ -395,7 +395,9 @@ export class MrSearchService {
         return null;
       }),
       filter((data) => data !== null),
-    ).subscribe(({ inputConfig, value }) => {
+    ).subscribe((data) => {
+      if (!data) throw Error('inputChange data is null');
+      const { inputConfig, value } = data;
       const { target } = inputConfig;
       // update internal filters
       this.internalFilterState.facets[target].query = value;
@@ -589,6 +591,7 @@ export class MrSearchService {
           .filter((input) => input.type === 'link')
           .forEach(({ id }) => {
             const scrollEl = document.querySelector(`#facet-container-${id} .n7-input-link`);
+            if (!scrollEl) throw Error(`Element with id "facet-container-${id}" not found`);
             const scroll$ = fromEvent(scrollEl, 'scroll');
             scroll$.pipe(
               debounceTime(300)
@@ -601,8 +604,11 @@ export class MrSearchService {
               } = this.internalFilterState.facets[id];
               const { scrollTop, clientHeight, scrollHeight } = target as HTMLElement;
               if (
-                (scrollTop + clientHeight >= scrollHeight)
+                // checks if the user has scrolled to the bottom of a container
+                (scrollTop + clientHeight + 1 >= Math.ceil(scrollHeight))
+                // checks if there are more items to load
                 && (offset + limit < filtered_total_count)
+                // checks if the application is not currently loading more items
                 && loading === false
               ) {
                 this.internalFilterState.facets[id].loading = true;
