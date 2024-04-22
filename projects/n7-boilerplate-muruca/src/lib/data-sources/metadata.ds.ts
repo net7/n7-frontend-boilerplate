@@ -16,7 +16,7 @@ export class MrMetadataDS extends DataSource {
     }
   };
 
-  protected transform(data: any): any {
+  public transform(data: any): any {
     if (!data) return null;
 
     // readmore applies to the whole metadata group, while

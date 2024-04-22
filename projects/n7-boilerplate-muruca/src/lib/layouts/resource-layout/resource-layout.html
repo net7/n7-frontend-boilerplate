@@ -87,7 +87,6 @@
                         </n7-item-preview>
                     </div>
                 </ng-container>
-                <!-- IMAGE VIEWER -->
     
                 <!-- METADATA VIEWER -->
                 <ng-container *ngSwitchCase="'metadata'">
@@ -99,7 +98,7 @@
                         <div class="mr-content-block__content">
                             <mr-read-more [data]="section.readmore">
                                 <ng-container *ngIf=" section?.options?.readmore || section?.options?.groupReadmore;
-                                              else wihoutReadmore">
+                                            else wihoutReadmore">
                                     <mr-metadata-readmore
                                         [data]="lb.widgets[section.id].ds.out$ | async"
                                         [emit]="lb.widgets[section.id].emit">
@@ -114,7 +113,15 @@
                             </mr-read-more>
                         </div>
                     </div>
-
+      
+                </ng-container>
+                    
+                <!-- METADATA DYNAMIC -->
+                <ng-container *ngSwitchCase="'metadata-dynamic'">
+                    <mr-metadata-dynamic 
+                    [data]="lb.widgets[section.id].ds.out$ | async"
+                    [emit]="lb.widgets[section.id].emit">
+                    </mr-metadata-dynamic>                    
                 </ng-container>
     
                 <!-- COLLECTION -->

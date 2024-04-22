@@ -39,7 +39,7 @@
         }
 
         /* Metadata under the title */
-        .mr-resource__metadata {
+        .mr-resource__metadata, .mr-resource__metadata-dynamic {
             max-width: $page-max-width;
             margin: 0 auto;
             margin: -$space * 3 auto $space * 4 auto;
@@ -134,7 +134,7 @@
         border-radius: $border-radius;
 
         /* Metadata */
-        .mr-resource__metadata {
+        .mr-resource__metadata, .mr-resource__metadata-dynamic {
             padding: $space * 6 0;
             margin: 0 $space * 10;
         }
@@ -211,6 +211,7 @@
 
         /* Sections border */
         .mr-resource__metadata + .mr-resource__metadata,
+        .mr-resource__metadata-dynamic + .mr-resource__metadata-dynamic,
         .mr-resource__collection + .mr-resource__metadata,
         .mr-resource__metadata + .mr-resource__collection,
         .mr-resource__collection + .mr-resource__collection {

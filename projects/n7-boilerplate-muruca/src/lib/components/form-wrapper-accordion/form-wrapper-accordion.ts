@@ -29,7 +29,7 @@ export class MrFormWrapperAccordionComponent implements OnInit, OnDestroy {
       return;
     }
     this.emit(type, payload);
-  }
+  };
 
   onReset() {
     this.fakeEmit('reset');

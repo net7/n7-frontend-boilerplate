@@ -15,6 +15,7 @@ import { MrTextViewerEH } from '../../event-handlers/text-viewer.eh';
 import { MrImageViewerToolsEH } from '../../event-handlers/image-viewer-tools.eh';
 import { MrCollectionEH } from '../../event-handlers/collection.eh';
 import { MrImageViewerOverlayDetailsEH } from '../../event-handlers/image-viewer-overlay-details.eh';
+import { MrMetadataDynamicEH } from '../../event-handlers';
 import {
   MrBreadcrumbsDS,
   MrCollectionDS,
@@ -27,6 +28,7 @@ import {
   MrTextViewerDS,
   MrResourceTabsDS,
   MrImageViewerOverlayDetailsDS,
+  MrMetadataDynamicDS,
 } from '../../data-sources';
 import { MrMapDS } from '../../data-sources/map.ds';
 import { MrLocaleService } from '../../services/locale.service';
@@ -44,7 +46,8 @@ const DATASOURCE_MAP = {
   'viewer-overlay-details': MrImageViewerOverlayDetailsDS,
   tabs: MrResourceTabsDS,
   'text-viewer': MrTextViewerDS,
-  map: MrMapDS
+  map: MrMapDS,
+  'metadata-dynamic': MrMetadataDynamicDS,
 };
 
 const EVENTHANDLER_MAP = {
@@ -53,6 +56,7 @@ const EVENTHANDLER_MAP = {
   'viewer-overlay-details': MrImageViewerOverlayDetailsEH,
   'text-viewer': MrTextViewerEH,
   collection: MrCollectionEH,
+  'metadata-dynamic': MrMetadataDynamicEH,
   // map: MrMapEH
 };
 
