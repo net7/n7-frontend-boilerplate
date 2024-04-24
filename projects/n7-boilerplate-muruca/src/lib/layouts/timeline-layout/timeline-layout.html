@@ -2,8 +2,9 @@
   <div class="mr-timeline__timeline">
     <div
       class="mr-timeline__timeline-loading"
-      *ngIf="lb.dataSource.loading.timeline"
-    ></div>
+      *ngIf="lb.dataSource.loading.timeline">
+        <n7-loader></n7-loader>
+    </div>
     <n7-timeline
       [data]="lb.widgets['mr-timeline'].ds.out$ | async"
       *ngIf="!lb.dataSource.loading.timeline"
