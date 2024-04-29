@@ -22,7 +22,6 @@ import mapConfig from './map.config';
 import tabsConfig from './tabs.config';
 import resourceWorkDatosBibliograficosConfig from './resource-work-datos-bibliograficos.config';
 import resourceWorkDatosCodicologicosConfig from './resource-work-datos-codicologicos.config';
-import advancedSearchAutesoConfig from './advanced-search-auteso.config';
 
 export default {
   home: homeConfig,
@@ -48,5 +47,4 @@ export default {
   tabs: tabsConfig,
   'resource-work-datos-bibliograficos': resourceWorkDatosBibliograficosConfig,
   'resource-work-datos-codicologicos': resourceWorkDatosCodicologicosConfig,
-  'advanced-search-auteso': advancedSearchAutesoConfig,
 };
