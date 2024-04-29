@@ -6,3 +6,4 @@ export * from './metadata-with-readmore/metadata-with-readmore';
 export * from './read-more/read-more';
 export * from './resource-modal/resource-modal';
 export * from './search-page-description/search-page-description';
+export * from './metadata-dynamic/metadata-dynamic';

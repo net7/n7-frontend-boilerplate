@@ -7,7 +7,8 @@ export const MrResourceLayoutConfig = {
   layoutId: 'mr-resource-layout',
   widgets: [
     { id: 'mr-read-more' },
-    { id: 'mr-metadata-readmore' }
+    { id: 'mr-metadata-readmore' },
+    { id: 'mr-metadata-dynamic' }
   ],
   layoutDS: MrResourceLayoutDS,
   layoutEH: MrResourceLayoutEH,

@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+-   Added Metadata Dynamic component
+
 ## [4.9.4] - 2024-04-19
 
 Muruca

@@ -30,3 +30,5 @@ export * from './static-metadata.ds';
 export * from './form-wrapper-accordion.ds';
 // advanced search layout
 export * from './search/advanced-search-tags.ds';
+// metadata-dynamic
+export * from './metadata-dynamic.ds';

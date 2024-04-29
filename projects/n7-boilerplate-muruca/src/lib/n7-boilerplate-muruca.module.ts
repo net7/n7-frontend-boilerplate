@@ -32,6 +32,7 @@ import { MrMetadataReadmoreComponent } from './components/metadata-with-readmore
 import { MrResourceModalComponent } from './components/resource-modal/resource-modal';
 import { MrSearchPageDescriptionComponent } from './components/search-page-description/search-page-description';
 import { ReadMoreComponent } from './components/read-more/read-more';
+import { MrMetadataDynamicComponent } from './components';
 
 const COMPONENTS = [
   // Layout components
@@ -55,6 +56,7 @@ const COMPONENTS = [
   MrResourceModalComponent,
   MrGalleryComponent,
   MrAdvancedResultComponent,
+  MrMetadataDynamicComponent,
 ];
 
 @NgModule({

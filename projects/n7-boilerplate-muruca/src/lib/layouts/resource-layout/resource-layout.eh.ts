@@ -6,6 +6,7 @@ import {
 } from 'rxjs/operators';
 import { MrLayoutStateService, LayoutState } from '../../services/layout-state.service';
 import { MrResourceModalService } from '../../services/resource-modal.service';
+// import mock from './resource-layout-mock-cambridge';
 
 export class MrResourceLayoutEH extends EventHandler {
   private route: ActivatedRoute;
@@ -101,6 +102,7 @@ export class MrResourceLayoutEH extends EventHandler {
     ).subscribe((response) => {
       this.layoutState.set('content', LayoutState.SUCCESS);
       this.dataSource.handleResponse(response);
+      // this.dataSource.handleResponse(mock);
       // scroll top
       window.scrollTo(0, 0);
     });

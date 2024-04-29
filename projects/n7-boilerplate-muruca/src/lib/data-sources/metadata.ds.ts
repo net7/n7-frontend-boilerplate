@@ -1,5 +1,6 @@
 import { DataSource, _t } from '@net7/core';
 import { isObject, merge } from 'lodash';
+import { GroupObject, MetadataOutput } from '../interfaces/metadata.interface';
 
 export class MrMetadataDS extends DataSource {
   /** Test if a string is a valid URL */
@@ -16,7 +17,7 @@ export class MrMetadataDS extends DataSource {
     }
   };
 
-  protected transform(data: any): any {
+  public transform(data: GroupObject): MetadataOutput {
     if (!data) return null;
 
     // readmore applies to the whole metadata group, while
@@ -36,11 +37,12 @@ export class MrMetadataDS extends DataSource {
           .filter((item) => isObject(item))
           .forEach(({ label, value }) => {
             const itemLabel = label && !hideLabels ? label : null;
+            const classLabel = label && !hideLabels ? label.replace(/ /g, '_').toLowerCase() : null;
             if (Array.isArray(value)) {
               result.group.push({
                 group: [{
                   title: _t(itemLabel),
-                  classes: `mrc-${itemLabel}`,
+                  classes: `mrc-${classLabel}`,
                   // use default values if not specified
                   readmore: merge({ ...this.defaultReadmore }, readmore),
                   groupReadmore,
@@ -53,7 +55,7 @@ export class MrMetadataDS extends DataSource {
                   // use default values if not specified
                   readmore: merge({ ...this.defaultReadmore }, readmore),
                   groupReadmore,
-                  classes: `mrc-${itemLabel}`,
+                  classes: `mrc-${classLabel}`,
                   items: value ? [{
                     label: _t(itemLabel),
                     value: this.getItemValue(value)
