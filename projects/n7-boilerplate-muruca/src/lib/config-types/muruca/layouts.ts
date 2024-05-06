@@ -6,6 +6,7 @@ import {
   ConfigMurucaContentSection,
   ConfigMurucaGallerySection,
   ConfigMurucaHeroSection,
+  ConfigMurucaIIIFViewerSection,
   ConfigMurucaImageViewerSection,
   ConfigMurucaInfoBoxSection,
   ConfigMurucaItemPreviewSection,
@@ -50,6 +51,7 @@ export interface ConfigMurucaResourceLayout extends ConfigMurucaLayout {
       | ConfigMurucaInfoBoxSection
       | ConfigMurucaBreadcrumbsSection
       | ConfigMurucaMetadataDynamicSection
+      | ConfigMurucaIIIFViewerSection
     )[];
   };
 }

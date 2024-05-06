@@ -69,6 +69,14 @@ export interface ConfigMurucaImageViewerSection extends ConfigMurucaSection {
   };
 }
 
+export interface ConfigMurucaIIIFViewerSection extends ConfigMurucaSection {
+  type: 'iifViewer';
+  options?: {
+    /** has image viewer tools? */
+    tools: boolean;
+  };
+}
+
 export interface ConfigMurucaTabsSection extends ConfigMurucaSection {
   type: 'tabs';
 }

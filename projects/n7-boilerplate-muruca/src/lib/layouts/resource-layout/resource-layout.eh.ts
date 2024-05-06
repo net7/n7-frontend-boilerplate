@@ -22,24 +22,26 @@ export class MrResourceLayoutEH extends EventHandler {
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
-        case 'mr-resource-layout.init': {
-          this.route = payload.route;
-          this.router = payload.router;
-          this.modalService = payload.modalService;
-          const { slug, id } = this.route.snapshot.params;
-          const { url } = this.route.snapshot;
-          this.dataSource.tab = url[url.length - 1].path;
-          this.dataSource.slug = slug;
-          this.dataSource.id = id;
-          this.layoutState = payload.layoutState;
-          this.dataSource.onInit(payload);
-          this.listenRoute();
-          // scroll top
-          window.scrollTo(0, 0);
+        case 'mr-resource-layout.init':
+          {
+            this.route = payload.route;
+            this.router = payload.router;
+            this.modalService = payload.modalService;
+            const { slug, id } = this.route.snapshot.params;
+            const { url } = this.route.snapshot;
+            this.dataSource.tab = url[url.length - 1].path;
+            this.dataSource.slug = slug;
+            this.dataSource.id = id;
+            this.layoutState = payload.layoutState;
+            this.dataSource.onInit(payload);
+            this.listenRoute();
+            // scroll top
+            window.scrollTo(0, 0);
 
-          // emit signal
-          this.emitOuter('init');
-        } break;
+            // emit signal
+            this.emitOuter('init');
+          }
+          break;
         case 'mr-resource-layout.destroy':
           this.destroy$.next();
           break;
@@ -59,7 +61,7 @@ export class MrResourceLayoutEH extends EventHandler {
         const targetId = sourceId.replace('-tools', '');
         this.emitOuter('thumbclick', {
           targetId,
-          thumbindex: payload
+          thumbindex: payload,
         });
       }
       if (type.indexOf('pagechange') !== -1) {
@@ -67,7 +69,7 @@ export class MrResourceLayoutEH extends EventHandler {
         const targetId = `${sourceId}-tools`;
         this.emitOuter('pagechange', {
           targetId,
-          eventData: payload
+          eventData: payload,
         });
       }
       // image viewer overlay events
@@ -81,30 +83,51 @@ export class MrResourceLayoutEH extends EventHandler {
   }
 
   private listenRoute() {
-    this.route.paramMap.pipe(
-      takeUntil(this.destroy$),
-      tap(() => {
-        this.layoutState.set('content', LayoutState.LOADING);
-      }),
-      map((params: ParamMap) => params.get('id')),
-      switchMap((id) => this.dataSource.pageRequest$(id, (err) => {
-        if (err.status === 404) {
-          // getting not found path
-          const { config } = this.router;
-          const route404 = config.find(({ data }) => data?.id === 'page-404');
-          const path404 = route404?.path || 'page-404';
-          this.router.navigate([path404]);
-        }
-        console.warn(`Error loading resource layout for ${id}`, err.message);
-        this.dataSource.id = id;
-        this.layoutState.set('content', LayoutState.ERROR);
-      }))
-    ).subscribe((response) => {
-      this.layoutState.set('content', LayoutState.SUCCESS);
-      this.dataSource.handleResponse(response);
-      // this.dataSource.handleResponse(mock);
-      // scroll top
-      window.scrollTo(0, 0);
-    });
+    this.route.paramMap
+      .pipe(
+        takeUntil(this.destroy$),
+        tap(() => {
+          this.layoutState.set('content', LayoutState.LOADING);
+        }),
+        map((params: ParamMap) => params.get('id')),
+        switchMap((id) => this.dataSource.pageRequest$(id, (err) => {
+          if (err.status === 404) {
+            // getting not found path
+            const { config } = this.router;
+            const route404 = config.find(
+              ({ data }) => data?.id === 'page-404'
+            );
+            const path404 = route404?.path || 'page-404';
+            this.router.navigate([path404]);
+          }
+          console.warn(
+            `Error loading resource layout for ${id}`,
+            err.message
+          );
+          this.dataSource.id = id;
+          this.layoutState.set('content', LayoutState.ERROR);
+        }))
+      )
+      .subscribe((response) => {
+        this.layoutState.set('content', LayoutState.SUCCESS);
+        this.dataSource.handleResponse(response);
+        // this.dataSource.handleResponse(mock);
+        // scroll top
+        window.scrollTo(0, 0);
+      });
+  }
+
+  private getManifestImages(manifest) {
+    const iiifImages = [];
+    if (manifest?.sequences) {
+      manifest.sequences.forEach(({ canvases }) => {
+        canvases.forEach(({ images }) => {
+          images.forEach(({ resource }) => {
+            iiifImages.push(resource['@id']);
+          });
+        });
+      });
+    }
+    return iiifImages;
   }
 }

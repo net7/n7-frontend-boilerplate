@@ -1,7 +1,13 @@
 /* eslint-disable camelcase */
 import { DataSource } from '@net7/core';
-import { Subject } from 'rxjs';
+import { Subject, interval } from 'rxjs';
+import { ImageViewerData } from '@net7/components';
+import { filter, first } from 'rxjs/operators';
 import { MrImageViewerOverlayModel } from '../models/image-viewer-overlay.model';
+
+interface MrImageViewerData extends ImageViewerData {
+  thumbs: any[];
+}
 
 export class MrImageViewerDS extends DataSource {
   id: string;
@@ -14,10 +20,10 @@ export class MrImageViewerDS extends DataSource {
 
   overlayEvents$: Subject<{ type: string; payload?: any }> = new Subject();
 
-  protected transform(data: any): any {
+  protected transform(data: any): MrImageViewerData {
     if (!data) return null;
     const { images, thumbs, overlay_images } = data;
-    const { tools } = (this.options || {});
+    const { tools } = this.options || {};
     return {
       images,
       thumbs,
@@ -47,10 +53,9 @@ export class MrImageViewerDS extends DataSource {
 
         // overlay test
         if (overlay_images) {
-          // FIXME: togliere mock
           this.loadOverlays(data);
         }
-      }
+      },
     };
   }
 
@@ -66,8 +71,61 @@ export class MrImageViewerDS extends DataSource {
     this.overlayModel = new MrImageViewerOverlayModel({
       viewer: this.viewer,
       config: data,
-      overlayEvents$: this.overlayEvents$
+      overlayEvents$: this.overlayEvents$,
     });
     this.overlayModel.init();
+  }
+
+  public updateImages(data) {
+    if (!this.viewer) return;
+    // container exists check
+    interval(10)
+      .pipe(
+        filter(() => !!document.getElementById(this.output.viewerId)),
+        first()
+      )
+      .subscribe(() => {
+        // reset
+        this.viewer.world.removeAll();
+        setTimeout(() => {
+          const images = this.getTileSources(data.items);
+          this.viewer.open(images);
+          this.onRender();
+        });
+      });
+  }
+
+  private getTileSources(images) {
+    const tileSources = [];
+    images.forEach(({ type, url, iiifImages }) => {
+      if (type === 'images-simple') {
+        tileSources.push({
+          url,
+          type: 'image',
+        });
+      } else if (type === 'images-iip') {
+        // FIXME: togliere replace
+        tileSources.push(
+          url.replace('FIF', 'Deepzoom').replace('.tif', '.tif.dzi')
+        );
+      } else if (type === 'images-iiif') {
+        iiifImages.forEach((iiifUrl) => {
+          tileSources.push(iiifUrl);
+        });
+      }
+    });
+    return tileSources;
+  }
+
+  private onRender() {
+    // emit signal
+    this.viewerLoaded$.next(this.viewer);
+
+    // update navigation classes
+    const { nextButton } = this.viewer;
+    const hasNavigation = !!(nextButton && !nextButton.element?.disabled);
+    this.output.classes = hasNavigation
+      ? 'has-navigation'
+      : 'navigation-hidden';
   }
 }
