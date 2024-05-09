@@ -105,6 +105,7 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
     const locale = this.localeService.getLocale();
 
     // update the timeline
+    this.loading.timeline = true;
     this.communication
       .request$('timeline', {
         method: 'GET',
@@ -118,6 +119,7 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
           libOptions: this.pageConfig.libOptions,
         });
         this.one('mr-timeline').update(d);
+        this.loading.timeline = false;
       });
     this.getWidgetDataSource('mr-timeline')
       .timelineLoaded$.pipe(first())

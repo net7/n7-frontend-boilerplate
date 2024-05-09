@@ -12,6 +12,7 @@ For each commit add a description under the Unreleased section under the corresp
 Muruca
 
 -   Added Metadata Dynamic component
+-   Update timeline layout
 
 ## [4.9.4] - 2024-04-19
 
