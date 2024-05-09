@@ -7,6 +7,12 @@ import {
 import { MrLocaleService } from '../../services/locale.service';
 import linksHelper from '../../helpers/links-helper';
 
+enum Sections {
+  ImageViewer = 'viewer',
+  TextViewer = 'text-viewer',
+  Tabs = 'tabs',
+}
+
 export class MrResourceLayoutDS extends LayoutDataSource {
   private configuration: ConfigurationService;
 
@@ -95,12 +101,12 @@ export class MrResourceLayoutDS extends LayoutDataSource {
       // set id
       widgetDataSource.id = id;
       // check viewer tools
-      if (type === 'viewer') {
+      if (type === Sections.ImageViewer) {
         // update image viewer options
         this.one(id).updateOptions({ tools });
       }
 
-      if (type === 'text-viewer') {
+      if (type === Sections.TextViewer) {
         let url;
         try {
           url = this.communication.getUrl('xmlSearch');
@@ -125,7 +131,7 @@ export class MrResourceLayoutDS extends LayoutDataSource {
       }
 
       // init viewer overlay details
-      if (type === 'viewer') {
+      if (type === Sections.ImageViewer) {
         const overlayDetailsId = `${id}-overlay-details`;
         const widgetOverlayDetailsDS = this.getWidgetDataSource(overlayDetailsId);
         if (!widgetOverlayDetailsDS) return;
@@ -133,7 +139,7 @@ export class MrResourceLayoutDS extends LayoutDataSource {
         widgetOverlayDetailsDS.id = overlayDetailsId;
       }
       // image viewer tools check
-      if (type === 'viewer' && tools) {
+      if (type === Sections.ImageViewer && tools) {
         const toolsId = `${id}-tools`;
         // update image viewer tools datasource
         const widgetToolsDataSource = this.getWidgetDataSource(toolsId);
@@ -152,7 +158,7 @@ export class MrResourceLayoutDS extends LayoutDataSource {
 
     // update tabs
     if (this.tabConfig) {
-      const tabSection = sections.find(({ type }) => type === 'tabs');
+      const tabSection = sections.find(({ type }) => type === Sections.Tabs);
       this.one(tabSection.id).updateOptions({
         id: this.id,
         root: this.pageConfig.tabs,

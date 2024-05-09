@@ -6,6 +6,7 @@ import {
 } from 'rxjs/operators';
 import { MrLayoutStateService, LayoutState } from '../../services/layout-state.service';
 import { MrResourceModalService } from '../../services/resource-modal.service';
+import { MrResourceLayoutDS } from './resource-layout.ds';
 // import mock from './resource-layout-mock-cambridge';
 
 export class MrResourceLayoutEH extends EventHandler {
@@ -18,6 +19,8 @@ export class MrResourceLayoutEH extends EventHandler {
   private modalService: MrResourceModalService;
 
   private destroy$: Subject<void> = new Subject();
+
+  dataSource: MrResourceLayoutDS;
 
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
