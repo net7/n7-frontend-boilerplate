@@ -100,3 +100,11 @@ export interface ConfigMurucaMetadataSection extends ConfigMurucaSection {
 export interface ConfigMurucaGallerySection extends ConfigMurucaSection {
   type: 'gallery';
 }
+
+export interface ConfigMurucaMetadataDynamicSection extends ConfigMurucaSection {
+  type: 'metadata-dynamic'
+  options?: {
+      accordion: boolean,
+        dynamic: boolean
+  }
+}
