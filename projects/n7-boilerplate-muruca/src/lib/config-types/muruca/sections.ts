@@ -104,7 +104,7 @@ export interface ConfigMurucaGallerySection extends ConfigMurucaSection {
 export interface ConfigMurucaMetadataDynamicSection extends ConfigMurucaSection {
   type: 'metadata-dynamic'
   options?: {
-      accordion: boolean,
-        dynamic: boolean
+    accordion: boolean,
+    dynamic: boolean
   }
 }
