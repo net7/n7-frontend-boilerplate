@@ -9,9 +9,18 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [4.9.5] - 2024-05-09
+
 Muruca
 
 -   Added Metadata Dynamic component
+-   Update timeline layout
+
+## [4.9.4] - 2024-04-19
+
+Muruca
+
+-   Update the math to trigger infinite scroll loading (`search.service.ts`)
 
 ## [4.9.3] - 2023-10-30
 
@@ -429,7 +438,11 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.9.3...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.9.5...HEAD
+
+[4.9.5]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.9.4...v4.9.5
+
+[4.9.4]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.9.3...v4.9.4
 
 [4.9.3]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.9.2...v4.9.3
 
