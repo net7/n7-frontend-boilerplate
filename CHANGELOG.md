@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+- Added config-type for Metadata Dynamic
+
 ## [4.9.5] - 2024-05-09
 
 Muruca
