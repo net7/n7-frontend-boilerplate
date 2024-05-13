@@ -13,7 +13,8 @@ import {
   ConfigMurucaSliderSection,
   ConfigMurucaTabsSection,
   ConfigMurucaTextViewerSection,
-  ConfigMurucaTitleSection
+  ConfigMurucaTitleSection,
+  ConfigMurucaMetadataDynamicSection
 } from './sections';
 
 export interface ConfigMurucaLayout {
@@ -48,6 +49,7 @@ export interface ConfigMurucaResourceLayout extends ConfigMurucaLayout {
       | ConfigMurucaTextViewerSection
       | ConfigMurucaInfoBoxSection
       | ConfigMurucaBreadcrumbsSection
+      | ConfigMurucaMetadataDynamicSection
     )[];
   };
 }
