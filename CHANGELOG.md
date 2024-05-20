@@ -9,9 +9,11 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [4.9.7] - 2024-05-20
+
 Muruca
 
-- Fix facets separated by comma
+-   Fix facets separated by comma
 
 ## [4.9.6] - 2024-05-13
 
@@ -448,7 +450,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.9.6...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.9.7...HEAD
+
+[4.9.7]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.9.6...v4.9.7
 
 [4.9.6]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.9.5...v4.9.6
 
