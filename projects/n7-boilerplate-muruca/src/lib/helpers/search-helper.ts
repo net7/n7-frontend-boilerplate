@@ -16,10 +16,18 @@ export default {
       const { multiple, valueType } = schema;
       const value = state[key];
       if (hasValue(value)) {
+        let encodedValue;
         switch (valueType) {
           case 'number':
-          case 'string':
             queryParams[key] = multiple ? value.join(',') : value;
+            break;
+          case 'string':
+            if (Array.isArray(value)) {
+              encodedValue = value.map((element) => element.replace(/,/g, '%2c'));
+            } else {
+              encodedValue = value.replace(/,/g, '%2c');
+            }
+            queryParams[key] = multiple ? encodedValue.join(',') : encodedValue;
             break;
 
           case 'boolean':
@@ -48,7 +56,7 @@ export default {
               break;
 
             case 'string':
-              state[key] = multiple ? value.split(',').map((v) => `${v}`) : `${value}`;
+              state[key] = multiple ? value.split(',').map((v) => `${v.replace(/%2c/g, ',')}`) : `${value.replace(/%2c/g, ',')}`;
               break;
 
             case 'boolean':
