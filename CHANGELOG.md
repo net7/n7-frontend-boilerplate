@@ -9,9 +9,11 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [4.9.6] - 2024-05-13
+
 Muruca
 
-- Added config-type for Metadata Dynamic
+-   Added config-type for Metadata Dynamic
 
 ## [4.9.5] - 2024-05-09
 
@@ -442,7 +444,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.9.5...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.9.6...HEAD
+
+[4.9.6]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.9.5...v4.9.6
 
 [4.9.5]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.9.4...v4.9.5
 
