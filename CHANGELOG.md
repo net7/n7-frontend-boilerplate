@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+- Fix facets separated by comma
+
 ## [4.9.6] - 2024-05-13
 
 Muruca

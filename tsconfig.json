@@ -43,9 +43,9 @@
       "@mr-routes": ["src/app/app.routes.muruca.ts"],
       "@mr-config": ["src/app/config-muruca/"],
       "@mr-config/*": ["src/app/config-muruca/*"],
-      // "@mr-routes": ["../auteso-frontend/src/app/app.routes.ts"],
-      // "@mr-config": ["../auteso-frontend/src/app/config"],
-      // "@mr-config/*": ["../auteso-frontend/src/app/config/*"],
+      // "@mr-routes": ["<PROJECT-LOCAL-PATH>/src/app/app.routes.ts"],
+      // "@mr-config": ["<PROJECT-LOCAL-PATH>/src/app/config"],
+      // "@mr-config/*": ["<PROJECT-LOCAL-PATH>/src/app/config/*"],
 
       // ARIANNA PROJECT PATHS
       // ------------------------------------------------------------------->
