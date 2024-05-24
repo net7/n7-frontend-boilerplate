@@ -75,6 +75,25 @@ export class MrResourceLayoutDS extends LayoutDataSource {
     });
   }
 
+  /** Request the configured widgets data in PDF format */
+  pdfRequest$(id, onError: (err: any) => void): Observable<any> {
+    const { locale } = this.routerData;
+    const params = linksHelper.getQueryParams(document.location.search);
+    const { top, content } = this.pageConfig.sections;
+    const sections = top.concat(content);
+    return this.communication.request$('getPdf', {
+      onError,
+      method: 'POST',
+      params: {
+        id,
+        type: this.pageConfig.type,
+        sections: sections.map((s) => s.id),
+      },
+      queryParams: params,
+      urlParams: locale ? `?locale=${locale}` : '',
+    });
+  }
+
   handleResponse(response) {
     this.initSections(response);
     this.setLocaleResourceConfig(response);

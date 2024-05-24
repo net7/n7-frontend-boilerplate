@@ -37,6 +37,7 @@ const config: ConfigCommonCommunication = {
         timelineDescription: 'get_search_description/timeline',
         itinerary: 'get_itinerary/',
         xmlSearch: 'search_text_hl/',
+        getPdf: 'get_pdf'
       }
     }
   }

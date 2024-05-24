@@ -18,6 +18,7 @@ import { MrImageViewerOverlayDetailsEH } from '../../event-handlers/image-viewer
 import { MrMetadataDynamicEH } from '../../event-handlers';
 import {
   MrBreadcrumbsDS,
+  MrButtonDS,
   MrCollectionDS,
   MrImageViewerDS,
   MrImageViewerToolsDS,
@@ -34,20 +35,21 @@ import { MrMapDS } from '../../data-sources/map.ds';
 import { MrLocaleService } from '../../services/locale.service';
 
 const DATASOURCE_MAP = {
+  'download-pdf': MrButtonDS,
+  'metadata-dynamic': MrMetadataDynamicDS,
+  'text-viewer': MrTextViewerDS,
+  'viewer-overlay-details': MrImageViewerOverlayDetailsDS,
+  'viewer-tools': MrImageViewerToolsDS,
   breadcrumbs: MrBreadcrumbsDS,
   collection: MrCollectionDS,
   info: MrInfoBoxDS,
+  map: MrMapDS,
   metadata: MrMetadataDS,
   preview: MrItemPreviewDS,
+  tabs: MrResourceTabsDS,
   text: MrTextViewerDS,
   title: MrInnerTitleDS,
   viewer: MrImageViewerDS,
-  'viewer-tools': MrImageViewerToolsDS,
-  'viewer-overlay-details': MrImageViewerOverlayDetailsDS,
-  tabs: MrResourceTabsDS,
-  'text-viewer': MrTextViewerDS,
-  map: MrMapDS,
-  'metadata-dynamic': MrMetadataDynamicDS,
 };
 
 const EVENTHANDLER_MAP = {
@@ -121,6 +123,7 @@ export class MrResourceLayoutComponent extends AbstractLayout implements OnInit,
       }) => {
         const widgetOptions = options || {};
         widgetOptions.localeService = this.localeService;
+        console.log('id', id);
         this.widgets.push({
           id,
           options: widgetOptions,

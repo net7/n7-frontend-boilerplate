@@ -55,9 +55,21 @@
                 <!-- INNER TITLE -->
                 <ng-container *ngSwitchCase="'title'">
                     <div class="mr-resource__title-content mr-side-margin">
-                        <n7-inner-title [data]="lb.widgets[section.id].ds.out$ | async"
+                        <n7-inner-title 
+                            [data]="lb.widgets[section.id].ds.out$ | async"
                             [emit]="lb.widgets[section.id].emit">
                         </n7-inner-title>
+                    </div>
+                </ng-container>
+
+                <!-- DOWNLOAD PDF -->
+                <ng-container *ngSwitchCase="'download-pdf'">
+                    --- download-pdf button is here! ---
+                    <div class="mr-resource__download-pdf">
+                        <n7-button 
+                            [data]="lb.widgets[section.id].ds.out$ | async"
+                            [emit]="lb.widgets[section.id].emit">
+                        </n7-button>
                     </div>
                 </ng-container>
     

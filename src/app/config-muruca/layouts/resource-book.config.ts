@@ -10,21 +10,28 @@ const config: ConfigMurucaResourceLayout = {
         id: 'breadcrumbs',
         type: 'breadcrumbs',
         options: {
-          base: [{
-            title: 'global#home',
-            link: '/',
-            routeId: 'home',
-          }, {
-            title: 'global#maps',
-            link: '/maps',
-            routeId: 'maps'
-          }]
-        }
+          base: [
+            {
+              title: 'global#home',
+              link: '/',
+              routeId: 'home',
+            },
+            {
+              title: 'global#maps',
+              link: '/maps',
+              routeId: 'maps',
+            },
+          ],
+        },
       },
       {
         id: 'header',
-        type: 'title'
-      }
+        type: 'title',
+      },
+      {
+        id: 'download-pdf',
+        type: 'download-pdf',
+      },
     ],
     content: [
       {
@@ -44,19 +51,19 @@ const config: ConfigMurucaResourceLayout = {
         type: 'metadata',
         grid: null,
         options: {
-          hideLabels: true
-        }
+          hideLabels: true,
+        },
       },
       {
         id: 'metadata',
         type: 'metadata',
         // title: 'Metadati',
-        grid: null
+        grid: null,
       },
       {
         id: 'metadata-size',
         type: 'metadata',
-        grid: null
+        grid: null,
       },
       {
         id: 'collection-bibliography',
@@ -67,22 +74,22 @@ const config: ConfigMurucaResourceLayout = {
           classes: 'mr-item-preview-bibliography',
           itemPreview: {
             limit: null,
-            striptags: false
-          }
-        }
+            striptags: false,
+          },
+        },
       },
       {
         id: 'collection-works',
         type: 'collection',
-        grid: 3
+        grid: 3,
       },
       {
         id: 'collection-continents',
         type: 'collection',
-        grid: 3
-      }
-    ]
-  }
+        grid: 3,
+      },
+    ],
+  },
 };
 
 export default config;

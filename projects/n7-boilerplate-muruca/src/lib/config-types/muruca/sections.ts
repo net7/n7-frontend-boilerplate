@@ -29,6 +29,10 @@ export interface ConfigMurucaHeroSection extends ConfigMurucaSection {
   };
 }
 
+export interface ConfigMurucaDownloadPDFSection extends ConfigMurucaSection {
+  type: 'download-pdf';
+}
+
 export interface ConfigMurucaCollectionSection extends ConfigMurucaSection {
   type: 'collection';
   options?: {
