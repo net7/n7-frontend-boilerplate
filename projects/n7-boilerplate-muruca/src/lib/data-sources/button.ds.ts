@@ -2,12 +2,12 @@ import { DataSource } from '@net7/core';
 import { ButtonData } from '@net7/components';
 
 export class MrButtonDS extends DataSource {
-  protected transform(data: any): ButtonData {
-    if (!data) return null;
+  protected transform(): ButtonData {
+    const { text, link } = this.options;
     return {
-      text: 'Download PDF',
+      text: text || 'Button',
       anchor: {
-        payload: 'download-pdf',
+        href: link || '#'
       }
     };
   }

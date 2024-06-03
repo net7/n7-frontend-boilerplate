@@ -42,7 +42,7 @@
         <section *ngIf="lb.widgets[section.id].ds.out$ | async"
         class="{{ 'mr-resource__section mr-resource__' + section.type }}">
             <ng-container [ngSwitch]="section.type">
-    
+
                 <!-- TABS -->
                 <ng-container *ngSwitchCase="'tabs'">
                     <ng-container *ngFor="let tab of lb.widgets[section.id].ds.out$ | async">
@@ -51,7 +51,7 @@
                         </n7-anchor-wrapper>
                     </ng-container>
                 </ng-container>
-    
+
                 <!-- INNER TITLE -->
                 <ng-container *ngSwitchCase="'title'">
                     <div class="mr-resource__title-content mr-side-margin">
@@ -64,7 +64,6 @@
 
                 <!-- DOWNLOAD PDF -->
                 <ng-container *ngSwitchCase="'download-pdf'">
-                    --- download-pdf button is here! ---
                     <div class="mr-resource__download-pdf">
                         <n7-button 
                             [data]="lb.widgets[section.id].ds.out$ | async"

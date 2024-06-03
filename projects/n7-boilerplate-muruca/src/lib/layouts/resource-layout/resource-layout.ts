@@ -123,7 +123,6 @@ export class MrResourceLayoutComponent extends AbstractLayout implements OnInit,
       }) => {
         const widgetOptions = options || {};
         widgetOptions.localeService = this.localeService;
-        console.log('id', id);
         this.widgets.push({
           id,
           options: widgetOptions,
