@@ -29,8 +29,8 @@ export interface ConfigMurucaHeroSection extends ConfigMurucaSection {
   };
 }
 
-export interface ConfigMurucaDownloadPDFSection extends ConfigMurucaSection {
-  type: 'download-pdf';
+export interface ConfigMurucaButtonSection extends ConfigMurucaSection {
+  type: 'button';
 }
 
 export interface ConfigMurucaCollectionSection extends ConfigMurucaSection {
