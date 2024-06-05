@@ -62,9 +62,9 @@
                     </div>
                 </ng-container>
 
-                <!-- DOWNLOAD PDF -->
-                <ng-container *ngSwitchCase="'download-pdf'">
-                    <div class="mr-resource__download-pdf">
+                <!-- CUSTOM BUTTON -->
+                <ng-container *ngSwitchCase="'button'">
+                    <div class="mr-resource__button">
                         <n7-button 
                             [data]="lb.widgets[section.id].ds.out$ | async"
                             [emit]="lb.widgets[section.id].emit">

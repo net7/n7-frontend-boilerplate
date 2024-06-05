@@ -35,12 +35,12 @@ import { MrMapDS } from '../../data-sources/map.ds';
 import { MrLocaleService } from '../../services/locale.service';
 
 const DATASOURCE_MAP = {
-  'download-pdf': MrButtonDS,
   'metadata-dynamic': MrMetadataDynamicDS,
   'text-viewer': MrTextViewerDS,
   'viewer-overlay-details': MrImageViewerOverlayDetailsDS,
   'viewer-tools': MrImageViewerToolsDS,
   breadcrumbs: MrBreadcrumbsDS,
+  button: MrButtonDS,
   collection: MrCollectionDS,
   info: MrInfoBoxDS,
   map: MrMapDS,

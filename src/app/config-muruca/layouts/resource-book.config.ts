@@ -29,8 +29,13 @@ const config: ConfigMurucaResourceLayout = {
         type: 'title',
       },
       {
-        id: 'download-pdf',
-        type: 'download-pdf',
+        id: 'button',
+        type: 'button',
+        options: {
+          text: 'Scarica PDF',
+          link: '/pdf-download',
+          iconRight: 'n7-icon-download'
+        }
       },
     ],
     content: [
