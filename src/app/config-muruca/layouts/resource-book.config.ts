@@ -28,17 +28,17 @@ const config: ConfigMurucaResourceLayout = {
         id: 'header',
         type: 'title',
       },
+    ],
+    content: [
       {
         id: 'button',
         type: 'button',
         options: {
           text: 'Scarica PDF',
-          link: '/pdf-download',
+          link: 'https://sls.petrarcaonline.it/pdf-download',
           iconRight: 'n7-icon-download'
         }
       },
-    ],
-    content: [
       {
         id: 'image-viewer',
         type: 'viewer',

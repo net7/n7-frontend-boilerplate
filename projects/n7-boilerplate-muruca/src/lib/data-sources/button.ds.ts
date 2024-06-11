@@ -4,14 +4,15 @@ import { ButtonData } from '@net7/components';
 export class MrButtonDS extends DataSource {
   protected transform(): ButtonData {
     const {
-      text, link, iconLeft, iconRight
+      iconLeft, iconRight
     } = this.options;
     return {
-      text: text || 'Button',
-      iconLeft: iconLeft || null,
-      iconRight: iconRight || null,
+      text: 'Scarica PDF',
+      iconLeft,
+      iconRight,
+      classes: 'n7-btn',
       anchor: {
-        href: link || '#'
+        payload: 'get-pdf-click',
       }
     };
   }

@@ -6,9 +6,12 @@ import {
 } from 'rxjs/operators';
 import { MrLayoutStateService, LayoutState } from '../../services/layout-state.service';
 import { MrResourceModalService } from '../../services/resource-modal.service';
+import { MrResourceLayoutDS } from './resource-layout.ds';
 // import mock from './resource-layout-mock-cambridge';
 
 export class MrResourceLayoutEH extends EventHandler {
+  dataSource: MrResourceLayoutDS;
+
   private route: ActivatedRoute;
 
   private router: Router;
@@ -76,6 +79,11 @@ export class MrResourceLayoutEH extends EventHandler {
       }
       if (type.includes('overlaypagechange')) {
         this.emitOuter('hideoverlaydetails', payload);
+      }
+      if (type.indexOf('download-pdf')) {
+        this.dataSource.pdfRequest$(this.dataSource.id).subscribe((pdf) => {
+          console.log({ pdf });
+        });
       }
     });
   }

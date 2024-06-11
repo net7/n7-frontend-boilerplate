@@ -76,13 +76,13 @@ export class MrResourceLayoutDS extends LayoutDataSource {
   }
 
   /** Request the configured widgets data in PDF format */
-  pdfRequest$(id, onError: (err: any) => void): Observable<any> {
+  pdfRequest$(id): Observable<any> {
     const { locale } = this.routerData;
     const params = linksHelper.getQueryParams(document.location.search);
     const { top, content } = this.pageConfig.sections;
     const sections = top.concat(content);
     return this.communication.request$('getPdf', {
-      onError,
+      onError: (e) => console.error(e),
       method: 'POST',
       params: {
         id,

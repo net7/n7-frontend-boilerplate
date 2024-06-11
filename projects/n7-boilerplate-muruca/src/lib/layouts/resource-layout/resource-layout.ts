@@ -15,7 +15,7 @@ import { MrTextViewerEH } from '../../event-handlers/text-viewer.eh';
 import { MrImageViewerToolsEH } from '../../event-handlers/image-viewer-tools.eh';
 import { MrCollectionEH } from '../../event-handlers/collection.eh';
 import { MrImageViewerOverlayDetailsEH } from '../../event-handlers/image-viewer-overlay-details.eh';
-import { MrMetadataDynamicEH } from '../../event-handlers';
+import { MrButtonEH, MrMetadataDynamicEH } from '../../event-handlers';
 import {
   MrBreadcrumbsDS,
   MrButtonDS,
@@ -59,6 +59,7 @@ const EVENTHANDLER_MAP = {
   'text-viewer': MrTextViewerEH,
   collection: MrCollectionEH,
   'metadata-dynamic': MrMetadataDynamicEH,
+  button: MrButtonEH,
   // map: MrMapEH
 };
 
