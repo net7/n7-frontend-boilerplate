@@ -65,8 +65,11 @@
                 <ng-container *ngSwitchCase="'viewer'">
 
                     <!-- MIRADOR CASE -->
-                    <div *ngIf="controlloProva; else imageViewer">
+                    <div 
+                    *ngIf="lb.widgets[section.id].ds.out$._value.libOptions.id === 'mirador-container'; 
+                    else imageViewer">
                         <p>Mirador Case</p>
+                        <!-- <n7-mirador></n7-mirador> -->
                     </div>
 
                     <!-- IMAGE-VIEWER CASE -->

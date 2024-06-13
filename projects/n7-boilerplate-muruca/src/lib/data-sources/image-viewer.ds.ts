@@ -16,6 +16,10 @@ export class MrImageViewerDS extends DataSource {
 
   protected transform(data: any): any {
     if (!data) return null;
+    // Mirador case
+    if (data.libOptions) {
+      return data;
+    }
     const { images, thumbs, overlay_images } = data;
     const { tools } = (this.options || {});
     return {

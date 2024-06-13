@@ -7,38 +7,38 @@ export default {
       title: "La crise de l'esprit"
     },
     'image-viewer': {
-      images: [
-        {
-          type: 'image',
-          url: 'http://aitia.muruca.cloud/wp-content/uploads/2024/03/N-I-11.jpg',
-          description: '',
-          caption: 'Aenean viverra rhoncus'
-        },
-        {
-          type: 'image',
-          url: 'http://aitia.muruca.cloud/wp-content/uploads/2024/03/N-I-12.jpg',
-          description: '',
-          caption: 'In turpis. Aenean tellus metus, bibendum sed, posuere ac, mattis non, nunc.'
-        },
-      ],
-      thumbs: [
-        'http://aitia.muruca.cloud/wp-content/uploads/2024/03/N-I-11-150x150.jpg',
-        'http://aitia.muruca.cloud/wp-content/uploads/2024/03/N-I-12-150x150.jpg'
-      ],
-
-      // libOptions: {
-      //   window: {
-      //     sideBarOpenByDefault: true,
+      // images: [
+      //   {
+      //     type: 'image',
+      //     url: 'http://aitia.muruca.cloud/wp-content/uploads/2024/03/N-I-11.jpg',
+      //     description: '',
+      //     caption: 'Aenean viverra rhoncus'
       //   },
-      //   id: 'mirador-container',
-      //   windows: [
-      //     {
-      //       imageToolsEnabled: true,
-      //       manifestId:
-      //         'https://dam.iccu.sbn.it/mol_447/containers/dPQWLWe/manifest',
-      //     },
-      //   ],
-      // },
+      //   {
+      //     type: 'image',
+      //     url: 'http://aitia.muruca.cloud/wp-content/uploads/2024/03/N-I-12.jpg',
+      //     description: '',
+      //     caption: 'In turpis. Aenean tellus metus, bibendum sed, posuere ac, mattis non, nunc.'
+      //   },
+      // ],
+      // thumbs: [
+      //   'http://aitia.muruca.cloud/wp-content/uploads/2024/03/N-I-11-150x150.jpg',
+      //   'http://aitia.muruca.cloud/wp-content/uploads/2024/03/N-I-12-150x150.jpg'
+      // ],
+
+      libOptions: {
+        window: {
+          sideBarOpenByDefault: true,
+        },
+        id: 'mirador-container',
+        windows: [
+          {
+            imageToolsEnabled: true,
+            manifestId:
+              'https://dam.iccu.sbn.it/mol_447/containers/dPQWLWe/manifest',
+          },
+        ],
+      },
     },
     metadata: {
       group: [
