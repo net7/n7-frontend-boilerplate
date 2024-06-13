@@ -67,6 +67,9 @@ const EVENTHANDLER_MAP = {
 export class MrResourceLayoutComponent extends AbstractLayout implements OnInit, OnDestroy {
   private routerData: Data;
 
+  // Da togliere
+  public controlloProva = true;
+
   constructor(
     layoutsConfiguration: LayoutsConfigurationService,
     private activatedRoute: ActivatedRoute,
