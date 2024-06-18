@@ -35,7 +35,7 @@
     "@angular/platform-browser-dynamic": "^15.2.10",
     "@angular/router": "^15.2.10",
     "@n7-frontend/icon-font": "https://github.com/net7/n7-icon-font.git#master",
-    "@net7/components": "*",
+    "@net7/components": "^4.2.3",
     "@net7/core": "*",
     "core-js": "^2.5.4",
     "dayjs": "^1.11.1",
