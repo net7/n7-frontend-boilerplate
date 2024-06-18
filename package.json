@@ -43,7 +43,7 @@
     "leaflet.markercluster": "^1.4.1",
     "lodash": "^4.17.15",
     "moment": "^2.26.0",
-    "ngx-extended-pdf-viewer": "^14.5.3",
+    "ngx-extended-pdf-viewer": "^20.5.0-alpha.3",
     "rxjs": "^6.6.7",
     "slugify": "^1.4.0",
     "tippy.js": "^5.1.2",
