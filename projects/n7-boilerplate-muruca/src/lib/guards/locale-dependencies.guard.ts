@@ -1,9 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  ActivatedRouteSnapshot,
-  CanActivate,
-  RouterStateSnapshot,
-} from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { MrTranslationsLoaderService } from '../services/translations-loader.service';
 import { MrFooterService } from '../services/footer.service';
@@ -12,7 +8,7 @@ import { MrMenuService } from '../services/menu.service';
 @Injectable({
   providedIn: 'root',
 })
-export class LocaleDependenciesGuard implements CanActivate {
+export class LocaleDependenciesGuard {
   private prevRouteId: string;
 
   private prevLocale: string;
