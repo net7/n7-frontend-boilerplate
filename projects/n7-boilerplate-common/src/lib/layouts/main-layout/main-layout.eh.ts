@@ -4,7 +4,7 @@ import { takeUntil, filter } from 'rxjs/operators';
 import { NavigationStart } from '@angular/router';
 
 export class MainLayoutEH extends EventHandler {
-  private destroyed$: Subject<any> = new Subject();
+  private destroyed$: Subject<void> = new Subject();
 
   private route: any;
 

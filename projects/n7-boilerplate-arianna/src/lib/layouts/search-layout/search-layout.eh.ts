@@ -9,16 +9,16 @@ import entityLinksHelper from '../../search/entity-links.helper';
 export class AwSearchLayoutEH extends EventHandler {
   public layoutId = 'aw-search-layout';
 
-  private destroyed$: Subject<any> = new Subject();
+  private destroyed$: Subject<void> = new Subject();
 
   private route: any;
 
   /** Emits when any of the search-facets are changed */
-  private facetsChange$: Subject<any> = new Subject();
+  private facetsChange$: Subject<void> = new Subject();
 
   /** Emits when the pagination element
    * or the select-sort element are changed */
-  private additionalParamsChange$: Subject<any> = new Subject();
+  private additionalParamsChange$: Subject<void> = new Subject();
 
   /** Last queried text, used to check if the text has changed */
   private previousText = '';
