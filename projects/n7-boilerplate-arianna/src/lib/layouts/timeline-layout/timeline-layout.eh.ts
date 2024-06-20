@@ -2,7 +2,7 @@ import { EventHandler } from '@net7/core';
 import { Subject } from 'rxjs';
 
 export class AwTimelineLayoutEH extends EventHandler {
-  private destroyed$: Subject<any> = new Subject();
+  private destroyed$: Subject<void> = new Subject();
 
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {

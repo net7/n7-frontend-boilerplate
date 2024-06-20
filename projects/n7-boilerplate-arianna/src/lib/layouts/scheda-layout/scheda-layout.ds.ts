@@ -17,9 +17,9 @@ const LOCAL_STORAGE_PREFIX = 'aw.scheda';
 export class AwSchedaLayoutDS extends LayoutDataSource {
   static tree: any = null;
 
-  private destroyed$: Subject<any> = new Subject();
+  private destroyed$: Subject<void> = new Subject();
 
-  private stickyControlTrigger$: Subject<any> = new Subject();
+  private stickyControlTrigger$: Subject<void> = new Subject();
 
   private communication: any;
 

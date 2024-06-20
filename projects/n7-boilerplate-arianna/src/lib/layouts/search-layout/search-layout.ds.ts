@@ -26,7 +26,7 @@ export class AwSearchLayoutDS extends LayoutDataSource {
 
   public paginationList = [10, 25, 50];
 
-  protected destroyed$: Subject<any> = new Subject();
+  protected destroyed$: Subject<void> = new Subject();
 
   protected communication: any;
 

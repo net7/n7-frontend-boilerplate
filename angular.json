@@ -174,27 +174,27 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "n7-boilerplate:build"
+            "buildTarget": "n7-boilerplate:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "n7-boilerplate:build:production"
+              "buildTarget": "n7-boilerplate:build:production"
             },
             "arianna": {
-              "browserTarget": "n7-boilerplate:build:arianna"
+              "buildTarget": "n7-boilerplate:build:arianna"
             },
             "dataviz": {
-              "browserTarget": "n7-boilerplate:build:dataviz"
+              "buildTarget": "n7-boilerplate:build:dataviz"
             },
             "muruca": {
-              "browserTarget": "n7-boilerplate:build:muruca"
+              "buildTarget": "n7-boilerplate:build:muruca"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "n7-boilerplate:build"
+            "buildTarget": "n7-boilerplate:build"
           }
         },
         "test": {
