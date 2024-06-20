@@ -9,6 +9,8 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.0.0] - 2024-06-20
+
 -   Upgrade angular to version 17
 -   Upgrade RxJS to version 7
 -   Upgrade ngx-pdf-viewer to version 19
@@ -455,7 +457,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.9.7...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.0.0...HEAD
+
+[5.0.0]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.9.7...v5.0.0
 
 [4.9.7]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.9.6...v4.9.7
 
