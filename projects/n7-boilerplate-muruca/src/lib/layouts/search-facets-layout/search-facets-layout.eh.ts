@@ -15,7 +15,7 @@ interface ChangedSubjects {
 export class SearchFacetsLayoutEH extends EventHandler {
   changed$: ChangedSubjects = {};
 
-  private destroyed$: Subject<boolean> = new Subject();
+  private destroyed$: Subject<void> = new Subject();
 
   private searchService: MrSearchService;
 

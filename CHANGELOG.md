@@ -9,6 +9,11 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+-   Upgrade angular to version 17
+-   Upgrade RxJS to version 7
+-   Upgrade ngx-pdf-viewer to version 19
+-   Fix TypeErrors
+
 ## [4.9.7] - 2024-05-20
 
 Muruca

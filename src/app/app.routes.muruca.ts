@@ -97,8 +97,8 @@ const config: {
   witnesses: {
     component: MrSearchLayoutComponent,
     paths: {
-      it: 'testimoni/:id/:slug',
-      en: 'en/witnesses/:id/:slug'
+      it: 'testimoni',
+      en: 'en/witnesses'
     },
     data: { configId: 'search-witnesses' },
   },

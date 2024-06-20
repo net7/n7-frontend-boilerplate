@@ -24,7 +24,7 @@ export type PdfViewerData = {
     showOpenFileButton: boolean;
     showPrintButton: boolean;
     showDownloadButton: boolean;
-    showBookmarkButton: boolean;
+    showBookModeButton: boolean;
     showSecondaryToolbarButton: boolean;
     showRotateButton: boolean;
     showHandToolButton: boolean;
