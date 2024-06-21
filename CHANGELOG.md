@@ -9,6 +9,11 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+- Mirador component implemented
+- Fix css timeline gallery
+
 ## [5.0.0] - 2024-06-20
 
 -   Upgrade angular to version 17
