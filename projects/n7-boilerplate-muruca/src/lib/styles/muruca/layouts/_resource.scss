@@ -77,6 +77,14 @@
             margin: 0;
         }
 
+        /* Image Viewer IIIF */
+        .mr-resource__viewer-iiif {
+            max-width: $page-max-width;
+            margin: 0 auto;
+            margin-bottom: 40px;
+            background-color: transparent;
+        }
+
         /* Tabs */
         .mr-resource__tabs {
             position: relative;

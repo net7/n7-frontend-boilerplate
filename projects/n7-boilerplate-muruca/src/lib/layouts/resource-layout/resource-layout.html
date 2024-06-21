@@ -60,19 +60,17 @@
                         </n7-inner-title>
                     </div>
                 </ng-container>
+
+                <!-- IMAGE VIEWER IIIF -->
+                <ng-container *ngSwitchCase="'viewer-iiif'">
+                    <n7-mirador
+                        [data]="lb.widgets[section.id].ds.out$ | async">
+                    </n7-mirador>
+                </ng-container>
     
                 <!-- IMAGE VIEWER -->
                 <ng-container *ngSwitchCase="'viewer'">
 
-                    <!-- MIRADOR CASE -->
-                    <div 
-                    *ngIf="lb.widgets[section.id].ds.out$._value.libOptions.id === 'mirador-container'; 
-                    else imageViewer">
-                        <p>Mirador Case</p>
-                        <!-- <n7-mirador></n7-mirador> -->
-                    </div>
-
-                    <!-- IMAGE-VIEWER CASE -->
                     <ng-template #imageViewer>
                         <n7-image-viewer 
                             [data]="lb.widgets[section.id].ds.out$ | async" 
