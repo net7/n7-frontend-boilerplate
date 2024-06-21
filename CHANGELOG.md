@@ -9,10 +9,12 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.1.0] - 2024-06-21
+
 Muruca
 
-- Mirador component implemented
-- Fix css timeline gallery
+-   Mirador component implemented
+-   Fix css timeline gallery
 
 ## [5.0.0] - 2024-06-20
 
@@ -462,7 +464,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.0.0...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.1.0...HEAD
+
+[5.1.0]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.0.0...v5.1.0
 
 [5.0.0]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.9.7...v5.0.0
 
