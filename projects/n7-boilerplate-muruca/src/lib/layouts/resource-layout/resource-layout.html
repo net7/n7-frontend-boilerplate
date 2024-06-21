@@ -60,32 +60,43 @@
                         </n7-inner-title>
                     </div>
                 </ng-container>
+
+                <!-- IMAGE VIEWER IIIF -->
+                <ng-container *ngSwitchCase="'viewer-iiif'">
+                    <n7-mirador
+                        [data]="lb.widgets[section.id].ds.out$ | async">
+                    </n7-mirador>
+                </ng-container>
     
                 <!-- IMAGE VIEWER -->
                 <ng-container *ngSwitchCase="'viewer'">
-                    <n7-image-viewer 
-                        [data]="lb.widgets[section.id].ds.out$ | async" 
-                        [emit]="lb.widgets[section.id].emit">
-                    </n7-image-viewer>
-                    <!-- IMAGE VIEWER TOOLS -->
-                    <n7-image-viewer-tools *ngIf="section.tools" 
-                        [data]="lb.widgets[section.id + '-tools'].ds.out$ | async" 
-                        [emit]="lb.widgets[section.id + '-tools'].emit">
-                    </n7-image-viewer-tools>
-                    <!-- IMAGE VIEWER OVERLAY DETAILS -->
-                    <div *ngIf="lb.widgets[section.id + '-overlay-details'].ds.out$ | async as viewerDetailsData" 
-                        class="mr-resource__viewer-overlay-details">
-                        <div class="mr-resource__viewer-overlay-details__close">
-                            <a class="mr-resource__viewer-overlay-details__close-link" 
-                                (click)="lb.eventHandler.emitOuter('overlaycloseclick')">
-                                <span class="n7-icon-close"></span>
-                            </a>
+
+                    <ng-template #imageViewer>
+                        <n7-image-viewer 
+                            [data]="lb.widgets[section.id].ds.out$ | async" 
+                            [emit]="lb.widgets[section.id].emit">
+                        </n7-image-viewer>
+                        <!-- IMAGE VIEWER TOOLS -->
+                        <n7-image-viewer-tools *ngIf="section.tools" 
+                            [data]="lb.widgets[section.id + '-tools'].ds.out$ | async" 
+                            [emit]="lb.widgets[section.id + '-tools'].emit">
+                        </n7-image-viewer-tools>
+                        <!-- IMAGE VIEWER OVERLAY DETAILS -->
+                        <div *ngIf="lb.widgets[section.id + '-overlay-details'].ds.out$ | async as viewerDetailsData" 
+                            class="mr-resource__viewer-overlay-details">
+                            <div class="mr-resource__viewer-overlay-details__close">
+                                <a class="mr-resource__viewer-overlay-details__close-link" 
+                                    (click)="lb.eventHandler.emitOuter('overlaycloseclick')">
+                                    <span class="n7-icon-close"></span>
+                                </a>
+                            </div>
+                            <n7-item-preview 
+                                [data]="viewerDetailsData" 
+                                [emit]="lb.widgets[section.id + '-overlay-details'].emit">
+                            </n7-item-preview>
                         </div>
-                        <n7-item-preview 
-                            [data]="viewerDetailsData" 
-                            [emit]="lb.widgets[section.id + '-overlay-details'].emit">
-                        </n7-item-preview>
-                    </div>
+                    </ng-template>
+
                 </ng-container>
     
                 <!-- METADATA VIEWER -->

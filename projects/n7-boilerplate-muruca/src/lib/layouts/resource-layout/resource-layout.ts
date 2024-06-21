@@ -29,6 +29,7 @@ import {
   MrResourceTabsDS,
   MrImageViewerOverlayDetailsDS,
   MrMetadataDynamicDS,
+  MrImageViewerIiifDS,
 } from '../../data-sources';
 import { MrMapDS } from '../../data-sources/map.ds';
 import { MrLocaleService } from '../../services/locale.service';
@@ -48,6 +49,7 @@ const DATASOURCE_MAP = {
   'text-viewer': MrTextViewerDS,
   map: MrMapDS,
   'metadata-dynamic': MrMetadataDynamicDS,
+  'viewer-iiif': MrImageViewerIiifDS,
 };
 
 const EVENTHANDLER_MAP = {
