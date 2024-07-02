@@ -9,6 +9,11 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+- Fix peerDependencies in the projects
+- Fix Mirador component
+
 ## [5.1.0] - 2024-06-21
 
 Muruca
