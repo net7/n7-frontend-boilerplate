@@ -2,8 +2,8 @@
   "name": "@net7/boilerplate-dataviz",
   "version": "5.1.0",
   "peerDependencies": {
-    "@angular/common": "^14.2.12",
-    "@angular/core": "^14.2.12"
+    "@angular/common": "^17.3.11",
+    "@angular/core": "^17.3.11"
   },
   "dependencies": {
     "lodash": "^4.17.15",
