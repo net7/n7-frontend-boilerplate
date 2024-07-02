@@ -9,10 +9,12 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.1.1] - 2024-07-02
+
 Muruca
 
-- Fix peerDependencies in the projects
-- Fix Mirador component
+-   Fix peerDependencies in the projects
+-   Fix Mirador component
 
 ## [5.1.0] - 2024-06-21
 
@@ -469,7 +471,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.1.0...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.1.1...HEAD
+
+[5.1.1]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.1.0...v5.1.1
 
 [5.1.0]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.0.0...v5.1.0
 
