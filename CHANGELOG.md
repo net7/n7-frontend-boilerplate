@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+- Add download-pdf button
+
 ## [5.1.1] - 2024-07-02
 
 Muruca
