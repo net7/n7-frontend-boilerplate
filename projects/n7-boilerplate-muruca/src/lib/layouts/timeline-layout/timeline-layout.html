@@ -41,15 +41,17 @@
       <ng-container *ngIf="!lb.dataSource.loading.resourceDetails">
         <!-- GALLERIA -->
         <div *ngIf="lb.dataSource.collectionGalleryData && lb.dataSource.collectionGalleryData.length" 
-        class="mr-content-block n7-grid-6">
-          <ng-container
-            *ngFor="let image of lb.dataSource.collectionGalleryData"
-          >
-            <a [href]="image.image" class="mr-gallery__image">
-              <img [src]="image.thumbnail" alt="image.title" />
-            </a>
-          </ng-container>
-        </div>
+         class="mr-content-block timeline-gallery__container n7-grid-4">
+           <ng-container *ngFor="let image of lb.dataSource.collectionGalleryData">
+             <figure class="timeline-gallery__image-container">
+               <a [href]="image.image" class="timeline-gallery__image">
+                 <img [src]="image.thumbnail" alt="image.title" />
+                 <figcaption class="timeline-gallery__description-text">{{ image.title }}</figcaption>
+               </a>
+              </figure>
+           </ng-container>
+         </div>
+
 
         <!-- MAPPA -->
         <div

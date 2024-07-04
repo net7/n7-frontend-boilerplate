@@ -15,7 +15,7 @@ import { AwSchedaLayoutDS } from './scheda-layout.ds';
 export class AwSchedaLayoutEH extends EventHandler {
   dataSource: AwSchedaLayoutDS;
 
-  private destroyed$: Subject<any> = new Subject();
+  private destroyed$: Subject<void> = new Subject();
 
   private configuration: ConfigurationService;
 

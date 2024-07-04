@@ -9,6 +9,27 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.1.1] - 2024-07-02
+
+Muruca
+
+-   Fix peerDependencies in the projects
+-   Fix Mirador component
+
+## [5.1.0] - 2024-06-21
+
+Muruca
+
+-   Mirador component implemented
+-   Fix css timeline gallery
+
+## [5.0.0] - 2024-06-20
+
+-   Upgrade angular to version 17
+-   Upgrade RxJS to version 7
+-   Upgrade ngx-pdf-viewer to version 19
+-   Fix TypeErrors
+
 ## [4.9.7] - 2024-05-20
 
 Muruca
@@ -450,7 +471,13 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.9.7...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.1.1...HEAD
+
+[5.1.1]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.1.0...v5.1.1
+
+[5.1.0]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.0.0...v5.1.0
+
+[5.0.0]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.9.7...v5.0.0
 
 [4.9.7]: https://github.com/net7/n7-frontend-boilerplate/compare/v4.9.6...v4.9.7
 

@@ -41,7 +41,7 @@ export class AwHomeLayoutDS extends LayoutDataSource {
 
   public homeAutocompleteQuery: string;
 
-  private destroyed$: Subject<any> = new Subject();
+  private destroyed$: Subject<void> = new Subject();
 
   public homeAutocompleteIsLoading = false;
 

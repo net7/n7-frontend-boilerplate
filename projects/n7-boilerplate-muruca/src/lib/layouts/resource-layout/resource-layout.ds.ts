@@ -118,6 +118,11 @@ export class MrResourceLayoutDS extends LayoutDataSource {
         // update image viewer options
         this.one(id).updateOptions({ tools });
       }
+      if (type === 'viewer-iiif') {
+        // update image viewer iiif options
+        const { libOptions } = options;
+        this.one(id).updateOptions({ libOptions });
+      }
 
       if (type === 'text-viewer') {
         let url;

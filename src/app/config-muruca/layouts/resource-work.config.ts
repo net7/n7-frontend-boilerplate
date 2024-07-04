@@ -22,34 +22,40 @@ const config: ConfigMurucaResourceLayout = {
     ],
     content: [
       {
-        id: 'text-viewer',
-        type: 'text',
-        options: {
-          enableListeners: true,
-        }
+        id: 'image-viewer',
+        type: 'viewer',
+        grid: 3,
+        title: 'resource#image-viewer',
       },
+      // {
+      //   id: 'text-viewer',
+      //   type: 'text',
+      //   options: {
+      //     enableListeners: true,
+      //   }
+      // },
       {
         id: 'metadata',
         type: 'metadata',
         title: 'resource#metadata'
       },
-      {
-        id: 'collection-witnesses',
-        type: 'collection',
-        grid: 3,
-        title: 'Testimoni collegati',
-        options: {
-          itemPreview: {
-            linkTarget: '_blank'
-          }
-        }
-      },
-      {
-        id: 'collection-taxonomies',
-        type: 'collection',
-        grid: 3,
-        title: 'Tassonomie collegate'
-      }
+      // {
+      //   id: 'collection-witnesses',
+      //   type: 'collection',
+      //   grid: 3,
+      //   title: 'Testimoni collegati',
+      //   options: {
+      //     itemPreview: {
+      //       linkTarget: '_blank'
+      //     }
+      //   }
+      // },
+      // {
+      //   id: 'collection-taxonomies',
+      //   type: 'collection',
+      //   grid: 3,
+      //   title: 'Tassonomie collegate'
+      // }
     ]
   }
 };

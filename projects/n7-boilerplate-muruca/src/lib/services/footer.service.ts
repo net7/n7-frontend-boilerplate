@@ -9,7 +9,7 @@ import { ConfigurationService, MainStateService } from '@net7/boilerplate-common
 })
 export class MrFooterService {
   private cache: {
-    [locale: string]: boolean;
+    [locale: string]: object;
   } = {};
 
   constructor(

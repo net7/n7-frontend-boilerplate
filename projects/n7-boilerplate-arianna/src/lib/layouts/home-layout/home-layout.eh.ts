@@ -3,7 +3,7 @@ import { Subject, forkJoin } from 'rxjs';
 import { helpers } from '@net7/boilerplate-common';
 
 export class AwHomeLayoutEH extends EventHandler {
-  private destroyed$: Subject<any> = new Subject();
+  private destroyed$: Subject<void> = new Subject();
 
   private configuration: any;
 

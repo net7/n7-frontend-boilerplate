@@ -7,6 +7,7 @@ import {
 import { MrLayoutStateService, LayoutState } from '../../services/layout-state.service';
 import { MrResourceModalService } from '../../services/resource-modal.service';
 import { MrResourceLayoutDS } from './resource-layout.ds';
+// import mock from './resource-layout-mock-mirador';
 // import mock from './resource-layout-mock-cambridge';
 
 export class MrResourceLayoutEH extends EventHandler {

@@ -33,3 +33,5 @@ export * from './form-wrapper-accordion.ds';
 export * from './search/advanced-search-tags.ds';
 // metadata-dynamic
 export * from './metadata-dynamic.ds';
+// image-viewer-iiif
+export * from './image-viewer-iiif.ds';

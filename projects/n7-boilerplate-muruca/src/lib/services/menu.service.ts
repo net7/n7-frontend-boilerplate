@@ -22,7 +22,7 @@ export class MrMenuService {
   private dynamicPaths: string[] = [];
 
   private cache: {
-    [locale: string]: boolean;
+    [locale: string]: object;
   } = {};
 
   constructor(
