@@ -83,7 +83,13 @@ export class MrResourceLayoutEH extends EventHandler {
       }
       if (type.indexOf('download-pdf')) {
         this.dataSource.pdfRequest$(this.dataSource.id).subscribe((pdf) => {
-          console.log({ pdf });
+          const blobObj = pdf as Blob;
+          const a = document.createElement('a');
+          const objectURL = URL.createObjectURL(blobObj);
+          a.href = objectURL;
+          a.download = `${this.dataSource.slug}`;
+          a.click();
+          URL.revokeObjectURL(objectURL);
         });
       }
     });

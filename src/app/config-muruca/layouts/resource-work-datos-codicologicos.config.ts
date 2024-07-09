@@ -1,23 +1,30 @@
-// Tab per Metadata Dynamic Accordion (sls Theatheor/Auteso con mock resource)
-
 export default {
   title: 'resource#page_codicological_data',
   tabs: 'obra',
   type: 'work',
   sections: {
     top: [
-      // {
-      //   id: 'breadcrumbs',
-      //   type: 'breadcrumbs'
-      // },
+      {
+        id: 'breadcrumbs',
+        type: 'breadcrumbs'
+      },
       {
         id: 'header',
         type: 'title'
       },
-      // {
-      //   id: 'metadata',
-      //   type: 'metadata'
-      // },
+      {
+        id: 'metadata',
+        type: 'metadata'
+      },
+      {
+        id: 'button',
+        type: 'button',
+        options: {
+          text: 'Scarica PDF',
+          link: 'pdf-download',
+          iconRight: 'n7-icon-download'
+        }
+      },
       {
         id: 'tab-bar',
         type: 'tabs'
@@ -25,12 +32,17 @@ export default {
     ],
     content: [
       {
-        id: 'metadata-dettaglio',
-        type: 'metadata-dynamic',
+        id: 'button',
+        type: 'button',
         options: {
-          accordion: true,
-          dynamic: true
+          text: 'Scarica PDF',
+          link: 'pdf-download',
+          iconRight: 'n7-icon-download'
         }
+      },
+      {
+        id: 'metadata-datos-codicologicos',
+        type: 'metadata'
       }
     ]
   }

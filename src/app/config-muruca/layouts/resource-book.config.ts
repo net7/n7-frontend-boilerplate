@@ -35,7 +35,7 @@ const config: ConfigMurucaResourceLayout = {
         type: 'button',
         options: {
           text: 'Scarica PDF',
-          link: 'https://sls.petrarcaonline.it/pdf-download',
+          link: 'pdf-download',
           iconRight: 'n7-icon-download'
         }
       },

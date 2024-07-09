@@ -82,7 +82,7 @@ export class MrResourceLayoutDS extends LayoutDataSource {
     const { top, content } = this.pageConfig.sections;
     const sections = top.concat(content);
     return this.communication.request$('getPdf', {
-      onError: (e) => console.error(e),
+      onError: (e) => console.error('getPdf', e),
       method: 'POST',
       params: {
         id,
@@ -91,6 +91,9 @@ export class MrResourceLayoutDS extends LayoutDataSource {
       },
       queryParams: params,
       urlParams: locale ? `?locale=${locale}` : '',
+      httpOptions: {
+        responseType: 'blob'
+      }
     });
   }
 
