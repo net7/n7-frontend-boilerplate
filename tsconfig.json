@@ -39,16 +39,13 @@
         "projects/n7-boilerplate-dataviz/src/public-api"
       ],
       "@mr-routes": [
-        // "src/app/app.routes.muruca.ts"
-        "../petrarca-frontend/src/app/app.routes.ts"
+        "src/app/app.routes.muruca.ts"
       ],
       "@mr-config": [
-        // "src/app/config-muruca/"
-        "../petrarca-frontend/src/app/config"
+        "src/app/config-muruca/"
       ],
       "@mr-config/*": [
-        // "src/app/config-muruca/*"
-        "../petrarca-frontend/src/app/config/*"
+        "src/app/config-muruca/*"
       ],
       "@aw-routes": [
         "src/app/app.routes.arianna.ts"

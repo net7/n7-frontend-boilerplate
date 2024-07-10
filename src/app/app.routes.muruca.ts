@@ -33,7 +33,7 @@ const config: {
   works: {
     component: MrSearchLayoutComponent,
     paths: {
-      it: 'obras',
+      it: 'opere',
       en: 'en/works'
     },
     data: { configId: 'search-works' },
@@ -57,28 +57,11 @@ const config: {
   work: {
     component: MrResourceLayoutComponent,
     paths: {
-      it: 'obra/:id/:slug',
+      it: 'opera/:id/:slug',
       en: 'en/work/:id/:slug'
     },
     data: { configId: 'resource-work' }
   },
-  bibliograficos: {
-    paths: {
-      it: 'obra/:id/:slug/datos-bibliograficos',
-      en: ''
-    },
-    component: MrResourceLayoutComponent,
-    data: { configId: 'resource-work-datos-bibliograficos' }
-  },
-  codicologicos: {
-    paths: {
-      it: 'obra/:id/:slug/datos-codicologicos',
-      en: ''
-    },
-    component: MrResourceLayoutComponent,
-    data: { configId: 'resource-work-datos-codicologicos' }
-  },
-
   book: {
     component: MrResourceLayoutComponent,
     paths: {
@@ -223,23 +206,11 @@ const config: {
   },
 };
 
-// const APP_ROUTES: Routes = [
-//   {
-//     path: 'home',
-//     redirectTo: '',
-//     pathMatch: 'full'
-//   },
-// ];
 const APP_ROUTES: Routes = [
   {
     path: 'home',
     redirectTo: '',
-    pathMatch: 'full',
-  },
-  {
-    path: 'obra/:id/:slug',
-    redirectTo: 'obra/:id/:slug/datos-bibliograficos',
-    pathMatch: 'full',
+    pathMatch: 'full'
   },
 ];
 
