@@ -42,7 +42,7 @@
         <section *ngIf="lb.widgets[section.id].ds.out$ | async"
         class="{{ 'mr-resource__section mr-resource__' + section.type }}">
             <ng-container [ngSwitch]="section.type">
-    
+
                 <!-- TABS -->
                 <ng-container *ngSwitchCase="'tabs'">
                     <ng-container *ngFor="let tab of lb.widgets[section.id].ds.out$ | async">
@@ -51,16 +51,27 @@
                         </n7-anchor-wrapper>
                     </ng-container>
                 </ng-container>
-    
+
                 <!-- INNER TITLE -->
                 <ng-container *ngSwitchCase="'title'">
                     <div class="mr-resource__title-content mr-side-margin">
-                        <n7-inner-title [data]="lb.widgets[section.id].ds.out$ | async"
+                        <n7-inner-title 
+                            [data]="lb.widgets[section.id].ds.out$ | async"
                             [emit]="lb.widgets[section.id].emit">
                         </n7-inner-title>
                     </div>
                 </ng-container>
 
+                <!-- CUSTOM BUTTON -->
+                <ng-container *ngSwitchCase="'button'">
+                    <div class="mr-resource__button">
+                        <n7-button 
+                            [data]="lb.widgets[section.id].ds.out$ | async"
+                            [emit]="lb.widgets[section.id].emit">
+                        </n7-button>
+                    </div>
+                </ng-container>
+    
                 <!-- IMAGE VIEWER IIIF -->
                 <ng-container *ngSwitchCase="'viewer-iiif'">
                     <n7-mirador

@@ -1,38 +1,50 @@
-// Tab per Metadata Dynamic Accordion (sls Theatheor/Auteso con mock resource)
-
 export default {
   title: 'resource#page_bibliographic_data',
   tabs: 'obra',
   type: 'work',
   sections: {
     top: [
-      // {
-      //   id: 'breadcrumbs',
-      //   type: 'breadcrumbs'
-      // },
+      {
+        id: 'breadcrumbs',
+        type: 'breadcrumbs'
+      },
       {
         id: 'header',
         type: 'title'
       },
-      // {
-      //   id: 'metadata',
-      //   type: 'metadata'
-      // },
+      {
+        id: 'metadata',
+        type: 'metadata'
+      },
       {
         id: 'tab-bar',
-        type: 'tabs'
+        type: 'tabs',
+        options: {
+          tabsContents: ['metadata-datos-bibliograficos', 'metadata-datos-codicologicos']
+        }
       }
     ],
     content: [
       {
-        id: 'metadata-contenuti',
-        type: 'metadata-dynamic',
+        id: 'button',
+        type: 'button',
         options: {
-          accordion: true,
-          dynamic: true
+          text: 'Scarica PDF',
+          link: 'pdf-download',
+          iconRight: 'n7-icon-download'
         }
       },
-
+      {
+        id: 'metadata-datos-bibliograficos',
+        type: 'metadata',
+        title: ''
+      },
+      {
+        id: 'collection-bibliography',
+        type: 'collection',
+        grid: 3,
+        title: ''
+      }
     ]
   }
 };

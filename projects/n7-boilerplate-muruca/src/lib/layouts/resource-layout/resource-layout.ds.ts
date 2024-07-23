@@ -32,6 +32,8 @@ export class MrResourceLayoutDS extends LayoutDataSource {
 
   public errorDescription = _t('global#layout_error_description');
 
+  private tabsContent: any;
+
   onInit(payload) {
     this.configuration = payload.configuration;
     this.communication = payload.communication;
@@ -72,6 +74,34 @@ export class MrResourceLayoutDS extends LayoutDataSource {
       },
       queryParams: params,
       urlParams: locale ? `?locale=${locale}` : '',
+    });
+  }
+
+  /** Request the configured widgets data in PDF format */
+  pdfRequest$(id): Observable<any> {
+    const { locale } = this.routerData;
+    const params = linksHelper.getQueryParams(document.location.search);
+    let sections;
+    if (this.tabsContent) {
+      const { top } = this.pageConfig.sections;
+      sections = top.map((s) => s.id).concat(this.tabsContent);
+    } else {
+      const { top, content } = this.pageConfig.sections;
+      sections = top.concat(content).map((s) => s.id);
+    }
+    return this.communication.request$('getPdf', {
+      onError: (e) => console.error('getPdf', e),
+      method: 'POST',
+      params: {
+        id,
+        type: this.pageConfig.type,
+        sections
+      },
+      queryParams: params,
+      urlParams: locale ? `?locale=${locale}` : '',
+      httpOptions: {
+        responseType: 'blob'
+      }
     });
   }
 
@@ -158,6 +188,9 @@ export class MrResourceLayoutDS extends LayoutDataSource {
     // update tabs
     if (this.tabConfig) {
       const tabSection = sections.find(({ type }) => type === 'tabs');
+      if (tabSection?.options?.tabsContents) {
+        this.tabsContent = tabSection.options.tabsContents;
+      }
       this.one(tabSection.id).updateOptions({
         id: this.id,
         root: this.pageConfig.tabs,

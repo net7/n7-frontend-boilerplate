@@ -14,7 +14,8 @@ import {
   ConfigMurucaTabsSection,
   ConfigMurucaTextViewerSection,
   ConfigMurucaTitleSection,
-  ConfigMurucaMetadataDynamicSection
+  ConfigMurucaMetadataDynamicSection,
+  ConfigMurucaButtonSection
 } from './sections';
 
 export interface ConfigMurucaLayout {
@@ -50,6 +51,7 @@ export interface ConfigMurucaResourceLayout extends ConfigMurucaLayout {
       | ConfigMurucaInfoBoxSection
       | ConfigMurucaBreadcrumbsSection
       | ConfigMurucaMetadataDynamicSection
+      | ConfigMurucaButtonSection
     )[];
   };
 }

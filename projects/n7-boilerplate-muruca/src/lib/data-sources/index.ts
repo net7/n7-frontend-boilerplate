@@ -1,4 +1,5 @@
 export * from './breadcrumbs.ds';
+export * from './button.ds';
 export * from './collection.ds';
 export * from './content.ds';
 export * from './filters.ds';

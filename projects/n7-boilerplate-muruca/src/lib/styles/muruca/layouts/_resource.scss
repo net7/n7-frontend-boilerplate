@@ -141,6 +141,14 @@
         0 13px 30px 0 rgba(0, 0, 0, 0.05);
         border-radius: $border-radius;
 
+        /* Button */
+        .mr-resource__button {
+            display: flex;
+            flex-direction: row;
+            justify-content: end;
+            padding: $space;
+        }
+
         /* Metadata */
         .mr-resource__metadata, .mr-resource__metadata-dynamic {
             padding: $space * 6 0;

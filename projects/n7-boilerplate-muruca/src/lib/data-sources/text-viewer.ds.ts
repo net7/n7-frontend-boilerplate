@@ -5,6 +5,7 @@ export class MrTextViewerDS extends DataSource {
   id: string;
 
   protected transform(data: TextViewerData): TextViewerData {
+    if (!data) return null;
     const {
       enableClickOnEntities, toggleColumn, searchId, searchApi
     } = this.options || {};

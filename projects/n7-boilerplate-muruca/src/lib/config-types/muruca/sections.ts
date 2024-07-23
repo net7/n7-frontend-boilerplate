@@ -29,6 +29,10 @@ export interface ConfigMurucaHeroSection extends ConfigMurucaSection {
   };
 }
 
+export interface ConfigMurucaButtonSection extends ConfigMurucaSection {
+  type: 'button';
+}
+
 export interface ConfigMurucaCollectionSection extends ConfigMurucaSection {
   type: 'collection';
   options?: {
@@ -71,6 +75,10 @@ export interface ConfigMurucaImageViewerSection extends ConfigMurucaSection {
 
 export interface ConfigMurucaTabsSection extends ConfigMurucaSection {
   type: 'tabs';
+  options?: {
+    /** sections of tabs (es: metadata-datos-bibliograficos) that we want to print as PDF */
+    tabsContents?: string[];
+  }
 }
 
 export interface ConfigMurucaItemPreviewSection extends ConfigMurucaSection {

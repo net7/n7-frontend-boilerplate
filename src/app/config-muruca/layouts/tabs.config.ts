@@ -4,11 +4,11 @@ export default {
   obra: [
     {
       id: 'datos-bibliograficos',
-      label: 'CONTENUTI'
+      label: 'tabs#work_bibliographic_data'
     },
     {
       id: 'datos-codicologicos',
-      label: 'SCHEDA DI DETTAGLIO'
+      label: 'tabs#work_codicological_data'
     },
   ]
 };

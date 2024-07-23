@@ -28,6 +28,14 @@
     .has-text-align-justify {
         text-align: justify;
     }
+
+    .has-medium-font-size {
+        font-size: $font-size-l;
+    }
+
+    .has-ek-indent {
+        padding-left: var(--ek-indent, 20px);
+    }
 }
 
 /* ------------------------------------ *\
@@ -53,6 +61,10 @@
         margin: $space * 3 auto $space * 6;
         font-family: $font-family-text;
         font-size: $font-size-l-xl;
+    }
+    ol.wp-block-footnotes {
+        font-size: $font-size-ms;
+
     }
 }
 

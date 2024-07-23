@@ -15,9 +15,10 @@ import { MrTextViewerEH } from '../../event-handlers/text-viewer.eh';
 import { MrImageViewerToolsEH } from '../../event-handlers/image-viewer-tools.eh';
 import { MrCollectionEH } from '../../event-handlers/collection.eh';
 import { MrImageViewerOverlayDetailsEH } from '../../event-handlers/image-viewer-overlay-details.eh';
-import { MrMetadataDynamicEH } from '../../event-handlers';
+import { MrButtonEH, MrMetadataDynamicEH } from '../../event-handlers';
 import {
   MrBreadcrumbsDS,
+  MrButtonDS,
   MrCollectionDS,
   MrImageViewerDS,
   MrImageViewerToolsDS,
@@ -36,18 +37,19 @@ import { MrLocaleService } from '../../services/locale.service';
 
 const DATASOURCE_MAP = {
   breadcrumbs: MrBreadcrumbsDS,
+  button: MrButtonDS,
   collection: MrCollectionDS,
   info: MrInfoBoxDS,
+  map: MrMapDS,
   metadata: MrMetadataDS,
   preview: MrItemPreviewDS,
+  tabs: MrResourceTabsDS,
   text: MrTextViewerDS,
   title: MrInnerTitleDS,
   viewer: MrImageViewerDS,
   'viewer-tools': MrImageViewerToolsDS,
   'viewer-overlay-details': MrImageViewerOverlayDetailsDS,
-  tabs: MrResourceTabsDS,
   'text-viewer': MrTextViewerDS,
-  map: MrMapDS,
   'metadata-dynamic': MrMetadataDynamicDS,
   'viewer-iiif': MrImageViewerIiifDS,
 };
@@ -59,6 +61,7 @@ const EVENTHANDLER_MAP = {
   'text-viewer': MrTextViewerEH,
   collection: MrCollectionEH,
   'metadata-dynamic': MrMetadataDynamicEH,
+  button: MrButtonEH,
   // map: MrMapEH
 };
 

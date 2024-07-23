@@ -8,10 +8,19 @@ const config: ConfigMurucaResourceLayout = {
       {
         id: 'header',
         type: 'title',
-        grid: null
-      }
+        grid: null,
+      },
     ],
     content: [
+      {
+        id: 'button',
+        type: 'button',
+        options: {
+          text: 'Scarica PDF',
+          link: 'pdf-download',
+          iconRight: 'n7-icon-download'
+        }
+      },
       {
         id: 'image-viewer',
         type: 'viewer',
