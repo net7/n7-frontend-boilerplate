@@ -62,6 +62,22 @@ const config: {
     },
     data: { configId: 'resource-work' }
   },
+  'datos-bibliograficos': {
+    component: MrResourceLayoutComponent,
+    paths: {
+      it: 'obra/:id/:slug/datos-bibliograficos',
+      en: 'en/work/:id/:slug'
+    },
+    data: { configId: 'resource-work-datos-bibliograficos' }
+  },
+  'datos-codicologicos': {
+    component: MrResourceLayoutComponent,
+    paths: {
+      it: 'obra/:id/:slug/datos-codicologicos',
+      en: 'en/work/:id/:slug'
+    },
+    data: { configId: 'resource-work-datos-codicologicos' }
+  },
   book: {
     component: MrResourceLayoutComponent,
     paths: {
@@ -210,6 +226,11 @@ const APP_ROUTES: Routes = [
   {
     path: 'home',
     redirectTo: '',
+    pathMatch: 'full'
+  },
+  {
+    path: 'obra/:id/:slug',
+    redirectTo: '/obra/:id/:slug/datos-bibliograficos',
     pathMatch: 'full'
   },
 ];

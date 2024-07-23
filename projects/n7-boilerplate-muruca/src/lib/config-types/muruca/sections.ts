@@ -75,6 +75,10 @@ export interface ConfigMurucaImageViewerSection extends ConfigMurucaSection {
 
 export interface ConfigMurucaTabsSection extends ConfigMurucaSection {
   type: 'tabs';
+  options?: {
+    /** sections of tabs (es: metadata-datos-bibliograficos) that we want to print as PDF */
+    tabsContents?: string[];
+  }
 }
 
 export interface ConfigMurucaItemPreviewSection extends ConfigMurucaSection {

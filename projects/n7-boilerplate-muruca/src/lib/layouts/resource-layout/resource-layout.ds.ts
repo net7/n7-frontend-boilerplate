@@ -32,6 +32,8 @@ export class MrResourceLayoutDS extends LayoutDataSource {
 
   public errorDescription = _t('global#layout_error_description');
 
+  private tabsContent: any;
+
   onInit(payload) {
     this.configuration = payload.configuration;
     this.communication = payload.communication;
@@ -79,15 +81,21 @@ export class MrResourceLayoutDS extends LayoutDataSource {
   pdfRequest$(id): Observable<any> {
     const { locale } = this.routerData;
     const params = linksHelper.getQueryParams(document.location.search);
-    const { top, content } = this.pageConfig.sections;
-    const sections = top.concat(content);
+    let sections;
+    if (this.tabsContent) {
+      const { top } = this.pageConfig.sections;
+      sections = top.map((s) => s.id).concat(this.tabsContent);
+    } else {
+      const { top, content } = this.pageConfig.sections;
+      sections = top.concat(content).map((s) => s.id);
+    }
     return this.communication.request$('getPdf', {
       onError: (e) => console.error('getPdf', e),
       method: 'POST',
       params: {
         id,
         type: this.pageConfig.type,
-        sections: sections.map((s) => s.id),
+        sections
       },
       queryParams: params,
       urlParams: locale ? `?locale=${locale}` : '',
@@ -180,6 +188,9 @@ export class MrResourceLayoutDS extends LayoutDataSource {
     // update tabs
     if (this.tabConfig) {
       const tabSection = sections.find(({ type }) => type === 'tabs');
+      if (tabSection?.options?.tabsContents) {
+        this.tabsContent = tabSection.options.tabsContents;
+      }
       this.one(tabSection.id).updateOptions({
         id: this.id,
         root: this.pageConfig.tabs,
