@@ -9,6 +9,11 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+- Fix map
+- Fix image-viewer
+
 ## [5.2.0] - 2024-07-24
 
 Muruca

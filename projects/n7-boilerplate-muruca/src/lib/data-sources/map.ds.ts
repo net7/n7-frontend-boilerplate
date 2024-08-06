@@ -64,7 +64,7 @@ export class MrMapDS extends DataSource {
           .map((m) => ({
           // convert to leaflet marker format
             coords: [+m.lat, +m.lng] as [number, number],
-            template: m.default_label ?? m.label,
+            template: m.label ?? m.default_label,
             title: m.label ?? m.default_label,
             id: area.id,
             slug: area.slug,
