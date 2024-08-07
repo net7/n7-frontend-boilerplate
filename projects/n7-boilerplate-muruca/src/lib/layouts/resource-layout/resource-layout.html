@@ -82,7 +82,6 @@
                 <!-- IMAGE VIEWER -->
                 <ng-container *ngSwitchCase="'viewer'">
 
-                    <ng-template #imageViewer>
                         <n7-image-viewer 
                             [data]="lb.widgets[section.id].ds.out$ | async" 
                             [emit]="lb.widgets[section.id].emit">
@@ -106,7 +105,6 @@
                                 [emit]="lb.widgets[section.id + '-overlay-details'].emit">
                             </n7-item-preview>
                         </div>
-                    </ng-template>
 
                 </ng-container>
     
