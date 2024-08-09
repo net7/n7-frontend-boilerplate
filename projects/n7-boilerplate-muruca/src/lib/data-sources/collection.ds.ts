@@ -1,6 +1,7 @@
-import { DataSource } from '@net7/core';
+import { DataSource, _t } from '@net7/core';
 import { merge } from 'lodash';
 import { helpers } from '@net7/boilerplate-common';
+import { MetadataGroup } from '@net7/components';
 import linksHelper from '../helpers/links-helper';
 import { MrLocaleService } from '../services/locale.service';
 
@@ -25,6 +26,7 @@ type collectionResponse = {
     title?: string;
     type?: string;
     payload?: any;
+    metadata?: MetadataGroup[];
   }[];
 }
 
@@ -84,6 +86,21 @@ export class MrCollectionDS extends DataSource {
             item.text = `${item.text.substring(0, itemPreviewOptions.limit)}...`;
           }
         }
+        // metadata
+        const metadata: MetadataGroup[] = [];
+        if (Array.isArray(item.metadata)) {
+          item.metadata.forEach((group) => {
+            const metadataItems = [];
+            (group.items || []).forEach((metadataItem) => {
+              metadataItems.push({
+                ...metadataItem,
+                label: _t(metadataItem.label)
+              });
+            });
+            metadata.push({ items: metadataItems });
+          });
+        }
+
         // link
         if (item.routeId) {
           const routeLink = localeService.getLinkByRouteId(item.routeId, item.id, item.slug);
@@ -109,6 +126,7 @@ export class MrCollectionDS extends DataSource {
         }
         return {
           ...item,
+          metadata,
           anchor,
           classes: classes || ''
         };
