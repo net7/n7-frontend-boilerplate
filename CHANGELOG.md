@@ -9,6 +9,11 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+- fix translation of metadata label in collection widget
+- fix css style for wordPress compatibility
+
 ## [5.2.1] - 2024-08-07
 
 Muruca
