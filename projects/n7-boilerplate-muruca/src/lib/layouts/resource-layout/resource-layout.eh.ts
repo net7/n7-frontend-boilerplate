@@ -74,14 +74,7 @@ export class MrResourceLayoutEH extends EventHandler {
           eventData: payload
         });
       }
-      // image viewer overlay events
-      if (type.includes('overlayclick')) {
-        this.emitOuter('showoverlaydetails', payload);
-      }
-      if (type.includes('overlaypagechange')) {
-        this.emitOuter('hideoverlaydetails', payload);
-      }
-      if (type.indexOf('download-pdf')) {
+      if (type.indexOf('download-pdf') !== -1) {
         this.dataSource.pdfRequest$(this.dataSource.id).subscribe((pdf) => {
           const blobObj = pdf as Blob;
           const a = document.createElement('a');
@@ -91,6 +84,13 @@ export class MrResourceLayoutEH extends EventHandler {
           a.click();
           URL.revokeObjectURL(objectURL);
         });
+      }
+      // image viewer overlay events
+      if (type.includes('overlayclick')) {
+        this.emitOuter('showoverlaydetails', payload);
+      }
+      if (type.includes('overlaypagechange')) {
+        this.emitOuter('hideoverlaydetails', payload);
       }
     });
   }
