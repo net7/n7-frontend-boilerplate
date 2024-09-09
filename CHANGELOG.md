@@ -9,10 +9,12 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.2.2] - 2024-08-09
+
 Muruca
 
-- fix translation of metadata label in collection widget
-- fix css style for wordPress compatibility
+-   fix translation of metadata label in collection widget
+-   fix css style for wordPress compatibility
 
 ## [5.2.1] - 2024-08-07
 
@@ -489,7 +491,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.1...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.2...HEAD
+
+[5.2.2]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.1...v5.2.2
 
 [5.2.1]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.0...v5.2.1
 
