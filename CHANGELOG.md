@@ -9,10 +9,12 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.2.3] - 2024-09-10
+
 Muruca
 
-- Fix metadata visualization in itinerary
-- Fix download-pdf when open modal
+-   Fix metadata visualization in itinerary
+-   Fix download-pdf when open modal
 
 ## [5.2.2] - 2024-08-09
 
@@ -496,7 +498,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.2...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.3...HEAD
+
+[5.2.3]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.2...v5.2.3
 
 [5.2.2]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.1...v5.2.2
 
