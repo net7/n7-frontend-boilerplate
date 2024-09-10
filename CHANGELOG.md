@@ -9,6 +9,11 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+- Fix metadata visualization in itinerary
+- Fix download-pdf when open modal
+
 ## [5.2.2] - 2024-08-09
 
 Muruca
