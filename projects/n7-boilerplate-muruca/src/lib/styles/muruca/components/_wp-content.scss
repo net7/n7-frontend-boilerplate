@@ -284,34 +284,54 @@
 .mr-wp-content {
     .wp-block-gallery {
         display: flex;
+        width: 100%;
+        margin-bottom: 32px;
+        padding-bottom: 32px;
+        border-bottom: 1px solid #dddddd;
         @include consistent;
 
         .blocks-gallery-grid {
             // UL element
             @include consistent;
+            width: 100%;
             padding: 0;
             margin: 0 auto;
             list-style: none;
             max-width: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            row-gap: 25px;
+            column-gap: 25px;
+
+            &::after {
+                content: none;
+            }
         }
 
         .blocks-gallery-item {
+            border: 1px solid #dddddd;
+            transition: all $transition-durations;
+            
             figure {
                 margin: 0;
 
                 a {
                     display: block;
                     width: 150px;
-                    height: 150px;
-                    overflow: hidden;
-                    border-radius: $border-radius;
-                    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.095),
-                    0 5px 25px rgba(0, 0, 0, 0.095);
-                    transition: all $transition-durations;
-
+                    // height: 150px;
+                    // overflow: hidden;
+                    padding: 8px;
+                    // border-radius: $border-radius;
+                    // box-shadow: 0 1px 1px rgba(0, 0, 0, 0.095), 0 5px 25px rgba(0, 0, 0, 0.095);
+                    
                     img {
                         border-radius: 0;
                         box-shadow: none;
+                    }
+                    
+                    figcaption {
+                        color: #5397c7;
                     }
                 }
             }
@@ -324,15 +344,10 @@
                 box-shadow: 0 1px 1px rgba(0, 0, 0, 0.095),
                 0 5px 25px rgba(0, 0, 0, 0.095);
             }
+        }
 
-            figure:hover a {
-                box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2),
-                0 10px 25px rgba(0, 0, 0, 0.1);
-
-                img {
-                    transform: scale(1.1);
-                }
-            }
+        .blocks-gallery-item:hover {
+            transform: scale(1.1);
         }
 
         .blocks-gallery-item__caption {
@@ -413,6 +428,21 @@
                 cursor: pointer;
             }
         }
+    }
+
+    // ZOOM
+    .mr-gallery__zoom-figcaption {
+        height: 9.8vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        background-color: black;
+        opacity: 0.8;
+        font-size: 18px;
+        color: white;
     }
 }
 

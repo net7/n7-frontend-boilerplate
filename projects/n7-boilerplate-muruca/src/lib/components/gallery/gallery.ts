@@ -1,10 +1,5 @@
 import { Component, Input } from '@angular/core';
 
-export type GalleryData = {
-  selected: null | GalleryItem;
-  items: GalleryItem[];
-}
-
 export type GalleryItem = {
   id: string | number;
   thumbSrc: string;
@@ -12,6 +7,11 @@ export type GalleryItem = {
   title: string;
   payload: any;
 };
+
+export type GalleryData = {
+  selected: null | GalleryItem;
+  items: GalleryItem[];
+}
 
 @Component({
   selector: 'mr-gallery',
