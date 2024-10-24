@@ -9,9 +9,11 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.2.4] - 2024-10-24
+
 Muruca
 
-- Add gallery component in timeline
+-   Add gallery component in timeline
 
 ## [5.2.3] - 2024-09-10
 
@@ -502,7 +504,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.3...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.4...HEAD
+
+[5.2.4]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.3...v5.2.4
 
 [5.2.3]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.2...v5.2.3
 
