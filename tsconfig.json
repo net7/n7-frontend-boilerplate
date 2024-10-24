@@ -40,15 +40,15 @@
       ],
       "@mr-routes": [
         "src/app/app.routes.muruca.ts"
-        // "../petrarca-frontend/src/app/app.routes.ts" //routes di un progetto in locale
+        // "../petrarca-fe/src/app/app.routes.ts" //routes di un progetto in locale
       ],
       "@mr-config": [
         "src/app/config-muruca/"
-        // "../petrarca-frontend/src/app/config/" //config di un progetto in locale
+        // "../petrarca-fe/src/app/config/" //config di un progetto in locale
       ],
       "@mr-config/*": [
         "src/app/config-muruca/*"
-        // "../petrarca-frontend/src/app/config/*" //config di un progetto in locale
+        // "../petrarca-fe/src/app/config/*" //config di un progetto in locale
       ],
       "@aw-routes": [
         "src/app/app.routes.arianna.ts"

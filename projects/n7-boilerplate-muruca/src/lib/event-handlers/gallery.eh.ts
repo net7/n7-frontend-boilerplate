@@ -8,9 +8,11 @@ export class MrGalleryEH extends EventHandler {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
         case `${this.dataSource.id}.click`:
+        case 'mr-gallery.click':
           this.dataSource.setSelected(payload);
           break;
         case `${this.dataSource.id}.close`:
+        case 'mr-gallery.close':
           this.dataSource.removeSelected();
           break;
         default:

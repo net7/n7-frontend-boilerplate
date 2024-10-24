@@ -12,6 +12,16 @@ import { MrResourceModalService } from '../../services/resource-modal.service';
 import { MrLayoutStateService } from '../../services/layout-state.service';
 import { MrTimelineLayoutConfig as config } from './timeline-layout.config';
 import { MrLocaleService } from '../../services/locale.service';
+import { MrGalleryDS } from '../../data-sources/gallery.ds';
+import { MrGalleryEH } from '../../event-handlers/gallery.eh';
+
+const DATASOURCE_MAP = {
+  gallery: MrGalleryDS
+};
+
+const EVENTHANDLER_MAP = {
+  gallery: MrGalleryEH
+};
 
 @Component({
   selector: 'mr-timeline-layout',
@@ -53,13 +63,22 @@ export class MrTimelineLayoutComponent extends AbstractLayout implements OnInit,
 
   ngOnInit() {
     this.route.data.subscribe((data) => {
-      this.configId = data.configId;
       this.layoutState.add('content');
+      this.configId = data.configId;
+      this.loadWidgets();
       this.onInit();
     });
   }
 
   ngOnDestroy() {
     this.onDestroy();
+  }
+
+  loadWidgets() {
+    this.widgets.push({
+      id: 'mr-gallery',
+      dataSource: DATASOURCE_MAP.gallery,
+      eventHandler: EVENTHANDLER_MAP.gallery
+    });
   }
 }

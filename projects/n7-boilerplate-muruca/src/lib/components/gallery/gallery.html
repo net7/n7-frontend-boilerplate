@@ -1,10 +1,11 @@
 <div *ngIf="data" class="mr-gallery mr-wp-content">
-    <div class="mr-gallery__wrapper wp-block-gallery has-zoom {{ grid ? 'columns-' + grid : '' }}">
+    <div class="mr-gallery__wrapper wp-block-gallery has-zoom"> <!-- {{ grid ? 'columns-' + grid : '' }} -->
         <ul class="mr-gallery__items blocks-gallery-grid">
             <li *ngFor="let item of data.items" class="mr-gallery__item blocks-gallery-item">
                 <figure>
                     <a (click)="onClick(item.payload)" class="mr-gallery__link">
                         <img [src]="item.thumbSrc" [alt]="item.title" class="mr-gallery__image">
+                        <figcaption class="timeline-gallery__description-text" [innerHTML]="item.title"></figcaption>
                     </a>
                 </figure>
             </li>
@@ -21,6 +22,7 @@
                 <div class="mr-modal__content mr-gallery-modal__content">
                     <div class="mr-gallery__zoom-image-wrapper">
                         <img [src]="data.selected.fullSrc" [alt]="data.selected.title" class="mr-gallery__zoom-image">
+                        <figcaption class="mr-gallery__zoom-figcaption" [innerHTML]="data.selected.title"></figcaption>
                     </div>
                 </div>
             </div>

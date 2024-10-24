@@ -52,6 +52,8 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
 
   public hasMap = false;
 
+  public hasGallery = false;
+
   public route;
 
   public mapHeader;
@@ -241,7 +243,9 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
         });
 
         if (gallery) {
-          this.collectionGalleryData = gallery;
+          // this.collectionGalleryData = gallery;
+          this.hasGallery = true;
+          this.one('mr-gallery').update(gallery);
         } else {
           this.collectionGalleryData = undefined;
         }
