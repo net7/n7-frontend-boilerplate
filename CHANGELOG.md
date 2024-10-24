@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+- Add gallery component in timeline
+
 ## [5.2.3] - 2024-09-10
 
 Muruca
