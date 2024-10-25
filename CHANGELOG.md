@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+- Add arrow navigation to gallery
+
 ## [5.2.4] - 2024-10-24
 
 Muruca
