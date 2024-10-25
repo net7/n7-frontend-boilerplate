@@ -11,15 +11,21 @@
             </li>
         </ul>
     </div>
-    <div *ngIf="data.selected" class="mr-modal mr-gallery-modal" (click)="onClose()">
+    <div *ngIf="data.selected" class="mr-modal mr-gallery-modal">
         <div class="mr-modal__overlay">
             <div class="mr-modal__window mr-gallery-modal__window">
                 <div class="mr-modal__header mr-gallery-modal__header">
                     <div class="mr-modal__close">
                         <a class="mr-modal__close-link" (click)="onClose()"><span class="n7-icon-close"></span></a>
                     </div>
+                    <div class="mr-modal__right">
+                        <a class="mr-modal__arrow-link" (click)="onChangeImg(true)"><span class="n7-icon-angle-right"></span></a>
+                    </div>
+                    <div class="mr-modal__left">
+                        <a class="mr-modal__arrow-link" (click)="onChangeImg(false)"><span class="n7-icon-angle-left"></span></a>
+                    </div>
                 </div>
-                <div class="mr-modal__content mr-gallery-modal__content">
+                <div class="mr-modal__content mr-gallery-modal__content" (click)="onClose()">
                     <div class="mr-gallery__zoom-image-wrapper">
                         <img [src]="data.selected.fullSrc" [alt]="data.selected.title" class="mr-gallery__zoom-image">
                         <figcaption class="mr-gallery__zoom-figcaption" [innerHTML]="data.selected.title"></figcaption>
