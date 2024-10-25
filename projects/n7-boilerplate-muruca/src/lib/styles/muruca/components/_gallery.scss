@@ -27,12 +27,36 @@
         bottom: 0;
     }
     .mr-modal__header {
+        width: 100%;
         padding: 0;
         position: absolute;
         top: 0;
         right: 0;
         z-index: 10;
         
+    }
+    .mr-modal__right {
+        position: absolute;
+        top: 40vh;
+        right: 20px;
+        //right: $space*2;
+        cursor: pointer;
+        font-size: 30px !important;
+    }
+    .mr-modal__left {
+        position: absolute;
+        top: 40vh;
+        left: 20px;
+        // right: $space*2;
+        cursor: pointer;
+        font-size: 30px !important;
+    }
+    .mr-modal__arrow-link {
+        color: $color-gray-04;
+        font-size: 60px;
+    }
+    .mr-modal__arrow-link:hover, .mr-modal__arrow-link:focus {
+        color: #397eae;
     }
     .mr-modal__content {
         padding: 0;

@@ -15,6 +15,10 @@ export class MrGalleryEH extends EventHandler {
         case 'mr-gallery.close':
           this.dataSource.removeSelected();
           break;
+        case `${this.dataSource.id}.changeImg`:
+        case 'mr-gallery.changeImg':
+          this.dataSource.changeImg(payload);
+          break;
         default:
           break;
       }

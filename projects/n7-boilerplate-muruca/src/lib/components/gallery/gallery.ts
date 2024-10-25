@@ -6,6 +6,7 @@ export type GalleryItem = {
   fullSrc: string;
   title: string;
   payload: any;
+  index: number;
 };
 
 export type GalleryData = {
@@ -34,5 +35,9 @@ export class MrGalleryComponent {
     if (this.emit) {
       this.emit('close');
     }
+  }
+
+  onChangeImg(rightImg) {
+    this.emit('changeImg', rightImg);
   }
 }
