@@ -356,6 +356,23 @@
             }
         }
     }
+    
+    /* Viewer iiif */
+    .aw-mirador-viewer {
+        // display: block;
+        // height: 500px;
+
+        .mui-1af2udd-WorkspaceArea-root,
+        .mui-rvh6fe-WorkspaceArea-root {
+            position: inherit;
+            height: 600px;
+        }
+
+        .fullscreen-enabled > .mui-1af2udd-WorkspaceArea-root,
+        .fullscreen-enabled > .mui-rvh6fe-WorkspaceArea-root {
+            height: 100%;
+        }
+    }
 
     /* fix section hidden */
     .aw-scheda__related-items[hidden] {

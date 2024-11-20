@@ -176,6 +176,20 @@ export interface ConfigAriannaSchedaLayout extends ConfigAriannaLayout {
     /** is mouse context menu (right click) disabled? */
     'context-menu'?: boolean;
   };
+  /** image viewer options */
+  'iiif-viewer'?: {
+    libOptions?: {
+      window?: {
+        sideBarOpenByDefault?: boolean;
+        allowClose?: boolean;
+        allowMaximize?: boolean;
+        defaultSideBarPanel?: string;
+        views?: any;
+        workspaceControlPanel?: any;
+      };
+      id: string;
+    }
+  };
   /** pdf viewer options */
   'pdf-viewer'?: {
     /** pdf lib (ngx-extended-pdf-viewer) options */

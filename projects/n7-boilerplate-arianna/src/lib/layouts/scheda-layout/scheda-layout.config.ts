@@ -18,6 +18,7 @@ export const AwPatrimonioLayoutConfig = {
     { id: 'aw-scheda-image' },
     { id: 'aw-scheda-image-navigator' },
     { id: 'aw-scheda-pdf' },
+    { id: 'aw-scheda-image-iiif' },
     { id: 'aw-scheda-inner-title' },
     { id: 'aw-related-entities' },
     { id: 'aw-chart-tippy' },
