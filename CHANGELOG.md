@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Arianna
+
+- Add Mirador
+
 ## [5.2.5] - 2024-10-25
 
 Muruca
