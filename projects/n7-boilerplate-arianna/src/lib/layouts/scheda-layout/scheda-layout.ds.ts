@@ -167,6 +167,9 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
     // pdf viewer options
     this.one('aw-scheda-pdf').updateOptions(this.configuration.get(this.configId)['pdf-viewer'] || {});
 
+    // iiif viewer options
+    this.one('aw-scheda-image-iiif').updateOptions(this.configuration.get(this.configId)['iiif-viewer'] || {});
+
     // check section collapse state
     Object.keys(this.sectionCollapseState).forEach((key) => {
       const storageKey = `${LOCAL_STORAGE_PREFIX}.${key}`;
@@ -574,7 +577,9 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
         this.currentDigitalObjectIndex = payload;
         this.currentDigitalObject = this.digitalObjects[payload];
-        if (this.currentDigitalObject.type.includes('images')) {
+        if (this.currentDigitalObject.type === 'images-iiif') {
+          this.one('aw-scheda-image-iiif').update(this.currentDigitalObject);
+        } else if (this.currentDigitalObject.type.includes('images')) {
           if (schedaImageDS.hasInstance()) {
             schedaImageDS.updateImages(this.currentDigitalObject);
           } else {

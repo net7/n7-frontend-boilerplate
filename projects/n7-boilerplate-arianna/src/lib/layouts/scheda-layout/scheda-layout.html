@@ -142,13 +142,10 @@
 
             <!-- IMAGE VIEWER (IIIF) -->
             <ng-container *ngSwitchCase="'images-iiif'">
-                <aw-scheda-image-navigator 
-                [data]="lb.widgets['aw-scheda-image-navigator'].ds.out$ | async"
-                [emit]="lb.widgets['aw-scheda-image-navigator'].emit"></aw-scheda-image-navigator>
-                <n7-image-viewer 
-                (contextmenu)="lb.dataSource.hasContextMenu()" 
-                [data]="lb.widgets['aw-scheda-image'].ds.out$ | async">
-                </n7-image-viewer>
+                <n7-mirador 
+                class="aw-mirador-viewer" 
+                [data]="lb.widgets['aw-scheda-image-iiif'].ds.out$ | async">
+                </n7-mirador>
             </ng-container>
 
             <!-- IMAGE VIEWER (Simple: jpg, png) -->

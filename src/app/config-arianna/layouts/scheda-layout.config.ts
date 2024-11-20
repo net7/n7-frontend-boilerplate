@@ -60,6 +60,24 @@ const config: ConfigAriannaSchedaLayout = {
   'image-viewer': {
     'context-menu': false
   },
+  'iiif-viewer': {
+    libOptions: {
+      window: {
+        sideBarOpenByDefault: true,
+        allowClose: false,
+        allowMaximize: true,
+        defaultSideBarPanel: 'info',
+        views: [
+          { key: 'single' },
+          { key: 'gallery' },
+        ],
+        workspaceControlPanel: {
+          enabled: false,
+        },
+      },
+      id: 'mirador-container',
+    },
+  },
   'pdf-viewer': {
     libOptions: {
       // showToolbar: true,

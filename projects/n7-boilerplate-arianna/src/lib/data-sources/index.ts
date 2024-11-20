@@ -23,6 +23,7 @@ export * from './scheda-breadcrumbs.ds';
 export * from './scheda-dropdown.ds';
 export * from './sidebar-header.ds';
 export * from './scheda-image.ds';
+export * from './scheda-image-iiif.ds';
 export * from './scheda-inner-title.ds';
 export * from './scheda-metadata.ds';
 export * from './scheda-pdf.ds';
