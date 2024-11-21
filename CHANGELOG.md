@@ -9,9 +9,11 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.2.6] - 2024-11-20
+
 Arianna
 
-- Add Mirador
+-   Add Mirador
 
 ## [5.2.5] - 2024-10-25
 
@@ -514,7 +516,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.5...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.6...HEAD
+
+[5.2.6]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.5...v5.2.6
 
 [5.2.5]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.4...v5.2.5
 
