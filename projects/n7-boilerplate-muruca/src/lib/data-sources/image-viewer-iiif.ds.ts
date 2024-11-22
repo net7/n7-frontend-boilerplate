@@ -7,7 +7,6 @@ export class MrImageViewerIiifDS extends DataSource {
     const { libOptions } = this.options;
     const iiifManifestsList = data['iiif-manifests'];
     const windows = iiifManifestsList.map((manifest) => ({
-      imageToolsEnabled: (manifest.imageToolsEnabled) ? manifest.imageToolsEnabled : true,
       manifestId: manifest.manifestUrl,
     }));
     return {

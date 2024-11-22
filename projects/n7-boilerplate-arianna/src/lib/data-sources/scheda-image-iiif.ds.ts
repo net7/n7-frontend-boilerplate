@@ -7,7 +7,6 @@ export class AwSchedaImageIiifDS extends DataSource {
     const { libOptions } = this.options;
     const iiifManifestsList = data.items;
     const windows = iiifManifestsList.map((manifest) => ({
-      imageToolsEnabled: (manifest.imageToolsEnabled) ? manifest.imageToolsEnabled : true,
       manifestId: manifest.url,
     }));
     return {
