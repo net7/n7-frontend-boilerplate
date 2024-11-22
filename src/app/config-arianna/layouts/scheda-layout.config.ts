@@ -71,11 +71,12 @@ const config: ConfigAriannaSchedaLayout = {
           { key: 'single' },
           { key: 'gallery' },
         ],
-        workspaceControlPanel: {
-          enabled: false,
-        },
+      },
+      workspaceControlPanel: {
+        enabled: true,
       },
       id: 'mirador-container',
+      useDefaultTheme: false,
     },
   },
   'pdf-viewer': {

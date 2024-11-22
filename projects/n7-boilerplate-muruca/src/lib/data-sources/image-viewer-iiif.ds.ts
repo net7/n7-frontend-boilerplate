@@ -4,7 +4,7 @@ export class MrImageViewerIiifDS extends DataSource {
   protected transform(data: any): any {
     if (!data) return null;
 
-    const { window, id } = this.options.libOptions;
+    const { libOptions } = this.options;
     const iiifManifestsList = data['iiif-manifests'];
     const windows = iiifManifestsList.map((manifest) => ({
       imageToolsEnabled: (manifest.imageToolsEnabled) ? manifest.imageToolsEnabled : true,
@@ -12,8 +12,7 @@ export class MrImageViewerIiifDS extends DataSource {
     }));
     return {
       libOptions: {
-        window,
-        id,
+        ...libOptions,
         windows
       },
     };
