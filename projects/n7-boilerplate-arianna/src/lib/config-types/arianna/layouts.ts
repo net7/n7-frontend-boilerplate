@@ -178,17 +178,7 @@ export interface ConfigAriannaSchedaLayout extends ConfigAriannaLayout {
   };
   /** image viewer options */
   'iiif-viewer'?: {
-    libOptions?: {
-      window?: {
-        sideBarOpenByDefault?: boolean;
-        allowClose?: boolean;
-        allowMaximize?: boolean;
-        defaultSideBarPanel?: string;
-        views?: any;
-        workspaceControlPanel?: any;
-      };
-      id: string;
-    }
+    libOptions?: any;
   };
   /** pdf viewer options */
   'pdf-viewer'?: {
