@@ -169,8 +169,8 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
     // iiif viewer options
     const imageViewerIiifConfig = this.configuration.get(this.configId)['iiif-viewer'] || {};
-    this.one('aw-scheda-image-iiif').updateOptions(imageViewerIiifConfig);
     this.hasContextMenu = () => !!imageViewerIiifConfig.libOptions['context-menu'];
+    this.one('aw-scheda-image-iiif').updateOptions(imageViewerIiifConfig);
 
     // check section collapse state
     Object.keys(this.sectionCollapseState).forEach((key) => {
