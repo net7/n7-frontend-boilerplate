@@ -75,6 +75,7 @@
                 <!-- IMAGE VIEWER IIIF -->
                 <ng-container *ngSwitchCase="'viewer-iiif'">
                     <n7-mirador
+                        (contextmenu)="lb.dataSource.hasContextMenu()"
                         [data]="lb.widgets[section.id].ds.out$ | async">
                     </n7-mirador>
                 </ng-container>
