@@ -32,6 +32,8 @@ export class MrResourceLayoutDS extends LayoutDataSource {
 
   public errorDescription = _t('global#layout_error_description');
 
+  public hasContextMenu: () => boolean;
+
   private tabsContent: any;
 
   onInit(payload) {
@@ -132,6 +134,7 @@ export class MrResourceLayoutDS extends LayoutDataSource {
       if (type === 'viewer-iiif') {
         // update image viewer iiif options
         const { libOptions } = options;
+        this.hasContextMenu = () => !!libOptions['context-menu'];
         this.one(id).updateOptions({ libOptions });
       }
 

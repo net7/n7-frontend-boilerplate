@@ -77,6 +77,8 @@ const config: ConfigAriannaSchedaLayout = {
       },
       id: 'mirador-container',
       useDefaultTheme: false,
+      language: 'it',
+      'context-menu': false,
     },
   },
   'pdf-viewer': {
