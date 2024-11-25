@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Arianna
+
+- Add context-menu config in Mirador
+
 ## [5.2.7] - 2024-11-22
 
 Arianna
