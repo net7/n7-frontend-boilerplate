@@ -9,9 +9,11 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.2.8] - 2024-11-25
+
 Arianna
 
-- Add context-menu config in Mirador
+-   Add context-menu config in Mirador
 
 ## [5.2.7] - 2024-11-22
 
@@ -526,7 +528,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.7...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.8...HEAD
+
+[5.2.8]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.7...v5.2.8
 
 [5.2.7]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.6...v5.2.7
 
