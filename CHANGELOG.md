@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Arianna
+
+- Fix Mirador
+
 ## [5.2.8] - 2024-11-25
 
 Arianna
