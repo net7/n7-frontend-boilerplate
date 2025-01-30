@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+- Fix bug iiif viewer
+
 ## [5.2.9] - 2024-12-27
 
 Arianna
