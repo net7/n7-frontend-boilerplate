@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { MrMetadataDynamicDS } from '../../data-sources/metadata-dynamic.ds';
 
 @Component({
   selector: 'mr-metadata-dynamic',
@@ -16,9 +15,4 @@ export class MrMetadataDynamicComponent {
     }
     this.emit(type, payload);
   };
-
-  public obtainData(section: any) {
-    const metadataDynamicDS = new MrMetadataDynamicDS();
-    return metadataDynamicDS.prepareMeta(section);
-  }
 }

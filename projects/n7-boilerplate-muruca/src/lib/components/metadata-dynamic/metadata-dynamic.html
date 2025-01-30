@@ -22,12 +22,12 @@
           <ng-container *ngIf=" group?.options?.readmore || group?.options?.groupReadmore;
                       else wihoutReadmore">
             <mr-metadata-readmore
-                [data]="obtainData(group)">
+                [data]="group.group">
             </mr-metadata-readmore>
           </ng-container>
           <ng-template #wihoutReadmore>
             <n7-metadata-viewer
-                [data]="obtainData(group)">
+                [data]="group.group">
             </n7-metadata-viewer>
           </ng-template>
         </mr-read-more>

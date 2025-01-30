@@ -3,7 +3,7 @@
   "version": "5.2.9",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve -c muruca",
     "arianna": "ng serve -c arianna",
     "muruca": "ng serve -c muruca",
     "dataviz": "ng serve -c dataviz",

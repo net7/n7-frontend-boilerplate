@@ -5,6 +5,8 @@ const ICON_OPEN = 'n7-icon-angle-up';
 const ICON_CLOSE = 'n7-icon-angle-down';
 
 export class MrMetadataDynamicDS extends DataSource {
+  private metadataDS = new MrMetadataDS();
+
   protected transform(data: any): any {
     if (!data) return null;
 
@@ -22,12 +24,10 @@ export class MrMetadataDynamicDS extends DataSource {
         iconRight: index === 0 ? ICON_OPEN : ICON_CLOSE,
       }
     }));
+    data.data.forEach((group, i) => {
+      data.data[i].group = this.metadataDS.transform(data.data[i]);
+    });
     return data;
-  }
-
-  public prepareMeta(data: any) {
-    const metadataDS = new MrMetadataDS();
-    return metadataDS.transform(data);
   }
 
   public toggleGroup(payload) {
