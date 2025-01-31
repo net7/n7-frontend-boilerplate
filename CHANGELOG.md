@@ -11,6 +11,7 @@ For each commit add a description under the Unreleased section under the corresp
 
 Muruca
 
+- Fix bug iiif viewer
 - Add iiif positioning by url
 
 ## [5.2.9] - 2024-12-27
