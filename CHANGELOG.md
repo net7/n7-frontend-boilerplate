@@ -9,10 +9,12 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.2.10] - 2025-01-31
+
 Muruca
 
-- Fix bug iiif viewer
-- Add iiif positioning by url
+-   Fix bug iiif viewer
+-   Add iiif positioning by url
 
 ## [5.2.9] - 2024-12-27
 
@@ -539,7 +541,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.9...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.10...HEAD
+
+[5.2.10]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.9...v5.2.10
 
 [5.2.9]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.8...v5.2.9
 
