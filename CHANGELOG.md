@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+- Fix css img footer
+
 ## [5.2.10] - 2025-01-31
 
 Muruca
