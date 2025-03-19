@@ -101,18 +101,21 @@ export class MrTextViewerDS extends DataSource {
   }
 
   onClick(payload) {
-    if (this.output.toggleColumn === false) {
-      let target = null;
-      if (payload.path) {
-        target = payload.path.find(
-          ({ tagName }) => tagName === 'PB-HIGHLIGHT'
-        );
-      } else {
-        target = payload.composedPath().find(
-          ({ tagName }) => tagName === 'PB-HIGHLIGHT'
-        );
-      }
+    let target = null;
 
+    if (payload.path) {
+      target = payload.path.find(
+        ({ tagName }) => tagName === 'PB-HIGHLIGHT'
+      );
+    } else {
+      target = payload.composedPath().find(
+        ({ tagName }) => tagName === 'PB-HIGHLIGHT'
+      );
+    }
+
+    if (target && target.getAttribute('type') === 'app_lem') {
+      /// /
+    } else if (target && this.output.toggleColumn === false) {
       if (
         target.__key
         && (target.className.includes('person')
