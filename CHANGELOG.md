@@ -12,6 +12,7 @@ For each commit add a description under the Unreleased section under the corresp
 Muruca
 
 - Fix css img footer
+- Update Package
 
 ## [5.2.10] - 2025-01-31
 
