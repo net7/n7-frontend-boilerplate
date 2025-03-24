@@ -9,10 +9,12 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.2.11] - 2025-03-24
+
 Muruca
 
-- Fix css img footer
-- Update Package
+-   Fix css img footer
+-   Update Package
 
 ## [5.2.10] - 2025-01-31
 
@@ -546,7 +548,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.10...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.11...HEAD
+
+[5.2.11]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.10...v5.2.11
 
 [5.2.10]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.9...v5.2.10
 
