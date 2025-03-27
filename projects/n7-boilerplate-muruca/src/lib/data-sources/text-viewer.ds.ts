@@ -124,12 +124,18 @@ export class MrTextViewerDS extends DataSource {
       console.log('apparatusView', apparatusView);
       console.log('shadowRoot', apparatusView?.shadowRoot);
 
-      const teiAppElement = apparatusView
+      // Prima troviamo l'elemento con l'ID specifico
+      const anchorElement = apparatusView
         ?.shadowRoot
-        ?.querySelector('.tei-body .tei-app');
+        ?.querySelector(`#${appId}`);
+
+      // Poi risaliamo al div tei-app contenitore
+      const teiAppElement = anchorElement
+        ? anchorElement.closest('.tei-app')
+        : null;
 
       if (teiAppElement) {
-        console.log('teiAppElement trovato!');
+        console.log(`teiAppElement per ${appId} trovato!`);
 
         // posizione attuale
         const elementPosition = teiAppElement.getBoundingClientRect().top;
@@ -139,6 +145,8 @@ export class MrTextViewerDS extends DataSource {
 
         // Spostamento
         (teiAppElement as HTMLElement).style.transform = `translateY(${positionDifference}px)`;
+      } else {
+        console.log(`Nessun elemento trovato per l'appId: ${appId}`);
       }
     } else if (target && this.output.toggleColumn === false) {
       if (
