@@ -114,7 +114,32 @@ export class MrTextViewerDS extends DataSource {
     }
 
     if (target && target.getAttribute('type') === 'app_lem') {
-      /// /
+      const appId = target.getAttribute('key');
+      console.log('appId', appId);
+
+      // Posizione elemento cliccato
+      const clickedElementPosition = (target as HTMLElement).getBoundingClientRect().top;
+
+      const apparatusView = document.querySelector('.n7-text-viewer #apparatus-view0');
+      console.log('apparatusView', apparatusView);
+      console.log('shadowRoot', apparatusView?.shadowRoot);
+
+      const teiAppElement = apparatusView
+        ?.shadowRoot
+        ?.querySelector('.tei-body .tei-app');
+
+      if (teiAppElement) {
+        console.log('teiAppElement trovato!');
+
+        // posizione attuale
+        const elementPosition = teiAppElement.getBoundingClientRect().top;
+
+        // differenza
+        const positionDifference = clickedElementPosition - elementPosition;
+
+        // Spostamento
+        (teiAppElement as HTMLElement).style.transform = `translateY(${positionDifference}px)`;
+      }
     } else if (target && this.output.toggleColumn === false) {
       if (
         target.__key
@@ -190,6 +215,15 @@ export class MrTextViewerDS extends DataSource {
           .querySelector(`.n7-text-viewer ${view}`)
           .shadowRoot.querySelector('.tei-em');
       }
+      /*
+      else if (type === 'apparatus') {
+        const key = target.getAttribute("key");
+        element = document
+          .querySelector(`.n7-text-viewer #apparatus-view0`)
+          ?.shadowRoot
+          ?.querySelector(`#${key}`);
+      }
+      */
 
       const container = document.querySelector(`.n7-text-viewer ${view}`);
       if (element) {
