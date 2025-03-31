@@ -23,6 +23,27 @@ export class MrTextViewerDS extends DataSource {
     const params = new URLSearchParams(document.location.search);
     const id = params.get('id');
 
+    // Nascondere tei-app e note-item se l'ODD non ha già l'elemento in display NONE
+    const hideElements = () => {
+      const apparatusView = document.querySelector('.n7-text-viewer #apparatus-view0');
+      if (apparatusView?.shadowRoot) {
+        const teiAppElements = apparatusView.shadowRoot.querySelectorAll('.tei-app');
+        const teiNoteElements = apparatusView.shadowRoot.querySelectorAll('.note-item');
+        console.log('Trovati elementi tei-app:', teiAppElements.length);
+        console.log('Trovati elementi tei-note:', teiNoteElements.length);
+        teiAppElements.forEach((element) => {
+          (element as HTMLElement).style.display = 'none';
+        });
+        teiNoteElements.forEach((element) => {
+          (element as HTMLElement).style.display = 'none';
+        });
+      }
+    };
+    document.addEventListener('pb-end-update', () => {
+      console.log('Evento pb-end-update ricevuto');
+      hideElements();
+    });
+
     if (data.docs[0]?.view === 'page' && id) {
       data.docs[0].view = 'div';
       document.addEventListener(
@@ -124,29 +145,34 @@ export class MrTextViewerDS extends DataSource {
       console.log('apparatusView', apparatusView);
       console.log('shadowRoot', apparatusView?.shadowRoot);
 
-      // Prima troviamo l'elemento con l'ID specifico
       const anchorElement = apparatusView
         ?.shadowRoot
         ?.querySelector(`#${appId}`);
 
-      // Poi risaliamo al div tei-app contenitore
       const teiAppElement = anchorElement
         ? anchorElement.closest('.tei-app')
         : null;
 
       if (teiAppElement) {
-        console.log(`teiAppElement per ${appId} trovato!`);
+        // Verifica se è visibile
+        const isVisible = (teiAppElement as HTMLElement).style.display === 'block';
 
-        // posizione attuale
-        const elementPosition = teiAppElement.getBoundingClientRect().top;
+        if (isVisible) {
+          (teiAppElement as HTMLElement).style.display = 'none';
 
-        // differenza
-        const positionDifference = clickedElementPosition - elementPosition;
+          (teiAppElement as HTMLElement).style.transform = '';
+        } else {
+          (teiAppElement as HTMLElement).style.display = 'block';
 
-        // Spostamento
-        (teiAppElement as HTMLElement).style.transform = `translateY(${positionDifference}px)`;
-      } else {
-        console.log(`Nessun elemento trovato per l'appId: ${appId}`);
+          // posizione attuale
+          const elementPosition = teiAppElement.getBoundingClientRect().top;
+
+          // differenza
+          const positionDifference = clickedElementPosition - elementPosition;
+
+          // spostamento
+          (teiAppElement as HTMLElement).style.transform = `translateY(${positionDifference}px)`;
+        }
       }
     } else if (target && this.output.toggleColumn === false) {
       if (
