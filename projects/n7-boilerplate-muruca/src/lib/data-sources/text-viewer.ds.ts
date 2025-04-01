@@ -24,7 +24,7 @@ export class MrTextViewerDS extends DataSource {
     const id = params.get('id');
 
     // Nascondere tei-app e note-item se l'ODD non ha già l'elemento in display NONE
-    const hideElements = () => {
+    /*  const hideElements = () => {
       const apparatusView = document.querySelector('.n7-text-viewer #apparatus-view0');
       if (apparatusView?.shadowRoot) {
         const teiAppElements = apparatusView.shadowRoot.querySelectorAll('.tei-app');
@@ -42,7 +42,7 @@ export class MrTextViewerDS extends DataSource {
     document.addEventListener('pb-end-update', () => {
       console.log('Evento pb-end-update ricevuto');
       hideElements();
-    });
+    }); */
 
     if (data.docs[0]?.view === 'page' && id) {
       data.docs[0].view = 'div';
@@ -142,8 +142,8 @@ export class MrTextViewerDS extends DataSource {
       const clickedElementPosition = (target as HTMLElement).getBoundingClientRect().top;
 
       const apparatusView = document.querySelector('.n7-text-viewer #apparatus-view0');
-      console.log('apparatusView', apparatusView);
-      console.log('shadowRoot', apparatusView?.shadowRoot);
+      /*       console.log('apparatusView', apparatusView);
+      console.log('shadowRoot', apparatusView?.shadowRoot); */
 
       const anchorElement = apparatusView
         ?.shadowRoot
@@ -172,6 +172,42 @@ export class MrTextViewerDS extends DataSource {
 
           // spostamento
           (teiAppElement as HTMLElement).style.transform = `translateY(${positionDifference}px)`;
+        }
+      }
+    } else if (target && target.getAttribute('type') === 'note_line') {
+      const noteId = target.getAttribute('key');
+      console.log('noteId', noteId);
+
+      const clickedElementPosition = (target as HTMLElement).getBoundingClientRect().top;
+
+      const apparatusView = document.querySelector('.n7-text-viewer #apparatus-view0');
+
+      const anchorElement = apparatusView
+        ?.shadowRoot
+        ?.querySelector(`#${noteId}`);
+
+      const teiNoteElement = anchorElement
+        ? anchorElement.closest('.note-item')
+        : null;
+      if (teiNoteElement) {
+        // Verifica se è visibile
+        const isVisible = (teiNoteElement as HTMLElement).style.display === 'block';
+
+        if (isVisible) {
+          (teiNoteElement as HTMLElement).style.display = 'none';
+
+          (teiNoteElement as HTMLElement).style.transform = '';
+        } else {
+          (teiNoteElement as HTMLElement).style.display = 'block';
+
+          // posizione attuale
+          const elementPosition = teiNoteElement.getBoundingClientRect().top;
+
+          // differenza
+          const positionDifference = clickedElementPosition - elementPosition;
+
+          // spostamento
+          (teiNoteElement as HTMLElement).style.transform = `translateY(${positionDifference}px)`;
         }
       }
     } else if (target && this.output.toggleColumn === false) {
