@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+-   Added text-viewer functions to handle column-view of the apparatus
+
 ## [5.2.11] - 2025-03-24
 
 Muruca
