@@ -9,6 +9,8 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.2.12] - 2025-04-02
+
 Muruca
 
 -   Added text-viewer functions to handle column-view of the apparatus
@@ -552,7 +554,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.11...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.12...HEAD
+
+[5.2.12]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.11...v5.2.12
 
 [5.2.11]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.10...v5.2.11
 
