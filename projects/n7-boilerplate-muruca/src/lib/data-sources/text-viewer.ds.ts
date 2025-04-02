@@ -136,7 +136,7 @@ export class MrTextViewerDS extends DataSource {
 
     if (target && target.getAttribute('type') === 'app_lem') {
       const appId = target.getAttribute('key');
-      console.log('appId', appId);
+      // console.log('appId', appId);
 
       // Posizione elemento cliccato
       const clickedElementPosition = (target as HTMLElement).getBoundingClientRect().top;
@@ -176,7 +176,7 @@ export class MrTextViewerDS extends DataSource {
       }
     } else if (target && target.getAttribute('type') === 'note_line') {
       const noteId = target.getAttribute('key');
-      console.log('noteId', noteId);
+      // console.log('noteId', noteId);
 
       const clickedElementPosition = (target as HTMLElement).getBoundingClientRect().top;
 
