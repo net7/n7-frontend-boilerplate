@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+-   Added text-viewer functions to close apparatus items with buttons and fixed css
+
 ## [5.2.12] - 2025-04-02
 
 Muruca
