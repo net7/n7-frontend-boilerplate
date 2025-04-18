@@ -16,6 +16,13 @@ export default {
         id: 'metadata',
         type: 'metadata'
       },
+      /*       {
+        id: 'text-viewer',
+        type: 'text-viewer',
+        options: {
+          searchId: 'xml_text',
+        },
+      }, */
       {
         id: 'tab-bar',
         type: 'tabs',

@@ -123,6 +123,43 @@ export class MrTextViewerDS extends DataSource {
 
   onClick(payload) {
     let target = null;
+    const clickPath = payload.path || payload.composedPath();
+
+    // chiusura apparato con tasto
+    const closeButton = clickPath.find((el) => el.className
+      && typeof el.className === 'string'
+      && el.className.includes('close_app'));
+
+    if (closeButton) {
+    //  console.log('Click rilevato sul bottone di chiusura:', closeButton);
+
+      const parentAppItem = closeButton.closest('.tei-app');
+      if (parentAppItem && parentAppItem.style) {
+        //    console.log('Chiusura dell\'elemento tei-app');
+        parentAppItem.style.display = 'none';
+        (parentAppItem as HTMLElement).style.transform = '';
+        payload.stopPropagation();
+        return;
+      }
+    }
+
+    // Chiusura note con tasto
+    const closeNoteButton = clickPath.find((el) => el.className
+      && typeof el.className === 'string'
+      && el.className.includes('close_note'));
+
+    if (closeNoteButton) {
+    //  console.log('Click rilevato sul bottone di chiusura nota:', closeNoteButton);
+
+      const parentNoteItem = closeNoteButton.closest('.note-item');
+      if (parentNoteItem && parentNoteItem.style) {
+        //    console.log('Chiusura dell\'elemento note-item');
+        parentNoteItem.style.display = 'none';
+        (parentNoteItem as HTMLElement).style.transform = '';
+        payload.stopPropagation();
+        return;
+      }
+    }
 
     if (payload.path) {
       target = payload.path.find(
