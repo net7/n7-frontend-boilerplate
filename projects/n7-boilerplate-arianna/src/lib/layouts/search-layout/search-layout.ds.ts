@@ -42,6 +42,9 @@ export class AwSearchLayoutDS extends LayoutDataSource {
 
   protected configKeys: any;
 
+  // OLD-VERSION
+  // protected facetIntervalData: any;
+
   public fallback: string;
 
   public resetButtonEnabled = true;
@@ -109,6 +112,9 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     this.configKeys = this.configuration.get('config-keys');
     this.fallback = this.configuration.get(this.configId).fallback;
     this.pageTitle = this.configuration.get(this.configId).title;
+    // OLD-VERSION
+    // this.facetIntervalData = this.configuration.get(this.configId).interval || null;
+
     // remove first
     // stateless search
     if (this.search.model(this.layoutId)) {
@@ -116,6 +122,9 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     }
     this.search.add(this.layoutId, cloneDeep(this.facetsConfig));
     this.searchModel = this.search.model(this.layoutId);
+    // OLD-VERSION
+    // this.searchModel._intervalFacet = this.facetIntervalData;
+
     // query params control
     if (AwSearchModel.queryParams) {
       this.searchModel.updateFiltersFromQueryParams(AwSearchModel.queryParams);

@@ -42,6 +42,7 @@ export class AwMapLayoutDS extends LayoutDataSource {
 
     // head title
     this.setHeadTitle();
+    this.setPageTitle();
 
     // navigation update
     this.mainState.updateCustom('currentNav', 'mappa');
@@ -154,5 +155,10 @@ export class AwMapLayoutDS extends LayoutDataSource {
       pageName: this.configuration.get(this.configId)?.pageName,
       pageDefault: 'Mappa',
     }));
+  }
+
+  private setPageTitle() {
+    const title = this.configuration.get(this.configId)?.pageName;
+    this.pageTitle = (title) || 'I luoghi dell\'archivio';
   }
 }

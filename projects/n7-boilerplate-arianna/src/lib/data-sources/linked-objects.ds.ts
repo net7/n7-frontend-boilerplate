@@ -175,6 +175,7 @@ export class AwLinkedObjectsDS extends DataSource {
           target: ['gallery', 'search'].includes(context) ? '_blank' : '_self'
         },
         relation: { key: el.relationName, value: el.relation },
+        qualification: { key: el.relationName || itemTitle, value: el.qualification || null },
         metadata: infoDataItems.length || toeData ? [] : null,
       };
       // metadata

@@ -27,6 +27,10 @@ export class AwRelatedEntitiesDS extends DataSource {
         key: d.relationName || title,
         value: d.entity.relation || null
       },
+      qualification: {
+        key: d.relationName || title,
+        value: d.entity.qualification || null
+      },
     })) : [];
     return { previews };
   };

@@ -51,13 +51,16 @@
         // "../petrarca-fe/src/app/config/*" //config di un progetto in locale
       ],
       "@aw-routes": [
-        "src/app/app.routes.arianna.ts"
+        // "src/app/app.routes.arianna.ts"
+        "../a4view/frontend/src/app/app.routes.ts"
       ],
       "@aw-config": [
-        "src/app/config-arianna/"
+        // "src/app/config-arianna/"
+        "../a4view/frontend/src/app/config"
       ],
       "@aw-config/*": [
-        "src/app/config-arianna/*"
+        // "src/app/config-arianna/*"
+        "../a4view/frontend/src/app/config/*"
       ]
     },
     "useDefineForClassFields": false

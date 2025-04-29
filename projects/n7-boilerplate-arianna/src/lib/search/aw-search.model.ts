@@ -84,6 +84,9 @@ export class AwSearchModel {
 
   private _results$: Subject<any[]> = new Subject();
 
+  // OLD-VERSION
+  // public _intervalFacet: any;
+
   constructor(id: string, config: AwSearchConfig) {
     this._id = id;
     this._config = config;
