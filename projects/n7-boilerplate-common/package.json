@@ -1,6 +1,6 @@
 {
   "name": "@net7/boilerplate-common",
-  "version": "5.2.13",
+  "version": "5.2.14",
   "peerDependencies": {
     "@angular/common": "^17.3.11",
     "@angular/core": "^17.3.11"
