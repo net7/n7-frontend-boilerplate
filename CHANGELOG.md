@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+- Update components to  4.3.0
+
 ## [5.2.13] - 2025-04-18
 
 Muruca
