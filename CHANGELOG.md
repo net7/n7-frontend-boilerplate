@@ -9,9 +9,11 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.2.14] - 2025-04-30
+
 Muruca
 
-- Update components to  4.3.0
+-   Update components to  4.3.0
 
 ## [5.2.13] - 2025-04-18
 
@@ -564,7 +566,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.13...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.14...HEAD
+
+[5.2.14]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.13...v5.2.14
 
 [5.2.13]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.12...v5.2.13
 
