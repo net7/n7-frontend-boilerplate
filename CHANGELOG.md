@@ -9,6 +9,31 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.2.14] - 2025-04-30
+
+Muruca
+
+-   Update components to  4.3.0
+
+## [5.2.13] - 2025-04-18
+
+Muruca
+
+-   Added text-viewer functions to close apparatus items with buttons and fixed css
+
+## [5.2.12] - 2025-04-02
+
+Muruca
+
+-   Added text-viewer functions to handle column-view of the apparatus
+
+## [5.2.11] - 2025-03-24
+
+Muruca
+
+-   Fix css img footer
+-   Update Package
+
 ## [5.2.10] - 2025-01-31
 
 Muruca
@@ -541,7 +566,15 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.10...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.14...HEAD
+
+[5.2.14]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.13...v5.2.14
+
+[5.2.13]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.12...v5.2.13
+
+[5.2.12]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.11...v5.2.12
+
+[5.2.11]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.10...v5.2.11
 
 [5.2.10]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.9...v5.2.10
 
