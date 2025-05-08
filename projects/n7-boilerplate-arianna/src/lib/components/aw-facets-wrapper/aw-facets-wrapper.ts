@@ -22,18 +22,4 @@ export class AwFacetsWrapperComponent {
     }
     this.emit('facet', { eventType, eventPayload });
   }
-
-  // OLD-VERSION
-  // intervalFacetEmit(eventType, eventPayload) {
-  //   if (!this.emit) {
-  //     return;
-  //   }
-  //   eventPayload.inputPayload = {
-  //     facetId: 'query-interval',
-  //     value: eventPayload.value
-  //   };
-  //   eventPayload.value = eventPayload.payload;
-  //   delete eventPayload.payload;
-  //   this.emit('facet', { eventType, eventPayload });
-  // }
 }

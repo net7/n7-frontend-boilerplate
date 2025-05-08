@@ -23,17 +23,6 @@ export class AwFacetsWrapperEH extends EventHandler {
           const input = this.dataSource.getInputByFacetId(facetId);
           const context = input.getContext();
 
-          // OLD-VERSION
-          // let context;
-          // let input;
-          // if (facetId === 'query-interval') {
-          //   input = null;
-          //   context = 'external';
-          // } else {
-          //   input = this.dataSource.getInputByFacetId(facetId);
-          //   context = input.getContext();
-          // }
-
           // update
           this.dataSource.onFacetChange(payload);
 
@@ -43,9 +32,6 @@ export class AwFacetsWrapperEH extends EventHandler {
             // external
           } else {
             this.externalFacetsChange$.next(facetId);
-
-            // OLD-VERSION
-            // this.externalFacetsChange$.next({ facetId, payload });
           }
         }
           break;
@@ -92,15 +78,8 @@ export class AwFacetsWrapperEH extends EventHandler {
     this.externalFacetsChange$.pipe(
       debounceTime(500),
     ).subscribe((facetId) => {
-      // OLD-VERSION
-      // ).subscribe(({ facetId, payload }) => {
       const requestParams = this.dataSource.getRequestParams();
       const queryParams = this.dataSource.filtersAsQueryParams(requestParams.filters);
-
-      // OLD-VERSION
-      // if (facetId === 'query-interval') {
-      //   queryParams['query-interval'] = this.createIntervalParams(payload);
-      // }
 
       Object.keys(queryParams).forEach((key) => { queryParams[key] = queryParams[key] || null; });
       // signal
@@ -117,21 +96,4 @@ export class AwFacetsWrapperEH extends EventHandler {
       });
     });
   }
-
-  // OLD-VERSION
-  // createIntervalParams(payload) {
-  //   const interval = payload.eventPayload.inputPayload.value;
-  //   const { from } = interval;
-  //   const { to } = interval;
-  //   const param = `${this.cleanYear(from)}_${this.cleanYear(to)}`;
-  //   return param;
-  // }
-
-  // OLD-VERSION
-  // cleanYear(year) {
-  //   if (year.endsWith('a.C.')) {
-  //     return `-${year.trim().match(/^(\d+)\s*a\.C\.$/i)[1]}`;
-  //   }
-  //   return year;
-  // }
 }

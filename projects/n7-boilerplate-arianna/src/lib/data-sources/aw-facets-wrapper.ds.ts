@@ -59,12 +59,8 @@ export class AwFacetsWrapperDS extends DataSource {
       });
     });
 
-    // OLD-VERSION
-    // const intervalFacetConfig = this.createIntervalFacet(this.searchModel._intervalFacet);
     return {
       groups,
-      // OLD-VERSION
-      // intervalFacet: intervalFacetConfig,
       classes: `n7-facets-wrapper__${this.searchModel.getId()}`,
     };
   }
@@ -189,50 +185,4 @@ export class AwFacetsWrapperDS extends DataSource {
       },
     } : null;
   }
-
-  // OLD-VERSION
-  // createIntervalFacet(data): FacetYearRangeData {
-  //   if (!data) {
-  //     return null;
-  //   }
-  //   const options = [];
-  //   const dateStart = data.dateStart.year;
-  //   const dateEnd = data.dateEnd.year;
-  //   if ((typeof dateStart !== 'number') || (typeof dateEnd !== 'number')) {
-  //     options.push({ value: '0' });
-  //   } else if (dateStart === dateEnd) {
-  //     options.push({ value: this.createYearLabel(dateStart) });
-  //   } else {
-  //     let option = dateStart;
-  //     while (option < dateEnd) {
-  //       options.push({ value: this.createYearLabel(option) });
-  //       option += data.gap || 5;
-  //     }
-  //     options.push({ value: this.createYearLabel(dateEnd) });
-  //   }
-  //   const intervalFacetConfig = {
-  //     inDate: {
-  //       text: data.dateStart.text || 'Da',
-  //       payload: 'in-date',
-  //       placeholder: data.placeholder || 'Anno',
-  //       options
-  //     },
-  //     outDate: {
-  //       text: data.dateEnd.text || 'A',
-  //       payload: 'out-date',
-  //       placeholder: data.placeholder || 'Anno',
-  //       classes: 'is-disabled',
-  //       options: [],
-  //     }
-  //   };
-  //   return intervalFacetConfig;
-  // }
-
-  // OLD-VERSION
-  // createYearLabel(year) {
-  //   if (year < 0) {
-  //     return `${-year} a.C.`;
-  //   }
-  //   return `${year}`;
-  // }
 }
