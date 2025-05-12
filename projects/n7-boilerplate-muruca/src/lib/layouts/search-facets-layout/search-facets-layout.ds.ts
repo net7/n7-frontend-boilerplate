@@ -1,4 +1,4 @@
-import { LayoutDataSource } from '@net7/core';
+import { _t, LayoutDataSource } from '@net7/core';
 import { MrSearchService } from '../../services/search.service';
 
 export class SearchFacetsLayoutDS extends LayoutDataSource {
@@ -10,14 +10,30 @@ export class SearchFacetsLayoutDS extends LayoutDataSource {
 
   public searchConfig;
 
+  // TO CHECK
+  public localeService;
+
   public facets;
+
+  // TO CHECK
+  public redirectPath;
+
+  // TO CHECK
+  public redirectLabel;
 
   onInit(payload) {
     this.searchService = payload.searchService;
+    // TO CHECK
+    this.localeService = payload.localeService;
+
     this.searchConfig = this.searchService.getConfig();
     this.facets = this.searchConfig.facets;
-
     this.initInputs();
+
+    // TO CHECK
+    if (this.searchConfig.facets.redirectLink) {
+      this.initRedirectLink(this.searchConfig.facets.redirectLink);
+    }
   }
 
   initInputs() {
@@ -37,6 +53,18 @@ export class SearchFacetsLayoutDS extends LayoutDataSource {
           }
         });
     });
+  }
+
+  // TO CHECK
+  initRedirectLink(redirectData) {
+    const locale = this.localeService.getLocale();
+    this.redirectLabel = _t(redirectData.label);
+    this.redirectPath = redirectData.paths[locale];
+
+    // const locale = this.localeService.getLocale();
+    // const localPath = this.localeService.getLink(locale, 'advancedSearch');
+    // this.redirectLabel = _t(redirectData.label);
+    // this.redirectPath = localPath;
   }
 
   updateInputValue(id, newValue) {

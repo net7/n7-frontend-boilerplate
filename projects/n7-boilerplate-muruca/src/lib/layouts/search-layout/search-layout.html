@@ -27,8 +27,10 @@
                         *ngIf="lb.dataSource.pageConfig['facetsTitle']">
                         {{ lb.dataSource.pageConfig['facetsTitle'] }}
                     </h2>
+                    <!-- TO CHECK - localeService -->
                     <mr-search-facets-layout 
-                    [searchService]="lb.dataSource.searchService">
+                    [searchService]="lb.dataSource.searchService"
+                    [localeService]="lb.dataSource.localeService">
                     </mr-search-facets-layout>
                 </div>
             </aside>
