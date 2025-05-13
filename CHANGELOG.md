@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+- Add metadata in timeline collection
+
 ## [5.2.14] - 2025-04-30
 
 Muruca
