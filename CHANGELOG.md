@@ -9,9 +9,11 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.2.15] - 2025-05-13
+
 Muruca
 
-- Add metadata in timeline collection
+-   Add metadata in timeline collection
 
 ## [5.2.14] - 2025-04-30
 
@@ -570,7 +572,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.14...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.15...HEAD
+
+[5.2.15]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.14...v5.2.15
 
 [5.2.14]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.13...v5.2.14
 
