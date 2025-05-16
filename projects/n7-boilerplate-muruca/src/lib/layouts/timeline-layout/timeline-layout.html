@@ -84,7 +84,7 @@
           <ng-container *ngIf="coll.items && coll.items.length > 0">
             <div class="mr-content-block-collection mr-content-block">
               <h3 class="mr-content-block__title">{{ coll.header.title }}</h3>
-              <div class="mr-content-block__content n7-grid-3">
+              <div class="mr-content-block__content {{ coll.grid ? 'n7-grid-' + coll.grid : 'n7-grid-3' }}">
                 <n7-item-preview *ngFor="let item of coll.items" [data]="item">
                 </n7-item-preview>
               </div>

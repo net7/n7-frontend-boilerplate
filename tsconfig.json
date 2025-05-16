@@ -39,25 +39,28 @@
         "projects/n7-boilerplate-dataviz/src/public-api"
       ],
       "@mr-routes": [
-        // "src/app/app.routes.muruca.ts"
-        "../mambrino-fe/src/app/app.routes.ts" //routes di un progetto in locale
+        "src/app/app.routes.muruca.ts"
+        // "../petrarca-fe/src/app/app.routes.ts" //routes di un progetto in locale
       ],
       "@mr-config": [
-        // "src/app/config-muruca/"
-        "../mambrino-fe/src/app/config/" //config di un progetto in locale
+        "src/app/config-muruca/"
+        // "../petrarca-fe/src/app/config/" //config di un progetto in locale
       ],
       "@mr-config/*": [
-        // "src/app/config-muruca/*"
-        "../mambrino-fe/src/app/config/*" //config di un progetto in locale
+        "src/app/config-muruca/*"
+        // "../petrarca-fe/src/app/config/*" //config di un progetto in locale
       ],
       "@aw-routes": [
-        "src/app/app.routes.arianna.ts"
+        // "src/app/app.routes.arianna.ts"
+        "../a4view/frontend/src/app/app.routes.ts"
       ],
       "@aw-config": [
-        "src/app/config-arianna/"
+        // "src/app/config-arianna/"
+        "../a4view/frontend/src/app/config"
       ],
       "@aw-config/*": [
-        "src/app/config-arianna/*"
+        // "src/app/config-arianna/*"
+        "../a4view/frontend/src/app/config/*"
       ]
     },
     "useDefineForClassFields": false

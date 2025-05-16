@@ -109,6 +109,7 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     this.configKeys = this.configuration.get('config-keys');
     this.fallback = this.configuration.get(this.configId).fallback;
     this.pageTitle = this.configuration.get(this.configId).title;
+
     // remove first
     // stateless search
     if (this.search.model(this.layoutId)) {
@@ -116,6 +117,7 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     }
     this.search.add(this.layoutId, cloneDeep(this.facetsConfig));
     this.searchModel = this.search.model(this.layoutId);
+
     // query params control
     if (AwSearchModel.queryParams) {
       this.searchModel.updateFiltersFromQueryParams(AwSearchModel.queryParams);

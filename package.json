@@ -1,9 +1,9 @@
 {
   "name": "n7-boilerplate",
-  "version": "5.2.14",
+  "version": "5.2.15",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve -c muruca",
+    "start": "ng serve -c arianna",
     "arianna": "ng serve -c arianna",
     "muruca": "ng serve -c muruca",
     "dataviz": "ng serve -c dataviz",
@@ -35,8 +35,8 @@
     "@angular/platform-browser-dynamic": "^17.3.11",
     "@angular/router": "^17.3.11",
     "@n7-frontend/icon-font": "https://github.com/net7/n7-icon-font.git#master",
-    "@net7/components": "^4.3.0",
-    "@net7/core": "^4.1.0",
+    "@net7/components": "^4.0.0",
+    "@net7/core": "^4.0.0",
     "core-js": "^2.5.4",
     "dayjs": "^1.11.1",
     "leaflet": "^1.6.0",

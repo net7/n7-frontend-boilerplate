@@ -1,4 +1,5 @@
 import { DataSource } from '@net7/core';
+// import { FacetYearRangeData } from '@net7/components';
 import { AwSearchModel } from '../search/aw-search.model';
 import entityLinksHelper from '../search/entity-links.helper';
 
