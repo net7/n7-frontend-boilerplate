@@ -9,6 +9,14 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+- Add link to advanced seach in normal seach
+
+Arianna
+
+- Add labels customization and qualification relation
+
 ## [5.2.15] - 2025-05-13
 
 Muruca

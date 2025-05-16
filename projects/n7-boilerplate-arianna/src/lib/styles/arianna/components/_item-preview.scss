@@ -206,6 +206,11 @@
    #RELATION-DESCRIPTION
 \* ------------------------------------ */
 /* Description of the relation with an entity, OC or AL */
+.aw-item-preview-container-relations {
+    display: inline-flex;
+    flex-direction: column;
+}
+
 .aw-item-preview-relation {
     display: inline-block;
     margin-top: $space * 1.5;

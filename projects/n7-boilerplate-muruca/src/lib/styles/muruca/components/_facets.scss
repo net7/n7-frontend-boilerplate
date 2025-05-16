@@ -14,6 +14,12 @@
         padding: 0;
     }
 
+    &__redirect-link {
+        border-bottom: 1px solid #dddddd;
+        padding-bottom: 24px;
+        margin-bottom: 24px;
+    }
+
     /* Wraps the actual facets */
     &__facets-wrapper {
 

@@ -174,7 +174,8 @@ export default (treeDepth) => ({
           typeOfEntity
           relatedLa: relatedAl {
             thumbnail
-            relation          
+            relation
+            qualification
             item {
               label
               id
@@ -219,6 +220,7 @@ export default (treeDepth) => ({
           relatedItems {
             thumbnail
             relation
+            qualification
             item {
               label
               id
@@ -246,6 +248,7 @@ export default (treeDepth) => ({
                 label
                 typeOfEntity
                 relation
+                qualification
             }
             count
           }
@@ -288,6 +291,7 @@ export default (treeDepth) => ({
               label
               typeOfEntity
               relation
+              qualification
             }
           }
           relatedItems {
@@ -395,6 +399,7 @@ export default (treeDepth) => ({
                   label
                   typeOfEntity
                   relation
+                  qualification
                 }
             }
             relatedItems {
@@ -467,6 +472,7 @@ export default (treeDepth) => ({
                 label
                 typeOfEntity
                 relation
+                qualification
               }
             }
             breadcrumbs {
@@ -578,6 +584,7 @@ export default (treeDepth) => ({
                     label
                     typeOfEntity
                     relation
+                    qualification
                   }
               }
               relatedItems {
