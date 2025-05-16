@@ -58,7 +58,6 @@ const EVENTHANDLER_MAP = {
 export class MrSearchFacetsLayoutComponent extends AbstractLayout implements OnInit, OnDestroy {
   @Input() searchService: MrSearchService;
 
-  // TO CHECK
   @Input() localeService: MrLocaleService;
 
   constructor() {
@@ -68,7 +67,6 @@ export class MrSearchFacetsLayoutComponent extends AbstractLayout implements OnI
   protected initPayload() {
     return {
       searchService: this.searchService,
-      // TO CHECK
       localeService: this.localeService,
     };
   }

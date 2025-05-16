@@ -104,7 +104,6 @@ export interface MrSearchFacetsConfig {
   /** aditional css classes */
   classes?: string;
 
-  // TO CHECK
   redirectLink?: {
     label: string,
     paths: {

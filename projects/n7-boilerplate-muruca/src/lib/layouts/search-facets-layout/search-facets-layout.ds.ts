@@ -10,27 +10,21 @@ export class SearchFacetsLayoutDS extends LayoutDataSource {
 
   public searchConfig;
 
-  // TO CHECK
   public localeService;
 
   public facets;
 
-  // TO CHECK
   public redirectPath;
 
-  // TO CHECK
   public redirectLabel;
 
   onInit(payload) {
     this.searchService = payload.searchService;
-    // TO CHECK
     this.localeService = payload.localeService;
-
     this.searchConfig = this.searchService.getConfig();
     this.facets = this.searchConfig.facets;
     this.initInputs();
 
-    // TO CHECK
     if (this.searchConfig.facets.redirectLink) {
       this.initRedirectLink(this.searchConfig.facets.redirectLink);
     }
@@ -55,16 +49,10 @@ export class SearchFacetsLayoutDS extends LayoutDataSource {
     });
   }
 
-  // TO CHECK
   initRedirectLink(redirectData) {
     const locale = this.localeService.getLocale();
     this.redirectLabel = _t(redirectData.label);
     this.redirectPath = redirectData.paths[locale];
-
-    // const locale = this.localeService.getLocale();
-    // const localPath = this.localeService.getLink(locale, 'advancedSearch');
-    // this.redirectLabel = _t(redirectData.label);
-    // this.redirectPath = localPath;
   }
 
   updateInputValue(id, newValue) {
