@@ -1,5 +1,7 @@
 import { LayoutDataSource, _t } from '@net7/core';
-import { Anchor, ItemPreviewData, TimelineData } from '@net7/components';
+import {
+  Anchor, ItemPreviewData, MetadataGroup, TimelineData
+} from '@net7/components';
 import { Timeline } from 'vis-timeline';
 import { Subject } from 'rxjs';
 import { first } from 'rxjs/operators';
@@ -7,6 +9,7 @@ import {
   ConfigurationService,
   CommunicationService,
   MainStateService,
+  helpers
 } from '@net7/boilerplate-common';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
@@ -201,6 +204,10 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
           delete res.sections['collection-places'];
         }
         const collections = [];
+        const itemPreviewOptions = {
+          limit: 100,
+          striptags: true
+        };
         Object.keys(res.sections).forEach((collection) => {
           if (String(collection).startsWith('collection-')) {
             if (res.sections[collection].items) {
@@ -210,12 +217,38 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
                     id: string;
                     link: string;
                     title: string;
+                    text: string;
+                    metadata: any;
                     type: string;
                     routeId?: string;
                     params?: object;
                     slug?: string;
                   }): ItemPreviewData => {
                     let anchor: Anchor;
+                    if (item.text) {
+                      // Sanitize HTML tags from the text content
+                      if (itemPreviewOptions.striptags) {
+                        item.text = helpers.striptags(item.text);
+                      }
+                      // Limit the length of the item preview text content
+                      if (itemPreviewOptions.limit
+                        && (item.text.length > itemPreviewOptions.limit)) {
+                        item.text = `${item.text.substring(0, itemPreviewOptions.limit)}...`;
+                      }
+                    }
+                    const metadata: MetadataGroup[] = [];
+                    if (Array.isArray(item.metadata)) {
+                      item.metadata.forEach((group) => {
+                        const metadataItems = [];
+                        (group.items || []).forEach((metadataItem) => {
+                          metadataItems.push({
+                            ...metadataItem,
+                            label: _t(metadataItem.label)
+                          });
+                        });
+                        metadata.push({ items: metadataItems });
+                      });
+                    }
                     if (item.routeId) {
                       const routeLink = this.localeService
                         .getLinkByRouteId(item.routeId, item.id, item.slug);
@@ -231,11 +264,14 @@ export class MrTimelineLayoutDS extends LayoutDataSource {
                     }
                     return {
                       title: item.title,
+                      text: item.text,
+                      metadata,
                       anchor
                     };
                   }
                 ),
                 header: res.sections[collection].header,
+                grid: res.sections[collection].grid,
               });
             }
             this.collectionData = collections;
