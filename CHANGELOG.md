@@ -9,13 +9,15 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.2.16] - 2025-05-16
+
 Muruca
 
-- Add link to advanced seach in normal seach
+-   Add link to advanced seach in normal seach
 
 Arianna
 
-- Add labels customization and qualification relation
+-   Add labels customization and qualification relation
 
 ## [5.2.15] - 2025-05-13
 
@@ -580,7 +582,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.15...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.16...HEAD
+
+[5.2.16]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.15...v5.2.16
 
 [5.2.15]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.14...v5.2.15
 
