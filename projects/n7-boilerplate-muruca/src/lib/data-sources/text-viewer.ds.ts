@@ -6,6 +6,16 @@ export class MrTextViewerDS extends DataSource {
 
   protected transform(data: TextViewerData): TextViewerData {
     if (!data) return null;
+
+    if (this.options.facsimileOptions && data.facsimile) {
+      if (!data.facsimile.options) {
+        data.facsimile.options = {};
+      }
+      Object.keys(this.options.facsimileOptions).forEach((key) => {
+        data.facsimile.options[key] = this.options.facsimileOptions[key];
+      });
+    }
+
     const {
       enableClickOnEntities, toggleColumn, searchId, searchApi
     } = this.options || {};
