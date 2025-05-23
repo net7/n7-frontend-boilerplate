@@ -9,6 +9,11 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+- Add possibility to hide a specific tab
+- Add facsimile options
+
 ## [5.2.16] - 2025-05-16
 
 Muruca

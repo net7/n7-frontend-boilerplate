@@ -126,6 +126,13 @@ export class MrResourceLayoutDS extends LayoutDataSource {
       const responseSection = response.sections[id];
       // set id
       widgetDataSource.id = id;
+      if (type === 'tabs') {
+        this.tabConfig = this.tabConfig.map((tab: any) => ({
+          id: tab.id,
+          label: tab.label,
+          hideTab: responseSection.includes(tab.id)
+        }));
+      }
       // check viewer tools
       if (type === 'viewer') {
         // update image viewer options
