@@ -9,9 +9,11 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.2.18] - 2025-05-23
+
 Muruca
 
-- Fix hide tab logic
+-   Fix hide tab logic
 
 ## [5.2.17] - 2025-05-23
 
@@ -593,7 +595,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.17...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.18...HEAD
+
+[5.2.18]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.17...v5.2.18
 
 [5.2.17]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.16...v5.2.17
 
