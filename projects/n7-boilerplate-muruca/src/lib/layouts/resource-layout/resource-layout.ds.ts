@@ -130,7 +130,7 @@ export class MrResourceLayoutDS extends LayoutDataSource {
         this.tabConfig = this.tabConfig.map((tab: any) => ({
           id: tab.id,
           label: tab.label,
-          hideTab: responseSection.includes(tab.id)
+          hideTab: (responseSection && responseSection.includes(tab.id))
         }));
       }
       // check viewer tools

@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+- Fix hide tab logic
+
 ## [5.2.17] - 2025-05-23
 
 Muruca
