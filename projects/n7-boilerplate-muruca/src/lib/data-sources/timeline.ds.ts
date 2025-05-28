@@ -14,7 +14,10 @@ export class MrTimelineDS extends DataSource {
 
   public timelineLoaded$: Subject<Timeline> = new Subject();
 
-  protected transform(data: { dataSet: DataSet }): TimelineData {
+  protected transform(data: {
+    dataSet: DataSet,
+    groups?: Array<{ id: number; content: string;}>
+  }): TimelineData {
     return {
       containerID: 'mr-timeline',
       libOptions: {
@@ -32,12 +35,14 @@ export class MrTimelineDS extends DataSource {
         zoomFriction: 8,
         ...this.options.libOptions
       },
+
       dataSet: data.dataSet.map((d) => {
         // Show dates that have identical start and end dates as points
         if (d.end && d.end === d.start) {
           return { ...d, ...{ end: undefined } };
         } return d;
       }),
+      ...(data.groups && { groups: data.groups }),
       _setInstance: (timeline) => {
         this.timeline = timeline;
         this.timelineLoaded$.next(timeline);
