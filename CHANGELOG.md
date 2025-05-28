@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+-   Add timeline groups feature
+
 ## [5.2.18] - 2025-05-23
 
 Muruca
