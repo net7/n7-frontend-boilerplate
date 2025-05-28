@@ -9,6 +9,8 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.2.19] - 2025-05-28
+
 Muruca
 
 -   Add timeline groups feature
@@ -599,7 +601,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.18...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.19...HEAD
+
+[5.2.19]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.18...v5.2.19
 
 [5.2.18]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.17...v5.2.18
 
