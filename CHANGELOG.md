@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+- Add anchor logic in accordion
+
 ## [5.2.19] - 2025-05-28
 
 Muruca
