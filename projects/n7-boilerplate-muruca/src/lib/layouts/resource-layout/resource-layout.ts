@@ -1,4 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component, OnInit, OnDestroy, AfterViewInit
+} from '@angular/core';
 import { ActivatedRoute, Data, Router } from '@angular/router';
 import {
   AbstractLayout,
@@ -69,7 +71,8 @@ const EVENTHANDLER_MAP = {
   selector: 'mr-resource-layout',
   templateUrl: './resource-layout.html',
 })
-export class MrResourceLayoutComponent extends AbstractLayout implements OnInit, OnDestroy {
+export class MrResourceLayoutComponent extends AbstractLayout implements OnInit, OnDestroy,
+AfterViewInit {
   private routerData: Data;
 
   constructor(
@@ -111,6 +114,20 @@ export class MrResourceLayoutComponent extends AbstractLayout implements OnInit,
     });
   }
 
+  ngAfterViewInit() {
+    // If a fragment (#id) is present in the url, the page scroll to that fragment
+    this.route.fragment.subscribe((fragment) => {
+      if (fragment) {
+        setTimeout(() => {
+          const element = document.getElementById(fragment);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 1000);
+      }
+    });
+  }
+
   ngOnDestroy() {
     this.onDestroy();
   }
@@ -126,6 +143,10 @@ export class MrResourceLayoutComponent extends AbstractLayout implements OnInit,
       }) => {
         const widgetOptions = options || {};
         widgetOptions.localeService = this.localeService;
+        // Add route to metadata-dynamic options
+        if (type === 'metadata-dynamic') {
+          options.route = this.route;
+        }
         this.widgets.push({
           id,
           options: widgetOptions,
