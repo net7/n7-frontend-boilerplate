@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+- Fix search-helper
+
 ## [5.2.21] - 2025-06-24
 
 Muruca
