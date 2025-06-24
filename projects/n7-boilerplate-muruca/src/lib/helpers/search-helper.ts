@@ -56,7 +56,7 @@ export default {
               break;
 
             case 'string':
-              state[key] = multiple ? value.split(',').map((v) => `${v.replace(/%2c/g, ',')}`) : `${value.replace(/%2c/g, ',')}`;
+              state[key] = multiple ? value.split(',').map((v) => `${v.replace(/%2c/g, ',')}`) : `${value}`.replace(/%2c/g, ',');
               break;
 
             case 'boolean':
