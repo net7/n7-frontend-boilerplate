@@ -16,6 +16,29 @@ export class MrTextViewerDS extends DataSource {
       });
     }
 
+    // Gestione libOptions
+    if (this.options.libOptions) {
+      if (!data.libOptions || typeof data.libOptions !== 'object') {
+        data.libOptions = {};
+      }
+      Object.keys(this.options.libOptions).forEach((key) => {
+        if (!data.libOptions[key] || typeof data.libOptions[key] !== 'object') {
+          data.libOptions[key] = {};
+        }
+        Object.keys(this.options.libOptions[key]).forEach((subKey) => {
+          data.libOptions[key][subKey] = this.options.libOptions[key][subKey];
+        });
+      });
+
+      // Debug libOptions
+      /*       console.log(' DEBUG libOptions:', {
+        'this.options.libOptions': this.options.libOptions,
+        'data.libOptions': data.libOptions,
+        'data.libOptions.pbPage': data.libOptions.pbPage,
+        'urlIgnore': data.libOptions.pbPage?.urlIgnore
+      }); */
+    }
+
     const {
       enableClickOnEntities, toggleColumn, searchId, searchApi
     } = this.options || {};

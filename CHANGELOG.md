@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+-   Add configurable libOptions from FE (text-viewer )
+
 ## [5.2.20] - 2025-06-20
 
 Muruca
