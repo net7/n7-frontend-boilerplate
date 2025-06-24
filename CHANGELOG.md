@@ -9,9 +9,11 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.2.22] - 2025-06-24
+
 Muruca
 
-- Fix search-helper
+-   Fix search-helper
 
 ## [5.2.21] - 2025-06-24
 
@@ -617,7 +619,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.21...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.22...HEAD
+
+[5.2.22]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.21...v5.2.22
 
 [5.2.21]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.20...v5.2.21
 
