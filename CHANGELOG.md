@@ -9,6 +9,8 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.2.23-rc1] - 2025-07-07
+
 ## [5.2.22] - 2025-06-24
 
 Muruca
@@ -619,7 +621,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.22...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.23-rc1...HEAD
+
+[5.2.23-rc1]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.22...v5.2.23-rc1
 
 [5.2.22]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.21...v5.2.22
 
