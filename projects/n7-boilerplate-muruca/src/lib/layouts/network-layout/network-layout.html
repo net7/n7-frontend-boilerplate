@@ -1,0 +1,27 @@
+<div class="network-layout-container" *ngIf="lb.dataSource">
+  <div class="network-header">
+    <h2>{{ lb.dataSource.pageConfig?.title}}</h2>
+    <p>{{ lb.dataSource.pageConfig?.mapHeader }}</p>
+  </div>
+  
+  <div class="network-legend-section" *ngIf="lb.dataSource.legend?.length">
+    <div class="legend-toggle">
+      <button 
+        class="legend-toggle-btn" 
+        (click)="lb.dataSource.toggleLegend()"
+        [class.active]="lb.dataSource.showLegend">
+        <span class="toggle-icon">{{ lb.dataSource.showLegend ? '−' : '+' }}</span>
+        Legenda
+      </button>
+    </div>
+    
+    <div class="network-legend" *ngIf="lb.dataSource.showLegend">
+      <div class="legend-item" *ngFor="let item of lb.dataSource.legend">
+        <span class="legend-color" [style.background-color]="item.color"></span>
+        <span>{{ item.label }}</span>
+      </div>
+    </div>
+  </div>
+  
+  <div id="demo-network" class="network-visualization"></div>
+</div>

@@ -17,6 +17,7 @@ import { MrAdvancedSearchLayoutComponent } from './layouts/advanced-search-layou
 import { MrHomeLayoutComponent } from './layouts/home-layout/home-layout';
 import { MrItineraryLayoutComponent } from './layouts/itinerary-layout/itinerary-layout';
 import { MrMapLayoutComponent } from './layouts/map-layout/map-layout';
+import { MrNetworkLayoutComponent } from './layouts/network-layout/network-layout';
 import { MrPostsLayoutComponent } from './layouts/posts-layout/posts-layout';
 import { MrResourceLayoutComponent } from './layouts/resource-layout/resource-layout';
 import { MrSearchFacetsLayoutComponent } from './layouts/search-facets-layout/search-facets-layout';
@@ -41,6 +42,7 @@ const COMPONENTS = [
   MrHomeLayoutComponent,
   MrItineraryLayoutComponent,
   MrMapLayoutComponent,
+  MrNetworkLayoutComponent,
   MrMetadataReadmoreComponent,
   MrPostsLayoutComponent,
   MrResourceLayoutComponent,

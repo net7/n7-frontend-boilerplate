@@ -13,6 +13,7 @@ import {
   MrTimelineLayoutComponent,
   MrMapLayoutComponent,
   LocaleDependenciesGuard,
+  MrNetworkLayoutComponent,
   // DynamicPathGuard,
 } from '@net7/boilerplate-muruca';
 
@@ -133,6 +134,14 @@ const config: {
       en: 'en/timeline'
     },
     isRedirect: true,
+  },
+  network: {
+    component: MrNetworkLayoutComponent,
+    paths: {
+      it: 'network',
+      en: 'en/network'
+    },
+    data: { configId: 'network' }
   },
   map: {
     component: MrMapLayoutComponent,
