@@ -102,13 +102,11 @@ export class MrNetworkLayoutDS extends LayoutDataSource {
         this.legend = [];
         Object.keys(mergedGroups).forEach((key) => {
           const group = mergedGroups[key];
-          if (group.label) {
-            this.legend.push({
-              key,
-              label: group.label || key,
-              color: group.color || '#cccccc'
-            });
-          }
+          this.legend.push({
+            key,
+            label: group.label || key,
+            color: group.color || '#cccccc'
+          });
         });
 
         const libOptions = {
