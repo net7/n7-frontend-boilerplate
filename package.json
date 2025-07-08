@@ -1,6 +1,6 @@
 {
   "name": "n7-boilerplate",
-  "version": "5.2.21",
+  "version": "5.2.23-rc2",
   "scripts": {
     "ng": "ng",
     "start": "ng serve -c muruca",

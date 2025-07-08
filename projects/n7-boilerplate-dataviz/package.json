@@ -1,6 +1,6 @@
 {
   "name": "@net7/boilerplate-dataviz",
-  "version": "5.2.21",
+  "version": "5.2.23-rc2",
   "peerDependencies": {
     "@angular/common": "^17.3.11",
     "@angular/core": "^17.3.11"
