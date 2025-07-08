@@ -9,6 +9,8 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.3.0] - 2025-07-08
+
 Muruca
 
 -   Add network layout
@@ -628,7 +630,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.23-rc2...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.3.0...HEAD
+
+[5.3.0]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.23-rc2...v5.3.0
 
 [5.2.23-rc2]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.23-rc1...v5.2.23-rc2
 
