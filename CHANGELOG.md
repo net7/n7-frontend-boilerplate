@@ -9,6 +9,11 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+-   Add network layout
+-   Minor fix config resource
+
 ## [5.2.23-rc2] - 2025-07-07
 
 ## [5.2.23-rc1] - 2025-07-07

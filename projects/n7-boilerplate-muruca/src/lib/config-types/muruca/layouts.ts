@@ -1,4 +1,4 @@
-import { LibOptions } from '@net7/components';
+import { LibOptions, NetworkLibOptions } from '@net7/components';
 import { MrSearchConfig } from '../../interfaces/search.interface';
 import {
   ConfigMurucaBreadcrumbsSection,
@@ -70,6 +70,13 @@ export interface ConfigMurucaTimelineLayout extends ConfigMurucaLayout {
   mapHeader: string;
   /** timeline library options */
   libOptions: LibOptions;
+}
+
+export interface ConfigMurucaNetworkLayout extends ConfigMurucaLayout {
+  /** map header title */
+  mapHeader: string;
+  /** timeline library options */
+  libOptions: NetworkLibOptions;
 }
 
 type SearchSortConfig = {

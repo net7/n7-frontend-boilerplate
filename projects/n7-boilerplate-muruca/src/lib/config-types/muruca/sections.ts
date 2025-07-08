@@ -58,7 +58,7 @@ export interface ConfigMurucaInfoBoxSection extends ConfigMurucaSection {
 }
 
 export interface ConfigMurucaTextViewerSection extends ConfigMurucaSection {
-  type: 'text';
+  type: 'text-viewer';
 }
 
 export interface ConfigMurucaTitleSection extends ConfigMurucaSection {
