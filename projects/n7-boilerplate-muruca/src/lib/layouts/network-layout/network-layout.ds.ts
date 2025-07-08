@@ -91,7 +91,7 @@ export class MrNetworkLayoutDS extends LayoutDataSource {
       try {
         const { nodes } = this.networkData;
         const { edges } = this.networkData;
-        const networkGroups = this.networkData.groups || {};
+        const networkGroups = this.networkData?.groups || {};
         const options = this.pageConfig.libOptions;
         const mergedGroups = {
           ...networkGroups,
