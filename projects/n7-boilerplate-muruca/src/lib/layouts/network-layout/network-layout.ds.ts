@@ -1,7 +1,4 @@
 import { LayoutDataSource } from '@net7/core';
-import {
-  NetworkData
-} from '@net7/components';
 import { Network } from 'vis-network';
 import { Subject } from 'rxjs';
 import {
@@ -11,6 +8,9 @@ import {
 } from '@net7/boilerplate-common';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import {
+  NetworkData
+} from './network-layouts.types';
 import 'leaflet.markercluster';
 // import { GetResourceResponse } from './network-layouts.types';
 import { MrLocaleService } from '../../services/locale.service';
