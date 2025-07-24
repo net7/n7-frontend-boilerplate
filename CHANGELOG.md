@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+-   Minor fix network layout
+
 ## [5.3.0] - 2025-07-08
 
 Muruca
