@@ -43,7 +43,7 @@ export class MrNetworkLayoutEH extends EventHandler {
                   // Navigazione interna
                   if (node?.payload?.link?.routeId) {
                     const routeLink = this.localeService.getLinkByRouteId(
-                      (node.payload.link.routeId).replace(/^mrc_/, ''),
+                      node.payload.link.routeId,
                       node.payload.link.id,
                       node.payload.link.slug
                     );
