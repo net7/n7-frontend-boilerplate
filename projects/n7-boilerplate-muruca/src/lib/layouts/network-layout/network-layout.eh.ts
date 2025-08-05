@@ -1,10 +1,14 @@
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { EventHandler } from '@net7/core';
 import { Network } from 'vis-network';
 import { Location } from '@angular/common';
+import {
+  map, Subject, switchMap, takeUntil, tap
+} from 'rxjs';
 import { MrResourceModalService } from '../../services/resource-modal.service';
 import { MrLocaleService } from '../../services/locale.service';
 import linksHelper from '../../helpers/links-helper';
+import { MrLayoutStateService, LayoutState } from '../../services/layout-state.service';
 
 export class MrNetworkLayoutEH extends EventHandler {
   private modalService: MrResourceModalService;
@@ -17,6 +21,10 @@ export class MrNetworkLayoutEH extends EventHandler {
 
   private location: Location;
 
+  private destroy$: Subject<void> = new Subject();
+
+  private layoutState: MrLayoutStateService;
+
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
@@ -27,6 +35,8 @@ export class MrNetworkLayoutEH extends EventHandler {
           this.router = payload.router;
           this.localeService = payload.localeService;
           this.location = payload.location;
+          this.layoutState = payload.layoutState;
+          this.listenRoute();
           // scroll top
           window.scrollTo(0, 0);
 
@@ -114,4 +124,30 @@ export class MrNetworkLayoutEH extends EventHandler {
       this.modalService.open(id, resourceType);
     }
   };
+
+  private listenRoute() {
+    this.route.paramMap.pipe(
+      takeUntil(this.destroy$),
+      tap(() => {
+        this.layoutState.set('content', LayoutState.LOADING);
+      }),
+      map((params: ParamMap) => params.get('id')),
+      switchMap((id) => this.dataSource.pageRequest$(id, (err) => {
+        if (err.status === 404) {
+          // getting not found path
+          const { config } = this.router;
+          const route404 = config.find(({ data }) => data?.id === 'page-404');
+          const path404 = route404?.path || 'page-404';
+          this.router.navigate([path404]);
+        }
+        console.warn(`Error loading resource layout for ${id}`, err.message);
+        this.layoutState.set('content', LayoutState.ERROR);
+      }))
+    ).subscribe((response) => {
+      this.layoutState.set('content', LayoutState.SUCCESS);
+      this.dataSource.handleResponse(response);
+      // scroll top
+      window.scrollTo(0, 0);
+    });
+  }
 }

@@ -1,7 +1,50 @@
-import { NetworkData } from './network-layouts.types';
+import { NetworkData } from '@net7/components';
 
 export const NETWORK_MOCK: NetworkData = {
   containerID: 'demo-network',
+  libOptions: {
+    nodes: {
+      shape: 'dot',
+      size: 40,
+      font: {
+        size: 14,
+        color: '#333333'
+      }
+    },
+    edges: {
+      arrows: {
+        to: { enabled: true, scaleFactor: 1.2 }
+      },
+      width: 1,
+      font: {
+        size: 10,
+        align: 'middle',
+        color: '#333333'
+      },
+      color: {
+        color: '#2B7CE9',
+        highlight: '#D2E5FF'
+      }
+    },
+    groups: {},
+    physics: {
+      stabilization: true,
+      barnesHut: {
+        gravitationalConstant: -3000,
+        springLength: 300,
+        springConstant: 0.02
+      }
+    },
+    interaction: {
+      hover: true,
+      tooltipDelay: 200,
+      zoomView: true,
+      dragView: true
+    },
+    layout: {
+      improvedLayout: true
+    }
+  },
   nodes: [
     {
       id: 1,

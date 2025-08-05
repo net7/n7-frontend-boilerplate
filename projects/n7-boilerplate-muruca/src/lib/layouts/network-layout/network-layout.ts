@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import {
   AbstractLayout,
   CommunicationService,
@@ -20,6 +20,8 @@ import { MrLocaleService } from '../../services/locale.service';
 })
 export class MrNetworkLayoutComponent extends AbstractLayout implements OnInit, OnDestroy {
   private configId: string;
+
+  private routeData: Data;
 
   constructor(
     layoutsConfiguration: LayoutsConfigurationService,
@@ -48,7 +50,8 @@ export class MrNetworkLayoutComponent extends AbstractLayout implements OnInit, 
       router: this.router,
       localeService: this.localeService,
       location: this.location,
-      options: this.config.options || {}
+      options: this.config.options || {},
+      routeData: this.routeData,
     };
   }
 
@@ -56,6 +59,7 @@ export class MrNetworkLayoutComponent extends AbstractLayout implements OnInit, 
     this.route.data.subscribe((data) => {
       this.layoutState.add('content');
       this.configId = data.configId;
+      this.routeData = data;
       this.onInit();
     });
   }
