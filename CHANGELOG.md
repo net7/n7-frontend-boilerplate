@@ -9,6 +9,8 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.3.3] - 2025-08-06
+
 Muruca
 
 -   Change import for network event handler
@@ -646,7 +648,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.3.2...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.3.3...HEAD
+
+[5.3.3]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.3.2...v5.3.3
 
 [5.3.2]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.3.1...v5.3.2
 
