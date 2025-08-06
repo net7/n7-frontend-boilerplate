@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+-   Added network layoud id configuration, update components, update mock data for network layout, update interfaces import (now import from components)
+
 ## [5.3.1] - 2025-07-24
 
 Muruca

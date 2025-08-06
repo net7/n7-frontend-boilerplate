@@ -1,16 +1,16 @@
 import { LayoutDataSource } from '@net7/core';
 import { Network } from 'vis-network';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import {
   ConfigurationService,
   CommunicationService,
 /*   helpers */
 } from '@net7/boilerplate-common';
-import { Router } from '@angular/router';
+import { Data, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import {
   NetworkData
-} from './network-layouts.types';
+} from '@net7/components';
 import 'leaflet.markercluster';
 // import { GetResourceResponse } from './network-layouts.types';
 import { MrLocaleService } from '../../services/locale.service';
@@ -45,6 +45,8 @@ export class MrNetworkLayoutDS extends LayoutDataSource {
 
   public networkListener$: Subject<Network> = new Subject();
 
+  private routeData: Data;
+
   public toggleLegend() {
     this.showLegend = !this.showLegend;
   }
@@ -57,16 +59,15 @@ export class MrNetworkLayoutDS extends LayoutDataSource {
     this.localeService = payload.localeService;
     this.location = payload.location;
     this.configId = payload.configId;
-
+    this.routeData = payload.routeData;
     this.pageConfig = this.configuration.get(this.configId);
-    const locale = this.localeService.getLocale();
 
     // update the network
-    this.loading.network = true;
+    /*     this.loading.network = true;
     this.communication
       .request$('network', {
         method: 'GET',
-        urlParams: locale ? `?locale=${locale}` : '',
+        urlParams: locale ? `$?locale=${locale}` : '',
         onError: (e) => console.error(e),
       })
       .subscribe((d) => {
@@ -78,7 +79,28 @@ export class MrNetworkLayoutDS extends LayoutDataSource {
         this.one('mr-network').update(d);
         this.loading.network = false;
         this.initializeNetwork();
-      });
+      }); */
+  }
+
+  pageRequest$(id, onError: (err: any) => void): Observable<any> {
+    const { locale } = this.routeData;
+    this.loading.network = true;
+    return this.communication.request$('network', {
+      onError,
+      method: 'GET',
+      urlParams: locale ? `${id}?locale=${locale}` : id
+    });
+  }
+
+  handleResponse(response) {
+    this.networkData = response;
+    this.loading.network = false;
+    this.one('mr-network').updateOptions({
+      libOptions: this.pageConfig.libOptions,
+    });
+    this.one('mr-network').update(response);
+    this.loading.network = false;
+    this.initializeNetwork();
   }
 
   public initializeNetwork() {
