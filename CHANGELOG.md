@@ -9,6 +9,8 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.3.2] - 2025-08-06
+
 Muruca
 
 -   Added network layoud id configuration, update components, update mock data for network layout, update interfaces import (now import from components)
@@ -640,7 +642,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.3.1...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.3.2...HEAD
+
+[5.3.2]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.3.1...v5.3.2
 
 [5.3.1]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.3.0...v5.3.1
 
