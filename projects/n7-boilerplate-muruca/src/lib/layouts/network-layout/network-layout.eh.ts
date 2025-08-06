@@ -2,9 +2,10 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { EventHandler } from '@net7/core';
 import { Network } from 'vis-network';
 import { Location } from '@angular/common';
+import { Subject } from 'rxjs';
 import {
-  map, Subject, switchMap, takeUntil, tap
-} from 'rxjs';
+  takeUntil, switchMap, map, tap
+} from 'rxjs/operators';
 import { MrResourceModalService } from '../../services/resource-modal.service';
 import { MrLocaleService } from '../../services/locale.service';
 import linksHelper from '../../helpers/links-helper';

@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+-   Change import for network event handler
+
 ## [5.3.2] - 2025-08-06
 
 Muruca
