@@ -115,6 +115,9 @@ AfterViewInit {
   }
 
   ngAfterViewInit() {
+    const { configId } = this.routerData;
+    const timeout = this.configuration.get(configId).pageLoad || 1000;
+
     // If a fragment (#id) is present in the url, the page scroll to that fragment
     this.route.fragment.subscribe((fragment) => {
       if (fragment) {
@@ -123,7 +126,7 @@ AfterViewInit {
           if (element) {
             element.scrollIntoView({ behavior: 'smooth' });
           }
-        }, 1000);
+        }, timeout);
       }
     });
   }

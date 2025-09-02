@@ -38,6 +38,8 @@ export interface ConfigMurucaHomeLayout extends ConfigMurucaLayout {
 export interface ConfigMurucaResourceLayout extends ConfigMurucaLayout {
   /** resource type (used by resource modal) */
   type: string;
+  /** delay time before scrolling to an anchor */
+  pageLoad: number;
   /** layout sections (top | content) */
   sections: {
     [key in 'top' | 'content']: (
