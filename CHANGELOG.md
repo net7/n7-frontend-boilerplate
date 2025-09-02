@@ -9,9 +9,11 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.3.4] - 2025-09-02
+
 Muruca
 
-- Add fragment to search results
+-   Add fragment to search results
 
 ## [5.3.3] - 2025-08-06
 
@@ -652,7 +654,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.3.3...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.3.4...HEAD
+
+[5.3.4]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.3.3...v5.3.4
 
 [5.3.3]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.3.2...v5.3.3
 
