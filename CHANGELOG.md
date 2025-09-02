@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+- Add fragment to search results
+
 ## [5.3.3] - 2025-08-06
 
 Muruca

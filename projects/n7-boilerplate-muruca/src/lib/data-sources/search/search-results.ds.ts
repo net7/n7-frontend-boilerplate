@@ -143,6 +143,7 @@ export class MrSearchResultsDS extends DataSource {
       anchor = {
         href: routeLink,
         queryParams: item.params || null,
+        fragment: item.fragment || null,
       };
     } else if (item.link) {
       anchor = {
