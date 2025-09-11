@@ -39,7 +39,9 @@ export interface ConfigMurucaResourceLayout extends ConfigMurucaLayout {
   /** resource type (used by resource modal) */
   type: string;
   /** delay time before scrolling to an anchor */
-  pageLoad: number;
+  pageLoad?: number;
+  /** Threshold where the "read-more" button appears */
+  maxHeight?: number;
   /** layout sections (top | content) */
   sections: {
     [key in 'top' | 'content']: (

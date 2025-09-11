@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+- Add mapCenter option in resource map
+
 ## [5.3.4] - 2025-09-02
 
 Muruca
