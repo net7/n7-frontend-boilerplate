@@ -9,9 +9,11 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.3.5] - 2025-09-11
+
 Muruca
 
-- Add mapCenter option in resource map
+-   Add mapCenter option in resource map
 
 ## [5.3.4] - 2025-09-02
 
@@ -658,7 +660,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.3.4...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.3.5...HEAD
+
+[5.3.5]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.3.4...v5.3.5
 
 [5.3.4]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.3.3...v5.3.4
 
