@@ -9,6 +9,11 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+-   Add new component: parallel text viewer
+-   Add parallel text viewer component ds, eh, layout and style
+
 ## [5.3.5] - 2025-09-11
 
 Muruca
