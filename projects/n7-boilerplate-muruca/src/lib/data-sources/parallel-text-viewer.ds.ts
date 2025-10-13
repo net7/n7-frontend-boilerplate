@@ -17,7 +17,7 @@ export class MrParallelTextViewerDS extends DataSource {
       });
     } */
     if (this.options) {
-    // Gestione libOptions
+    // Gestione delle libOptions
       if (this.options.libOptions) {
         if (!data.libOptions || typeof data.libOptions !== 'object') {
           data.libOptions = {};
@@ -38,11 +38,11 @@ export class MrParallelTextViewerDS extends DataSource {
         'urlIgnore': data.libOptions.pbPage?.urlIgnore
       }); */
       }
-      // Gestione grid
+      // Gestione della grid
       if (this.options.grid) {
         data.grid = this.options.grid;
       }
-      // Gestione panels
+      // Gestione dei panels
       if (this.options.panels) {
         this.options.panels.forEach((panelProperties) => {
           const panelIndex = data.panels.findIndex(
