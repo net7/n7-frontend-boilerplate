@@ -9,6 +9,8 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.4.0] - 2025-10-13
+
 Muruca
 
 -   Add new component: parallel text viewer
@@ -665,7 +667,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.3.5...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.4.0...HEAD
+
+[5.4.0]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.3.5...v5.4.0
 
 [5.3.5]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.3.4...v5.3.5
 
