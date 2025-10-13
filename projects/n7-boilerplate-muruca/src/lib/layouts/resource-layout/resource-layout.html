@@ -185,7 +185,19 @@
                           </n7-text-viewer>
                     </div>
                   </div>
-                  
+                </ng-container>
+
+                <!-- PARALLEL TEXT VIEWER -->
+                <ng-container *ngSwitchCase="'parallel-text-viewer'">
+                  <div class="mr-content-block mr-content-block-text-viewer mr-content-block-parallel-text-viewer">
+                        <h3 *ngIf="section.title" class="mr-content-block__title">
+                            {{ section.title }}
+                        </h3>
+                        <div class="mr-content-block__content">
+                          <n7-parallel-text-viewer [data]="lb.widgets[section.id].ds.out$ | async" [emit]="lb.widgets[section.id].emit">
+                          </n7-parallel-text-viewer>
+                    </div>
+                  </div>
                 </ng-container>
 
                 <!-- MAP -->

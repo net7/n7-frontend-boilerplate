@@ -61,6 +61,16 @@ export interface ConfigMurucaTextViewerSection extends ConfigMurucaSection {
   type: 'text-viewer';
 }
 
+export interface ConfigMurucaParallelTextViewerSection extends ConfigMurucaSection {
+  type: 'parallel-text-viewer';
+  options?: {
+    /** grid */
+    grid?: any;
+    /** panels */
+    panels?: any;
+  };
+}
+
 export interface ConfigMurucaTitleSection extends ConfigMurucaSection {
   type: 'title';
 }

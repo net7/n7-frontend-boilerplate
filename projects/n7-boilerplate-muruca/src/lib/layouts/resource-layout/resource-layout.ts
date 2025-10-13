@@ -14,6 +14,7 @@ import { MrResourceModalService } from '../../services/resource-modal.service';
 import { MrResourceLayoutConfig as config } from './resource-layout.config';
 import { MrImageViewerEH } from '../../event-handlers/image-viewer.eh';
 import { MrTextViewerEH } from '../../event-handlers/text-viewer.eh';
+import { MrParallelTextViewerEH } from '../../event-handlers/parallel-text-viewer.eh';
 import { MrImageViewerToolsEH } from '../../event-handlers/image-viewer-tools.eh';
 import { MrCollectionEH } from '../../event-handlers/collection.eh';
 import { MrImageViewerOverlayDetailsEH } from '../../event-handlers/image-viewer-overlay-details.eh';
@@ -29,6 +30,7 @@ import {
   MrItemPreviewDS,
   MrMetadataDS,
   MrTextViewerDS,
+  MrParallelTextViewerDS,
   MrResourceTabsDS,
   MrImageViewerOverlayDetailsDS,
   MrMetadataDynamicDS,
@@ -52,6 +54,7 @@ const DATASOURCE_MAP = {
   'viewer-tools': MrImageViewerToolsDS,
   'viewer-overlay-details': MrImageViewerOverlayDetailsDS,
   'text-viewer': MrTextViewerDS,
+  'parallel-text-viewer': MrParallelTextViewerDS,
   'metadata-dynamic': MrMetadataDynamicDS,
   'viewer-iiif': MrImageViewerIiifDS,
 };
@@ -61,6 +64,7 @@ const EVENTHANDLER_MAP = {
   'viewer-tools': MrImageViewerToolsEH,
   'viewer-overlay-details': MrImageViewerOverlayDetailsEH,
   'text-viewer': MrTextViewerEH,
+  'parallel-text-viewer': MrParallelTextViewerEH,
   collection: MrCollectionEH,
   'metadata-dynamic': MrMetadataDynamicEH,
   button: MrButtonEH,
