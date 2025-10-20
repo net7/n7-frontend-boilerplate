@@ -216,6 +216,14 @@ export class MrParallelTextViewerDS extends DataSource {
       }
     }
 
+    const insideTeiApp = clickPath.find((el) => el.className
+      && typeof el.className === 'string'
+      && el.className.includes('tei-app'));
+
+    if (insideTeiApp && (insideTeiApp as HTMLElement).style.display === 'block') {
+      return;
+    }
+
     // Chiusura note con tasto
     const closeNoteButton = clickPath.find((el) => el.className
       && typeof el.className === 'string'
