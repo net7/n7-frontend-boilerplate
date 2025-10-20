@@ -9,6 +9,8 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.4.1] - 2025-10-20
+
 Muruca
 
 -   Minor fix parallel text viewer, close app button    
@@ -671,7 +673,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.4.0...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.4.1...HEAD
+
+[5.4.1]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.4.0...v5.4.1
 
 [5.4.0]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.3.5...v5.4.0
 
