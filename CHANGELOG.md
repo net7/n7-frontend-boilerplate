@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+-   Minor fix parallel text viewer, close app button    
+
 ## [5.4.0] - 2025-10-13
 
 Muruca
