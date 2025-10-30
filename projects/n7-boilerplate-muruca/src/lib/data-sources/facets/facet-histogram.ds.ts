@@ -18,7 +18,7 @@ export class FacetHistogramDS extends DataSource implements FacetDataSource {
     const items = this.parseLinks(links); // format data
 
     const histogramData: HistogramRangeData = {
-      containerId: 'container-for-histogram',
+      containerId: `container-for-histogram-${this.id}`,
       width: 450,
       height: 50,
       colours: {
@@ -102,7 +102,7 @@ export class FacetHistogramDS extends DataSource implements FacetDataSource {
    * Loads tippy tooltips and appends them to the histogram bars
    */
   loadTooltips() {
-    const elements = document.querySelectorAll('#container-for-histogram g.bars rect.bars');
+    const elements = document.querySelectorAll(`#container-for-histogram-${this.id} g.bars rect.bars`);
     tippy(elements, {
       content(reference) {
         const start = reference.getAttribute('data-start');

@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+- Fix facet histogram
+
 ## [5.4.1] - 2025-10-20
 
 Muruca
