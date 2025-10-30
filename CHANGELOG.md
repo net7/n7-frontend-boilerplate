@@ -9,9 +9,11 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.4.2] - 2025-10-30
+
 Muruca
 
-- Fix facet histogram
+-   Fix facet histogram
 
 ## [5.4.1] - 2025-10-20
 
@@ -677,7 +679,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.4.1...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.4.2...HEAD
+
+[5.4.2]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.4.1...v5.4.2
 
 [5.4.1]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.4.0...v5.4.1
 
