@@ -2,7 +2,7 @@ import { EventHandler } from '@net7/core';
 import { FacetHistogramDS } from '../../data-sources/facets/facet-histogram.ds';
 
 export class FacetHistogramEH extends EventHandler {
-  dataSource: FacetHistogramDS
+  dataSource: FacetHistogramDS;
 
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
