@@ -20,6 +20,7 @@ export * from './timeline.ds';
 export * from './year-header.ds';
 export * from './gallery.ds';
 export * from './network.ds';
+export * from './network-resource.ds';
 export * from './parallel-text-viewer.ds';
 // search layout
 export * from './search/search-page-title.ds';

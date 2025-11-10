@@ -201,13 +201,22 @@
                 </ng-container>
 
                 <!-- MAP -->
-             <ng-container *ngSwitchCase="'map'">
-                  <div class="mr-content-block mr-content-block-map">
-                    <div class="mr-content-block__content">
-                        <n7-map [data]="lb.widgets[section.id].ds.out$ | async" [emit]="lb.widgets[section.id].emit"></n7-map>
+                <ng-container *ngSwitchCase="'map'">
+                    <div class="mr-content-block mr-content-block-map">
+                        <div class="mr-content-block__content">
+                            <n7-map [data]="lb.widgets[section.id].ds.out$ | async" [emit]="lb.widgets[section.id].emit"></n7-map>
+                        </div>
                     </div>
-                </div>
-            </ng-container>
+                </ng-container>
+
+                <!-- NETWORK -->
+                <ng-container *ngSwitchCase="'network-resource'">
+                    <div class="mr-content-block mr-content-block-network">
+                        <div class="mr-content-block__content">
+                            <div id="demo-network" class="network-visualization"><p>Network</p></div>
+                        </div>
+                    </div>
+                </ng-container>
     
                 <!-- INFO BOX -->
                 <ng-container *ngSwitchCase="'info-box'">
