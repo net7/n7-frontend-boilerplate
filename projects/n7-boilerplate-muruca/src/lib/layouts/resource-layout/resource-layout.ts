@@ -18,7 +18,7 @@ import { MrParallelTextViewerEH } from '../../event-handlers/parallel-text-viewe
 import { MrImageViewerToolsEH } from '../../event-handlers/image-viewer-tools.eh';
 import { MrCollectionEH } from '../../event-handlers/collection.eh';
 import { MrImageViewerOverlayDetailsEH } from '../../event-handlers/image-viewer-overlay-details.eh';
-import { MrButtonEH, MrMetadataDynamicEH } from '../../event-handlers';
+import { MrButtonEH, MrMetadataDynamicEH, MrNetworkResourceEH } from '../../event-handlers';
 import {
   MrBreadcrumbsDS,
   MrButtonDS,
@@ -35,6 +35,7 @@ import {
   MrImageViewerOverlayDetailsDS,
   MrMetadataDynamicDS,
   MrImageViewerIiifDS,
+  MrNetworkResourceDS,
 } from '../../data-sources';
 import { MrMapDS } from '../../data-sources/map.ds';
 import { MrLocaleService } from '../../services/locale.service';
@@ -57,6 +58,7 @@ const DATASOURCE_MAP = {
   'parallel-text-viewer': MrParallelTextViewerDS,
   'metadata-dynamic': MrMetadataDynamicDS,
   'viewer-iiif': MrImageViewerIiifDS,
+  'network-resource': MrNetworkResourceDS
 };
 
 const EVENTHANDLER_MAP = {
@@ -68,6 +70,7 @@ const EVENTHANDLER_MAP = {
   collection: MrCollectionEH,
   'metadata-dynamic': MrMetadataDynamicEH,
   button: MrButtonEH,
+  'network-resource': MrNetworkResourceEH,
   // map: MrMapEH
 };
 

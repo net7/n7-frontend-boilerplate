@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+-   Add network-resource ds and eh
+
 ## [5.4.2] - 2025-10-30
 
 Muruca

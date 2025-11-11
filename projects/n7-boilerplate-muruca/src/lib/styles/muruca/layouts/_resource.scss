@@ -225,6 +225,11 @@
             }
         }
 
+        // Network
+        .network-visualization {
+            height: 600px
+        }
+
         /* Sections border */
         .mr-resource__metadata + .mr-resource__metadata,
         .mr-resource__metadata-dynamic + .mr-resource__metadata-dynamic,
