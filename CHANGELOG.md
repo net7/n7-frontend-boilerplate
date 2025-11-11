@@ -9,6 +9,8 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.4.3] - 2025-11-11
+
 Muruca
 
 -   Add network-resource ds and eh
@@ -683,7 +685,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.4.2...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.4.3...HEAD
+
+[5.4.3]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.4.2...v5.4.3
 
 [5.4.2]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.4.1...v5.4.2
 
