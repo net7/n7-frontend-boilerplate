@@ -119,6 +119,23 @@
                 }
             }
         }
+
+        /* Date range inputs inline */
+        .n7-facets-wrapper__group:has(.date-range-class) {
+            .n7-facet {
+                display: flex;
+                gap: $space*2;
+            }
+
+            .n7-facet__section-input-text {
+                flex: 1;
+
+                .n7-facet__section-input,
+                .n7-facet__input-text-wrapper {
+                    width: 100%;
+                }
+            }
+        }
     }
 
     &__facets {
