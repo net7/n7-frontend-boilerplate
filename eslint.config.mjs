@@ -1,10 +1,9 @@
-import { defineConfig } from 'eslint/config';
 import eslint from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import prettierConfig from 'eslint-config-prettier';
 import importPlugin from 'eslint-plugin-import';
 
-export default defineConfig(
+export default [
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
   prettierConfig,
@@ -39,5 +38,5 @@ export default defineConfig(
       'no-useless-constructor': 'off',
       'comma-dangle': 'off',
     },
-  }
-);
+  },
+];
