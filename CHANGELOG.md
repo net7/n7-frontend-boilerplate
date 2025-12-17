@@ -9,6 +9,8 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.4.4] - 2025-12-17
+
 Muruca
 
 -   Add logic in parallel text viewer data source for scrolling elements in index 
@@ -690,7 +692,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.4.3...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.4.4...HEAD
+
+[5.4.4]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.4.3...v5.4.4
 
 [5.4.3]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.4.2...v5.4.3
 
