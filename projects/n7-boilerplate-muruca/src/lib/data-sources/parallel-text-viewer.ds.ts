@@ -1,10 +1,12 @@
-import { ParallelTextViewerData } from '@net7/components';
+// import { ParallelTextViewerData } from '@net7/components';
 import { DataSource } from '@net7/core';
 
 export class MrParallelTextViewerDS extends DataSource {
   id: string;
 
-  protected transform(data: ParallelTextViewerData): ParallelTextViewerData {
+  // protected transform(data: ParallelTextViewerData): ParallelTextViewerData {
+  // ^^^^^^^^^^^^^se va buildare components --- 17-12-2025^^^^^^^^^^^^^^^^^
+  protected transform(data: any): any {
     if (!data) return null;
 
     /*
@@ -60,8 +62,8 @@ export class MrParallelTextViewerDS extends DataSource {
     }
     const {
       enableClickOnEntities, toggleColumn,
-      // searchId,
-      // searchApi
+      searchId,
+      searchApi
     } = this.options || {};
     data.toggleColumn = toggleColumn;
     // force tei publisher endpoint value
@@ -74,7 +76,7 @@ export class MrParallelTextViewerDS extends DataSource {
       { once: true }
     );
 
-    // const params = new URLSearchParams(document.location.search);
+    const params = new URLSearchParams(document.location.search);
     // const id = params.get('id');
 
     this.setupViewClickListeners();
@@ -131,20 +133,40 @@ export class MrParallelTextViewerDS extends DataSource {
       });
     }
 
-    /*     if (params.get('hq')) {
+    /*       if (params.get('hq')) {
       if (searchApi) {
         const xmlQueryUrl = `${searchApi.url
         }?resource-id=${searchApi['resource-id']
         }&searchId=${searchId
         }&xml=${data.docs[0]?.xml
         }&${params.toString()}`;
+
         data.docs[0].url = xmlQueryUrl;
         data.docs[0].rootPath = 'api/mrcparts';
       }
-      document.addEventListener('pb-end-update', (ev: any) => {
-        this.scrollElementsIntoView(ev.detail, 'hq', '#view0');
-      });
-    } */
+         */
+
+    if (params.get('hq')) {
+      if (searchApi) {
+        const mainDoc = data.docs.find((doc) => doc.id === 'mainDoc');
+
+        if (mainDoc) {
+          const xmlQueryUrl = `${searchApi.url
+          }?resource-id=${searchApi['resource-id']
+          }&searchId=${searchId
+          }&xml=${mainDoc.xml
+          }&${params.toString()}`;
+
+          mainDoc.url = xmlQueryUrl;
+          mainDoc.rootPath = 'api/mrcparts';
+        }
+      }
+      // ..
+    }
+    document.addEventListener('pb-end-update', (ev: any) => {
+      this.scrollElementsIntoView(ev.detail, 'hq', '#transcription-view');
+    });
+    /*   }  */
     return data;
   }
 
@@ -338,6 +360,12 @@ export class MrParallelTextViewerDS extends DataSource {
           (teiNoteElement as HTMLElement).style.transform = `translateY(${positionDifference}px)`;
         }
       }
+    } else if (target && target.getAttribute('key') && target.getAttribute('scrollview') !== null) {
+      // Per scroll su indice
+      const key = target.getAttribute('key');
+      if (key) {
+        this.scrollToIndexElement(key);
+      }
     } else if (target && this.output.toggleColumn === false) {
       if (
         target.__key
@@ -410,14 +438,33 @@ export class MrParallelTextViewerDS extends DataSource {
           .shadowRoot.querySelector(`#${key}`);
       } else if (type === 'hq') {
         element = document
-          .querySelector(`.n7-text-viewer ${view}`)
+          .querySelector(`.n7-parallel-text-viewer ${view}`)
           .shadowRoot.querySelector('.tei-em');
       }
 
-      const container = document.querySelector(`.n7-text-viewer ${view}`);
+      const container = document.querySelector(`.n7-parallel-text-viewer ${view}`);
       if (element) {
         container.scrollTop = element.offsetTop;
       }
     }, 600);
+  }
+
+  /**
+   * Scrolla all'elemento corrispondente nell'indice
+   */
+  scrollToIndexElement(key: string) {
+    setTimeout(() => {
+      const cleanKey = key.replace('#', '');
+      const views = document.querySelectorAll('.n7-parallel-text-viewer [id$="-view"]:not(#transcription-view)');
+
+      Array.from(views).some((view) => {
+        const target = view.shadowRoot?.querySelector(`#${cleanKey}`);
+        if (target) {
+          (target as HTMLElement).scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return true;
+        }
+        return false;
+      });
+    }, 300);
   }
 }
