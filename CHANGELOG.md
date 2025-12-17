@@ -9,6 +9,11 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+-   Add logic in parallel text viewer data source for scrolling elements in index 
+-   Refactor hq config for search api
+
 ## [5.4.3] - 2025-11-11
 
 Muruca
