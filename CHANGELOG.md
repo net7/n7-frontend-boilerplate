@@ -9,9 +9,11 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.5.2] - 2026-01-07
+
 Muruca
 
-- Mirador viewer: open a specific annotation
+-   Mirador viewer: open a specific annotation
 
 ## [5.5.1] - 2025-12-17
 
@@ -700,7 +702,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.1...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.2...HEAD
+
+[5.5.2]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.1...v5.5.2
 
 [5.5.1]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.0...v5.5.1
 
