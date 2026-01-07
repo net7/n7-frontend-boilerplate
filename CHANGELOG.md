@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+- Mirador viewer: open a specific annotation
+
 ## [5.5.1] - 2025-12-17
 
 ## [5.5.0] - 2025-12-17
