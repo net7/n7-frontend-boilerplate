@@ -5,14 +5,13 @@ export class MrImageViewerIiifDS extends DataSource {
     if (!data) return null;
 
     const urlParams = new URLSearchParams(window.location.search);
-    const parCanvasId = urlParams.get('iiifPageId');
-    const parCanvasIndex = urlParams.get('iiifPageIndex');
+    const parCanvasId = urlParams.get('iiifCanvasId');
+    const parCanvasIndex = urlParams.get('iiifCanvasIndex');
     const parAnnotationId = urlParams.get('iiifAnnotationId');
 
     const canvasId = parCanvasId || null;
-    const canvasIndex = parCanvasIndex ? parseInt(parCanvasIndex, 10) : 0;
+    const canvasIndex = parCanvasIndex ? parseInt(parCanvasIndex, 10) : null;
     const annotationId = parAnnotationId || null;
-
     const { libOptions } = this.options;
     const iiifManifestsList = data['iiif-manifests'];
     const windows = iiifManifestsList.map((manifest) => ({
