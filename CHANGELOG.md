@@ -9,9 +9,11 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.5.3] - 2026-01-12
+
 Muruca
 
-- Minor parallel text viewer fix, fix parallel text viewer config types
+-   Minor parallel text viewer fix, fix parallel text viewer config types
 
 ## [5.5.2] - 2026-01-07
 
@@ -706,7 +708,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.2...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.3...HEAD
+
+[5.5.3]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.2...v5.5.3
 
 [5.5.2]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.1...v5.5.2
 
