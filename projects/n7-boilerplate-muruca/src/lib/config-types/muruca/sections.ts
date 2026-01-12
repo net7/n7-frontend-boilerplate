@@ -68,6 +68,8 @@ export interface ConfigMurucaParallelTextViewerSection extends ConfigMurucaSecti
     grid?: any;
     /** panels */
     panels?: any;
+    /** search */
+    searchId?: any,
   };
 }
 
