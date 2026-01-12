@@ -281,6 +281,9 @@ export class MrParallelTextViewerDS extends DataSource {
       // Posizione elemento cliccato
       const clickedElementPosition = (target as HTMLElement).getBoundingClientRect().top;
 
+      const clickedView = clickPath.find((el) => el.id && el.id.endsWith('-view'));
+      const clickedViewId = clickedView ? clickedView.id : null;
+
       const apparatusView = document.querySelectorAll('.n7-parallel-text-viewer [id$="-view"]');
       // console.log('Numero di view trovate:', apparatusView.length);
 
@@ -288,6 +291,11 @@ export class MrParallelTextViewerDS extends DataSource {
       let teiAppElement = null;
 
       apparatusView.forEach((view) => {
+        // Salta la view in cui è stato fatto il click
+        if (view.id === clickedViewId) {
+          return;
+        }
+
         if (view.shadowRoot) {
           const found = view.shadowRoot.querySelector(`[id="${appId}"]`);
           if (found) {
