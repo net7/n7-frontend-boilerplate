@@ -2,6 +2,7 @@
 interface Metadata {
   label?: string;
   value?: string | Metadata[][];
+  anchorId?: string;
 }
 interface GroupMetadata {
   title?: string;

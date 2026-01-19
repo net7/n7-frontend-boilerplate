@@ -131,7 +131,23 @@ AfterViewInit {
         setTimeout(() => {
           const element = document.getElementById(fragment);
           if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
+            // Open read-more if present
+            const readMoreElement = element
+              ?.closest('.mr-read-more__content')
+              ?.closest('.mr-read-more.is-collapsed');
+            if (readMoreElement) {
+              const readMoreButton = readMoreElement.querySelector(
+                ':scope > .mr-read-more__btn'
+              );
+              if (readMoreButton instanceof HTMLElement) {
+                readMoreButton.click();
+              }
+              // Scroll
+              setTimeout(() => element.scrollIntoView({ behavior: 'smooth' }), 300);
+            } else {
+              // Scroll
+              element.scrollIntoView({ behavior: 'smooth' });
+            }
           }
         }, timeout);
       }

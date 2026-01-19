@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+- Open readmore before scrolling to an anchor
+
 ## [5.5.3] - 2026-01-12
 
 Muruca

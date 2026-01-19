@@ -18,6 +18,10 @@ export interface MetadataViewerItems {
    * the value for @property label
    */
   value?: string;
+  /**
+   * the anchorId of the metadata
+   */
+  anchorId?: string;
 }
 
 /**
