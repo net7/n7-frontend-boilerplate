@@ -9,9 +9,11 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.5.4] - 2026-01-19
+
 Muruca
 
-- Open readmore before scrolling to an anchor
+-   Open readmore before scrolling to an anchor
 
 ## [5.5.3] - 2026-01-12
 
@@ -712,7 +714,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.3...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.4...HEAD
+
+[5.5.4]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.3...v5.5.4
 
 [5.5.3]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.2...v5.5.3
 
