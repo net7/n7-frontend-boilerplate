@@ -9,9 +9,11 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.5.5] - 2026-01-21
+
 Muruca
 
-- Add search bar in hero component
+-   Add search bar in hero component
 
 ## [5.5.4] - 2026-01-19
 
@@ -718,7 +720,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.4...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.5...HEAD
+
+[5.5.5]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.4...v5.5.5
 
 [5.5.4]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.3...v5.5.4
 
