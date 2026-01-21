@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+- Add search bar in hero component
+
 ## [5.5.4] - 2026-01-19
 
 Muruca

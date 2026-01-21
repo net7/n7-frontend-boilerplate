@@ -26,6 +26,19 @@ export interface ConfigMurucaHeroSection extends ConfigMurucaSection {
     classes?: string;
     /** has background? */
     background?: boolean;
+    /** search input field */
+    input?: {
+      /** placeholder label */
+      placeholder?: string;
+      /** icon insiode the field */
+      icon?: string;
+      /** payload used to detect event */
+      payload?: string;
+      /** id of the query used for queryParams */
+      queryId?: string;
+      /** additional queryParams */
+      additionalQueryParams?: Record<string, string>;
+    };
   };
 }
 

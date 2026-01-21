@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Data } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import {
   AbstractLayout,
   CommunicationService,
@@ -40,6 +40,7 @@ export class MrHomeLayoutComponent extends AbstractLayout implements OnInit, OnD
 
   constructor(
     layoutsConfiguration: LayoutsConfigurationService,
+    private router: Router,
     private activatedRoute: ActivatedRoute,
     private configuration: ConfigurationService,
     private communication: CommunicationService,
@@ -52,6 +53,7 @@ export class MrHomeLayoutComponent extends AbstractLayout implements OnInit, OnD
 
   protected initPayload() {
     return {
+      router: this.router,
       routeData: this.routeData,
       mainState: this.mainState,
       configuration: this.configuration,

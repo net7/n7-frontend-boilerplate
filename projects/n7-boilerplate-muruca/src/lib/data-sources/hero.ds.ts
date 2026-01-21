@@ -5,8 +5,10 @@ import { MrLocaleService } from '../services/locale.service';
 export class MrHeroDS extends DataSource {
   id: string;
 
+  public currentInputValue = '';
+
   protected transform(data: any): any {
-    const { classes, background } = this.options;
+    const { classes, background, input } = this.options;
 
     const { localeService }: { localeService: MrLocaleService } = this.options;
 
@@ -30,6 +32,12 @@ export class MrHeroDS extends DataSource {
       };
     }
 
+    // Search input
+    if (button && input) {
+      anchor.payload = { route: anchor.href, payloadId: 'hero-search' };
+      anchor.href = null;
+    }
+
     return {
       text,
       title,
@@ -39,7 +47,8 @@ export class MrHeroDS extends DataSource {
       button: button && anchor ? {
         ...button,
         anchor,
-      } : null
+      } : null,
+      input
     };
   }
 }

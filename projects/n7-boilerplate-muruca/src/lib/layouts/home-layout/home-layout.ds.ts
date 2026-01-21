@@ -1,10 +1,12 @@
 import { LayoutDataSource, _t } from '@net7/core';
-import { Data } from '@angular/router';
+import { Data, Router } from '@angular/router';
 import { isEmpty } from 'lodash';
 import { ConfigurationService, CommunicationService, MainStateService } from '@net7/boilerplate-common';
 import { MrLayoutStateService, LayoutState } from '../../services/layout-state.service';
 
 export class MrHomeLayoutDS extends LayoutDataSource {
+  protected router: Router;
+
   private configuration: ConfigurationService;
 
   private communication: CommunicationService;
@@ -22,6 +24,7 @@ export class MrHomeLayoutDS extends LayoutDataSource {
   public errorDescription = _t('global#layout_error_description');
 
   onInit(payload) {
+    this.router = payload.router;
     this.configuration = payload.configuration;
     this.communication = payload.communication;
     this.mainState = payload.mainState;
@@ -78,5 +81,20 @@ export class MrHomeLayoutDS extends LayoutDataSource {
     const appName = this.configuration.get('name');
     const pageTitle = this.pageConfig.title;
     this.mainState.update('headTitle', [appName, pageTitle].join(' > '));
+  }
+
+  searchRedirect(type, payload) {
+    const configId = type.split('.')[0];
+    const { input } = this.pageConfig.sections.find((section) => section.id === configId).options;
+    const { queryId } = input;
+    const { additionalQueryParams } = input;
+    const queryParams = {};
+    queryParams[queryId] = payload.inputValue;
+    if (additionalQueryParams) {
+      Object.keys(additionalQueryParams).forEach((paramKey) => {
+        queryParams[paramKey] = additionalQueryParams[paramKey];
+      });
+    }
+    this.router.navigate([payload.route], { queryParams });
   }
 }
