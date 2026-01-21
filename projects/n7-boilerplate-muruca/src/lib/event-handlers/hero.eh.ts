@@ -7,7 +7,6 @@ export class MrHeroEH extends EventHandler {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
         case `${this.dataSource.id}.change`:
-          console.warn(payload.inputPayload);
           if (payload.inputPayload && payload.inputPayload === 'input') {
             this.dataSource.currentInputValue = payload.value;
           }
