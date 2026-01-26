@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Arianna
+
+-   Add date range filter in search layout
+
 ## [5.5.5] - 2026-01-21
 
 Muruca

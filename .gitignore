@@ -41,8 +41,10 @@ testem.log
 .DS_Store
 Thumbs.db
 
-# package lock
-# package-lock.json
+# Lock files
+*.lock
+*lock.json
+!package-lock.json
 
 # local
 src/assets/app-config.local.json
