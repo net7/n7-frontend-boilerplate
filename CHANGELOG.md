@@ -9,6 +9,8 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.5.6] - 2026-01-26
+
 Arianna
 
 -   Add date range filter in search layout
@@ -724,7 +726,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.5...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.6...HEAD
+
+[5.5.6]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.5...v5.5.6
 
 [5.5.5]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.4...v5.5.5
 
