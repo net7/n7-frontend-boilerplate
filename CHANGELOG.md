@@ -9,9 +9,11 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.5.7] - 2026-01-30
+
 Muruca
 
-- Editable tag label in search
+-   Editable tag label in search
 
 ## [5.5.6] - 2026-01-26
 
@@ -730,7 +732,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.6...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.7...HEAD
+
+[5.5.7]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.6...v5.5.7
 
 [5.5.6]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.5...v5.5.6
 
