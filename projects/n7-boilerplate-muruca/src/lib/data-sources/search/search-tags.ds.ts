@@ -1,4 +1,4 @@
-import { DataSource } from '@net7/core';
+import { _t, DataSource } from '@net7/core';
 import { TagData } from '@net7/components';
 
 export class MrSearchTagsDS extends DataSource {
@@ -31,7 +31,7 @@ export class MrSearchTagsDS extends DataSource {
                   }
                 }
                 tags.push({
-                  text,
+                  text: _t(text),
                   icon: 'n7-icon-close',
                   payload: {
                     id,
