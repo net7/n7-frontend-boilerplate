@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+- Editable tag label in search
+
 ## [5.5.6] - 2026-01-26
 
 Arianna
