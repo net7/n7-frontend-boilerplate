@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+- Add facet identifier
+
 ## [5.5.7] - 2026-01-30
 
 Muruca
