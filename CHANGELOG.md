@@ -9,9 +9,11 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.5.8] - 2026-02-04
+
 Muruca
 
-- Add facet identifier
+-   Add facet identifier
 
 ## [5.5.7] - 2026-01-30
 
@@ -736,7 +738,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.7...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.8...HEAD
+
+[5.5.8]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.7...v5.5.8
 
 [5.5.7]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.6...v5.5.7
 
