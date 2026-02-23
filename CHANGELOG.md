@@ -9,6 +9,12 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.5.9] - 2026-02-23
+
+Muruca
+
+-   Add `mr-input-typeahead` as a native form input type with debounced API autocomplete, static options (local filtering), Tab-to-complete, match highlighting, and base styles
+
 ## [5.5.8] - 2026-02-04
 
 Muruca
