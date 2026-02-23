@@ -156,8 +156,8 @@ export class MrAdvancedSearchLayoutDS extends LayoutDataSource {
           input.data.legend = _t(input.data.legend);
         }
 
-        // input text
-        if (input.type === 'text') {
+        // input text / typeahead
+        if (input.type === 'text' || input.type === 'typeahead') {
           if (input.data.placeholder) {
             input.data.placeholder = _t(input.data.placeholder);
           }
@@ -176,7 +176,7 @@ export class MrAdvancedSearchLayoutDS extends LayoutDataSource {
         }
 
         // info tooltip
-        if (input.info && input.data.label && ['text', 'select'].includes(input.type)) {
+        if (input.info && input.data.label && ['text', 'select', 'typeahead'].includes(input.type)) {
           const inputData = input.data as InputTextData | InputSelectData;
           if (/n7-icon/.test(input.data.label)) return;
           (input.data as InputTextData | InputSelectData).label = [

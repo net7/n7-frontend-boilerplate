@@ -1,0 +1,59 @@
+/**
+ * INPUT TYPEAHEAD
+ *
+ * Text input with an inline autocomplete dropdown.
+ */
+
+/* ------------------------------------ *\
+   #INPUT-TYPEAHEAD
+\* ------------------------------------ */
+.mr-input-typeahead {
+    position: relative;
+
+    &__dropdown {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        margin: 0;
+        padding: calc($space / 2) 0;
+        list-style: none;
+        background: $color-background-base;
+        border: 1px solid $color-border-normal;
+        border-radius: $border-radius;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    }
+
+    &__option {
+        padding: calc($space * 0.75) $space * 1.5;
+        border-radius: calc($border-radius / 2);
+        margin: 0 calc($space / 2);
+        cursor: pointer;
+        font-size: $font-size-m;
+        color: $color-text;
+
+        &:hover {
+            background: $color-background-light;
+            color: $color-text-link;
+        }
+
+        strong {
+            font-weight: $font-weight-bold;
+        }
+    }
+}
+
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (max-width: $breakpoint-ipad-portrait) {
+}
+
+@media all and (max-width: $breakpoint-smartphone-landscape) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}

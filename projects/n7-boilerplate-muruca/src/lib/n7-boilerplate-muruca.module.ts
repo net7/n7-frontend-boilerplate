@@ -34,6 +34,7 @@ import { MrResourceModalComponent } from './components/resource-modal/resource-m
 import { MrSearchPageDescriptionComponent } from './components/search-page-description/search-page-description';
 import { ReadMoreComponent } from './components/read-more/read-more';
 import { MrMetadataDynamicComponent } from './components';
+import { MrInputTypeaheadComponent } from './components/input-typeahead/input-typeahead';
 
 const COMPONENTS = [
   // Layout components
@@ -59,6 +60,7 @@ const COMPONENTS = [
   MrGalleryComponent,
   MrAdvancedResultComponent,
   MrMetadataDynamicComponent,
+  MrInputTypeaheadComponent,
 ];
 
 @NgModule({

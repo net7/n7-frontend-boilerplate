@@ -22,9 +22,14 @@
                         [emit]="form.inputs[input.id].emit"></n7-input-checkbox>
 
                     <!-- INPUT SELECT -->
-                    <n7-input-select *ngSwitchCase="'select'" 
+                    <n7-input-select *ngSwitchCase="'select'"
                         [data]="form.inputs[input.id].ds.out$ | async"
                         [emit]="form.inputs[input.id].emit"></n7-input-select>
+
+                    <!-- INPUT TYPEAHEAD -->
+                    <mr-input-typeahead *ngSwitchCase="'typeahead'"
+                        [data]="form.inputs[input.id].ds.out$ | async"
+                        [emit]="form.inputs[input.id].emit"></mr-input-typeahead>
 
                     <!-- DEFAULT (external template) -->
                     <ng-container *ngSwitchDefault>
