@@ -9,6 +9,8 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.5.10] - 2026-03-02
+
 Muruca
 
 -   Add search api to parallel-text-viewer
@@ -750,7 +752,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.9...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.10...HEAD
+
+[5.5.10]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.9...v5.5.10
 
 [5.5.9]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.8...v5.5.9
 
