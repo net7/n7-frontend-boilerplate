@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+-   Add search api to parallel-text-viewer
+
 ## [5.5.9] - 2026-02-23
 
 Muruca
