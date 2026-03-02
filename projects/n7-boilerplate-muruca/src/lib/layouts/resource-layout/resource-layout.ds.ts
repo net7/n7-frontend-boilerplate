@@ -145,11 +145,11 @@ export class MrResourceLayoutDS extends LayoutDataSource {
         this.one(id).updateOptions({ libOptions });
       }
 
-      if (type === 'text-viewer') {
+      if (type === 'text-viewer' || type === 'parallel-text-viewer')  {
         let url;
         try {
           url = this.communication.getUrl('xmlSearch');
-        } catch (e) {
+        } catch {
           url = '';
           // do nothing
         }
