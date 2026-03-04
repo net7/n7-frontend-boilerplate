@@ -151,7 +151,6 @@ export class MrResourceLayoutDS extends LayoutDataSource {
           url = this.communication.getUrl('xmlSearch');
         } catch {
           url = '';
-          // do nothing
         }
         const searchApi = {
           url,
