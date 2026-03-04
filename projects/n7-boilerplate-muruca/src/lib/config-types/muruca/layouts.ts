@@ -16,7 +16,8 @@ import {
   ConfigMurucaTitleSection,
   ConfigMurucaMetadataDynamicSection,
   ConfigMurucaButtonSection,
-  ConfigMurucaParallelTextViewerSection
+  ConfigMurucaParallelTextViewerSection,
+  ConfigMurucaEmbeddedContentSection
 } from './sections';
 
 export interface ConfigMurucaLayout {
@@ -54,6 +55,7 @@ export interface ConfigMurucaResourceLayout extends ConfigMurucaLayout {
       | ConfigMurucaItemPreviewSection
       | ConfigMurucaTextViewerSection
       | ConfigMurucaParallelTextViewerSection
+      | ConfigMurucaEmbeddedContentSection
       | ConfigMurucaInfoBoxSection
       | ConfigMurucaBreadcrumbsSection
       | ConfigMurucaMetadataDynamicSection

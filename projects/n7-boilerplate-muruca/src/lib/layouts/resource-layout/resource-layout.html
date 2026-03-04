@@ -217,6 +217,15 @@
                         </div>
                     </div>
                 </ng-container>
+
+                <!-- EMBEDDED CONTENT -->
+                <ng-container *ngSwitchCase="'embedded-content'">
+                    <div class="mr-content-block mr-content-block-embedded-content">
+                        <div class="mr-content-block__content">
+                            <div class="mr-wp-content" [innerHTML]="lb.widgets[section.id].ds.out$ | async | keepHtml"></div>
+                        </div>
+                    </div>
+                </ng-container>
     
                 <!-- INFO BOX -->
                 <ng-container *ngSwitchCase="'info-box'">

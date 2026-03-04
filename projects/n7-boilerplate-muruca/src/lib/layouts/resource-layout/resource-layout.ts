@@ -36,6 +36,7 @@ import {
   MrMetadataDynamicDS,
   MrImageViewerIiifDS,
   MrNetworkResourceDS,
+  MrEmbeddedContentDS,
 } from '../../data-sources';
 import { MrMapDS } from '../../data-sources/map.ds';
 import { MrLocaleService } from '../../services/locale.service';
@@ -58,7 +59,8 @@ const DATASOURCE_MAP = {
   'parallel-text-viewer': MrParallelTextViewerDS,
   'metadata-dynamic': MrMetadataDynamicDS,
   'viewer-iiif': MrImageViewerIiifDS,
-  'network-resource': MrNetworkResourceDS
+  'network-resource': MrNetworkResourceDS,
+  'embedded-content': MrEmbeddedContentDS,
 };
 
 const EVENTHANDLER_MAP = {

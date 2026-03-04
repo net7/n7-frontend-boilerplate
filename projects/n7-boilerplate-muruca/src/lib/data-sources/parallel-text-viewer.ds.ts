@@ -157,11 +157,10 @@ export class MrParallelTextViewerDS extends DataSource {
           }&xml=${mainDoc.xml
           }&${params.toString()}`;
 
-          mainDoc.url = xmlQueryUrl;
-          mainDoc.rootPath = 'api/mrcparts';
+          data.mainDoc.url = xmlQueryUrl;
+          data.mainDoc.rootPath = 'api/mrcparts';
         }
       }
-      // ..
     }
     document.addEventListener('pb-end-update', (ev: any) => {
       this.scrollElementsIntoView(ev.detail, 'hq', '#transcription-view');

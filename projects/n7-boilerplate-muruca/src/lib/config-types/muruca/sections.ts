@@ -74,6 +74,10 @@ export interface ConfigMurucaTextViewerSection extends ConfigMurucaSection {
   type: 'text-viewer';
 }
 
+export interface ConfigMurucaEmbeddedContentSection extends ConfigMurucaSection {
+  type: 'embedded-content';
+}
+
 export interface ConfigMurucaParallelTextViewerSection extends ConfigMurucaSection {
   type: 'parallel-text-viewer';
   options?: {

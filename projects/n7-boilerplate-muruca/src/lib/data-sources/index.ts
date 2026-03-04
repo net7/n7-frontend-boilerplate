@@ -22,6 +22,7 @@ export * from './gallery.ds';
 export * from './network.ds';
 export * from './network-resource.ds';
 export * from './parallel-text-viewer.ds';
+export * from './embedded-content.ds';
 // search layout
 export * from './search/search-page-title.ds';
 export * from './search/search-results-title.ds';

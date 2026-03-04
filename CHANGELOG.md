@@ -9,6 +9,11 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+- Add embedded-content section in resource-layout
+- Fix parallel-text-viewer AS
+
 ## [5.5.10] - 2026-03-02
 
 Muruca
