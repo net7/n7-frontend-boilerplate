@@ -9,10 +9,12 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.5.11] - 2026-03-04
+
 Muruca
 
-- Add embedded-content section in resource-layout
-- Fix parallel-text-viewer AS
+-   Add embedded-content section in resource-layout
+-   Fix parallel-text-viewer AS
 
 ## [5.5.10] - 2026-03-02
 
@@ -757,7 +759,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.10...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.11...HEAD
+
+[5.5.11]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.10...v5.5.11
 
 [5.5.10]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.9...v5.5.10
 
