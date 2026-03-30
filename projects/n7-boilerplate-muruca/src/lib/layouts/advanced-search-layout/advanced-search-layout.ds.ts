@@ -147,6 +147,9 @@ export class MrAdvancedSearchLayoutDS extends LayoutDataSource {
       if (section.description) {
         section.description = _t(section.description);
       }
+      if (section.info) {
+        section.info = _t(section.info);
+      }
       section.inputs.forEach((input) => {
         if (input.data.label) {
           input.data.label = _t(input.data.label);
