@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+- Add info popup in section of Advanced Search
+
 ## [5.5.11] - 2026-03-04
 
 Muruca

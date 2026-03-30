@@ -3,7 +3,10 @@
          [ngClass]="{ 'mr-form__section-advanced' : section.advancedSection  }" >
         
         <div class="mr-form__section-header">
-            <h3 *ngIf="section.title" class="mr-form__section-title">{{ section.title }}</h3>
+            <h3 *ngIf="section.title" class="mr-form__section-title">
+                {{ section.title }}
+                <span *ngIf="section.info" class="mr-input-info n7-icon n7-icon-info-circle" [attr.alt]="section.info"></span>
+            </h3>
             <p *ngIf="section.description" class="mr-form__section-description">{{ section.description }}</p>
         </div>
         
