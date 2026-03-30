@@ -9,9 +9,11 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.5.12] - 2026-03-30
+
 Muruca
 
-- Add info popup in section of Advanced Search
+-   Add info popup in section of Advanced Search
 
 ## [5.5.11] - 2026-03-04
 
@@ -763,7 +765,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.11...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.12...HEAD
+
+[5.5.12]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.11...v5.5.12
 
 [5.5.11]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.10...v5.5.11
 
