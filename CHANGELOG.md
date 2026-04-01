@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+- Fix resource-layout embedded-content
+
 ## [5.5.12] - 2026-03-30
 
 Muruca
