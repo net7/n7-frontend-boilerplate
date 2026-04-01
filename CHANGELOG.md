@@ -9,9 +9,11 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.5.13] - 2026-04-01
+
 Muruca
 
-- Fix resource-layout embedded-content
+-   Fix resource-layout embedded-content
 
 ## [5.5.12] - 2026-03-30
 
@@ -769,7 +771,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.12...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.13...HEAD
+
+[5.5.13]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.12...v5.5.13
 
 [5.5.12]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.11...v5.5.12
 
