@@ -41,6 +41,9 @@ testem.log
 .DS_Store
 Thumbs.db
 
+# Claude AI context files
+CLAUDE.md
+
 # Lock files
 *.lock
 *lock.json

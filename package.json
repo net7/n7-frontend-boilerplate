@@ -103,5 +103,8 @@
     "*.scss": [
       "stylelint --syntax scss --fix"
     ]
+  },
+  "volta": {
+    "node": "24.14.1"
   }
 }
