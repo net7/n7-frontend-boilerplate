@@ -232,6 +232,7 @@ export class MrParallelTextViewerDS extends DataSource {
         //    console.log('Chiusura dell\'elemento tei-app');
         parentAppItem.style.display = 'none';
         (parentAppItem as HTMLElement).style.transform = '';
+        this.resetHighlights();
         payload.stopPropagation();
         return;
       }
@@ -258,6 +259,7 @@ export class MrParallelTextViewerDS extends DataSource {
         //    console.log('Chiusura dell\'elemento note-item');
         parentNoteItem.style.display = 'none';
         (parentNoteItem as HTMLElement).style.transform = '';
+        this.resetHighlights();
         payload.stopPropagation();
         return;
       }
@@ -275,7 +277,6 @@ export class MrParallelTextViewerDS extends DataSource {
 
     if (target && target.getAttribute('type') === 'app_lem') {
       const appId = target.getAttribute('key');
-      // console.log('appId:', appId);
 
       // Posizione elemento cliccato
       const clickedElementPosition = (target as HTMLElement).getBoundingClientRect().top;
@@ -284,7 +285,6 @@ export class MrParallelTextViewerDS extends DataSource {
       const clickedViewId = clickedView ? clickedView.id : null;
 
       const apparatusView = document.querySelectorAll('.n7-parallel-text-viewer [id$="-view"]');
-      // console.log('Numero di view trovate:', apparatusView.length);
 
       let anchorElement = null;
       let teiAppElement = null;
@@ -334,6 +334,7 @@ export class MrParallelTextViewerDS extends DataSource {
         if (isVisible) {
           (teiAppElement as HTMLElement).style.display = 'none';
           (teiAppElement as HTMLElement).style.transform = '';
+          this.resetHighlights();
 
           if (isOuterCit) {
             // Pannello esterno chiuso: ripristina il background dei seg annidati
@@ -442,6 +443,34 @@ export class MrParallelTextViewerDS extends DataSource {
         this.scrollElementsIntoView(target, 'entity', '#text-viewer-index');
       }
     } else this.output.toggleColumn = false;
+  }
+
+  /**
+   * Resetta tutti gli highlight attivi del testo 
+   */
+  private resetHighlights() {
+    document.querySelectorAll('[id$="-view"]').forEach((view: any) => {
+      if (!view.shadowRoot) return;
+      const content = view.shadowRoot.getElementById('view') || view.shadowRoot;
+
+      // console.log('[resetHighlights] processing view:', view.id, '| pb-highlights:', content.querySelectorAll('pb-highlight').length);
+
+      // Rimuove il giallo e re-abilita tutti i pb-highlight
+      content.querySelectorAll('pb-highlight').forEach((hl: any) => {
+        hl._className = 'highlight-off';
+        hl.disabled = false;
+      });
+
+      // Rimuove classe 'disable' da qualsiasi elemento (residuo da plain reading view)
+      content.querySelectorAll('.disable').forEach((el: Element) => {
+        el.classList.remove('disable');
+      });
+
+      // Ripristina il background dei seg-outer-inner (potrebbe essere rimasto 'white'
+      content.querySelectorAll('.seg-outer-inner').forEach((el: Element) => {
+        (el as HTMLElement).style.backgroundColor = '';
+      });
+    });
   }
 
   viewListenerUpdate() {
