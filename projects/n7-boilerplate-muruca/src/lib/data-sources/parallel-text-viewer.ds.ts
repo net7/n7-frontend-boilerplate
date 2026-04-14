@@ -211,6 +211,21 @@ export class MrParallelTextViewerDS extends DataSource {
     document.addEventListener('pb-end-update', attachListeners);
 
     setTimeout(attachListeners, 500);
+
+    // Cross-highlight per termini multi-@ana: quando un pb-highlight con key "vox2_vox3"
+    // emette pb-highlight-on (hover sul termine o sulla tab aperta), ri-emettiamo pb-highlight-on
+    // per ogni token individuale ("vox2", "vox3") così i termini correlati si evidenziano.
+    document.addEventListener('pb-highlight-on', (ev: any) => {
+      const key = ev.detail?.id;
+      const channel = ev.detail?.key;
+      if (key && key.includes('_')) {
+        key.split('_').forEach((token: string) => {
+          document.dispatchEvent(new CustomEvent('pb-highlight-on', {
+            detail: { key: channel, id: token, source: ev.detail.source },
+          }));
+        });
+      }
+    });
   }
 
   onClick(payload) {
