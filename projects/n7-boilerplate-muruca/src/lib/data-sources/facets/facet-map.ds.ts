@@ -154,8 +154,10 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
       coords, template, id, slug, counter
     }) => {
       // create custom icon marker
+      const icon = this.getIcon(id, counter);
+      if (!icon) return;
       const newMarker = L.marker(coords, {
-        icon: this.getIcon(id, counter),
+        icon,
         zIndexOffset: this.getZindex(id, counter)
       });
       if (id && slug) {
@@ -226,6 +228,7 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
   getIcon = (id: string, counter: number) => {
     if (this.value.includes(id)) return this.MARKER_ICON_SELECTED;
     if (counter > 0) return this.MARKER_ICON;
+    if (this.options.libOptions?.hideUnavailablePin) return null;
     return this.MARKER_ICON_UNAVAILABLE;
   };
 

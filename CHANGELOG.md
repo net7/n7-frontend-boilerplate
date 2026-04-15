@@ -18,6 +18,7 @@ For each commit add a description under the Unreleased section under the corresp
 Muruca
 
 -   Fix resource-layout embedded-content
+-   Add logic to hide unavailable pin in facet map
 
 ## [5.5.12] - 2026-03-30
 
