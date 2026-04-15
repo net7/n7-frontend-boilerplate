@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+- Muruca
+
+-   Add parallel text viewer logic to handle new highlight functionality in TEI Publisher
+
 ## [5.5.13] - 2026-04-01
 
 Muruca
