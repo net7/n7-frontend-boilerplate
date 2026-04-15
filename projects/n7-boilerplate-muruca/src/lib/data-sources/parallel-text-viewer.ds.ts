@@ -211,6 +211,21 @@ export class MrParallelTextViewerDS extends DataSource {
     document.addEventListener('pb-end-update', attachListeners);
 
     setTimeout(attachListeners, 500);
+
+    // Cross-highlight per termini multi-@ana: quando un pb-highlight con key "vox2_vox3"
+    // emette pb-highlight-on (hover sul termine o sulla tab aperta), ri-emettiamo pb-highlight-on
+    // per ogni token individuale ("vox2", "vox3") così i termini correlati si evidenziano.
+    document.addEventListener('pb-highlight-on', (ev: any) => {
+      const key = ev.detail?.id;
+      const channel = ev.detail?.key;
+      if (key && key.includes('_')) {
+        key.split('_').forEach((token: string) => {
+          document.dispatchEvent(new CustomEvent('pb-highlight-on', {
+            detail: { key: channel, id: token, source: ev.detail.source },
+          }));
+        });
+      }
+    });
   }
 
   onClick(payload) {
@@ -232,6 +247,7 @@ export class MrParallelTextViewerDS extends DataSource {
         //    console.log('Chiusura dell\'elemento tei-app');
         parentAppItem.style.display = 'none';
         (parentAppItem as HTMLElement).style.transform = '';
+        this.resetHighlights();
         payload.stopPropagation();
         return;
       }
@@ -258,6 +274,7 @@ export class MrParallelTextViewerDS extends DataSource {
         //    console.log('Chiusura dell\'elemento note-item');
         parentNoteItem.style.display = 'none';
         (parentNoteItem as HTMLElement).style.transform = '';
+        this.resetHighlights();
         payload.stopPropagation();
         return;
       }
@@ -275,7 +292,6 @@ export class MrParallelTextViewerDS extends DataSource {
 
     if (target && target.getAttribute('type') === 'app_lem') {
       const appId = target.getAttribute('key');
-      // console.log('appId:', appId);
 
       // Posizione elemento cliccato
       const clickedElementPosition = (target as HTMLElement).getBoundingClientRect().top;
@@ -284,7 +300,6 @@ export class MrParallelTextViewerDS extends DataSource {
       const clickedViewId = clickedView ? clickedView.id : null;
 
       const apparatusView = document.querySelectorAll('.n7-parallel-text-viewer [id$="-view"]');
-      // console.log('Numero di view trovate:', apparatusView.length);
 
       let anchorElement = null;
       let teiAppElement = null;
@@ -313,9 +328,36 @@ export class MrParallelTextViewerDS extends DataSource {
       if (teiAppElement) {
         const isVisible = (teiAppElement as HTMLElement).style.display === 'block';
 
+        // Determina se il pb-highlight cliccato è una cit esterna (contiene cit annidate).
+        const nestedCits = (target as HTMLElement).querySelectorAll('span.quote');
+        const isOuterCit = nestedCits.length > 0;
+        const segElements = (target as HTMLElement).querySelectorAll('.seg-outer-inner');
+
+        // console.log('[seg-outer-inner] click su:', target.getAttribute('key'), '| isOuterCit:', isOuterCit, '| seg trovati:', segElements.length, '| panel isVisible:', isVisible);
+        // console.log('  nestedCits keys:', Array.from(nestedCits).map((el) => el.getAttribute('key')));
+        // segElements.forEach((el, i) => {
+        //   console.log(`  seg[${i}] backgroundColor attuale: "${(el as HTMLElement).style.backgroundColor}"`);
+        //   let node = (el as HTMLElement).parentElement;
+        //   const chain = [];
+        //   while (node && chain.length < 6) {
+        //     chain.push(`${node.tagName}${node.className ? '.' + node.className.replace(/\s+/g, '.') : ''}${node.getAttribute('key') ? '[key=' + node.getAttribute('key').substring(0, 20) + ']' : ''}`);
+        //     node = node.parentElement;
+        //   }
+        //   console.log(`  seg[${i}] ancestors:`, chain.join(' > '));
+        // });
+
         if (isVisible) {
           (teiAppElement as HTMLElement).style.display = 'none';
           (teiAppElement as HTMLElement).style.transform = '';
+          this.resetHighlights();
+
+          if (isOuterCit) {
+            // Pannello esterno chiuso: ripristina il background dei seg annidati
+            segElements.forEach((el) => {
+              (el as HTMLElement).style.backgroundColor = '';
+              // console.log('  [outer CLOSE] seg backgroundColor → ""');
+            });
+          }
         } else {
           (teiAppElement as HTMLElement).style.display = 'block';
 
@@ -327,6 +369,25 @@ export class MrParallelTextViewerDS extends DataSource {
 
           // spostamento
           (teiAppElement as HTMLElement).style.transform = `translateY(${positionDifference}px)`;
+
+          if (isOuterCit) {
+            // Pannello esterno aperto: dopo che pb-highlight si attiva (giallo),
+            // imposta sfondo bianco sui seg che appartengono semanticamente alla cit esterna
+            requestAnimationFrame(() => {
+              segElements.forEach((el) => {
+                (el as HTMLElement).style.backgroundColor = 'white';
+                // console.log('  [outer OPEN rAF] seg backgroundColor → "white"');
+              });
+            });
+          } else {
+            // Pannello interno aperto: ripristina eventuali soppressioni sui seg interni
+            requestAnimationFrame(() => {
+              segElements.forEach((el) => {
+                (el as HTMLElement).style.backgroundColor = '';
+                // console.log('  [inner OPEN rAF] seg backgroundColor → ""');
+              });
+            });
+          }
         }
       } else {
         console.warn('teiAppElement non trovato!');
@@ -367,6 +428,20 @@ export class MrParallelTextViewerDS extends DataSource {
           (teiNoteElement as HTMLElement).style.transform = `translateY(${positionDifference}px)`;
         }
       }
+    } else if (target && target.getAttribute('type') === 'parallel_anchor') {
+      const sectionId = target.getAttribute('key');
+      if (sectionId) {
+        document.dispatchEvent(
+          new CustomEvent('pb-toggle', {
+            detail: {
+              properties: { id: sectionId },
+              action: 'refresh',
+              key: 'transcription',
+            },
+            bubbles: true,
+          })
+        );
+      }
     } else if (target && target.getAttribute('key') && target.getAttribute('scrollview') !== null) {
       // Per scroll su indice
       const key = target.getAttribute('key');
@@ -383,6 +458,34 @@ export class MrParallelTextViewerDS extends DataSource {
         this.scrollElementsIntoView(target, 'entity', '#text-viewer-index');
       }
     } else this.output.toggleColumn = false;
+  }
+
+  /**
+   * Resetta tutti gli highlight attivi del testo 
+   */
+  private resetHighlights() {
+    document.querySelectorAll('[id$="-view"]').forEach((view: any) => {
+      if (!view.shadowRoot) return;
+      const content = view.shadowRoot.getElementById('view') || view.shadowRoot;
+
+      // console.log('[resetHighlights] processing view:', view.id, '| pb-highlights:', content.querySelectorAll('pb-highlight').length);
+
+      // Rimuove il giallo e re-abilita tutti i pb-highlight
+      content.querySelectorAll('pb-highlight').forEach((hl: any) => {
+        hl._className = 'highlight-off';
+        hl.disabled = false;
+      });
+
+      // Rimuove classe 'disable' da qualsiasi elemento (residuo da plain reading view)
+      content.querySelectorAll('.disable').forEach((el: Element) => {
+        el.classList.remove('disable');
+      });
+
+      // Ripristina il background dei seg-outer-inner (potrebbe essere rimasto 'white'
+      content.querySelectorAll('.seg-outer-inner').forEach((el: Element) => {
+        (el as HTMLElement).style.backgroundColor = '';
+      });
+    });
   }
 
   viewListenerUpdate() {
