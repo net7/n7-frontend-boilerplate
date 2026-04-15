@@ -9,7 +9,9 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
-- Muruca
+## [5.5.14] - 2026-04-15
+
+-   Muruca
 
 -   Add parallel text viewer logic to handle new highlight functionality in TEI Publisher
 
@@ -775,7 +777,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.13...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.14...HEAD
+
+[5.5.14]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.13...v5.5.14
 
 [5.5.13]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.12...v5.5.13
 
