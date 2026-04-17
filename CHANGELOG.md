@@ -9,6 +9,16 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.5.17-rc4] - 2026-04-17
+
+## [5.5.17-rc3] - 2026-04-16
+
+## [5.5.17-rc2] - 2026-04-16
+
+## [5.5.17-rc1] - 2026-04-16
+
+## [5.5.16] - 2026-04-15
+
 ## [5.5.14] - 2026-04-15
 
 -   Muruca
@@ -778,7 +788,17 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.14...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.17-rc4...HEAD
+
+[5.5.17-rc4]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.17-rc3...v5.5.17-rc4
+
+[5.5.17-rc3]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.17-rc2...v5.5.17-rc3
+
+[5.5.17-rc2]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.17-rc1...v5.5.17-rc2
+
+[5.5.17-rc1]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.16...v5.5.17-rc1
+
+[5.5.16]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.14...v5.5.16
 
 [5.5.14]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.13...v5.5.14
 
