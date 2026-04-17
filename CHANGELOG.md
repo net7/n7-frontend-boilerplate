@@ -9,9 +9,11 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.5.19] - 2026-04-17
+
 Muruca
 
-- Fix unavailable pin logic in facet map
+-   Fix unavailable pin logic in facet map
 
 ## [5.5.18] - 2026-04-17
 
@@ -794,7 +796,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.18...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.19...HEAD
+
+[5.5.19]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.18...v5.5.19
 
 [5.5.18]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.17-rc4...v5.5.18
 
