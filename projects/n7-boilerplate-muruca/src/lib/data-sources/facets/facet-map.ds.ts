@@ -70,12 +70,11 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
     className: 'marker-icon-selected'
   });
 
-  protected transform({ links }: { links: CadastralUnit[] }): MapData {
-    const markers = [];
+  private linksToMarkers(links: CadastralUnit[]): MarkerWithID[] {
+    const markers: MarkerWithID[] = [];
     links
       .filter((d) => d.args?.lat && d.args?.lon)
       .forEach((d) => {
-        // if a link has more than one corresponding marker
         if (Array.isArray(d.args.lat)) {
           d.args.lat.forEach((element, i) => {
             markers.push({
@@ -88,7 +87,6 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
             });
           });
         } else {
-          // if a link has only one marker
           markers.push({
             coords: [+d.args.lat, +d.args.lon] as [number, number],
             template: d.text,
@@ -99,6 +97,11 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
           });
         }
       });
+    return markers;
+  }
+
+  protected transform({ links }: { links: CadastralUnit[] }): MapData {
+    const markers = this.linksToMarkers(links);
     const mapConfig = this.options?.libOptions;
     return {
       containerId: 'map-canvas',
@@ -210,12 +213,16 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
       }));
       // update marker icons
       if (this.markerLayer) {
-        this.markerLayer.eachLayer((marker) => {
-          const { id } = marker;
-          const counter = links.find(({ payload }) => payload === id)?.counter || 0;
-          marker.getPopup()._source.setIcon(this.getIcon(id, counter))
-            .setZIndexOffset(this.getZindex(id, counter));
-        });
+        if (this.options.libOptions?.hideUnavailablePin) {
+          this.buildMarkers(this.linksToMarkers(links));
+        } else {
+          this.markerLayer.eachLayer((marker) => {
+            const { id } = marker;
+            const counter = links.find(({ payload }) => payload === id)?.counter || 0;
+            marker.getPopup()._source.setIcon(this.getIcon(id, counter))
+              .setZIndexOffset(this.getZindex(id, counter));
+          });
+        }
       }
       // ---
       this.update({
