@@ -212,27 +212,42 @@ export class MrParallelTextViewerDS extends DataSource {
 
     setTimeout(attachListeners, 500);
 
-    // Cross-highlight per termini multi-@ana: quando un pb-highlight con key "vox2_vox3"
-    // emette pb-highlight-on (hover sul termine o sulla tab aperta), ri-emettiamo pb-highlight-on
-    // per ogni token individuale ("vox2", "vox3") così i termini correlati si evidenziano.
+    // Cross-highlight per termini multi-@ana: quando un pb-highlight con doppia key emette pb-highlight-on 
+    //  ri-emette pb-highlight-on per ogni token individuale  così i termini correlati si evidenziano.
     document.addEventListener('pb-highlight-on', (ev: any) => {
       const key = ev.detail?.id;
       const channel = ev.detail?.key;
-      if (key && key.includes('_')) {
+      if (!key || !channel) return;
+
+      // Chiave composita (multi-@ana "vox2_vox3", ancore paired "v1a1_v1a2"): spezza e ri-emetti per ogni token su highlight-channel.
+      if (key.includes('_')) {
         key.split('_').forEach((token: string) => {
           document.dispatchEvent(new CustomEvent('pb-highlight-on', {
             detail: { key: channel, id: token, source: ev.detail.source },
           }));
         });
+        return;
       }
+
+      if (ev.detail?.source === 'paired-anchor') return;
+
+      // Token singolo: se corrisponde a un'ancora paired ri-emette con l'id composito del popup per attivarne l'highlight.
+      document.querySelectorAll('[id$="-view"]').forEach((view: any) => {
+        if (!view.shadowRoot) return;
+        const popup = view.shadowRoot.querySelector(`.tei-app[data-from="${key}"]`)
+          || view.shadowRoot.querySelector(`.tei-app[data-to="${key}"]`);
+        if (popup && popup.id) {
+          document.dispatchEvent(new CustomEvent('pb-highlight-on', {
+            detail: { key: channel, id: popup.id, source: 'paired-anchor' },
+          }));
+        }
+      });
     });
   }
 
   onClick(payload) {
-    // console.log('🔵 onClick chiamato!', payload);
     let target = null;
     const clickPath = payload.path || payload.composedPath();
-    // console.log('🔵 clickPath:', clickPath);
 
     // chiusura apparato con tasto
     const closeButton = clickPath.find((el) => el.className
@@ -240,11 +255,8 @@ export class MrParallelTextViewerDS extends DataSource {
       && el.className.includes('close_app'));
 
     if (closeButton) {
-    //  console.log('Click rilevato sul bottone di chiusura:', closeButton);
-
       const parentAppItem = closeButton.closest('.tei-app');
       if (parentAppItem && parentAppItem.style) {
-        //    console.log('Chiusura dell\'elemento tei-app');
         parentAppItem.style.display = 'none';
         (parentAppItem as HTMLElement).style.transform = '';
         this.resetHighlights();
@@ -267,11 +279,8 @@ export class MrParallelTextViewerDS extends DataSource {
       && el.className.includes('close_note'));
 
     if (closeNoteButton) {
-    //  console.log('Click rilevato sul bottone di chiusura nota:', closeNoteButton);
-
       const parentNoteItem = closeNoteButton.closest('.note-item');
       if (parentNoteItem && parentNoteItem.style) {
-        //    console.log('Chiusura dell\'elemento note-item');
         parentNoteItem.style.display = 'none';
         (parentNoteItem as HTMLElement).style.transform = '';
         this.resetHighlights();
@@ -311,13 +320,17 @@ export class MrParallelTextViewerDS extends DataSource {
         }
 
         if (view.shadowRoot) {
-          const found = view.shadowRoot.querySelector(`[id="${appId}"]`);
+          // Cerca prima per id esatto; se non trovato, cerca popup per ancora apertura (data-from)
+          // o ancora di chiusura (data-to)
+          const found = view.shadowRoot.querySelector(`[id="${appId}"]`)
+            || view.shadowRoot.querySelector(`.tei-app[data-from="${appId}"]`)
+            || view.shadowRoot.querySelector(`.tei-app[data-to="${appId}"]`);
           if (found) {
             if (!anchorElement) {
               anchorElement = found;
             }
 
-            const appElement = found.closest('.tei-app');
+            const appElement = found.closest('.tei-app') || (found.classList.contains('tei-app') ? found : null);
             if (appElement && !teiAppElement) {
               teiAppElement = appElement;
             }
@@ -333,19 +346,6 @@ export class MrParallelTextViewerDS extends DataSource {
         const isOuterCit = nestedCits.length > 0;
         const segElements = (target as HTMLElement).querySelectorAll('.seg-outer-inner');
 
-        // console.log('[seg-outer-inner] click su:', target.getAttribute('key'), '| isOuterCit:', isOuterCit, '| seg trovati:', segElements.length, '| panel isVisible:', isVisible);
-        // console.log('  nestedCits keys:', Array.from(nestedCits).map((el) => el.getAttribute('key')));
-        // segElements.forEach((el, i) => {
-        //   console.log(`  seg[${i}] backgroundColor attuale: "${(el as HTMLElement).style.backgroundColor}"`);
-        //   let node = (el as HTMLElement).parentElement;
-        //   const chain = [];
-        //   while (node && chain.length < 6) {
-        //     chain.push(`${node.tagName}${node.className ? '.' + node.className.replace(/\s+/g, '.') : ''}${node.getAttribute('key') ? '[key=' + node.getAttribute('key').substring(0, 20) + ']' : ''}`);
-        //     node = node.parentElement;
-        //   }
-        //   console.log(`  seg[${i}] ancestors:`, chain.join(' > '));
-        // });
-
         if (isVisible) {
           (teiAppElement as HTMLElement).style.display = 'none';
           (teiAppElement as HTMLElement).style.transform = '';
@@ -355,7 +355,6 @@ export class MrParallelTextViewerDS extends DataSource {
             // Pannello esterno chiuso: ripristina il background dei seg annidati
             segElements.forEach((el) => {
               (el as HTMLElement).style.backgroundColor = '';
-              // console.log('  [outer CLOSE] seg backgroundColor → ""');
             });
           }
         } else {
@@ -376,7 +375,6 @@ export class MrParallelTextViewerDS extends DataSource {
             requestAnimationFrame(() => {
               segElements.forEach((el) => {
                 (el as HTMLElement).style.backgroundColor = 'white';
-                // console.log('  [outer OPEN rAF] seg backgroundColor → "white"');
               });
             });
           } else {
@@ -384,7 +382,6 @@ export class MrParallelTextViewerDS extends DataSource {
             requestAnimationFrame(() => {
               segElements.forEach((el) => {
                 (el as HTMLElement).style.backgroundColor = '';
-                // console.log('  [inner OPEN rAF] seg backgroundColor → ""');
               });
             });
           }
@@ -394,7 +391,6 @@ export class MrParallelTextViewerDS extends DataSource {
       }
     } else if (target && target.getAttribute('type') === 'note_line') {
       const noteId = target.getAttribute('key');
-      // console.log('noteId', noteId);
 
       const clickedElementPosition = (target as HTMLElement).getBoundingClientRect().top;
 
