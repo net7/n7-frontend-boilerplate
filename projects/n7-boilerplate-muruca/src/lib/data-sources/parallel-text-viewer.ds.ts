@@ -52,10 +52,16 @@ export class MrParallelTextViewerDS extends DataSource {
           );
 
           if (panelIndex !== -1) {
-            data.panels[panelIndex] = {
-              ...data.panels[panelIndex],
-              ...panelProperties
-            };
+            const apiPanel = data.panels[panelIndex];
+            const merged = { ...apiPanel, ...panelProperties };
+            // Se l'API ha inviato un baseurl e la config statica ha uri vuoto popola facsimile.uri con il baseurl dinamico dell'API.
+            if (merged.facsimile && !merged.facsimile.uri && apiPanel.baseurl) {
+              merged.facsimile = {
+                ...merged.facsimile,
+                uri: apiPanel.baseurl,
+              };
+            }
+            data.panels[panelIndex] = merged;
           }
         });
       }
