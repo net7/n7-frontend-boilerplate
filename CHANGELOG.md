@@ -9,6 +9,8 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.5.21] - 2026-04-28
+
 Muruca
 
 -   Add logic to handle baseurl for facsimile in parallel text viewer
@@ -806,7 +808,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.20...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.21...HEAD
+
+[5.5.21]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.20...v5.5.21
 
 [5.5.20]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.19...v5.5.20
 
