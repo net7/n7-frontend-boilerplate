@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+-   Add logic to handle baseurl for facsimile in parallel text viewer
+
 ## [5.5.20] - 2026-04-22
 
 Muruca
