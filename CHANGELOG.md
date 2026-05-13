@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+-   Use title when download PDF
+
 ## [5.5.21] - 2026-04-28
 
 Muruca

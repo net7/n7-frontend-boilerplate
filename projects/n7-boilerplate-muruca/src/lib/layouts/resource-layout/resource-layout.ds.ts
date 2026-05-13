@@ -28,6 +28,8 @@ export class MrResourceLayoutDS extends LayoutDataSource {
 
   public slug: string;
 
+  public title: string;
+
   public errorTitle = _t('global#layout_error_title');
 
   public errorDescription = _t('global#layout_error_description');
@@ -220,6 +222,7 @@ export class MrResourceLayoutDS extends LayoutDataSource {
   }
 
   private updateHeadTitle({ title: resourceTitle }) {
+    this.title = resourceTitle;
     const appName = this.configuration.get('name');
     const pageTitle = this.pageConfig.title;
     this.mainState.update('headTitle', [appName, _t(pageTitle), resourceTitle].join(' > '));
