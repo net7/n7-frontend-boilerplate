@@ -9,6 +9,8 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.5.22] - 2026-05-13
+
 Muruca
 
 -   Use title when download PDF
@@ -812,7 +814,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.21...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.22...HEAD
+
+[5.5.22]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.21...v5.5.22
 
 [5.5.21]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.20...v5.5.21
 
