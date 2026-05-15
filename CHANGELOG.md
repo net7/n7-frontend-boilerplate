@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+- Add possibility to add a text to the copy/paste on the website
+
 ## [5.5.22] - 2026-05-13
 
 Muruca
