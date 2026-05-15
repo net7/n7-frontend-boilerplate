@@ -9,9 +9,11 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.5.23] - 2026-05-15
+
 Muruca
 
-- Add possibility to add a text to the copy/paste on the website
+-   Add possibility to add a text to the copy/paste on the website
 
 ## [5.5.22] - 2026-05-13
 
@@ -818,7 +820,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.22...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.23...HEAD
+
+[5.5.23]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.22...v5.5.23
 
 [5.5.22]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.21...v5.5.22
 
