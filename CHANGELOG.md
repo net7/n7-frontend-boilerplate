@@ -9,6 +9,8 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.5.24] - 2026-05-19
+
 Muruca
 
 -   Add logic to handle start section in parallel text viewer and to change view by click on anchors
@@ -824,7 +826,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.23...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.24...HEAD
+
+[5.5.24]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.23...v5.5.24
 
 [5.5.23]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.22...v5.5.23
 
