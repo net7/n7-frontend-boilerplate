@@ -9,6 +9,15 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+CI
+
+-   Migrate npm publishing to OIDC trusted publishing (remove NPM_TOKEN dependency)
+-   Upgrade Node to 24 (required for npm ≥ 11.5.1 OIDC support)
+-   Harden develop→master merge with `-X theirs` strategy to prevent conflict failures
+-   Auto-detect prerelease versions and publish with `--tag next` instead of `latest`
+-   Consolidate release workflow into a single linear job
+-   Fix stale `actions/checkout@master` reference in pull request workflow
+
 ## [5.5.25] - 2026-05-19
 
 Muruca
