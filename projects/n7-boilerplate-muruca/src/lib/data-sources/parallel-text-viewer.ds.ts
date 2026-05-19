@@ -87,6 +87,20 @@ export class MrParallelTextViewerDS extends DataSource {
 
     this.setupViewClickListeners();
 
+    // Gestione della sezione di partenza degli XML 
+    const startSection = data.startSection || this.options?.startSection;
+    if (startSection) {
+      const handleFirstLoad = () => {
+        document.removeEventListener('pb-end-update', handleFirstLoad);
+        setTimeout(() => {
+          document.querySelectorAll('.n7-parallel-text-viewer [id$="-view"]').forEach((view: any) => {
+            view.gotoId(startSection);
+          });
+        }, 200);
+      };
+      document.addEventListener('pb-end-update', handleFirstLoad);
+    }
+
     /*     if (data.docs[0]?.view === 'page' && id) {
       data.docs[0].view = 'div';
       document.addEventListener(
@@ -433,16 +447,9 @@ export class MrParallelTextViewerDS extends DataSource {
     } else if (target && target.getAttribute('type') === 'parallel_anchor') {
       const sectionId = target.getAttribute('key');
       if (sectionId) {
-        document.dispatchEvent(
-          new CustomEvent('pb-toggle', {
-            detail: {
-              properties: { id: sectionId },
-              action: 'refresh',
-              key: 'transcription',
-            },
-            bubbles: true,
-          })
-        );
+        document.querySelectorAll('.n7-parallel-text-viewer [id$="-view"]').forEach((view: any) => {
+          view.gotoId(sectionId);
+        });
       }
     } else if (target && target.getAttribute('key') && target.getAttribute('scrollview') !== null) {
       // Per scroll su indice

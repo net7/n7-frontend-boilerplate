@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+-   Add logic to handle start section in parallel text viewer and to change view by click on anchors
+
 ## [5.5.23] - 2026-05-15
 
 Muruca
