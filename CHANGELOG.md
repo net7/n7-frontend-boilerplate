@@ -9,9 +9,11 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.5.25] - 2026-05-19
+
 Muruca
 
-- Copy-protection service add style to message
+-   Copy-protection service add style to message
 
 ## [5.5.24] - 2026-05-19
 
@@ -830,7 +832,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.24...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.25...HEAD
+
+[5.5.25]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.24...v5.5.25
 
 [5.5.24]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.23...v5.5.24
 
