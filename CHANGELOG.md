@@ -9,6 +9,8 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.5.26-rc1] - 2026-05-19
+
 CI
 
 -   Migrate npm publishing to OIDC trusted publishing (remove NPM_TOKEN dependency)
@@ -841,7 +843,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.25...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.26-rc1...HEAD
+
+[5.5.26-rc1]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.25...v5.5.26-rc1
 
 [5.5.25]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.24...v5.5.25
 
