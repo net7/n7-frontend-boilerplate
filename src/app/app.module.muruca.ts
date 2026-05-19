@@ -14,6 +14,7 @@ import {
 } from '@net7/boilerplate-common';
 import {
   N7BoilerplateMurucaModule,
+  MrCopyProtectionService,
 } from '@net7/boilerplate-muruca';
 
 import { APP_ROUTES } from '@mr-routes';
@@ -57,13 +58,16 @@ translate.init({
     useFactory: (
       localConfigService: LocalConfigService,
       jsonConfigService: JsonConfigService,
+      copyProtectionService: MrCopyProtectionService,
     ) => () => (
       localConfigService.load(configMuruca)
         .then(() => jsonConfigService.load(JSON_PATH))
+        .then(() => { copyProtectionService.init(); })
     ),
     deps: [
       LocalConfigService,
       JsonConfigService,
+      MrCopyProtectionService,
     ],
     multi: true
   }],

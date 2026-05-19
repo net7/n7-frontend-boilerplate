@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+- Copy-protection service add style to message
+
 ## [5.5.24] - 2026-05-19
 
 Muruca
