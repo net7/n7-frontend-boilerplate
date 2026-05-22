@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+- Fix hardcoded name in PDF button
+
 ## [5.5.26-rc1] - 2026-05-19
 
 CI
