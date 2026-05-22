@@ -9,9 +9,11 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.5.27] - 2026-05-22
+
 Muruca
 
-- Fix hardcoded name in PDF button
+-   Fix hardcoded name in PDF button
 
 ## [5.5.26-rc1] - 2026-05-19
 
@@ -847,7 +849,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.26-rc1...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.27...HEAD
+
+[5.5.27]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.26-rc1...v5.5.27
 
 [5.5.26-rc1]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.25...v5.5.26-rc1
 
