@@ -9,6 +9,8 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.5.28] - 2026-05-25
+
 Muruca
 
 -   Change Parallel TW DS with updated logic for specific highlight
@@ -853,7 +855,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.27...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.28...HEAD
+
+[5.5.28]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.27...v5.5.28
 
 [5.5.27]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.26-rc1...v5.5.27
 
