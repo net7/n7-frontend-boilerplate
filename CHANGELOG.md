@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+-   Change Parallel TW DS with updated logic for specific highlight
+
 ## [5.5.27] - 2026-05-22
 
 Muruca
