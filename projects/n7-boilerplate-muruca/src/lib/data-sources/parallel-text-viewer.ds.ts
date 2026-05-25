@@ -364,7 +364,8 @@ export class MrParallelTextViewerDS extends DataSource {
         // Determina se il pb-highlight cliccato è una cit esterna (contiene cit annidate).
         const nestedCits = (target as HTMLElement).querySelectorAll('span.quote');
         const isOuterCit = nestedCits.length > 0;
-        const segElements = (target as HTMLElement).querySelectorAll('.seg-outer-inner');
+        const segOuterInner = (target as HTMLElement).querySelectorAll('.seg-outer-inner');
+        const segPartF = (target as HTMLElement).querySelectorAll('.seg-part-f');
 
         if (isVisible) {
           (teiAppElement as HTMLElement).style.display = 'none';
@@ -373,7 +374,10 @@ export class MrParallelTextViewerDS extends DataSource {
 
           if (isOuterCit) {
             // Pannello esterno chiuso: ripristina il background dei seg annidati
-            segElements.forEach((el) => {
+            segOuterInner.forEach((el) => {
+              (el as HTMLElement).style.backgroundColor = '';
+            });
+            segPartF.forEach((el) => {
               (el as HTMLElement).style.backgroundColor = '';
             });
           }
@@ -391,16 +395,19 @@ export class MrParallelTextViewerDS extends DataSource {
 
           if (isOuterCit) {
             // Pannello esterno aperto: dopo che pb-highlight si attiva (giallo),
-            // imposta sfondo bianco sui seg che appartengono semanticamente alla cit esterna
+            // imposta sfondo bianco su seg-outer-inner e seg-part-f
             requestAnimationFrame(() => {
-              segElements.forEach((el) => {
+              segOuterInner.forEach((el) => {
+                (el as HTMLElement).style.backgroundColor = 'white';
+              });
+              segPartF.forEach((el) => {
                 (el as HTMLElement).style.backgroundColor = 'white';
               });
             });
           } else {
             // Pannello interno aperto: ripristina eventuali soppressioni sui seg interni
             requestAnimationFrame(() => {
-              segElements.forEach((el) => {
+              segOuterInner.forEach((el) => {
                 (el as HTMLElement).style.backgroundColor = '';
               });
             });
@@ -490,8 +497,11 @@ export class MrParallelTextViewerDS extends DataSource {
         el.classList.remove('disable');
       });
 
-      // Ripristina il background dei seg-outer-inner (potrebbe essere rimasto 'white'
+      // Ripristina il background dei seg-outer-inner e seg-part-f (potrebbero essere rimasti 'white')
       content.querySelectorAll('.seg-outer-inner').forEach((el: Element) => {
+        (el as HTMLElement).style.backgroundColor = '';
+      });
+      content.querySelectorAll('.seg-part-f').forEach((el: Element) => {
         (el as HTMLElement).style.backgroundColor = '';
       });
     });
