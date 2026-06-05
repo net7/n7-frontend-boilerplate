@@ -9,6 +9,14 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Build
+
+-   Fix `sync-version.js` to also sync shared dependency versions from root `package.json` into sub-packages, preventing version drift between the published arianna package and the monorepo root
+
+Arianna
+
+-   Bump `ngx-extended-pdf-viewer` to `19.2.0` (Angular 17 compatible), resolving peer dependency conflict on install
+
 ## [5.5.28] - 2026-05-25
 
 Muruca
