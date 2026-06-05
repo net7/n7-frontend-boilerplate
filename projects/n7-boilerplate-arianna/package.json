@@ -10,7 +10,7 @@
     "dayjs": "^1.11.1",
     "slugify": "^1.4.0",
     "tippy.js": "^5.1.2",
-    "ngx-extended-pdf-viewer": "^14.5.3",
-    "tslib": "^2.3.0"
+    "ngx-extended-pdf-viewer": "19.2.0",
+    "tslib": "^2.0.0"
   }
 }
