@@ -9,6 +9,8 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.6.0] - 2026-06-05
+
 Build
 
 -   Fix `sync-version.js` to also sync shared dependency versions from root `package.json` into sub-packages, preventing version drift between the published arianna package and the monorepo root
@@ -863,7 +865,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.28...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.0...HEAD
+
+[5.6.0]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.28...v5.6.0
 
 [5.5.28]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.27...v5.5.28
 
