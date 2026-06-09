@@ -55,9 +55,10 @@ export abstract class AwFacetInput {
   public getOutput = () => this.output;
 
   /**
-   * Pure validity check against the optional config-driven
-   * `validation: { pattern, message }`. Empty values are always valid
-   * (use `required` for emptiness). Does not mutate the output.
+   * Pure validity check against the optional config-driven `validation`.
+   * The consumer may supply either a `validator(value) => boolean` function
+   * (takes precedence) or a `pattern` (RegExp or string). Empty values are
+   * always valid (use `required` for emptiness). Does not mutate the output.
    */
   public isValid(value?): boolean {
     const { validation } = this.config;
@@ -68,10 +69,16 @@ export abstract class AwFacetInput {
     if (str.length === 0) {
       return true;
     }
-    const pattern = validation.pattern instanceof RegExp
-      ? validation.pattern
-      : new RegExp(validation.pattern);
-    return pattern.test(str);
+    if (typeof validation.validator === 'function') {
+      return !!validation.validator(str);
+    }
+    if (validation.pattern) {
+      const pattern = validation.pattern instanceof RegExp
+        ? validation.pattern
+        : new RegExp(validation.pattern);
+      return pattern.test(str);
+    }
+    return true;
   }
 
   /**

@@ -115,7 +115,9 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     if (this.search.model(this.layoutId)) {
       this.search.remove(this.layoutId);
     }
-    this.search.add(this.layoutId, cloneDeep(this.facetsConfig));
+    const facetsConfig = cloneDeep(this.facetsConfig);
+    this._applyValidationOverrides(facetsConfig);
+    this.search.add(this.layoutId, facetsConfig);
     this.searchModel = this.search.model(this.layoutId);
 
     // query params control
@@ -310,6 +312,34 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     this.searchModel.setPageConfigOffset(newOffset);
 
     return of(true);
+  }
+
+  /**
+   * Lets the consumer app customize per-facet input validation from its
+   * layout configuration, keyed by `facetId`, without forking the default
+   * facets config. Each override replaces that input's `validation` and may
+   * provide a `validator(value) => boolean` function and/or a `pattern`
+   * (RegExp or string), plus a `message`. Setting an override to a falsy
+   * value disables validation for that facet.
+   *
+   * Example (app config under the layout's config id):
+   *   facetsValidation: {
+   *     'date-from': { pattern: /.../, message: '…' },
+   *     'date-to': { validator: (v) => isRealDate(v), message: '…' },
+   *   }
+   */
+  private _applyValidationOverrides(facetsConfig) {
+    const overrides = this.configuration.get(this.configId)?.facetsValidation;
+    if (!overrides || !facetsConfig?.fields) {
+      return;
+    }
+    facetsConfig.fields.forEach((field) => {
+      (field.inputs || []).forEach((input) => {
+        if (input.facetId && Object.prototype.hasOwnProperty.call(overrides, input.facetId)) {
+          input.validation = overrides[input.facetId];
+        }
+      });
+    });
   }
 
   private _addFacetsLabels(facets) {
