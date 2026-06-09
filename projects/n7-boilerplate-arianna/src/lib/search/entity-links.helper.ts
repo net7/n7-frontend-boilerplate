@@ -5,7 +5,18 @@ import {
 // import { isEmpty } from 'lodash';
 
 const ENTITY_LINKS_CLASS = 'entity-links';
-const ENTITY_LINKS_PARENT_SELECTOR = '.n7-facets-wrapper__group:last-child .n7-facet__section-input-links';
+const ENTITY_LINKS_SELECTOR = '.n7-facet__section-input-links';
+
+/**
+ * Returns the entity-links scroll container. It is the last links container
+ * rendered in the facets wrapper, so this stays correct regardless of how
+ * many other facet groups (e.g. the date range) follow it — unlike a
+ * `:last-child` group selector, which breaks when another group is appended.
+ */
+function getEntityLinksScrollEl(): HTMLElement | null {
+  const els = document.querySelectorAll(ENTITY_LINKS_SELECTOR);
+  return (els[els.length - 1] as HTMLElement) || null;
+}
 
 const loaderItem = {
   counter: null,
@@ -81,7 +92,7 @@ export default {
 
     // fix scroll
     if (offset === 0) {
-      const scrollEl = document.querySelector(ENTITY_LINKS_PARENT_SELECTOR);
+      const scrollEl = getEntityLinksScrollEl();
       if (scrollEl) {
         scrollEl.scrollTop = 0;
       }
@@ -101,7 +112,10 @@ export default {
       };
     });
     setTimeout(() => {
-      const scrollEl = document.querySelector(ENTITY_LINKS_PARENT_SELECTOR);
+      const scrollEl = getEntityLinksScrollEl();
+      if (!scrollEl) {
+        return;
+      }
       const scroll$ = fromEvent(scrollEl, 'scroll');
       scroll$.pipe(
         debounceTime(300)

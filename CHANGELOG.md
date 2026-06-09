@@ -11,6 +11,7 @@ For each commit add a description under the Unreleased section under the corresp
 
 - Search facets: validation now accepts a `validator(value) => boolean` function in addition to a `pattern` (RegExp or string)
 - Search layout: consumer apps can override per-facet validation from their layout config via a `facetsValidation` map keyed by `facetId` (set/replace/disable), without forking the default facets config
+- Search facets: fix `TypeError: ... addEventListener, target is null` in entity-links pagination — the scroll container is now resolved by the last links container instead of a `:last-child` group selector, which broke when another facet group (e.g. the date range) is rendered last; also guard against a missing element
 
 ## [5.6.1] - 2026-06-09
 
