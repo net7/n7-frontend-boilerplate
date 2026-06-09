@@ -9,6 +9,8 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.6.1] - 2026-06-09
+
 Arianna
 
 -   Search facets: config-driven validation for text inputs (`validation: { pattern, message }`) — invalid values surface an accessible error on blur/enter and are no longer applied to the search (the last valid filter is kept); `date-from`/`date-to` validate the supported date formats out of the box
@@ -871,7 +873,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.0...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.1...HEAD
+
+[5.6.1]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.0...v5.6.1
 
 [5.6.0]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.28...v5.6.0
 
