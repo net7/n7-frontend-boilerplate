@@ -9,6 +9,12 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Arianna
+
+-   Search facets: config-driven validation for text inputs (`validation: { pattern, message }`) — invalid values surface an accessible error on blur/enter and are no longer applied to the search (the last valid filter is kept); `date-from`/`date-to` validate the supported date formats out of the box
+-   Search facets: add `isValid()` (pure check) and `validate()` (reflects error state on the output) to facet inputs, plus a `blurPayload` on the text input model
+-   Search facets: replace the consumer-side `AwFacetsWrapperDS.onFacetChange` monkey-patch with this built-in validation seam
+
 ## [5.6.0] - 2026-06-05
 
 Build
