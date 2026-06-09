@@ -229,7 +229,14 @@ export class AwSearchLayoutDS extends LayoutDataSource {
       params,
       onError: (error) => console.error(error),
     }).pipe(
-      tap(({ totalCount, results }) => {
+      tap((response) => {
+        // Bail out gracefully if the backend rejects the query and resolves
+        // to null (e.g. an Elasticsearch query_string parse error) rather than
+        // throwing on the destructured response.
+        if (!response) {
+          return;
+        }
+        const { totalCount, results } = response;
         this.totalCount = totalCount;
         let resultsTitleIndex = 0;
         // results title
@@ -265,7 +272,14 @@ export class AwSearchLayoutDS extends LayoutDataSource {
       params,
       onError: (error) => console.error(error),
     }).pipe(
-      tap(({ facets }) => {
+      tap((response) => {
+        // The facets request can resolve to null when the backend rejects the
+        // query (e.g. an Elasticsearch query_string parse error). Bail out
+        // gracefully instead of throwing on the destructured `facets`.
+        const facets = response?.facets;
+        if (!facets) {
+          return;
+        }
         // entity links pagination control
         entityLinksHelper.onFacetsResponse(this.searchModel, facets);
         // facets labels
