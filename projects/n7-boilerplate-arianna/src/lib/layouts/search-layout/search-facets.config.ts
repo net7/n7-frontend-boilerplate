@@ -1,3 +1,9 @@
+// Accepted date inputs: a year ([AAA]A), a full ISO-like date
+// ([AAA]A-MM-GG), or a 7-8 digit numeric date (YYYYMMDD).
+// Mirror of the backend `normalizeDate` rules in graphql/datasources/date-utils.ts.
+const DATE_INPUT_PATTERN = /^(\d{1,4}|\d{1,4}-\d{2}-\d{2}|\d{7,8})$/;
+const DATE_INPUT_MESSAGE = 'Inserisci un anno (es. 1900) o una data completa (es. 1999-12-31)';
+
 export default {
   totalCount: 0,
   facets: [
@@ -162,6 +168,10 @@ export default {
           type: 'text',
           facetId: 'date-from',
           placeholder: 'Data da (es. 1700)',
+          validation: {
+            pattern: DATE_INPUT_PATTERN,
+            message: DATE_INPUT_MESSAGE,
+          },
           filterConfig: {
             delay: 500,
             searchIn: [
@@ -184,6 +194,10 @@ export default {
           type: 'text',
           facetId: 'date-to',
           placeholder: 'Data a (es. 1800)',
+          validation: {
+            pattern: DATE_INPUT_PATTERN,
+            message: DATE_INPUT_MESSAGE,
+          },
           filterConfig: {
             delay: 500,
             searchIn: [

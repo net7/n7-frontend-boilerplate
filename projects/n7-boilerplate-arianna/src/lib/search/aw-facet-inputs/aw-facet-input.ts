@@ -54,6 +54,41 @@ export abstract class AwFacetInput {
 
   public getOutput = () => this.output;
 
+  /**
+   * Pure validity check against the optional config-driven
+   * `validation: { pattern, message }`. Empty values are always valid
+   * (use `required` for emptiness). Does not mutate the output.
+   */
+  public isValid(value?): boolean {
+    const { validation } = this.config;
+    if (!validation) {
+      return true;
+    }
+    const str = value == null ? '' : `${value}`.trim();
+    if (str.length === 0) {
+      return true;
+    }
+    const pattern = validation.pattern instanceof RegExp
+      ? validation.pattern
+      : new RegExp(validation.pattern);
+    return pattern.test(str);
+  }
+
+  /**
+   * Validates the value and reflects the error state on the output (error
+   * flag / message) so the facet component can render it accessibly.
+   */
+  public validate(value?): boolean {
+    const { validation } = this.config;
+    if (!validation || !this.output) {
+      return true;
+    }
+    const valid = this.isValid(value);
+    this.output.error = !valid;
+    this.output.errorMessage = valid ? null : validation.message;
+    return valid;
+  }
+
   public clear() { return null; }
 
   public setIsEmpty = (empty: boolean) => {
