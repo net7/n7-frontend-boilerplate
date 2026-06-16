@@ -9,6 +9,8 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.6.4] - 2026-06-16
+
 Common
 
 -   Apollo provider: escape string values when building the GraphQL query (via `JSON.stringify`), so search terms containing `"`, `\`, or newlines no longer produce an invalid GraphQL document / parse error
@@ -1129,6 +1131,8 @@ A4V
 
 [v3.4.2]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.4.1...v3.4.2
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.3...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.4...HEAD
+
+[5.6.4]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.1...v5.6.4
 
 [5.6.3]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.1...v5.6.3
