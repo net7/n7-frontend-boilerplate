@@ -9,9 +9,20 @@ import {
 import { helpers } from '@net7/boilerplate-common';
 import facetsConfig from './search-facets.config';
 import { AwSearchService } from '../../search/aw-search.service';
-import { AwSearchModel } from '../../search/aw-search.model';
+import { AwSearchModel, Facet } from '../../search/aw-search.model';
 import entityLinksHelper from '../../search/entity-links.helper';
 import { getHeadTitle } from '../../helpers/title.helper';
+
+/** Shape of the `search` request response consumed by the search layout */
+interface SearchResultsResponse {
+  totalCount: number;
+  results: { items: any[] };
+}
+
+/** Shape of the `facets` request response consumed by the search layout */
+interface FacetsResponse {
+  facets: Facet[];
+}
 
 export class AwSearchLayoutDS extends LayoutDataSource {
   public layoutId = 'aw-search-layout';
@@ -115,7 +126,9 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     if (this.search.model(this.layoutId)) {
       this.search.remove(this.layoutId);
     }
-    this.search.add(this.layoutId, cloneDeep(this.facetsConfig));
+    const facetsConfig = cloneDeep(this.facetsConfig);
+    this._applyValidationOverrides(facetsConfig);
+    this.search.add(this.layoutId, facetsConfig);
     this.searchModel = this.search.model(this.layoutId);
 
     // query params control
@@ -227,7 +240,14 @@ export class AwSearchLayoutDS extends LayoutDataSource {
       params,
       onError: (error) => console.error(error),
     }).pipe(
-      tap(({ totalCount, results }) => {
+      tap((response: SearchResultsResponse | null) => {
+        // Bail out gracefully if the backend rejects the query and resolves
+        // to null (e.g. an Elasticsearch query_string parse error) rather than
+        // throwing on the destructured response.
+        if (!response) {
+          return;
+        }
+        const { totalCount, results } = response;
         this.totalCount = totalCount;
         let resultsTitleIndex = 0;
         // results title
@@ -263,7 +283,14 @@ export class AwSearchLayoutDS extends LayoutDataSource {
       params,
       onError: (error) => console.error(error),
     }).pipe(
-      tap(({ facets }) => {
+      tap((response: FacetsResponse | null) => {
+        // The facets request can resolve to null when the backend rejects the
+        // query (e.g. an Elasticsearch query_string parse error). Bail out
+        // gracefully instead of throwing on the destructured `facets`.
+        const facets = response?.facets;
+        if (!facets) {
+          return;
+        }
         // entity links pagination control
         entityLinksHelper.onFacetsResponse(this.searchModel, facets);
         // facets labels
@@ -310,6 +337,34 @@ export class AwSearchLayoutDS extends LayoutDataSource {
     this.searchModel.setPageConfigOffset(newOffset);
 
     return of(true);
+  }
+
+  /**
+   * Lets the consumer app customize per-facet input validation from its
+   * layout configuration, keyed by `facetId`, without forking the default
+   * facets config. Each override replaces that input's `validation` and may
+   * provide a `validator(value) => boolean` function and/or a `pattern`
+   * (RegExp or string), plus a `message`. Setting an override to a falsy
+   * value disables validation for that facet.
+   *
+   * Example (app config under the layout's config id):
+   *   facetsValidation: {
+   *     'date-from': { pattern: /.../, message: '…' },
+   *     'date-to': { validator: (v) => isRealDate(v), message: '…' },
+   *   }
+   */
+  private _applyValidationOverrides(facetsConfig) {
+    const overrides = this.configuration.get(this.configId)?.facetsValidation;
+    if (!overrides || !facetsConfig?.fields) {
+      return;
+    }
+    facetsConfig.fields.forEach((field) => {
+      (field.inputs || []).forEach((input) => {
+        if (input.facetId && Object.prototype.hasOwnProperty.call(overrides, input.facetId)) {
+          input.validation = overrides[input.facetId];
+        }
+      });
+    });
   }
 
   private _addFacetsLabels(facets) {

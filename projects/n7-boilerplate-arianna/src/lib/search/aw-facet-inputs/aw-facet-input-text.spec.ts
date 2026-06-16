@@ -49,6 +49,15 @@ describe('AwFacetInputText validation', () => {
     it('is always valid when no validation is configured', () => {
       expect(make().isValid('anything')).toBe(true);
     });
+
+    it('uses a validator function when provided (takes precedence)', () => {
+      const validator = (value) => value === 'ok';
+      const input = make({ validator, message });
+      expect(input.isValid('ok')).toBe(true);
+      expect(input.isValid('nope')).toBe(false);
+      // empty is still short-circuited to valid before the validator runs
+      expect(input.isValid('')).toBe(true);
+    });
   });
 
   describe('validate (reflects state on the output)', () => {
