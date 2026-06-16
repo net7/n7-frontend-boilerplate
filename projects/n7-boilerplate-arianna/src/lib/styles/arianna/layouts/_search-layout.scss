@@ -165,12 +165,32 @@
 
 /* facet links loader */
 .aw-search {
+    /*
+     * The loading sentinel carries the `loader-link` class on both the section
+     * wrapper and the inner `.n7-facet__input-link` (which holds the label).
+     * Hide the label and draw a single spinner on the inner link, instead of
+     * the original rule that styled a non-existent nested `.loader-link`.
+     */
     .loader-link {
         overflow: hidden;
-        .loader-link {
+        border-bottom: 0;
+        cursor: default;
+    }
+
+    .n7-facet__input-link.loader-link {
+        font-size: 0;
+
+        .n7-facet__input-link-text,
+        .n7-facet__input-link-counter,
+        .n7-facet__input-link-icon {
+            display: none;
+        }
+
+        &::after {
             @extend .n7-loader;
-        
-            padding: 0;
+
+            content: '';
+            display: block;
             margin: $space auto 0;
             width: 40px !important;
             height: 40px !important;
