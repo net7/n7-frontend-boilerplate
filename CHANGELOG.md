@@ -9,6 +9,8 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.6.2] - 2026-06-16
+
 Build
 
 -   Bump `@net7/components` to `^4.5.17`, picking up the bubble chart shuffle fix (`shuffle` now runs on first draw instead of being a no-op)
@@ -877,7 +879,9 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.1...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.2...HEAD
+
+[5.6.2]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.1...v5.6.2
 
 [5.6.1]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.0...v5.6.1
 
