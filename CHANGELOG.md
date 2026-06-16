@@ -15,6 +15,12 @@ For each commit add a description under the Unreleased section under the corresp
 - Search layout: fix the entity-links loading spinner showing its label text — the `.loader-link` style targeted a non-existent nested element; the label is now hidden and the spinner drawn on the link itself
 - Search layout: guard the facets and results requests against a null/failed backend response (e.g. an Elasticsearch query error) so the search degrades gracefully instead of throwing a destructuring `TypeError`
 
+## [5.6.2] - 2026-06-16
+
+Build
+
+-   Bump `@net7/components` to `^4.5.17`, picking up the bubble chart shuffle fix (`shuffle` now runs on first draw instead of being a no-op)
+
 ## [5.6.1] - 2026-06-09
 
 Arianna
@@ -879,7 +885,7 @@ A4V
 - url configurabili
 - timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.1...HEAD
+[5.6.2]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.1...v5.6.2
 [5.6.1]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.0...v5.6.1
 [5.6.0]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.28...v5.6.0
 [5.5.28]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.27...v5.5.28
