@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Common
+
+-   Apollo provider: escape string values when building the GraphQL query (via `JSON.stringify`), so search terms containing `"`, `\`, or newlines no longer produce an invalid GraphQL document / parse error
+
 ## [5.6.3] - 2026-06-16
 
 -   Search facets: validation now accepts a `validator(value) => boolean` function in addition to a `pattern` (RegExp or string)
