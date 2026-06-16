@@ -229,7 +229,7 @@ export class AwSearchLayoutDS extends LayoutDataSource {
       params,
       onError: (error) => console.error(error),
     }).pipe(
-      tap((response) => {
+      tap((response: any) => {
         // Bail out gracefully if the backend rejects the query and resolves
         // to null (e.g. an Elasticsearch query_string parse error) rather than
         // throwing on the destructured response.
@@ -272,7 +272,7 @@ export class AwSearchLayoutDS extends LayoutDataSource {
       params,
       onError: (error) => console.error(error),
     }).pipe(
-      tap((response) => {
+      tap((response: any) => {
         // The facets request can resolve to null when the backend rejects the
         // query (e.g. an Elasticsearch query_string parse error). Bail out
         // gracefully instead of throwing on the destructured `facets`.
