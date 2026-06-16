@@ -9,9 +9,20 @@ import {
 import { helpers } from '@net7/boilerplate-common';
 import facetsConfig from './search-facets.config';
 import { AwSearchService } from '../../search/aw-search.service';
-import { AwSearchModel } from '../../search/aw-search.model';
+import { AwSearchModel, Facet } from '../../search/aw-search.model';
 import entityLinksHelper from '../../search/entity-links.helper';
 import { getHeadTitle } from '../../helpers/title.helper';
+
+/** Shape of the `search` request response consumed by the search layout */
+interface SearchResultsResponse {
+  totalCount: number;
+  results: { items: any[] };
+}
+
+/** Shape of the `facets` request response consumed by the search layout */
+interface FacetsResponse {
+  facets: Facet[];
+}
 
 export class AwSearchLayoutDS extends LayoutDataSource {
   public layoutId = 'aw-search-layout';
@@ -229,7 +240,7 @@ export class AwSearchLayoutDS extends LayoutDataSource {
       params,
       onError: (error) => console.error(error),
     }).pipe(
-      tap((response: any) => {
+      tap((response: SearchResultsResponse | null) => {
         // Bail out gracefully if the backend rejects the query and resolves
         // to null (e.g. an Elasticsearch query_string parse error) rather than
         // throwing on the destructured response.
@@ -272,7 +283,7 @@ export class AwSearchLayoutDS extends LayoutDataSource {
       params,
       onError: (error) => console.error(error),
     }).pipe(
-      tap((response: any) => {
+      tap((response: FacetsResponse | null) => {
         // The facets request can resolve to null when the backend rejects the
         // query (e.g. an Elasticsearch query_string parse error). Bail out
         // gracefully instead of throwing on the destructured `facets`.
