@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Build
+
+-   Bump `@net7/components` to `^4.5.17`, picking up the bubble chart shuffle fix (`shuffle` now runs on first draw instead of being a no-op)
+
 ## [5.6.1] - 2026-06-09
 
 Arianna
