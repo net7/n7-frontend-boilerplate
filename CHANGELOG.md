@@ -9,9 +9,11 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.6.5-rc.1] - 2026-06-22
+
 Muruca
 
-- Fix scrollElementsIntoView for parallel text viewer
+-   Fix scrollElementsIntoView for parallel text viewer
 
 ## [5.6.4] - 2026-06-16
 
@@ -1135,7 +1137,9 @@ A4V
 
 [v3.4.2]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.4.1...v3.4.2
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.4...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.5-rc.1...HEAD
+
+[5.6.5-rc.1]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.1...v5.6.5-rc.1
 
 [5.6.4]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.1...v5.6.4
 
