@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+- Fix scrollElementsIntoView for parallel text viewer
+
 ## [5.6.4] - 2026-06-16
 
 Common
