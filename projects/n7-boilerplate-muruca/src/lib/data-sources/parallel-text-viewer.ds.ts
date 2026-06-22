@@ -181,11 +181,10 @@ export class MrParallelTextViewerDS extends DataSource {
           data.mainDoc.rootPath = 'api/mrcparts';
         }
       }
+      document.addEventListener('pb-end-update', (ev: any) => {
+        this.scrollElementsIntoView(ev.detail, 'hq', '#transcription-view');
+      });
     }
-    document.addEventListener('pb-end-update', (ev: any) => {
-      this.scrollElementsIntoView(ev.detail, 'hq', '#transcription-view');
-    });
-    /*   }  */
     return data;
   }
 
@@ -545,11 +544,11 @@ export class MrParallelTextViewerDS extends DataSource {
       if (type === 'chapter') {
         if (
           document
-            .querySelector('.n7-text-viewer #view0')
-            .shadowRoot.querySelector('pb-highlight')
+            .querySelector('.n7-parallel-text-viewer #transcription-view')
+            ?.shadowRoot?.querySelector('pb-highlight')
         ) {
           const highlight = document
-            .querySelector('.n7-text-viewer #view0')
+            .querySelector('.n7-parallel-text-viewer #transcription-view')
             .shadowRoot.querySelectorAll('pb-highlight');
 
           const highlightId = highlight[highlight.length - 1].id; // s.x
@@ -557,23 +556,22 @@ export class MrParallelTextViewerDS extends DataSource {
           const fragmentNumber = highlightId.replace('.', '\\.');
 
           element = document
-            .querySelector(view)
-            .shadowRoot.querySelector(`#${fragmentNumber}`);
+            .querySelector(`.n7-parallel-text-viewer ${view}`)
+            ?.shadowRoot?.querySelector(`#${fragmentNumber}`);
         }
       } else if (type === 'entity') {
         const key = target.__key;
         element = document
-          .querySelector(`.n7-text-viewer ${view}`)
-          .shadowRoot.querySelector(`#${key}`);
+          .querySelector(`.n7-parallel-text-viewer ${view}`)
+          ?.shadowRoot?.querySelector(`#${key}`);
       } else if (type === 'hq') {
         element = document
           .querySelector(`.n7-parallel-text-viewer ${view}`)
-          .shadowRoot.querySelector('.tei-em');
+          ?.shadowRoot?.querySelector('.tei-em');
       }
 
-      const container = document.querySelector(`.n7-parallel-text-viewer ${view}`);
       if (element) {
-        container.scrollTop = element.offsetTop;
+        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
     }, 600);
   }
