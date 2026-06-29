@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+- Release non RC version
+
 ## [5.6.5-rc.1] - 2026-06-22
 
 Muruca
