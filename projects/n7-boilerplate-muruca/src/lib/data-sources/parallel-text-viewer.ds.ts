@@ -196,6 +196,114 @@ export class MrParallelTextViewerDS extends DataSource {
     }
   }
 
+  private wrapFullTextAuthorities(view: Element) {
+    if (!view.shadowRoot || (view as any).__authoritiesWrapped) return;
+    const content = view.shadowRoot.getElementById('content') || view.shadowRoot;
+    const interps = Array.from(content.querySelectorAll('[class^="tei-interp"]'))
+      .filter((el) => el.querySelector('.authority-full-entry'));
+    if (!interps.length) return;
+
+    // Estrae l'etichetta dal primo authority-header
+    const headerEl = interps[0].querySelector('.authority-header');
+    const labelText = headerEl?.textContent?.replace(/:$/, '').trim() || 'Fonti';
+    const count = interps.length;
+
+    // Crea il wrapper accordion
+    const accordion = document.createElement('div');
+    accordion.className = 'authority-accordion';
+    accordion.setAttribute('style', 'margin-bottom:0.5em;');
+
+    // Header cliccabile
+    const header = document.createElement('div');
+    header.className = 'authority-accordion__header';
+    header.setAttribute('style',
+      'display:flex;align-items:center;gap:8px;padding:8px 12px;'
+      + 'background:#f0f2f5;cursor:pointer;user-select:none;'
+      + 'border-bottom:1px solid #dee2e6;font-family:sans-serif;'
+    );
+    header.innerHTML = `
+      <span style="font-size:12px;font-weight:600;color:#495057;text-transform:uppercase;letter-spacing:0.5px;">${labelText}</span>
+      <span style="font-size:11px;color:#6c757d;border:1px solid #adb5bd;border-radius:4px;padding:1px 6px;">CONTIENE ${count} FONT${count === 1 ? 'E' : 'I'}</span>
+      <span class="authority-accordion__chevron" style="margin-left:auto;font-size:14px;color:#6c757d;transition:transform 0.2s;">▼</span>
+    `;
+
+    // Body collassabile
+    const body = document.createElement('div');
+    body.className = 'authority-accordion__body';
+    body.setAttribute('style', 'display:none;padding:8px 12px;');
+
+    // Sposta gli interp nel body
+    interps.forEach((interp) => {
+      body.appendChild(interp);
+    });
+
+    // Toggle click
+    header.addEventListener('click', () => {
+      const isOpen = body.style.display !== 'none';
+      body.style.display = isOpen ? 'none' : 'block';
+      const chevron = header.querySelector('.authority-accordion__chevron') as HTMLElement;
+      if (chevron) chevron.style.transform = isOpen ? '' : 'rotate(180deg)';
+    });
+
+    accordion.appendChild(header);
+    accordion.appendChild(body);
+
+    // Inserisce l'accordion all'inizio del content
+    const contentDiv = content.querySelector('.content') || content;
+    if (contentDiv.parentNode) {
+      contentDiv.parentNode.insertBefore(accordion, contentDiv);
+    }
+    // Nasconde il contenitore originale (ora vuoto degli interp)
+    if (contentDiv.querySelector('.tei-TEI') && !contentDiv.querySelector('[class^="tei-interp"]')) {
+      const teiDiv = contentDiv.querySelector('.tei-TEI') as HTMLElement;
+      if (teiDiv && !teiDiv.children.length) {
+        teiDiv.style.display = 'none';
+      }
+    }
+
+    (view as any).__authoritiesWrapped = true;
+  }
+
+  private injectPlaceholder(view: Element) {
+    if (!view.shadowRoot || (view as any).__placeholderInjected) return;
+    const placeholder = document.createElement('div');
+    placeholder.className = 'column-placeholder';
+    placeholder.setAttribute('style',
+      'display:flex;flex-direction:column;align-items:center;justify-content:center;'
+      + 'padding:2em;margin:1em;text-align:center;'
+      + 'color:#6c757d;font-family:sans-serif;'
+    );
+    placeholder.innerHTML = `
+      <div style="width:40px;height:40px;border:2px solid #adb5bd;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:0.8em;font-size:18px;color:#adb5bd;">i</div>
+      <div style="font-size:14px;">Clicca una voce per aprirne la scheda.</div>
+    `;
+    const container = view.shadowRoot.getElementById('view') || view.shadowRoot;
+    if (container.appendChild) {
+      container.appendChild(placeholder);
+    }
+    (view as any).__placeholderInjected = true;
+    (view as any).__placeholderEl = placeholder;
+  }
+
+  private hidePlaceholder(view: Element) {
+    const el = (view as any).__placeholderEl;
+    if (el) el.style.display = 'none';
+  }
+
+  private checkPlaceholder(view: Element) {
+    if (!view.shadowRoot) return;
+    const el = (view as any).__placeholderEl;
+    if (!el) return;
+    const content = view.shadowRoot.getElementById('view') || view.shadowRoot;
+    const hasVisibleApp = Array.from(content.querySelectorAll('.tei-app')).some(
+      (app: any) => app.style.display === 'block'
+    );
+    const hasVisibleNote = Array.from(content.querySelectorAll('.note-item')).some(
+      (note: any) => note.style.display === 'block'
+    );
+    el.style.display = (hasVisibleApp || hasVisibleNote) ? 'none' : 'flex';
+  }
+
   setupViewClickListeners() {
     const attachListeners = () => {
       setTimeout(() => {
@@ -205,6 +313,11 @@ export class MrParallelTextViewerDS extends DataSource {
           if (view.id === 'transcription-view') {
             return;
           }
+
+          // Wrappa autorità full-text in accordion collassabile
+          this.wrapFullTextAuthorities(view);
+          // Inietta placeholder nella view laterale
+          this.injectPlaceholder(view);
 
           if (view.shadowRoot) {
             if ((view as any).__clickListenerAttached) {
@@ -279,6 +392,9 @@ export class MrParallelTextViewerDS extends DataSource {
         parentAppItem.style.display = 'none';
         (parentAppItem as HTMLElement).style.transform = '';
         this.resetHighlights();
+        // Verifica se mostrare il placeholder
+        const closedView = clickPath.find((el: any) => el.id && el.id.endsWith('-view'));
+        if (closedView) this.checkPlaceholder(closedView);
         payload.stopPropagation();
         return;
       }
@@ -303,6 +419,9 @@ export class MrParallelTextViewerDS extends DataSource {
         parentNoteItem.style.display = 'none';
         (parentNoteItem as HTMLElement).style.transform = '';
         this.resetHighlights();
+        // Verifica se mostrare il placeholder
+        const closedView = clickPath.find((el: any) => el.id && el.id.endsWith('-view'));
+        if (closedView) this.checkPlaceholder(closedView);
         payload.stopPropagation();
         return;
       }
@@ -370,6 +489,9 @@ export class MrParallelTextViewerDS extends DataSource {
           (teiAppElement as HTMLElement).style.display = 'none';
           (teiAppElement as HTMLElement).style.transform = '';
           this.resetHighlights();
+          // Verifica se mostrare il placeholder nella view che contiene il tei-app
+          const parentView = teiAppElement.getRootNode()?.host;
+          if (parentView) this.checkPlaceholder(parentView);
 
           if (isOuterCit) {
             // Pannello esterno chiuso: ripristina il background dei seg annidati
@@ -382,6 +504,9 @@ export class MrParallelTextViewerDS extends DataSource {
           }
         } else {
           (teiAppElement as HTMLElement).style.display = 'block';
+          // Nascondi il placeholder nella view che contiene il tei-app
+          const parentView = teiAppElement.getRootNode()?.host;
+          if (parentView) this.hidePlaceholder(parentView);
 
           // posizione attuale
           const elementPosition = teiAppElement.getBoundingClientRect().top;
@@ -432,13 +557,15 @@ export class MrParallelTextViewerDS extends DataSource {
       if (teiNoteElement) {
         // Verifica se è visibile
         const isVisible = (teiNoteElement as HTMLElement).style.display === 'block';
+        const noteParentView = (teiNoteElement.getRootNode() as any)?.host;
 
         if (isVisible) {
           (teiNoteElement as HTMLElement).style.display = 'none';
-
           (teiNoteElement as HTMLElement).style.transform = '';
+          if (noteParentView) this.checkPlaceholder(noteParentView as Element);
         } else {
           (teiNoteElement as HTMLElement).style.display = 'block';
+          if (noteParentView) this.hidePlaceholder(noteParentView as Element);
 
           // posizione attuale
           const elementPosition = teiNoteElement.getBoundingClientRect().top;
