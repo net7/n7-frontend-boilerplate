@@ -1,6 +1,13 @@
 // import { ParallelTextViewerData } from '@net7/components';
 import { DataSource } from '@net7/core';
 
+interface OpenDiv {
+  id: string;
+  element: HTMLElement;
+  idealTop: number;
+  height: number;
+}
+
 export class MrParallelTextViewerDS extends DataSource {
   id: string;
 
@@ -196,6 +203,134 @@ export class MrParallelTextViewerDS extends DataSource {
     }
   }
 
+  // --- Stack management per view ---
+
+  private getOpenDivs(view: Element): OpenDiv[] {
+    if (!(view as any).__openDivs) {
+      (view as any).__openDivs = [];
+    }
+    return (view as any).__openDivs;
+  }
+
+  private getActiveId(view: Element): string | null {
+    return (view as any).__activeId || null;
+  }
+
+  private setActiveId(view: Element, id: string | null) {
+    (view as any).__activeId = id;
+  }
+
+  private addToStack(view: Element, id: string, element: HTMLElement, idealTop: number) {
+    const stack = this.getOpenDivs(view);
+    // Se già presente, aggiorna idealTop
+    const existing = stack.find((d) => d.id === id);
+    if (existing) {
+      existing.idealTop = idealTop;
+      return;
+    }
+    stack.push({ id, element, idealTop, height: 0 });
+  }
+
+  private removeFromStack(view: Element, id: string) {
+    const stack = this.getOpenDivs(view);
+    const idx = stack.findIndex((d) => d.id === id);
+    if (idx !== -1) {
+      stack.splice(idx, 1);
+    }
+  }
+
+  private findInStack(view: Element, id: string): OpenDiv | undefined {
+    return this.getOpenDivs(view).find((d) => d.id === id);
+  }
+
+  private prepareViewContainer(view: Element) {
+    if (!view.shadowRoot || (view as any).__containerPrepared) return;
+    const content = view.shadowRoot.getElementById('content');
+    if (content) {
+      content.style.position = 'relative';
+    }
+    (view as any).__containerPrepared = true;
+  }
+
+  /**
+   * Ricalcola le posizioni di tutti i div aperti in una view.
+   * Il div attivo sta alla sua posizione ideale,
+   * quelli sopra si impilano verso l'alto, quelli sotto verso il basso.
+   */
+  private layoutOpenDivs(view: Element) {
+    const stack = this.getOpenDivs(view);
+    if (!stack.length) return;
+
+    const gap = 8;
+    const activeId = this.getActiveId(view);
+
+    // Ordina per posizione ideale (ordine nel testo)
+    stack.sort((a, b) => a.idealTop - b.idealTop);
+
+    // Misura altezze attuali
+    stack.forEach((div) => {
+      div.height = div.element.getBoundingClientRect().height || 0;
+    });
+
+    // Trova l'indice del div attivo
+    const activeIdx = stack.findIndex((d) => d.id === activeId);
+    const finalTops: number[] = new Array(stack.length);
+
+    if (activeIdx === -1) {
+      // Nessun attivo: layout semplice top-to-bottom
+      let nextTop = 0;
+      stack.forEach((div, i) => {
+        finalTops[i] = Math.max(div.idealTop, nextTop);
+        nextTop = finalTops[i] + div.height + gap;
+      });
+    } else {
+      // Attivo alla sua posizione ideale
+      finalTops[activeIdx] = stack[activeIdx].idealTop;
+
+      // Div SOPRA l'attivo: dal più vicino all'attivo verso l'alto
+      for (let i = activeIdx - 1; i >= 0; i--) {
+        const maxBottom = finalTops[i + 1];
+        finalTops[i] = Math.min(stack[i].idealTop, maxBottom - stack[i].height - gap);
+        finalTops[i] = Math.max(finalTops[i], 0); // clamp a 0, può sovrapporre se clustered
+      }
+
+      // Div SOTTO l'attivo: dal più vicino all'attivo verso il basso
+      for (let i = activeIdx + 1; i < stack.length; i++) {
+        const minTop = finalTops[i - 1] + stack[i - 1].height + gap;
+        finalTops[i] = Math.max(stack[i].idealTop, minTop);
+      }
+    }
+
+    // Applica posizioni
+    stack.forEach((div, i) => {
+      div.element.style.position = 'absolute';
+      div.element.style.top = `${finalTops[i]}px`;
+      div.element.style.left = '0';
+      div.element.style.right = '0';
+    });
+  }
+
+  /**
+   * Applica stili attivo/dimmed ai div aperti nella view.
+   */
+  private applyActiveStyles(view: Element) {
+    const stack = this.getOpenDivs(view);
+    const activeId = this.getActiveId(view);
+    stack.forEach((div) => {
+      if (div.id === activeId) {
+        div.element.style.opacity = '1';
+        div.element.style.boxShadow = '0 2px 8px rgba(0,0,0,0.15)';
+        div.element.style.zIndex = '20';
+      } else {
+        div.element.style.opacity = '0.5';
+        div.element.style.boxShadow = 'none';
+        div.element.style.zIndex = '10';
+      }
+    });
+  }
+
+  // --- Fine stack management ---
+
   private wrapFullTextAuthorities(view: Element) {
     if (!view.shadowRoot || (view as any).__authoritiesWrapped) return;
     const content = view.shadowRoot.getElementById('content') || view.shadowRoot;
@@ -294,14 +429,8 @@ export class MrParallelTextViewerDS extends DataSource {
     if (!view.shadowRoot) return;
     const el = (view as any).__placeholderEl;
     if (!el) return;
-    const content = view.shadowRoot.getElementById('view') || view.shadowRoot;
-    const hasVisibleApp = Array.from(content.querySelectorAll('.tei-app')).some(
-      (app: any) => app.style.display === 'block'
-    );
-    const hasVisibleNote = Array.from(content.querySelectorAll('.note-item')).some(
-      (note: any) => note.style.display === 'block'
-    );
-    el.style.display = (hasVisibleApp || hasVisibleNote) ? 'none' : 'flex';
+    const hasOpenDivs = this.getOpenDivs(view).length > 0;
+    el.style.display = hasOpenDivs ? 'none' : 'flex';
   }
 
   setupViewClickListeners() {
@@ -314,6 +443,8 @@ export class MrParallelTextViewerDS extends DataSource {
             return;
           }
 
+          // Prepara il container per absolute positioning
+          this.prepareViewContainer(view);
           // Wrappa autorità full-text in accordion collassabile
           this.wrapFullTextAuthorities(view);
           // Inietta placeholder nella view laterale
@@ -387,14 +518,29 @@ export class MrParallelTextViewerDS extends DataSource {
       && el.className.includes('close_app'));
 
     if (closeButton) {
-      const parentAppItem = closeButton.closest('.tei-app');
-      if (parentAppItem && parentAppItem.style) {
+      const parentAppItem = closeButton.closest('.tei-app') as HTMLElement;
+      if (parentAppItem) {
+        const parentView = (parentAppItem.getRootNode() as any)?.host as Element;
+        const appId = parentAppItem.id || parentAppItem.getAttribute('data-from');
+        // Rimuove dallo stack e nasconde
         parentAppItem.style.display = 'none';
-        (parentAppItem as HTMLElement).style.transform = '';
+        parentAppItem.style.position = '';
+        parentAppItem.style.top = '';
+        parentAppItem.style.left = '';
+        parentAppItem.style.right = '';
+        parentAppItem.style.transform = '';
+        if (parentView && appId) {
+          this.removeFromStack(parentView, appId);
+          // Se era l'attivo, imposta l'ultimo rimasto come attivo
+          const stack = this.getOpenDivs(parentView);
+          if (this.getActiveId(parentView) === appId) {
+            this.setActiveId(parentView, stack.length ? stack[stack.length - 1].id : null);
+          }
+          this.layoutOpenDivs(parentView);
+          this.applyActiveStyles(parentView);
+          this.checkPlaceholder(parentView);
+        }
         this.resetHighlights();
-        // Verifica se mostrare il placeholder
-        const closedView = clickPath.find((el: any) => el.id && el.id.endsWith('-view'));
-        if (closedView) this.checkPlaceholder(closedView);
         payload.stopPropagation();
         return;
       }
@@ -440,102 +586,92 @@ export class MrParallelTextViewerDS extends DataSource {
     if (target && target.getAttribute('type') === 'app_lem') {
       const appId = target.getAttribute('key');
 
-      // Posizione elemento cliccato
-      const clickedElementPosition = (target as HTMLElement).getBoundingClientRect().top;
+      // Posizione elemento cliccato (relativa al viewport)
+      const clickedElementRect = (target as HTMLElement).getBoundingClientRect();
 
-      const clickedView = clickPath.find((el) => el.id && el.id.endsWith('-view'));
+      const clickedView = clickPath.find((el: any) => el.id && el.id.endsWith('-view'));
       const clickedViewId = clickedView ? clickedView.id : null;
 
-      const apparatusView = document.querySelectorAll('.n7-parallel-text-viewer [id$="-view"]');
+      const allViews = document.querySelectorAll('.n7-parallel-text-viewer [id$="-view"]');
 
-      let anchorElement = null;
-      let teiAppElement = null;
+      let teiAppElement: HTMLElement = null;
+      let targetView: Element = null;
 
-      apparatusView.forEach((view) => {
-        // Salta la view in cui è stato fatto il click
-        if (view.id === clickedViewId) {
-          return;
-        }
+      allViews.forEach((view) => {
+        if (view.id === clickedViewId) return;
+        if (!view.shadowRoot) return;
 
-        if (view.shadowRoot) {
-          // Cerca prima per id esatto; se non trovato, cerca popup per ancora apertura (data-from)
-          // o ancora di chiusura (data-to)
-          const found = view.shadowRoot.querySelector(`[id="${appId}"]`)
-            || view.shadowRoot.querySelector(`.tei-app[data-from="${appId}"]`)
-            || view.shadowRoot.querySelector(`.tei-app[data-to="${appId}"]`);
-          if (found) {
-            if (!anchorElement) {
-              anchorElement = found;
-            }
-
-            const appElement = found.closest('.tei-app') || (found.classList.contains('tei-app') ? found : null);
-            if (appElement && !teiAppElement) {
-              teiAppElement = appElement;
-            }
+        const found = view.shadowRoot.querySelector(`[id="${appId}"]`)
+          || view.shadowRoot.querySelector(`.tei-app[data-from="${appId}"]`)
+          || view.shadowRoot.querySelector(`.tei-app[data-to="${appId}"]`);
+        if (found && !teiAppElement) {
+          const appElement = found.closest('.tei-app') || (found.classList.contains('tei-app') ? found : null);
+          if (appElement) {
+            teiAppElement = appElement as HTMLElement;
+            targetView = view;
           }
         }
       });
 
-      if (teiAppElement) {
-        const isVisible = (teiAppElement as HTMLElement).style.display === 'block';
+      if (teiAppElement && targetView) {
+        const divId = teiAppElement.id || teiAppElement.getAttribute('data-from') || appId;
+        const existingInStack = this.findInStack(targetView, divId);
 
-        // Determina se il pb-highlight cliccato è una cit esterna (contiene cit annidate).
+        // Gestione cit annidate (seg-outer-inner)
         const nestedCits = (target as HTMLElement).querySelectorAll('span.quote');
         const isOuterCit = nestedCits.length > 0;
         const segOuterInner = (target as HTMLElement).querySelectorAll('.seg-outer-inner');
         const segPartF = (target as HTMLElement).querySelectorAll('.seg-part-f');
 
-        if (isVisible) {
-          (teiAppElement as HTMLElement).style.display = 'none';
-          (teiAppElement as HTMLElement).style.transform = '';
-          this.resetHighlights();
-          // Verifica se mostrare il placeholder nella view che contiene il tei-app
-          const parentView = teiAppElement.getRootNode()?.host;
-          if (parentView) this.checkPlaceholder(parentView);
-
-          if (isOuterCit) {
-            // Pannello esterno chiuso: ripristina il background dei seg annidati
-            segOuterInner.forEach((el) => {
-              (el as HTMLElement).style.backgroundColor = '';
-            });
-            segPartF.forEach((el) => {
-              (el as HTMLElement).style.backgroundColor = '';
-            });
-          }
+        if (existingInStack) {
+          // Div già aperto → riattiva: aggiorna idealTop e ricalcola layout
+          const contentEl = targetView.shadowRoot.getElementById('content');
+          const viewEl = targetView.shadowRoot.getElementById('view');
+          const scrollContainer = viewEl || contentEl || targetView;
+          const contentRect = contentEl ? contentEl.getBoundingClientRect() : targetView.getBoundingClientRect();
+          const scrollTop = (scrollContainer as HTMLElement).scrollTop || 0;
+          existingInStack.idealTop = clickedElementRect.top - contentRect.top + scrollTop;
+          this.setActiveId(targetView, divId);
+          requestAnimationFrame(() => {
+            this.layoutOpenDivs(targetView);
+            this.applyActiveStyles(targetView);
+          });
         } else {
-          (teiAppElement as HTMLElement).style.display = 'block';
-          // Nascondi il placeholder nella view che contiene il tei-app
-          const parentView = teiAppElement.getRootNode()?.host;
-          if (parentView) this.hidePlaceholder(parentView);
+          // Calcola posizione ideale relativa al container #content della view
+          const contentEl = targetView.shadowRoot.getElementById('content');
+          const viewEl = targetView.shadowRoot.getElementById('view');
+          const scrollContainer = viewEl || contentEl || targetView;
+          const contentRect = contentEl ? contentEl.getBoundingClientRect() : targetView.getBoundingClientRect();
+          const scrollTop = (scrollContainer as HTMLElement).scrollTop || 0;
+          const idealTop = clickedElementRect.top - contentRect.top + scrollTop;
 
-          // posizione attuale
-          const elementPosition = teiAppElement.getBoundingClientRect().top;
+          // Mostra il div
+          teiAppElement.style.display = 'block';
 
-          // differenza
-          const positionDifference = clickedElementPosition - elementPosition;
+          // Aggiunge allo stack
+          this.addToStack(targetView, divId, teiAppElement, idealTop);
+          this.setActiveId(targetView, divId);
+          this.hidePlaceholder(targetView);
 
-          // spostamento
-          (teiAppElement as HTMLElement).style.transform = `translateY(${positionDifference}px)`;
+          // Layout e stili dopo che il browser ha renderizzato (per misurare le altezze)
+          requestAnimationFrame(() => {
+            this.layoutOpenDivs(targetView);
+            this.applyActiveStyles(targetView);
 
-          if (isOuterCit) {
-            // Pannello esterno aperto: dopo che pb-highlight si attiva (giallo),
-            // imposta sfondo bianco su seg-outer-inner e seg-part-f
-            requestAnimationFrame(() => {
+            // Gestione seg per cit annidate
+            if (isOuterCit) {
               segOuterInner.forEach((el) => {
                 (el as HTMLElement).style.backgroundColor = 'white';
               });
               segPartF.forEach((el) => {
                 (el as HTMLElement).style.backgroundColor = 'white';
               });
-            });
-          } else {
-            // Pannello interno aperto: ripristina eventuali soppressioni sui seg interni
-            requestAnimationFrame(() => {
+            } else {
               segOuterInner.forEach((el) => {
                 (el as HTMLElement).style.backgroundColor = '';
               });
-            });
-          }
+            }
+          });
         }
       } else {
         console.warn('teiAppElement non trovato!');
