@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+- Fix label traslation for checkbox facet
+
 ## [5.6.5] - 2026-06-29
 
 Muruca
