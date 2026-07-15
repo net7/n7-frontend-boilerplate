@@ -1,4 +1,4 @@
-import { DataSource } from '@net7/core';
+import { DataSource, _t } from '@net7/core';
 import { InputCheckbox, InputCheckboxData } from '@net7/components';
 import { FacetDataSource } from './facet-datasource';
 
@@ -10,7 +10,13 @@ export class FacetCheckboxDS extends DataSource implements FacetDataSource {
   value: FACET_VALUE = [];
 
   protected transform(data: InputCheckboxData): InputCheckboxData {
-    return data;
+    return {
+      ...data,
+      checkboxes: data.checkboxes.map((checkbox: InputCheckbox) => ({
+        ...checkbox,
+        label: _t(checkbox.label)
+      }))
+    };
   }
 
   setValue(value: FACET_VALUE, update = false) {
