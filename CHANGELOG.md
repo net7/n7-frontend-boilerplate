@@ -9,9 +9,11 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.6.6] - 2026-07-15
+
 Muruca
 
-- Fix label traslation for checkbox facet
+-   Fix label traslation for checkbox facet
 
 ## [5.6.5] - 2026-06-29
 
@@ -1147,7 +1149,9 @@ A4V
 
 [v3.4.2]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.4.1...v3.4.2
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.5...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.6...HEAD
+
+[5.6.6]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.1...v5.6.6
 
 [5.6.5]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.1...v5.6.5
 
