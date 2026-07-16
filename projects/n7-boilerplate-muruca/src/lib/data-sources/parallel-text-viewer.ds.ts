@@ -322,9 +322,138 @@ export class MrParallelTextViewerDS extends DataSource {
         div.element.style.boxShadow = '0 2px 8px rgba(0,0,0,0.15)';
         div.element.style.zIndex = '20';
       } else {
-        div.element.style.opacity = '0.5';
+        div.element.style.opacity = '0.7';
         div.element.style.boxShadow = 'none';
         div.element.style.zIndex = '10';
+      }
+    });
+  }
+
+  /**
+   * Determina se un .tei-app è un div autorità (ha .quote-container).
+   */
+  private isAuthorityDiv(element: HTMLElement): boolean {
+    return !!element.querySelector('.quote-container');
+  }
+
+  /**
+   * Collassa un div autorità: nasconde le citazioni lunghe, tiene link e label.
+   */
+  private collapseAuthorityDiv(element: HTMLElement) {
+    if (!this.isAuthorityDiv(element) || (element as any).__collapsed) return;
+
+    // Nasconde i testi lunghi
+    const hideSelectors = ['.quote-source', '.quote-incipit', '.quote-desinit', '.quote-mediation'];
+    hideSelectors.forEach((sel) => {
+      element.querySelectorAll(sel).forEach((el: HTMLElement) => {
+        el.style.display = 'none';
+      });
+    });
+
+    // Aggiunge o aggiorna tasto toggle
+    this.ensureCollapseToggle(element);
+    const toggle = element.querySelector('.collapse-toggle') as HTMLElement;
+    if (toggle) {
+      toggle.textContent = '▼ Espandi';
+      toggle.style.display = 'inline-block';
+    }
+
+    (element as any).__collapsed = true;
+  }
+
+  /**
+   * Espande un div autorità: mostra tutto il contenuto.
+   */
+  private expandAuthorityDiv(element: HTMLElement) {
+    if (!this.isAuthorityDiv(element)) return;
+    if ((element as any).__collapsed === false) return; // già espanso
+
+    // Mostra i testi lunghi
+    const showSelectors = ['.quote-source', '.quote-incipit', '.quote-desinit', '.quote-mediation'];
+    showSelectors.forEach((sel) => {
+      element.querySelectorAll(sel).forEach((el: HTMLElement) => {
+        el.style.display = '';
+      });
+    });
+
+    // Crea o aggiorna tasto toggle a "Collassa"
+    this.ensureCollapseToggle(element);
+    const toggle = element.querySelector('.collapse-toggle') as HTMLElement;
+    if (toggle) {
+      toggle.textContent = '▲ Collassa';
+      toggle.style.display = 'inline-block';
+    }
+
+    (element as any).__collapsed = false;
+  }
+
+  /**
+   * Crea il tasto toggle espandi/collassa se non esiste.
+   */
+  private ensureCollapseToggle(element: HTMLElement) {
+    if (!this.isAuthorityDiv(element)) return;
+    if (element.querySelector('.collapse-toggle')) return;
+    const toggle = document.createElement('button');
+    toggle.className = 'collapse-toggle';
+    toggle.setAttribute('style',
+      'background:none;border:1px solid #adb5bd;border-radius:4px;padding:2px 8px;'
+      + 'cursor:pointer;font-size:11px;color:#6c757d;margin-top:6px;display:inline-block;'
+    );
+    toggle.addEventListener('click', (ev) => {
+      ev.stopPropagation();
+      this.onCollapseToggleClick(element);
+    });
+    element.appendChild(toggle);
+  }
+
+  /**
+   * Handler click sul tasto espandi/collassa di un div autorità.
+   */
+  private onCollapseToggleClick(element: HTMLElement) {
+    const parentView = (element.getRootNode() as any)?.host as Element;
+    if (!parentView) return;
+    const isCollapsed = (element as any).__collapsed;
+
+    if (isCollapsed) {
+      // Espandi → riattiva il div (diventa attivo, si riposiziona, altri collassano)
+      const stack = this.getOpenDivs(parentView);
+      const divEntry = stack.find((d) => d.element === element);
+      if (divEntry) {
+        this.setActiveId(parentView, divEntry.id);
+        this.updateDivCollapse(parentView);
+        requestAnimationFrame(() => {
+          this.layoutOpenDivs(parentView);
+          this.applyActiveStyles(parentView);
+        });
+      }
+    } else {
+      // Collassa → chiude il contenuto (resta attivo ma compatto)
+      const hideSelectors = ['.quote-source', '.quote-incipit', '.quote-desinit', '.quote-mediation'];
+      hideSelectors.forEach((sel) => {
+        element.querySelectorAll(sel).forEach((el: HTMLElement) => {
+          el.style.display = 'none';
+        });
+      });
+      (element as any).__collapsed = true;
+      const toggle = element.querySelector('.collapse-toggle') as HTMLElement;
+      if (toggle) toggle.textContent = '▼ Espandi';
+      requestAnimationFrame(() => {
+        this.layoutOpenDivs(parentView);
+      });
+    }
+  }
+
+  /**
+   * Aggiorna collasso/espansione di tutti i div in base allo stato attivo.
+   */
+  private updateDivCollapse(view: Element) {
+    const stack = this.getOpenDivs(view);
+    const activeId = this.getActiveId(view);
+    stack.forEach((div) => {
+      if (div.id === activeId) {
+        this.expandAuthorityDiv(div.element);
+      } else {
+        this.collapseAuthorityDiv(div.element);
       }
     });
   }
@@ -632,6 +761,7 @@ export class MrParallelTextViewerDS extends DataSource {
           const scrollTop = (scrollContainer as HTMLElement).scrollTop || 0;
           existingInStack.idealTop = clickedElementRect.top - contentRect.top + scrollTop;
           this.setActiveId(targetView, divId);
+          this.updateDivCollapse(targetView);
           requestAnimationFrame(() => {
             this.layoutOpenDivs(targetView);
             this.applyActiveStyles(targetView);
@@ -652,6 +782,7 @@ export class MrParallelTextViewerDS extends DataSource {
           this.addToStack(targetView, divId, teiAppElement, idealTop);
           this.setActiveId(targetView, divId);
           this.hidePlaceholder(targetView);
+          this.updateDivCollapse(targetView);
 
           // Layout e stili dopo che il browser ha renderizzato (per misurare le altezze)
           requestAnimationFrame(() => {
