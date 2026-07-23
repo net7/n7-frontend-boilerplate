@@ -9,6 +9,8 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.6.7] - 2026-07-23
+
 Muruca
 
 -   Parallel text viewer: Google Docs-style multi-stack for opening divs in lateral columns
@@ -17,8 +19,8 @@ Muruca
 -   Parallel text viewer: collapsible accordion for full-text authorities
 -   Parallel text viewer: dimmed div collapse for authorities and terms with chevron toggle
 -   Parallel text viewer: "Contains N syntagms" badge for multi-syntagma terms
--   Parallel text viewer: legend moved to components with i18n support (_t)
--   Parallel text viewer: labels translation from config via _t()
+-   Parallel text viewer: legend moved to components with i18n support (\_t)
+-   Parallel text viewer: labels translation from config via \_t()
 
 ## [5.6.6] - 2026-07-15
 
@@ -1160,7 +1162,9 @@ A4V
 
 [v3.4.2]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.4.1...v3.4.2
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.6...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.7...HEAD
+
+[5.6.7]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.1...v5.6.7
 
 [5.6.6]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.1...v5.6.6
 
