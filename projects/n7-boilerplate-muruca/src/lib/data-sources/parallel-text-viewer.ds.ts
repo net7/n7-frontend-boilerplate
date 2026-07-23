@@ -1,5 +1,5 @@
 // import { ParallelTextViewerData } from '@net7/components';
-import { DataSource } from '@net7/core';
+import { _t, DataSource } from '@net7/core';
 
 interface OpenDiv {
   id: string;
@@ -79,6 +79,21 @@ export class MrParallelTextViewerDS extends DataSource {
       searchApi
     } = this.options || {};
     data.toggleColumn = toggleColumn;
+    // Traduce labels legenda
+    if (this.options?.legend) {
+      data.legend = this.options.legend.map((item: any) => ({
+        ...item,
+        label: _t(item.label),
+        description: _t(item.description),
+      }));
+    }
+    // Traduzione labels 
+    if (this.options?.labels) {
+      if (!data.labels) data.labels = {};
+      Object.keys(this.options.labels).forEach((key) => {
+        data.labels[key] = _t(this.options.labels[key]);
+      });
+    }
     // force tei publisher endpoint value
     document.addEventListener(
       'pb-page-ready',
@@ -277,7 +292,7 @@ export class MrParallelTextViewerDS extends DataSource {
     const finalTops: number[] = new Array(stack.length);
 
     if (activeIdx === -1) {
-      // Nessun attivo: layout semplice top-to-bottom
+      // Nessun attivo
       let nextTop = 0;
       stack.forEach((div, i) => {
         finalTops[i] = Math.max(div.idealTop, nextTop);
@@ -337,24 +352,149 @@ export class MrParallelTextViewerDS extends DataSource {
   }
 
   /**
-   * Collassa un div autorità: nasconde le citazioni lunghe, tiene link e label.
+   * Determina se un .tei-app è un div termine notevole (ha .editorial-note — unico dei termini).
    */
-  private collapseAuthorityDiv(element: HTMLElement) {
-    if (!this.isAuthorityDiv(element) || (element as any).__collapsed) return;
+  private isTermDiv(element: HTMLElement): boolean {
+    return !!element.querySelector('.editorial-note');
+  }
 
-    // Nasconde i testi lunghi
-    const hideSelectors = ['.quote-source', '.quote-incipit', '.quote-desinit', '.quote-mediation'];
-    hideSelectors.forEach((sel) => {
+  /**
+   * Determina se un div termine è multi-sintagma (ha wrapper .tei-entry2.sintagma-block).
+   */
+  private isMultiSintagmaDiv(element: HTMLElement): boolean {
+    return !!element.querySelector('.tei-entry2.sintagma-block');
+  }
+
+  /**
+   * Determina se un .tei-app è un div collassabile (autorità o termine).
+   */
+  private isCollapsibleDiv(element: HTMLElement): boolean {
+    return this.isAuthorityDiv(element) || this.isTermDiv(element);
+  }
+
+  /**
+   * Restituisce i selettori degli elementi da nascondere nel collasso.
+   */
+  private getHideSelectors(element: HTMLElement): string[] {
+    if (this.isAuthorityDiv(element)) {
+      return ['.quote-source', '.quote-incipit', '.quote-desinit', '.quote-mediation'];
+    }
+    if (this.isTermDiv(element)) {
+      return ['.editorial-note', 'a[href*="mrc_term"]'];
+    }
+    return [];
+  }
+
+  /**
+   * Nasconde testi secondari nei termini (status Sreznevskij, label Commento).
+   */
+  private collapseTermExtras(element: HTMLElement) {
+    // Multi-sintagma: nasconde i wrapper .tei-entry2.sintagma-block e aggiunge badge
+    if (this.isMultiSintagmaDiv(element)) {
+      const sintagmi = element.querySelectorAll('.tei-entry2.sintagma-block');
+      sintagmi.forEach((s: HTMLElement) => {
+        s.style.display = 'none';
+      });
+      // Badge conteggio
+      if (!element.querySelector('.sintagma-badge')) {
+        const count = sintagmi.length;
+        const badge = document.createElement('span');
+        badge.className = 'sintagma-badge';
+        badge.setAttribute('style',
+          'font-size:11px;color:#6c757d;border:1px solid #adb5bd;border-radius:4px;'
+          + 'padding:1px 6px;margin-left:8px;display:inline-block;'
+        );
+        badge.textContent = `CONTIENE ${count} SINTAGM${count === 1 ? 'A' : 'I'}`;
+        const lemmaBlock = element.querySelector('.lemma-block');
+        const firstStrong = lemmaBlock?.querySelector('strong');
+        if (firstStrong && firstStrong.nextSibling) {
+          // Inserisce dopo il testo "Voce: lemma (cat)" che segue il primo <strong>
+          const voceTextEnd = firstStrong.parentNode;
+          voceTextEnd.insertBefore(badge, firstStrong.nextSibling.nextSibling);
+        } else if (lemmaBlock) {
+          lemmaBlock.prepend(badge);
+        }
+      } else {
+        (element.querySelector('.sintagma-badge') as HTMLElement).style.display = 'inline-block';
+      }
+    }
+
+    // Nasconde extra in tutti i container
+    const containers = element.querySelectorAll('.app-head, .lemma-block, .sintagma-block');
+    containers.forEach((container) => {
+      const children = Array.from(container.childNodes);
+      children.forEach((node) => {
+        if (node.nodeType === Node.TEXT_NODE) {
+          const text = node.textContent?.trim() || '';
+          if (text.startsWith('Presente') || text.startsWith('Assente')) {
+            (node as any).__origText = node.textContent;
+            node.textContent = '';
+          }
+        }
+        if (node.nodeName === 'BR') {
+          (node as HTMLElement).style.display = 'none';
+          (node as any).__hiddenByCollapse = true;
+        }
+        if (node.nodeName === 'STRONG' && node.textContent?.includes('Commento')) {
+          (node as HTMLElement).style.display = 'none';
+          (node as any).__hiddenByCollapse = true;
+        }
+      });
+    });
+  }
+
+  /**
+   * Ripristina i testi secondari nei termini.
+   */
+  private expandTermExtras(element: HTMLElement) {
+    // Multi-sintagma: mostra i wrapper .tei-entry2.sintagma-block e nasconde il badge
+    if (this.isMultiSintagmaDiv(element)) {
+      element.querySelectorAll('.tei-entry2.sintagma-block').forEach((s: HTMLElement) => {
+        s.style.display = '';
+      });
+      const badge = element.querySelector('.sintagma-badge') as HTMLElement;
+      if (badge) badge.style.display = 'none';
+    }
+
+    const containers = element.querySelectorAll('.app-head, .lemma-block, .sintagma-block');
+    containers.forEach((container) => {
+      const children = Array.from(container.childNodes);
+      children.forEach((node) => {
+        if (node.nodeType === Node.TEXT_NODE && (node as any).__origText) {
+          node.textContent = (node as any).__origText;
+          delete (node as any).__origText;
+        }
+        if ((node as any).__hiddenByCollapse) {
+          (node as HTMLElement).style.display = '';
+          delete (node as any).__hiddenByCollapse;
+        }
+      });
+    });
+  }
+
+  /**
+   * Collassa un div (autorità o termine): nasconde contenuto lungo, tiene summary.
+   */
+  private collapseDiv(element: HTMLElement) {
+    if (!this.isCollapsibleDiv(element) || (element as any).__collapsed) return;
+
+    // Nasconde gli elementi principali
+    this.getHideSelectors(element).forEach((sel) => {
       element.querySelectorAll(sel).forEach((el: HTMLElement) => {
         el.style.display = 'none';
       });
     });
 
-    // Aggiunge o aggiorna tasto toggle
+    // Extra per termini: nasconde Sreznevskij, label Commento, <br>
+    if (this.isTermDiv(element)) {
+      this.collapseTermExtras(element);
+    }
+
+    // Tasto toggle
     this.ensureCollapseToggle(element);
     const toggle = element.querySelector('.collapse-toggle') as HTMLElement;
     if (toggle) {
-      toggle.textContent = '▼ Espandi';
+      toggle.textContent = '∨';
       toggle.style.display = 'inline-block';
     }
 
@@ -362,25 +502,29 @@ export class MrParallelTextViewerDS extends DataSource {
   }
 
   /**
-   * Espande un div autorità: mostra tutto il contenuto.
+   * Espande un div (autorità o termine): mostra tutto il contenuto.
    */
-  private expandAuthorityDiv(element: HTMLElement) {
-    if (!this.isAuthorityDiv(element)) return;
-    if ((element as any).__collapsed === false) return; // già espanso
+  private expandDiv(element: HTMLElement) {
+    if (!this.isCollapsibleDiv(element)) return;
+    if ((element as any).__collapsed === false) return;
 
-    // Mostra i testi lunghi
-    const showSelectors = ['.quote-source', '.quote-incipit', '.quote-desinit', '.quote-mediation'];
-    showSelectors.forEach((sel) => {
+    // Mostra gli elementi principali
+    this.getHideSelectors(element).forEach((sel) => {
       element.querySelectorAll(sel).forEach((el: HTMLElement) => {
         el.style.display = '';
       });
     });
 
-    // Crea o aggiorna tasto toggle a "Collassa"
+    // Extra per termini: ripristina Sreznevskij, label Commento, <br>
+    if (this.isTermDiv(element)) {
+      this.expandTermExtras(element);
+    }
+
+    // Tasto toggle
     this.ensureCollapseToggle(element);
     const toggle = element.querySelector('.collapse-toggle') as HTMLElement;
     if (toggle) {
-      toggle.textContent = '▲ Collassa';
+      toggle.textContent = '∧';
       toggle.style.display = 'inline-block';
     }
 
@@ -391,13 +535,25 @@ export class MrParallelTextViewerDS extends DataSource {
    * Crea il tasto toggle espandi/collassa se non esiste.
    */
   private ensureCollapseToggle(element: HTMLElement) {
-    if (!this.isAuthorityDiv(element)) return;
+    if (!this.isCollapsibleDiv(element)) return;
     if (element.querySelector('.collapse-toggle')) return;
-    const toggle = document.createElement('button');
+
+    // Posiziona la X di chiusura in alto a destra
+    const closeBtn = element.querySelector('paper-icon-button.close_app') as HTMLElement;
+    if (closeBtn) {
+      closeBtn.style.position = 'absolute';
+      closeBtn.style.top = '4px';
+      closeBtn.style.right = '4px';
+      closeBtn.style.zIndex = '5';
+    }
+
+    // Crea il chevron accanto alla X
+    const toggle = document.createElement('span');
     toggle.className = 'collapse-toggle';
     toggle.setAttribute('style',
-      'background:none;border:1px solid #adb5bd;border-radius:4px;padding:2px 8px;'
-      + 'cursor:pointer;font-size:11px;color:#6c757d;margin-top:6px;display:inline-block;'
+      'position:absolute;top:8px;right:25px;cursor:pointer;font-size:18px;color:#6c757d;'
+      + 'user-select:none;z-index:5;width:32px;height:32px;display:flex;'
+      + 'align-items:center;justify-content:center;'
     );
     toggle.addEventListener('click', (ev) => {
       ev.stopPropagation();
@@ -407,7 +563,7 @@ export class MrParallelTextViewerDS extends DataSource {
   }
 
   /**
-   * Handler click sul tasto espandi/collassa di un div autorità.
+   * Handler click sul tasto espandi/collassa.
    */
   private onCollapseToggleClick(element: HTMLElement) {
     const parentView = (element.getRootNode() as any)?.host as Element;
@@ -415,7 +571,7 @@ export class MrParallelTextViewerDS extends DataSource {
     const isCollapsed = (element as any).__collapsed;
 
     if (isCollapsed) {
-      // Espandi → riattiva il div (diventa attivo, si riposiziona, altri collassano)
+      // Espandi → riattiva il div
       const stack = this.getOpenDivs(parentView);
       const divEntry = stack.find((d) => d.element === element);
       if (divEntry) {
@@ -427,16 +583,8 @@ export class MrParallelTextViewerDS extends DataSource {
         });
       }
     } else {
-      // Collassa → chiude il contenuto (resta attivo ma compatto)
-      const hideSelectors = ['.quote-source', '.quote-incipit', '.quote-desinit', '.quote-mediation'];
-      hideSelectors.forEach((sel) => {
-        element.querySelectorAll(sel).forEach((el: HTMLElement) => {
-          el.style.display = 'none';
-        });
-      });
-      (element as any).__collapsed = true;
-      const toggle = element.querySelector('.collapse-toggle') as HTMLElement;
-      if (toggle) toggle.textContent = '▼ Espandi';
+      // Collassa manualmente
+      this.collapseDiv(element);
       requestAnimationFrame(() => {
         this.layoutOpenDivs(parentView);
       });
@@ -451,9 +599,9 @@ export class MrParallelTextViewerDS extends DataSource {
     const activeId = this.getActiveId(view);
     stack.forEach((div) => {
       if (div.id === activeId) {
-        this.expandAuthorityDiv(div.element);
+        this.expandDiv(div.element);
       } else {
-        this.collapseAuthorityDiv(div.element);
+        this.collapseDiv(div.element);
       }
     });
   }

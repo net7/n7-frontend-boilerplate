@@ -51,3 +51,6 @@ CLAUDE.md
 
 # local
 src/assets/app-config.local.json
+
+# ODD e CSS di TEI Publisher (file locali, non versionati)
+/odd-files
