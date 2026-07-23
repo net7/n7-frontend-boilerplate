@@ -1,5 +1,12 @@
 // import { ParallelTextViewerData } from '@net7/components';
-import { DataSource } from '@net7/core';
+import { _t, DataSource } from '@net7/core';
+
+interface OpenDiv {
+  id: string;
+  element: HTMLElement;
+  idealTop: number;
+  height: number;
+}
 
 export class MrParallelTextViewerDS extends DataSource {
   id: string;
@@ -72,6 +79,21 @@ export class MrParallelTextViewerDS extends DataSource {
       searchApi
     } = this.options || {};
     data.toggleColumn = toggleColumn;
+    // Traduce labels legenda
+    if (this.options?.legend) {
+      data.legend = this.options.legend.map((item: any) => ({
+        ...item,
+        label: _t(item.label),
+        description: _t(item.description),
+      }));
+    }
+    // Traduzione labels 
+    if (this.options?.labels) {
+      if (!data.labels) data.labels = {};
+      Object.keys(this.options.labels).forEach((key) => {
+        data.labels[key] = _t(this.options.labels[key]);
+      });
+    }
     // force tei publisher endpoint value
     document.addEventListener(
       'pb-page-ready',
@@ -196,6 +218,498 @@ export class MrParallelTextViewerDS extends DataSource {
     }
   }
 
+  // --- Stack management per view ---
+
+  private getOpenDivs(view: Element): OpenDiv[] {
+    if (!(view as any).__openDivs) {
+      (view as any).__openDivs = [];
+    }
+    return (view as any).__openDivs;
+  }
+
+  private getActiveId(view: Element): string | null {
+    return (view as any).__activeId || null;
+  }
+
+  private setActiveId(view: Element, id: string | null) {
+    (view as any).__activeId = id;
+  }
+
+  private addToStack(view: Element, id: string, element: HTMLElement, idealTop: number) {
+    const stack = this.getOpenDivs(view);
+    // Se già presente, aggiorna idealTop
+    const existing = stack.find((d) => d.id === id);
+    if (existing) {
+      existing.idealTop = idealTop;
+      return;
+    }
+    stack.push({ id, element, idealTop, height: 0 });
+  }
+
+  private removeFromStack(view: Element, id: string) {
+    const stack = this.getOpenDivs(view);
+    const idx = stack.findIndex((d) => d.id === id);
+    if (idx !== -1) {
+      stack.splice(idx, 1);
+    }
+  }
+
+  private findInStack(view: Element, id: string): OpenDiv | undefined {
+    return this.getOpenDivs(view).find((d) => d.id === id);
+  }
+
+  private prepareViewContainer(view: Element) {
+    if (!view.shadowRoot || (view as any).__containerPrepared) return;
+    const content = view.shadowRoot.getElementById('content');
+    if (content) {
+      content.style.position = 'relative';
+    }
+    (view as any).__containerPrepared = true;
+  }
+
+  /**
+   * Ricalcola le posizioni di tutti i div aperti in una view.
+   * Il div attivo sta alla sua posizione ideale,
+   * quelli sopra si impilano verso l'alto, quelli sotto verso il basso.
+   */
+  private layoutOpenDivs(view: Element) {
+    const stack = this.getOpenDivs(view);
+    if (!stack.length) return;
+
+    const gap = 8;
+    const activeId = this.getActiveId(view);
+
+    // Ordina per posizione ideale (ordine nel testo)
+    stack.sort((a, b) => a.idealTop - b.idealTop);
+
+    // Misura altezze attuali
+    stack.forEach((div) => {
+      div.height = div.element.getBoundingClientRect().height || 0;
+    });
+
+    // Trova l'indice del div attivo
+    const activeIdx = stack.findIndex((d) => d.id === activeId);
+    const finalTops: number[] = new Array(stack.length);
+
+    if (activeIdx === -1) {
+      // Nessun attivo
+      let nextTop = 0;
+      stack.forEach((div, i) => {
+        finalTops[i] = Math.max(div.idealTop, nextTop);
+        nextTop = finalTops[i] + div.height + gap;
+      });
+    } else {
+      // Attivo alla sua posizione ideale
+      finalTops[activeIdx] = stack[activeIdx].idealTop;
+
+      // Div SOPRA l'attivo: dal più vicino all'attivo verso l'alto
+      for (let i = activeIdx - 1; i >= 0; i--) {
+        const maxBottom = finalTops[i + 1];
+        finalTops[i] = Math.min(stack[i].idealTop, maxBottom - stack[i].height - gap);
+        finalTops[i] = Math.max(finalTops[i], 0); // clamp a 0, può sovrapporre se clustered
+      }
+
+      // Div SOTTO l'attivo: dal più vicino all'attivo verso il basso
+      for (let i = activeIdx + 1; i < stack.length; i++) {
+        const minTop = finalTops[i - 1] + stack[i - 1].height + gap;
+        finalTops[i] = Math.max(stack[i].idealTop, minTop);
+      }
+    }
+
+    // Applica posizioni
+    stack.forEach((div, i) => {
+      div.element.style.position = 'absolute';
+      div.element.style.top = `${finalTops[i]}px`;
+      div.element.style.left = '0';
+      div.element.style.right = '0';
+    });
+  }
+
+  /**
+   * Applica stili attivo/dimmed ai div aperti nella view.
+   */
+  private applyActiveStyles(view: Element) {
+    const stack = this.getOpenDivs(view);
+    const activeId = this.getActiveId(view);
+    stack.forEach((div) => {
+      if (div.id === activeId) {
+        div.element.style.opacity = '1';
+        div.element.style.boxShadow = '0 2px 8px rgba(0,0,0,0.15)';
+        div.element.style.zIndex = '20';
+      } else {
+        div.element.style.opacity = '0.7';
+        div.element.style.boxShadow = 'none';
+        div.element.style.zIndex = '10';
+      }
+    });
+  }
+
+  /**
+   * Determina se un .tei-app è un div autorità (ha .quote-container).
+   */
+  private isAuthorityDiv(element: HTMLElement): boolean {
+    return !!element.querySelector('.quote-container');
+  }
+
+  /**
+   * Determina se un .tei-app è un div termine notevole (ha .editorial-note — unico dei termini).
+   */
+  private isTermDiv(element: HTMLElement): boolean {
+    return !!element.querySelector('.editorial-note');
+  }
+
+  /**
+   * Determina se un div termine è multi-sintagma (ha wrapper .tei-entry2.sintagma-block).
+   */
+  private isMultiSintagmaDiv(element: HTMLElement): boolean {
+    return !!element.querySelector('.tei-entry2.sintagma-block');
+  }
+
+  /**
+   * Determina se un .tei-app è un div collassabile (autorità o termine).
+   */
+  private isCollapsibleDiv(element: HTMLElement): boolean {
+    return this.isAuthorityDiv(element) || this.isTermDiv(element);
+  }
+
+  /**
+   * Restituisce i selettori degli elementi da nascondere nel collasso.
+   */
+  private getHideSelectors(element: HTMLElement): string[] {
+    if (this.isAuthorityDiv(element)) {
+      return ['.quote-source', '.quote-incipit', '.quote-desinit', '.quote-mediation'];
+    }
+    if (this.isTermDiv(element)) {
+      return ['.editorial-note', 'a[href*="mrc_term"]'];
+    }
+    return [];
+  }
+
+  /**
+   * Nasconde testi secondari nei termini (status Sreznevskij, label Commento).
+   */
+  private collapseTermExtras(element: HTMLElement) {
+    // Multi-sintagma: nasconde i wrapper .tei-entry2.sintagma-block e aggiunge badge
+    if (this.isMultiSintagmaDiv(element)) {
+      const sintagmi = element.querySelectorAll('.tei-entry2.sintagma-block');
+      sintagmi.forEach((s: HTMLElement) => {
+        s.style.display = 'none';
+      });
+      // Badge conteggio
+      if (!element.querySelector('.sintagma-badge')) {
+        const count = sintagmi.length;
+        const badge = document.createElement('span');
+        badge.className = 'sintagma-badge';
+        badge.setAttribute('style',
+          'font-size:11px;color:#6c757d;border:1px solid #adb5bd;border-radius:4px;'
+          + 'padding:1px 6px;margin-left:8px;display:inline-block;'
+        );
+        badge.textContent = `CONTIENE ${count} SINTAGM${count === 1 ? 'A' : 'I'}`;
+        const lemmaBlock = element.querySelector('.lemma-block');
+        const firstStrong = lemmaBlock?.querySelector('strong');
+        if (firstStrong && firstStrong.nextSibling) {
+          // Inserisce dopo il testo "Voce: lemma (cat)" che segue il primo <strong>
+          const voceTextEnd = firstStrong.parentNode;
+          voceTextEnd.insertBefore(badge, firstStrong.nextSibling.nextSibling);
+        } else if (lemmaBlock) {
+          lemmaBlock.prepend(badge);
+        }
+      } else {
+        (element.querySelector('.sintagma-badge') as HTMLElement).style.display = 'inline-block';
+      }
+    }
+
+    // Nasconde extra in tutti i container
+    const containers = element.querySelectorAll('.app-head, .lemma-block, .sintagma-block');
+    containers.forEach((container) => {
+      const children = Array.from(container.childNodes);
+      children.forEach((node) => {
+        if (node.nodeType === Node.TEXT_NODE) {
+          const text = node.textContent?.trim() || '';
+          if (text.startsWith('Presente') || text.startsWith('Assente')) {
+            (node as any).__origText = node.textContent;
+            node.textContent = '';
+          }
+        }
+        if (node.nodeName === 'BR') {
+          (node as HTMLElement).style.display = 'none';
+          (node as any).__hiddenByCollapse = true;
+        }
+        if (node.nodeName === 'STRONG' && node.textContent?.includes('Commento')) {
+          (node as HTMLElement).style.display = 'none';
+          (node as any).__hiddenByCollapse = true;
+        }
+      });
+    });
+  }
+
+  /**
+   * Ripristina i testi secondari nei termini.
+   */
+  private expandTermExtras(element: HTMLElement) {
+    // Multi-sintagma: mostra i wrapper .tei-entry2.sintagma-block e nasconde il badge
+    if (this.isMultiSintagmaDiv(element)) {
+      element.querySelectorAll('.tei-entry2.sintagma-block').forEach((s: HTMLElement) => {
+        s.style.display = '';
+      });
+      const badge = element.querySelector('.sintagma-badge') as HTMLElement;
+      if (badge) badge.style.display = 'none';
+    }
+
+    const containers = element.querySelectorAll('.app-head, .lemma-block, .sintagma-block');
+    containers.forEach((container) => {
+      const children = Array.from(container.childNodes);
+      children.forEach((node) => {
+        if (node.nodeType === Node.TEXT_NODE && (node as any).__origText) {
+          node.textContent = (node as any).__origText;
+          delete (node as any).__origText;
+        }
+        if ((node as any).__hiddenByCollapse) {
+          (node as HTMLElement).style.display = '';
+          delete (node as any).__hiddenByCollapse;
+        }
+      });
+    });
+  }
+
+  /**
+   * Collassa un div (autorità o termine): nasconde contenuto lungo, tiene summary.
+   */
+  private collapseDiv(element: HTMLElement) {
+    if (!this.isCollapsibleDiv(element) || (element as any).__collapsed) return;
+
+    // Nasconde gli elementi principali
+    this.getHideSelectors(element).forEach((sel) => {
+      element.querySelectorAll(sel).forEach((el: HTMLElement) => {
+        el.style.display = 'none';
+      });
+    });
+
+    // Extra per termini: nasconde Sreznevskij, label Commento, <br>
+    if (this.isTermDiv(element)) {
+      this.collapseTermExtras(element);
+    }
+
+    // Tasto toggle
+    this.ensureCollapseToggle(element);
+    const toggle = element.querySelector('.collapse-toggle') as HTMLElement;
+    if (toggle) {
+      toggle.textContent = '∨';
+      toggle.style.display = 'inline-block';
+    }
+
+    (element as any).__collapsed = true;
+  }
+
+  /**
+   * Espande un div (autorità o termine): mostra tutto il contenuto.
+   */
+  private expandDiv(element: HTMLElement) {
+    if (!this.isCollapsibleDiv(element)) return;
+    if ((element as any).__collapsed === false) return;
+
+    // Mostra gli elementi principali
+    this.getHideSelectors(element).forEach((sel) => {
+      element.querySelectorAll(sel).forEach((el: HTMLElement) => {
+        el.style.display = '';
+      });
+    });
+
+    // Extra per termini: ripristina Sreznevskij, label Commento, <br>
+    if (this.isTermDiv(element)) {
+      this.expandTermExtras(element);
+    }
+
+    // Tasto toggle
+    this.ensureCollapseToggle(element);
+    const toggle = element.querySelector('.collapse-toggle') as HTMLElement;
+    if (toggle) {
+      toggle.textContent = '∧';
+      toggle.style.display = 'inline-block';
+    }
+
+    (element as any).__collapsed = false;
+  }
+
+  /**
+   * Crea il tasto toggle espandi/collassa se non esiste.
+   */
+  private ensureCollapseToggle(element: HTMLElement) {
+    if (!this.isCollapsibleDiv(element)) return;
+    if (element.querySelector('.collapse-toggle')) return;
+
+    // Posiziona la X di chiusura in alto a destra
+    const closeBtn = element.querySelector('paper-icon-button.close_app') as HTMLElement;
+    if (closeBtn) {
+      closeBtn.style.position = 'absolute';
+      closeBtn.style.top = '4px';
+      closeBtn.style.right = '4px';
+      closeBtn.style.zIndex = '5';
+    }
+
+    // Crea il chevron accanto alla X
+    const toggle = document.createElement('span');
+    toggle.className = 'collapse-toggle';
+    toggle.setAttribute('style',
+      'position:absolute;top:8px;right:25px;cursor:pointer;font-size:18px;color:#6c757d;'
+      + 'user-select:none;z-index:5;width:32px;height:32px;display:flex;'
+      + 'align-items:center;justify-content:center;'
+    );
+    toggle.addEventListener('click', (ev) => {
+      ev.stopPropagation();
+      this.onCollapseToggleClick(element);
+    });
+    element.appendChild(toggle);
+  }
+
+  /**
+   * Handler click sul tasto espandi/collassa.
+   */
+  private onCollapseToggleClick(element: HTMLElement) {
+    const parentView = (element.getRootNode() as any)?.host as Element;
+    if (!parentView) return;
+    const isCollapsed = (element as any).__collapsed;
+
+    if (isCollapsed) {
+      // Espandi → riattiva il div
+      const stack = this.getOpenDivs(parentView);
+      const divEntry = stack.find((d) => d.element === element);
+      if (divEntry) {
+        this.setActiveId(parentView, divEntry.id);
+        this.updateDivCollapse(parentView);
+        requestAnimationFrame(() => {
+          this.layoutOpenDivs(parentView);
+          this.applyActiveStyles(parentView);
+        });
+      }
+    } else {
+      // Collassa manualmente
+      this.collapseDiv(element);
+      requestAnimationFrame(() => {
+        this.layoutOpenDivs(parentView);
+      });
+    }
+  }
+
+  /**
+   * Aggiorna collasso/espansione di tutti i div in base allo stato attivo.
+   */
+  private updateDivCollapse(view: Element) {
+    const stack = this.getOpenDivs(view);
+    const activeId = this.getActiveId(view);
+    stack.forEach((div) => {
+      if (div.id === activeId) {
+        this.expandDiv(div.element);
+      } else {
+        this.collapseDiv(div.element);
+      }
+    });
+  }
+
+  // --- Fine stack management ---
+
+  private wrapFullTextAuthorities(view: Element) {
+    if (!view.shadowRoot || (view as any).__authoritiesWrapped) return;
+    const content = view.shadowRoot.getElementById('content') || view.shadowRoot;
+    const interps = Array.from(content.querySelectorAll('[class^="tei-interp"]'))
+      .filter((el) => el.querySelector('.authority-full-entry'));
+    if (!interps.length) return;
+
+    // Estrae l'etichetta dal primo authority-header
+    const headerEl = interps[0].querySelector('.authority-header');
+    const labelText = headerEl?.textContent?.replace(/:$/, '').trim() || 'Fonti';
+    const count = interps.length;
+
+    // Crea il wrapper accordion
+    const accordion = document.createElement('div');
+    accordion.className = 'authority-accordion';
+    accordion.setAttribute('style', 'margin-bottom:0.5em;');
+
+    // Header cliccabile
+    const header = document.createElement('div');
+    header.className = 'authority-accordion__header';
+    header.setAttribute('style',
+      'display:flex;align-items:center;gap:8px;padding:8px 12px;'
+      + 'background:#f0f2f5;cursor:pointer;user-select:none;'
+      + 'border-bottom:1px solid #dee2e6;font-family:sans-serif;'
+    );
+    header.innerHTML = `
+      <span style="font-size:12px;font-weight:600;color:#495057;text-transform:uppercase;letter-spacing:0.5px;">${labelText}</span>
+      <span style="font-size:11px;color:#6c757d;border:1px solid #adb5bd;border-radius:4px;padding:1px 6px;">CONTIENE ${count} FONT${count === 1 ? 'E' : 'I'}</span>
+      <span class="authority-accordion__chevron" style="margin-left:auto;font-size:14px;color:#6c757d;transition:transform 0.2s;">▼</span>
+    `;
+
+    // Body collassabile
+    const body = document.createElement('div');
+    body.className = 'authority-accordion__body';
+    body.setAttribute('style', 'display:none;padding:8px 12px;');
+
+    // Sposta gli interp nel body
+    interps.forEach((interp) => {
+      body.appendChild(interp);
+    });
+
+    // Toggle click
+    header.addEventListener('click', () => {
+      const isOpen = body.style.display !== 'none';
+      body.style.display = isOpen ? 'none' : 'block';
+      const chevron = header.querySelector('.authority-accordion__chevron') as HTMLElement;
+      if (chevron) chevron.style.transform = isOpen ? '' : 'rotate(180deg)';
+    });
+
+    accordion.appendChild(header);
+    accordion.appendChild(body);
+
+    // Inserisce l'accordion all'inizio del content
+    const contentDiv = content.querySelector('.content') || content;
+    if (contentDiv.parentNode) {
+      contentDiv.parentNode.insertBefore(accordion, contentDiv);
+    }
+    // Nasconde il contenitore originale (ora vuoto degli interp)
+    if (contentDiv.querySelector('.tei-TEI') && !contentDiv.querySelector('[class^="tei-interp"]')) {
+      const teiDiv = contentDiv.querySelector('.tei-TEI') as HTMLElement;
+      if (teiDiv && !teiDiv.children.length) {
+        teiDiv.style.display = 'none';
+      }
+    }
+
+    (view as any).__authoritiesWrapped = true;
+  }
+
+  private injectPlaceholder(view: Element) {
+    if (!view.shadowRoot || (view as any).__placeholderInjected) return;
+    const placeholder = document.createElement('div');
+    placeholder.className = 'column-placeholder';
+    placeholder.setAttribute('style',
+      'display:flex;flex-direction:column;align-items:center;justify-content:center;'
+      + 'padding:2em;margin:1em;text-align:center;'
+      + 'color:#6c757d;font-family:sans-serif;'
+    );
+    placeholder.innerHTML = `
+      <div style="width:40px;height:40px;border:2px solid #adb5bd;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:0.8em;font-size:18px;color:#adb5bd;">i</div>
+      <div style="font-size:14px;">Clicca una voce per aprirne la scheda.</div>
+    `;
+    const container = view.shadowRoot.getElementById('view') || view.shadowRoot;
+    if (container.appendChild) {
+      container.appendChild(placeholder);
+    }
+    (view as any).__placeholderInjected = true;
+    (view as any).__placeholderEl = placeholder;
+  }
+
+  private hidePlaceholder(view: Element) {
+    const el = (view as any).__placeholderEl;
+    if (el) el.style.display = 'none';
+  }
+
+  private checkPlaceholder(view: Element) {
+    if (!view.shadowRoot) return;
+    const el = (view as any).__placeholderEl;
+    if (!el) return;
+    const hasOpenDivs = this.getOpenDivs(view).length > 0;
+    el.style.display = hasOpenDivs ? 'none' : 'flex';
+  }
+
   setupViewClickListeners() {
     const attachListeners = () => {
       setTimeout(() => {
@@ -205,6 +719,13 @@ export class MrParallelTextViewerDS extends DataSource {
           if (view.id === 'transcription-view') {
             return;
           }
+
+          // Prepara il container per absolute positioning
+          this.prepareViewContainer(view);
+          // Wrappa autorità full-text in accordion collassabile
+          this.wrapFullTextAuthorities(view);
+          // Inietta placeholder nella view laterale
+          this.injectPlaceholder(view);
 
           if (view.shadowRoot) {
             if ((view as any).__clickListenerAttached) {
@@ -274,10 +795,28 @@ export class MrParallelTextViewerDS extends DataSource {
       && el.className.includes('close_app'));
 
     if (closeButton) {
-      const parentAppItem = closeButton.closest('.tei-app');
-      if (parentAppItem && parentAppItem.style) {
+      const parentAppItem = closeButton.closest('.tei-app') as HTMLElement;
+      if (parentAppItem) {
+        const parentView = (parentAppItem.getRootNode() as any)?.host as Element;
+        const appId = parentAppItem.id || parentAppItem.getAttribute('data-from');
+        // Rimuove dallo stack e nasconde
         parentAppItem.style.display = 'none';
-        (parentAppItem as HTMLElement).style.transform = '';
+        parentAppItem.style.position = '';
+        parentAppItem.style.top = '';
+        parentAppItem.style.left = '';
+        parentAppItem.style.right = '';
+        parentAppItem.style.transform = '';
+        if (parentView && appId) {
+          this.removeFromStack(parentView, appId);
+          // Se era l'attivo, imposta l'ultimo rimasto come attivo
+          const stack = this.getOpenDivs(parentView);
+          if (this.getActiveId(parentView) === appId) {
+            this.setActiveId(parentView, stack.length ? stack[stack.length - 1].id : null);
+          }
+          this.layoutOpenDivs(parentView);
+          this.applyActiveStyles(parentView);
+          this.checkPlaceholder(parentView);
+        }
         this.resetHighlights();
         payload.stopPropagation();
         return;
@@ -303,6 +842,9 @@ export class MrParallelTextViewerDS extends DataSource {
         parentNoteItem.style.display = 'none';
         (parentNoteItem as HTMLElement).style.transform = '';
         this.resetHighlights();
+        // Verifica se mostrare il placeholder
+        const closedView = clickPath.find((el: any) => el.id && el.id.endsWith('-view'));
+        if (closedView) this.checkPlaceholder(closedView);
         payload.stopPropagation();
         return;
       }
@@ -321,96 +863,94 @@ export class MrParallelTextViewerDS extends DataSource {
     if (target && target.getAttribute('type') === 'app_lem') {
       const appId = target.getAttribute('key');
 
-      // Posizione elemento cliccato
-      const clickedElementPosition = (target as HTMLElement).getBoundingClientRect().top;
+      // Posizione elemento cliccato (relativa al viewport)
+      const clickedElementRect = (target as HTMLElement).getBoundingClientRect();
 
-      const clickedView = clickPath.find((el) => el.id && el.id.endsWith('-view'));
+      const clickedView = clickPath.find((el: any) => el.id && el.id.endsWith('-view'));
       const clickedViewId = clickedView ? clickedView.id : null;
 
-      const apparatusView = document.querySelectorAll('.n7-parallel-text-viewer [id$="-view"]');
+      const allViews = document.querySelectorAll('.n7-parallel-text-viewer [id$="-view"]');
 
-      let anchorElement = null;
-      let teiAppElement = null;
+      let teiAppElement: HTMLElement = null;
+      let targetView: Element = null;
 
-      apparatusView.forEach((view) => {
-        // Salta la view in cui è stato fatto il click
-        if (view.id === clickedViewId) {
-          return;
-        }
+      allViews.forEach((view) => {
+        if (view.id === clickedViewId) return;
+        if (!view.shadowRoot) return;
 
-        if (view.shadowRoot) {
-          // Cerca prima per id esatto; se non trovato, cerca popup per ancora apertura (data-from)
-          // o ancora di chiusura (data-to)
-          const found = view.shadowRoot.querySelector(`[id="${appId}"]`)
-            || view.shadowRoot.querySelector(`.tei-app[data-from="${appId}"]`)
-            || view.shadowRoot.querySelector(`.tei-app[data-to="${appId}"]`);
-          if (found) {
-            if (!anchorElement) {
-              anchorElement = found;
-            }
-
-            const appElement = found.closest('.tei-app') || (found.classList.contains('tei-app') ? found : null);
-            if (appElement && !teiAppElement) {
-              teiAppElement = appElement;
-            }
+        const found = view.shadowRoot.querySelector(`[id="${appId}"]`)
+          || view.shadowRoot.querySelector(`.tei-app[data-from="${appId}"]`)
+          || view.shadowRoot.querySelector(`.tei-app[data-to="${appId}"]`);
+        if (found && !teiAppElement) {
+          const appElement = found.closest('.tei-app') || (found.classList.contains('tei-app') ? found : null);
+          if (appElement) {
+            teiAppElement = appElement as HTMLElement;
+            targetView = view;
           }
         }
       });
 
-      if (teiAppElement) {
-        const isVisible = (teiAppElement as HTMLElement).style.display === 'block';
+      if (teiAppElement && targetView) {
+        const divId = teiAppElement.id || teiAppElement.getAttribute('data-from') || appId;
+        const existingInStack = this.findInStack(targetView, divId);
 
-        // Determina se il pb-highlight cliccato è una cit esterna (contiene cit annidate).
+        // Gestione cit annidate (seg-outer-inner)
         const nestedCits = (target as HTMLElement).querySelectorAll('span.quote');
         const isOuterCit = nestedCits.length > 0;
         const segOuterInner = (target as HTMLElement).querySelectorAll('.seg-outer-inner');
         const segPartF = (target as HTMLElement).querySelectorAll('.seg-part-f');
 
-        if (isVisible) {
-          (teiAppElement as HTMLElement).style.display = 'none';
-          (teiAppElement as HTMLElement).style.transform = '';
-          this.resetHighlights();
-
-          if (isOuterCit) {
-            // Pannello esterno chiuso: ripristina il background dei seg annidati
-            segOuterInner.forEach((el) => {
-              (el as HTMLElement).style.backgroundColor = '';
-            });
-            segPartF.forEach((el) => {
-              (el as HTMLElement).style.backgroundColor = '';
-            });
-          }
+        if (existingInStack) {
+          // Div già aperto → riattiva: aggiorna idealTop e ricalcola layout
+          const contentEl = targetView.shadowRoot.getElementById('content');
+          const viewEl = targetView.shadowRoot.getElementById('view');
+          const scrollContainer = viewEl || contentEl || targetView;
+          const contentRect = contentEl ? contentEl.getBoundingClientRect() : targetView.getBoundingClientRect();
+          const scrollTop = (scrollContainer as HTMLElement).scrollTop || 0;
+          existingInStack.idealTop = clickedElementRect.top - contentRect.top + scrollTop;
+          this.setActiveId(targetView, divId);
+          this.updateDivCollapse(targetView);
+          requestAnimationFrame(() => {
+            this.layoutOpenDivs(targetView);
+            this.applyActiveStyles(targetView);
+          });
         } else {
-          (teiAppElement as HTMLElement).style.display = 'block';
+          // Calcola posizione ideale relativa al container #content della view
+          const contentEl = targetView.shadowRoot.getElementById('content');
+          const viewEl = targetView.shadowRoot.getElementById('view');
+          const scrollContainer = viewEl || contentEl || targetView;
+          const contentRect = contentEl ? contentEl.getBoundingClientRect() : targetView.getBoundingClientRect();
+          const scrollTop = (scrollContainer as HTMLElement).scrollTop || 0;
+          const idealTop = clickedElementRect.top - contentRect.top + scrollTop;
 
-          // posizione attuale
-          const elementPosition = teiAppElement.getBoundingClientRect().top;
+          // Mostra il div
+          teiAppElement.style.display = 'block';
 
-          // differenza
-          const positionDifference = clickedElementPosition - elementPosition;
+          // Aggiunge allo stack
+          this.addToStack(targetView, divId, teiAppElement, idealTop);
+          this.setActiveId(targetView, divId);
+          this.hidePlaceholder(targetView);
+          this.updateDivCollapse(targetView);
 
-          // spostamento
-          (teiAppElement as HTMLElement).style.transform = `translateY(${positionDifference}px)`;
+          // Layout e stili dopo che il browser ha renderizzato (per misurare le altezze)
+          requestAnimationFrame(() => {
+            this.layoutOpenDivs(targetView);
+            this.applyActiveStyles(targetView);
 
-          if (isOuterCit) {
-            // Pannello esterno aperto: dopo che pb-highlight si attiva (giallo),
-            // imposta sfondo bianco su seg-outer-inner e seg-part-f
-            requestAnimationFrame(() => {
+            // Gestione seg per cit annidate
+            if (isOuterCit) {
               segOuterInner.forEach((el) => {
                 (el as HTMLElement).style.backgroundColor = 'white';
               });
               segPartF.forEach((el) => {
                 (el as HTMLElement).style.backgroundColor = 'white';
               });
-            });
-          } else {
-            // Pannello interno aperto: ripristina eventuali soppressioni sui seg interni
-            requestAnimationFrame(() => {
+            } else {
               segOuterInner.forEach((el) => {
                 (el as HTMLElement).style.backgroundColor = '';
               });
-            });
-          }
+            }
+          });
         }
       } else {
         console.warn('teiAppElement non trovato!');
@@ -432,13 +972,15 @@ export class MrParallelTextViewerDS extends DataSource {
       if (teiNoteElement) {
         // Verifica se è visibile
         const isVisible = (teiNoteElement as HTMLElement).style.display === 'block';
+        const noteParentView = (teiNoteElement.getRootNode() as any)?.host;
 
         if (isVisible) {
           (teiNoteElement as HTMLElement).style.display = 'none';
-
           (teiNoteElement as HTMLElement).style.transform = '';
+          if (noteParentView) this.checkPlaceholder(noteParentView as Element);
         } else {
           (teiNoteElement as HTMLElement).style.display = 'block';
+          if (noteParentView) this.hidePlaceholder(noteParentView as Element);
 
           // posizione attuale
           const elementPosition = teiNoteElement.getBoundingClientRect().top;

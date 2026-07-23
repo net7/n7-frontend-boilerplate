@@ -9,6 +9,17 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+-   Parallel text viewer: Google Docs-style multi-stack for opening divs in lateral columns
+-   Parallel text viewer: anti-overlap layout algorithm with active-centric positioning
+-   Parallel text viewer: "Click to open" placeholder in empty columns
+-   Parallel text viewer: collapsible accordion for full-text authorities
+-   Parallel text viewer: dimmed div collapse for authorities and terms with chevron toggle
+-   Parallel text viewer: "Contains N syntagms" badge for multi-syntagma terms
+-   Parallel text viewer: legend moved to components with i18n support (_t)
+-   Parallel text viewer: labels translation from config via _t()
+
 ## [5.6.6] - 2026-07-15
 
 Muruca
