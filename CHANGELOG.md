@@ -20,6 +20,12 @@ Muruca
 -   Parallel text viewer: legend moved to components with i18n support (_t)
 -   Parallel text viewer: labels translation from config via _t()
 
+## [5.6.6] - 2026-07-15
+
+Muruca
+
+-   Fix label traslation for checkbox facet
+
 ## [5.6.5] - 2026-06-29
 
 Muruca
@@ -1154,7 +1160,9 @@ A4V
 
 [v3.4.2]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.4.1...v3.4.2
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.5...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.6...HEAD
+
+[5.6.6]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.1...v5.6.6
 
 [5.6.5]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.1...v5.6.5
 
