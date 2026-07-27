@@ -5,7 +5,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { EventHandler } from '@net7/core';
 import {
-  takeUntil, switchMap, tap, map
+  takeUntil, switchMap, tap, map, distinctUntilChanged
 } from 'rxjs/operators';
 import { MrLayoutStateService, LayoutState } from '../../services/layout-state.service';
 import { MrStaticLayoutDS } from './static-layout.ds';
@@ -50,6 +50,13 @@ export class MrStaticLayoutEH extends EventHandler {
   private listenRoute() {
     this.route.url.pipe(
       takeUntil(this.destroy$),
+      // ignore navigations that only change the fragment (e.g. clicking an
+      // in-page anchor): the router re-emits `url` on every navigation, even
+      // when the page itself hasn't changed, which would otherwise re-fetch
+      // the same content and reset the layout state needlessly
+      distinctUntilChanged((prev: UrlSegment[], curr: UrlSegment[]) => (
+        prev.map((s) => s.path).join('/') === curr.map((s) => s.path).join('/')
+      )),
       map((urlSegments: UrlSegment[]) => ({
         urlSegments,
         routerParams: this.route.snapshot.params,

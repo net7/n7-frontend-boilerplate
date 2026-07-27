@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+- Add fragment scroll in static page
+
 ## [5.6.7] - 2026-07-23
 
 Muruca
