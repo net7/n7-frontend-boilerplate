@@ -9,6 +9,8 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.6.9] - 2026-07-31
+
 Muruca
 
 -   Parallel text viewer: add postilla comment accordion
@@ -1172,7 +1174,9 @@ A4V
 
 [v3.4.2]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.4.1...v3.4.2
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.8...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.9...HEAD
+
+[5.6.9]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.1...v5.6.9
 
 [5.6.8]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.1...v5.6.8
 
