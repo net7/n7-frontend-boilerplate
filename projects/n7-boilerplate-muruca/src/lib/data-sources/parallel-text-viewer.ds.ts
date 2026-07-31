@@ -219,54 +219,6 @@ export class MrParallelTextViewerDS extends DataSource {
   }
 
 
-  private injectAccordionCSS(view: Element) {
-    if (!view.shadowRoot) return;
-    if (view.shadowRoot.querySelector('#accordion-commentary-style')) return;
-    const style = document.createElement('style');
-    style.id = 'accordion-commentary-style';
-    style.textContent = `
-      .postilla-comment { display: none; }
-      .postilla-comment.expanded {
-        display: block;
-        border-top: 1px solid #dee2e6;
-        padding-top: 0.8em;
-        margin-top: 0.5em;
-      }
-      .pericope-group {
-        border: 1px solid #e8e8e8;
-        border-radius: 6px;
-        padding: 10px 14px;
-        margin-bottom: 10px;
-      }
-      .pericope-heading {
-        cursor: pointer;
-        user-select: none;
-        display: flex;
-        align-items: center;
-      }
-      .pericope-heading::after {
-        content: '\\276F';
-        color: #999;
-        font-size: 11px;
-        margin-left: auto;
-        display: inline-block;
-        transition: transform 0.2s;
-        flex-shrink: 0;
-        transform: rotate(90deg);
-      }
-      .pericope-heading.open::after {
-        transform: rotate(270deg);
-      }
-      .pericope-heading.no-toggle {
-        cursor: default;
-      }
-      .pericope-heading.no-toggle::after {
-        display: none;
-      }
-    `;
-    view.shadowRoot.appendChild(style);
-  }
-
   /**
    * Attacca click listener ai .pericope-heading generati dall'ODD.
    * Chiamato ad ogni pb-end-update per coprire i cambi pagina.
@@ -815,8 +767,8 @@ export class MrParallelTextViewerDS extends DataSource {
           }
 
           // Accordion commentary (postille collassabili)
+          // CSS in postille.css su TEI Publisher, JS solo per toggle classi
           if (this.options?.accordionCommentary) {
-            this.injectAccordionCSS(view);
             this.attachAccordionToggleListeners(view);
           }
 
