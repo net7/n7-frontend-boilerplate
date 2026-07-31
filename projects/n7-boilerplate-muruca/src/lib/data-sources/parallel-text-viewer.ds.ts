@@ -218,6 +218,52 @@ export class MrParallelTextViewerDS extends DataSource {
     }
   }
 
+
+  /**
+   * Attacca click listener ai .pericope-heading generati dall'ODD.
+   * Chiamato ad ogni pb-end-update per coprire i cambi pagina.
+   */
+  private attachAccordionToggleListeners(view: Element) {
+    if (!view.shadowRoot) return;
+    view.shadowRoot.querySelectorAll('.pericope-heading').forEach((heading: HTMLElement) => {
+      if ((heading as any).__accordionAttached) return;
+      // Nasconde il chevron se la pericope non ha commento
+      const parentGroup = heading.closest('.pericope-group');
+      if (!parentGroup || !parentGroup.querySelector('.postilla-comment')) {
+        heading.style.cursor = 'default';
+        heading.classList.add('no-toggle');
+        (heading as any).__accordionAttached = true;
+        return;
+      }
+      heading.addEventListener('click', () => {
+        const pericope = heading.closest('.pericope-group');
+        if (!pericope) return;
+        const comment = pericope.querySelector('.postilla-comment') as HTMLElement;
+        if (!comment) return;
+
+        const isOpen = comment.classList.contains('expanded');
+        if (isOpen) {
+          comment.classList.remove('expanded');
+          heading.classList.remove('open');
+        } else {
+          // Collassa tutti gli altri
+          view.shadowRoot.querySelectorAll('.postilla-comment').forEach((c: HTMLElement) => {
+            c.classList.remove('expanded');
+          });
+          view.shadowRoot.querySelectorAll('.pericope-heading').forEach((h: HTMLElement) => {
+            h.classList.remove('open');
+          });
+          comment.classList.add('expanded');
+          heading.classList.add('open');
+          setTimeout(() => {
+            comment.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }, 100);
+        }
+      });
+      (heading as any).__accordionAttached = true;
+    });
+  }
+
   // --- Stack management per view ---
 
   private getOpenDivs(view: Element): OpenDiv[] {
@@ -720,12 +766,21 @@ export class MrParallelTextViewerDS extends DataSource {
             return;
           }
 
-          // Prepara il container per absolute positioning
-          this.prepareViewContainer(view);
-          // Wrappa autorità full-text in accordion collassabile
-          this.wrapFullTextAuthorities(view);
-          // Inietta placeholder nella view laterale
-          this.injectPlaceholder(view);
+          // Accordion commentary (postille collassabili)
+          // CSS in postille.css su TEI Publisher, JS solo per toggle classi
+          if (this.options?.accordionCommentary) {
+            this.attachAccordionToggleListeners(view);
+          }
+
+          // Funzionalità avanzate colonne (attive solo se enableColumnFeatures è true)
+          if (this.options?.enableColumnFeatures) {
+            // Prepara il container per absolute positioning
+            this.prepareViewContainer(view);
+            // Wrappa autorità full-text in accordion collassabile
+            this.wrapFullTextAuthorities(view);
+            // Inietta placeholder nella view laterale
+            this.injectPlaceholder(view);
+          }
 
           if (view.shadowRoot) {
             if ((view as any).__clickListenerAttached) {
@@ -783,6 +838,7 @@ export class MrParallelTextViewerDS extends DataSource {
         }
       });
     });
+
   }
 
   onClick(payload) {
@@ -992,6 +1048,39 @@ export class MrParallelTextViewerDS extends DataSource {
           (teiNoteElement as HTMLElement).style.transform = `translateY(${positionDifference}px)`;
         }
       }
+    } else if (target && target.getAttribute('type') === 'commentary' && this.options?.accordionCommentary) {
+      const commentaryKey = target.getAttribute('key');
+      if (!commentaryKey) return;
+
+      // Cerca nelle view laterali (non transcription-view) il pb-highlight corrispondente
+      const allViews = document.querySelectorAll('.n7-parallel-text-viewer [id$="-view"]');
+      allViews.forEach((view) => {
+        if (view.id === 'transcription-view' || !view.shadowRoot) return;
+        const highlighted = view.shadowRoot.querySelector(`pb-highlight[key="${commentaryKey}"]`);
+        if (!highlighted) return;
+
+        const pericope = highlighted.closest('.pericope-group');
+        if (!pericope) return;
+
+        // Collassa tutti i commenti e resetta gli heading
+        view.shadowRoot.querySelectorAll('.postilla-comment').forEach((comment: HTMLElement) => {
+          comment.classList.remove('expanded');
+        });
+        view.shadowRoot.querySelectorAll('.pericope-heading').forEach((h: HTMLElement) => {
+          h.classList.remove('open');
+        });
+
+        // Espande il commento della pericope corrispondente
+        const comment = pericope.querySelector('.postilla-comment') as HTMLElement;
+        const heading = pericope.querySelector('.pericope-heading') as HTMLElement;
+        if (comment) {
+          comment.classList.add('expanded');
+          if (heading) heading.classList.add('open');
+          setTimeout(() => {
+            comment.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }, 100);
+        }
+      });
     } else if (target && target.getAttribute('type') === 'parallel_anchor') {
       const sectionId = target.getAttribute('key');
       if (sectionId) {
