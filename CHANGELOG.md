@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+-   Parallel text viewer: add postilla comment accordion
+
 ## [5.6.8] - 2026-07-27
 
 Muruca
