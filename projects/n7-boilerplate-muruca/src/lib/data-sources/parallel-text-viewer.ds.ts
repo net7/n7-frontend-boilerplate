@@ -304,11 +304,77 @@ export class MrParallelTextViewerDS extends DataSource {
     return this.getOpenDivs(view).find((d) => d.id === id);
   }
 
+  /**
+   * Stila il dropdown select dei pannelli (dentro pb-panel shadow DOM).
+   */
+  private stylePanelDropdown(view: Element) {
+    const panel = view.closest('._pb_panel')?.parentElement;
+    if (!panel || !(panel as any).shadowRoot) return;
+    const sr = (panel as any).shadowRoot;
+    if (sr.querySelector('#panel-dropdown-style')) return;
+    const style = document.createElement('style');
+    style.id = 'panel-dropdown-style';
+    style.textContent = `
+      select.dropdown {
+        appearance: none;
+        -webkit-appearance: none;
+        background: white;
+        border: 1px solid #adb5bd;
+        border-radius: 6px;
+        padding: 2px 36px 2px 16px;
+        font-size: 14px;
+        margin-top: 2px;
+        font-weight: 500;
+        color: #2c3e6b;
+        cursor: pointer;
+        outline: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236c757d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 12px center;
+      }
+      select.dropdown:hover {
+        border-color: #2c3e6b;
+      }
+    `;
+    sr.appendChild(style);
+  }
+
   private prepareViewContainer(view: Element) {
     if (!view.shadowRoot || (view as any).__containerPrepared) return;
     const content = view.shadowRoot.getElementById('content');
     if (content) {
       content.style.position = 'relative';
+    }
+    // Inietta stili per le colonne laterali (dentro il shadow DOM)
+    if (!view.shadowRoot.querySelector('#column-styles')) {
+      const style = document.createElement('style');
+      style.id = 'column-styles';
+      style.textContent = `
+        .mediation-fonte a,
+        .mediation-fonte a:link,
+        .mediation-fonte a:visited {
+          color: #3b5998 !important;
+          text-decoration: none !important;
+        }
+        .mediation-fonte a:hover {
+          text-decoration: underline !important;
+        }
+        .tei-interp5 {
+          display: block;
+        }
+        .tei-interp5 + .tei-interp5 {
+          margin-top: 16px;
+          padding-top: 16px;
+          border-top: 1px solid #dee2e6;
+        }
+        .tei-app:has(.tei-interp5) > .app-head {
+          display: block;
+          padding-bottom: 12px;
+          border-bottom: 1px solid #dee2e6;
+          margin-bottom: 12px;
+        }
+      `;
+      view.shadowRoot.appendChild(style);
     }
     (view as any).__containerPrepared = true;
   }
@@ -412,10 +478,18 @@ export class MrParallelTextViewerDS extends DataSource {
   }
 
   /**
-   * Determina se un .tei-app è un div collassabile (autorità o termine).
+   * Determina se un .tei-app è un div citazione biblica.
+   */
+  private isBiblicalDiv(element: HTMLElement): boolean {
+    const strong = element.querySelector('strong');
+    return strong?.textContent?.includes('Fonte biblica') || false;
+  }
+
+  /**
+   * Determina se un .tei-app è un div collassabile (autorità, termine o biblica).
    */
   private isCollapsibleDiv(element: HTMLElement): boolean {
-    return this.isAuthorityDiv(element) || this.isTermDiv(element);
+    return this.isAuthorityDiv(element) || this.isTermDiv(element) || this.isBiblicalDiv(element);
   }
 
   /**
@@ -427,6 +501,9 @@ export class MrParallelTextViewerDS extends DataSource {
     }
     if (this.isTermDiv(element)) {
       return ['.editorial-note', 'a[href*="mrc_term"]'];
+    }
+    if (this.isBiblicalDiv(element)) {
+      return ['span[style*="white-space"]'];
     }
     return [];
   }
@@ -536,6 +613,16 @@ export class MrParallelTextViewerDS extends DataSource {
       this.collapseTermExtras(element);
     }
 
+    // Extra per bibliche: nasconde i <br> tra il titolo e il testo
+    if (this.isBiblicalDiv(element)) {
+      Array.from(element.childNodes).forEach((node) => {
+        if (node.nodeName === 'BR') {
+          (node as HTMLElement).style.display = 'none';
+          (node as any).__hiddenByCollapse = true;
+        }
+      });
+    }
+
     // Tasto toggle
     this.ensureCollapseToggle(element);
     const toggle = element.querySelector('.collapse-toggle') as HTMLElement;
@@ -564,6 +651,16 @@ export class MrParallelTextViewerDS extends DataSource {
     // Extra per termini: ripristina Sreznevskij, label Commento, <br>
     if (this.isTermDiv(element)) {
       this.expandTermExtras(element);
+    }
+
+    // Extra per bibliche: ripristina i <br>
+    if (this.isBiblicalDiv(element)) {
+      Array.from(element.childNodes).forEach((node) => {
+        if ((node as any).__hiddenByCollapse) {
+          (node as HTMLElement).style.display = '';
+          delete (node as any).__hiddenByCollapse;
+        }
+      });
     }
 
     // Tasto toggle
@@ -767,13 +864,31 @@ export class MrParallelTextViewerDS extends DataSource {
           }
 
           // Accordion commentary (postille collassabili)
-          // CSS in postille.css su TEI Publisher, JS solo per toggle classi
           if (this.options?.accordionCommentary) {
             this.attachAccordionToggleListeners(view);
           }
 
           // Funzionalità avanzate colonne (attive solo se enableColumnFeatures è true)
           if (this.options?.enableColumnFeatures) {
+            // Resetta i flag se il contenuto è stato ricreato da TEI Publisher
+            if (view.shadowRoot) {
+              const hasAccordion = view.shadowRoot.querySelector('.authority-accordion');
+              if (!hasAccordion && (view as any).__authoritiesWrapped) {
+                (view as any).__authoritiesWrapped = false;
+              }
+              const hasPlaceholder = view.shadowRoot.querySelector('.column-placeholder');
+              if (!hasPlaceholder && (view as any).__placeholderInjected) {
+                (view as any).__placeholderInjected = false;
+                (view as any).__placeholderEl = null;
+              }
+              if (!hasAccordion || !hasPlaceholder) {
+                (view as any).__openDivs = [];
+                (view as any).__activeId = null;
+                (view as any).__containerPrepared = false;
+              }
+            }
+            // Stila il dropdown select del pannello
+            this.stylePanelDropdown(view);
             // Prepara il container per absolute positioning
             this.prepareViewContainer(view);
             // Wrappa autorità full-text in accordion collassabile
