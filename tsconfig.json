@@ -49,7 +49,6 @@
       "@mr-config/*": [
         //"src/app/config-muruca/*"
            "../petrarca_fe/src/app/config/*" //config di un progetto in locale
-          // "../leopardi-fe/src/app/config/*" //config di un progetto in locale
       ],
       "@aw-routes": [
         "src/app/app.routes.arianna.ts"
