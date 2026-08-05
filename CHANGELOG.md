@@ -9,6 +9,8 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.6.10] - 2026-08-05
+
 Muruca
 
 -   Parallel text viewer: enableColumnFeatures guard for project-specific features
@@ -1180,7 +1182,9 @@ A4V
 
 [v3.4.2]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.4.1...v3.4.2
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.9...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.10...HEAD
+
+[5.6.10]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.1...v5.6.10
 
 [5.6.9]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.1...v5.6.9
 
