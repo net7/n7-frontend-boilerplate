@@ -9,6 +9,12 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+-   Parallel text viewer: enableColumnFeatures guard for project-specific features
+-   Parallel text viewer: biblical citations collapse in dimmed state
+-   Parallel text viewer: reset flags on panel change (fix accordion/placeholder loss)
+
 ## [5.6.9] - 2026-07-31
 
 Muruca
