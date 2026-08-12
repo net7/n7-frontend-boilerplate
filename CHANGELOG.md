@@ -9,6 +9,8 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.6.11] - 2026-08-12
+
 Muruca
 
 -   Parallel text viewer: add source_ref handler for leoantico cross-panel scroll
@@ -1186,7 +1188,9 @@ A4V
 
 [v3.4.2]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.4.1...v3.4.2
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.10...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.11...HEAD
+
+[5.6.11]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.1...v5.6.11
 
 [5.6.10]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.1...v5.6.10
 
