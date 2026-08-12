@@ -922,6 +922,8 @@ export class MrParallelTextViewerDS extends DataSource {
 
     setTimeout(attachListeners, 500);
 
+
+
     // Cross-highlight per termini multi-@ana: quando un pb-highlight con doppia key emette pb-highlight-on 
     //  ri-emette pb-highlight-on per ogni token individuale  così i termini correlati si evidenziano.
     document.addEventListener('pb-highlight-on', (ev: any) => {
@@ -1201,6 +1203,24 @@ export class MrParallelTextViewerDS extends DataSource {
       if (sectionId) {
         document.querySelectorAll('.n7-parallel-text-viewer [id$="-view"]').forEach((view: any) => {
           view.gotoId(sectionId);
+        });
+      }
+    } else if (target && target.getAttribute('type') === 'source_ref') {
+      // Cross-panel scroll per citazioni fonti antiche (leoantico).
+      // Click su una citazione nel testo → scrolla alla fonte corrispondente nel pannello fonti.
+      const sourceKey = target.getAttribute('key');
+      if (sourceKey) {
+        const clickedView = clickPath.find((el) => el.id && el.id.endsWith('-view'));
+        const clickedViewId = clickedView ? clickedView.id : null;
+
+        document.querySelectorAll('.n7-parallel-text-viewer [id$="-view"]').forEach((view: any) => {
+          if (view.id === clickedViewId) return;
+          if (!view.shadowRoot) return;
+
+          const fonteHighlight = view.shadowRoot.querySelector(`pb-highlight[key="${sourceKey}"]`);
+          if (fonteHighlight) {
+            fonteHighlight.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
         });
       }
     } else if (target && target.getAttribute('key') && target.getAttribute('scrollview') !== null) {

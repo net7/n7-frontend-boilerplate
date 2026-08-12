@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+-   Parallel text viewer: add source_ref handler for leoantico cross-panel scroll
+
 ## [5.6.10] - 2026-08-05
 
 Muruca
