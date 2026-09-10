@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+- Parallel text viewer: add accordion for apparatus column
+
 ## [5.6.11] - 2026-08-12
 
 Muruca
