@@ -819,6 +819,92 @@ export class MrParallelTextViewerDS extends DataSource {
     (view as any).__authoritiesWrapped = true;
   }
 
+  private wrapHandDescriptions(view: Element) {
+    if (!view.shadowRoot || (view as any).__handsWrapped) return;
+    const content = view.shadowRoot.getElementById('content') || view.shadowRoot;
+
+    // Verifica prima che il contenuto abbia informazioni sulle mani
+    const fullText = content.textContent || '';
+    if (!fullText.includes('почерк') && !fullText.includes('mano del')) return;
+
+    // Cerca tutti gli span nel shadow DOM il cui testo contiene "почерк" o "mano"
+    // Risale al parent per trovare il sibling abbreviazione.
+    const allSpans = Array.from(content.querySelectorAll('span'));
+    const handsMap = new Map<string, string>();
+    allSpans.forEach((span: Element) => {
+      const text = span.textContent?.trim() || '';
+      if (!text.startsWith('(')) return;
+      if (!text.includes('почерк') && !text.includes('mano')) return;
+      const parent = span.parentElement;
+      if (!parent) return;
+      const siblings = Array.from(parent.children);
+      const idx = siblings.indexOf(span);
+      const abbrEl = idx > 0 ? siblings[idx - 1] : null;
+      if (!abbrEl) return;
+      const abbrText = abbrEl.textContent?.trim() || '';
+      if (abbrText.length > 3 || abbrText.length === 0) return;
+      const cleanExpan = text.replace(/^\(/, '').replace(/\)$/, '').trim();
+      if (!handsMap.has(abbrText)) {
+        handsMap.set(abbrText, cleanExpan);
+      }
+    });
+
+    if (!handsMap.size) return;
+
+    const count = handsMap.size;
+
+    // Crea il wrapper accordion
+    const accordion = document.createElement('div');
+    accordion.className = 'hands-accordion';
+    accordion.setAttribute('style', 'margin-bottom:0.5em;');
+
+    // Header cliccabile
+    const header = document.createElement('div');
+    header.className = 'hands-accordion__header';
+    header.setAttribute('style',
+      'display:flex;align-items:center;gap:8px;padding:8px 12px;'
+      + 'background:#f0f2f5;cursor:pointer;user-select:none;'
+      + 'border-bottom:1px solid #dee2e6;font-family:sans-serif;'
+    );
+    header.innerHTML = `
+      <span style="font-size:12px;font-weight:600;color:#495057;text-transform:uppercase;letter-spacing:0.5px;">Sigle delle mani</span>
+      <span style="font-size:11px;color:#6c757d;border:1px solid #adb5bd;border-radius:4px;padding:1px 6px;">${count} SIGL${count === 1 ? 'A' : 'E'}</span>
+      <span class="hands-accordion__chevron" style="margin-left:auto;font-size:14px;color:#6c757d;transition:transform 0.2s;">▼</span>
+    `;
+
+    // Body collassabile
+    const body = document.createElement('div');
+    body.className = 'hands-accordion__body';
+    body.setAttribute('style', 'display:none;padding:8px 12px;font-family:sans-serif;font-size:13px;line-height:1.6;');
+
+    // Popola con le sigle
+    handsMap.forEach((expanText, abbrText) => {
+      const row = document.createElement('div');
+      row.setAttribute('style', 'padding:2px 0;');
+      row.innerHTML = `<strong>${abbrText}</strong> — ${expanText}`;
+      body.appendChild(row);
+    });
+
+    // Toggle click
+    header.addEventListener('click', () => {
+      const isOpen = body.style.display !== 'none';
+      body.style.display = isOpen ? 'none' : 'block';
+      const chevron = header.querySelector('.hands-accordion__chevron') as HTMLElement;
+      if (chevron) chevron.style.transform = isOpen ? '' : 'rotate(180deg)';
+    });
+
+    accordion.appendChild(header);
+    accordion.appendChild(body);
+
+    // Inserisce l'accordion all'inizio del content
+    const contentDiv = content.querySelector('.content') || content;
+    if (contentDiv.parentNode) {
+      contentDiv.parentNode.insertBefore(accordion, contentDiv);
+    }
+
+    (view as any).__handsWrapped = true;
+  }
+
   private injectPlaceholder(view: Element) {
     if (!view.shadowRoot || (view as any).__placeholderInjected) return;
     const placeholder = document.createElement('div');
@@ -876,6 +962,10 @@ export class MrParallelTextViewerDS extends DataSource {
               if (!hasAccordion && (view as any).__authoritiesWrapped) {
                 (view as any).__authoritiesWrapped = false;
               }
+              const hasHandsAccordion = view.shadowRoot.querySelector('.hands-accordion');
+              if (!hasHandsAccordion && (view as any).__handsWrapped) {
+                (view as any).__handsWrapped = false;
+              }
               const hasPlaceholder = view.shadowRoot.querySelector('.column-placeholder');
               if (!hasPlaceholder && (view as any).__placeholderInjected) {
                 (view as any).__placeholderInjected = false;
@@ -893,6 +983,8 @@ export class MrParallelTextViewerDS extends DataSource {
             this.prepareViewContainer(view);
             // Wrappa autorità full-text in accordion collassabile
             this.wrapFullTextAuthorities(view);
+            // Wrappa sigle delle mani in accordion collassabile
+            this.wrapHandDescriptions(view);
             // Inietta placeholder nella view laterale
             this.injectPlaceholder(view);
           }
