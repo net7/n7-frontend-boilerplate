@@ -809,8 +809,8 @@ export class MrParallelTextViewerDS extends DataSource {
       contentDiv.parentNode.insertBefore(accordion, contentDiv);
     }
     // Nasconde il contenitore originale (ora vuoto degli interp)
-    if (contentDiv.querySelector('.tei-TEI') && !contentDiv.querySelector('[class^="tei-interp"]')) {
-      const teiDiv = contentDiv.querySelector('.tei-TEI') as HTMLElement;
+    if (content.querySelector('.tei-TEI') && !content.querySelector('[class^="tei-interp"]')) {
+      const teiDiv = content.querySelector('.tei-TEI') as HTMLElement;
       if (teiDiv && !teiDiv.children.length) {
         teiDiv.style.display = 'none';
       }
@@ -905,6 +905,373 @@ export class MrParallelTextViewerDS extends DataSource {
     (view as any).__handsWrapped = true;
   }
 
+  /**
+   * Inietta i controlli "Apri tutto" + filtro testimoni nella colonna apparato.
+   * Fase 1 (placeholder): inietta subito una barra "Caricamento..." senza scansione DOM.
+   * Fase 2 (ready): quando il contenuto è pronto, verifica che sia apparato e popola i controlli.
+   */
+  private injectApparatusControls(view: Element) {
+    if (!view.shadowRoot) return;
+
+    // Se i controlli sono già pronti (fase 2 completata), non fare nulla
+    if ((view as any).__apparatusControlsReady) return;
+
+    // Check rapido: solo colonne con ODD apparato (disponibile subito, prima del contenuto)
+    const oddAttr = ((view as any).odd || view.getAttribute('odd') || '').toLowerCase();
+    if (oddAttr && !oddAttr.includes('apparatus')) return;
+
+    const content = view.shadowRoot.getElementById('content') || view.shadowRoot;
+
+    // FASE 1: inietta placeholder immediato (solo se ODD è apparatus o non ancora noto)
+    if (!(view as any).__apparatusControlsInjected) {
+      const controlsEl = document.createElement('div');
+      controlsEl.className = 'apparatus-controls';
+      controlsEl.setAttribute('style',
+        'display:flex;align-items:center;gap:8px;padding:8px 12px;'
+        + 'background:#f0f2f5;border-bottom:1px solid #dee2e6;font-family:sans-serif;'
+        + 'margin-bottom:0.5em;flex-wrap:wrap;'
+      );
+      controlsEl.innerHTML = '<span style="font-size:11px;color:#6c757d;">Caricamento apparato...</span>';
+
+      // Inserisce all'inizio del content
+      const contentDiv = content.querySelector('.content') || content;
+      if (contentDiv.parentNode) {
+        contentDiv.parentNode.insertBefore(controlsEl, contentDiv);
+      }
+
+      (view as any).__apparatusControlsInjected = true;
+      (view as any).__apparatusControlsEl = controlsEl;
+    }
+
+    // FASE 2: verifica se il contenuto è pronto e popola i controlli
+    const teiApps = content.querySelectorAll('.tei-app');
+    if (!teiApps.length) return; // contenuto non ancora pronto
+
+    // Discrimina la colonna apparato: solo l'ODD apparatus produce .rdg-item/.lem-item
+    const isApparatusView = content.querySelector('.tei-app .rdg-item')
+      || content.querySelector('.tei-app .lem-item')
+      || content.querySelector('.tei-app .lem-item-positive');
+
+    const controlsEl = (view as any).__apparatusControlsEl as HTMLElement;
+
+    if (!isApparatusView) {
+      controlsEl.remove();
+      (view as any).__apparatusControlsInjected = false;
+      (view as any).__apparatusControlsEl = null;
+      (view as any).__apparatusControlsReady = true; // non riprovare
+      return;
+    }
+
+    // Popola la barra con i controlli reali
+    controlsEl.innerHTML = '';
+
+    // Pulsante toggle
+    const toggleBtn = document.createElement('button');
+    toggleBtn.className = 'apparatus-controls__toggle';
+    toggleBtn.textContent = 'Apri tutto';
+    toggleBtn.setAttribute('style',
+      'font-size:11px;font-weight:600;color:#495057;text-transform:uppercase;'
+      + 'letter-spacing:0.5px;padding:4px 10px;border:1px solid #adb5bd;'
+      + 'border-radius:4px;background:#fff;cursor:pointer;white-space:nowrap;'
+    );
+    toggleBtn.addEventListener('mouseover', () => { toggleBtn.style.background = '#e9ecef'; });
+    toggleBtn.addEventListener('mouseout', () => {
+      toggleBtn.style.background = (view as any).__listModeActive ? '#e9ecef' : '#fff';
+    });
+    toggleBtn.addEventListener('click', () => { this.toggleListMode(view); });
+
+    // Dropdown filtro testimoni
+    const witnessSelect = document.createElement('select');
+    witnessSelect.className = 'apparatus-controls__witness-filter';
+    witnessSelect.setAttribute('style',
+      'font-size:11px;color:#495057;padding:4px 6px;border:1px solid #adb5bd;'
+      + 'border-radius:4px;background:#fff;font-family:sans-serif;cursor:pointer;'
+    );
+    witnessSelect.disabled = true;
+    const defaultOpt = document.createElement('option');
+    defaultOpt.value = '';
+    defaultOpt.textContent = 'Tutti i testimoni';
+    witnessSelect.appendChild(defaultOpt);
+    witnessSelect.addEventListener('change', () => {
+      this.filterByWitness(view, witnessSelect.value);
+    });
+
+    // Contatore voci
+    const countSpan = document.createElement('span');
+    countSpan.className = 'apparatus-controls__count';
+    countSpan.setAttribute('style', 'font-size:11px;color:#6c757d;margin-left:auto;white-space:nowrap;');
+    countSpan.textContent = `${teiApps.length} voci`;
+
+    controlsEl.appendChild(toggleBtn);
+    controlsEl.appendChild(witnessSelect);
+    controlsEl.appendChild(countSpan);
+
+    // Salva riferimenti
+    (view as any).__toggleButton = toggleBtn;
+    (view as any).__witnessSelect = witnessSelect;
+    (view as any).__countSpan = countSpan;
+    (view as any).__listModeActive = false;
+    (view as any).__apparatusControlsReady = true;
+  }
+
+  /**
+   * Estrae tutti i testimoni unici dalla view, scansionando .rdg-wit e .lem-item-positive.
+   */
+  private extractWitnesses(view: Element): string[] {
+    if (!view.shadowRoot) return [];
+    const content = view.shadowRoot.getElementById('content') || view.shadowRoot;
+    const witnessSet = new Set<string>();
+
+    // Fonte primaria: .rdg-wit spans (contengono sigla separate da spazio)
+    content.querySelectorAll('.tei-app .rdg-wit').forEach((el: Element) => {
+      const text = el.textContent?.trim() || '';
+      text.split(/\s+/).forEach((w) => {
+        if (w && w.length > 0) witnessSet.add(w);
+      });
+    });
+
+    // Fonte secondaria: .lem-item-positive (wit inline dopo il bold)
+    content.querySelectorAll('.tei-app .lem-item-positive').forEach((el: Element) => {
+      const bold = el.querySelector('b');
+      if (!bold) return;
+      // Il testo del wit è dopo il <b>, prima della fine dello span
+      const fullText = el.textContent || '';
+      const boldText = bold.textContent || '';
+      const afterBold = fullText.substring(fullText.indexOf(boldText) + boldText.length).trim();
+      afterBold.split(/\s+/).forEach((w) => {
+        if (w && w.length > 0 && w.length <= 10) witnessSet.add(w);
+      });
+    });
+
+    // Fonte terziaria: .wit-detail (wit alla fine del testo)
+    content.querySelectorAll('.tei-app .wit-detail').forEach((el: Element) => {
+      const text = el.textContent?.trim() || '';
+      const tokens = text.split(/\s+/);
+      // L'ultimo token è solitamente la sigla del testimone
+      const last = tokens[tokens.length - 1];
+      if (last && last.length > 0 && last.length <= 10) witnessSet.add(last);
+    });
+
+    // Rimuovi token che non sembrano sigle (troppo lunghi o vuoti)
+    const result = Array.from(witnessSet).filter((w) => w.length <= 10 && w.length > 0);
+    result.sort();
+    return result;
+  }
+
+  /**
+   * Restituisce i testimoni presenti in una singola entry .tei-app.
+   */
+  private getWitnessesFromEntry(app: HTMLElement): string[] {
+    const witnesses = new Set<string>();
+
+    app.querySelectorAll('.rdg-wit').forEach((el: Element) => {
+      (el.textContent?.trim() || '').split(/\s+/).forEach((w) => {
+        if (w) witnesses.add(w);
+      });
+    });
+
+    app.querySelectorAll('.lem-item-positive').forEach((el: Element) => {
+      const bold = el.querySelector('b');
+      if (!bold) return;
+      const fullText = el.textContent || '';
+      const boldText = bold.textContent || '';
+      const afterBold = fullText.substring(fullText.indexOf(boldText) + boldText.length).trim();
+      afterBold.split(/\s+/).forEach((w) => {
+        if (w && w.length <= 10) witnesses.add(w);
+      });
+    });
+
+    app.querySelectorAll('.wit-detail').forEach((el: Element) => {
+      const text = el.textContent?.trim() || '';
+      const tokens = text.split(/\s+/);
+      const last = tokens[tokens.length - 1];
+      if (last && last.length <= 10) witnesses.add(last);
+    });
+
+    // Fallback: .lem-item (standard lem, wit è testo libero tra <b> e <i>)
+    app.querySelectorAll('.lem-item').forEach((el: Element) => {
+      const bold = el.querySelector('b');
+      const italic = el.querySelector('i');
+      if (!bold) return;
+      const fullText = el.textContent || '';
+      const boldText = bold.textContent || '';
+      const italicText = italic ? italic.textContent || '' : '';
+      let afterBold = fullText.substring(fullText.indexOf(boldText) + boldText.length).trim();
+      if (italicText) {
+        afterBold = afterBold.substring(0, afterBold.indexOf(italicText)).trim();
+      }
+      afterBold.split(/\s+/).forEach((w) => {
+        if (w && w.length <= 10) witnesses.add(w);
+      });
+    });
+
+    return Array.from(witnesses);
+  }
+
+  /**
+   * Attiva/disattiva la modalità lista (apri tutto / chiudi tutto).
+   */
+  private toggleListMode(view: Element) {
+    if (!view.shadowRoot) return;
+    const content = view.shadowRoot.getElementById('content');
+    const teiApps = view.shadowRoot.querySelectorAll('.tei-app');
+    const isActive = (view as any).__listModeActive;
+
+    if (!isActive) {
+      // === ATTIVA LIST MODE ===
+
+      // Svuota lo stack e resetta stili absolute
+      const stack = this.getOpenDivs(view);
+      stack.forEach((div) => {
+        div.element.style.position = '';
+        div.element.style.top = '';
+        div.element.style.left = '';
+        div.element.style.right = '';
+        div.element.style.opacity = '';
+        div.element.style.boxShadow = '';
+        div.element.style.zIndex = '';
+      });
+      (view as any).__openDivs = [];
+      (view as any).__activeId = null;
+
+      // Container: flusso normale
+      if (content) content.style.position = 'static';
+
+      // Mostra tutte le entry in lista
+      teiApps.forEach((app: HTMLElement) => {
+        app.style.display = 'block';
+        app.style.position = 'static';
+        app.style.top = '';
+        app.style.left = '';
+        app.style.right = '';
+        app.style.opacity = '1';
+        app.style.boxShadow = '';
+        app.style.zIndex = '';
+        app.style.marginBottom = '8px';
+        // Nascondi bottone X
+        const closeBtn = app.querySelector('.close_app') as HTMLElement;
+        if (closeBtn) closeBtn.style.display = 'none';
+      });
+
+      // Estrai testimoni (lazy, cachato)
+      if (!(view as any).__witnessList) {
+        (view as any).__witnessList = this.extractWitnesses(view);
+      }
+
+      // Popola dropdown
+      const select = (view as any).__witnessSelect as HTMLSelectElement;
+      while (select.options.length > 1) select.remove(1);
+      ((view as any).__witnessList as string[]).forEach((w: string) => {
+        const opt = document.createElement('option');
+        opt.value = w;
+        opt.textContent = w;
+        select.appendChild(opt);
+      });
+      select.disabled = false;
+      select.value = '';
+
+      // Aggiorna UI
+      (view as any).__toggleButton.textContent = 'Chiudi tutto';
+      (view as any).__toggleButton.style.background = '#e9ecef';
+      this.hidePlaceholder(view);
+
+      // Contatore
+      const countSpan = (view as any).__countSpan as HTMLElement;
+      countSpan.textContent = `${teiApps.length} voci`;
+
+      (view as any).__listModeActive = true;
+      (view as any).__witnessFilter = null;
+    } else {
+      // === DISATTIVA LIST MODE ===
+
+      // Nascondi tutte le entry e resetta stili
+      teiApps.forEach((app: HTMLElement) => {
+        app.style.display = 'none';
+        app.style.position = '';
+        app.style.marginBottom = '';
+        // Ripristina bottone X
+        const closeBtn = app.querySelector('.close_app') as HTMLElement;
+        if (closeBtn) closeBtn.style.display = '';
+      });
+
+      // Ripristina container
+      if (content) content.style.position = 'relative';
+
+      // Resetta dropdown
+      const select = (view as any).__witnessSelect as HTMLSelectElement;
+      select.disabled = true;
+      select.value = '';
+
+      // Aggiorna UI
+      (view as any).__toggleButton.textContent = 'Apri tutto';
+      (view as any).__toggleButton.style.background = '#fff';
+      this.checkPlaceholder(view);
+
+      (view as any).__listModeActive = false;
+      (view as any).__witnessFilter = null;
+
+      // Reset highlights
+      this.resetHighlights();
+    }
+  }
+
+  /**
+   * Filtra le entry di apparato in base al testimone selezionato.
+   */
+  private filterByWitness(view: Element, witness: string) {
+    if (!view.shadowRoot) return;
+    const teiApps = view.shadowRoot.querySelectorAll('.tei-app');
+    let visibleCount = 0;
+
+    teiApps.forEach((app: HTMLElement) => {
+      if (!witness) {
+        // Nessun filtro: mostra tutto
+        app.style.display = 'block';
+        visibleCount++;
+      } else {
+        const witnesses = this.getWitnessesFromEntry(app);
+        if (witnesses.includes(witness)) {
+          app.style.display = 'block';
+          visibleCount++;
+        } else {
+          app.style.display = 'none';
+        }
+      }
+    });
+
+    (view as any).__witnessFilter = witness || null;
+
+    // Aggiorna contatore
+    const countSpan = (view as any).__countSpan as HTMLElement;
+    const total = teiApps.length;
+    if (witness) {
+      countSpan.textContent = `${visibleCount}/${total} voci`;
+    } else {
+      countSpan.textContent = `${total} voci`;
+    }
+  }
+
+  /**
+   * In list mode, scrolla alla entry corrispondente e la evidenzia brevemente.
+   */
+  private scrollToEntryInList(view: Element, entry: HTMLElement) {
+    if (entry.style.display === 'none') return;
+
+    // Evidenzia con flash giallo
+    const originalBg = entry.style.backgroundColor || '';
+    entry.style.backgroundColor = '#fff3cd';
+    entry.style.transition = 'background-color 0.3s';
+
+    // Scrolla
+    entry.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    // Rimuovi highlight dopo 1.5s
+    setTimeout(() => {
+      entry.style.backgroundColor = originalBg;
+      setTimeout(() => { entry.style.transition = ''; }, 300);
+    }, 1500);
+  }
+
   private injectPlaceholder(view: Element) {
     if (!view.shadowRoot || (view as any).__placeholderInjected) return;
     const placeholder = document.createElement('div');
@@ -966,6 +1333,18 @@ export class MrParallelTextViewerDS extends DataSource {
               if (!hasHandsAccordion && (view as any).__handsWrapped) {
                 (view as any).__handsWrapped = false;
               }
+              const hasApparatusControls = view.shadowRoot.querySelector('.apparatus-controls');
+              if (!hasApparatusControls && ((view as any).__apparatusControlsInjected || (view as any).__apparatusControlsReady)) {
+                (view as any).__apparatusControlsInjected = false;
+                (view as any).__apparatusControlsReady = false;
+                (view as any).__apparatusControlsEl = null;
+                (view as any).__listModeActive = false;
+                (view as any).__witnessFilter = null;
+                (view as any).__witnessList = null;
+                (view as any).__toggleButton = null;
+                (view as any).__witnessSelect = null;
+                (view as any).__countSpan = null;
+              }
               const hasPlaceholder = view.shadowRoot.querySelector('.column-placeholder');
               if (!hasPlaceholder && (view as any).__placeholderInjected) {
                 (view as any).__placeholderInjected = false;
@@ -985,6 +1364,8 @@ export class MrParallelTextViewerDS extends DataSource {
             this.wrapFullTextAuthorities(view);
             // Wrappa sigle delle mani in accordion collassabile
             this.wrapHandDescriptions(view);
+            // Inietta controlli apparato (apri tutto + filtro testimoni)
+            this.injectApparatusControls(view);
             // Inietta placeholder nella view laterale
             this.injectPlaceholder(view);
           }
@@ -1156,6 +1537,12 @@ export class MrParallelTextViewerDS extends DataSource {
       });
 
       if (teiAppElement && targetView) {
+        // List mode: scrolla alla entry invece di aprirla nello stack
+        if ((targetView as any).__listModeActive) {
+          this.scrollToEntryInList(targetView, teiAppElement);
+          return;
+        }
+
         const divId = teiAppElement.id || teiAppElement.getAttribute('data-from') || appId;
         const existingInStack = this.findInStack(targetView, divId);
 
