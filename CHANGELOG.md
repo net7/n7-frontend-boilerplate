@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+-   Parallel text viewer: add logic to handle open apparatus in list mode
+
 ## [5.6.12] - 2026-09-10
 
 Muruca
