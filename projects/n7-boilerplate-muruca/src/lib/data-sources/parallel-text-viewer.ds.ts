@@ -881,7 +881,7 @@ export class MrParallelTextViewerDS extends DataSource {
     handsMap.forEach((expanText, abbrText) => {
       const row = document.createElement('div');
       row.setAttribute('style', 'padding:2px 0;');
-      row.innerHTML = `<strong>${abbrText}</strong> — ${expanText}`;
+      row.innerHTML = `<strong style="color:#c0392b;">${abbrText}</strong> — ${expanText}`;
       body.appendChild(row);
     });
 
@@ -931,7 +931,13 @@ export class MrParallelTextViewerDS extends DataSource {
         + 'background:#f0f2f5;border-bottom:1px solid #dee2e6;font-family:sans-serif;'
         + 'margin-bottom:0.5em;flex-wrap:wrap;'
       );
-      controlsEl.innerHTML = '<span style="font-size:11px;color:#6c757d;">Caricamento apparato...</span>';
+      controlsEl.innerHTML = `
+        <span style="display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#495057;">
+          <span style="display:inline-block;width:14px;height:14px;border:2px solid #dee2e6;border-top-color:#2c3e6b;border-radius:50%;animation:apparatus-spin 0.8s linear infinite;"></span>
+          Caricamento apparato...
+        </span>
+        <style>@keyframes apparatus-spin { to { transform: rotate(360deg); } }</style>
+      `;
 
       // Inserisce all'inizio del content
       const contentDiv = content.querySelector('.content') || content;
@@ -1209,6 +1215,7 @@ export class MrParallelTextViewerDS extends DataSource {
 
       (view as any).__listModeActive = false;
       (view as any).__witnessFilter = null;
+      (view as any).__highlightedEntry = null;
 
       // Reset highlights
       this.resetHighlights();
@@ -1257,19 +1264,18 @@ export class MrParallelTextViewerDS extends DataSource {
   private scrollToEntryInList(view: Element, entry: HTMLElement) {
     if (entry.style.display === 'none') return;
 
-    // Evidenzia con flash giallo
-    const originalBg = entry.style.backgroundColor || '';
+    // Rimuovi highlight dalla entry precedente
+    const prev = (view as any).__highlightedEntry as HTMLElement;
+    if (prev && prev !== entry) {
+      prev.style.backgroundColor = '';
+    }
+
+    // Highlight permanente sulla entry cliccata
     entry.style.backgroundColor = '#fff3cd';
-    entry.style.transition = 'background-color 0.3s';
+    (view as any).__highlightedEntry = entry;
 
     // Scrolla
     entry.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-    // Rimuovi highlight dopo 1.5s
-    setTimeout(() => {
-      entry.style.backgroundColor = originalBg;
-      setTimeout(() => { entry.style.transition = ''; }, 300);
-    }, 1500);
   }
 
   private injectPlaceholder(view: Element) {
