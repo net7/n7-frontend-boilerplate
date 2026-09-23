@@ -9,9 +9,11 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.6.14] - 2026-09-23
+
 Muruca
 
--  Add fixes for parallel text viewer 
+-   Add fixes for parallel text viewer 
 
 ## [5.6.13] - 2026-09-16
 
@@ -1204,7 +1206,9 @@ A4V
 
 [v3.4.2]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.4.1...v3.4.2
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.13...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.14...HEAD
+
+[5.6.14]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.1...v5.6.14
 
 [5.6.13]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.1...v5.6.13
 
