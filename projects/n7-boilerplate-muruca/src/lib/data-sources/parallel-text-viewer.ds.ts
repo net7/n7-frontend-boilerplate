@@ -922,8 +922,9 @@ export class MrParallelTextViewerDS extends DataSource {
 
     const content = view.shadowRoot.getElementById('content') || view.shadowRoot;
 
-    // FASE 1: inietta placeholder immediato (solo se ODD è apparatus o non ancora noto)
-    if (!(view as any).__apparatusControlsInjected) {
+    // FASE 1: inietta placeholder immediato (solo se ODD è confermato apparatus)
+    const isConfirmedApparatus = oddAttr.includes('apparatus');
+    if (!(view as any).__apparatusControlsInjected && isConfirmedApparatus) {
       const controlsEl = document.createElement('div');
       controlsEl.className = 'apparatus-controls';
       controlsEl.setAttribute('style',
@@ -951,21 +952,51 @@ export class MrParallelTextViewerDS extends DataSource {
 
     // FASE 2: verifica se il contenuto è pronto e popola i controlli
     const teiApps = content.querySelectorAll('.tei-app');
-    if (!teiApps.length) return; // contenuto non ancora pronto
+    if (!teiApps.length) {
+      // Se il contenuto è caricato (ha .content) ma non ci sono entry → niente apparato
+      const contentDiv = content.querySelector('.content');
+      if (contentDiv && (view as any).__apparatusControlsEl) {
+        ((view as any).__apparatusControlsEl as HTMLElement).remove();
+        (view as any).__apparatusControlsInjected = false;
+        (view as any).__apparatusControlsEl = null;
+        (view as any).__apparatusControlsReady = true;
+      }
+      return;
+    }
 
-    // Discrimina la colonna apparato: solo l'ODD apparatus produce .rdg-item/.lem-item
+    // Discrimina la colonna apparato: l'ODD apparatus produce .rdg-item/.lem-item o .note-item
     const isApparatusView = content.querySelector('.tei-app .rdg-item')
       || content.querySelector('.tei-app .lem-item')
-      || content.querySelector('.tei-app .lem-item-positive');
-
-    const controlsEl = (view as any).__apparatusControlsEl as HTMLElement;
+      || content.querySelector('.tei-app .lem-item-positive')
+      || content.querySelector('.tei-app .note-item');
 
     if (!isApparatusView) {
-      controlsEl.remove();
+      // Non è apparato: rimuovi il placeholder se esiste
+      if ((view as any).__apparatusControlsEl) {
+        ((view as any).__apparatusControlsEl as HTMLElement).remove();
+      }
       (view as any).__apparatusControlsInjected = false;
       (view as any).__apparatusControlsEl = null;
       (view as any).__apparatusControlsReady = true; // non riprovare
       return;
+    }
+
+    // Se la fase 1 non ha creato l'elemento (odd non leggibile), crealo ora
+    let controlsEl = (view as any).__apparatusControlsEl as HTMLElement;
+    if (!controlsEl) {
+      controlsEl = document.createElement('div');
+      controlsEl.className = 'apparatus-controls';
+      controlsEl.setAttribute('style',
+        'display:flex;align-items:center;gap:8px;padding:8px 12px;'
+        + 'background:#f0f2f5;border-bottom:1px solid #dee2e6;font-family:sans-serif;'
+        + 'margin-bottom:0.5em;flex-wrap:wrap;'
+      );
+      const contentDiv = content.querySelector('.content') || content;
+      if (contentDiv.parentNode) {
+        contentDiv.parentNode.insertBefore(controlsEl, contentDiv);
+      }
+      (view as any).__apparatusControlsInjected = true;
+      (view as any).__apparatusControlsEl = controlsEl;
     }
 
     // Popola la barra con i controlli reali
@@ -1143,7 +1174,7 @@ export class MrParallelTextViewerDS extends DataSource {
       // Container: flusso normale
       if (content) content.style.position = 'static';
 
-      // Mostra tutte le entry in lista
+      // Mostra tutte le entry in lista (apparati + note)
       teiApps.forEach((app: HTMLElement) => {
         app.style.display = 'block';
         app.style.position = 'static';
@@ -1158,7 +1189,6 @@ export class MrParallelTextViewerDS extends DataSource {
         const closeBtn = app.querySelector('.close_app') as HTMLElement;
         if (closeBtn) closeBtn.style.display = 'none';
       });
-
       // Estrai testimoni (lazy, cachato)
       if (!(view as any).__witnessList) {
         (view as any).__witnessList = this.extractWitnesses(view);
@@ -1190,7 +1220,7 @@ export class MrParallelTextViewerDS extends DataSource {
     } else {
       // === DISATTIVA LIST MODE ===
 
-      // Nascondi tutte le entry e resetta stili
+      // Nascondi tutte le entry e resetta stili (apparati + note)
       teiApps.forEach((app: HTMLElement) => {
         app.style.display = 'none';
         app.style.position = '';
@@ -1199,7 +1229,6 @@ export class MrParallelTextViewerDS extends DataSource {
         const closeBtn = app.querySelector('.close_app') as HTMLElement;
         if (closeBtn) closeBtn.style.display = '';
       });
-
       // Ripristina container
       if (content) content.style.position = 'relative';
 
@@ -1232,7 +1261,6 @@ export class MrParallelTextViewerDS extends DataSource {
 
     teiApps.forEach((app: HTMLElement) => {
       if (!witness) {
-        // Nessun filtro: mostra tutto
         app.style.display = 'block';
         visibleCount++;
       } else {
@@ -1603,10 +1631,21 @@ export class MrParallelTextViewerDS extends DataSource {
               segPartF.forEach((el) => {
                 (el as HTMLElement).style.backgroundColor = 'white';
               });
+              // Evidenzia le quote annidate (parte della cit esterna) con giallo tenue
+              nestedCits.forEach((el) => {
+                (el as HTMLElement).style.backgroundColor = '#fff8e1';
+              });
             } else {
               segOuterInner.forEach((el) => {
                 (el as HTMLElement).style.backgroundColor = '';
               });
+              // Resetta le quote annidate (click sulla cit interna)
+              const parentCit = (target as HTMLElement).closest('.quote');
+              if (parentCit) {
+                parentCit.querySelectorAll('.quote').forEach((el) => {
+                  (el as HTMLElement).style.backgroundColor = '';
+                });
+              }
             }
           });
         }
@@ -1752,6 +1791,10 @@ export class MrParallelTextViewerDS extends DataSource {
         (el as HTMLElement).style.backgroundColor = '';
       });
       content.querySelectorAll('.seg-part-f').forEach((el: Element) => {
+        (el as HTMLElement).style.backgroundColor = '';
+      });
+      // Ripristina le quote annidate (potrebbero essere rimaste giallo tenue dopo click su cit esterna)
+      content.querySelectorAll('.quote .quote').forEach((el: Element) => {
         (el as HTMLElement).style.backgroundColor = '';
       });
     });

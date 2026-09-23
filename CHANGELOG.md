@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+-  Add fixes for parallel text viewer 
+
 ## [5.6.13] - 2026-09-16
 
 Muruca
