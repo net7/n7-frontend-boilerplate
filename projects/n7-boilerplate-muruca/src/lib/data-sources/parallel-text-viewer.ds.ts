@@ -16,6 +16,7 @@ export class MrParallelTextViewerDS extends DataSource {
   protected transform(data: any): any {
     if (!data) return null;
 
+
     /*
     if (this.options.facsimileOptions && data.facsimile) {
       if (!data.facsimile.options) {
@@ -104,6 +105,69 @@ export class MrParallelTextViewerDS extends DataSource {
       { once: true }
     );
 
+    // Fix navigazione opera→traduzione: corregge il path del pb-document
+    // dopo che il registry singleton di TEI Publisher lo ha sovrascritto.
+    const newXml = data.docs?.[0]?.xml;
+    if (newXml) {
+      const storedXml = sessionStorage.getItem('ptv-current-xml');
+      const isDocChange = storedXml && storedXml !== newXml;
+      sessionStorage.setItem('ptv-current-xml', newXml);
+
+      if (isDocChange) {
+        // Inietta CSS per nascondere pb-view PRIMA che Angular renderizzi
+        let hideStyle = document.getElementById('ptv-hide-flash') as HTMLStyleElement;
+        if (!hideStyle) {
+          hideStyle = document.createElement('style');
+          hideStyle.id = 'ptv-hide-flash';
+          document.head.appendChild(hideStyle);
+        }
+        hideStyle.textContent = 'pb-view { visibility: hidden !important; }';
+      }
+
+      setTimeout(() => {
+        const pbDoc = document.querySelector('pb-document') as any;
+        if (pbDoc && pbDoc.getAttribute('path') !== newXml) {
+          pbDoc.setAttribute('path', newXml);
+          pbDoc.path = newXml;
+          // Rimuove controlli iniettati dalla pagina precedente (es. opera→traduzione)
+          document.querySelectorAll('pb-view').forEach((view: any) => {
+            if (view.shadowRoot) {
+              view.shadowRoot.querySelectorAll('.apparatus-controls, .hands-accordion, .authority-accordion, .column-placeholder').forEach((el: Element) => el.remove());
+            }
+            // Resetta i flag sulle view
+            view.__apparatusControlsInjected = false;
+            view.__apparatusControlsReady = false;
+            view.__handsWrapped = false;
+            view.__authoritiesWrapped = false;
+            view.__placeholderInjected = false;
+            view.__containerPrepared = false;
+            view.__openDivs = [];
+            view.__activeId = null;
+            if (view._load) view._load();
+          });
+          // Rimostra quando il contenuto corretto arriva e pulisce i controlli orfani
+          document.addEventListener('pb-end-update', () => {
+            const hideStyle = document.getElementById('ptv-hide-flash');
+            if (hideStyle) hideStyle.textContent = '';
+            // Ritarda il cleanup per eseguirlo DOPO il vecchio attachListeners
+            setTimeout(() => {
+              if (!this.options?.enableColumnFeatures) {
+                document.querySelectorAll('pb-view').forEach((view: any) => {
+                  if (view.shadowRoot) {
+                    view.shadowRoot.querySelectorAll('.apparatus-controls, .hands-accordion, .authority-accordion, .column-placeholder').forEach((el: Element) => el.remove());
+                  }
+                });
+              }
+            }, 200);
+          }, { once: true });
+        } else {
+          // Path già corretto, rimuovi il CSS di nascondimento
+          const hideStyle = document.getElementById('ptv-hide-flash');
+          if (hideStyle) hideStyle.textContent = '';
+        }
+      }, 500);
+    }
+
     const params = new URLSearchParams(document.location.search);
     // const id = params.get('id');
 
@@ -190,7 +254,7 @@ export class MrParallelTextViewerDS extends DataSource {
 
     if (params.get('hq')) {
       if (searchApi) {
-        const mainDoc = data.docs.find((doc) => doc.id === 'mainDoc');
+        const mainDoc = data.docs.find((doc) => doc.id === data.mainDoc.doc_id);
 
         if (mainDoc) {
           const xmlQueryUrl = `${searchApi.url

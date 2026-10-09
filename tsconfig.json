@@ -40,7 +40,7 @@
       ],
       "@mr-routes": [
         //"src/app/app.routes.muruca.ts"
-          "../leoantico_fe/src/app/app.routes.ts" //routes di un progetto in locale
+          "../_fe/src/app/app.routes.ts" //routes di un progetto in locale
       ],
       "@mr-config": [
         //"src/app/config-muruca/"
