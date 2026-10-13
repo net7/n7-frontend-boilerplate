@@ -9,7 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.6.15] - 2026-10-13
+
 Muruca
+
 -   Fix work→translation same-window navigation: correct pb-document path after TEI Publisher registry cache override
 -   Fix nested authority highlight persistence on close when sibling cit remains open
 
@@ -1210,7 +1213,9 @@ A4V
 
 [v3.4.2]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.4.1...v3.4.2
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.14...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.15...HEAD
+
+[5.6.15]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.1...v5.6.15
 
 [5.6.14]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.1...v5.6.14
 
