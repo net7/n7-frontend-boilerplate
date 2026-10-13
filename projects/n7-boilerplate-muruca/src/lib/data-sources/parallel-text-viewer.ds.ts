@@ -1562,6 +1562,37 @@ export class MrParallelTextViewerDS extends DataSource {
           this.checkPlaceholder(parentView);
         }
         this.resetHighlights();
+        // Ri-applica gli highlight per le cit annidate ancora aperte
+        if (parentView) {
+          const stack = this.getOpenDivs(parentView);
+          if (stack.length) {
+            const activeId = this.getActiveId(parentView);
+            if (activeId) {
+              // Trova il pb-highlight corrispondente nella transcription view
+              const transcriptionView = document.querySelector('#transcription-view') as any;
+              if (transcriptionView?.shadowRoot) {
+                const hl = transcriptionView.shadowRoot.querySelector(`pb-highlight[key="${activeId}"]`) as HTMLElement;
+                if (hl) {
+                  // Riattiva l'highlight
+                  (hl as any)._className = 'highlight-on';
+                  // Se è una cit esterna (ha span.quote annidati), ri-applica gli stili
+                  const nestedQuotes = hl.querySelectorAll('span.quote');
+                  if (nestedQuotes.length > 0) {
+                    hl.querySelectorAll('.seg-outer-inner').forEach((el: HTMLElement) => {
+                      el.style.backgroundColor = 'white';
+                    });
+                    hl.querySelectorAll('.seg-part-f').forEach((el: HTMLElement) => {
+                      el.style.backgroundColor = 'white';
+                    });
+                    nestedQuotes.forEach((el: HTMLElement) => {
+                      el.style.backgroundColor = '#fff8e1';
+                    });
+                  }
+                }
+              }
+            }
+          }
+        }
         payload.stopPropagation();
         return;
       }
