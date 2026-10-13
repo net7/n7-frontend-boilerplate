@@ -13,6 +13,9 @@ Muruca
 -   Fix work→translation same-window navigation: correct pb-document path after TEI Publisher registry cache override
 -   Fix nested authority highlight persistence on close when sibling cit remains open
 
+Common 
+-   Add repository.url to all package.json for npm provenance verification 
+
 ## [5.6.14] - 2026-09-23
 
 Muruca
