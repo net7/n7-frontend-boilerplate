@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+-   Fix work→translation same-window navigation: correct pb-document path after TEI Publisher registry cache override
+-   Fix nested authority highlight persistence on close when sibling cit remains open
+
 ## [5.6.14] - 2026-09-23
 
 Muruca
