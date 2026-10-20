@@ -1104,7 +1104,9 @@ export class MrParallelTextViewerDS extends DataSource {
     countSpan.textContent = `${teiApps.length} voci`;
 
     controlsEl.appendChild(toggleBtn);
-    controlsEl.appendChild(witnessSelect);
+    if (!this.options?.hideWitnessFilter) {
+      controlsEl.appendChild(witnessSelect);
+    }
     controlsEl.appendChild(countSpan);
 
     // Salva riferimenti
@@ -1153,8 +1155,15 @@ export class MrParallelTextViewerDS extends DataSource {
       if (last && last.length > 0 && last.length <= 10) witnessSet.add(last);
     });
 
+    // Reverse-entry: il testo "testimone base" è inline nel .rdg-item (non in .rdg-wit)
+    // Lo cerchiamo come token unico per includerlo nel dropdown filtro testimoni
+    content.querySelectorAll('.tei-app .rdg-item').forEach((el: Element) => {
+      const text = el.textContent || '';
+      if (text.includes('testimone base')) witnessSet.add('testimone base');
+    });
+
     // Rimuovi token che non sembrano sigle (troppo lunghi o vuoti)
-    const result = Array.from(witnessSet).filter((w) => w.length <= 10 && w.length > 0);
+    const result = Array.from(witnessSet).filter((w) => w.length <= 20 && w.length > 0);
     result.sort();
     return result;
   }
@@ -1187,6 +1196,11 @@ export class MrParallelTextViewerDS extends DataSource {
       const tokens = text.split(/\s+/);
       const last = tokens[tokens.length - 1];
       if (last && last.length <= 10) witnesses.add(last);
+    });
+
+    // Reverse-entry: "testimone base" è testo inline nel .rdg-item
+    app.querySelectorAll('.rdg-item').forEach((el: Element) => {
+      if ((el.textContent || '').includes('testimone base')) witnesses.add('testimone base');
     });
 
     // Fallback: .lem-item (standard lem, wit è testo libero tra <b> e <i>)
