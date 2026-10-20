@@ -9,9 +9,11 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.6.17] - 2026-10-20
+
 Muruca
 
--  Minor fix: add hideWitnessFilter option and extract "testimone base" from reverse-entry in witness filter in parallel text viewer
+-   Minor fix: add hideWitnessFilter option and extract "testimone base" from reverse-entry in witness filter in parallel text viewer
 
 ## [5.6.16] - 2026-10-13
 
@@ -1223,7 +1225,9 @@ A4V
 
 [v3.4.2]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.4.1...v3.4.2
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.16...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.17...HEAD
+
+[5.6.17]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.1...v5.6.17
 
 [5.6.16]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.1...v5.6.16
 
