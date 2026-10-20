@@ -9,6 +9,10 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+-  Minor fix: add hideWitnessFilter option and extract "testimone base" from reverse-entry in witness filter in parallel text viewer
+
 ## [5.6.16] - 2026-10-13
 
 ## [5.6.15] - 2026-10-13
