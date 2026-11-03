@@ -80,7 +80,7 @@ export class MrResourceLayoutEH extends EventHandler {
           const a = document.createElement('a');
           const objectURL = URL.createObjectURL(blobObj);
           a.href = objectURL;
-          a.download = `${this.dataSource.slug}`;
+          a.download = `${this.dataSource.title || this.dataSource.slug}`;
           a.click();
           URL.revokeObjectURL(objectURL);
         });

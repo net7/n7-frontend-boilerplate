@@ -53,3 +53,8 @@ export * from './itinerary-layout/itinerary-layout';
 export * from './itinerary-layout/itinerary-layout.ds';
 export * from './itinerary-layout/itinerary-layout.eh';
 export * from './itinerary-layout/itinerary-layout.config';
+// network layout
+export * from './network-layout/network-layout';
+export * from './network-layout/network-layout.ds';
+export * from './network-layout/network-layout.eh';
+export * from './network-layout/network-layout.config';

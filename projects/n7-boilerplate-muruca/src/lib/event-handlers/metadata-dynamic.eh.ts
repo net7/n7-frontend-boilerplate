@@ -7,7 +7,7 @@ export class MrMetadataDynamicEH extends EventHandler {
   public listen() {
     this.innerEvents$.subscribe(({ type, payload }) => {
       switch (type) {
-        case 'metadata-contenuti.click':
+        case `${this.dataSource.id}.click`:
           this.dataSource.toggleGroup(payload);
           break;
         default:

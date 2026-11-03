@@ -53,6 +53,14 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
   public metadataSectionTitle: string;
 
+  public treeOpenTitle: string;
+
+  public treeCloseTitle: string;
+
+  public showRelationType: boolean;
+
+  public showRelationQualification: boolean;
+
   public hasMetadata: boolean;
 
   public hasRelatedEntities: boolean;
@@ -139,6 +147,8 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       this.sidebarCollapsed = this.layoutConfig.tree.collapsedByDefault ?? false;
     }
     this.relatedEntitiesHeader = this.layoutConfig['related-entities'].title;
+    this.showRelationType = this.layoutConfig['related-entities'].showRelationType;
+    this.showRelationQualification = this.layoutConfig['related-entities'].showRelationQualification;
     this.similarItemsSectionTitle = this.layoutConfig['related-items'].title;
     this.externalUrlText = this.layoutConfig['external-url-text'];
     this.metadataSectionTitle = this.getMetadataSectionTitle();
@@ -159,6 +169,7 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
 
     // head title
     this.setHeadTitle();
+    this.setTreeTitle();
 
     // image viewer context-menu check
     const imageViewerConfig = this.configuration.get(this.configId)['image-viewer'] || {};
@@ -635,5 +646,12 @@ export class AwSchedaLayoutDS extends LayoutDataSource {
       pageName: this.configuration.get(this.configId)?.pageName,
       pageDefault: 'Patrimonio',
     }));
+  }
+
+  private setTreeTitle() {
+    const titleClose = this.configuration.get(this.configId)?.treeCloseTitle;
+    const titleOpen = this.configuration.get(this.configId)?.treeOpenTitle;
+    this.treeCloseTitle = (titleClose) || 'Consulta il patrimonio';
+    this.treeOpenTitle = (titleOpen) || 'Patrimonio';
   }
 }

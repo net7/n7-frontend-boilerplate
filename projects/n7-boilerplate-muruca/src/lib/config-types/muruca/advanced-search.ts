@@ -49,6 +49,8 @@ export interface ConfigMurucaAdvancedSearchSection {
   title?: string;
   /** section description text */
   description?: string;
+  /** section info tooltip */
+  info?: string;
   /** is advanced? for css purposes */
   advancedSection?: boolean;
   /** section inputs */

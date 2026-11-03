@@ -45,6 +45,7 @@ export class AwTimelineLayoutDS extends LayoutDataSource {
 
     // head title
     this.setHeadTitle();
+    this.setPageTitle();
 
     // navigation update
     this.mainState.updateCustom('currentNav', 'timeline');
@@ -176,5 +177,10 @@ export class AwTimelineLayoutDS extends LayoutDataSource {
       pageName: this.configuration.get(this.configId)?.pageName,
       pageDefault: 'Timeline',
     }));
+  }
+
+  private setPageTitle() {
+    const title = this.configuration.get(this.configId)?.pageName;
+    this.pageTitle = (title) || 'Gli eventi dell\'archivio';
   }
 }

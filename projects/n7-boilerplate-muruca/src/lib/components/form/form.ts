@@ -31,7 +31,8 @@ export class MrFormComponent implements OnInit {
     this.sections = this.sections.map((section) => ({
       ...section,
       title: _t(section.title),
-      description: _t(section.description)
+      description: _t(section.description),
+      info: _t(section.info)
     }));
   }
 }

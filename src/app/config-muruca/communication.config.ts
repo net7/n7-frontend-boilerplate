@@ -16,9 +16,11 @@ const config: ConfigCommonCommunication = {
       type: 'rest',
       // baseUrl: 'https://theatheor-sls.netseven.it/', // THEATHEOR/AUTESO
       baseUrl: 'https://sls.petrarcaonline.it/', // PETRARCA
+      // baseUrl: 'https://mdw.adalgisa.muruca.cloud/', //ADALGISA
       // baseUrl: 'http://cartetrentine-sls.muruca.cloud/', // CARTE TRENTINE
       // baseUrl: 'http://demosls.muruca.cloud/', // DEMO
       // baseUrl: 'http://localhost:3126/',
+      // baseUrl: 'http://localhost:3000/',
       config: {
         home: 'get_home',
         menu: 'get_menu',
@@ -37,7 +39,8 @@ const config: ConfigCommonCommunication = {
         timelineDescription: 'get_search_description/timeline',
         itinerary: 'get_itinerary/',
         xmlSearch: 'search_text_hl/',
-        getPdf: 'getPDF'
+        getPdf: 'getPDF',
+        network: 'get_network'
       }
     }
   }

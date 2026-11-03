@@ -7,6 +7,9 @@ export * from './gallery.eh';
 export * from './collection.eh';
 export * from './text-viewer.eh';
 export * from './button.eh';
+export * from './network.eh';
+export * from './network-resource.eh';
+export * from './parallel-text-viewer.eh';
 // search
 export * from './search/search-tags.eh';
 export * from './search/search-results-title.eh';

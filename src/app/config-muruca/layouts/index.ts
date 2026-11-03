@@ -3,6 +3,7 @@ import advancedResultsConfig from './advanced-results.config';
 import advancedSearchConfig from './advanced-search.config';
 import advancedSearchFullConfig from './advanced-search-full.config';
 import homeConfig from './home.config';
+import networkConfig from './network-config';
 import postsConfig from './posts.config';
 import resourceBookConfig from './resource-book.config';
 import resourceKeywordConfig from './resource-keyword.config';
@@ -25,6 +26,7 @@ import resourceWorkDatosCodicologicosConfig from './resource-work-datos-codicolo
 
 export default {
   home: homeConfig,
+  network: networkConfig,
   posts: postsConfig,
   itinerary: itineraryConfig,
   timeline: timelineConfig,

@@ -72,8 +72,13 @@ export class MrMapDS extends DataSource {
         // flatten the list of markers
         .reduce((acc, val) => acc.concat(val), []);
     }
-    const mapCenter: [number, number] = d.map_center ? [d.map_center.lat, d.map_center.lng]
-      : [54.5260, 15.2551];
+    let mapCenter: [number, number];
+    const mapCenterOptions = this.options?.libOptions?.map_center;
+    if (mapCenterOptions) {
+      mapCenter = mapCenterOptions;
+    } else {
+      mapCenter = d.map_center ? [d.map_center.lat, d.map_center.lng] : [54.5260, 15.2551];
+    }
     const initialView: { center: [number, number]; zoom: number } = {
     // center of europe (only for initial load)
       center: mapCenter,
@@ -84,15 +89,19 @@ export class MrMapDS extends DataSource {
     // update the already existing layers.
     if (this.mapInstance && this.markerLayer) {
       this.buildMarkers(markers);
-      this.fitMapToBounds(markers.map((m) => m.coords), d.zoom);
+      if (!mapCenterOptions) {
+        this.fitMapToBounds(markers.map((m) => m.coords), d.zoom);
+      }
     }
 
     return {
       // only called once, on component init!
       _setInstance: (instance) => {
         this.mapInstance = instance;
-        // center the map on the markers
-        this.fitMapToBounds(markers.map((m) => m.coords), d.zoom);
+        if (!mapCenterOptions) {
+          // center the map on the markers
+          this.fitMapToBounds(markers.map((m) => m.coords), d.zoom);
+        }
         // load custom markers
         this.buildMarkers(markers);
         this.mapLoaded$.next({ map: instance, markers: this.markerLayer });

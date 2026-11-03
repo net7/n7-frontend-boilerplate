@@ -3,7 +3,10 @@
          [ngClass]="{ 'mr-form__section-advanced' : section.advancedSection  }" >
         
         <div class="mr-form__section-header">
-            <h3 *ngIf="section.title" class="mr-form__section-title">{{ section.title }}</h3>
+            <h3 *ngIf="section.title" class="mr-form__section-title">
+                {{ section.title }}
+                <span *ngIf="section.info" class="mr-input-info n7-icon n7-icon-info-circle" [attr.alt]="section.info"></span>
+            </h3>
             <p *ngIf="section.description" class="mr-form__section-description">{{ section.description }}</p>
         </div>
         
@@ -22,9 +25,14 @@
                         [emit]="form.inputs[input.id].emit"></n7-input-checkbox>
 
                     <!-- INPUT SELECT -->
-                    <n7-input-select *ngSwitchCase="'select'" 
+                    <n7-input-select *ngSwitchCase="'select'"
                         [data]="form.inputs[input.id].ds.out$ | async"
                         [emit]="form.inputs[input.id].emit"></n7-input-select>
+
+                    <!-- INPUT TYPEAHEAD -->
+                    <mr-input-typeahead *ngSwitchCase="'typeahead'"
+                        [data]="form.inputs[input.id].ds.out$ | async"
+                        [emit]="form.inputs[input.id].emit"></mr-input-typeahead>
 
                     <!-- DEFAULT (external template) -->
                     <ng-container *ngSwitchDefault>

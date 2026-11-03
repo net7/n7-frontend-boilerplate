@@ -5,6 +5,8 @@ import { MrInputSelectDS } from '../data-sources/form/input-select.ds';
 import { MrInputSelectEH } from '../event-handlers/form/input-select.eh';
 import { MrInputCheckboxDS } from '../data-sources/form/input-checkbox.ds';
 import { MrInputCheckboxEH } from '../event-handlers/form/input-checkbox.eh';
+import { MrInputTypeaheadDS } from '../data-sources/form/input-typeahead.ds';
+import { MrInputTypeaheadEH } from '../event-handlers/form/input-typeahead.eh';
 import {
   MrChangedParams,
   MrInputDataSource,
@@ -20,8 +22,7 @@ export class MrFormModel {
     [id: string]: {
       ds: any;
       eh: any;
-      // eslint-disable-next-line @typescript-eslint/ban-types
-      emit: (t: string, p: any) => Function;
+      emit: (t: string, p: any) => void;
     };
   } = {};
 
@@ -42,6 +43,10 @@ export class MrFormModel {
       checkbox: {
         ds: MrInputCheckboxDS,
         eh: MrInputCheckboxEH
+      },
+      typeahead: {
+        ds: MrInputTypeaheadDS,
+        eh: MrInputTypeaheadEH
       }
     };
 

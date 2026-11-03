@@ -309,7 +309,8 @@ export class AwSchedaLayoutEH extends EventHandler {
     this.dataSource.getNavigation().subscribe((response) => {
       if (response) {
         this.dataSource.setTree(response);
-        this.dataSource.updateNavigation(this.dataSource.getTree().label);
+        const treeLabel = this.dataSource.treeOpenTitle || this.dataSource.getTree().label;
+        this.dataSource.updateNavigation(treeLabel);
         this.emitOuter('navigationresponse', {
           tree: this.dataSource.getTree(),
           currentItem: selectedItem,

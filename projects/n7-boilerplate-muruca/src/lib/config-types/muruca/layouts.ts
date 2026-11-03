@@ -1,4 +1,4 @@
-import { LibOptions } from '@net7/components';
+import { LibOptions, NetworkLibOptions } from '@net7/components';
 import { MrSearchConfig } from '../../interfaces/search.interface';
 import {
   ConfigMurucaBreadcrumbsSection,
@@ -15,7 +15,9 @@ import {
   ConfigMurucaTextViewerSection,
   ConfigMurucaTitleSection,
   ConfigMurucaMetadataDynamicSection,
-  ConfigMurucaButtonSection
+  ConfigMurucaButtonSection,
+  ConfigMurucaParallelTextViewerSection,
+  ConfigMurucaEmbeddedContentSection
 } from './sections';
 
 export interface ConfigMurucaLayout {
@@ -38,6 +40,10 @@ export interface ConfigMurucaHomeLayout extends ConfigMurucaLayout {
 export interface ConfigMurucaResourceLayout extends ConfigMurucaLayout {
   /** resource type (used by resource modal) */
   type: string;
+  /** delay time before scrolling to an anchor */
+  pageLoad?: number;
+  /** Threshold where the "read-more" button appears */
+  maxHeight?: number;
   /** layout sections (top | content) */
   sections: {
     [key in 'top' | 'content']: (
@@ -48,6 +54,8 @@ export interface ConfigMurucaResourceLayout extends ConfigMurucaLayout {
       | ConfigMurucaCollectionSection
       | ConfigMurucaItemPreviewSection
       | ConfigMurucaTextViewerSection
+      | ConfigMurucaParallelTextViewerSection
+      | ConfigMurucaEmbeddedContentSection
       | ConfigMurucaInfoBoxSection
       | ConfigMurucaBreadcrumbsSection
       | ConfigMurucaMetadataDynamicSection
@@ -70,6 +78,13 @@ export interface ConfigMurucaTimelineLayout extends ConfigMurucaLayout {
   mapHeader: string;
   /** timeline library options */
   libOptions: LibOptions;
+}
+
+export interface ConfigMurucaNetworkLayout extends ConfigMurucaLayout {
+  /** map header title */
+  mapHeader: string;
+  /** timeline library options */
+  libOptions: NetworkLibOptions;
 }
 
 type SearchSortConfig = {

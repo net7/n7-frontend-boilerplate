@@ -1,3 +1,9 @@
+// Accepted date inputs: a year ([AAA]A), a full ISO-like date
+// ([AAA]A-MM-GG), or a 7-8 digit numeric date (YYYYMMDD).
+// Mirror of the backend `normalizeDate` rules in graphql/datasources/date-utils.ts.
+const DATE_INPUT_PATTERN = /^(\d{1,4}|\d{1,4}-\d{2}-\d{2}|\d{7,8})$/;
+const DATE_INPUT_MESSAGE = 'Inserisci un anno (es. 1900) o una data completa (es. 1999-12-31)';
+
 export default {
   totalCount: 0,
   facets: [
@@ -35,6 +41,14 @@ export default {
       id: 'entity-links',
       type: 'value',
       searchData: ['entity-type'],
+    },
+    {
+      id: 'date-from',
+      type: 'value',
+    },
+    {
+      id: 'date-to',
+      type: 'value',
     },
   ],
   fields: [
@@ -124,14 +138,15 @@ export default {
           type: 'link',
           facetId: 'entity-links',
           emptyState: {
-            label: 'La tua ricerca non ha dato risultati, prova a cambiare i filtri',
+            label:
+              'La tua ricerca non ha dato risultati, prova a cambiare i filtri',
           },
           filterConfig: {
             isArray: true,
             limit: 20,
             pagination: {
               limit: 50,
-              offset: 0
+              offset: 0,
             },
             searchIn: [
               {
@@ -143,12 +158,73 @@ export default {
         },
       ],
     },
+    {
+      header: {
+        label: 'Intervallo di date',
+        classes: 'date-range-class',
+      },
+      inputs: [
+        {
+          type: 'text',
+          facetId: 'date-from',
+          placeholder: 'Data da (es. 1700)',
+          validation: {
+            pattern: DATE_INPUT_PATTERN,
+            message: DATE_INPUT_MESSAGE,
+          },
+          filterConfig: {
+            delay: 500,
+            searchIn: [
+              {
+                key: 'data_inizio',
+                operator: '>=',
+              },
+              {
+                key: 'date_start',
+                operator: '>=',
+              },
+              {
+                key: 'estremo_remoto',
+                operator: '>=',
+              },
+            ],
+          },
+        },
+        {
+          type: 'text',
+          facetId: 'date-to',
+          placeholder: 'Data a (es. 1800)',
+          validation: {
+            pattern: DATE_INPUT_PATTERN,
+            message: DATE_INPUT_MESSAGE,
+          },
+          filterConfig: {
+            delay: 500,
+            searchIn: [
+              {
+                key: 'data_fine',
+                operator: '<=',
+              },
+              {
+                key: 'date_end',
+                operator: '<=',
+              },
+              {
+                key: 'estremo_recente',
+                operator: '<=',
+              },
+            ],
+          },
+        },
+      ],
+    },
   ],
   results: {
-    order: { // Default Sorting Method
+    order: {
+      // Default Sorting Method
       type: 'text', // score | text | date
       key: 'label_sort', // docPath, elastic key, ecc
-      direction: 'ASC' // ASC | DESC
+      direction: 'ASC', // ASC | DESC
     },
     fields: [
       {

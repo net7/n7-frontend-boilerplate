@@ -28,6 +28,10 @@ export class AwFacetInputText extends AwFacetInput {
         ...payload,
         trigger: 'icon',
       },
+      blurPayload: {
+        ...payload,
+        trigger: 'blur',
+      },
       _meta: { facetId },
     };
   }

@@ -73,7 +73,9 @@ export class ApolloProvider implements CommunicationProvider {
           } else if (typeof val === 'number' || typeof val === 'boolean' || val === null) {
             arrStr.push(`${val}`);
           } else {
-            arrStr.push(`"${val}"`);
+            // JSON.stringify yields a valid GraphQL string literal (same escape
+            // sequences), so user input containing " or \ doesn't break the query.
+            arrStr.push(JSON.stringify(val));
           }
         });
         paramsStr.push(`${key}: [${arrStr.join(',')}]`);
@@ -85,7 +87,9 @@ export class ApolloProvider implements CommunicationProvider {
       } else if (typeof params[key] === 'number' || typeof params[key] === 'boolean' || params[key] === null) {
         paramsStr.push(`${key}: ${params[key]}`);
       } else {
-        paramsStr.push(`${key}: "${params[key]}"`);
+        // JSON.stringify yields a valid GraphQL string literal (same escape
+        // sequences), so user input containing " or \ doesn't break the query.
+        paramsStr.push(`${key}: ${JSON.stringify(params[key])}`);
       }
     });
     return paramsStr.join(' ');

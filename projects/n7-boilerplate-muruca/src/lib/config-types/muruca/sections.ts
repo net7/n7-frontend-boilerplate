@@ -26,6 +26,19 @@ export interface ConfigMurucaHeroSection extends ConfigMurucaSection {
     classes?: string;
     /** has background? */
     background?: boolean;
+    /** search input field */
+    input?: {
+      /** placeholder label */
+      placeholder?: string;
+      /** icon insiode the field */
+      icon?: string;
+      /** payload used to detect event */
+      payload?: string;
+      /** id of the query used for queryParams */
+      queryId?: string;
+      /** additional queryParams */
+      additionalQueryParams?: Record<string, string>;
+    };
   };
 }
 
@@ -58,7 +71,23 @@ export interface ConfigMurucaInfoBoxSection extends ConfigMurucaSection {
 }
 
 export interface ConfigMurucaTextViewerSection extends ConfigMurucaSection {
-  type: 'text';
+  type: 'text-viewer';
+}
+
+export interface ConfigMurucaEmbeddedContentSection extends ConfigMurucaSection {
+  type: 'embedded-content';
+}
+
+export interface ConfigMurucaParallelTextViewerSection extends ConfigMurucaSection {
+  type: 'parallel-text-viewer';
+  options?: {
+    /** grid */
+    grid?: any;
+    /** panels */
+    panels?: any;
+    /** search */
+    searchId?: any,
+  };
 }
 
 export interface ConfigMurucaTitleSection extends ConfigMurucaSection {

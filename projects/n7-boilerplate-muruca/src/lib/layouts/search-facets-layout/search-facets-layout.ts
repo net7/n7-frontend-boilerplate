@@ -5,6 +5,7 @@ import {
   Input
 } from '@angular/core';
 import { AbstractLayout } from '@net7/boilerplate-common';
+import { MrLocaleService } from '../../services/locale.service';
 import { SearchFacetsLayoutConfig as config } from './search-facets-layout.config';
 import { FacetTextDS } from '../../data-sources/facets/facet-text.ds';
 import { FacetCheckboxDS } from '../../data-sources/facets/facet-checkbox.ds';
@@ -57,13 +58,16 @@ const EVENTHANDLER_MAP = {
 export class MrSearchFacetsLayoutComponent extends AbstractLayout implements OnInit, OnDestroy {
   @Input() searchService: MrSearchService;
 
+  @Input() localeService: MrLocaleService;
+
   constructor() {
     super(config);
   }
 
   protected initPayload() {
     return {
-      searchService: this.searchService
+      searchService: this.searchService,
+      localeService: this.localeService,
     };
   }
 

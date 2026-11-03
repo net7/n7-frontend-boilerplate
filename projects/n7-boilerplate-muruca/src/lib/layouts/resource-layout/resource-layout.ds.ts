@@ -28,6 +28,8 @@ export class MrResourceLayoutDS extends LayoutDataSource {
 
   public slug: string;
 
+  public title: string;
+
   public errorTitle = _t('global#layout_error_title');
 
   public errorDescription = _t('global#layout_error_description');
@@ -126,6 +128,13 @@ export class MrResourceLayoutDS extends LayoutDataSource {
       const responseSection = response.sections[id];
       // set id
       widgetDataSource.id = id;
+      if (type === 'tabs') {
+        this.tabConfig = this.tabConfig.map((tab: any) => ({
+          id: tab.id,
+          label: tab.label,
+          hideTab: (responseSection && responseSection.includes(tab.id))
+        }));
+      }
       // check viewer tools
       if (type === 'viewer') {
         // update image viewer options
@@ -138,13 +147,12 @@ export class MrResourceLayoutDS extends LayoutDataSource {
         this.one(id).updateOptions({ libOptions });
       }
 
-      if (type === 'text-viewer') {
+      if (type === 'text-viewer' || type === 'parallel-text-viewer')  {
         let url;
         try {
           url = this.communication.getUrl('xmlSearch');
-        } catch (e) {
+        } catch {
           url = '';
-          // do nothing
         }
         const searchApi = {
           url,
@@ -214,6 +222,7 @@ export class MrResourceLayoutDS extends LayoutDataSource {
   }
 
   private updateHeadTitle({ title: resourceTitle }) {
+    this.title = resourceTitle;
     const appName = this.configuration.get('name');
     const pageTitle = this.pageConfig.title;
     this.mainState.update('headTitle', [appName, _t(pageTitle), resourceTitle].join(' > '));

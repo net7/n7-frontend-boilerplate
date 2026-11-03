@@ -35,7 +35,7 @@ export class MrMetadataDS extends DataSource {
       .forEach(({ items }) => {
         items
           .filter((item) => isObject(item))
-          .forEach(({ label, value }) => {
+          .forEach(({ label, value, anchorId }) => {
             const itemLabel = label && !hideLabels ? label : null;
             const classLabel = label && !hideLabels ? label.replace(/ /g, '_').toLowerCase() : null;
             if (Array.isArray(value)) {
@@ -58,7 +58,8 @@ export class MrMetadataDS extends DataSource {
                   classes: `mrc-${classLabel}`,
                   items: value ? [{
                     label: _t(itemLabel),
-                    value: this.getItemValue(value)
+                    value: this.getItemValue(value),
+                    anchorId: anchorId || ''
                   }] : []
                 }]
               });
@@ -83,6 +84,7 @@ export class MrMetadataDS extends DataSource {
         .map((childItem) => ({
           label: _t(childItem.label),
           value: this.getItemValue(childItem.value),
+          anchorId: childItem.anchorId || ''
         })),
       // load the optional "readmore" configuration
       groupReadmore,

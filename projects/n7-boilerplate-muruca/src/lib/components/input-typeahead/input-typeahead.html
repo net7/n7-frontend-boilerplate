@@ -1,0 +1,13 @@
+<div class="mr-input-typeahead" (keydown)="onKeydown($event)">
+    <n7-input-text
+        [data]="data"
+        [emit]="localEmit">
+    </n7-input-text>
+    <ul *ngIf="suggestions.length > 0" class="mr-input-typeahead__dropdown">
+        <li *ngFor="let s of suggestions"
+            class="mr-input-typeahead__option"
+            (mousedown)="onSelect(s, $event)">
+            <span [innerHTML]="highlight(s, currentQuery)"></span>
+        </li>
+    </ul>
+</div>

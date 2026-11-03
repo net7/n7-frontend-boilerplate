@@ -20,6 +20,12 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
 
   protected route: ActivatedRoute;
 
+  private layoutConfig;
+
+  public showRelationType: boolean;
+
+  public showRelationQualification: boolean;
+
   public configId = 'entita-layout';
 
   public options: any;
@@ -65,10 +71,13 @@ export class AwEntitaLayoutDS extends LayoutDataSource {
     this.router = router;
     this.titleService = titleService;
     this.currentId = '';
-    this.currentPage = +this.route.snapshot.queryParams.page ?? 1;
+    this.currentPage = this.route.snapshot.queryParams.page ?? 1;
     this.one('aw-related-entities').updateOptions({
       config: this.configuration,
     });
+    this.layoutConfig = this.configuration.get(this.configId);
+    this.showRelationType = this.layoutConfig.showRelationType;
+    this.showRelationQualification = this.layoutConfig.showRelationQualification;
 
     // navigation update
     this.mainState.updateCustom('currentNav', 'entita');

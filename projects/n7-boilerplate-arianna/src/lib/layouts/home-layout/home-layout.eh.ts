@@ -60,7 +60,11 @@ export class AwHomeLayoutEH extends EventHandler {
           this.emitGlobal('navigate', {
             handler: 'router',
             path: [this.configuration.get('paths').searchBasePath],
-            queryParams: { query },
+            queryParams: {
+              query,
+              // Cerca in tutti i campi delle schede
+              'query-all': (this.configuration.defaults['home-layout']['top-hero'].searchAllField) ? 1 : 0,
+            },
           });
         } break;
         case 'aw-hero.change':
@@ -204,7 +208,7 @@ export class AwHomeLayoutEH extends EventHandler {
 
   public handleSimpleAutocompleteClick = (payload) => {
     this.emitOuter('facetclick', payload);
-  }
+  };
 
   public outerLinkClick(type, payload) {
     window.open(payload, '_blank');
@@ -244,5 +248,5 @@ export class AwHomeLayoutEH extends EventHandler {
         });
       }
     });
-  }
+  };
 }

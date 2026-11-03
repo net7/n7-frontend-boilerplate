@@ -13,10 +13,9 @@ export class MrHomeLayoutEH extends EventHandler {
           break;
       }
     });
-    this.outerEvents$.subscribe(({ type }) => {
-      switch (type) {
-        default:
-          break;
+    this.outerEvents$.subscribe(({ type, payload }) => {
+      if (type.indexOf('hero-search-enter') !== -1) {
+        this.dataSource.searchRedirect(type, payload);
       }
     });
   }

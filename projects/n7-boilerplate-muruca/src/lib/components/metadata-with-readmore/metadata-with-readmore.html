@@ -21,6 +21,7 @@
             <mr-read-more [data]="grp.groupReadmore">
                 <div class="n7-metadata-viewer__item"
                     *ngFor="let i of grp.items">
+                    <span *ngIf="i.anchorId" id="{{ i.anchorId }}"></span>
                     <span *ngIf="i.label" class="n7-metadata-viewer__item-label">
                         {{ i.label }}
                     </span>

@@ -8,8 +8,9 @@
   <div class="mr-content-block mr-content-block-metadata">
     <div *ngIf="group" class="mr-metadata-dynamic" [ngClass]="{'mr-metadata-dynamic-accordion' : group.title}">
       
-      <!-- Header accordion (se presente) -->
+      <!-- Header accordion -->
       <div *ngIf="group.options && (group.options.showHeader !== false) && group.title" class="mr-metadata-dynamic-accordion__header">
+        <span *ngIf="group.accordionId" id="{{ group.accordionId }}"></span>
         <n7-facet-header 
           [data]="group.options" 
           [emit]="fakeEmit"
@@ -22,12 +23,12 @@
           <ng-container *ngIf=" group?.options?.readmore || group?.options?.groupReadmore;
                       else wihoutReadmore">
             <mr-metadata-readmore
-                [data]="obtainData(group)">
+                [data]="group.group">
             </mr-metadata-readmore>
           </ng-container>
           <ng-template #wihoutReadmore>
             <n7-metadata-viewer
-                [data]="obtainData(group)">
+                [data]="group.group">
             </n7-metadata-viewer>
           </ng-template>
         </mr-read-more>

@@ -40,6 +40,7 @@ export interface MrFormConfigSection {
   id: string;
   title?: string;
   description?: string;
+  info?: string;
   inputs: MrFormConfigInput<any>[];
   classes?: string;
   advancedSection?: boolean;

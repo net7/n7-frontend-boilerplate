@@ -103,6 +103,13 @@ export interface MrSearchFacetsConfig {
   sections: MrSearchFacetsSection[];
   /** aditional css classes */
   classes?: string;
+
+  redirectLink?: {
+    label: string,
+    paths: {
+      [locale: string]: string;
+    };
+  }
 }
 
 export interface MrSearchConfig {

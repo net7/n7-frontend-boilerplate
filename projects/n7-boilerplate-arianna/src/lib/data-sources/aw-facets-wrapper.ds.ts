@@ -84,6 +84,11 @@ export class AwFacetsWrapperDS extends DataSource {
     // normalize
     value = `${value}`;
 
+    // config-driven validation (when the input declares one)
+    if (source === 'input-text') {
+      this._validateTextInput(facetId, value, trigger);
+    }
+
     // remove control
     if (Array.isArray(filterValue)) {
       remove = filterValue.indexOf(value) !== -1;
@@ -93,10 +98,45 @@ export class AwFacetsWrapperDS extends DataSource {
 
     // input text control
     // TODO: gestire i casi enter / icon click nel input text
-    if (source === 'input-text' && ['enter', 'icon'].indexOf(trigger) !== -1) return;
+    // 'blur' only drives validation (handled above) and must not mutate
+    // the filter — otherwise blurring a field with its current value would
+    // match the remove-control and clear the active filter.
+    if (source === 'input-text' && ['enter', 'icon', 'blur'].indexOf(trigger) !== -1) return;
+
+    // Never apply an invalid value to the search: keep the typed text on
+    // screen (so the field doesn't snap back) but leave the last valid
+    // filter in place. Validity feedback is surfaced separately on blur.
+    if (source === 'input-text') {
+      const input = this.searchModel.getInputByFacetId(facetId);
+      if (input && !input.isValid(value)) {
+        input.setActive(value);
+        return;
+      }
+    }
 
     this.searchModel.updateFilter(facetId, value, remove);
     this.searchModel.updateInputsFromFilters();
+  }
+
+  /**
+   * Surfaces validation feedback for a text input. The error is shown on
+   * blur/enter (so it never flashes mid-typing); once an error is visible
+   * it is re-evaluated on every keystroke so it clears as soon as the
+   * value becomes valid. No-op when the input declares no validation.
+   */
+  private _validateTextInput(facetId, value, trigger) {
+    const input = this.searchModel.getInputByFacetId(facetId);
+    if (!input || !input.getConfig().validation) {
+      return;
+    }
+    const output = input.getOutput();
+    const showErrors = trigger === 'blur' || trigger === 'enter';
+    const clearingExisting = !!(output && output.error);
+    if (!showErrors && !clearingExisting) {
+      return;
+    }
+    input.validate(value);
+    this.updateFilteredTarget(facetId);
   }
 
   public updateFilteredTarget(target) {

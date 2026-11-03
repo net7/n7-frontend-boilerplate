@@ -70,12 +70,11 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
     className: 'marker-icon-selected'
   });
 
-  protected transform({ links }: { links: CadastralUnit[] }): MapData {
-    const markers = [];
+  private linksToMarkers(links: CadastralUnit[]): MarkerWithID[] {
+    const markers: MarkerWithID[] = [];
     links
       .filter((d) => d.args?.lat && d.args?.lon)
       .forEach((d) => {
-        // if a link has more than one corresponding marker
         if (Array.isArray(d.args.lat)) {
           d.args.lat.forEach((element, i) => {
             markers.push({
@@ -88,7 +87,6 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
             });
           });
         } else {
-          // if a link has only one marker
           markers.push({
             coords: [+d.args.lat, +d.args.lon] as [number, number],
             template: d.text,
@@ -99,6 +97,11 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
           });
         }
       });
+    return markers;
+  }
+
+  protected transform({ links }: { links: CadastralUnit[] }): MapData {
+    const markers = this.linksToMarkers(links);
     const mapConfig = this.options?.libOptions;
     return {
       containerId: 'map-canvas',
@@ -154,8 +157,10 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
       coords, template, id, slug, counter
     }) => {
       // create custom icon marker
+      const icon = this.getIcon(id, counter);
+      if (!icon) return;
       const newMarker = L.marker(coords, {
-        icon: this.getIcon(id, counter),
+        icon,
         zIndexOffset: this.getZindex(id, counter)
       });
       if (id && slug) {
@@ -208,12 +213,16 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
       }));
       // update marker icons
       if (this.markerLayer) {
-        this.markerLayer.eachLayer((marker) => {
-          const { id } = marker;
-          const counter = links.find(({ payload }) => payload === id)?.counter || 0;
-          marker.getPopup()._source.setIcon(this.getIcon(id, counter))
-            .setZIndexOffset(this.getZindex(id, counter));
-        });
+        if (this.options.libOptions?.hideUnavailablePin) {
+          this.buildMarkers(this.linksToMarkers(links));
+        } else {
+          this.markerLayer.eachLayer((marker) => {
+            const { id } = marker;
+            const counter = links.find(({ payload }) => payload === id)?.counter || 0;
+            marker.getPopup()._source.setIcon(this.getIcon(id, counter))
+              .setZIndexOffset(this.getZindex(id, counter));
+          });
+        }
       }
       // ---
       this.update({
@@ -226,6 +235,7 @@ export class FacetMapDS extends DataSource implements FacetDataSource {
   getIcon = (id: string, counter: number) => {
     if (this.value.includes(id)) return this.MARKER_ICON_SELECTED;
     if (counter > 0) return this.MARKER_ICON;
+    if (this.options.libOptions?.hideUnavailablePin) return null;
     return this.MARKER_ICON_UNAVAILABLE;
   };
 

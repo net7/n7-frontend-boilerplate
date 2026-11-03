@@ -1,4 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component, OnInit, OnDestroy, AfterViewInit
+} from '@angular/core';
 import { ActivatedRoute, Data, Router } from '@angular/router';
 import {
   AbstractLayout,
@@ -12,10 +14,11 @@ import { MrResourceModalService } from '../../services/resource-modal.service';
 import { MrResourceLayoutConfig as config } from './resource-layout.config';
 import { MrImageViewerEH } from '../../event-handlers/image-viewer.eh';
 import { MrTextViewerEH } from '../../event-handlers/text-viewer.eh';
+import { MrParallelTextViewerEH } from '../../event-handlers/parallel-text-viewer.eh';
 import { MrImageViewerToolsEH } from '../../event-handlers/image-viewer-tools.eh';
 import { MrCollectionEH } from '../../event-handlers/collection.eh';
 import { MrImageViewerOverlayDetailsEH } from '../../event-handlers/image-viewer-overlay-details.eh';
-import { MrButtonEH, MrMetadataDynamicEH } from '../../event-handlers';
+import { MrButtonEH, MrMetadataDynamicEH, MrNetworkResourceEH } from '../../event-handlers';
 import {
   MrBreadcrumbsDS,
   MrButtonDS,
@@ -27,10 +30,13 @@ import {
   MrItemPreviewDS,
   MrMetadataDS,
   MrTextViewerDS,
+  MrParallelTextViewerDS,
   MrResourceTabsDS,
   MrImageViewerOverlayDetailsDS,
   MrMetadataDynamicDS,
   MrImageViewerIiifDS,
+  MrNetworkResourceDS,
+  MrEmbeddedContentDS,
 } from '../../data-sources';
 import { MrMapDS } from '../../data-sources/map.ds';
 import { MrLocaleService } from '../../services/locale.service';
@@ -50,8 +56,11 @@ const DATASOURCE_MAP = {
   'viewer-tools': MrImageViewerToolsDS,
   'viewer-overlay-details': MrImageViewerOverlayDetailsDS,
   'text-viewer': MrTextViewerDS,
+  'parallel-text-viewer': MrParallelTextViewerDS,
   'metadata-dynamic': MrMetadataDynamicDS,
   'viewer-iiif': MrImageViewerIiifDS,
+  'network-resource': MrNetworkResourceDS,
+  'embedded-content': MrEmbeddedContentDS,
 };
 
 const EVENTHANDLER_MAP = {
@@ -59,9 +68,11 @@ const EVENTHANDLER_MAP = {
   'viewer-tools': MrImageViewerToolsEH,
   'viewer-overlay-details': MrImageViewerOverlayDetailsEH,
   'text-viewer': MrTextViewerEH,
+  'parallel-text-viewer': MrParallelTextViewerEH,
   collection: MrCollectionEH,
   'metadata-dynamic': MrMetadataDynamicEH,
   button: MrButtonEH,
+  'network-resource': MrNetworkResourceEH,
   // map: MrMapEH
 };
 
@@ -69,7 +80,8 @@ const EVENTHANDLER_MAP = {
   selector: 'mr-resource-layout',
   templateUrl: './resource-layout.html',
 })
-export class MrResourceLayoutComponent extends AbstractLayout implements OnInit, OnDestroy {
+export class MrResourceLayoutComponent extends AbstractLayout implements OnInit, OnDestroy,
+AfterViewInit {
   private routerData: Data;
 
   constructor(
@@ -111,6 +123,39 @@ export class MrResourceLayoutComponent extends AbstractLayout implements OnInit,
     });
   }
 
+  ngAfterViewInit() {
+    const { configId } = this.routerData;
+    const timeout = this.configuration.get(configId).pageLoad || 1000;
+
+    // If a fragment (#id) is present in the url, the page scroll to that fragment
+    this.route.fragment.subscribe((fragment) => {
+      if (fragment) {
+        setTimeout(() => {
+          const element = document.getElementById(fragment);
+          if (element) {
+            // Open read-more if present
+            const readMoreElement = element
+              ?.closest('.mr-read-more__content')
+              ?.closest('.mr-read-more.is-collapsed');
+            if (readMoreElement) {
+              const readMoreButton = readMoreElement.querySelector(
+                ':scope > .mr-read-more__btn'
+              );
+              if (readMoreButton instanceof HTMLElement) {
+                readMoreButton.click();
+              }
+              // Scroll
+              setTimeout(() => element.scrollIntoView({ behavior: 'smooth' }), 300);
+            } else {
+              // Scroll
+              element.scrollIntoView({ behavior: 'smooth' });
+            }
+          }
+        }, timeout);
+      }
+    });
+  }
+
   ngOnDestroy() {
     this.onDestroy();
   }
@@ -126,6 +171,10 @@ export class MrResourceLayoutComponent extends AbstractLayout implements OnInit,
       }) => {
         const widgetOptions = options || {};
         widgetOptions.localeService = this.localeService;
+        // Add route to metadata-dynamic options
+        if (type === 'metadata-dynamic') {
+          options.route = this.route;
+        }
         this.widgets.push({
           id,
           options: widgetOptions,

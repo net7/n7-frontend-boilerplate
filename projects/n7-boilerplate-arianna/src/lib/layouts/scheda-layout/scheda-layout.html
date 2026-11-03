@@ -20,7 +20,7 @@
                  (click)="lb.eventHandler.emitInner('togglesidebar', {})">
                  <p class="aw-scheda__fake-breadcrumbs-open" 
                     *ngIf="lb.dataSource.sidebarCollapsed">
-                    Consulta il patrimonio
+                    {{ lb.dataSource.treeCloseTitle }}
                  </p>
             </div>
 
@@ -221,13 +221,22 @@
                     <n7-item-preview [data]="preview"
                                      [emit]="lb.widgets['aw-related-entities'].emit">
                     </n7-item-preview>
-                    <!-- Relation -->
-                    <div class="aw-item-preview-relation"
-                         *ngIf="preview.relation?.value">
-                        <p class="aw-item-preview-relation__description">Tipo di relazione
-                            <!-- <span class="aw-item-preview-relation__key">{{preview.relation.key}}</span>: -->
-                            <span class="aw-item-preview-relation__value">{{preview.relation.value}}</span>
-                        </p>
+                    <div class="aw-item-preview-container-relations">
+                        <!-- Relation -->
+                        <div class="aw-item-preview-relation"
+                             *ngIf="preview.relation?.value && lb.dataSource.showRelationType">
+                            <p class="aw-item-preview-relation__description">Tipo di relazione
+                                <!-- <span class="aw-item-preview-relation__key">{{preview.relation.key}}</span>: -->
+                                <span class="aw-item-preview-relation__value">{{preview.relation.value}}</span>
+                            </p>
+                        </div>
+                        <!-- Qualification -->
+                        <div class="aw-item-preview-relation"
+                             *ngIf="preview.qualification?.value && lb.dataSource.showRelationQualification">
+                            <p class="aw-item-preview-relation__description">Qualifica della relazione
+                                <span class="aw-item-preview-relation__value">{{preview.qualification.value}}</span>
+                            </p>
+                        </div>
                     </div>
                 </div>
             </ng-container>

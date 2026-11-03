@@ -41,8 +41,16 @@ testem.log
 .DS_Store
 Thumbs.db
 
-# package lock
-# package-lock.json
+# Claude AI context files
+CLAUDE.md
+
+# Lock files
+*.lock
+*lock.json
+!package-lock.json
 
 # local
 src/assets/app-config.local.json
+
+# ODD e CSS di TEI Publisher (file locali, non versionati)
+/odd-files

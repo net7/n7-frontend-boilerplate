@@ -15,12 +15,13 @@ export class MrResourceTabsDS extends DataSource {
       baseUrl = root[locale];
     }
 
-    return data.map(({ id, label }) => ({
+    return data.map(({ id, label, hideTab }) => ({
       label: _t(label),
       classes: currentTab === id ? 'is-active' : '',
       anchor: {
         href: `/${baseUrl}/${resourceId}/${slug}/${id}`
-      }
+      },
+      hideTab
     }));
   }
 }

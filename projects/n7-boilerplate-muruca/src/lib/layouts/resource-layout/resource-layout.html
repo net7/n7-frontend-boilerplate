@@ -46,7 +46,7 @@
                 <!-- TABS -->
                 <ng-container *ngSwitchCase="'tabs'">
                     <ng-container *ngFor="let tab of lb.widgets[section.id].ds.out$ | async">
-                        <n7-anchor-wrapper [data]="tab.anchor" [classes]="tab.classes">
+                        <n7-anchor-wrapper [data]="tab.anchor" [classes]="tab.classes" *ngIf="!tab.hideTab">
                             <span class="mr-resource__tabs-item">{{ tab.label }}</span>
                         </n7-anchor-wrapper>
                     </ng-container>
@@ -185,17 +185,47 @@
                           </n7-text-viewer>
                     </div>
                   </div>
-                  
+                </ng-container>
+
+                <!-- PARALLEL TEXT VIEWER -->
+                <ng-container *ngSwitchCase="'parallel-text-viewer'">
+                  <div class="mr-content-block mr-content-block-text-viewer mr-content-block-parallel-text-viewer">
+                        <h3 *ngIf="section.title" class="mr-content-block__title">
+                            {{ section.title }}
+                        </h3>
+                        <div class="mr-content-block__content">
+                          <n7-parallel-text-viewer [data]="lb.widgets[section.id].ds.out$ | async" [emit]="lb.widgets[section.id].emit">
+                          </n7-parallel-text-viewer>
+                    </div>
+                  </div>
                 </ng-container>
 
                 <!-- MAP -->
-             <ng-container *ngSwitchCase="'map'">
-                  <div class="mr-content-block mr-content-block-map">
-                    <div class="mr-content-block__content">
-                        <n7-map [data]="lb.widgets[section.id].ds.out$ | async" [emit]="lb.widgets[section.id].emit"></n7-map>
+                <ng-container *ngSwitchCase="'map'">
+                    <div class="mr-content-block mr-content-block-map">
+                        <div class="mr-content-block__content">
+                            <n7-map [data]="lb.widgets[section.id].ds.out$ | async" [emit]="lb.widgets[section.id].emit"></n7-map>
+                        </div>
                     </div>
-                </div>
-            </ng-container>
+                </ng-container>
+
+                <!-- NETWORK -->
+                <ng-container *ngSwitchCase="'network-resource'">
+                    <div class="mr-content-block mr-content-block-network">
+                        <div class="mr-content-block__content">
+                            <div id="demo-network" class="network-visualization"><p>Network</p></div>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <!-- EMBEDDED CONTENT -->
+                <ng-container *ngSwitchCase="'embedded-content'">
+                    <div class="mr-content-block mr-content-block-embedded-content">
+                        <div class="mr-content-block__content">
+                            <div class="mr-wp-content" [innerHTML]="lb.widgets[section.id].ds.out$ | async | keepHtml"></div>
+                        </div>
+                    </div>
+                </ng-container>
     
                 <!-- INFO BOX -->
                 <ng-container *ngSwitchCase="'info-box'">

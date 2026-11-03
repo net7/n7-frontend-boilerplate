@@ -12,6 +12,464 @@ For each commit add a description under the Unreleased section under the corresp
 Muruca
 
 -   Map in resource pages: tile layer configurable through `libOptions.layerUrl` and `libOptions.layerOptions`
+## [5.6.17] - 2026-10-20
+
+Muruca
+
+-   Minor fix: add hideWitnessFilter option and extract "testimone base" from reverse-entry in witness filter in parallel text viewer
+
+## [5.6.16] - 2026-10-13
+
+## [5.6.15] - 2026-10-13
+
+Muruca
+
+-   Fix work→translation same-window navigation: correct pb-document path after TEI Publisher registry cache override
+-   Fix nested authority highlight persistence on close when sibling cit remains open
+
+Common 
+
+-   Add repository.url to all package.json for npm provenance verification 
+
+## [5.6.14] - 2026-09-23
+
+Muruca
+
+-   Add fixes for parallel text viewer 
+
+## [5.6.13] - 2026-09-16
+
+Muruca
+
+-   Parallel text viewer: add logic to handle open apparatus in list mode
+
+## [5.6.12] - 2026-09-10
+
+Muruca
+
+-   Parallel text viewer: add accordion for apparatus column
+
+## [5.6.11] - 2026-08-12
+
+Muruca
+
+-   Parallel text viewer: add source_ref handler for leoantico cross-panel scroll
+
+## [5.6.10] - 2026-08-05
+
+Muruca
+
+-   Parallel text viewer: enableColumnFeatures guard for project-specific features
+-   Parallel text viewer: biblical citations collapse in dimmed state
+-   Parallel text viewer: reset flags on panel change (fix accordion/placeholder loss)
+
+## [5.6.9] - 2026-07-31
+
+Muruca
+
+-   Parallel text viewer: add postilla comment accordion
+
+## [5.6.8] - 2026-07-27
+
+Muruca
+
+-   Add fragment scroll in static page
+
+## [5.6.7] - 2026-07-23
+
+Muruca
+
+-   Parallel text viewer: Google Docs-style multi-stack for opening divs in lateral columns
+-   Parallel text viewer: anti-overlap layout algorithm with active-centric positioning
+-   Parallel text viewer: "Click to open" placeholder in empty columns
+-   Parallel text viewer: collapsible accordion for full-text authorities
+-   Parallel text viewer: dimmed div collapse for authorities and terms with chevron toggle
+-   Parallel text viewer: "Contains N syntagms" badge for multi-syntagma terms
+-   Parallel text viewer: legend moved to components with i18n support (\_t)
+-   Parallel text viewer: labels translation from config via \_t()
+
+## [5.6.6] - 2026-07-15
+
+Muruca
+
+-   Fix label traslation for checkbox facet
+
+## [5.6.5] - 2026-06-29
+
+Muruca
+
+-   Release non RC version
+
+## [5.6.5-rc.1] - 2026-06-22
+
+Muruca
+
+-   Fix scrollElementsIntoView for parallel text viewer
+
+## [5.6.4] - 2026-06-16
+
+Common
+
+-   Apollo provider: escape string values when building the GraphQL query (via `JSON.stringify`), so search terms containing `"`, `\`, or newlines no longer produce an invalid GraphQL document / parse error
+
+## [5.6.3] - 2026-06-16
+
+-   Search facets: validation now accepts a `validator(value) => boolean` function in addition to a `pattern` (RegExp or string)
+-   Search layout: consumer apps can override per-facet validation from their layout config via a `facetsValidation` map keyed by `facetId` (set/replace/disable), without forking the default facets config
+-   Search facets: fix `TypeError: ... addEventListener, target is null` in entity-links pagination — the scroll container is now resolved by the last links container instead of a `:last-child` group selector, which broke when another facet group (e.g. the date range) is rendered last; also guard against a missing element
+-   Search layout: fix the entity-links loading spinner showing its label text — the `.loader-link` style targeted a non-existent nested element; the label is now hidden and the spinner drawn on the link itself
+-   Search layout: guard the facets and results requests against a null/failed backend response (e.g. an Elasticsearch query error) so the search degrades gracefully instead of throwing a destructuring `TypeError`
+
+## [5.6.2] - 2026-06-16
+
+Build
+
+-   Bump `@net7/components` to `^4.5.17`, picking up the bubble chart shuffle fix (`shuffle` now runs on first draw instead of being a no-op)
+
+## [5.6.1] - 2026-06-09
+
+Arianna
+
+-   Search facets: config-driven validation for text inputs (`validation: { pattern, message }`) — invalid values surface an accessible error on blur/enter and are no longer applied to the search (the last valid filter is kept); `date-from`/`date-to` validate the supported date formats out of the box
+-   Search facets: add `isValid()` (pure check) and `validate()` (reflects error state on the output) to facet inputs, plus a `blurPayload` on the text input model
+-   Search facets: replace the consumer-side `AwFacetsWrapperDS.onFacetChange` monkey-patch with this built-in validation seam
+
+## [5.6.0] - 2026-06-05
+
+Build
+
+-   Fix `sync-version.js` to also sync shared dependency versions from root `package.json` into sub-packages, preventing version drift between the published arianna package and the monorepo root
+
+Arianna
+
+-   Bump `ngx-extended-pdf-viewer` to `19.2.0` (Angular 17 compatible), resolving peer dependency conflict on install
+
+## [5.5.28] - 2026-05-25
+
+Muruca
+
+-   Change Parallel TW DS with updated logic for specific highlight
+
+## [5.5.27] - 2026-05-22
+
+Muruca
+
+-   Fix hardcoded name in PDF button
+
+## [5.5.26-rc1] - 2026-05-19
+
+CI
+
+-   Migrate npm publishing to OIDC trusted publishing (remove NPM_TOKEN dependency)
+-   Upgrade Node to 24 (required for npm ≥ 11.5.1 OIDC support)
+-   Harden develop→master merge with `-X theirs` strategy to prevent conflict failures
+-   Auto-detect prerelease versions and publish with `--tag next` instead of `latest`
+-   Consolidate release workflow into a single linear job
+-   Fix stale `actions/checkout@master` reference in pull request workflow
+
+## [5.5.25] - 2026-05-19
+
+Muruca
+
+-   Copy-protection service add style to message
+
+## [5.5.24] - 2026-05-19
+
+Muruca
+
+-   Add logic to handle start section in parallel text viewer and to change view by click on anchors
+
+## [5.5.23] - 2026-05-15
+
+Muruca
+
+-   Add possibility to add a text to the copy/paste on the website
+
+## [5.5.22] - 2026-05-13
+
+Muruca
+
+-   Use title when download PDF
+
+## [5.5.21] - 2026-04-28
+
+Muruca
+
+-   Add logic to handle baseurl for facsimile in parallel text viewer
+
+## [5.5.20] - 2026-04-22
+
+Muruca
+
+-   Add logic to handle paired anchor apparatus in parallel text viewer
+
+## [5.5.19] - 2026-04-17
+
+Muruca
+
+-   Fix unavailable pin logic in facet map
+
+## [5.5.18] - 2026-04-17
+
+## [5.5.17-rc4] - 2026-04-17
+
+## [5.5.17-rc3] - 2026-04-16
+
+## [5.5.17-rc2] - 2026-04-16
+
+## [5.5.17-rc1] - 2026-04-16
+
+## [5.5.16] - 2026-04-15
+
+## [5.5.14] - 2026-04-15
+
+-   Muruca
+
+-   Add parallel text viewer logic to handle new highlight functionality in TEI Publisher
+
+## [5.5.13] - 2026-04-01
+
+Muruca
+
+-   Fix resource-layout embedded-content
+-   Add logic to hide unavailable pin in facet map
+
+## [5.5.12] - 2026-03-30
+
+Muruca
+
+-   Add info popup in section of Advanced Search
+
+## [5.5.11] - 2026-03-04
+
+Muruca
+
+-   Add embedded-content section in resource-layout
+-   Fix parallel-text-viewer AS
+
+## [5.5.10] - 2026-03-02
+
+Muruca
+
+-   Add search api to parallel-text-viewer
+
+## [5.5.9] - 2026-02-23
+
+## [5.5.9] - 2026-02-23
+
+Muruca
+
+-   Add `mr-input-typeahead` as a native form input type with debounced API autocomplete, static options (local filtering), Tab-to-complete, match highlighting, and base styles
+
+## [5.5.8] - 2026-02-04
+
+Muruca
+
+-   Add facet identifier
+
+## [5.5.7] - 2026-01-30
+
+Muruca
+
+-   Editable tag label in search
+
+## [5.5.6] - 2026-01-26
+
+Arianna
+
+-   Add date range filter in search layout
+
+## [5.5.5] - 2026-01-21
+
+Muruca
+
+-   Add search bar in hero component
+
+## [5.5.4] - 2026-01-19
+
+Muruca
+
+-   Open readmore before scrolling to an anchor
+
+## [5.5.3] - 2026-01-12
+
+Muruca
+
+-   Minor parallel text viewer fix, fix parallel text viewer config types
+
+## [5.5.2] - 2026-01-07
+
+Muruca
+
+-   Mirador viewer: open a specific annotation
+
+## [5.5.1] - 2025-12-17
+
+## [5.5.0] - 2025-12-17
+
+## [5.4.4] - 2025-12-17
+
+Muruca
+
+-   Add logic in parallel text viewer data source for scrolling elements in index
+-   Refactor hq config for search api
+
+## [5.4.3] - 2025-11-11
+
+Muruca
+
+-   Add network-resource ds and eh
+
+## [5.4.2] - 2025-10-30
+
+Muruca
+
+-   Fix facet histogram
+
+## [5.4.1] - 2025-10-20
+
+Muruca
+
+-   Minor fix parallel text viewer, close app button
+
+## [5.4.0] - 2025-10-13
+
+Muruca
+
+-   Add new component: parallel text viewer
+-   Add parallel text viewer component ds, eh, layout and style
+
+## [5.3.5] - 2025-09-11
+
+Muruca
+
+-   Add mapCenter option in resource map
+
+## [5.3.4] - 2025-09-02
+
+Muruca
+
+-   Add fragment to search results
+
+## [5.3.3] - 2025-08-06
+
+Muruca
+
+-   Change import for network event handler
+
+## [5.3.2] - 2025-08-06
+
+Muruca
+
+-   Added network layoud id configuration, update components, update mock data for network layout, update interfaces import (now import from components)
+
+## [5.3.1] - 2025-07-24
+
+Muruca
+
+-   Minor fix network layout
+
+## [5.3.0] - 2025-07-08
+
+Muruca
+
+-   Add network layout
+-   Minor fix config resource
+
+## [5.2.23-rc2] - 2025-07-07
+
+## [5.2.23-rc1] - 2025-07-07
+
+## [5.2.22] - 2025-06-24
+
+Muruca
+
+-   Fix search-helper
+
+## [5.2.21] - 2025-06-24
+
+Muruca
+
+-   Add configurable libOptions from FE (text-viewer )
+
+## [5.2.20] - 2025-06-20
+
+Muruca
+
+-   Add anchor logic in accordion
+
+## [5.2.19] - 2025-05-28
+
+Muruca
+
+-   Add timeline groups feature
+
+## [5.2.18] - 2025-05-23
+
+Muruca
+
+-   Fix hide tab logic
+
+## [5.2.17] - 2025-05-23
+
+Muruca
+
+-   Add possibility to hide a specific tab
+-   Add facsimile options
+
+## [5.2.16] - 2025-05-16
+
+Muruca
+
+-   Add link to advanced seach in normal seach
+
+Arianna
+
+-   Add labels customization and qualification relation
+
+## [5.2.15] - 2025-05-13
+
+Muruca
+
+-   Add metadata in timeline collection
+
+## [5.2.14] - 2025-04-30
+
+Muruca
+
+-   Update components to 4.3.0
+
+## [5.2.13] - 2025-04-18
+
+Muruca
+
+-   Added text-viewer functions to close apparatus items with buttons and fixed css
+
+## [5.2.12] - 2025-04-02
+
+Muruca
+
+-   Added text-viewer functions to handle column-view of the apparatus
+
+## [5.2.11] - 2025-03-24
+
+Muruca
+
+-   Fix css img footer
+-   Update Package
+
+## [5.2.10] - 2025-01-31
+
+Muruca
+
+-   Fix bug iiif viewer
+-   Add iiif positioning by url
+
+## [5.2.9] - 2024-12-27
+
+Arianna
+
+-   Fix Mirador
 
 ## [5.2.8] - 2024-11-25
 
@@ -235,7 +693,7 @@ Muruca
 
 Muruca
 
--   text viewer, fixed issue on chromium  "'Event.path' is deprecated"
+-   text viewer, fixed issue on chromium "'Event.path' is deprecated"
 -   communication remove exception
 -   added tooltip timeout
 
@@ -272,7 +730,7 @@ Arianna
 
 ## [4.0.0] - 2022-12-05
 
--   upgrade angular to v14x and node to v18x 
+-   upgrade angular to v14x and node to v18x
 
 ## [3.9.2] - 2022-10-20
 
@@ -286,7 +744,7 @@ Muruca
 -   advanced results - added logic to add query params to link
 -   text viewer - added function to handle highlight API and positioning
 
-Common 
+Common
 
 -   Edited README.md
 -   Added getUrl function to communication service
@@ -395,7 +853,7 @@ Arianna
 Muruca
 
 -   Added advanced search dynamic options
-    Arianna 
+    Arianna
 -   New tree version: extended-tree
 
 ## [v3.4.2] - 2022-05-30
@@ -415,7 +873,7 @@ Muruca
 Muruca
 
 -   Fix map and timeline layout state
--   Fix map and timeline layout locale handler 
+-   Fix map and timeline layout locale handler
 -   Fix menu service update
 -   Fix footer service update
 -   Fix locale service path check
@@ -460,7 +918,7 @@ Muruca
 
 -   Fix muruca search config path
 -   Fixed highlight link in advanced search item preview
--   timeline-layout-fix 
+-   timeline-layout-fix
 
 ## [v3.2.2]
 
@@ -484,7 +942,7 @@ Muruca
 
 -   Fix muruca search config path
 -   Fixed highlight link in advanced search item preview
--   timeline-layout-fix 
+-   timeline-layout-fix
 
 ## [v3.2.2]
 
@@ -508,7 +966,7 @@ Muruca
 
 ### Fixed
 
--   fix-dataviz-dependencies 
+-   fix-dataviz-dependencies
 
 ## [v3.0.0]
 
@@ -532,7 +990,127 @@ A4V
 -   url configurabili
 -   timeline solo anni
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.8...HEAD
+[5.6.2]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.1...v5.6.2
+
+[5.6.1]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.0...v5.6.1
+
+[5.6.0]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.28...v5.6.0
+
+[5.5.28]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.27...v5.5.28
+
+[5.5.27]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.26-rc1...v5.5.27
+
+[5.5.26-rc1]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.25...v5.5.26-rc1
+
+[5.5.25]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.24...v5.5.25
+
+[5.5.24]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.23...v5.5.24
+
+[5.5.23]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.22...v5.5.23
+
+[5.5.22]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.21...v5.5.22
+
+[5.5.21]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.20...v5.5.21
+
+[5.5.20]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.19...v5.5.20
+
+[5.5.19]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.18...v5.5.19
+
+[5.5.18]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.17-rc4...v5.5.18
+
+[5.5.17-rc4]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.17-rc3...v5.5.17-rc4
+
+[5.5.17-rc3]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.17-rc2...v5.5.17-rc3
+
+[5.5.17-rc2]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.17-rc1...v5.5.17-rc2
+
+[5.5.17-rc1]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.16...v5.5.17-rc1
+
+[5.5.16]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.14...v5.5.16
+
+[5.5.14]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.13...v5.5.14
+
+[5.5.13]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.12...v5.5.13
+
+[5.5.12]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.11...v5.5.12
+
+[5.5.11]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.10...v5.5.11
+
+[5.5.10]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.9...v5.5.10
+
+[5.5.9]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.8...v5.5.9
+
+[5.5.8]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.7...v5.5.8
+
+[5.5.7]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.6...v5.5.7
+
+[5.5.6]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.5...v5.5.6
+
+[5.5.5]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.4...v5.5.5
+
+[5.5.4]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.3...v5.5.4
+
+[5.5.3]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.2...v5.5.3
+
+[5.5.2]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.1...v5.5.2
+
+[5.5.1]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.5.0...v5.5.1
+
+[5.5.0]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.4.4...v5.5.0
+
+[5.4.4]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.4.3...v5.4.4
+
+[5.4.3]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.4.2...v5.4.3
+
+[5.4.2]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.4.1...v5.4.2
+
+[5.4.1]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.4.0...v5.4.1
+
+[5.4.0]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.3.5...v5.4.0
+
+[5.3.5]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.3.4...v5.3.5
+
+[5.3.4]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.3.3...v5.3.4
+
+[5.3.3]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.3.2...v5.3.3
+
+[5.3.2]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.3.1...v5.3.2
+
+[5.3.1]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.3.0...v5.3.1
+
+[5.3.0]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.23-rc2...v5.3.0
+
+[5.2.23-rc2]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.23-rc1...v5.2.23-rc2
+
+[5.2.23-rc1]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.22...v5.2.23-rc1
+
+[5.2.22]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.21...v5.2.22
+
+[5.2.21]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.20...v5.2.21
+
+[5.2.20]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.19...v5.2.20
+
+[5.2.19]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.18...v5.2.19
+
+[5.2.18]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.17...v5.2.18
+
+[5.2.17]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.16...v5.2.17
+
+[5.2.16]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.15...v5.2.16
+
+[5.2.15]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.14...v5.2.15
+
+[5.2.14]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.13...v5.2.14
+
+[5.2.13]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.12...v5.2.13
+
+[5.2.12]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.11...v5.2.12
+
+[5.2.11]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.10...v5.2.11
+
+[5.2.10]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.9...v5.2.10
+
+[5.2.9]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.8...v5.2.9
 
 [5.2.8]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.2.7...v5.2.8
 
@@ -649,3 +1227,37 @@ A4V
 [3.6.0-rc.1]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.4.2...v3.6.0-rc.1
 
 [v3.4.2]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.4.1...v3.4.2
+
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.17...HEAD
+
+[5.6.17]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.1...v5.6.17
+
+[5.6.16]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.1...v5.6.16
+
+[5.6.15]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.1...v5.6.15
+
+[5.6.14]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.1...v5.6.14
+
+[5.6.13]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.1...v5.6.13
+
+[5.6.12]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.1...v5.6.12
+
+[5.6.11]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.1...v5.6.11
+
+[5.6.10]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.1...v5.6.10
+
+[5.6.9]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.1...v5.6.9
+
+[5.6.8]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.1...v5.6.8
+
+[5.6.7]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.1...v5.6.7
+
+[5.6.6]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.1...v5.6.6
+
+[5.6.5]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.1...v5.6.5
+
+[5.6.5-rc.1]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.1...v5.6.5-rc.1
+
+[5.6.4]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.1...v5.6.4
+
+[5.6.3]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.1...v5.6.3

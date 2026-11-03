@@ -4,10 +4,10 @@ import { ButtonData } from '@net7/components';
 export class MrButtonDS extends DataSource {
   protected transform(): ButtonData {
     const {
-      iconLeft, iconRight
+      iconLeft, iconRight, text
     } = this.options;
     return {
-      text: 'Scarica PDF',
+      text: text || 'Scarica PDF',
       iconLeft,
       iconRight,
       classes: 'n7-btn',

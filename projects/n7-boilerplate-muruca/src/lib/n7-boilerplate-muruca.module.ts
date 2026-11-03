@@ -17,6 +17,7 @@ import { MrAdvancedSearchLayoutComponent } from './layouts/advanced-search-layou
 import { MrHomeLayoutComponent } from './layouts/home-layout/home-layout';
 import { MrItineraryLayoutComponent } from './layouts/itinerary-layout/itinerary-layout';
 import { MrMapLayoutComponent } from './layouts/map-layout/map-layout';
+import { MrNetworkLayoutComponent } from './layouts/network-layout/network-layout';
 import { MrPostsLayoutComponent } from './layouts/posts-layout/posts-layout';
 import { MrResourceLayoutComponent } from './layouts/resource-layout/resource-layout';
 import { MrSearchFacetsLayoutComponent } from './layouts/search-facets-layout/search-facets-layout';
@@ -33,6 +34,7 @@ import { MrResourceModalComponent } from './components/resource-modal/resource-m
 import { MrSearchPageDescriptionComponent } from './components/search-page-description/search-page-description';
 import { ReadMoreComponent } from './components/read-more/read-more';
 import { MrMetadataDynamicComponent } from './components';
+import { MrInputTypeaheadComponent } from './components/input-typeahead/input-typeahead';
 
 const COMPONENTS = [
   // Layout components
@@ -41,6 +43,7 @@ const COMPONENTS = [
   MrHomeLayoutComponent,
   MrItineraryLayoutComponent,
   MrMapLayoutComponent,
+  MrNetworkLayoutComponent,
   MrMetadataReadmoreComponent,
   MrPostsLayoutComponent,
   MrResourceLayoutComponent,
@@ -57,6 +60,7 @@ const COMPONENTS = [
   MrGalleryComponent,
   MrAdvancedResultComponent,
   MrMetadataDynamicComponent,
+  MrInputTypeaheadComponent,
 ];
 
 @NgModule({
