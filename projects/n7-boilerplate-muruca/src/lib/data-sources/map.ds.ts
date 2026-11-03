@@ -105,8 +105,11 @@ export class MrMapDS extends DataSource {
       tileLayers: [{
         // url: 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
         // url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-        url: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png',
-        options: {}
+        // il layer e' configurabile da libOptions.layerUrl (come nella faccetta mappa);
+        // libOptions.layerOptions passa le opzioni del tile layer (es. attribution)
+        url: this.options?.libOptions?.layerUrl
+          ?? 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png',
+        options: this.options?.libOptions?.layerOptions ?? {}
       }],
       initialView,
     };
