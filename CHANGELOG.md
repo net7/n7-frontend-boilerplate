@@ -9,6 +9,9 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+Muruca
+
+-   Map in resource pages: tile layer configurable through `libOptions.layerUrl` and `libOptions.layerOptions`
 ## [5.6.17] - 2026-10-20
 
 Muruca
