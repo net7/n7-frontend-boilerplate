@@ -9,9 +9,12 @@ For each commit add a description under the Unreleased section under the corresp
 
 ## [Unreleased]
 
+## [5.6.18] - 2026-11-04
+
 Muruca
 
 -   Map in resource pages: tile layer configurable through `libOptions.layerUrl` and `libOptions.layerOptions`
+
 ## [5.6.17] - 2026-10-20
 
 Muruca
@@ -1228,7 +1231,9 @@ A4V
 
 [v3.4.2]: https://github.com/net7/n7-frontend-boilerplate/compare/v3.4.1...v3.4.2
 
-[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.17...HEAD
+[Unreleased]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.18...HEAD
+
+[5.6.18]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.1...v5.6.18
 
 [5.6.17]: https://github.com/net7/n7-frontend-boilerplate/compare/v5.6.1...v5.6.17
 
